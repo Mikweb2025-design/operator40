@@ -144,6 +144,12 @@ const PROGRAMS = [
     exercises: ['squat', 'flessioni', 'affondo', 'deadbug', 'superman', 'crunch'] },
   { id: 'D', name: { it: 'RECUPERO ATTIVO', en: 'ACTIVE RECOVERY', de: 'AKTIVE ERHOLUNG' }, tagline: { it: 'Mobilità e respiro — giorno di ricarica', en: 'Mobility and breath — recharge day', de: 'Mobilität und Atmung — Auftanktag' }, focus: { it: 'RECUPERO', en: 'RECOVERY', de: 'ERHOLUNG' }, rounds: 1,
     exercises: ['wallsit', 'ponte', 'superman', 'sideplank', 'deadbug'] },
+  { id: 'E', name: { it: 'PANCIA PIATTA', en: 'FLAT BELLY', de: 'FLACHER BAUCH' }, tagline: { it: 'Brucia grasso e scolpisci il girovita — la missione anti-pancetta', en: 'Burn fat and sculpt your waist — the anti-belly mission', de: 'Fett verbrennen und die Taille formen — die Anti-Bauch-Mission' }, focus: { it: 'GIROVITA', en: 'WAIST', de: 'TAILLE' }, rounds: 2,
+    exercises: ['jumpingjack', 'mountainclimber', 'crunchbici', 'russiantwist', 'skater', 'heeltap'] },
+  { id: 'F', name: { it: 'ADDOMINALI SCOLPITI', en: 'SCULPTED ABS', de: 'BAUCH AUS STAHL' }, tagline: { it: 'Isolamento mirato per addominali definiti come l\'acciaio', en: 'Targeted isolation for steel-defined abs', de: 'Gezieltes Training für stahlharte Bauchmuskeln' }, focus: { it: 'ADDOMINALI', en: 'ABS', de: 'BAUCH' }, rounds: 2,
+    exercises: ['crunch', 'legraise', 'vup', 'deadbug', 'flutterkick', 'sideplank'] },
+  { id: 'G', name: { it: 'SNAGLIATURA TOTALE', en: 'FULL SLIM', de: 'TOTALER SCHLANKHEIT' }, tagline: { it: 'Dimagrisci su tutto il corpo: metabolismo al massimo', en: 'Slim down all over — metabolism on max', de: 'Überall abnehmen — Stoffwechsel auf Maximum' }, focus: { it: 'SNAGLIATURA', en: 'SLIM', de: 'ABNEHMEN' }, rounds: 2,
+    exercises: ['burpeetattico', 'ginocchiaalte', 'mountainclimber', 'squat', 'flessioni', 'skater'] },
 ];
 const QUICK_PROGRAM = {
   id: 'Q', name: { it: 'RAFFICA LAMPO', en: 'QUICK BLAST', de: 'BLITZ-RUNDE' }, tagline: { it: 'Per i giorni senza tempo', en: 'For the days with no time', de: 'Für Tage ohne Zeit' }, rounds: 1,
@@ -3070,7 +3076,7 @@ function last7DaysKcal(sessions, locale) {
   return days;
 }
 function missionCounts(sessions) {
-  const counts = { A: 0, B: 0, C: 0, D: 0 };
+  const counts = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
   sessions.forEach(s => { if (counts[s.programId] !== undefined) counts[s.programId]++; });
   return counts;
 }
@@ -3110,7 +3116,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, onBack,
   const bestStreak = computeBestStreak(sessions);
   const weekData = last7DaysKcal(sessions, LOCALES[lang]);
   const counts = missionCounts(sessions);
-  const maxCount = Math.max(1, counts.A, counts.B, counts.C, counts.D);
+  const maxCount = Math.max(1, counts.A, counts.B, counts.C, counts.D, counts.E, counts.F, counts.G);
   const totalKcal = Math.round(sessions.reduce((a, s) => a + s.kcal, 0));
   const weeklyGoal = profile.weeklyGoal || WEEKLY_GOAL;
   const heatmap = buildHeatmap(sessions, 35);
