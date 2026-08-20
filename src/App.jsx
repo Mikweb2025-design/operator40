@@ -1165,7 +1165,7 @@ function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = '100%', rounded
     return (
       <video src={videoSrc} autoPlay muted loop playsInline preload="metadata"
         onError={() => setFailed(true)}
-        style={{ width: size, height: size, objectFit: 'cover', borderRadius: rounded, display: 'block', background: INK }} />
+        style={{ width: size, height: size, objectFit: 'contain', borderRadius: rounded, display: 'block', background: INK }} />
     );
   }
   if (src && !failed) {
