@@ -31,7 +31,7 @@ Dark, military-themed UI with **animated SVG exercise figures**, a full exercise
 - **Exercise library** — all exercises with technical notes for the over-40 body; animated **cartoon WebP clips** for every movement (the app's own SVG figures rendered as seamless loops).
 - **Live session** — voice-style guidance, countdowns, tracking of elapsed time, estimated kcal, HR (entered manually from a smartwatch) and RPE.
 - **Statistics** — streaks, session history, kcal totals, waist/weight trends, ranks (Recruit → Veteran).
-- **Music** — 12 royalty-free tracks (NEFFEX CC BY 3.0, public-domain marches, Bella ciao CC BY-SA 4.0), shipped as **local files** — works fully offline, no streaming.
+- **Music** — 12 royalty-free English tracks (NEFFEX, CC BY 3.0), shipped as **local files** — works fully offline, no streaming.
 - **Privacy** — all data stays on the device (localStorage / Capacitor Preferences). Optional Apple Health `export.xml` import runs entirely on-device.
 - **Installable PWA** — full screen, no browser chrome.
 
