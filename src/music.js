@@ -6,18 +6,18 @@
    - Bella ciao (Orchestra of Serbian Guards / Tinkes): CC BY-SA 4.0 */
 
 export const TRACKS = [
-  { id: 'hustlin', name: "Hustlin'", artist: 'NEFFEX', src: '/tracks/hustlin.mp3', tag: 'Energetica', lang: 'EN' },
-  { id: 'manifest', name: 'Manifest It', artist: 'NEFFEX', src: '/tracks/manifest.mp3', tag: 'Battuta', lang: 'EN' },
-  { id: 'born', name: 'Born A Rockstar', artist: 'NEFFEX', src: '/tracks/born.mp3', tag: 'Sprint', lang: 'EN' },
-  { id: 'fightback', name: 'Fight Back', artist: 'NEFFEX', src: '/tracks/fightback.mp3', tag: 'Pesante', lang: 'EN' },
-  { id: 'theitch', name: 'The Itch', artist: 'NEFFEX ft. Josh A', src: '/tracks/theitch.mp3', tag: 'Battuta', lang: 'EN' },
-  { id: 'godown', name: 'Go Down Swinging', artist: 'NEFFEX', src: '/tracks/godown.mp3', tag: 'Energetica', lang: 'EN' },
-  { id: 'addict', name: 'Addict', artist: 'NEFFEX', src: '/tracks/addict.mp3', tag: 'Sprint', lang: 'EN' },
-  { id: 'tellme', name: "Tell Me That I Can't", artist: 'NEFFEX', src: '/tracks/tellme.mp3', tag: 'Pesante', lang: 'EN' },
-  { id: 'piave', name: 'La Leggenda del Piave', artist: 'E. A. Mario', src: '/tracks/piave.mp3', tag: 'Marcia', lang: 'IT' },
-  { id: 'bellaciao', name: 'Bella ciao', artist: 'Banda · Guardia Serba', src: '/tracks/bellaciao.mp3', tag: 'Inno', lang: 'IT' },
-  { id: 'altekameraden', name: 'Alte Kameraden', artist: 'C. Teike · Anker-Orch.', src: '/tracks/alte-kameraden.mp3', tag: 'Marcia', lang: 'DE' },
-  { id: 'preussensgloria', name: 'Preußens Gloria', artist: 'G. Piefke', src: '/tracks/preussens-gloria.mp3', tag: 'Marcia', lang: 'DE' },
+  { id: 'hustlin', name: "Hustlin'", artist: 'NEFFEX', src: 'tracks/hustlin.mp3', tag: 'Energetica', lang: 'EN' },
+  { id: 'manifest', name: 'Manifest It', artist: 'NEFFEX', src: 'tracks/manifest.mp3', tag: 'Battuta', lang: 'EN' },
+  { id: 'born', name: 'Born A Rockstar', artist: 'NEFFEX', src: 'tracks/born.mp3', tag: 'Sprint', lang: 'EN' },
+  { id: 'fightback', name: 'Fight Back', artist: 'NEFFEX', src: 'tracks/fightback.mp3', tag: 'Pesante', lang: 'EN' },
+  { id: 'theitch', name: 'The Itch', artist: 'NEFFEX ft. Josh A', src: 'tracks/theitch.mp3', tag: 'Battuta', lang: 'EN' },
+  { id: 'godown', name: 'Go Down Swinging', artist: 'NEFFEX', src: 'tracks/godown.mp3', tag: 'Energetica', lang: 'EN' },
+  { id: 'addict', name: 'Addict', artist: 'NEFFEX', src: 'tracks/addict.mp3', tag: 'Sprint', lang: 'EN' },
+  { id: 'tellme', name: "Tell Me That I Can't", artist: 'NEFFEX', src: 'tracks/tellme.mp3', tag: 'Pesante', lang: 'EN' },
+  { id: 'piave', name: 'La Leggenda del Piave', artist: 'E. A. Mario', src: 'tracks/piave.mp3', tag: 'Marcia', lang: 'IT' },
+  { id: 'bellaciao', name: 'Bella ciao', artist: 'Banda · Guardia Serba', src: 'tracks/bellaciao.mp3', tag: 'Inno', lang: 'IT' },
+  { id: 'altekameraden', name: 'Alte Kameraden', artist: 'C. Teike · Anker-Orch.', src: 'tracks/alte-kameraden.mp3', tag: 'Marcia', lang: 'DE' },
+  { id: 'preussensgloria', name: 'Preußens Gloria', artist: 'G. Piefke', src: 'tracks/preussens-gloria.mp3', tag: 'Marcia', lang: 'DE' },
 ];
 
 export const DEFAULT_TRACK = TRACKS[0].id;
