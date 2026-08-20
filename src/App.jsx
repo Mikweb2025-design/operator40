@@ -566,6 +566,41 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-scroll::-webkit-scrollbar-thumb { background: ${KHAKI}; border-radius: 4px; }
 
 /* ---- modern UI polish ---- */
+.o40-aura {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  background:
+    radial-gradient(38% 46% at 22% 26%, ${OLIVE}40 0%, transparent 70%),
+    radial-gradient(30% 40% at 78% 16%, ${BLAZE}33 0%, transparent 70%),
+    radial-gradient(42% 50% at 72% 84%, ${OLIVE}30 0%, transparent 70%),
+    radial-gradient(26% 34% at 18% 88%, ${BLAZE_DEEP}30 0%, transparent 70%);
+  animation: auraDrift 22s ease-in-out infinite alternate;
+}
+@keyframes auraDrift {
+  0% { transform: translate(0, 0) scale(1); filter: hue-rotate(0deg); }
+  100% { transform: translate(-2%, 2%) scale(1.08); filter: hue-rotate(10deg); }
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(360px) rotate(300deg); opacity: 0; }
+}
+.o40-confetti { position: absolute; top: 0; width: 8px; height: 13px; border-radius: 2px; animation: confettiFall linear infinite; pointer-events: none; }
+.o40-gradtext {
+  background: linear-gradient(110deg, ${PAPER} 20%, ${KHAKI} 40%, ${BLAZE} 55%, ${PAPER} 75%);
+  background-size: 220% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: gradShift 5s linear infinite;
+}
+@keyframes gradShift { to { background-position: -220% center; } }
+.o40-pulsebtn { position: relative; }
+.o40-pulsebtn::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  box-shadow: 0 0 0 0 ${BLAZE}aa; animation: btnRing 2.2s ease-out infinite; pointer-events: none;
+}
+@keyframes btnRing {
+  0% { box-shadow: 0 0 0 0 ${BLAZE}aa; }
+  70% { box-shadow: 0 0 0 14px ${BLAZE}00; }
+  100% { box-shadow: 0 0 0 0 ${BLAZE}00; }
+}
 .o40 button { -webkit-tap-highlight-color: transparent; transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease; }
 .o40 button:active { transform: scale(0.96); }
 .o40-toast-in { animation: toastIn 0.3s cubic-bezier(0.16,1,0.3,1); }
@@ -1260,6 +1295,8 @@ export default function App() {
   const [rpe, setRpe] = useState(null);
   const [notes, setNotes] = useState('');
   const [waistHistory, setWaistHistory] = useState([]);
+  const [weightHistory, setWeightHistory] = useState([]);
+  const [weightInput, setWeightInput] = useState('');
   const soundRef = useRef(true);
   soundRef.current = soundOn;
   const vibrationRef = useRef(true);
@@ -1291,10 +1328,16 @@ export default function App() {
         const r = await window.storage.get('o40_waist', false);
         if (r) wh = JSON.parse(r.value);
       } catch (e) { /* not set yet */ }
+      let wt = null;
+      try {
+        const r = await window.storage.get('o40_weight', false);
+        if (r) wt = JSON.parse(r.value);
+      } catch (e) { /* not set yet */ }
       setProfile(p);
       setSessions(s || []);
       setCustomPrograms(cp || []);
       setWaistHistory(wh || []);
+      setWeightHistory(wt || []);
       if (p) {
         setFormName(p.name); setFormAge(String(p.age)); setFormWeight(String(p.weight));
         setSoundOn(p.soundOn !== false);
@@ -1446,6 +1489,14 @@ export default function App() {
     try { await window.storage.set('o40_waist', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
   }
 
+  async function recordWeight(kg) {
+    const latest = weightHistory.length ? weightHistory[weightHistory.length - 1] : null;
+    if (latest && latest.kg === kg && dayKey(new Date(latest.date)) === dayKey(new Date())) return;
+    const updated = [...weightHistory, { date: new Date().toISOString(), kg }];
+    setWeightHistory(updated);
+    try { await window.storage.set('o40_weight', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+  }
+
   async function applyLevel(key) {
     const next = getLevel(key);
     const p = { ...profile, level: next.key, intervalPreset: next.preset };
@@ -1568,8 +1619,13 @@ export default function App() {
       const cm = Math.max(40, Math.min(200, parseInt(waistInput, 10)));
       if (!isNaN(cm)) await recordWaist(cm);
     }
+    if (weightInput) {
+      const kg = Math.round(parseFloat(weightInput.replace(',', '.')) * 10) / 10;
+      if (!isNaN(kg)) await recordWeight(Math.max(35, Math.min(250, kg)));
+    }
     setHrInput('');
     setWaistInput('');
+    setWeightInput('');
     setRpe(null);
     setNotes('');
     setScreen('home');
@@ -1695,8 +1751,9 @@ export default function App() {
   }
 
   return (
-    <div className="o40" style={shell}>
+    <div className="o40" style={{ ...shell, position: 'relative' }}>
       <style>{STYLES}</style>
+      <div className="o40-aura" />
       <div className="o40-phone" style={phone}>
         <div className="o40-gridbg" />
         <div className="o40-camo" style={{ height: 6 }} />
@@ -1727,7 +1784,7 @@ export default function App() {
         {screen === 'home' && profile && (
           <HomeScreen
             profile={profile} sessions={sessions} customPrograms={customPrograms}
-            waistHistory={waistHistory}
+            waistHistory={waistHistory} weightHistory={weightHistory}
             onOpenProgram={(p) => { setPreviewProgram(p); setScreen('preview'); }}
             onBuild={() => setScreen('builder')}
             onDeleteCustom={deleteCustomProgram}
@@ -1774,6 +1831,7 @@ export default function App() {
           <SummaryScreen
             stats={lastStats} profile={profile} hrInput={hrInput} setHrInput={setHrInput}
             waistInput={waistInput} setWaistInput={setWaistInput}
+            weightInput={weightInput} setWeightInput={setWeightInput}
             rpe={rpe} setRpe={setRpe} notes={notes} setNotes={setNotes}
             onSave={saveSession}
           />
@@ -1781,7 +1839,7 @@ export default function App() {
 
         {screen === 'history' && (
           <HistoryScreen
-            sessions={sessions} profile={profile} waistHistory={waistHistory}
+            sessions={sessions} profile={profile} waistHistory={waistHistory} weightHistory={weightHistory}
             onBack={() => setScreen('home')}
             onClear={clearHistory}
             onUpdateGoal={updateWeeklyGoal}
@@ -2017,7 +2075,7 @@ const primaryBtn = {
 };
 
 /* ================= HOME SCREEN ================= */
-function HomeScreen({ profile, sessions, customPrograms, waistHistory, onOpenProgram, onBuild, onDeleteCustom, onDismissIntro, onPromote }) {
+function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHistory, onOpenProgram, onBuild, onDeleteCustom, onDismissIntro, onPromote }) {
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [showOthers, setShowOthers] = useState(false);
   const streak = computeStreak(sessions);
@@ -2039,6 +2097,9 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, onOpenPro
   const waist = waistHistory.length ? waistHistory[waistHistory.length - 1] : null;
   const waistFirst = waistHistory.length ? waistHistory[0] : null;
   const waistDelta = waist && waistFirst && waistHistory.length > 1 ? waist.cm - waistFirst.cm : null;
+  const weight = weightHistory.length ? weightHistory[weightHistory.length - 1] : null;
+  const weightFirst = weightHistory.length ? weightHistory[0] : null;
+  const weightDelta = weight && weightFirst && weightHistory.length > 1 ? weight.kg - weightFirst.kg : null;
   const recentRpe = sessions.slice(-3).map(s => s.rpe).filter(r => r != null);
   const canPromote = recentRpe.length >= 3 && recentRpe.every(r => r <= 2) && levelIdx < LEVELS.length - 1;
   const nextLevel = canPromote ? LEVELS[levelIdx + 1] : null;
@@ -2123,6 +2184,31 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, onOpenPro
         </div>
         {waist && (
           <span className="o40-mono" style={{ color: waistDelta != null && waistDelta <= 0 ? '#7FB069' : KHAKI, fontSize: 11 }}>{waistDelta != null && waistDelta <= 0 ? 'TREND OK' : 'INIZIA'}</span>
+        )}
+      </div>
+
+      <div style={{ margin: '0 16px 4px', background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '11px 13px', display: 'flex', alignItems: 'center', gap: 11 }}>
+        <div style={{ width: 34, height: 34, borderRadius: '50%', background: `${KHAKI}1f`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <Scale size={16} color={KHAKI} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>PESO <span style={{ color: STEEL, fontWeight: 400 }}>(media settimanale)</span></div>
+          {weight ? (
+            <div style={{ color: KHAKI, fontSize: 11.5, marginTop: 1 }}>
+              Ultima rilevazione: {weight.kg} kg
+              {weightDelta != null && (
+                <span style={{ color: weightDelta <= 0 ? '#7FB069' : BLAZE, marginLeft: 6, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+                  {weightDelta <= 0 ? <TrendingDown size={12} /> : <TrendingUp size={12} />}
+                  {weightDelta > 0 ? '+' : ''}{weightDelta.toFixed(1)} kg dalla prima
+                </span>
+              )}
+            </div>
+          ) : (
+            <div style={{ color: STEEL, fontSize: 11.5, marginTop: 1 }}>Registralo nel riepilogo dopo l'allenamento</div>
+          )}
+        </div>
+        {weight && (
+          <span className="o40-mono" style={{ color: weightDelta != null && weightDelta <= 0 ? '#7FB069' : KHAKI, fontSize: 11 }}>{weightDelta != null && weightDelta <= 0 ? 'TREND OK' : 'INIZIA'}</span>
         )}
       </div>
 
@@ -2554,7 +2640,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
         </div>
       </div>
       <div style={{ padding: 16, borderTop: `1px solid ${OLIVE_DARK}` }}>
-        <button onClick={() => onStart(effectiveProgram)} style={primaryBtn}><Play size={18} /> VIA!</button>
+        <button onClick={() => onStart(effectiveProgram)} className="o40-pulsebtn" style={{ ...primaryBtn, borderRadius: 14 }}><Play size={18} /> VIA!</button>
       </div>
     </div>
   );
@@ -2598,7 +2684,7 @@ function SessionScreen({ program, seq, phaseIdx, secondsLeft, paused, setPaused,
       </div>
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, padding: 16 }}>
-        <div key={phaseIdx} className="o40-mono o40-expand" style={{ color: ringColor, fontSize: 13, letterSpacing: '0.1em' }}>{phaseLabel}</div>
+        <div key={phaseIdx} className={`o40-mono o40-expand ${phase.type === 'work' ? 'o40-gradtext' : ''}`} style={{ color: ringColor, fontSize: 13, letterSpacing: '0.1em' }}>{phaseLabel}</div>
 
         <div style={{ position: 'relative', width: 240, height: 240 }}>
           <div style={{
@@ -2680,7 +2766,7 @@ const pillBtn = {
 };
 
 /* ================= SUMMARY SCREEN ================= */
-function SummaryScreen({ stats, profile, hrInput, setHrInput, waistInput, setWaistInput, rpe, setRpe, notes, setNotes, onSave }) {
+function SummaryScreen({ stats, profile, hrInput, setHrInput, waistInput, setWaistInput, weightInput, setWeightInput, rpe, setRpe, notes, setNotes, onSave }) {
   const zone = hrInput ? hrZone(parseInt(hrInput, 10), profile.age) : null;
   const [shareState, setShareState] = useState('idle');
 
@@ -2698,7 +2784,15 @@ function SummaryScreen({ stats, profile, hrInput, setHrInput, waistInput, setWai
   }
 
   return (
-    <div className="o40-screen-in" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+    <div className="o40-screen-in" style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
+        {['#C1440E', '#B8AE8C', '#7FB069', '#EDE8D8', '#D9B34C'].map((c, i) => (
+          <span key={i} className="o40-confetti" style={{
+            background: c, left: `${8 + i * 18}%`, animationDuration: `${2.6 + (i % 3) * 0.7}s`,
+            animationDelay: `${i * 0.35}s`, opacity: 0.85,
+          }} />
+        ))}
+      </div>
       <div className="o40-scroll" style={{ flex: 1, overflowY: 'auto', padding: 20 }}>
         <div style={{ textAlign: 'center', marginTop: 10 }} className="o40-pop">
           <Trophy size={40} color={BLAZE} />
@@ -2756,6 +2850,18 @@ function SummaryScreen({ stats, profile, hrInput, setHrInput, waistInput, setWai
           </div>
           <input value={waistInput} onChange={e => setWaistInput(e.target.value.replace(/\D/g, ''))} inputMode="numeric"
             placeholder="es. 96" className="o40-input" style={inputStyle} />
+        </div>
+
+        <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+            <Scale size={18} color={BLAZE} />
+            <span className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Peso oggi (kg)</span>
+          </div>
+          <div style={{ color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }}>
+            Pesati alla stessa ora (al mattino, a digiuno): la media settimanale è più utile del singolo valore.
+          </div>
+          <input value={weightInput} onChange={e => setWeightInput(e.target.value.replace(/[^\d.,]/g, ''))} inputMode="decimal"
+            placeholder={profile && profile.weight ? `es. ${profile.weight}` : 'es. 80.5'} className="o40-input" style={inputStyle} />
         </div>
 
         <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }}>
@@ -2819,7 +2925,7 @@ function Badge({ label, unlocked, value }) {
   );
 }
 
-function HistoryScreen({ sessions, profile, waistHistory, onBack, onClear, onUpdateGoal, onDeleteSession }) {
+function HistoryScreen({ sessions, profile, waistHistory, weightHistory, onBack, onClear, onUpdateGoal, onDeleteSession }) {
   const [confirmClear, setConfirmClear] = useState(false);
   const [confirmDeleteDate, setConfirmDeleteDate] = useState(null);
   const ordered = [...sessions].reverse();
@@ -2828,6 +2934,9 @@ function HistoryScreen({ sessions, profile, waistHistory, onBack, onClear, onUpd
   }));
   const waistData = [...waistHistory].sort((a, b) => new Date(a.date) - new Date(b.date)).map((w, i) => ({
     idx: i + 1, cm: w.cm, label: new Date(w.date).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' }),
+  }));
+  const weightData = [...weightHistory].sort((a, b) => new Date(a.date) - new Date(b.date)).map((w, i) => ({
+    idx: i + 1, kg: w.kg, label: new Date(w.date).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' }),
   }));
   const streak = computeStreak(sessions);
   const bestStreak = computeBestStreak(sessions);
@@ -3012,6 +3121,28 @@ function HistoryScreen({ sessions, profile, waistHistory, onBack, onClear, onUpd
                   <YAxis domain={['dataMin - 2', 'dataMax + 2']} tick={{ fill: STEEL, fontSize: 10 }} axisLine={false} tickLine={false} width={30} />
                   <Tooltip contentStyle={{ background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: KHAKI }} itemStyle={{ color: BLAZE }} />
                   <Line type="monotone" dataKey="cm" stroke={BLAZE} strokeWidth={2} dot={{ r: 3, fill: BLAZE }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        )}
+
+        {weightData.length >= 2 && (
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
+              <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Peso nel tempo (kg)</div>
+              <span className="o40-mono" style={{ color: weightData[weightData.length - 1].kg <= weightData[0].kg ? '#7FB069' : BLAZE, fontSize: 11 }}>
+                {weightData[weightData.length - 1].kg - weightData[0].kg > 0 ? '+' : ''}{(weightData[weightData.length - 1].kg - weightData[0].kg).toFixed(1)} kg totali
+              </span>
+            </div>
+            <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: '10px 6px', height: 160 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={weightData} margin={{ top: 8, right: 12, left: -18, bottom: 0 }}>
+                  <CartesianGrid stroke={OLIVE_DARK} strokeDasharray="3 3" />
+                  <XAxis dataKey="label" tick={{ fill: STEEL, fontSize: 10 }} axisLine={{ stroke: OLIVE }} tickLine={false} />
+                  <YAxis domain={['dataMin - 1.5', 'dataMax + 1.5']} tick={{ fill: STEEL, fontSize: 10 }} axisLine={false} tickLine={false} width={30} />
+                  <Tooltip contentStyle={{ background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: KHAKI }} itemStyle={{ color: '#7FB069' }} />
+                  <Line type="monotone" dataKey="kg" stroke="#7FB069" strokeWidth={2} dot={{ r: 3, fill: '#7FB069' }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
