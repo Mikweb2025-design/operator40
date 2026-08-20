@@ -2029,9 +2029,6 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
 
         {canCancel && (
           <div className="o40-sheen" style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 4, position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(music-bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
-            <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,12,10,0.55)' }} />
-            <div style={{ position: 'relative' }}>
             <ToggleRow label={t('setup.music')} icon={musicOn ? Music2 : HeadphoneOff} on={musicOn} onClick={onToggleMusic} />
             {musicOn && (
               <div style={{ padding: '8px 10px 12px' }}>
@@ -2068,7 +2065,6 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
                 </div>
               </div>
             )}
-            </div>
           </div>
         )}
 
@@ -2359,6 +2355,9 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           borderRadius: 18, padding: 20, cursor: 'pointer', position: 'relative', overflow: 'hidden',
           boxShadow: `0 10px 30px rgba(0,0,0,0.45), 0 0 0 1px ${BLAZE}22 inset`,
         }}>
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(music-bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,12,10,0.6)' }} />
+          <div style={{ position: 'relative' }}>
           <div className="o40-embers">
             {[['8%', '0s', '3.2s'], ['22%', '1.1s', '3.8s'], ['38%', '0.5s', '3.4s'], ['55%', '1.7s', '3.6s'], ['70%', '0.9s', '3.3s'], ['84%', '1.4s', '3.9s'], ['93%', '0.3s', '3.5s']].map(([l, d, du], i) => (
               <span key={i} className="o40-ember" style={{ left: l, animationDelay: d, animationDuration: du }} />
@@ -2390,6 +2389,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
             animation: 'glowPulse 2.4s ease-in-out infinite',
           }}>
             {t('home.mission.see')} <ChevronRight size={18} />
+          </div>
           </div>
         </button>
 
