@@ -3,7 +3,7 @@ import {
   Play, Pause, SkipForward, Flame, HeartPulse, Trophy, ChevronRight,
   ChevronLeft, RotateCcw, Settings, X, Check, Volume2, VolumeX, Vibrate, History as HistoryIcon, Info, Dog, Plus, Trash2,
   Home as HomeIcon, BookOpen, Zap, RefreshCw, TrendingUp, TrendingDown, Ruler, Target, Medal, Crown,
-  Music, Music2, HeadphoneOff, Lightbulb, Scale
+  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind
 } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay } from './music';
@@ -23,70 +23,114 @@ const STEEL = '#8A9078';
 const EXERCISES = {
   squat: { name: 'Squat', pose: 'squat', met: 5.5, repGuide: '12–15 ripetizioni',
     cue: 'Schiena dritta, ginocchia in linea con le punte dei piedi.',
-    tip40: 'Scendi solo fin dove senti il controllo: meglio un range parziale pulito che uno ampio scomposto.' },
+    tip40: 'Scendi solo fin dove senti il controllo: meglio un range parziale pulito che uno ampio scomposto.',
+    steps: ['Piedi larghi quanto le spalle, punte leggermente fuori', 'Scendi come per sederti, peso sui talloni', 'Sali spingendo sui talloni, bacino in avanti'],
+    breath: 'Inspira scendendo, espira risalendo.' },
   affondo: { name: 'Affondo alternato', pose: 'lunge', met: 5.5, repGuide: '10–12 per gamba',
     cue: 'Passo lungo, busto verticale, il ginocchio dietro sfiora il pavimento.',
-    tip40: 'Evita il rimbalzo sul ginocchio a terra: controlla la discesa, niente scatti.' },
+    tip40: 'Evita il rimbalzo sul ginocchio a terra: controlla la discesa, niente scatti.',
+    steps: ['Passo lungo in avanti, busto verticale', 'Scendi finché il ginocchio dietro sfiora il suolo', 'Spingi col piede davanti per risalire'],
+    breath: 'Inspira scendendo, espira spingendo su.' },
   flessioni: { name: 'Piegamenti (push-up)', pose: 'pushup', met: 8, repGuide: '8–12 ripetizioni',
     cue: 'Corpo in linea retta, gomiti a circa 45° dal busto.',
-    tip40: 'Spalle che protestano? Ginocchia a terra: la tecnica conta più della versione "hardcore".' },
+    tip40: 'Spalle che protestano? Ginocchia a terra: la tecnica conta più della versione "hardcore".',
+    steps: ['Mani sotto le spalle, corpo in linea retta', 'Piega i gomiti a 45° finché il petto sfiora terra', 'Spingi via il pavimento, testa neutra'],
+    breath: 'Inspira scendendo, espira spingendo su.' },
   plank: { name: 'Plank', pose: 'plank', met: 3.5, repGuide: 'Tieni la posizione',
     cue: 'Addome contratto, bacino né troppo alto né troppo basso, respira.',
-    tip40: 'Se senti la zona lombare, alza leggermente il bacino: meno estetico, molto più sicuro.' },
+    tip40: 'Se senti la zona lombare, alza leggermente il bacino: meno estetico, molto più sicuro.',
+    steps: ['Avambracci a terra, gomiti sotto le spalle', 'Piedi aperti, corpo in linea retta', 'Contrai glutei e addome, bacino fermo'],
+    breath: 'Respiro lento e costante, mai trattenuto.' },
   jumpingjack: { name: 'Jumping jack', pose: 'jack', met: 8, repGuide: 'Ritmo costante',
     cue: 'Atterra morbido sulle punte, braccia sopra la testa.',
-    tip40: 'Ginocchia sensibili? Passa allo step jack laterale: stesso battito, meno impatto.' },
+    tip40: 'Ginocchia sensibili? Passa allo step jack laterale: stesso battito, meno impatto.',
+    steps: ['Piedi uniti, braccia lungo i fianchi', 'Salta aprendo gambe e braccia sopra la testa', 'Atterra morbido sulle punte e ripeti'],
+    breath: 'Un ciclo di respiro ogni 2 salti.' },
   mountainclimber: { name: 'Mountain climber', pose: 'mountainclimber', met: 8, repGuide: 'Ritmo sostenuto',
     cue: 'Bacino basso e stabile, ginocchia verso il petto.',
-    tip40: 'Se il polso protesta, rallenta il ritmo: la qualità del gesto viene prima della velocità.' },
+    tip40: 'Se il polso protesta, rallenta il ritmo: la qualità del gesto viene prima della velocità.',
+    steps: ['Plank alto, mani sotto le spalle', 'Porta un ginocchio al petto, poi l\u2019altro in corsa', 'Bacino basso, core contratto'],
+    breath: 'Espirazioni brevi e ritmiche, non trattenere.' },
   wallsit: { name: 'Wall sit', pose: 'wallsit', met: 3.5, repGuide: 'Tieni la posizione',
     cue: 'Ginocchia a 90°, schiena piatta contro il muro.',
-    tip40: 'Ottimo per il ginocchio: carico isometrico, zero impatto.' },
+    tip40: 'Ottimo per il ginocchio: carico isometrico, zero impatto.',
+    steps: ['Schiena appoggiata al muro, piedi un passo avanti', 'Scendi fino a ginocchia a 90°', 'Resta fermo, cosce parallele al suolo'],
+    breath: 'Respiro calmo e continuo durante la tenuta.' },
   superman: { name: 'Superman', pose: 'superman', met: 3.5, repGuide: 'Contrazioni lente',
     cue: 'Solleva braccia e gambe insieme, sguardo verso il basso.',
-    tip40: 'Rinforza la zona lombare: un investimento diretto contro il mal di schiena da scrivania.' },
+    tip40: 'Rinforza la zona lombare: un investimento diretto contro il mal di schiena da scrivania.',
+    steps: ['A pancia in giù, braccia tese in avanti', 'Solleva braccia e gambe insieme', 'Stringi i glutei, sguardo a terra'],
+    breath: 'Inspira per preparare, espira sollevando.' },
   ponte: { name: 'Ponte glutei', pose: 'bridge', met: 3.5, repGuide: '12–15 ripetizioni',
     cue: 'Spingi sui talloni, contrai i glutei in alto.',
-    tip40: 'Contrasta le ore da seduto: riattiva glutei spesso "addormentati".' },
+    tip40: 'Contrasta le ore da seduto: riattiva glutei spesso "addormentati".',
+    steps: ['Sdraiato, ginocchia piegate, piedi vicini al bacino', 'Spingi sui talloni e alza il bacino', 'Contrai i glutei in alto, scendi lento'],
+    breath: 'Espira salendo, inspira scendendo.' },
   crunchbici: { name: 'Bicycle crunch', pose: 'bicyclecrunch', met: 4.5, repGuide: '10–12 per lato',
     cue: 'Gomito verso il ginocchio opposto, movimento lento e controllato.',
-    tip40: 'Niente strappi sul collo: la mano è un appoggio leggero, non una leva.' },
+    tip40: 'Niente strappi sul collo: la mano è un appoggio leggero, non una leva.',
+    steps: ['Sdraiato, mani dietro la testa, gambe sollevate', 'Gomito destro verso ginocchio sinistro, gambe alternate', 'Movimento lento, scapole sollevate'],
+    breath: 'Espira ruotando, inspira al centro.' },
   russiantwist: { name: 'Russian twist', pose: 'russiantwist', met: 4.5, repGuide: '10–12 per lato',
     cue: 'Busto inclinato, piedi a terra o sollevati, ruota dal core.',
-    tip40: 'Piedi a terra è già efficace: non serve la versione acrobatica per lavorare bene.' },
+    tip40: 'Piedi a terra è già efficace: non serve la versione acrobatica per lavorare bene.',
+    steps: ['Seduto, busto inclinato all\u2019indietro', 'Piedi a terra (o sollevati) e braccia davanti', 'Ruota il busto a destra e sinistra dal core'],
+    breath: 'Espira a ogni rotazione.' },
   ginocchiaalte: { name: 'Ginocchia alte', pose: 'highknees', met: 8, repGuide: 'Ritmo sostenuto',
     cue: 'Ginocchio a livello anca, braccia in coordinazione.',
-    tip40: 'Ottimo motore cardio a basso impatto se atterri sull\u2019avampiede.' },
+    tip40: 'Ottimo motore cardio a basso impatto se atterri sull\u2019avampiede.',
+    steps: ['Busto dritto, braccia ai fianchi', 'Porta le ginocchia all\u2019altezza dell\u2019anca', 'Atterra sull\u2019avampiede, ritmo costante'],
+    breath: 'Respiro ritmico: 2 passi a ogni inspirazione.' },
   burpeetattico: { name: 'Burpee tattico', pose: 'burpee', met: 8, repGuide: '6–8 ripetizioni',
     cue: 'Passo indietro invece del salto, spinta a terra, risali controllato.',
-    tip40: 'La variante "senza salto" mantiene l\u2019intensità cardio proteggendo ginocchia e lombari.' },
+    tip40: 'La variante "senza salto" mantiene l\u2019intensità cardio proteggendo ginocchia e lombari.',
+    steps: ['Da in piedi scendi con le mani a terra', 'Porta i piedi indietro in plank, uno alla volta', 'Riporta i piedi avanti e risali, senza salto'],
+    breath: 'Espira nella spinta, inspira scendendo.' },
   crunch: { name: 'Crunch', pose: 'crunch', met: 4, repGuide: '15–20 ripetizioni',
     cue: 'Scapole fuori dal pavimento, sguardo al soffitto, espira in alto.',
-    tip40: 'La lombare resta appoggiata: non tirare il collo con le mani.' },
+    tip40: 'La lombare resta appoggiata: non tirare il collo con le mani.',
+    steps: ['Sdraiato, ginocchia piegate, mani alle tempie', 'Solleva le scapole, sguardo al soffitto', 'Scendi controllato, testa non riappoggia'],
+    breath: 'Espira in alto, inspira scendendo.' },
   sideplank: { name: 'Plank laterale', pose: 'sideplank', met: 3.5, repGuide: '20–30\u2033 per lato',
     cue: 'Corpo in linea retta di lato, gomito sotto la spalla, bacino alto.',
-    tip40: 'Lato debole? Ginocchio a terra finché la linea regge: conta la tenuta, non la finta.' },
+    tip40: 'Lato debole? Ginocchio a terra finché la linea regge: conta la tenuta, non la finta.',
+    steps: ['Gomito sotto la spalla, piedi impilati', 'Alza il bacino fino a corpo in linea', 'Tieni senza lasciar cadere l\u2019anca'],
+    breath: 'Respiro continuo, niente apnee.' },
   legraise: { name: 'Leg raise', pose: 'legraise', met: 3.5, repGuide: '10–12 ripetizioni',
     cue: 'Gambe tese, lombare premuta a terra: scendi solo fin dove resta appoggiata.',
-    tip40: 'Se la schiena si inarca, piega leggermente le ginocchia: proteggi i lombari.' },
+    tip40: 'Se la schiena si inarca, piega leggermente le ginocchia: proteggi i lombari.',
+    steps: ['Sdraiato, gambe tese, lombare a terra', 'Solleva le gambe a 90°', 'Scendi lento finché la lombare resta a terra'],
+    breath: 'Espira salendo, inspira scendendo.' },
   flutterkick: { name: 'Forbici', pose: 'flutterkick', met: 4.5, repGuide: 'Ritmo costante',
     cue: 'Gambe a pochi cm da terra, alterna salita e discesa senza fermarti.',
-    tip40: 'Lavoro intenso: se i lombari cedono, alza leggermente le gambe.' },
+    tip40: 'Lavoro intenso: se i lombari cedono, alza leggermente le gambe.',
+    steps: ['Sdraiato, gambe sollevate a pochi cm da terra', 'Alterna su e giù senza fermarti', 'Lombare premuta a terra'],
+    breath: 'Respiro breve e ritmico, non trattenere.' },
   deadbug: { name: 'Dead bug', pose: 'deadbug', met: 3.5, repGuide: '8–10 per lato',
     cue: 'Braccio e gamba opposti si abbassano lenti, lombare sempre a terra.',
-    tip40: 'L\u2019esercizio lombare-sicuro per eccellenza: rinforza senza dolore.' },
+    tip40: 'L\u2019esercizio lombare-sicuro per eccellenza: rinforza senza dolore.',
+    steps: ['Sdraiato, braccia in alto, gambe a 90°', 'Abbassa braccio e gamba opposti, lenti', 'Torna al centro e cambia lato, lombare a terra'],
+    breath: 'Espira allungando braccio e gamba.' },
   vup: { name: 'V-up', pose: 'vup', met: 5, repGuide: '8–10 ripetizioni',
     cue: 'Toccati le punte dei piedi formando una V, scendi controllato.',
-    tip40: 'Troppo? Piegala le ginocchia: la V imperfetta conta, il collo tirato no.' },
+    tip40: 'Troppo? Piegala le ginocchia: la V imperfetta conta, il collo tirato no.',
+    steps: ['Sdraiato, braccia tese oltre la testa', 'Solleva gambe e busto insieme verso le punte', 'Scendi controllato, senza slanci'],
+    breath: 'Espira toccando le punte, inspira scendendo.' },
   plankjack: { name: 'Plank jack', pose: 'plankjack', met: 6, repGuide: 'Ritmo sostenuto',
     cue: 'In plank alto, piedi che saltano fuori e dentro senza muovere il bacino.',
-    tip40: 'Unisce core e battito: brucia calorie a impatto quasi zero.' },
+    tip40: 'Unisce core e battito: brucia calorie a impatto quasi zero.',
+    steps: ['Plank alto, piedi uniti', 'Salta aprendo e chiudendo i piedi', 'Bacino fermo, core stretto'],
+    breath: 'Respiro ritmico: 2 salti per ciclo.' },
   skater: { name: 'Skater', pose: 'skater', met: 7, repGuide: '10–12 per lato',
     cue: 'Saltello laterale da una gamba all\u2019altra, busto basso e avanti.',
-    tip40: 'Grande brucia-grassi a basso impatto: atterra morbido sull\u2019avampiede.' },
+    tip40: 'Grande brucia-grassi a basso impatto: atterra morbido sull\u2019avampiede.',
+    steps: ['Peso su una gamba, busto basso e avanti', 'Saltella di lato sull\u2019altra gamba', 'Atterra morbido, gesto ampio'],
+    breath: 'Espira a ogni atterraggio.' },
   heeltap: { name: 'Heel tap', pose: 'heeltap', met: 3.5, repGuide: '12–15 per lato',
     cue: 'Da sdraiato con ginocchia piegate, tocca i talloni in alternanza.',
-    tip40: 'Fatto lento ti fa sentire davvero gli obliqui: niente fretta.' },
+    tip40: 'Fatto lento ti fa sentire davvero gli obliqui: niente fretta.',
+    steps: ['Sdraiato, ginocchia piegate, piedi a terra', 'Tocca il tallone destro con la mano destra', 'Alterna lentamente, obliqui attivi'],
+    breath: 'Espira toccando il tallone.' },
 };
 
 const PROGRAMS = [
@@ -2428,9 +2472,26 @@ function LibraryScreen() {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ color: PAPER, fontWeight: 700, fontSize: 14.5 }}>{ex.name}</div>
                     <div style={{ color: KHAKI, fontSize: 12 }}>{ex.repGuide}</div>
-                    <div style={{ color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4 }}>{ex.cue}</div>
-                    {isOpen && (
-                      <div style={{ color: STEEL, fontSize: 11.5, marginTop: 6, lineHeight: 1.4, fontStyle: 'italic' }}>{ex.tip40}</div>
+                    {isOpen ? (
+                      <>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginTop: 5, textAlign: 'left' }}>
+                          {ex.steps.map((s, i) => (
+                            <div key={i} style={{ display: 'flex', gap: 6, alignItems: 'flex-start' }}>
+                              <span className="o40-mono" style={{ color: KHAKI, fontSize: 10, minWidth: 13 }}>{i + 1}.</span>
+                              <span style={{ color: STEEL, fontSize: 11.5, lineHeight: 1.4 }}>{s}</span>
+                            </div>
+                          ))}
+                        </div>
+                        {ex.breath && (
+                          <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 6, color: OLIVE }}>
+                            <Wind size={12} style={{ flexShrink: 0 }} />
+                            <span style={{ fontSize: 11, fontStyle: 'italic', lineHeight: 1.4 }}>{ex.breath}</span>
+                          </div>
+                        )}
+                        <div style={{ color: STEEL, fontSize: 11.5, marginTop: 6, lineHeight: 1.4, fontStyle: 'italic' }}>{ex.tip40}</div>
+                      </>
+                    ) : (
+                      <div style={{ color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4 }}>{ex.cue}</div>
                     )}
                   </div>
                 </div>
@@ -2609,7 +2670,23 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
                         {isSubbed && <span className="o40-mono" style={{ color: KHAKI, fontSize: 9, border: `1px solid ${OLIVE}`, borderRadius: 4, padding: '1px 4px' }}>sostituito</span>}
                       </div>
                       <div style={{ color: KHAKI, fontSize: 12 }}>{ex.repGuide}</div>
-                      <div style={{ color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4 }}>{ex.tip40}</div>
+                      {isOpen && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginTop: 5, textAlign: 'left' }}>
+                          {ex.steps.map((s, k) => (
+                            <div key={k} style={{ display: 'flex', gap: 6, alignItems: 'flex-start' }}>
+                              <span className="o40-mono" style={{ color: KHAKI, fontSize: 10, minWidth: 13 }}>{k + 1}.</span>
+                              <span style={{ color: STEEL, fontSize: 11.5, lineHeight: 1.4 }}>{s}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {isOpen && ex.breath && (
+                        <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 6, color: OLIVE }}>
+                          <Wind size={12} style={{ flexShrink: 0 }} />
+                          <span style={{ fontSize: 11, fontStyle: 'italic', lineHeight: 1.4 }}>{ex.breath}</span>
+                        </div>
+                      )}
+                      <div style={{ color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4, fontStyle: 'italic' }}>{ex.tip40}</div>
                     </div>
                   </button>
                   <button onClick={() => setSwapOpenId(isSwapping ? null : originalId)} style={{ ...btnIcon, flexShrink: 0, alignSelf: 'flex-start' }} aria-label="Sostituisci esercizio">
@@ -2708,9 +2785,22 @@ function SessionScreen({ program, seq, phaseIdx, secondsLeft, paused, setPaused,
         {ex && <div className="o40-display" style={{ color: PAPER, fontSize: 40 }}>{formatTime(secondsLeft)}</div>}
 
         {ex && (
-          <div style={{ textAlign: 'center', maxWidth: 320 }}>
+          <div style={{ textAlign: 'center', maxWidth: 330 }}>
             <div style={{ color: KHAKI, fontSize: 13 }}>{ex.repGuide}</div>
-            <div style={{ color: STEEL, fontSize: 12.5, marginTop: 4, lineHeight: 1.4 }}>{ex.cue}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 8, textAlign: 'left' }}>
+              {ex.steps.map((s, i) => (
+                <div key={i} style={{ display: 'flex', gap: 7, alignItems: 'flex-start' }}>
+                  <span className="o40-mono" style={{ color: KHAKI, fontSize: 10.5, minWidth: 15 }}>{i + 1}.</span>
+                  <span style={{ color: STEEL, fontSize: 12, lineHeight: 1.4 }}>{s}</span>
+                </div>
+              ))}
+            </div>
+            {ex.breath && (
+              <div style={{ display: 'flex', gap: 7, alignItems: 'center', justifyContent: 'center', marginTop: 9, color: OLIVE }}>
+                <Wind size={13} style={{ flexShrink: 0 }} />
+                <span style={{ fontSize: 11.5, fontStyle: 'italic', lineHeight: 1.4 }}>{ex.breath}</span>
+              </div>
+            )}
             {ex.tip40 && (
               <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginTop: 10, textAlign: 'left', background: `${KHAKI}10`, border: `1px solid ${KHAKI}44`, borderRadius: 10, padding: '8px 10px' }}>
                 <Lightbulb size={14} color={KHAKI} style={{ flexShrink: 0, marginTop: 1 }} />
