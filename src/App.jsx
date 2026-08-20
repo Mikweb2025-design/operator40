@@ -2868,6 +2868,11 @@ function SummaryScreen({ stats, profile, hrInput, setHrInput, waistInput, setWai
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
             <HeartPulse size={18} color={BLAZE} />
             <span className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Battito di picco (Huawei Watch)</span>
+            {!hrInput && (
+              <span className="o40-blink" style={{ marginLeft: 'auto', background: `${BLAZE}22`, border: `1px solid ${BLAZE}`, color: BLAZE, fontSize: 10, letterSpacing: '0.06em', borderRadius: 6, padding: '2px 7px' }}>
+                RICORDA
+              </span>
+            )}
           </div>
           <div style={{ color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }}>
             Apri l'app Huawei Health e leggi il valore massimo registrato durante l'allenamento, poi inseriscilo qui.
