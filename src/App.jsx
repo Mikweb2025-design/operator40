@@ -3,7 +3,7 @@ import {
   Play, Pause, SkipForward, Flame, HeartPulse, Trophy, ChevronRight,
   ChevronLeft, RotateCcw, Settings, X, Check, Volume2, VolumeX, Vibrate, History as HistoryIcon, Info, Dog, Plus, Trash2,
   Home as HomeIcon, BookOpen, Zap, RefreshCw, TrendingUp, TrendingDown, Ruler, Target, Medal, Crown,
-  Music, Music2, HeadphoneOff, Lightbulb
+  Music, Music2, HeadphoneOff, Lightbulb, Scale
 } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay } from './music';
