@@ -2029,6 +2029,9 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
 
         {canCancel && (
           <div className="o40-sheen" style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 4, position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(music-bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,12,10,0.55)' }} />
+            <div style={{ position: 'relative' }}>
             <ToggleRow label={t('setup.music')} icon={musicOn ? Music2 : HeadphoneOff} on={musicOn} onClick={onToggleMusic} />
             {musicOn && (
               <div style={{ padding: '8px 10px 12px' }}>
@@ -2065,6 +2068,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
                 </div>
               </div>
             )}
+            </div>
           </div>
         )}
 
