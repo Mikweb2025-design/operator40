@@ -1153,8 +1153,9 @@ function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = '100%', rounded
     getMediaMap()
       .then(({ b64, files }) => {
         if (cancelled) return;
-        setVideoSrc(files[exerciseId] || null);
-        if (!files[exerciseId]) setSrc(b64[exerciseId] || null);
+        const clip = files[exerciseId] || files[pose] || null;
+        setVideoSrc(clip);
+        if (!clip) setSrc(b64[exerciseId] || b64[pose] || null);
       })
       .catch(() => { if (!cancelled) setFailed(true); });
     return () => { cancelled = true; };
