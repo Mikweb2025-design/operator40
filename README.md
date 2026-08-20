@@ -60,10 +60,11 @@ Open `http://192.168.1.84:4173` (Vite preview) on the phone → works just like 
 
 ## Install as a PWA
 
-The live app is already set up as an installable PWA (manifest + icons, relative paths so it also works under a sub-path):
+The live app is already set up as an installable PWA (manifest + icons + offline service worker, relative paths so it also works under a sub-path). Always open the URL **with the trailing slash**: <https://mikweb.eu/operator40/>
 
 - **iPhone/iPad (Safari):** open <https://mikweb.eu/operator40/> → **Share** → **Add to Home Screen** → the "Op40" icon appears on the home screen, full-screen, offline.
-- **Mac (Safari/Chrome):** open the URL and click the install icon in the address bar, or **File → Install**.
+- **Mac — Chrome:** open <https://mikweb.eu/operator40/> → click the **install icon** (monitor with a `+`) at the right end of the address bar → **Install Operator 40**. A standalone app window is added to the Dock/Applications. If you don't see the icon, reload the page once (the service worker must finish registering) and try again.
+- **Mac — Safari (macOS 15.2+):** open the page → **Share** → **Add to Dock** → the app runs in its own window with the Op40 icon.
 
 ---
 
