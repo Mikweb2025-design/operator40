@@ -8,6 +8,7 @@ import {
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay } from './music';
 import { LANGS, LOCALES, detectLang, tr, translate } from './i18n';
+import { hasClip } from './clips.js';
 
 /* ================= DESIGN TOKENS ================= */
 const INK = '#1B1D16';
@@ -2513,7 +2514,7 @@ function LibraryScreen() {
                 cursor: 'pointer', textAlign: 'left', width: '100%',
               }}>
                 {isOpen && (
-                  <div className="o40-expand" style={{ width: '100%', aspectRatio: '1 / 1', maxHeight: 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: 'hidden' }}>
+                  <div className="o40-expand" style={{ width: '100%', aspectRatio: hasClip(id, ex.pose) ? '9 / 16' : '1 / 1', maxHeight: hasClip(id, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: 'hidden' }}>
                     <ExerciseMedia exerciseId={id} pose={ex.pose} color={BLAZE} rounded={10} />
                   </div>
                 )}
@@ -2706,7 +2707,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
                 border: `1px solid ${isOpen ? BLAZE : OLIVE}`, borderRadius: 10, padding: 12,
               }}>
                 {isOpen && (
-                  <div className="o40-expand" style={{ width: '100%', aspectRatio: '1 / 1', maxHeight: 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: 'hidden' }}>
+                  <div className="o40-expand" style={{ width: '100%', aspectRatio: hasClip(currentId, ex.pose) ? '9 / 16' : '1 / 1', maxHeight: hasClip(currentId, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: 'hidden' }}>
                     <ExerciseMedia exerciseId={currentId} pose={ex.pose} color={BLAZE} rounded={10} />
                   </div>
                 )}

@@ -22,8 +22,4 @@ export const VIDEO_B64 = {
 
 /* Real video clips (MP4, shipped as local files under public/clips/ — relative
    paths so they also work under a sub-path like /operator40/). Key = exerciseId. */
-export const VIDEO_FILES = {
-  bicyclecrunch: 'clips/bicyclecrunch.mp4',
-  russiantwist: 'clips/russiantwist.mp4',
-  wallsit: 'clips/wallsit.mp4'
-};
+export { CLIP_FILES as VIDEO_FILES } from './clips.js';
