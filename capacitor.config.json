@@ -1,0 +1,14 @@
+{
+  "appId": "com.operator40.app",
+  "appName": "Operator 40",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "always"
+  },
+  "plugins": {
+    "Preferences": {}
+  }
+}
