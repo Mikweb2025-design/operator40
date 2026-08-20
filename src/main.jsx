@@ -10,5 +10,12 @@ import { get, set } from './storage.js';
 // localStorage on web/macOS).
 window.storage = { get, set };
 
+// Register the PWA service worker (offline-first + Chrome installability).
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
 const root = createRoot(document.getElementById('root'));
 root.render(<App />);
