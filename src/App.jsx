@@ -1137,23 +1137,36 @@ function ExerciseFigure({ pose, color = BLAZE, size = '100%' }) {
 /* ================= EXERCISE MEDIA (real clip when available, else drawn pictogram) ================= */
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = import('./media.js').then(m => m.VIDEO_B64);
+  if (!_mediaPromise) _mediaPromise = import('./media.js').then(m => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = '100%', rounded = 10 }) {
   const [src, setSrc] = useState(null);
+  const [videoSrc, setVideoSrc] = useState(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     setSrc(null);
+    setVideoSrc(null);
     setFailed(false);
     getMediaMap()
-      .then(map => { if (!cancelled) setSrc(map[exerciseId] || null); })
+      .then(({ b64, files }) => {
+        if (cancelled) return;
+        setVideoSrc(files[exerciseId] || null);
+        if (!files[exerciseId]) setSrc(b64[exerciseId] || null);
+      })
       .catch(() => { if (!cancelled) setFailed(true); });
     return () => { cancelled = true; };
   }, [exerciseId]);
 
+  if (videoSrc && !failed) {
+    return (
+      <video src={videoSrc} autoPlay muted loop playsInline preload="metadata"
+        onError={() => setFailed(true)}
+        style={{ width: size, height: size, objectFit: 'cover', borderRadius: rounded, display: 'block', background: INK }} />
+    );
+  }
   if (src && !failed) {
     return (
       <img src={src} alt="" onError={() => setFailed(true)}
