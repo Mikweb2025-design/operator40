@@ -6,7 +6,7 @@
   "description": "Operator 40 — allenamento funzionale per over 40. iOS (Capacitor) + Mac (PWA/Electron).",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/version-sw.mjs",
     "preview": "vite preview",
     "cap:add:ios": "cap add ios",
     "cap:add:mac": "cap add @capacitor-community/electron",

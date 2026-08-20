@@ -2,7 +2,7 @@
    Same-origin assets are hashed by Vite (immutable) so cache-first is safe;
    navigations are network-first with the cached shell as offline fallback. */
 
-const CACHE = 'o40-v1';
+const CACHE = 'o40-v__VERSION__';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();

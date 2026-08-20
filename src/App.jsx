@@ -1444,6 +1444,15 @@ export default function App() {
     return () => document.removeEventListener('click', handleClick, true);
   }, []);
 
+  // ---- PWA: flag busy periods (mid-workout) so the SW-update reload defers ----
+  useEffect(() => {
+    window.__o40Busy = screen === 'session';
+    if (screen !== 'session' && window.__o40ReloadAfter) {
+      window.__o40ReloadAfter = false;
+      window.location.reload();
+    }
+  }, [screen]);
+
   // ---- auto-pause the session if the app is backgrounded ----
   useEffect(() => {
     function onVisibility() {
