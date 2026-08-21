@@ -9,7 +9,8 @@ export const CLIP_FILES = {
   highknees: 'clips/ginocchiaalte.mp4',
   crunch: 'clips/crunch.mp4',
   burpeetattico: 'clips/burpeetattico.mp4',
-  burpee: 'clips/burpeetattico.mp4'
+  burpee: 'clips/burpeetattico.mp4',
+  sideplank: 'clips/sideplank.mp4'
 };
 
 export function hasClip(exerciseId, pose) {
