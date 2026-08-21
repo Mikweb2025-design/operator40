@@ -21,8 +21,12 @@ async function get(key) {
     const r = await Preferences.get({ key });
     return r.value == null ? undefined : { value: r.value };
   }
-  const value = localStorage.getItem(key);
-  return value == null ? undefined : { value };
+  try {
+    const value = localStorage.getItem(key);
+    return value == null ? undefined : { value };
+  } catch {
+    return undefined;
+  }
 }
 
 async function set(key, value) {
@@ -30,7 +34,27 @@ async function set(key, value) {
     await Preferences.set({ key, value });
     return;
   }
-  localStorage.setItem(key, value);
+  try {
+    localStorage.setItem(key, value);
+  } catch (e) {
+    console.warn('[storage] set failed', key, e);
+  }
 }
 
-export { get, set };
+async function remove(key) {
+  if (isNative()) {
+    await Preferences.remove({ key });
+    return;
+  }
+  try { localStorage.removeItem(key); } catch { /* ignore */ }
+}
+
+async function clear() {
+  if (isNative()) {
+    await Preferences.clear();
+    return;
+  }
+  try { localStorage.clear(); } catch { /* ignore */ }
+}
+
+export { get, set, remove, clear };

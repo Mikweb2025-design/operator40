@@ -1,14 +1,15 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
-import { get, set } from './storage.js';
+import { get, set, remove, clear } from './storage.js';
+import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 
 // NB: no StrictMode — its dev-only double-effect invocation would fire
 // the countdown/beep side effects twice on this timer-heavy app.
 
 // Expose the storage bridge the app expects (Capacitor on iOS,
 // localStorage on web/macOS).
-window.storage = { get, set };
+window.storage = { get, set, remove, clear };
 
 // Register the PWA service worker (offline-first + Chrome installability) and
 // keep an installed PWA current: check for updates on load/foreground and, when
@@ -46,4 +47,8 @@ if ('serviceWorker' in navigator) {
 }
 
 const root = createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>
+);

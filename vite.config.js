@@ -7,9 +7,23 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     chunkSizeWarningLimit: 2000,
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          charts: ['recharts'],
+          icons: ['lucide-react'],
+        },
+      },
+    },
   },
   server: {
     host: true,
     port: 5173,
+  },
+  preview: {
+    port: 4173,
+    host: true,
   },
 });

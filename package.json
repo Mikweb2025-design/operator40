@@ -8,11 +8,18 @@
     "dev": "vite",
     "build": "vite build && node scripts/version-sw.mjs",
     "preview": "vite preview",
+    "lint": "eslint src --ext .js,.jsx",
+    "lint:fix": "eslint src --ext .js,.jsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx}\"",
     "cap:add:ios": "cap add ios",
     "cap:add:mac": "cap add @capacitor-community/electron",
     "cap:sync": "npm run build && cap sync",
     "cap:open:ios": "cap open ios",
     "cap:open:mac": "cap open @capacitor-community/electron"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "dependencies": {
     "@capacitor-community/electron": "^5.0.1",

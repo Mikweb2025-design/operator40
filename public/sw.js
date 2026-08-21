@@ -39,17 +39,20 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Same-origin assets: cache first, then network (and cache the result).
+    // Same-origin assets: cache first, then network (and cache the result).
+  // Bypass cache for Vite HMR / dev server and for range requests (audio).
+  if (req.headers.has('range')) return;
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
       return fetch(req).then((res) => {
-        if (res && res.ok) {
+        // Only cache successful, non-opaque, non-range responses
+        if (res && res.ok && res.type !== 'opaque') {
           const copy = res.clone();
           caches.open(CACHE).then((c) => c.put(req, copy));
         }
         return res;
-      });
+      }).catch(() => caches.match(req));
     })
   );
 });
