@@ -11,7 +11,7 @@ import { LANGS, LOCALES, detectLang, tr, translate } from './i18n';
 import { hasClip } from './clips.js';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from './constants/theme.js';
 import { EXERCISES, EXERCISE_GROUPS } from './data/exercises.js';
-import { PROGRAMS, QUICK_PROGRAM, WORK_SEC, REST_SEC, WARM_SEC, COOL_SEC, INTERVAL_PRESETS, LEVELS, CAMP_DAYS, DAY_CYCLE, getIntervalPreset, getLevel, levelPreset, campDayIndex, programById, pickNextProgram } from './data/programs.js';
+import { PROGRAMS, QUICK_PROGRAM, WORK_SEC, REST_SEC, WARM_SEC, COOL_SEC, INTERVAL_PRESETS, LEVELS, CAMP_DAYS, DAY_CYCLE, getIntervalPreset, getLevel, levelPreset, campDayIndex, campDayDisplay, programById, pickNextProgram } from './data/programs.js';
 import { buildSequence, kcalForSeconds, estimateProgramKcal, totalSeqSeconds } from './utils/workout.js';
 import { formatTime, dayKey, sessionDayKey } from './utils/date.js';
 import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, greeting, buildHeatmap, buildYearHeatmap, getPersonalRecords } from './utils/stats.js';
@@ -1284,7 +1284,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
   const lastProgram = lastSession && lastSession.programId !== 'health-import'
     ? [...PROGRAMS, ...customPrograms].find(p => p.id === lastSession.programId)
     : null;
-  const campDay = campDayIndex(profile);
+  const campDay = campDayDisplay(profile);
   const lvl = getLevel(profile.level || 'combattente');
   const levelIdx = LEVELS.indexOf(lvl);
   const waist = waistHistory.length ? waistHistory[waistHistory.length - 1] : null;

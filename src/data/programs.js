@@ -77,8 +77,18 @@ export const DAY_CYCLE = ['A', 'B', 'C', 'H', 'I', 'J', 'D', 'E', 'F', 'G', 'A',
 export function campDayIndex(profile) {
   const start = profile && profile.campStart ? new Date(profile.campStart) : null;
   if (!start) return 1;
-  const diff = Math.floor((Date.now() - start.getTime()) / 86400000);
-  return Math.min(CAMP_DAYS, Math.max(1, diff + 1));
+  // local-midnight diff: compare date keys, not raw UTC ms
+  const toKey = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const startKey = toKey(start);
+  const nowKey = toKey(new Date());
+  const s = new Date(startKey);
+  const n = new Date(nowKey);
+  const diff = Math.round((n - s) / 86400000);
+  // uncapped for program rotation, UI caps via Math.min where needed
+  return Math.max(1, diff + 1);
+}
+export function campDayDisplay(profile) {
+  return Math.min(CAMP_DAYS, campDayIndex(profile));
 }
 
 export function programById(id) {
