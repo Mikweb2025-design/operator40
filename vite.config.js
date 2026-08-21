@@ -1,15 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
+import { execSync } from 'node:child_process';
 
 let pkgVersion = '0.0.0';
 try { pkgVersion = JSON.parse(readFileSync('./package.json', 'utf8')).version; } catch {}
-const buildId = new Date().toISOString().slice(0, 16).replace('T', ' ');
+let gitHash = '';
+try { gitHash = execSync('git rev-parse --short HEAD').toString().trim(); } catch {}
+const buildId = gitHash ? `${pkgVersion} · ${gitHash}` : pkgVersion;
+// buildId deterministico: stesso commit → stesso hash asset → locale e server restano allineati
 
 export default defineConfig({
   plugins: [react()],
   define: {
-    __APP_VERSION__: JSON.stringify(`${pkgVersion} · ${buildId}`),
+    __APP_VERSION__: JSON.stringify(buildId),
     __BUILD_ID__: JSON.stringify(buildId),
   },
   base: './',
