@@ -29,6 +29,8 @@ import { requestWakeLock, releaseWakeLock } from './utils/wakeLock.js';
 import { shareStatsImage } from './utils/shareImage.js';
 import { estimateBodyFat, whtCategory } from './utils/body.js';
 import { getWeeklyProgress, getConsistencyScore, getAveragePace, formatDuration, getStreakRisk } from './utils/progress.js';
+import { getGoalProgress, getGoalHistory, suggestNextGoal, formatGoal, estimateWeeklyCalories, getStreakWeeks } from './utils/goals.js';
+import { GoalRing, MiniGoalBar } from './components/GoalRing.jsx';
 
 const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
 
@@ -1468,11 +1470,28 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       )}
 
       <div style={{ padding: '0 16px 4px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }} className="o40-mono">
-          <span style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{t('home.goal.title')}</span>
-          <span style={{ color: sessionsThisWeek >= weeklyGoal ? BLAZE : STEEL, fontSize: 11 }}>{sessionsThisWeek}/{weeklyGoal}</span>
+        {(() => {
+          const gp = getGoalProgress(sessions, weeklyGoal);
+          const hist = getGoalHistory(sessions, weeklyGoal, 6);
+          const sugg = suggestNextGoal(sessions, weeklyGoal);
+          const kcalWeekEst = estimateWeeklyCalories(sessions, weeklyGoal);
+          return (
+            <div style={{ background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${gp.isDone ? '#7FB069' : OLIVE}`, borderRadius: 14, padding: 12, display: 'flex', gap: 12, alignItems: 'center' }}>
+              <GoalRing done={gp.done} total={gp.total} size={64} stroke={6} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.06em' }}>{t('home.goal.title')} · {formatGoal(weeklyGoal)} {gp.isDone && <span style={{ color: '#7FB069' }}>✓</span>}</div>
+                <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600, marginTop: 2 }}>{gp.isDone ? 'Obiettivo raggiunto!' : `${gp.remain} ${gp.remain === 1 ? 'sessione' : 'sessioni'} alla meta`} <span style={{ color: STEEL, fontWeight: 400 }}>· ~{kcalWeekEst} kcal/sett.</span></div>
+                <div style={{ marginTop: 8 }}><MiniGoalBar history={hist} /></div>
+                {sugg !== weeklyGoal && (
+                  <div style={{ color: KHAKI, fontSize: 10.5, marginTop: 6, display: 'flex', alignItems: 'center', gap: 4 }}><Lightbulb size={10} /> {lang === 'it' ? `Suggerito: ${formatGoal(sugg)}` : `Suggested: ${formatGoal(sugg)}`}</div>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+        <div style={{ marginTop: 8 }}>
+          <SegmentedProgress total={weeklyGoal} current={Math.min(sessionsThisWeek, weeklyGoal)} currentProgress={1} color={sessionsThisWeek >= weeklyGoal ? '#7FB069' : BLAZE} />
         </div>
-        <SegmentedProgress total={weeklyGoal} current={Math.min(sessionsThisWeek, weeklyGoal)} currentProgress={1} color={BLAZE} />
         {upcoming && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 8 }}>
             <Trophy size={12} color={KHAKI} />
@@ -2450,17 +2469,34 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
 
         <div style={{ marginBottom: 20 }}>
           <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>{t('hist.goal.title')}</div>
-          <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ color: PAPER, fontSize: 13 }}>{t('hist.goal.label')}</span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-              <button onClick={() => onUpdateGoal(weeklyGoal - 1)} disabled={weeklyGoal <= 1} style={{ ...iconCircle, width: 30, height: 30, opacity: weeklyGoal <= 1 ? 0.4 : 1 }}>
-                <span style={{ color: PAPER, fontSize: 16, lineHeight: 1 }}>–</span>
-              </button>
-              <span className="o40-display" style={{ color: PAPER, fontSize: 22, minWidth: 20, textAlign: 'center' }}>{weeklyGoal}</span>
-              <button onClick={() => onUpdateGoal(weeklyGoal + 1)} disabled={weeklyGoal >= 7} style={{ ...iconCircle, width: 30, height: 30, opacity: weeklyGoal >= 7 ? 0.4 : 1 }}>
-                <span style={{ color: PAPER, fontSize: 16, lineHeight: 1 }}>+</span>
-              </button>
+          <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+              <span style={{ color: PAPER, fontSize: 13 }}>{t('hist.goal.label')}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                <button onClick={() => onUpdateGoal(weeklyGoal - 1)} disabled={weeklyGoal <= 1} style={{ ...iconCircle, width: 30, height: 30, opacity: weeklyGoal <= 1 ? 0.4 : 1 }}>
+                  <span style={{ color: PAPER, fontSize: 16, lineHeight: 1 }}>–</span>
+                </button>
+                <span className="o40-display" style={{ color: PAPER, fontSize: 22, minWidth: 20, textAlign: 'center' }}>{weeklyGoal}</span>
+                <button onClick={() => onUpdateGoal(weeklyGoal + 1)} disabled={weeklyGoal >= 7} style={{ ...iconCircle, width: 30, height: 30, opacity: weeklyGoal >= 7 ? 0.4 : 1 }}>
+                  <span style={{ color: PAPER, fontSize: 16, lineHeight: 1 }}>+</span>
+                </button>
+              </div>
             </div>
+            {(() => {
+              const hist = getGoalHistory(sessions, weeklyGoal, 8);
+              const sugg = suggestNextGoal(sessions, weeklyGoal);
+              const streakW = getStreakWeeks(sessions);
+              return (
+                <div>
+                  <MiniGoalBar history={hist} />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, color: STEEL, fontSize: 11 }}>
+                    <span>8 sett. · {streakW} {streakW === 1 ? 'settimana' : 'settimane'} streak</span>
+                    {sugg !== weeklyGoal && <span style={{ color: KHAKI }}><Lightbulb size={10} style={{ verticalAlign: 'middle', marginRight: 4 }} />Suggerito: {formatGoal(sugg)}</span>}
+                  </div>
+                  <div style={{ color: STEEL, fontSize: 10.5, marginTop: 4 }}>~{estimateWeeklyCalories(sessions, weeklyGoal)} kcal/sett. a goal {weeklyGoal}</div>
+                </div>
+              );
+            })()}
           </div>
         </div>
 
