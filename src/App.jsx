@@ -33,6 +33,8 @@ import { getGoalProgress, getGoalHistory, suggestNextGoal, formatGoal, estimateW
 import { GoalRing, MiniGoalBar } from './components/GoalRing.jsx';
 import { getSmartInsight, getSmartRecommendation } from './utils/smart.js';
 import { getPersonalChallenge, getRecoveryTip } from './utils/personalChallenge.js';
+import { getAchievementsProgress, getNextAchievements } from './utils/achievements.js';
+import { getDailyInsight, getWeeklyInsight } from './utils/insights.js';
 
 const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
 
@@ -1539,6 +1541,37 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         );
       })()}
 
+      {(() => {
+        const ach = getAchievementsProgress(sessions);
+        const nextAch = getNextAchievements(sessions, 3);
+        const unlocked = ach.filter(a => a.unlocked).length;
+        return (
+          <div style={{ margin: '0 16px 4px', background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '11px 13px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+              <Medal size={14} color={KHAKI} />
+              <span className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>ACHIEVEMENTS • {unlocked}/{ach.length}</span>
+              <span style={{ marginLeft: 'auto', color: unlocked === ach.length ? '#7FB069' : STEEL, fontSize: 10 }}>{unlocked === ach.length ? 'Tutte!' : `${ach.length - unlocked} mancanti`}</span>
+            </div>
+            <div style={{ display: 'flex', gap: 6, overflowX: 'auto' }}>
+              {ach.slice(0,6).map(a => (
+                <div key={a.id} style={{ minWidth: 64, background: a.unlocked ? `${a.color}22` : INK, border: `1px solid ${a.unlocked ? a.color : OLIVE}`, borderRadius: 10, padding: '6px 8px', textAlign: 'center', flexShrink: 0, opacity: a.unlocked ? 1 : 0.6 }}>
+                  <div style={{ fontSize: 16 }}>{a.icon}</div>
+                  <div style={{ color: a.unlocked ? PAPER : STEEL, fontSize: 9, fontWeight: 700, lineHeight: 1.2 }}>{a.title.it}</div>
+                  <div style={{ height: 3, borderRadius: 2, background: OLIVE_DARK, marginTop: 4 }}><div style={{ width: `${Math.round(a.progress*100)}%`, height: '100%', background: a.color }} /></div>
+                </div>
+              ))}
+            </div>
+            {nextAch.length > 0 && (
+              <div style={{ marginTop: 8, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                {nextAch.map(a => (
+                  <span key={a.id} style={{ background: `${a.color}22`, border: `1px solid ${a.color}55`, color: PAPER, fontSize: 10, padding: '2px 7px', borderRadius: 20 }}>{a.icon} {a.title.it} {Math.round(a.progress*100)}%</span>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })()}
+
       <div style={{ margin: '0 16px 4px', background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '11px 13px', display: 'flex', alignItems: 'center', gap: 11 }}>
         <div style={{ width: 34, height: 34, borderRadius: '50%', background: `${BLAZE}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
           <Ruler size={16} color={BLAZE} />
@@ -2672,15 +2705,26 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
         })()}
 
         {(() => {
-          const smart = getSmartInsight({ sessions, profile, waistHistory, weightHistory, lang });
+          const daily = getDailyInsight({ sessions, profile, waistHistory, weightHistory, lang });
+          const weekly = getWeeklyInsight({ sessions, profile, lang });
           return (
-            <div style={{ marginBottom: 18, background: `linear-gradient(135deg, ${smart.color}18, ${INK_2})`, border: `1px solid ${smart.color}55`, borderRadius: 14, padding: 12, display: 'flex', gap: 10, alignItems: 'center' }}>
-              <div style={{ fontSize: 22 }}>{smart.icon}</div>
-              <div style={{ flex: 1 }}>
-                <div style={{ color: PAPER, fontSize: 13, fontWeight: 600 }}>{smart.title}</div>
-                <div style={{ color: STEEL, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }}>{smart.body}</div>
+            <div style={{ marginBottom: 18, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ background: `linear-gradient(135deg, ${daily.color}18, ${INK_2})`, border: `1px solid ${daily.color}55`, borderRadius: 14, padding: 12, display: 'flex', gap: 10, alignItems: 'center' }}>
+                <div style={{ fontSize: 22 }}>{daily.icon}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ color: PAPER, fontSize: 13, fontWeight: 600 }}>{daily.title} <span style={{ color: STEEL, fontSize: 11, fontWeight: 400 }}>· {daily.tip}</span></div>
+                  <div style={{ color: STEEL, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }}>{daily.body}</div>
+                </div>
+                <Sparkles size={16} color={daily.color} style={{ flexShrink: 0 }} />
               </div>
-              <Sparkles size={16} color={smart.color} style={{ flexShrink: 0 }} />
+              <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12, display: 'flex', gap: 10, alignItems: 'center' }}>
+                <div style={{ fontSize: 18 }}>{weekly.icon}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ color: PAPER, fontSize: 13, fontWeight: 600 }}>{weekly.title}</div>
+                  <div style={{ color: STEEL, fontSize: 11.5, marginTop: 2 }}>{weekly.body}</div>
+                </div>
+                <div style={{ color: weekly.color, fontSize: 18, fontWeight: 700 }}>{weekly.body.split('/')[0]?.trim()}</div>
+              </div>
             </div>
           );
         })()}
