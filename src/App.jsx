@@ -35,6 +35,7 @@ import { getSmartInsight, getSmartRecommendation } from './utils/smart.js';
 import { getPersonalChallenge, getRecoveryTip } from './utils/personalChallenge.js';
 import { getAchievementsProgress, getNextAchievements } from './utils/achievements.js';
 import { getDailyInsight, getWeeklyInsight } from './utils/insights.js';
+import { getRecommendedMissions, getDailyChallenge } from './utils/missions.js';
 
 const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
 
@@ -1354,7 +1355,6 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         }}>
           {t('setup.enlist')} <ChevronRight size={18} />
         </button>
-        <VersionBadge />
       </div>
     </div>
   );
@@ -1408,7 +1408,9 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
   const sessionsThisWeek = sessions.filter(s => new Date(s.date).getTime() > weekAgo).length;
   const weeklyGoal = profile.weeklyGoal || WEEKLY_GOAL;
   const { program: todayProgram, adaptive } = pickNextProgram(sessions, profile);
-  const others = PROGRAMS.filter(p => p.id !== todayProgram.id);
+  const othersRaw = PROGRAMS.filter(p => p.id !== todayProgram.id);
+  const others = getRecommendedMissions({ sessions, profile, others: othersRaw });
+  const dailyChallenge = getDailyChallenge({ sessions, profile });
   const { current: rank, next: nextRank } = getRank(sessions.length);
   const upcoming = nextBadge(sessions);
   const lastSession = sessions.length ? sessions[sessions.length - 1] : null;
@@ -1773,20 +1775,42 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           <ChevronRight size={16} color={STEEL} />
         </button>
 
+        <div style={{ margin: '12px 0 8px', background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Star size={16} color={KHAKI} />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>SFIDA DEL GIORNO • {dailyChallenge.bonus}</div>
+            <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>{tr(dailyChallenge.program.name, lang)}</div>
+            <div style={{ color: STEEL, fontSize: 11 }}>{tr(dailyChallenge.program.tagline, lang)}</div>
+          </div>
+          <button onClick={() => onOpenProgram(dailyChallenge.program)} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}>Vai</button>
+        </div>
+
         <button onClick={() => setShowOthers(v => !v)} style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%',
-          background: 'transparent', border: 'none', cursor: 'pointer', margin: '20px 0 8px', padding: 0,
+          display: 'flex', alignItems: 'center', gap: 12, width: '100%',
+          background: showOthers ? OLIVE_DARK : INK_2, border: `1px solid ${showOthers ? BLAZE : OLIVE}`, borderRadius: 12, padding: '12px 14px', cursor: 'pointer', margin: '20px 0 12px',
+          boxShadow: showOthers ? `0 4px 12px rgba(0,0,0,0.3)` : 'none', transition: 'all 0.2s ease'
         }}>
-          <span className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{t('home.other')}</span>
-          <ChevronRight size={16} color={STEEL} style={{ transform: showOthers ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: showOthers ? BLAZE : `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <BookOpen size={16} color={showOthers ? PAPER : KHAKI} />
+          </div>
+          <div style={{ flex: 1, textAlign: 'left' }}>
+            <div className="o40-mono" style={{ color: showOthers ? BLAZE : KHAKI, fontSize: 11, letterSpacing: '0.06em' }}>{t('home.other')} • {others.length} missioni</div>
+            <div style={{ color: STEEL, fontSize: 11, marginTop: 2 }}>{showOthers ? 'Tocca per chiudere' : 'Esplora tutte le missioni disponibili'}</div>
+          </div>
+          <div style={{ width: 28, height: 28, borderRadius: '50%', background: showOthers ? BLAZE : OLIVE_DARK, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: showOthers ? 'rotate(90deg)' : 'none', transition: 'all 0.2s ease' }}>
+            <ChevronRight size={14} color={showOthers ? PAPER : KHAKI} />
+          </div>
         </button>
         {showOthers && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {others.map(p => (
+            {others.map((p, idx) => (
               <button key={p.id} onClick={() => onOpenProgram(p)} style={{
-                display: 'flex', alignItems: 'center', gap: 12, background: INK_2, border: `1px solid ${['H','I','J'].includes(p.id) ? BLAZE : OLIVE}`,
+                display: 'flex', alignItems: 'center', gap: 12, background: idx === 0 ? `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})` : INK_2, border: `1px solid ${idx === 0 ? KHAKI : ['H','I','J'].includes(p.id) ? BLAZE : OLIVE}`,
                 borderRadius: 10, padding: 12, cursor: 'pointer', textAlign: 'left', position: 'relative',
               }}>
+                {idx === 0 && <span style={{ position: 'absolute', top: 6, left: 6, background: KHAKI, color: INK, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>★ Consigliata</span>}
                 {['H','I','J','K','L','M'].includes(p.id) && <span style={{ position: 'absolute', top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>NEW</span>}
                 <div style={{ width: 40, height: 40, flexShrink: 0 }}>
                   <ExerciseFigure pose={EXERCISES[p.exercises[0]].pose} color={KHAKI} />
@@ -1836,7 +1860,6 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
             <span className="o40-mono" style={{ color: KHAKI, fontSize: 12.5, letterSpacing: '0.05em' }}>{t('home.custom.create')}</span>
           </button>
         </div>
-        <VersionBadge />
       </div>
     </div>
   );
