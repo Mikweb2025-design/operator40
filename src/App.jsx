@@ -14,7 +14,7 @@ import { EXERCISES, EXERCISE_GROUPS } from './data/exercises.js';
 import { PROGRAMS, QUICK_PROGRAM, WORK_SEC, REST_SEC, WARM_SEC, COOL_SEC, INTERVAL_PRESETS, LEVELS, CAMP_DAYS, DAY_CYCLE, getIntervalPreset, getLevel, levelPreset, campDayIndex, campDayDisplay, programById, pickNextProgram } from './data/programs.js';
 import { buildSequence, kcalForSeconds, estimateProgramKcal, totalSeqSeconds } from './utils/workout.js';
 import { formatTime, dayKey, sessionDayKey } from './utils/date.js';
-import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, greeting, buildHeatmap, buildYearHeatmap, getPersonalRecords } from './utils/stats.js';
+import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, greeting, buildHeatmap, buildYearHeatmap, getPersonalRecords, getMonthlyTrend } from './utils/stats.js';
 import { getAudioCtx, unlockAudio, playBeep, playClick, vibrate, speak } from './utils/audio.js';
 import { STYLES } from './styles/appStyles.js';
 import { ExerciseFigure } from './components/ExerciseFigure.jsx';
@@ -1464,7 +1464,12 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
             <div className="o40-mono" style={{ color: KHAKI, fontSize: 9.5, letterSpacing: '0.08em', background: `${KHAKI}18`, border: `1px solid ${KHAKI}44`, borderRadius: 6, padding: '2px 7px' }}>
               {tr(todayProgram.focus, lang)}
             </div>
-            {['H','I','J'].includes(todayProgram.id) && (
+            <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Star key={i} size={10} color={i < (todayProgram.difficulty || 2) ? BLAZE : STEEL} fill={i < (todayProgram.difficulty || 2) ? BLAZE : 'none'} />
+              ))}
+            </div>
+            {['H','I','J','K','L','M'].includes(todayProgram.id) && (
               <div className="o40-mono" style={{ color: PAPER, fontSize: 9, letterSpacing: '0.08em', background: BLAZE, borderRadius: 6, padding: '2px 7px' }}>NEW</div>
             )}
           </div>
@@ -1527,12 +1532,12 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
                 display: 'flex', alignItems: 'center', gap: 12, background: INK_2, border: `1px solid ${['H','I','J'].includes(p.id) ? BLAZE : OLIVE}`,
                 borderRadius: 10, padding: 12, cursor: 'pointer', textAlign: 'left', position: 'relative',
               }}>
-                {['H','I','J'].includes(p.id) && <span style={{ position: 'absolute', top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>NEW</span>}
+                {['H','I','J','K','L','M'].includes(p.id) && <span style={{ position: 'absolute', top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>NEW</span>}
                 <div style={{ width: 40, height: 40, flexShrink: 0 }}>
                   <ExerciseFigure pose={EXERCISES[p.exercises[0]].pose} color={KHAKI} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ color: PAPER, fontSize: 14.5, fontWeight: 600 }}>{tr(p.name, lang)}</div>
+                  <div style={{ color: PAPER, fontSize: 14.5, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>{tr(p.name, lang)}<span style={{ display: 'flex', gap: 1 }}>{Array.from({ length: 3 }).map((_, i) => (<Star key={i} size={9} color={i < (p.difficulty || 2) ? KHAKI : STEEL} fill={i < (p.difficulty || 2) ? KHAKI : 'none'} />))}</span></div>
                   <div style={{ color: STEEL, fontSize: 12 }}>{tr(p.tagline, lang)}</div>
                 </div>
                 <ChevronRight size={18} color={STEEL} />
@@ -2402,6 +2407,26 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
             </ResponsiveContainer>
           </div>
         </div>
+
+        {(() => {
+          const months = getMonthlyTrend(sessions);
+          const maxK = Math.max(1, ...months.map(m => m.kcal));
+          return (
+            <div style={{ marginBottom: 20 }}>
+              <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Trend mensile · kcal</div>
+              <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: '12px 10px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 80 }}>
+                  {months.map(m => (
+                    <div key={m.key} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                      <div style={{ width: '100%', height: `${Math.round((m.kcal / maxK) * 60) + 4}px`, background: m.kcal ? BLAZE : OLIVE_DARK, borderRadius: 3, opacity: m.kcal ? 1 : 0.5 }} />
+                      <span className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>{m.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {sessions.length > 0 && (
           <div style={{ marginBottom: 20 }}>

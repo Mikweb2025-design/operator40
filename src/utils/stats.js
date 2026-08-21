@@ -128,3 +128,15 @@ export function getPersonalRecords(sessions) {
   const favId = Object.entries(favCounts).sort((a,b)=>b[1]-a[1])[0]?.[0] || null;
   return { maxKcal, maxStreak, totalMin, totalSessions: sessions.length, favId };
 }
+export function getMonthlyTrend(sessions) {
+  const now = new Date();
+  const months = [];
+  for (let i=5;i>=0;i--) {
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const label = d.toLocaleDateString('it-IT', { month: 'short' });
+    const kcal = sessions.filter(s => s.date.slice(0,7) === key).reduce((a,s)=>a+(s.kcal||0),0);
+    months.push({ key, label, kcal });
+  }
+  return months;
+}
