@@ -1681,9 +1681,6 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
               <span key={i} className="o40-ember" style={{ left: l, animationDelay: d, animationDuration: du }} />
             ))}
           </div>
-          <div style={{ position: 'absolute', right: -10, top: -10, opacity: 0.15 }}>
-            <ExerciseFigure pose={EXERCISES[todayProgram.exercises[0]].pose} color={PAPER} size={130} />
-          </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <div className="o40-mono" style={{ color: BLAZE, fontSize: 11, letterSpacing: '0.1em' }}>{t('home.mission.tag', { id: todayProgram.id })}</div>
             <div className="o40-mono" style={{ color: KHAKI, fontSize: 9.5, letterSpacing: '0.08em', background: `${KHAKI}18`, border: `1px solid ${KHAKI}44`, borderRadius: 6, padding: '2px 7px' }}>
