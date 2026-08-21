@@ -11,6 +11,14 @@ import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 // localStorage on web/macOS).
 window.storage = { get, set, remove, clear };
 
+// PWA install prompt capture
+window.__o40DeferPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  window.__o40DeferPrompt = e;
+  window.dispatchEvent(new CustomEvent('o40:installReady'));
+});
+
 // Register the PWA service worker (offline-first + Chrome installability) and
 // keep an installed PWA current: check for updates on load/foreground and, when
 // a newer build's service worker takes control, reload to the fresh version.

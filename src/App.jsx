@@ -3,7 +3,7 @@ import {
   Play, Pause, SkipForward, Flame, HeartPulse, Trophy, ChevronRight,
   ChevronLeft, RotateCcw, Settings, X, Check, Volume2, VolumeX, Vibrate, History as HistoryIcon, Info, Dog, Plus, Trash2,
   Home as HomeIcon, BookOpen, Zap, RefreshCw, TrendingUp, TrendingDown, Ruler, Target, Medal, Crown,
-  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe
+  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye
 } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay } from './music';
@@ -22,6 +22,8 @@ import { requestNotificationPermission, scheduleDailyReminder, disableReminder, 
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
 import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.js';
+import { loadFavorites, toggleFavorite } from './utils/favorites.js';
+import { loadPhotos, savePhotos, fileToDataUrl } from './utils/photos.js';
 
 function exportData(profile, sessions) {
   try {
@@ -328,6 +330,10 @@ export default function App() {
   const [reminderHour, setReminderHour] = useState('8');
   const [reminderMinute, setReminderMinute] = useState('0');
   const [reminderEnabled, setReminderEnabled] = useState(false);
+  const [theme, setTheme] = useState(() => { try { return localStorage.getItem('o40_theme') || 'dark'; } catch { return 'dark'; } });
+  const [installPrompt, setInstallPrompt] = useState(null);
+  const [showTour, setShowTour] = useState(false);
+  const [photos, setPhotos] = useState(() => loadPhotos());
   const [previewProgram, setPreviewProgram] = useState(null);
 
   const [activeProgram, setActiveProgram] = useState(null);
@@ -442,6 +448,27 @@ export default function App() {
     checkAndFireReminder(t);
     return () => clearInterval(id);
   }, [t]);
+  // ---- theme ----
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    try { localStorage.setItem('o40_theme', theme); } catch {}
+  }, [theme]);
+  // ---- install prompt ----
+  useEffect(() => {
+    function onReady() { setInstallPrompt(window.__o40DeferPrompt); }
+    function onInstalled() { setInstallPrompt(null); }
+    window.addEventListener('o40:installReady', onReady);
+    window.addEventListener('appinstalled', onInstalled);
+    if (window.__o40DeferPrompt) setInstallPrompt(window.__o40DeferPrompt);
+    return () => { window.removeEventListener('o40:installReady', onReady); window.removeEventListener('appinstalled', onInstalled); };
+  }, []);
+  // ---- onboarding tour (first visit) ----
+  useEffect(() => {
+    if (screen === 'home' && profile && !profile.seenTour) {
+      const seen = (() => { try { return localStorage.getItem('o40_seenTour'); } catch { return null; } })();
+      if (!seen) setShowTour(true);
+    }
+  }, [screen, profile]);
 
   // ---- motivational music: plays while on, adapts volume to the phase ----
   useEffect(() => {
@@ -734,6 +761,16 @@ export default function App() {
     try { await window.storage.set('o40_sessions', JSON.stringify([]), false); } catch (e) { /* best effort */ }
     showToast(t('toast.history'));
   }
+  async function handleAddPhoto(file) {
+    if (!file) return;
+    try {
+      const url = await fileToDataUrl(file);
+      const next = [...photos, { id: Date.now().toString(36), date: new Date().toISOString(), url }].slice(-12);
+      setPhotos(next);
+      savePhotos(next);
+      showToast('Foto aggiunta');
+    } catch { showToast('File troppo grande (max 4MB)'); }
+  }
 
   async function deleteSession(date) {
     const updated = sessions.filter(s => s.date !== date);
@@ -928,6 +965,7 @@ export default function App() {
         {screen === 'history' && (
           <HistoryScreen
             sessions={sessions} profile={profile} waistHistory={waistHistory} weightHistory={weightHistory}
+            photos={photos} onAddPhoto={handleAddPhoto}
             onBack={() => setScreen('home')}
             onClear={clearHistory}
             onUpdateGoal={updateWeeklyGoal}
@@ -950,6 +988,35 @@ export default function App() {
               color: PAPER, fontSize: 13, fontWeight: 600, textAlign: 'center', maxWidth: '100%',
             }}>
               {toast}
+            </div>
+          </div>
+        )}
+        {/* theme toggle */}
+        <button onClick={() => setTheme(v => v === 'dark' ? 'light' : 'dark')} aria-label="theme" style={{ position: 'absolute', top: 10, right: 12, zIndex: 6, width: 34, height: 34, borderRadius: '50%', border: `1px solid ${KHAKI}`, background: INK_2, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          {theme === 'dark' ? <Sun size={16} color={KHAKI} /> : <Moon size={16} color={OLIVE} />}
+        </button>
+        {/* install banner */}
+        {installPrompt && ['home','library','history','setup'].includes(screen) && (
+          <div className="o40-install">
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: BLAZE, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Download size={18} color={PAPER} /></div>
+            <div style={{ flex: 1 }}>
+              <div style={{ color: PAPER, fontWeight: 700, fontSize: 13 }}>{lang === 'it' ? 'Installa Operator 40' : lang === 'de' ? 'Operator 40 installieren' : 'Install Operator 40'}</div>
+              <div style={{ color: KHAKI, fontSize: 11 }}>{lang === 'it' ? 'Aggiungi alla home per l’accesso offline' : 'Add to home for offline access'}</div>
+            </div>
+            <button onClick={async () => { try { installPrompt.prompt(); const c = await installPrompt.userChoice; if (c.outcome === 'accepted') setInstallPrompt(null); } catch {} }} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '8px 12px', fontWeight: 700, cursor: 'pointer', fontSize: 12 }}>OK</button>
+            <button onClick={() => setInstallPrompt(null)} style={{ background: 'transparent', border: 'none', color: STEEL, cursor: 'pointer', padding: 6 }}><X size={16} /></button>
+          </div>
+        )}
+        {/* tour */}
+        {showTour && (
+          <div className="o40-tour-mask" onClick={() => { setShowTour(false); try { localStorage.setItem('o40_seenTour','1'); } catch {} }}>
+            <div className="o40-tour-card" onClick={e => e.stopPropagation()}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}><Sparkles size={18} color={BLAZE} /><span className="o40-display" style={{ fontSize: 20 }}>Benvenuto!</span></div>
+              <div style={{ fontSize: 13, lineHeight: 1.5, color: '#333' }}>{lang === 'it' ? 'Tre tap: scegli la missione del giorno, allenati 15 minuti, traccia i progressi. Tutto offline, sulla tua privacy.' : 'Three taps: pick today\'s mission, train 15 min, track progress. Fully offline, private.'}</div>
+              <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
+                <button onClick={() => { setShowTour(false); try { localStorage.setItem('o40_seenTour','1'); } catch {} }} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 10, padding: '10px 0', fontWeight: 700, cursor: 'pointer' }}>INIZIA</button>
+                <button onClick={() => { setShowTour(false); try { localStorage.setItem('o40_seenTour','1'); } catch {} }} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 14px', cursor: 'pointer' }}><Eye size={16} color={OLIVE} /></button>
+              </div>
             </div>
           </div>
         )}
@@ -1506,9 +1573,17 @@ function LibraryScreen() {
   const { lang, t } = useT();
   const [filter, setFilter] = useState('all');
   const [selectedId, setSelectedId] = useState(null);
-  const visibleIds = Object.keys(EXERCISES).filter(id =>
-    filter === 'all' ? true : EXERCISE_GROUPS[filter].includes(id)
-  );
+  const [query, setQuery] = useState('');
+  const [showFavs, setShowFavs] = useState(false);
+  const [favs, setFavs] = useState(() => loadFavorites());
+  const visibleIds = Object.keys(EXERCISES).filter(id => {
+    const ex = EXERCISES[id];
+    const byGroup = filter === 'all' ? true : EXERCISE_GROUPS[filter].includes(id);
+    const byFav = showFavs ? favs.includes(id) : true;
+    const q = query.trim().toLowerCase();
+    const byQuery = !q || tr(ex.name, lang).toLowerCase().includes(q) || id.toLowerCase().includes(q) || tr(ex.cue, lang).toLowerCase().includes(q);
+    return byGroup && byFav && byQuery;
+  });
 
   return (
     <div className="o40-screen-in" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -1516,7 +1591,16 @@ function LibraryScreen() {
         <div className="o40-display" style={{ color: PAPER, fontSize: 26 }}>{t('lib.title')}</div>
         <div style={{ color: KHAKI, fontSize: 13 }}>{t('lib.sub')}</div>
       </div>
-      <div style={{ display: 'flex', gap: 8, padding: '12px 16px 4px' }}>
+      <div style={{ padding: '10px 16px 0' }}>
+        <div className="o40-search-wrap">
+          <input value={query} onChange={e => setQuery(e.target.value)} placeholder={lang === 'it' ? 'Cerca esercizio…' : lang === 'de' ? 'Übung suchen…' : 'Search exercise…'} className="o40-search" />
+          {query && <button onClick={() => setQuery('')} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: STEEL, cursor: 'pointer' }}><X size={14} /></button>}
+        </div>
+      </div>
+      <div style={{ display: 'flex', gap: 8, padding: '12px 16px 4px', flexWrap: 'wrap' }}>
+        <button onClick={() => setShowFavs(v => !v)} style={{ padding: '6px 12px', borderRadius: 20, cursor: 'pointer', background: showFavs ? BLAZE : 'transparent', border: `1px solid ${showFavs ? BLAZE : OLIVE}`, display: 'flex', alignItems: 'center', gap: 4 }}>
+          <Star size={12} color={showFavs ? PAPER : KHAKI} fill={showFavs ? PAPER : 'none'} /><span className="o40-mono" style={{ color: showFavs ? PAPER : STEEL, fontSize: 11 }}>{showFavs ? '★' : '☆'} {favs.length || ''}</span>
+        </button>
         {[['all', t('lib.all')], ['standing', t('lib.standing')], ['ground', t('lib.ground')], ['core', t('lib.core')]].map(([key, label]) => (
           <button key={key} onClick={() => setFilter(key)} style={{
             padding: '6px 12px', borderRadius: 20, cursor: 'pointer',
@@ -1549,7 +1633,12 @@ function LibraryScreen() {
                     </div>
                   )}
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ color: PAPER, fontWeight: 700, fontSize: 14.5 }}>{tr(ex.name, lang)}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <div style={{ color: PAPER, fontWeight: 700, fontSize: 14.5, flex: 1 }}>{tr(ex.name, lang)}</div>
+                      <button onClick={e => { e.stopPropagation(); const next = toggleFavorite(favs, id); setFavs(next); }} className="o40-fav" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 4 }} aria-label="favorite">
+                        <Star size={16} color={favs.includes(id) ? BLAZE : STEEL} fill={favs.includes(id) ? BLAZE : 'none'} />
+                      </button>
+                    </div>
                     <div style={{ color: KHAKI, fontSize: 12 }}>{tr(ex.repGuide, lang)}</div>
                     {isOpen ? (
                       <>
@@ -2103,7 +2192,7 @@ function Badge({ label, unlocked, value }) {
   );
 }
 
-function HistoryScreen({ sessions, profile, waistHistory, weightHistory, onBack, onClear, onUpdateGoal, onDeleteSession }) {
+function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos, onAddPhoto, onBack, onClear, onUpdateGoal, onDeleteSession }) {
   const { lang, t } = useT();
   const [confirmClear, setConfirmClear] = useState(false);
   const [confirmDeleteDate, setConfirmDeleteDate] = useState(null);
@@ -2376,6 +2465,24 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, onBack,
             </div>
           );
         })()}
+        <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+            <span className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.06em' }}>Foto progressi</span>
+            <label style={{ background: BLAZE, color: PAPER, borderRadius: 8, padding: '6px 10px', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+              + Foto
+              <input type="file" accept="image/*" capture="environment" style={{ display: 'none' }} onChange={e => { const f = e.target.files && e.target.files[0]; if (f) onAddPhoto(f); e.target.value=''; }} />
+            </label>
+          </div>
+          {photos.length === 0 ? <div style={{ color: STEEL, fontSize: 12 }}>Nessuna foto — aggiungi la prima per vedere il prima/dopo</div> : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6 }}>
+              {photos.slice(-6).map(ph => (
+                <div key={ph.id} style={{ aspectRatio: '3/4', borderRadius: 8, overflow: 'hidden', border: `1px solid ${OLIVE}`, background: INK }}>
+                  <img src={ph.url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>{t('hist.sessions.title')}</div>
         {ordered.length === 0 && <div style={{ color: STEEL, fontSize: 13 }}>{t('hist.empty')}</div>}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
