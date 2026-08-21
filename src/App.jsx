@@ -29,6 +29,8 @@ import { requestWakeLock, releaseWakeLock } from './utils/wakeLock.js';
 import { shareStatsImage } from './utils/shareImage.js';
 import { estimateBodyFat, whtCategory } from './utils/body.js';
 
+const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
+
 function exportData(profile, sessions) {
   try {
     const payload = JSON.stringify({ profile, sessions }, null, 2);
@@ -577,6 +579,7 @@ export default function App() {
       musicTrack: (profile && profile.musicTrack) || DEFAULT_TRACK,
       musicVolume: typeof (profile && profile.musicVolume) === 'number' ? profile.musicVolume : 0.55,
       skipWarmup: profile ? !!profile.skipWarmup : false,
+      voiceCountdown: profile ? !!profile.voiceCountdown : false,
       seenIntro: profile ? !!profile.seenIntro : false,
       intervalPreset: (formCustomWork !== '40' || formCustomRest !== '20') ? 'custom' : ((profile && profile.intervalPreset) || 'standard'),
       level: prevLevel || 'combattente',
@@ -624,6 +627,11 @@ export default function App() {
     showToast(t('toast.level.up', { label: tr(next.label, lang) }));
   }
 
+  async function toggleVoiceCountdown() {
+    const p = { ...profile, voiceCountdown: !profile.voiceCountdown };
+    setProfile(p);
+    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch {}
+  }
   async function toggleSkipWarmup() {
     const p = { ...profile, skipWarmup: !profile.skipWarmup };
     setProfile(p);
@@ -910,6 +918,7 @@ export default function App() {
             musicTrack={musicTrack} onSelectTrack={selectMusicTrack}
             musicVolume={musicVolume} onChangeMusicVolume={changeMusicVolume}
             skipWarmup={!!(profile && profile.skipWarmup)} onToggleSkipWarmup={toggleSkipWarmup}
+            voiceCountdown={!!(profile && profile.voiceCountdown)} onToggleVoiceCountdown={toggleVoiceCountdown}
             level={(profile && (profile.level || (profile.intervalPreset === 'breve' ? 'recluta' : profile.intervalPreset === 'lungo' ? 'elite' : 'combattente'))) || 'combattente'}
             onSetLevel={applyLevel}
             intervalPreset={(profile && profile.intervalPreset) || 'standard'} onSetIntervalPreset={setIntervalPreset}
@@ -960,7 +969,7 @@ export default function App() {
 
         {screen === 'session' && seq.length > 0 && (
           <SessionScreen
-            program={activeProgram} seq={seq} phaseIdx={phaseIdx} secondsLeft={secondsLeft}
+            program={activeProgram} profile={profile} seq={seq} phaseIdx={phaseIdx} secondsLeft={secondsLeft}
             paused={paused} setPaused={setPaused} soundOn={soundOn} setSoundOn={setSoundOn}
             musicOn={musicOn} onToggleMusic={toggleMusic}
             onSkip={advancePhase} onPrev={goPrev} exitConfirm={exitConfirm} setExitConfirm={setExitConfirm}
@@ -970,7 +979,7 @@ export default function App() {
 
         {screen === 'summary' && lastStats && (
           <SummaryScreen
-            stats={lastStats} profile={profile} hrInput={hrInput} setHrInput={setHrInput}
+            stats={lastStats} profile={profile} sessions={sessions} hrInput={hrInput} setHrInput={setHrInput}
             waistInput={waistInput} setWaistInput={setWaistInput}
             weightInput={weightInput} setWeightInput={setWeightInput}
             rpe={rpe} setRpe={setRpe} notes={notes} setNotes={setNotes}
@@ -1060,7 +1069,7 @@ function CountdownScreen({ program, onDone }) {
 }
 
 /* ================= SETUP SCREEN ================= */
-function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, skipWarmup, onToggleSkipWarmup, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText }) {
+function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || 'combattente');
   return (
@@ -1113,6 +1122,8 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
             <ToggleRow label={t('setup.vibration')} icon={Vibrate} on={vibrationOn} onClick={onToggleVibration} />
             <div style={{ height: 1, background: OLIVE_DARK, margin: '0 12px' }} />
             <ToggleRow label={t('setup.skip')} icon={SkipForward} on={skipWarmup} onClick={onToggleSkipWarmup} />
+            <div style={{ height: 1, background: OLIVE_DARK, margin: '0 12px' }} />
+            <ToggleRow label={lang === 'it' ? 'Conto vocale' : lang === 'de' ? 'Sprach-Countdown' : 'Voice countdown'} icon={Music} on={voiceCountdown} onClick={onToggleVoiceCountdown} />
           </div>
         )}
 
@@ -1284,7 +1295,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
   const { lang, t } = useT();
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [showOthers, setShowOthers] = useState(false);
-  const streak = computeStreak(sessions);
+  const { streak, usedFreeze } = computeStreakWithFreeze(sessions);
   const weekAgo = Date.now() - 7 * 86400000;
   const kcalWeek = Math.round(sessions.filter(s => new Date(s.date).getTime() > weekAgo).reduce((a, s) => a + s.kcal, 0));
   const sessionsThisWeek = sessions.filter(s => new Date(s.date).getTime() > weekAgo).length;
@@ -1361,7 +1372,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       )}
 
       <div style={{ display: 'flex', gap: 10, padding: '14px 16px' }}>
-        <DogTag label={t('dt.streak')} value={streak} sub={streak === 1 ? t('dt.day') : t('dt.days')} />
+        <DogTag label={t('dt.streak')} value={usedFreeze ? `${streak} ❄️` : streak} sub={streak === 1 ? t('dt.day') : t('dt.days')} />
         <DogTag label={t('dt.sessions')} value={sessions.length} sub={t('dt.total')} />
         <DogTag label={t('dt.kcal')} value={kcalWeek} sub={t('dt.7d')} />
       </div>
@@ -1594,6 +1605,9 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
             <span className="o40-mono" style={{ color: KHAKI, fontSize: 12.5, letterSpacing: '0.05em' }}>{t('home.custom.create')}</span>
           </button>
         </div>
+        <div className="o40-mono" style={{ color: STEEL, fontSize: 9, textAlign: 'center', opacity: 0.5, marginTop: 16, letterSpacing: '0.06em' }}>
+          v{BUILD_VERSION}
+        </div>
       </div>
     </div>
   );
@@ -1784,6 +1798,20 @@ function BuilderScreen({ profile, initial, onCancel, onCreate, onUpdate }) {
             </button>
           ))}
         </div>
+        {selected.length > 0 && (
+          <div style={{ marginBottom: 12, background: INK_2, border: `1px solid ${BLAZE}`, borderRadius: 10, padding: 10 }}>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em', marginBottom: 6 }}>Ordine selezionati · trascina su/giù</div>
+            {selected.map((sid, idx) => (
+              <div key={sid} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 0', borderBottom: idx < selected.length - 1 ? `1px solid ${OLIVE_DARK}` : 'none' }}>
+                <span className="o40-mono" style={{ color: STEEL, fontSize: 10 }}>{idx + 1}.</span>
+                <span style={{ flex: 1, color: PAPER, fontSize: 12 }}>{EXERCISES[sid] ? EXERCISES[sid].name.it : sid}</span>
+                <button disabled={idx === 0} onClick={() => setSelected(s => { const a=[...s]; [a[idx-1],a[idx]]=[a[idx],a[idx-1]]; return a; })} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 6, padding: '2px 6px', color: PAPER, opacity: idx===0?0.3:1, cursor: idx===0?'default':'pointer' }}>↑</button>
+                <button disabled={idx === selected.length-1} onClick={() => setSelected(s => { const a=[...s]; [a[idx],a[idx+1]]=[a[idx+1],a[idx]]; return a; })} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 6, padding: '2px 6px', color: PAPER, opacity: idx===selected.length-1?0.3:1, cursor: idx===selected.length-1?'default':'pointer' }}>↓</button>
+                <button onClick={() => setSelected(s => s.filter(x=>x!==sid))} style={{ background: 'transparent', border: 'none', color: STEEL, cursor: 'pointer', padding: 4 }}><X size={12} /></button>
+              </div>
+            ))}
+          </div>
+        )}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {visibleIds.map(id => {
             const ex = EXERCISES[id];
@@ -1949,13 +1977,14 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
 }
 
 /* ================= SESSION SCREEN ================= */
-function SessionScreen({ program, seq, phaseIdx, secondsLeft, paused, setPaused, soundOn, setSoundOn, musicOn, onToggleMusic, onSkip, onPrev, exitConfirm, setExitConfirm, onExit }) {
+function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, setPaused, soundOn, setSoundOn, musicOn, onToggleMusic, onSkip, onPrev, exitConfirm, setExitConfirm, onExit }) {
   const { lang, t } = useT();
   const phase = seq[phaseIdx];
   const next = seq[phaseIdx + 1];
   const ex = phase.exerciseId ? EXERCISES[phase.exerciseId] : null;
   const nextEx = next && next.exerciseId ? EXERCISES[next.exerciseId] : null;
   const progress = 1 - secondsLeft / phase.duration;
+  useEffect(() => { if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === 'work') speak(String(secondsLeft), lang, LOCALES); }, [secondsLeft, phase.type, soundOn, profile]);
   useEffect(() => { requestWakeLock(); function onVis(){ if (!document.hidden) requestWakeLock(); } document.addEventListener('visibilitychange', onVis); return () => { document.removeEventListener('visibilitychange', onVis); releaseWakeLock(); }; }, []);
 
   const phaseLabel = phase.type === 'warmup' ? t('ses.warmup')
@@ -2091,7 +2120,7 @@ const pillBtn = {
 };
 
 /* ================= SUMMARY SCREEN ================= */
-function SummaryScreen({ stats, profile, hrInput, setHrInput, waistInput, setWaistInput, weightInput, setWeightInput, rpe, setRpe, notes, setNotes, onSave }) {
+function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInput, setWaistInput, weightInput, setWeightInput, rpe, setRpe, notes, setNotes, onSave }) {
   const { lang, t } = useT();
   const zone = hrInput ? hrZone(parseInt(hrInput, 10), profile.age, lang) : null;
   const [shareState, setShareState] = useState('idle');

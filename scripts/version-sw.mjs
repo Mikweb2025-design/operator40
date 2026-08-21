@@ -13,6 +13,12 @@ const version = h.digest('hex').slice(0, 8);
 
 const swPath = 'dist/sw.js';
 mkdirSync('dist', { recursive: true });
-const sw = readFileSync(swPath, 'utf8');
-writeFileSync(swPath, sw.replace('__VERSION__', version));
+let sw = readFileSync(swPath, 'utf8');
+// Supporta sia __VERSION__ (prima build) che o40-vXXXXXXXX (build successive se public/sw.js non viene ricopiato)
+if (sw.includes('__VERSION__')) {
+  sw = sw.replace('__VERSION__', version);
+} else {
+  sw = sw.replace(/o40-v[0-9a-f]{8}/, `o40-v${version}`);
+}
+writeFileSync(swPath, sw);
 console.log(`[sw] cache versioned: o40-v${version}`);

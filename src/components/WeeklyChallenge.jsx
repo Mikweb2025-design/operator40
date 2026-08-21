@@ -2,12 +2,12 @@ import React from 'react';
 import { Flame, ShieldCheck, Zap } from 'lucide-react';
 import { INK, INK_2, PAPER, OLIVE, KHAKI, BLAZE, STEEL } from '../constants/theme.js';
 
-export function WeeklyChallenge({ sessions, weeklyGoal = 3 }) {
+export function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
   const now = new Date();
   const start = new Date(now);
   start.setDate(now.getDate() - now.getDay() + 1); // Monday
   start.setHours(0,0,0,0);
-  const weekSessions = sessions.filter(s => new Date(s.date) >= start);
+  const weekSessions = (sessions || []).filter(s => new Date(s.date) >= start);
   const done = weekSessions.length;
   const pct = Math.min(1, done / weeklyGoal);
   const remain = Math.max(0, weeklyGoal - done);
