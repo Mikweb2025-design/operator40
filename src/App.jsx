@@ -14,7 +14,7 @@ import { EXERCISES, EXERCISE_GROUPS } from './data/exercises.js';
 import { PROGRAMS, QUICK_PROGRAM, WORK_SEC, REST_SEC, WARM_SEC, COOL_SEC, INTERVAL_PRESETS, LEVELS, CAMP_DAYS, DAY_CYCLE, getIntervalPreset, getLevel, levelPreset, campDayIndex, campDayDisplay, programById, pickNextProgram } from './data/programs.js';
 import { buildSequence, kcalForSeconds, estimateProgramKcal, totalSeqSeconds } from './utils/workout.js';
 import { formatTime, dayKey, sessionDayKey } from './utils/date.js';
-import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, greeting, buildHeatmap, buildYearHeatmap, getPersonalRecords, getMonthlyTrend } from './utils/stats.js';
+import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, KCAL_BADGES, CONSISTENCY_BADGES, PERFECT_WEEK_BADGES, MEDAL_DEFS, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, getMedalProgress, getNextMedals, greeting, buildHeatmap, buildYearHeatmap, getPersonalRecords, getMonthlyTrend } from './utils/stats.js';
 import { getAudioCtx, unlockAudio, playBeep, playClick, vibrate, speak } from './utils/audio.js';
 import { STYLES } from './styles/appStyles.js';
 import { ExerciseFigure } from './components/ExerciseFigure.jsx';
@@ -1502,6 +1502,28 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         )}
       </div>
 
+      {(() => {
+        const next = getNextMedals(sessions, 3);
+        if (!next.length) return null;
+        return (
+          <div style={{ padding: '0 16px 8px' }}>
+            <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
+              <Medal size={16} color={KHAKI} />
+              <div style={{ flex: 1 }}>
+                <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>PROSSIME MEDAGLIE</div>
+                <div style={{ display: 'flex', gap: 6, marginTop: 4, flexWrap: 'wrap' }}>
+                  {next.map(m => (
+                    <span key={`${m.type}-${m.n}`} style={{ background: `${m.color}22`, border: `1px solid ${m.color}55`, color: PAPER, fontSize: 11, padding: '2px 7px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                      {m.icon} {m.n} <span style={{ color: KHAKI, fontSize: 9 }}>{Math.round(m.progress*100)}%</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
       <div style={{ padding: '4px 16px 16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '12px 0 8px' }}>
           <svg width="64" height="12" viewBox="0 0 64 12" fill="none" style={{ flexShrink: 0 }}>
@@ -2321,20 +2343,72 @@ function missionCounts(sessions) {
   sessions.forEach(s => { if (counts[s.programId] !== undefined) counts[s.programId]++; });
   return counts;
 }
-function Badge({ label, unlocked, value }) {
+function Badge({ label, unlocked, value, color = BLAZE, icon = 'trophy', progress = 1 }) {
+  const Icon = icon === 'fire' ? Flame : icon === 'zap' ? Zap : icon === 'star' ? Star : icon === 'target' ? Target : Trophy;
   return (
     <div style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, flex: 1,
-      opacity: unlocked ? 1 : 0.35,
+      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, flex: 1, minWidth: 52,
+      opacity: unlocked ? 1 : 0.55,
+      transform: unlocked ? 'scale(1)' : 'scale(0.96)',
+      transition: 'all 0.2s ease',
     }}>
       <div style={{
-        width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: unlocked ? BLAZE : INK_2, border: `1px solid ${unlocked ? BLAZE : OLIVE}`,
+        width: 44, height: 44, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: unlocked ? `radial-gradient(circle at 30% 30%, ${color}, ${INK})` : INK_2,
+        border: `1px solid ${unlocked ? color : OLIVE}`,
+        boxShadow: unlocked ? `0 0 12px ${color}66, inset 0 1px 1px rgba(255,255,255,0.15)` : 'none',
+        position: 'relative', overflow: 'hidden',
       }}>
-        <Trophy size={18} color={unlocked ? PAPER : STEEL} />
+        <Icon size={18} color={unlocked ? PAPER : STEEL} style={{ filter: unlocked ? `drop-shadow(0 1px 2px rgba(0,0,0,0.4))` : 'none' }} />
+        {!unlocked && progress > 0 && progress < 1 && (
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: OLIVE_DARK }}>
+            <div style={{ width: `${Math.round(progress * 100)}%`, height: '100%', background: color, transition: 'width 0.4s ease' }} />
+          </div>
+        )}
+        {unlocked && <div style={{ position: 'absolute', inset: -2, borderRadius: '50%', border: `1px solid ${color}44`, animation: 'badgePulse 1.6s ease-in-out infinite' }} />}
       </div>
-      <div className="o40-mono" style={{ color: unlocked ? PAPER : STEEL, fontSize: 10 }}>{value}</div>
-      <div style={{ color: STEEL, fontSize: 9, textAlign: 'center' }}>{label}</div>
+      <div className="o40-mono" style={{ color: unlocked ? PAPER : STEEL, fontSize: 10, fontWeight: unlocked ? 700 : 400 }}>{value}</div>
+      <div style={{ color: unlocked ? KHAKI : STEEL, fontSize: 8.5, textAlign: 'center', lineHeight: 1.2, minHeight: 20 }}>{label}</div>
+    </div>
+  );
+}
+
+function MedalGrid({ sessions }) {
+  const { all, unlocked } = getMedalProgress(sessions);
+  const byType = {
+    streak: all.filter(m => m.type === 'streak'),
+    sessions: all.filter(m => m.type === 'sessions'),
+    kcal: all.filter(m => m.type === 'kcal'),
+    consistency: all.filter(m => m.type === 'consistency'),
+    perfect: all.filter(m => m.type === 'perfect'),
+  };
+  const next = getNextMedals(sessions, 3);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      {[
+        { key: 'streak', title: 'SERIE', icon: 'fire' },
+        { key: 'sessions', title: 'SESSIONI', icon: 'zap' },
+        { key: 'kcal', title: 'KCAL', icon: 'target' },
+        { key: 'consistency', title: 'COSTANZA', icon: 'star' },
+        { key: 'perfect', title: 'SETT. PERFETTE', icon: 'star' },
+      ].map(cat => (
+        <div key={cat.key}>
+          <div className="o40-mono" style={{ color: STEEL, fontSize: 9, letterSpacing: '0.08em', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+            {cat.title} <span style={{ color: unlocked.filter(m => m.type === cat.key).length ? '#7FB069' : STEEL, fontSize: 9 }}>{unlocked.filter(m => m.type === cat.key).length}/{byType[cat.key].length}</span>
+          </div>
+          <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingBottom: 4 }}>
+            {byType[cat.key].map(m => (
+              <Badge key={`${m.type}-${m.n}`} label={m.label} value={m.n} unlocked={m.unlocked} color={m.color} icon={m.type === 'streak' ? 'fire' : m.type === 'kcal' ? 'target' : m.type === 'perfect' ? 'star' : 'trophy'} progress={m.progress} />
+            ))}
+          </div>
+        </div>
+      ))}
+      {next.length > 0 && (
+        <div style={{ background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK})`, border: `1px solid ${KHAKI}33`, borderRadius: 10, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <Sparkles size={14} color={KHAKI} />
+          <span style={{ color: KHAKI, fontSize: 11, flex: 1 }}>Prossime: {next.map(m => `${m.icon} ${m.n}${m.type === 'kcal' ? '' : m.type === 'streak' ? 'gg' : ''} (${Math.round(m.progress*100)}%)`).join(' • ')}</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -2525,15 +2599,14 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           </div>
         </div>
 
-        {sessions.length > 0 && (
-          <div style={{ marginBottom: 20 }}>
-            <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>{t('hist.milestones')}</div>
-            <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: '14px 8px', display: 'flex' }}>
-              {STREAK_BADGES.map(n => <Badge key={`s${n}`} label={t('hist.miles.streak', { n })} value={n} unlocked={bestStreak >= n} />)}
-              {SESSION_BADGES.map(n => <Badge key={`n${n}`} label={t('hist.miles.sessions', { n })} value={n} unlocked={sessions.length >= n} />)}
-            </div>
+        <div style={{ marginBottom: 20 }}>
+          <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <Medal size={12} color={KHAKI} /> {t('hist.milestones')} <span style={{ color: STEEL, fontSize: 10, marginLeft: 6 }}>{getMedalProgress(sessions).unlocked.length}/{getMedalProgress(sessions).all.length} sbloccate</span>
           </div>
-        )}
+          <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }}>
+            <MedalGrid sessions={sessions} />
+          </div>
+        </div>
 
         <div style={{ marginBottom: 20 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>

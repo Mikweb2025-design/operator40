@@ -51,6 +51,17 @@ export function computeStreakWithFreeze(sessions) {
 export const WEEKLY_GOAL = 3;
 export const STREAK_BADGES = [3, 7, 14, 30, 60, 90];
 export const SESSION_BADGES = [5, 10, 25, 50, 75, 100, 150];
+export const KCAL_BADGES = [1000, 2500, 5000, 10000, 20000, 50000];
+export const CONSISTENCY_BADGES = [30, 50, 70, 85, 100]; // % su 8 settimane
+export const PERFECT_WEEK_BADGES = [1, 4, 8, 12, 26]; // settimane perfette (goal raggiunto)
+
+export const MEDAL_DEFS = {
+  streak: STREAK_BADGES.map(n => ({ type: 'streak', n, label: `${n}gg serie`, icon: '🔥', color: '#C1440E' })),
+  sessions: SESSION_BADGES.map(n => ({ type: 'sessions', n, label: `${n} sessioni`, icon: '⚡', color: '#B8AE8C' })),
+  kcal: KCAL_BADGES.map(n => ({ type: 'kcal', n, label: `${n >= 1000 ? (n/1000)+'k' : n} kcal`, icon: '🔥', color: '#E84B2A' })),
+  consistency: CONSISTENCY_BADGES.map(n => ({ type: 'consistency', n, label: `${n}% costanza`, icon: '◎', color: '#7FB069' })),
+  perfect: PERFECT_WEEK_BADGES.map(n => ({ type: 'perfect', n, label: `${n} sett. perfette`, icon: '★', color: '#D9B34C' })),
+};
 
 export const RPE_LABELS = [
   { it: 'Facile', en: 'Easy', de: 'Leicht' },
@@ -85,6 +96,51 @@ export function nextBadge(sessions) {
   if (!candidates.length) return null;
   candidates.sort((a, b) => a.remaining - b.remaining);
   return candidates[0];
+}
+
+// --- Sistema medaglie potenziato ---
+
+export function getMedalProgress(sessions) {
+  const bestStreak = computeBestStreak(sessions);
+  const totalKcal = Math.round((sessions || []).reduce((a, s) => a + (s.kcal || 0), 0));
+  const totalSessions = sessions?.length || 0;
+  // consistenza 8w
+  const byDay = new Set((sessions || []).map(sessionDayKey));
+  const now = new Date();
+  let activeDays = 0;
+  for (let i = 0; i < 56; i++) {
+    const d = new Date(now); d.setDate(now.getDate() - i);
+    if (byDay.has(dayKey(d))) activeDays++;
+  }
+  const cons = Math.round(Math.min(100, (activeDays / (8 * WEEKLY_GOAL)) * 100));
+  // perfect weeks (ultime 12)
+  let perfectWeeks = 0;
+  for (let w = 0; w < 12; w++) {
+    const ws = new Date(now); ws.setDate(now.getDate() - now.getDay() + 1 - w * 7); ws.setHours(0,0,0,0);
+    const we = new Date(ws); we.setDate(ws.getDate() + 7);
+    const done = (sessions || []).filter(s => { const d = new Date(s.date); return d >= ws && d < we; }).length;
+    if (done >= WEEKLY_GOAL) perfectWeeks++;
+    else if (w === 0 && done > 0) { /* settimana in corso non conta come break */ }
+  }
+
+  const all = [];
+  for (const n of STREAK_BADGES) all.push({ type: 'streak', n, label: `${n}gg serie`, icon: '🔥', color: '#C1440E', value: bestStreak, unlocked: bestStreak >= n, progress: Math.min(1, bestStreak / n) });
+  for (const n of SESSION_BADGES) all.push({ type: 'sessions', n, label: `${n} sessioni`, icon: '⚡', color: '#B8AE8C', value: totalSessions, unlocked: totalSessions >= n, progress: Math.min(1, totalSessions / n) });
+  for (const n of KCAL_BADGES) all.push({ type: 'kcal', n, label: `${n >= 1000 ? (n/1000)+'k' : n} kcal`, icon: '◆', color: '#E84B2A', value: totalKcal, unlocked: totalKcal >= n, progress: Math.min(1, totalKcal / n) });
+  for (const n of CONSISTENCY_BADGES) all.push({ type: 'consistency', n, label: `${n}% costanza`, icon: '◎', color: '#7FB069', value: cons, unlocked: cons >= n, progress: Math.min(1, cons / n) });
+  for (const n of PERFECT_WEEK_BADGES) all.push({ type: 'perfect', n, label: `${n} sett. perfette`, icon: '★', color: '#D9B34C', value: perfectWeeks, unlocked: perfectWeeks >= n, progress: Math.min(1, perfectWeeks / n) });
+  return { all, unlocked: all.filter(m => m.unlocked), locked: all.filter(m => !m.unlocked), totals: { bestStreak, totalSessions, totalKcal, cons, perfectWeeks } };
+}
+
+export function getNextMedals(sessions, limit = 3) {
+  const { locked } = getMedalProgress(sessions);
+  // ordina per progresso più vicino (progress desc)
+  locked.sort((a, b) => b.progress - a.progress);
+  return locked.slice(0, limit);
+}
+
+export function getUnlockedMedals(sessions) {
+  return getMedalProgress(sessions).unlocked;
 }
 
 export function greeting(lang) {
