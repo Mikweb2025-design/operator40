@@ -3,7 +3,7 @@ import {
   Play, Pause, SkipForward, Flame, HeartPulse, Trophy, ChevronRight,
   ChevronLeft, RotateCcw, Settings, X, Check, Volume2, VolumeX, Vibrate, History as HistoryIcon, Info, Dog, Plus, Trash2,
   Home as HomeIcon, BookOpen, Zap, RefreshCw, TrendingUp, TrendingDown, Ruler, Target, Medal, Crown,
-  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye
+  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye, Watch
 } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay } from './music';
@@ -29,6 +29,9 @@ import { requestWakeLock, releaseWakeLock } from './utils/wakeLock.js';
 import { shareStatsImage } from './utils/shareImage.js';
 import { estimateBodyFat, whtCategory } from './utils/body.js';
 import { getWeeklyProgress, getConsistencyScore, getAveragePace, formatDuration, getStreakRisk } from './utils/progress.js';
+import { parseHuaweiHealthExport, HUAWEI_ACTIVITY_MAP, HUAWEI_FALLBACK } from './utils/huawei.js';
+import { connectHuaweiWatch, mockHuaweiWatchSync, isBluetoothAvailable } from './utils/huaweiWatch.js';
+import { getHuaweiApiConfig, setHuaweiApiConfig, clearHuaweiApiConfig, isHuaweiApiConfigured, isHuaweiApiConnected, buildHuaweiAuthUrl, exchangeHuaweiCodeForToken, fetchHuaweiWorkoutsViaApi, mockHuaweiApiWorkouts } from './utils/huaweiApi.js';
 
 const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
 
@@ -359,6 +362,12 @@ export default function App() {
   const toastTimerRef = useRef(null);
   const [healthWeightSuggestion, setHealthWeightSuggestion] = useState(null);
   const [healthImportStatus, setHealthImportStatus] = useState('idle');
+  const [huaweiWeightSuggestion, setHuaweiWeightSuggestion] = useState(null);
+  const [huaweiImportStatus, setHuaweiImportStatus] = useState('idle');
+  const [huaweiWatchStatus, setHuaweiWatchStatus] = useState('idle'); // idle | searching | connected | disconnected | error
+  const [huaweiWatchInfo, setHuaweiWatchInfo] = useState(null); // { hr, battery, mock }
+  const [huaweiApiStatus, setHuaweiApiStatus] = useState('idle'); // idle | syncing | done | error
+  const [huaweiApiCfg, setHuaweiApiCfg] = useState(() => getHuaweiApiConfig());
 
   const [lastStats, setLastStats] = useState(null);
   const [hrInput, setHrInput] = useState('');
@@ -420,6 +429,31 @@ export default function App() {
       }
       setScreen(p ? 'home' : 'setup');
     })();
+  }, []);
+
+  // ---- Huawei Health OAuth code return (AppGallery redirect) ----
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const state = params.get('state');
+    if (code && state === 'o40') {
+      (async () => {
+        try {
+          setHuaweiApiStatus('syncing');
+          await exchangeHuaweiCodeForToken(code);
+          setHuaweiApiCfg(getHuaweiApiConfig());
+          setHuaweiApiStatus('done');
+          showToast('Huawei Health connesso!');
+          // pulisci URL
+          window.history.replaceState({}, '', window.location.pathname);
+          // auto-sync
+          setTimeout(() => handleHuaweiApiSync(), 800);
+        } catch (e) {
+          setHuaweiApiStatus('error');
+          showToast(`Huawei OAuth: ${e.message.slice(0,100)}`);
+        }
+      })();
+    }
   }, []);
 
   // ---- tap sound on every button, app-wide ----
@@ -871,6 +905,164 @@ export default function App() {
     showToast(t('toast.weight'));
   }
 
+  async function importHuaweiHealth(file) {
+    setHuaweiImportStatus('reading');
+    try {
+      const text = await file.text();
+      setHuaweiImportStatus('parsing');
+      const parsed = parseHuaweiHealthExport(text, file.name);
+      const existingImportDates = new Set(sessions.filter(s => s.imported).map(s => s.date));
+      const newRecords = [];
+      for (const w of parsed.workouts) {
+        const d = parseHuaweiDate(w.startDate);
+        if (!d) continue;
+        const iso = d.toISOString();
+        if (existingImportDates.has(iso)) continue;
+        existingImportDates.add(iso);
+        newRecords.push({
+          date: iso,
+          programId: 'health-import',
+          programName: tr(HUAWEI_ACTIVITY_MAP[w.type] || HUAWEI_FALLBACK, lang),
+          kcal: w.kcal,
+          durationSec: (w.durationMin || 15) * 60,
+          peakHR: null,
+          rpe: null,
+          notes: null,
+          imported: true,
+          source: 'huawei',
+        });
+      }
+      if (newRecords.length) {
+        const updated = [...sessions, ...newRecords].sort((a, b) => new Date(a.date) - new Date(b.date));
+        setSessions(updated);
+        try { await window.storage.set('o40_sessions', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+      }
+      if (parsed.weightKg) {
+        setHuaweiWeightSuggestion({ kg: Math.round(parsed.weightKg * 10) / 10, date: parsed.weightDate });
+      }
+      setHuaweiImportStatus('done');
+      showToast(newRecords.length ? t('toast.imported', { n: newRecords.length }) : t('toast.imported.none'));
+    } catch (e) {
+      setHuaweiImportStatus('error');
+      showToast(t('toast.import.fail'));
+    }
+  }
+
+  async function applyHuaweiWeight() {
+    if (!huaweiWeightSuggestion) return;
+    const p = { ...profile, weight: Math.round(huaweiWeightSuggestion.kg) };
+    setProfile(p);
+    setFormWeight(String(p.weight));
+    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    setHuaweiWeightSuggestion(null);
+    showToast(t('toast.weight'));
+  }
+
+  function parseHuaweiDate(s) {
+    if (!s) return null;
+    const d = new Date(s);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  async function handleConnectHuaweiWatch() {
+    if (!navigator.bluetooth) {
+      const mock = mockHuaweiWatchSync({ sessionsCount: sessions.length });
+      setHuaweiWatchInfo(mock);
+      setHuaweiWatchStatus('connected');
+      showToast(`Huawei Watch (mock) HR ${mock.hr} bpm`);
+      return;
+    }
+    setHuaweiWatchStatus('searching');
+    try {
+      const conn = await connectHuaweiWatch({
+        onHeartRate: (hr) => {
+          setHuaweiWatchInfo(prev => ({ ...(prev || {}), hr, at: new Date().toISOString(), mock: false }));
+          setHrInput(String(hr));
+        },
+        onBattery: (b) => setHuaweiWatchInfo(prev => ({ ...(prev || {}), battery: b })),
+        onStatus: (s) => setHuaweiWatchStatus(s),
+      });
+      setHuaweiWatchStatus('connected');
+      showToast('Huawei Watch connesso');
+      // salva conn per disconnect se serve
+      window.__huaweiWatchConn = conn;
+    } catch (e) {
+      setHuaweiWatchStatus('error');
+      showToast(e.message || 'Connessione Watch fallita');
+    }
+  }
+
+  async function handleMockHuaweiSync() {
+    const mock = mockHuaweiWatchSync({ sessionsCount: sessions.length });
+    setHuaweiWatchInfo(mock);
+    setHuaweiWatchStatus('connected');
+    setHrInput(String(mock.hr));
+    showToast(`Sync Huawei mock HR ${mock.hr} bpm`);
+  }
+
+  // ---- Huawei Health Kit API (OAuth + REST) ----
+  async function handleHuaweiApiConnect() {
+    const cfg = getHuaweiApiConfig();
+    if (!cfg.clientId || !cfg.clientSecret) {
+      showToast('Inserisci Client ID/Secret Huawei (AppGallery Connect)');
+      return;
+    }
+    try {
+      const url = buildHuaweiAuthUrl({ clientId: cfg.clientId, redirectUri: cfg.redirectUri });
+      window.location.href = url;
+    } catch (e) {
+      showToast(e.message);
+    }
+  }
+
+  async function handleHuaweiApiSync() {
+    setHuaweiApiStatus('syncing');
+    try {
+      const isMock = !isHuaweiApiConfigured() || !isHuaweiApiConnected();
+      const parsed = isMock ? mockHuaweiApiWorkouts({ days: 14 }) : await fetchHuaweiWorkoutsViaApi({});
+      const existing = new Set(sessions.filter(s => s.imported).map(s => s.date));
+      const newRecords = [];
+      for (const w of parsed.workouts) {
+        const d = parseHuaweiDate(w.startDate);
+        if (!d) continue;
+        const iso = d.toISOString();
+        if (existing.has(iso)) continue;
+        existing.add(iso);
+        newRecords.push({
+          date: iso,
+          programId: 'health-import',
+          programName: tr(HUAWEI_ACTIVITY_MAP[w.type] || HUAWEI_FALLBACK, lang),
+          kcal: w.kcal,
+          durationSec: (w.durationMin || 15) * 60,
+          peakHR: null,
+          rpe: null,
+          notes: null,
+          imported: true,
+          source: 'huawei-api',
+        });
+      }
+      if (newRecords.length) {
+        const updated = [...sessions, ...newRecords].sort((a,b)=> new Date(a.date)-new Date(b.date));
+        setSessions(updated);
+        try { await window.storage.set('o40_sessions', JSON.stringify(updated), false); } catch {}
+      }
+      if (parsed.weightKg) setHuaweiWeightSuggestion({ kg: parsed.weightKg, date: parsed.weightDate });
+      setHuaweiApiStatus('done');
+      setHuaweiApiCfg(getHuaweiApiConfig());
+      showToast(newRecords.length ? `Huawei Health: ${newRecords.length} importati` : 'Huawei Health: niente di nuovo (mock se non connesso)');
+    } catch (e) {
+      setHuaweiApiStatus('error');
+      showToast(`Huawei API: ${e.message.slice(0,120)}`);
+    }
+  }
+
+  function handleHuaweiApiClear() {
+    clearHuaweiApiConfig();
+    setHuaweiApiCfg(getHuaweiApiConfig());
+    setHuaweiApiStatus('idle');
+    showToast('Huawei Health disconnesso');
+  }
+
 
   /* ---------------- RENDER ---------------- */
   const shell = { minHeight: '100dvh', background: INK, display: 'flex', justifyContent: 'center' };
@@ -925,6 +1117,10 @@ export default function App() {
             intervalPreset={(profile && profile.intervalPreset) || 'standard'} onSetIntervalPreset={setIntervalPreset}
             onImportHealth={importAppleHealth} healthImportStatus={healthImportStatus}
             healthWeightSuggestion={healthWeightSuggestion} onApplyHealthWeight={applyHealthWeight}
+            onImportHuawei={importHuaweiHealth} huaweiImportStatus={huaweiImportStatus}
+            huaweiWeightSuggestion={huaweiWeightSuggestion} onApplyHuaweiWeight={applyHuaweiWeight}
+            huaweiWatchStatus={huaweiWatchStatus} huaweiWatchInfo={huaweiWatchInfo} onConnectHuaweiWatch={handleConnectHuaweiWatch} onMockHuaweiSync={handleMockHuaweiSync}
+            huaweiApiCfg={huaweiApiCfg} huaweiApiStatus={huaweiApiStatus} onHuaweiApiConnect={handleHuaweiApiConnect} onHuaweiApiSync={handleHuaweiApiSync} onHuaweiApiClear={handleHuaweiApiClear} onUpdateHuaweiApiCfg={(p)=>{setHuaweiApiCfg(setHuaweiApiConfig(p))}}
             showToast={showToast} largeText={largeText} setLargeText={setLargeText}
           />
         )}
@@ -1070,7 +1266,7 @@ function CountdownScreen({ program, onDone }) {
 }
 
 /* ================= SETUP SCREEN ================= */
-function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText }) {
+function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, onImportHuawei, huaweiImportStatus, huaweiWeightSuggestion, onApplyHuaweiWeight, huaweiWatchStatus, huaweiWatchInfo, onConnectHuaweiWatch, onMockHuaweiSync, huaweiApiCfg, huaweiApiStatus, onHuaweiApiConnect, onHuaweiApiSync, onHuaweiApiClear, onUpdateHuaweiApiCfg, showToast, largeText, setLargeText }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || 'combattente');
   return (
@@ -1233,6 +1429,85 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
                 </div>
                 <button onClick={onApplyHealthWeight} style={{ ...primaryBtn, width: 'auto', padding: '8px 14px', fontSize: 13 }}>{t('setup.health.apply')}</button>
               </div>
+            )}
+          </div>
+        )}
+
+        {canCancel && (
+          <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }}>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Watch size={14} color={BLAZE} /> Huawei Health — File Import
+            </div>
+            <div style={{ color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }}>
+              {lang === 'it' ? 'Importa l’export di Huawei Health (JSON/TCX/CSV dal ZIP “Richiedi i tuoi dati” o export TCX del Watch). 100% locale, come Apple Health.' : lang === 'de' ? 'Huawei Health-Export importieren (JSON/TCX/CSV). 100 % lokal.' : 'Import Huawei Health export (JSON/TCX/CSV from “Request your data” ZIP or Watch TCX). 100% local.'}
+            </div>
+            <label style={{ ...secondaryBtn, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, cursor: 'pointer', width: '100%' }}>
+              {huaweiImportStatus === 'reading' || huaweiImportStatus === 'parsing' ? (lang === 'it' ? 'Elaborazione…' : 'Processing…') : (lang === 'it' ? 'Carica Huawei JSON/TCX/CSV' : 'Upload Huawei JSON/TCX/CSV')}
+              <input type="file" accept=".json,.tcx,.csv,.xml" style={{ display: 'none' }} onChange={e => { const f = e.target.files && e.target.files[0]; if (f) onImportHuawei(f); e.target.value = ''; }} />
+            </label>
+            {huaweiImportStatus === 'error' && (
+              <div style={{ color: BLAZE, fontSize: 11.5, marginTop: 8 }}>{lang === 'it' ? 'File non riconosciuto — prova JSON/TCX/CSV Huawei.' : 'Unrecognized file — try Huawei JSON/TCX/CSV.'}</div>
+            )}
+            {huaweiWeightSuggestion && (
+              <div style={{ marginTop: 12, background: INK, border: `1px solid ${BLAZE}`, borderRadius: 10, padding: 12, display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{ flex: 1, color: PAPER, fontSize: 12.5 }}>
+                  Huawei: <strong>{huaweiWeightSuggestion.kg} kg</strong>
+                </div>
+                <button onClick={onApplyHuaweiWeight} style={{ ...primaryBtn, width: 'auto', padding: '8px 14px', fontSize: 13 }}>{lang === 'it' ? 'Applica' : 'Apply'}</button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {canCancel && (
+          <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }}>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Globe size={14} color={BLAZE} /> Huawei Health Kit — API Cloud
+            </div>
+            <div style={{ color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }}>
+              {lang === 'it' ? 'Connetti Huawei Health Kit (OAuth2) per sync diretta workout & peso dal cloud, senza file. Richiede AppGallery Connect (Client ID/Secret). Mock se non configurato.' : 'Connect Huawei Health Kit (OAuth2) for direct cloud sync. Requires AppGallery Connect. Mock if not configured.'}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 10 }}>
+              <input value={huaweiApiCfg.clientId || ''} onChange={e => onUpdateHuaweiApiCfg({ clientId: e.target.value })} placeholder="Client ID (AppGallery Connect)" className="o40-input" style={inputStyle} />
+              <input value={huaweiApiCfg.clientSecret || ''} onChange={e => onUpdateHuaweiApiCfg({ clientSecret: e.target.value })} placeholder="Client Secret" type="password" className="o40-input" style={inputStyle} />
+              <input value={huaweiApiCfg.redirectUri || ''} onChange={e => onUpdateHuaweiApiCfg({ redirectUri: e.target.value })} placeholder={`Redirect URI (default: ${typeof window !== 'undefined' ? window.location.origin + window.location.pathname : ''})`} className="o40-input" style={inputStyle} />
+            </div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button onClick={onHuaweiApiConnect} style={{ ...secondaryBtn, flex: 1, fontSize: 12, padding: '10px 12px' }}>{huaweiApiStatus === 'syncing' ? '…' : 'Connetti OAuth'}</button>
+              <button onClick={onHuaweiApiSync} style={{ ...primaryBtn, flex: 1, fontSize: 12, padding: '10px 12px' }}>{huaweiApiStatus === 'syncing' ? 'Sync…' : 'Sync Health Kit'}</button>
+            </div>
+            <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+              <button onClick={onHuaweiApiClear} style={{ ...secondaryBtn, flex: 1, fontSize: 11, padding: '8px 12px', opacity: 0.8 }}>Disconnetti</button>
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, color: STEEL, fontSize: 11 }}>
+                {isHuaweiApiConnected() ? <span style={{ color: '#7FB069' }}>● Connesso</span> : isHuaweiApiConfigured() ? <span style={{ color: KHAKI }}>○ Configurato</span> : <span>○ Mock</span>}
+                {huaweiApiCfg.lastSync && <span>· {new Date(huaweiApiCfg.lastSync).toLocaleDateString()}</span>}
+              </div>
+            </div>
+            {huaweiApiStatus === 'error' && (
+              <div style={{ color: BLAZE, fontSize: 11.5, marginTop: 8 }}>API error — verifica Client ID/Secret & redirect URI (CORS). Prova mock sync.</div>
+            )}
+          </div>
+        )}
+
+        {canCancel && (
+          <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }}>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Watch size={14} color={BLAZE} /> Huawei Watch — HR Live
+            </div>
+            <div style={{ color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }}>
+              {lang === 'it' ? 'Connetti Huawei Watch GT via Bluetooth per HR live durante la sessione (Web Bluetooth — Chrome/Edge). Su iOS usa mock.' : 'Connect Huawei Watch GT via Bluetooth for live HR (Web Bluetooth). Mock on iOS.'}
+            </div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button onClick={onConnectHuaweiWatch} style={{ ...secondaryBtn, flex: 1, fontSize: 12, padding: '10px 12px' }}>{huaweiWatchStatus === 'searching' ? 'Ricerca…' : huaweiWatchStatus === 'connected' ? 'Connesso ✓' : 'Connetti Watch'}</button>
+              <button onClick={onMockHuaweiSync} style={{ ...primaryBtn, flex: 1, fontSize: 12, padding: '10px 12px' }}>Mock HR</button>
+            </div>
+            {huaweiWatchInfo && (
+              <div style={{ marginTop: 10, display: 'flex', gap: 8, color: PAPER, fontSize: 12.5, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '8px 12px', alignItems: 'center' }}>
+                <HeartPulse size={14} color={BLAZE} /> HR {huaweiWatchInfo.hr} bpm {huaweiWatchInfo.battery ? `· 🔋 ${huaweiWatchInfo.battery}%` : ''} {huaweiWatchInfo.mock ? <span style={{ color: KHAKI, fontSize: 10, marginLeft: 6 }}>(mock)</span> : null}
+              </div>
+            )}
+            {huaweiWatchStatus === 'error' && (
+              <div style={{ color: BLAZE, fontSize: 11.5, marginTop: 8 }}>BT non disponibile — usa Mock HR (iOS).</div>
             )}
           </div>
         )}
