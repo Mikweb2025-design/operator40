@@ -914,7 +914,7 @@ export default function App() {
         )}
 
         {screen === 'library' && (
-          <LibraryScreen />
+          <LibraryScreen sessions={sessions} profile={profile} />
         )}
 
         {screen === 'builder' && (
@@ -1561,7 +1561,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
 }
 
 /* ================= LIBRARY SCREEN (browse all exercises) ================= */
-function LibraryScreen() {
+function LibraryScreen({ sessions, profile }) {
   const { lang, t } = useT();
   const [filter, setFilter] = useState('all');
   const [selectedId, setSelectedId] = useState(null);
@@ -1602,6 +1602,29 @@ function LibraryScreen() {
           </button>
         ))}
       </div>
+      {(() => {
+        const lastProg = sessions && sessions.length ? sessions[sessions.length - 1].programId : null;
+        const recIds = lastProg && EXERCISES[lastProg] ? [] : (profile ? PROGRAMS.find(pr => pr.id === 'A').exercises.slice(0,3) : []);
+        // simple: recommend 3 core exercises not yet favorited
+        const rec = recIds.length ? recIds : ['plank','squat','jumpingjack'].filter(id => !favs.includes(id)).slice(0,3);
+        if (!query && !showFavs && rec.length) return (
+          <div style={{ padding: '8px 16px 0' }}>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 4 }}><Sparkles size={10} /> {lang === 'it' ? 'Consigliati per te' : lang === 'de' ? 'Für dich empfohlen' : 'Recommended for you'}</div>
+            <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4 }}>
+              {rec.map(rid => {
+                const ex = EXERCISES[rid];
+                return (
+                  <button key={`rec-${rid}`} onClick={() => setSelectedId(rid)} style={{ minWidth: 110, background: INK_2, border: `1px solid ${favs.includes(rid) ? BLAZE : OLIVE}`, borderRadius: 12, padding: 10, cursor: 'pointer', textAlign: 'center' }}>
+                    <div style={{ width: 44, height: 44, margin: '0 auto 6px' }}><ExerciseFigure pose={ex.pose} color={BLAZE} /></div>
+                    <div style={{ color: PAPER, fontSize: 11, fontWeight: 700 }}>{tr(ex.name, lang)}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+        return null;
+      })()}
       <div className="o40-scroll" style={{ flex: 1, overflowY: 'auto', padding: 16 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {visibleIds.map(id => {
@@ -1973,7 +1996,15 @@ function SessionScreen({ program, seq, phaseIdx, secondsLeft, paused, setPaused,
           </div>
         )}
 
-        <div style={{ color: STEEL, fontSize: 12, marginTop: 6, display: 'flex', alignItems: 'center', gap: 8, background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '7px 12px' }}>
+        {phase.type === 'rest' && (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, marginTop: 4 }}>
+            <div style={{ width: 52, height: 52, borderRadius: '50%', background: OLIVE, opacity: 0.9, animation: 'restBreath 3.2s ease-in-out infinite', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Wind size={16} color={PAPER} />
+            </div>
+            <span className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.08em' }}>{lang === 'it' ? 'Respira — 4 sec in, 4 sec out' : lang === 'de' ? 'Atmen — 4s ein, 4s aus' : 'Breathe — 4s in, 4s out'}</span>
+          </div>
+        )}
+        <div className="o40-card-glass" style={{ color: STEEL, fontSize: 12, marginTop: 6, display: 'flex', alignItems: 'center', gap: 8, borderRadius: 10, padding: '7px 12px' }}>
           {next ? (<>
             {next.exerciseId && <div style={{ width: 26, height: 26, flexShrink: 0 }}><ExerciseFigure pose={EXERCISES[next.exerciseId].pose} color={KHAKI} size="100%" /></div>}
             <span>{t('ses.next', { name: next.type === 'work' ? tr(nextEx.name, lang) : next.type === 'rest' ? t('ses.next.rest') : t('ses.next.cooldown') })}</span>

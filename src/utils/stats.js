@@ -49,8 +49,8 @@ export function computeStreakWithFreeze(sessions) {
 }
 
 export const WEEKLY_GOAL = 3;
-export const STREAK_BADGES = [3, 7, 14, 30];
-export const SESSION_BADGES = [5, 10, 25, 50];
+export const STREAK_BADGES = [3, 7, 14, 30, 60, 90];
+export const SESSION_BADGES = [5, 10, 25, 50, 75, 100, 150];
 
 export const RPE_LABELS = [
   { it: 'Facile', en: 'Easy', de: 'Leicht' },
