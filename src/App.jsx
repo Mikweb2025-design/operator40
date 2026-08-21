@@ -3,7 +3,7 @@ import {
   Play, Pause, SkipForward, Flame, HeartPulse, Trophy, ChevronRight,
   ChevronLeft, RotateCcw, Settings, X, Check, Volume2, VolumeX, Vibrate, History as HistoryIcon, Info, Dog, Plus, Trash2,
   Home as HomeIcon, BookOpen, Zap, RefreshCw, TrendingUp, TrendingDown, Ruler, Target, Medal, Crown,
-  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye
+  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye, Watch, Share2
 } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay, musicSetAutoPlay, musicGetAutoPlay, musicSetShuffle, musicGetShuffle, musicNext, musicPrev, musicSetOnTrackChange, musicGetCurrentId, musicGetQueue } from './music';
@@ -26,11 +26,13 @@ import { loadFavorites, toggleFavorite } from './utils/favorites.js';
 import { WeeklyChallenge } from './components/WeeklyChallenge.jsx';
 import { loadPhotos, savePhotos, fileToDataUrl } from './utils/photos.js';
 import { requestWakeLock, releaseWakeLock } from './utils/wakeLock.js';
-import { shareStatsImage } from './utils/shareImage.js';
+import { shareStatsImage, shareCompetitionImage } from './utils/shareImage.js';
 import { estimateBodyFat, whtCategory } from './utils/body.js';
 import { getWeeklyProgress, getConsistencyScore, getAveragePace, formatDuration, getStreakRisk } from './utils/progress.js';
 import { getGoalProgress, getGoalHistory, suggestNextGoal, formatGoal, estimateWeeklyCalories, getStreakWeeks } from './utils/goals.js';
 import { GoalRing, MiniGoalBar } from './components/GoalRing.jsx';
+import { getCurrentCompetition, getCompetitionShareText } from './utils/competitions.js';
+import { getSmartInsight, getSmartRecommendation } from './utils/smart.js';
 
 const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
 
@@ -1504,6 +1506,47 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         );
       })()}
 
+      {(() => {
+        const smart = getSmartInsight({ sessions, profile, waistHistory, weightHistory, lang });
+        const rec = getSmartRecommendation({ sessions, profile, lang });
+        return (
+          <div style={{ margin: '0 16px 4px', background: `linear-gradient(135deg, ${smart.color}18, ${INK_2})`, border: `1px solid ${smart.color}55`, borderRadius: 12, padding: '11px 13px', display: 'flex', gap: 11, alignItems: 'center' }}>
+            <div style={{ width: 34, height: 34, borderRadius: '50%', background: `${smart.color}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 18 }}>{smart.icon}</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>{smart.title}</div>
+              <div style={{ color: STEEL, fontSize: 11.5, marginTop: 1, lineHeight: 1.4 }}>{smart.body}</div>
+              <div style={{ color: KHAKI, fontSize: 10.5, marginTop: 4, display: 'flex', alignItems: 'center', gap: 4 }}><Lightbulb size={10} /> {rec.reason}</div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {(() => {
+        const comp = getCurrentCompetition(sessions, profile);
+        return (
+          <div style={{ margin: '0 16px 4px', background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '11px 13px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+              <Trophy size={14} color={KHAKI} />
+              <span className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>{typeof comp.competition.title === 'object' ? comp.competition.title[lang] || comp.competition.title.it : comp.competition.title} • #{comp.myRank}/{comp.total}</span>
+              <span style={{ marginLeft: 'auto', color: comp.myRank <= 3 ? '#7FB069' : BLAZE, fontSize: 11, fontWeight: 700 }}>{comp.myRank === 1 ? '🥇' : comp.myRank === 2 ? '🥈' : comp.myRank === 3 ? '🥉' : `${comp.myRank}°`}</span>
+            </div>
+            <div style={{ display: 'flex', gap: 6, overflowX: 'auto' }}>
+              {comp.board.slice(0,5).map(u => (
+                <div key={u.name} style={{ minWidth: 64, background: u.isMe ? `${BLAZE}22` : INK, border: `1px solid ${u.isMe ? BLAZE : OLIVE}`, borderRadius: 10, padding: '6px 8px', textAlign: 'center', flexShrink: 0 }}>
+                  <div style={{ fontSize: 16 }}>{u.avatar}</div>
+                  <div style={{ color: u.isMe ? BLAZE : PAPER, fontSize: 10, fontWeight: 700 }}>{u.name}</div>
+                  <div style={{ color: STEEL, fontSize: 9 }}>{u.sessions} sess</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+              <button onClick={async () => { const r = await shareCompetitionImage({ sessions, profile, lang }); showToast(r === 'share' ? 'Sfida condivisa!' : 'Immagine scaricata'); }} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '8px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}><Share2 size={12} /> Sfida amici</button>
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: STEEL, fontSize: 10.5 }}>{comp.need > 0 ? `+${comp.need} per sorpassare` : 'Sei in testa!'}</div>
+            </div>
+          </div>
+        );
+      })()}
+
       <div style={{ margin: '0 16px 4px', background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '11px 13px', display: 'flex', alignItems: 'center', gap: 11 }}>
         <div style={{ width: 34, height: 34, borderRadius: '50%', background: `${BLAZE}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
           <Ruler size={16} color={BLAZE} />
@@ -2639,6 +2682,20 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           );
         })()}
 
+        {(() => {
+          const smart = getSmartInsight({ sessions, profile, waistHistory, weightHistory, lang });
+          return (
+            <div style={{ marginBottom: 18, background: `linear-gradient(135deg, ${smart.color}18, ${INK_2})`, border: `1px solid ${smart.color}55`, borderRadius: 14, padding: 12, display: 'flex', gap: 10, alignItems: 'center' }}>
+              <div style={{ fontSize: 22 }}>{smart.icon}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ color: PAPER, fontSize: 13, fontWeight: 600 }}>{smart.title}</div>
+                <div style={{ color: STEEL, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }}>{smart.body}</div>
+              </div>
+              <Sparkles size={16} color={smart.color} style={{ flexShrink: 0 }} />
+            </div>
+          );
+        })()}
+
         <div style={{ marginBottom: 20 }}>
           <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>{t('hist.goal.title')}</div>
           <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }}>
@@ -2940,6 +2997,9 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
             </button>
             <button onClick={async () => { const r = await shareStatsImage({ sessions, profile, t, tr }); showToast(r === 'share' ? 'Condiviso' : 'Immagine scaricata'); }} style={{ ...secondaryBtn, flex: 1, minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
               <Sparkles size={14} /> {lang === 'it' ? 'Condividi PNG' : 'Share PNG'}
+            </button>
+            <button onClick={async () => { const r = await shareCompetitionImage({ sessions, profile, lang }); showToast(r === 'share' ? 'Sfida condivisa!' : 'Immagine scaricata'); }} style={{ ...secondaryBtn, flex: 1, minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: `${BLAZE}14`, border: `1px solid ${BLAZE}55` }}>
+              <Trophy size={14} color={BLAZE} /> {lang === 'it' ? 'Sfida' : 'Challenge'}
             </button>
             <button onClick={() => setConfirmClear(true)} style={{ ...secondaryBtn, flex: 1, minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
               <RotateCcw size={15} /> {t('hist.clear')}

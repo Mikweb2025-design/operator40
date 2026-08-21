@@ -1,5 +1,7 @@
 import { computeBestStreak, getRank, getMedalProgress } from './stats.js';
 import { getConsistencyScore } from './progress.js';
+import { getCurrentCompetition } from './competitions.js';
+import { getSmartInsight } from './smart.js';
 
 export async function shareStatsImage({ sessions, profile, t, tr }) {
   const W = 1080, H = 1350;
@@ -197,6 +199,47 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
     ctx.fillText(`${Math.round(nextBadge.progress * 100)}%`, barX + barW, quoteY + 22);
   }
 
+  // --- Smart insight ---
+  try {
+    const smart = getSmartInsight({ sessions, profile, lang: 'it' });
+    const sY = quoteY + 40;
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+    ctx.strokeStyle = `${smart.color}33`;
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.roundRect(cardX + 24, sY, cardW - 48, 64, 12); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = smart.color;
+    ctx.font = '800 22px Inter, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(smart.icon, cardX + 36, sY + 30);
+    ctx.fillStyle = '#EDE8D8';
+    ctx.font = '700 13px Inter, sans-serif';
+    ctx.fillText(smart.title, cardX + 64, sY + 26);
+    ctx.fillStyle = 'rgba(237,232,216,0.72)';
+    ctx.font = '500 11px Inter, sans-serif';
+    const body = smart.body.length > 78 ? smart.body.slice(0, 78) + '…' : smart.body;
+    ctx.fillText(body, cardX + 64, sY + 44);
+  } catch {}
+
+  // --- Competition rank ---
+  try {
+    const comp = getCurrentCompetition(sessions, profile);
+    const cY = quoteY + 118;
+    ctx.fillStyle = 'rgba(193,68,14,0.10)';
+    ctx.strokeStyle = 'rgba(193,68,14,0.22)';
+    ctx.beginPath(); ctx.roundRect(cardX + 24, cY, cardW - 48, 48, 12); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = comp.competition.color || '#C1440E';
+    ctx.font = '800 14px Inter, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${comp.competition.icon} ${typeof comp.competition.title === 'object' ? comp.competition.title.it : comp.competition.title}`, cardX + 36, cY + 20);
+    ctx.fillStyle = '#B8AE8C';
+    ctx.font = '600 11px "IBM Plex Mono", monospace';
+    ctx.fillText(`#${comp.myRank}/${comp.total}  •  ${comp.me.sessions} sess.  •  ${comp.me.kcal} kcal`, cardX + 36, cY + 36);
+    ctx.fillStyle = comp.myRank <= 2 ? '#7FB069' : '#EDE8D8';
+    ctx.font = '800 16px Inter, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(comp.myRank === 1 ? '🥇 1°' : comp.myRank === 2 ? '🥈 2°' : comp.myRank === 3 ? '🥉 3°' : `${comp.myRank}°`, cardX + cardW - 36, cY + 30);
+  } catch {}
+
   // --- Footer ---
   const footY = H - 92;
   // line
@@ -226,5 +269,61 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = `operator40-${new Date().toISOString().slice(0,10)}.png`; a.click();
   URL.revokeObjectURL(url);
+  return 'download';
+}
+
+export async function shareCompetitionImage({ sessions, profile, lang = 'it' }) {
+  const { getCurrentCompetition, getCompetitionShareText } = await import('./competitions.js');
+  const W = 1080, H = 1350;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const ctx = c.getContext('2d');
+  const bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,'#0F1210'); bg.addColorStop(1,'#2A2E22');
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+  // grid
+  ctx.strokeStyle = 'rgba(184,174,140,0.06)'; ctx.lineWidth = 1;
+  for(let x=0;x<W;x+=42){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  // card
+  const pad=36, cardX=pad, cardY=48, cardW=W-pad*2, cardH=H-pad*2-20;
+  ctx.fillStyle='rgba(237,232,216,0.07)'; ctx.strokeStyle='rgba(184,174,140,0.22)'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.roundRect(cardX,cardY,cardW,cardH,28); ctx.fill(); ctx.stroke();
+  const comp = getCurrentCompetition(sessions, profile);
+  const title = typeof comp.competition.title === 'object' ? comp.competition.title[lang] || comp.competition.title.it : comp.competition.title;
+  ctx.fillStyle = comp.competition.color || '#C1440E';
+  ctx.font = '900 42px "Bebas Neue", sans-serif'; ctx.textAlign='center';
+  ctx.fillText(title.toUpperCase(), W/2, cardY+90);
+  ctx.fillStyle='#B8AE8C'; ctx.font='600 14px "IBM Plex Mono", monospace';
+  ctx.fillText('COMPETIZIONE SETTIMANALE • SFIDA UN AMICO', W/2, cardY+118);
+  // leaderboard
+  const startY = cardY+160;
+  comp.board.slice(0,5).forEach((u,i)=>{
+    const y = startY + i*96;
+    const isMe = u.isMe;
+    ctx.fillStyle = isMe ? 'rgba(193,68,14,0.18)' : 'rgba(0,0,0,0.18)';
+    ctx.strokeStyle = isMe ? 'rgba(193,68,14,0.35)' : 'rgba(184,174,140,0.12)';
+    ctx.beginPath(); ctx.roundRect(cardX+24, y, cardW-48, 80, 14); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = isMe ? '#C1440E' : '#B8AE8C';
+    ctx.font = '800 18px Inter, sans-serif'; ctx.textAlign='left';
+    ctx.fillText(`#${u.rank}`, cardX+40, y+32);
+    ctx.font='700 20px Inter, sans-serif'; ctx.fillStyle='#EDE8D8';
+    ctx.fillText(`${u.avatar} ${u.name}`, cardX+80, y+32);
+    ctx.fillStyle='#B8AE8C'; ctx.font='600 11px "IBM Plex Mono", monospace';
+    ctx.fillText(`${u.sessions} sess • ${u.kcal} kcal • streak ${u.streak}`, cardX+80, y+52);
+    if(isMe) { ctx.fillStyle='#7FB069'; ctx.font='800 14px Inter, sans-serif'; ctx.textAlign='right'; ctx.fillText('TU', cardX+cardW-40, y+32); }
+  });
+  // invite
+  const footY = H-120;
+  ctx.fillStyle='#EDE8D8'; ctx.font='700 16px Inter, sans-serif'; ctx.textAlign='center';
+  ctx.fillText('Sfida un amico su Operator40', W/2, footY);
+  ctx.fillStyle='#B8AE8C'; ctx.font='500 13px Inter, sans-serif';
+  ctx.fillText(getCompetitionShareText(comp, lang), W/2, footY+22);
+  ctx.fillStyle='rgba(237,232,216,0.45)'; ctx.font='500 11px Inter, sans-serif';
+  ctx.fillText('mikweb.eu/operator40', W/2, footY+44);
+  const blob = await new Promise(res=>c.toBlob(res,'image/png',0.96));
+  const file = new File([blob],'operator40-competition.png',{type:'image/png'});
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try{ await navigator.share({title:'Operator40 — Sfida', text: getCompetitionShareText(comp, lang), files:[file]}); return 'share'; }catch{}
+  }
+  const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`operator40-competition-${new Date().toISOString().slice(0,10)}.png`; a.click(); URL.revokeObjectURL(url);
   return 'download';
 }
