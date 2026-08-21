@@ -1683,18 +1683,27 @@ function LibraryScreen({ sessions, profile }) {
       {(() => {
         const lastProg = sessions && sessions.length ? sessions[sessions.length - 1].programId : null;
         const recIds = lastProg && EXERCISES[lastProg] ? [] : (profile ? PROGRAMS.find(pr => pr.id === 'A').exercises.slice(0,3) : []);
-        // simple: recommend 3 core exercises not yet favorited
-        const rec = recIds.length ? recIds : ['plank','squat','jumpingjack'].filter(id => !favs.includes(id)).slice(0,3);
+        let rec = recIds.length ? recIds : ['plank','squat','jumpingjack'].filter(id => !favs.includes(id)).slice(0,3);
+        // Personalizza in base a consistenza e streak risk (nuova funzione progresso)
+        const cons = getConsistencyScore(sessions);
+        const risk = getStreakRisk(sessions);
+        if (risk === 'at-risk' && !query && !showFavs) {
+          rec = ['wallsit','ponte','superman'].filter(id => !favs.includes(id)).slice(0,3);
+        } else if (cons < 30 && !query && !showFavs) {
+          rec = ['jumpingjack','squat','crunch'].filter(id => !favs.includes(id)).slice(0,3);
+        }
+        const label = risk === 'at-risk' ? (lang === 'it' ? 'Recupero consigliato' : 'Recovery pick') : cons < 30 ? (lang === 'it' ? 'Partenza facile' : 'Easy start') : (lang === 'it' ? 'Consigliati per te' : 'Recommended for you');
         if (!query && !showFavs && rec.length) return (
           <div style={{ padding: '8px 16px 0' }}>
-            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 4 }}><Sparkles size={10} /> {lang === 'it' ? 'Consigliati per te' : lang === 'de' ? 'Für dich empfohlen' : 'Recommended for you'}</div>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 4 }}><Sparkles size={10} /> {label} {cons ? <span style={{ color: STEEL, marginLeft: 6 }}>· {cons}% aderenza</span> : null}</div>
             <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4 }}>
               {rec.map(rid => {
                 const ex = EXERCISES[rid];
                 return (
-                  <button key={`rec-${rid}`} onClick={() => setSelectedId(rid)} style={{ minWidth: 110, background: INK_2, border: `1px solid ${favs.includes(rid) ? BLAZE : OLIVE}`, borderRadius: 12, padding: 10, cursor: 'pointer', textAlign: 'center' }}>
-                    <div style={{ width: 44, height: 44, margin: '0 auto 6px' }}><ExerciseFigure pose={ex.pose} color={BLAZE} /></div>
+                  <button key={`rec-${rid}`} onClick={() => setSelectedId(rid)} style={{ minWidth: 110, background: `linear-gradient(135deg, ${INK_2}, ${INK})`, border: `1px solid ${favs.includes(rid) ? BLAZE : OLIVE}`, borderRadius: 12, padding: 10, cursor: 'pointer', textAlign: 'center', boxShadow: favs.includes(rid) ? `0 0 0 1px ${BLAZE}22` : 'none' }}>
+                    <div style={{ width: 44, height: 44, margin: '0 auto 6px' }}><ExerciseFigure pose={ex.pose} color={favs.includes(rid) ? BLAZE : KHAKI} /></div>
                     <div style={{ color: PAPER, fontSize: 11, fontWeight: 700 }}>{tr(ex.name, lang)}</div>
+                    <div style={{ color: favs.includes(rid) ? BLAZE : STEEL, fontSize: 9 }}>{favs.includes(rid) ? '★ preferito' : 'tap per aprire'}</div>
                   </button>
                 );
               })}
@@ -2405,6 +2414,39 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
             <span style={{ color: STEEL, fontSize: 10.5 }}>{t('hist.kcal.unit')}</span>
           </div>
         )}
+
+        {(() => {
+          const wp = getWeeklyProgress(sessions, weeklyGoal);
+          const cons = getConsistencyScore(sessions);
+          const pace = getAveragePace(sessions);
+          const risk = getStreakRisk(sessions);
+          return (
+            <div style={{ marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }}>
+              <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.06em', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}><Zap size={12} color={BLAZE} /> ADERENZA 8 SETTIMANE</div>
+              <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
+                <div style={{ flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
+                  <div className="o40-display" style={{ color: cons >= 70 ? '#7FB069' : cons >= 40 ? KHAKI : BLAZE, fontSize: 22 }}>{cons}%</div>
+                  <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>CONSISTENZA</div>
+                  <div style={{ height: 4, borderRadius: 2, background: OLIVE_DARK, marginTop: 6, overflow: 'hidden' }}><div style={{ width: `${cons}%`, height: '100%', background: cons >= 70 ? '#7FB069' : cons >= 40 ? KHAKI : BLAZE }} /></div>
+                </div>
+                <div style={{ flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
+                  <div className="o40-display" style={{ color: wp.isDone ? '#7FB069' : BLAZE, fontSize: 22 }}>{wp.done}/{wp.total}</div>
+                  <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>SETTIMANA</div>
+                  <div style={{ color: risk === 'ok' ? '#7FB069' : risk === 'at-risk' ? KHAKI : BLAZE, fontSize: 10, marginTop: 4 }}>{risk === 'ok' ? '● ok' : risk === 'at-risk' ? '◐ a rischio' : '○ break'}</div>
+                </div>
+                <div style={{ flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
+                  <div className="o40-display" style={{ color: PAPER, fontSize: 18 }}>{pace ? `${pace.avgMin}′` : '—'}</div>
+                  <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>MEDIA</div>
+                  <div style={{ color: KHAKI, fontSize: 10, marginTop: 4 }}>{pace ? `${pace.avgKcal} kcal` : 'n/d'}</div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: STEEL, fontSize: 11 }}>
+                <span>Goal {weeklyGoal}/sett.</span>
+                <span style={{ color: wp.isDone ? '#7FB069' : KHAKI }}>{wp.isDone ? 'Completata!' : `${wp.remain} mancanti`}</span>
+              </div>
+            </div>
+          );
+        })()}
 
         <div style={{ marginBottom: 20 }}>
           <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>{t('hist.goal.title')}</div>
