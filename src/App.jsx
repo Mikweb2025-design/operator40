@@ -6,7 +6,7 @@ import {
   Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye
 } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay } from './music';
+import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay, musicSetAutoPlay, musicGetAutoPlay, musicSetShuffle, musicGetShuffle, musicNext, musicPrev, musicSetOnTrackChange, musicGetCurrentId, musicGetQueue } from './music';
 import { LANGS, LOCALES, detectLang, tr, translate } from './i18n';
 import { hasClip } from './clips.js';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from './constants/theme.js';
@@ -33,6 +33,16 @@ import { getGoalProgress, getGoalHistory, suggestNextGoal, formatGoal, estimateW
 import { GoalRing, MiniGoalBar } from './components/GoalRing.jsx';
 
 const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
+
+function VersionBadge() {
+  return (
+    <div className="o40-mono" style={{ color: STEEL, fontSize: 9, textAlign: 'center', opacity: 0.75, marginTop: 18, letterSpacing: '0.07em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '6px 12px', background: `${INK_2}88`, border: `1px solid ${OLIVE}44`, borderRadius: 20, alignSelf: 'center' }}>
+      <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#7FB069', boxShadow: '0 0 6px #7FB06988' }} />
+      v{BUILD_VERSION}
+      <span style={{ width: 6, height: 6, borderRadius: '50%', background: BLAZE, boxShadow: `0 0 6px ${BLAZE}88` }} />
+    </div>
+  );
+}
 
 function exportData(profile, sessions) {
   try {
@@ -354,6 +364,8 @@ export default function App() {
   const [musicOn, setMusicOn] = useState(false);
   const [musicTrack, setMusicTrack] = useState(DEFAULT_TRACK);
   const [musicVolume, setMusicVolume] = useState(0.55);
+  const [musicAutoPlay, setMusicAutoPlay] = useState(true);
+  const [musicShuffle, setMusicShuffle] = useState(false);
   const [exitConfirm, setExitConfirm] = useState(false);
   const [customPrograms, setCustomPrograms] = useState([]);
   const [editingCustom, setEditingCustom] = useState(null);
@@ -419,6 +431,10 @@ export default function App() {
         setMusicOn(p.musicOn === true);
         setMusicTrack(p.musicTrack || DEFAULT_TRACK);
         if (typeof p.musicVolume === 'number') setMusicVolume(p.musicVolume);
+        setMusicAutoPlay(p.musicAutoPlay !== false);
+        setMusicShuffle(p.musicShuffle === true);
+        musicSetAutoPlay(p.musicAutoPlay !== false);
+        musicSetShuffle(p.musicShuffle === true);
       }
       setScreen(p ? 'home' : 'setup');
     })();
@@ -480,9 +496,11 @@ export default function App() {
     try { localStorage.setItem('o40_largeText', largeText ? '1' : '0'); } catch {}
   }, [largeText]);
 
-  // ---- motivational music: plays while on, adapts volume to the phase ----
+  // ---- motivational music: plays while on, adapts volume to the phase + autoplay playlist ----
   useEffect(() => {
     musicSetShouldPlay(!!musicOn);
+    musicSetAutoPlay(!!musicAutoPlay);
+    musicSetShuffle(!!musicShuffle);
     if (!musicOn) { musicPause(); return; }
     musicLoad(trackSrc(musicTrack));
     let vol = musicVolume;
@@ -499,7 +517,20 @@ export default function App() {
     musicSetVolume(vol);
     musicPlay();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [musicOn, screen, musicTrack, phaseIdx, paused, musicVolume, seq]);
+  }, [musicOn, musicAutoPlay, musicShuffle, screen, musicTrack, phaseIdx, paused, musicVolume, seq]);
+
+  // auto-advance: quando music.js passa alla traccia successiva, aggiorna UI + profilo
+  useEffect(() => {
+    musicSetOnTrackChange((nextId) => {
+      setMusicTrack(nextId);
+      if (profile) {
+        const p = { ...profile, musicTrack: nextId };
+        setProfile(p);
+        window.storage.set('o40_profile', JSON.stringify(p), false).catch(()=>{});
+      }
+    });
+    return () => musicSetOnTrackChange(null);
+  }, [profile]);
 
   // ---- session countdown ----
   useEffect(() => {
@@ -717,6 +748,44 @@ export default function App() {
     try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
   }
 
+  async function toggleMusicAutoPlay() {
+    const next = !musicAutoPlay;
+    setMusicAutoPlay(next);
+    musicSetAutoPlay(next);
+    const p = { ...profile, musicAutoPlay: next };
+    setProfile(p);
+    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+  }
+
+  async function toggleMusicShuffle() {
+    const next = !musicShuffle;
+    setMusicShuffle(next);
+    musicSetShuffle(next);
+    const p = { ...profile, musicShuffle: next };
+    setProfile(p);
+    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+  }
+
+  async function nextMusicTrack() {
+    const nextId = musicNext();
+    if (nextId) {
+      setMusicTrack(nextId);
+      const p = { ...profile, musicTrack: nextId };
+      setProfile(p);
+      try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    }
+  }
+
+  async function prevMusicTrack() {
+    const prevId = musicPrev();
+    if (prevId) {
+      setMusicTrack(prevId);
+      const p = { ...profile, musicTrack: prevId };
+      setProfile(p);
+      try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    }
+  }
+
   async function saveSession() {
     const prevBest = computeBestStreak(sessions);
     const prevCount = sessions.length;
@@ -920,6 +989,9 @@ export default function App() {
             musicOn={musicOn} onToggleMusic={toggleMusic}
             musicTrack={musicTrack} onSelectTrack={selectMusicTrack}
             musicVolume={musicVolume} onChangeMusicVolume={changeMusicVolume}
+            musicAutoPlay={musicAutoPlay} onToggleAutoPlay={toggleMusicAutoPlay}
+            musicShuffle={musicShuffle} onToggleShuffle={toggleMusicShuffle}
+            onNextTrack={nextMusicTrack} onPrevTrack={prevMusicTrack}
             skipWarmup={!!(profile && profile.skipWarmup)} onToggleSkipWarmup={toggleSkipWarmup}
             voiceCountdown={!!(profile && profile.voiceCountdown)} onToggleVoiceCountdown={toggleVoiceCountdown}
             level={(profile && (profile.level || (profile.intervalPreset === 'breve' ? 'recluta' : profile.intervalPreset === 'lungo' ? 'elite' : 'combattente'))) || 'combattente'}
@@ -1005,6 +1077,11 @@ export default function App() {
           <BottomNav active={screen} onNavigate={setScreen} />
         )}
 
+        {/* VersionBadge sempre visibile - corretta e deterministica */}
+        <div style={{ display: 'flex', justifyContent: 'center', padding: screen === 'loading' ? '12px 0' : '6px 0 10px', opacity: 0.85 }}>
+          <VersionBadge />
+        </div>
+
         {toast && (
           <div style={{
             position: 'absolute', left: 16, right: 16, bottom: 20, zIndex: 20,
@@ -1072,7 +1149,7 @@ function CountdownScreen({ program, onDone }) {
 }
 
 /* ================= SETUP SCREEN ================= */
-function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText }) {
+function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || 'combattente');
   return (
@@ -1135,8 +1212,29 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
             <ToggleRow label={t('setup.music')} icon={musicOn ? Music2 : HeadphoneOff} on={musicOn} onClick={onToggleMusic} />
             {musicOn && (
               <div style={{ padding: '8px 10px 12px' }}>
-                <div style={{ color: STEEL, fontSize: 11.5, marginBottom: 8 }}>{t('setup.music.pick')}</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {/* Now playing + prev/next + autoplay/shuffle */}
+                <div style={{ background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                  <button onClick={onPrevTrack} style={{ width: 32, height: 32, borderRadius: '50%', background: OLIVE_DARK, border: `1px solid ${OLIVE}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} aria-label="Prev"><ChevronLeft size={16} color={KHAKI} /></button>
+                  <div style={{ flex: 1, minWidth: 0, textAlign: 'center' }}>
+                    <div className="o40-mono" style={{ color: BLAZE, fontSize: 9, letterSpacing: '0.08em' }}>{musicAutoPlay ? (musicShuffle ? 'SHUFFLE • AUTOPLAY' : 'AUTOPLAY • TUTTE') : 'SINGOLA'}</div>
+                    <div style={{ color: PAPER, fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{(TRACKS.find(t => t.id === musicTrack) || TRACKS[0]).name}</div>
+                    <div style={{ color: STEEL, fontSize: 10 }}>{(TRACKS.find(t => t.id === musicTrack) || TRACKS[0]).artist}</div>
+                  </div>
+                  <button onClick={onNextTrack} style={{ width: 32, height: 32, borderRadius: '50%', background: BLAZE, border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} aria-label="Next"><SkipForward size={16} color={PAPER} /></button>
+                </div>
+                <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
+                  <button onClick={onToggleAutoPlay} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '7px 8px', borderRadius: 8, border: `1px solid ${musicAutoPlay ? BLAZE : OLIVE}`, background: musicAutoPlay ? `${BLAZE}22` : 'transparent', color: musicAutoPlay ? BLAZE : STEEL, fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>
+                    <RefreshCw size={12} /> {musicAutoPlay ? 'Auto • Tutte' : 'Singola'}
+                  </button>
+                  <button onClick={onToggleShuffle} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '7px 8px', borderRadius: 8, border: `1px solid ${musicShuffle ? BLAZE : OLIVE}`, background: musicShuffle ? `${BLAZE}22` : 'transparent', color: musicShuffle ? BLAZE : STEEL, fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>
+                    <RefreshCw size={12} style={{ transform: musicShuffle ? 'rotate(180deg)' : 'none' }} /> {musicShuffle ? 'Shuffle ON' : 'Shuffle OFF'}
+                  </button>
+                </div>
+                <div style={{ color: STEEL, fontSize: 11.5, marginBottom: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span>{t('setup.music.pick')}</span>
+                  <span style={{ color: KHAKI, fontSize: 10 }}>{TRACKS.length} brani • {musicAutoPlay ? 'auto' : 'loop singolo'}</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 220, overflowY: 'auto' }}>
                   {TRACKS.map(track => {
                     const on = musicTrack === track.id;
                     return (
@@ -1150,9 +1248,9 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
                             <span className="o40-mono" style={{ color: PAPER, fontSize: 12 }}>{track.name}</span>
                             <span className="o40-mono" style={{ fontSize: 9, color: track.lang === 'IT' ? '#7FB069' : track.lang === 'DE' ? '#D9B34C' : STEEL, border: `1px solid ${track.lang === 'IT' ? '#7FB06966' : track.lang === 'DE' ? '#D9B34C66' : `${STEEL}44`}`, borderRadius: 4, padding: '0 4px' }}>{track.lang}</span>
                           </div>
-                          <div style={{ color: STEEL, fontSize: 10.5 }}>{track.artist} · {track.tag} · 2:00</div>
+                          <div style={{ color: STEEL, fontSize: 10.5 }}>{track.artist} · {track.tag} · 2:00 {on && musicOn ? '• ora' : ''}</div>
                         </div>
-                        <span className="o40-mono" style={{ color: on ? BLAZE : KHAKI, fontSize: 10 }}>{on ? t('setup.music.playing') : t('setup.music.listen')}</span>
+                        <span className="o40-mono" style={{ color: on ? BLAZE : KHAKI, fontSize: 10 }}>{on ? (musicOn ? '▶' : t('setup.music.playing')) : t('setup.music.listen')}</span>
                       </button>
                     );
                   })}
@@ -1162,9 +1260,10 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
                   <input type="range" min={0} max={100} value={Math.round(musicVolume * 100)}
                     onChange={e => onChangeMusicVolume(e.target.value / 100)}
                     style={{ flex: 1, accentColor: BLAZE }} />
+                  <span className="o40-mono" style={{ color: STEEL, fontSize: 10 }}>{Math.round(musicVolume * 100)}%</span>
                 </div>
                 <div style={{ marginTop: 8, color: STEEL, fontSize: 10, lineHeight: 1.4 }}>
-                  {t('setup.music.note')}
+                  {musicAutoPlay ? (lang === 'it' ? '▶ Tutte le canzoni in sequenza automatica. Shuffle per ordine casuale.' : 'All songs autoplay in sequence. Shuffle for random.') : t('setup.music.note')}
                 </div>
               </div>
             )}
@@ -1251,6 +1350,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         }}>
           {t('setup.enlist')} <ChevronRight size={18} />
         </button>
+        <VersionBadge />
       </div>
     </div>
   );
@@ -1671,9 +1771,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
             <span className="o40-mono" style={{ color: KHAKI, fontSize: 12.5, letterSpacing: '0.05em' }}>{t('home.custom.create')}</span>
           </button>
         </div>
-        <div className="o40-mono" style={{ color: STEEL, fontSize: 9, textAlign: 'center', opacity: 0.5, marginTop: 16, letterSpacing: '0.06em' }}>
-          v{BUILD_VERSION}
-        </div>
+        <VersionBadge />
       </div>
     </div>
   );
