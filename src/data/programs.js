@@ -58,6 +58,12 @@ export const PROGRAMS = [
     exercises: ['crunch', 'legraise', 'vup', 'deadbug', 'flutterkick', 'sideplank'] },
   { id: 'G', name: { it: 'SNAGLIATURA TOTALE', en: 'FULL SLIM', de: 'TOTALER SCHLANKHEIT' }, tagline: { it: 'Dimagrisci su tutto il corpo: metabolismo al massimo', en: 'Slim down all over — metabolism on max', de: 'Überall abnehmen — Stoffwechsel auf Maximum' }, focus: { it: 'SNAGLIATURA', en: 'SLIM', de: 'ABNEHMEN' }, rounds: 2,
     exercises: ['burpeetattico', 'ginocchiaalte', 'mountainclimber', 'squat', 'flessioni', 'skater'] },
+  { id: 'H', name: { it: 'SCHIENA DI FERRO', en: 'IRON BACK', de: 'EISENRÜCKEN' }, tagline: { it: 'Postura e lombari — addio mal di schiena', en: 'Posture & lower back — goodbye back pain', de: 'Haltung & unterer Rücken — bye Rückenschmerz' }, focus: { it: 'SCHIENA', en: 'BACK', de: 'RÜCKEN' }, rounds: 2,
+    exercises: ['superman', 'ponte', 'deadbug', 'wallsit', 'sideplank', 'plank'] },
+  { id: 'I', name: { it: 'CARDIO LEGGERO', en: 'LIGHT CARDIO', de: 'LEICHTES CARDIO' }, tagline: { it: 'Fiato senza impatto — per ginocchia sensibili', en: 'Breath without impact — for sensitive knees', de: 'Atem ohne Impact — für empfindliche Knie' }, focus: { it: 'FIATO', en: 'BREATH', de: 'ATEM' }, rounds: 2,
+    exercises: ['ginocchiaalte', 'heeltap', 'ponte', 'crunch', 'sideplank', 'superman'] },
+  { id: 'J', name: { it: 'BRACCIA D\'ACCIAIO', en: 'STEEL ARMS', de: 'STAHLARME' }, tagline: { it: 'Petto e braccia — spinta a corpo libero', en: 'Chest & arms — bodyweight push', de: 'Brust & Arme — Bodyweight Push' }, focus: { it: 'BRACCIA', en: 'ARMS', de: 'ARME' }, rounds: 2,
+    exercises: ['flessioni', 'plankjack', 'mountainclimber', 'deadbug', 'superman', 'crunchbici'] },
 ];
 
 export const QUICK_PROGRAM = {
@@ -66,7 +72,7 @@ export const QUICK_PROGRAM = {
 };
 
 export const CAMP_DAYS = 30;
-export const DAY_CYCLE = ['A', 'B', 'C', 'A', 'B', 'C', 'D'];
+export const DAY_CYCLE = ['A', 'B', 'C', 'H', 'I', 'J', 'D', 'E', 'F', 'G', 'A', 'B', 'C', 'D'];
 
 export function campDayIndex(profile) {
   const start = profile && profile.campStart ? new Date(profile.campStart) : null;

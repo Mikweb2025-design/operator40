@@ -14,7 +14,7 @@ import { EXERCISES, EXERCISE_GROUPS } from './data/exercises.js';
 import { PROGRAMS, QUICK_PROGRAM, WORK_SEC, REST_SEC, WARM_SEC, COOL_SEC, INTERVAL_PRESETS, LEVELS, CAMP_DAYS, DAY_CYCLE, getIntervalPreset, getLevel, levelPreset, campDayIndex, programById, pickNextProgram } from './data/programs.js';
 import { buildSequence, kcalForSeconds, estimateProgramKcal, totalSeqSeconds } from './utils/workout.js';
 import { formatTime, dayKey, sessionDayKey } from './utils/date.js';
-import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, greeting, buildHeatmap } from './utils/stats.js';
+import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, greeting, buildHeatmap, buildYearHeatmap, getPersonalRecords } from './utils/stats.js';
 import { getAudioCtx, unlockAudio, playBeep, playClick, vibrate, speak } from './utils/audio.js';
 import { STYLES } from './styles/appStyles.js';
 import { ExerciseFigure } from './components/ExerciseFigure.jsx';
@@ -1464,6 +1464,9 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
             <div className="o40-mono" style={{ color: KHAKI, fontSize: 9.5, letterSpacing: '0.08em', background: `${KHAKI}18`, border: `1px solid ${KHAKI}44`, borderRadius: 6, padding: '2px 7px' }}>
               {tr(todayProgram.focus, lang)}
             </div>
+            {['H','I','J'].includes(todayProgram.id) && (
+              <div className="o40-mono" style={{ color: PAPER, fontSize: 9, letterSpacing: '0.08em', background: BLAZE, borderRadius: 6, padding: '2px 7px' }}>NEW</div>
+            )}
           </div>
           <div className="o40-display" style={{ color: PAPER, fontSize: 30, marginTop: 2 }}>{tr(todayProgram.name, lang)}</div>
           <div style={{ color: KHAKI, fontSize: 13.5, marginTop: 2 }}>{tr(todayProgram.tagline, lang)}</div>
@@ -1521,9 +1524,10 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {others.map(p => (
               <button key={p.id} onClick={() => onOpenProgram(p)} style={{
-                display: 'flex', alignItems: 'center', gap: 12, background: INK_2, border: `1px solid ${OLIVE}`,
-                borderRadius: 10, padding: 12, cursor: 'pointer', textAlign: 'left',
+                display: 'flex', alignItems: 'center', gap: 12, background: INK_2, border: `1px solid ${['H','I','J'].includes(p.id) ? BLAZE : OLIVE}`,
+                borderRadius: 10, padding: 12, cursor: 'pointer', textAlign: 'left', position: 'relative',
               }}>
+                {['H','I','J'].includes(p.id) && <span style={{ position: 'absolute', top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>NEW</span>}
                 <div style={{ width: 40, height: 40, flexShrink: 0 }}>
                   <ExerciseFigure pose={EXERCISES[p.exercises[0]].pose} color={KHAKI} />
                 </div>
@@ -2260,6 +2264,8 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
   const totalSec = sessions.reduce((a, s) => a + (s.durationSec || 780), 0);
   const totalMin = Math.round(totalSec / 60);
   const avgKcal = sessions.length ? Math.round(totalKcal / sessions.length) : 0;
+  const pr = getPersonalRecords(sessions);
+  const yearHeat = buildYearHeatmap(sessions);
   const rpeSeries = sessions.filter(s => s.rpe != null).map((s, i) => ({
     idx: i + 1, rpe: s.rpe, label: new Date(s.date).toLocaleDateString(LOCALES[lang], { day: '2-digit', month: '2-digit' }),
   }));
@@ -2290,6 +2296,16 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           <DogTag label={t('dt.avgkcal')} value={avgKcal} sub={t('dt.permission')} />
           <DogTag label={t('dt.weeks')} value={sessionsPerWeek.toFixed(1)} sub={t('dt.perweek')} />
         </div>
+
+        {pr && (
+          <div className="o40-card-glass" style={{ display: 'flex', gap: 10, marginBottom: 18, padding: 12, borderRadius: 12 }}>
+            <div style={{ flex: 1, textAlign: 'center' }}><div className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>MAX KCAL</div><div className="o40-display" style={{ color: BLAZE, fontSize: 20 }}>{pr.maxKcal}</div></div>
+            <div style={{ width: 1, background: OLIVE_DARK }} />
+            <div style={{ flex: 1, textAlign: 'center' }}><div className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>MAX STREAK</div><div className="o40-display" style={{ color: PAPER, fontSize: 20 }}>{pr.maxStreak}🔥</div></div>
+            <div style={{ width: 1, background: OLIVE_DARK }} />
+            <div style={{ flex: 1, textAlign: 'center' }}><div className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>TOTALE</div><div className="o40-display" style={{ color: KHAKI, fontSize: 20 }}>{pr.totalMin}′</div></div>
+          </div>
+        )}
 
         {avgRpe !== null && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }}>
@@ -2339,6 +2355,17 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
                   aspectRatio: '1 / 1', borderRadius: 3,
                   background: c.active ? BLAZE : OLIVE_DARK, opacity: c.active ? 1 : 0.6,
                 }} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginBottom: 20 }}>
+          <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Anno · {new Date().getFullYear()}</div>
+          <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(26, 1fr)', gap: 2 }}>
+              {yearHeat.map(c => (
+                <div key={c.key} title={`${c.key} · ${c.count || 0}`} style={{ aspectRatio: '1/1', borderRadius: 2, background: c.count ? (c.count > 1 ? BLAZE : OLIVE) : OLIVE_DARK, opacity: c.count ? 1 : 0.5 }} />
               ))}
             </div>
           </div>

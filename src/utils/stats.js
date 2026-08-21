@@ -105,3 +105,26 @@ export function buildHeatmap(sessions, days = 35) {
   }
   return cells;
 }
+export function buildYearHeatmap(sessions) {
+  const byDay = new Map();
+  sessions.forEach(s => { const k = sessionDayKey(s); byDay.set(k, (byDay.get(k) || 0) + 1); });
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 1);
+  const days = [];
+  for (let d = new Date(start); d <= now; d.setDate(d.getDate() + 1)) {
+    const k = dayKey(d);
+    const c = byDay.get(k) || 0;
+    days.push({ key: k, date: new Date(d), count: c, active: c > 0 });
+  }
+  return days;
+}
+export function getPersonalRecords(sessions) {
+  if (!sessions.length) return null;
+  const maxKcal = Math.max(...sessions.map(s => s.kcal || 0));
+  const maxStreak = computeBestStreak(sessions);
+  const totalMin = Math.round(sessions.reduce((a,s)=>a+(s.durationSec||0),0)/60);
+  const favCounts = {};
+  sessions.forEach(s => { favCounts[s.programId] = (favCounts[s.programId]||0)+1; });
+  const favId = Object.entries(favCounts).sort((a,b)=>b[1]-a[1])[0]?.[0] || null;
+  return { maxKcal, maxStreak, totalMin, totalSessions: sessions.length, favId };
+}
