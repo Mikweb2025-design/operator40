@@ -6,10 +6,21 @@ export const WARM_SEC = 90;
 export const COOL_SEC = 90;
 
 export const INTERVAL_PRESETS = [
+  { key: 'tabata', work: 20, rest: 10, label: '20″ / 10″ · Tabata' },
   { key: 'breve', work: 30, rest: 15, label: '30″ / 15″' },
   { key: 'standard', work: 40, rest: 20, label: '40″ / 20″' },
   { key: 'lungo', work: 45, rest: 15, label: '45″ / 15″' },
+  { key: 'custom', work: 40, rest: 20, label: 'Custom', isCustom: true },
 ];
+
+export function getCustomPreset(profile) {
+  if (profile && profile.customWork && profile.customRest) {
+    const w = Math.max(10, Math.min(90, parseInt(profile.customWork, 10) || 40));
+    const r = Math.max(5, Math.min(60, parseInt(profile.customRest, 10) || 20));
+    return { key: 'custom', work: w, rest: r, label: `${w}″ / ${r}″` };
+  }
+  return null;
+}
 
 export function getIntervalPreset(key) {
   return INTERVAL_PRESETS.find(p => p.key === key) || INTERVAL_PRESETS[1];
@@ -24,6 +35,10 @@ export const LEVELS = [
 export function getLevel(key) { return LEVELS.find(l => l.key === key) || LEVELS[1]; }
 
 export function levelPreset(profile) {
+  if (profile && profile.intervalPreset === 'custom') {
+    const c = getCustomPreset(profile);
+    if (c) return c;
+  }
   const lvl = profile && profile.level ? getLevel(profile.level) : null;
   return lvl ? getIntervalPreset(lvl.preset) : getIntervalPreset((profile && profile.intervalPreset) || 'standard');
 }

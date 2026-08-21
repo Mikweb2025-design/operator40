@@ -18,6 +18,10 @@ import { hrZone, computeBestStreak, computeStreak, WEEKLY_GOAL, STREAK_BADGES, S
 import { getAudioCtx, unlockAudio, playBeep, playClick, vibrate, speak } from './utils/audio.js';
 import { STYLES } from './styles/appStyles.js';
 import { ExerciseFigure } from './components/ExerciseFigure.jsx';
+import { requestNotificationPermission, scheduleDailyReminder, disableReminder, getReminder, checkAndFireReminder, fireTestNotification } from './utils/notifications.js';
+import { shareResults } from './utils/share.js';
+import { exportCSV, buildCalendarGrid } from './utils/export.js';
+import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.js';
 
 function exportData(profile, sessions) {
   try {
@@ -318,6 +322,12 @@ export default function App() {
   const [formAge, setFormAge] = useState('');
   const [formWeight, setFormWeight] = useState('');
   const [formWaist, setFormWaist] = useState('');
+  const [formHeight, setFormHeight] = useState('');
+  const [formCustomWork, setFormCustomWork] = useState('40');
+  const [formCustomRest, setFormCustomRest] = useState('20');
+  const [reminderHour, setReminderHour] = useState('8');
+  const [reminderMinute, setReminderMinute] = useState('0');
+  const [reminderEnabled, setReminderEnabled] = useState(false);
   const [previewProgram, setPreviewProgram] = useState(null);
 
   const [activeProgram, setActiveProgram] = useState(null);
@@ -388,7 +398,7 @@ export default function App() {
       setWeightHistory(wt || []);
       if (p) {
         setLang((p.lang && LANGS.includes(p.lang) && p.lang) || detectLang());
-        setFormName(p.name); setFormAge(String(p.age)); setFormWeight(String(p.weight));
+        setFormName(p.name); setFormAge(String(p.age)); setFormWeight(String(p.weight)); setFormHeight(p.heightCm ? String(p.heightCm) : ''); setFormCustomWork(p.customWork || '40'); setFormCustomRest(p.customRest || '20');
         setSoundOn(p.soundOn !== false);
         setVibrationOn(p.vibrationOn !== false);
         setMusicOn(p.musicOn === true);
@@ -421,10 +431,17 @@ export default function App() {
   useEffect(() => {
     function onVisibility() {
       if (document.hidden && screen === 'session') setPaused(true);
+      else if (!document.hidden) checkAndFireReminder(t);
     }
     document.addEventListener('visibilitychange', onVisibility);
     return () => document.removeEventListener('visibilitychange', onVisibility);
-  }, [screen]);
+  }, [screen, t]);
+  // ---- daily reminder check every minute ----
+  useEffect(() => {
+    const id = setInterval(() => checkAndFireReminder(t), 60000);
+    checkAndFireReminder(t);
+    return () => clearInterval(id);
+  }, [t]);
 
   // ---- motivational music: plays while on, adapts volume to the phase ----
   useEffect(() => {
@@ -518,6 +535,9 @@ export default function App() {
       name: formName.trim() || 'Operatore',
       age: Math.max(18, Math.min(90, parseInt(formAge, 10) || 40)),
       weight: Math.max(40, Math.min(180, parseInt(formWeight, 10) || 80)),
+      heightCm: formHeight ? Math.max(120, Math.min(220, parseInt(formHeight, 10) || 0)) : (profile && profile.heightCm) || null,
+      customWork: formCustomWork ? String(Math.max(10, Math.min(90, parseInt(formCustomWork, 10) || 40))) : (profile && profile.customWork) || '40',
+      customRest: formCustomRest ? String(Math.max(5, Math.min(60, parseInt(formCustomRest, 10) || 20))) : (profile && profile.customRest) || '20',
       weeklyGoal: (profile && profile.weeklyGoal) || WEEKLY_GOAL,
       soundOn: profile ? profile.soundOn !== false : true,
       vibrationOn: profile ? profile.vibrationOn !== false : true,
@@ -526,7 +546,7 @@ export default function App() {
       musicVolume: typeof (profile && profile.musicVolume) === 'number' ? profile.musicVolume : 0.55,
       skipWarmup: profile ? !!profile.skipWarmup : false,
       seenIntro: profile ? !!profile.seenIntro : false,
-      intervalPreset: (profile && profile.intervalPreset) || 'standard',
+      intervalPreset: (formCustomWork !== '40' || formCustomRest !== '20') ? 'custom' : ((profile && profile.intervalPreset) || 'standard'),
       level: prevLevel || 'combattente',
       lang: lang,
       campStart: profile && profile.campStart ? profile.campStart : new Date().toISOString(),
@@ -826,6 +846,11 @@ export default function App() {
             formAge={formAge} setFormAge={setFormAge}
             formWeight={formWeight} setFormWeight={setFormWeight}
             formWaist={formWaist} setFormWaist={setFormWaist}
+            formHeight={formHeight} setFormHeight={setFormHeight}
+            formCustomWork={formCustomWork} setFormCustomWork={setFormCustomWork}
+            formCustomRest={formCustomRest} setFormCustomRest={setFormCustomRest}
+            reminderHour={reminderHour} setReminderHour={setReminderHour}
+            reminderMinute={reminderMinute} setReminderMinute={setReminderMinute}
             onSave={saveProfile}
             canCancel={!!profile}
             onCancel={() => setScreen('home')}
@@ -840,6 +865,7 @@ export default function App() {
             intervalPreset={(profile && profile.intervalPreset) || 'standard'} onSetIntervalPreset={setIntervalPreset}
             onImportHealth={importAppleHealth} healthImportStatus={healthImportStatus}
             healthWeightSuggestion={healthWeightSuggestion} onApplyHealthWeight={applyHealthWeight}
+            showToast={showToast}
           />
         )}
 
@@ -954,7 +980,7 @@ function CountdownScreen({ program, onDone }) {
 }
 
 /* ================= SETUP SCREEN ================= */
-function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, skipWarmup, onToggleSkipWarmup, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight }) {
+function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, skipWarmup, onToggleSkipWarmup, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || 'combattente');
   return (
@@ -988,6 +1014,10 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         <Field label={t('setup.waist')}>
           <input value={formWaist} onChange={e => setFormWaist(e.target.value.replace(/\D/g, ''))} inputMode="numeric"
             placeholder={t('setup.waist.ph')} className="o40-input" style={inputStyle} />
+        </Field>
+        <Field label={t('setup.height')}>
+          <input value={formHeight} onChange={e => setFormHeight(e.target.value.replace(/\D/g, ''))} inputMode="numeric"
+            placeholder={t('setup.height.ph')} className="o40-input" style={inputStyle} />
         </Field>
 
         {canCancel && (
@@ -1047,6 +1077,23 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
               {t('setup.level')}
             </div>
             <div style={{ color: STEEL, fontSize: 11.5, marginBottom: 10 }}>{t('setup.level.hint')}</div>
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
+              {INTERVAL_PRESETS.map(pr => (
+                <button key={pr.key} onClick={() => { onSetIntervalPreset(pr.key); if (pr.key !== 'custom') { setFormCustomWork(String(pr.work)); setFormCustomRest(String(pr.rest)); } }} style={{ padding: '6px 10px', borderRadius: 8, border: `1px solid ${intervalPreset === pr.key ? BLAZE : OLIVE}`, background: intervalPreset === pr.key ? `${BLAZE}22` : 'transparent', color: intervalPreset === pr.key ? BLAZE : STEEL, fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>
+                  {pr.label}
+                </button>
+              ))}
+            </div>
+            {intervalPreset === 'custom' || formCustomWork !== '40' || formCustomRest !== '20' ? (
+              <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
+                <Field label={t('setup.custom.work')}>
+                  <input value={formCustomWork} onChange={e => setFormCustomWork(e.target.value)} type="number" inputMode="numeric" className="o40-input" style={inputStyle} />
+                </Field>
+                <Field label={t('setup.custom.rest')}>
+                  <input value={formCustomRest} onChange={e => setFormCustomRest(e.target.value)} type="number" inputMode="numeric" className="o40-input" style={inputStyle} />
+                </Field>
+              </div>
+            ) : null}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {LEVELS.map(l => (
                 <button key={l.key} onClick={() => onSetLevel(l.key)} style={{
@@ -2298,6 +2345,37 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, onBack,
           </div>
         )}
 
+        {profile && profile.heightCm && weightHistory.length > 0 && (() => {
+          const latestKg = weightHistory[weightHistory.length - 1].kg;
+          const bmi = calcBMI(latestKg, profile.heightCm);
+          const cat = bmiCategory(bmi);
+          const tdee = estimateTDEE(latestKg, profile.heightCm, profile.age);
+          return (
+            <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }}>
+              <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.06em', marginBottom: 6 }}>{t('bmi.title')} · {bmi} {cat && <span style={{ color: cat.color }}>· {t('bmi.' + cat.key)}</span>}</div>
+              {tdee && <div style={{ color: STEEL, fontSize: 12 }}>{t('bmi.tdee', { v: tdee })}</div>}
+              <div style={{ color: STEEL, fontSize: 11.5, marginTop: 6, opacity: 0.8 }}>{tr(simpleMealHint(bmi > 27 ? 'cut' : 'maintain'), lang)}</div>
+            </div>
+          );
+        })()}
+        {(() => {
+          const now = new Date();
+          const { pad, days } = buildCalendarGrid(sessions, now.getFullYear(), now.getMonth());
+          return (
+            <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }}>
+              <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.06em', marginBottom: 8 }}>{t('export.calendar')} · {now.toLocaleDateString(lang === 'it' ? 'it-IT' : lang === 'de' ? 'de-DE' : 'en-US', { month: 'long', year: 'numeric' })}</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4, textAlign: 'center' }}>
+                {['L','M','M','G','V','S','D'].map(d => <div key={d} style={{ color: STEEL, fontSize: 10 }}>{d}</div>)}
+                {Array.from({ length: pad }).map((_, i) => <div key={`p${i}`} />)}
+                {days.map(d => (
+                  <div key={d.key} title={d.sessions.length ? `${d.sessions.length} sessioni` : ''} style={{ width: 28, height: 28, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, background: d.sessions.length ? BLAZE : 'transparent', color: d.sessions.length ? PAPER : STEEL, border: d.isToday ? `1px solid ${KHAKI}` : '1px solid transparent', fontWeight: d.sessions.length ? 700 : 400 }}>
+                    {d.day}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
         <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>{t('hist.sessions.title')}</div>
         {ordered.length === 0 && <div style={{ color: STEEL, fontSize: 13 }}>{t('hist.empty')}</div>}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -2327,11 +2405,14 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, onBack,
         </div>
 
         {sessions.length > 0 && (
-          <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
-            <button onClick={() => exportData(profile, sessions)} style={{ ...secondaryBtn, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+          <div style={{ display: 'flex', gap: 8, marginTop: 20, flexWrap: 'wrap' }}>
+            <button onClick={() => exportData(profile, sessions)} style={{ ...secondaryBtn, flex: 1, minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
               {t('hist.export')}
             </button>
-            <button onClick={() => setConfirmClear(true)} style={{ ...secondaryBtn, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+            <button onClick={() => exportCSV(sessions, waistHistory, weightHistory)} style={{ ...secondaryBtn, flex: 1, minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+              {t('export.csv')}
+            </button>
+            <button onClick={() => setConfirmClear(true)} style={{ ...secondaryBtn, flex: 1, minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
               <RotateCcw size={15} /> {t('hist.clear')}
             </button>
           </div>
