@@ -28,6 +28,7 @@ import { loadPhotos, savePhotos, fileToDataUrl } from './utils/photos.js';
 import { requestWakeLock, releaseWakeLock } from './utils/wakeLock.js';
 import { shareStatsImage } from './utils/shareImage.js';
 import { estimateBodyFat, whtCategory } from './utils/body.js';
+import { getWeeklyProgress, getConsistencyScore, getAveragePace, formatDuration, getStreakRisk } from './utils/progress.js';
 
 const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
 
@@ -1376,6 +1377,30 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         <DogTag label={t('dt.sessions')} value={sessions.length} sub={t('dt.total')} />
         <DogTag label={t('dt.kcal')} value={kcalWeek} sub={t('dt.7d')} />
       </div>
+
+      {(() => {
+        const wp = getWeeklyProgress(sessions, weeklyGoal);
+        const cons = getConsistencyScore(sessions);
+        const risk = getStreakRisk(sessions);
+        const pace = getAveragePace(sessions);
+        return (
+          <div style={{ margin: '0 16px 4px', background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${risk === 'at-risk' ? KHAKI : risk === 'break' ? BLAZE : OLIVE}`, borderRadius: 12, padding: '11px 13px', display: 'flex', alignItems: 'center', gap: 11 }}>
+            <div style={{ width: 34, height: 34, borderRadius: '50%', background: `${BLAZE}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <TrendingUp size={16} color={risk === 'break' ? BLAZE : KHAKI} />
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>Aderenza · {cons}% <span style={{ color: STEEL, fontWeight: 400 }}>· {wp.done}/{wp.total} questa settimana</span></div>
+              <div style={{ color: STEEL, fontSize: 11.5, marginTop: 1 }}>
+                {risk === 'ok' ? 'Streak al sicuro' : risk === 'at-risk' ? 'Rischio streak — allenati oggi!' : 'Streak interrotta — riparti oggi'} {pace ? `· ${pace.avgMin}′ / ${pace.avgKcal} kcal medi` : ''}
+              </div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div className="o40-display" style={{ color: wp.isDone ? '#7FB069' : BLAZE, fontSize: 18 }}>{Math.round(wp.pct * 100)}%</div>
+              <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>SETTIMANA</div>
+            </div>
+          </div>
+        );
+      })()}
 
       <div style={{ margin: '0 16px 4px', background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '11px 13px', display: 'flex', alignItems: 'center', gap: 11 }}>
         <div style={{ width: 34, height: 34, borderRadius: '50%', background: `${BLAZE}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
