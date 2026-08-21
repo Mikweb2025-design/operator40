@@ -33,6 +33,20 @@ export function computeStreak(sessions) {
   }
   return streak;
 }
+export function computeStreakWithFreeze(sessions) {
+  const dateSet = new Set(sessions.map(sessionDayKey));
+  let cursor = new Date();
+  if (!dateSet.has(dayKey(cursor))) cursor.setDate(cursor.getDate() - 1);
+  let streak = 0;
+  let freezes = 1; // one freeze per streak
+  while (true) {
+    const k = dayKey(cursor);
+    if (dateSet.has(k)) { streak++; cursor.setDate(cursor.getDate() - 1); continue; }
+    if (freezes > 0) { freezes--; cursor.setDate(cursor.getDate() - 1); continue; }
+    break;
+  }
+  return { streak, usedFreeze: freezes === 0 };
+}
 
 export const WEEKLY_GOAL = 3;
 export const STREAK_BADGES = [3, 7, 14, 30];

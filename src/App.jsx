@@ -14,7 +14,7 @@ import { EXERCISES, EXERCISE_GROUPS } from './data/exercises.js';
 import { PROGRAMS, QUICK_PROGRAM, WORK_SEC, REST_SEC, WARM_SEC, COOL_SEC, INTERVAL_PRESETS, LEVELS, CAMP_DAYS, DAY_CYCLE, getIntervalPreset, getLevel, levelPreset, campDayIndex, programById, pickNextProgram } from './data/programs.js';
 import { buildSequence, kcalForSeconds, estimateProgramKcal, totalSeqSeconds } from './utils/workout.js';
 import { formatTime, dayKey, sessionDayKey } from './utils/date.js';
-import { hrZone, computeBestStreak, computeStreak, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, greeting, buildHeatmap } from './utils/stats.js';
+import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, greeting, buildHeatmap } from './utils/stats.js';
 import { getAudioCtx, unlockAudio, playBeep, playClick, vibrate, speak } from './utils/audio.js';
 import { STYLES } from './styles/appStyles.js';
 import { ExerciseFigure } from './components/ExerciseFigure.jsx';
@@ -23,6 +23,7 @@ import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
 import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.js';
 import { loadFavorites, toggleFavorite } from './utils/favorites.js';
+import { WeeklyChallenge } from './components/WeeklyChallenge.jsx';
 import { loadPhotos, savePhotos, fileToDataUrl } from './utils/photos.js';
 
 function exportData(profile, sessions) {
@@ -247,9 +248,8 @@ function DogTag({ label, value, sub }) {
 function TopBar({ title, onBack, right }) {
   const { t } = useT();
   return (
-    <div style={{
+    <div className="o40-topbar-glass" style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'max(14px, env(safe-area-inset-top, 0px)) 16px',
-      borderBottom: `1px solid ${OLIVE_DARK}`, background: `${INK}ee`, backdropFilter: 'blur(6px)',
       position: 'sticky', top: 0, zIndex: 5,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 32 }}>
@@ -276,8 +276,8 @@ function BottomNav({ active, onNavigate }) {
     { key: 'setup', label: t('nav.setup'), icon: Settings },
   ];
   return (
-    <div style={{
-      display: 'flex', borderTop: `1px solid ${OLIVE_DARK}`, background: `${INK}ee`, backdropFilter: 'blur(6px)',
+    <div className="o40-bottomnav-glass" style={{
+      display: 'flex',
       paddingBottom: 'env(safe-area-inset-bottom, 0px)',
     }}>
       {tabs.map(t => {
@@ -330,7 +330,6 @@ export default function App() {
   const [reminderHour, setReminderHour] = useState('8');
   const [reminderMinute, setReminderMinute] = useState('0');
   const [reminderEnabled, setReminderEnabled] = useState(false);
-  const [theme, setTheme] = useState(() => { try { return localStorage.getItem('o40_theme') || 'dark'; } catch { return 'dark'; } });
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showTour, setShowTour] = useState(false);
   const [photos, setPhotos] = useState(() => loadPhotos());
@@ -448,11 +447,7 @@ export default function App() {
     checkAndFireReminder(t);
     return () => clearInterval(id);
   }, [t]);
-  // ---- theme ----
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    try { localStorage.setItem('o40_theme', theme); } catch {}
-  }, [theme]);
+
   // ---- install prompt ----
   useEffect(() => {
     function onReady() { setInstallPrompt(window.__o40DeferPrompt); }
@@ -991,10 +986,7 @@ export default function App() {
             </div>
           </div>
         )}
-        {/* theme toggle */}
-        <button onClick={() => setTheme(v => v === 'dark' ? 'light' : 'dark')} aria-label="theme" style={{ position: 'absolute', top: 10, right: 12, zIndex: 6, width: 34, height: 34, borderRadius: '50%', border: `1px solid ${KHAKI}`, background: INK_2, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-          {theme === 'dark' ? <Sun size={16} color={KHAKI} /> : <Moon size={16} color={OLIVE} />}
-        </button>
+
         {/* install banner */}
         {installPrompt && ['home','library','history','setup'].includes(screen) && (
           <div className="o40-install">
@@ -2074,6 +2066,7 @@ function SummaryScreen({ stats, profile, hrInput, setHrInput, waistInput, setWai
           <DogTag label={t('dt.duration')} value={`${Math.round(stats.durationSec / 60)}′`} />
           <DogTag label={t('dt.kcal')} value={stats.kcal} />
         </div>
+        <WeeklyChallenge sessions={sessions} weeklyGoal={profile.weeklyGoal || WEEKLY_GOAL} />
 
         <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }}>
           <span className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{t('sum.rpe.title')}</span>

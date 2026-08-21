@@ -272,9 +272,6 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 
 /* ---- UI upgrade: glass + light mode + search + favorites ---- */
 :root { --bg: ${INK}; --bg2: ${INK_2}; --surface: ${OLIVE_DARK}; --text: ${PAPER}; --muted: ${STEEL}; --accent: ${BLAZE}; --accent2: ${KHAKI}; }
-[data-theme="light"] { --bg: #F6F1E0; --bg2: #EDE8D8; --surface: #DDD6BE; --text: #1B1D16; --muted: #6B6B5A; --accent: #C1440E; --accent2: #4A5233; }
-[data-theme="light"] .o40-phone { background: var(--bg) !important; }
-[data-theme="light"] .o40-aura { opacity: 0.35; }
 .o40-glass { background: color-mix(in srgb, var(--bg2) 92%, transparent); backdrop-filter: blur(10px) saturate(1.2); border: 1px solid color-mix(in srgb, var(--accent2) 22%, transparent); box-shadow: 0 8px 24px rgba(0,0,0,0.28); }
 .o40-card-glass { background: linear-gradient(165deg, color-mix(in srgb, var(--bg2) 96%, transparent), color-mix(in srgb, var(--bg) 96%, transparent)); backdrop-filter: blur(8px); border: 1px solid rgba(184,174,140,0.18); box-shadow: 0 6px 20px rgba(0,0,0,0.32); transition: transform 0.18s ease, box-shadow 0.22s ease, border-color 0.22s ease; }
 .o40-card-glass:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.42); border-color: rgba(184,174,140,0.28); }
@@ -288,4 +285,8 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-install { position: fixed; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); left: 12px; right: 12px; z-index: 40; background: ${INK_2}; border: 1px solid ${KHAKI}; border-radius: 14px; padding: 12px; display: flex; align-items: center; gap: 10; box-shadow: 0 12px 30px rgba(0,0,0,0.45); animation: popIn 0.32s ease; }
 .o40-tour-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.58); z-index: 50; display: flex; align-items: flex-end; justify-content: center; padding: 16px; }
 .o40-tour-card { background: ${PAPER}; color: ${INK}; border-radius: 16px; padding: 18px; max-width: 360px; width: 100%; box-shadow: 0 16px 40px rgba(0,0,0,0.5); }
+/* dark polish: stronger TopBar blur, card depth, noise */
+.o40-phone::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); }
+.o40-topbar-glass { backdrop-filter: blur(12px) saturate(1.15); background: color-mix(in srgb, ${INK} 88%, transparent); border-bottom: 1px solid rgba(184,174,140,0.12); }
+.o40-bottomnav-glass { backdrop-filter: blur(12px) saturate(1.15); background: color-mix(in srgb, ${INK} 90%, transparent); border-top: 1px solid rgba(184,174,140,0.12); }
 `;
