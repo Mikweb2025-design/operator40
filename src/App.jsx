@@ -1486,7 +1486,138 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         <DogTag label={t('dt.kcal')} value={kcalWeek} sub={t('dt.7d')} />
       </div>
 
-      {(() => {
+      <div style={{ padding: '4px 16px 16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '12px 0 8px' }}>
+          <svg width="64" height="12" viewBox="0 0 64 12" fill="none" style={{ flexShrink: 0 }}>
+            <path d="M0 6 H10 L14 2 L18 10 L22 4 L26 8 L30 6 H40 L44 2 L48 10 L52 4 L56 8 L60 6 H64"
+              stroke={BLAZE} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" className="o40-ecg" />
+          </svg>
+          <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{t('home.mission.title')}</div>
+        </div>
+        <button className="o40-card o40-ring-border o40-sheen" onClick={() => { vibrate(10); onOpenProgram(todayProgram); }} style={{
+          width: '100%', textAlign: 'left', border: `1px solid ${BLAZE}`,
+          background: `linear-gradient(150deg, ${INK_2} 0%, ${OLIVE_DARK} 55%, ${OLIVE} 130%)`,
+          borderRadius: 18, padding: 20, cursor: 'pointer', position: 'relative', overflow: 'hidden',
+          boxShadow: `0 10px 30px rgba(0,0,0,0.45), 0 0 0 1px ${BLAZE}22 inset`,
+        }}>
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(music-bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,12,10,0.6)' }} />
+          <div style={{ position: 'relative' }}>
+          <div className="o40-embers">
+            {[['8%', '0s', '3.2s'], ['22%', '1.1s', '3.8s'], ['38%', '0.5s', '3.4s'], ['55%', '1.7s', '3.6s'], ['70%', '0.9s', '3.3s'], ['84%', '1.4s', '3.9s'], ['93%', '0.3s', '3.5s']].map(([l, d, du], i) => (
+              <span key={i} className="o40-ember" style={{ left: l, animationDelay: d, animationDuration: du }} />
+            ))}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div className="o40-mono" style={{ color: BLAZE, fontSize: 11, letterSpacing: '0.1em' }}>{t('home.mission.tag', { id: todayProgram.id })}</div>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 9.5, letterSpacing: '0.08em', background: `${KHAKI}18`, border: `1px solid ${KHAKI}44`, borderRadius: 6, padding: '2px 7px' }}>
+              {tr(todayProgram.focus, lang)}
+            </div>
+            <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Star key={i} size={10} color={i < (todayProgram.difficulty || 2) ? BLAZE : STEEL} fill={i < (todayProgram.difficulty || 2) ? BLAZE : 'none'} />
+              ))}
+            </div>
+            {['H','I','J','K','L','M'].includes(todayProgram.id) && (
+              <div className="o40-mono" style={{ color: PAPER, fontSize: 9, letterSpacing: '0.08em', background: BLAZE, borderRadius: 6, padding: '2px 7px' }}>NEW</div>
+            )}
+          </div>
+          <div className="o40-display" style={{ color: PAPER, fontSize: 30, marginTop: 2 }}>{tr(todayProgram.name, lang)}</div>
+          <div style={{ color: KHAKI, fontSize: 13.5, marginTop: 2 }}>{tr(todayProgram.tagline, lang)}</div>
+          {adaptive && (
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10.5, marginTop: 8, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: '4px 8px', display: 'inline-block' }}>
+              {t('home.mission.adaptive')}
+            </div>
+          )}
+          <div style={{ display: 'flex', gap: 14, marginTop: 12, color: STEEL, fontSize: 12.5 }}>
+            <span>{t('home.mission.min')}</span><span>·</span><span>{t('home.mission.noequip')}</span><span>·</span><span>{t('home.mission.ex', { n: todayProgram.exercises.length })}</span>
+          </div>
+          <div style={{
+            marginTop: 14, display: 'inline-flex', alignItems: 'center', gap: 4, color: PAPER,
+            fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em',
+            background: `${BLAZE}33`, border: `1px solid ${BLAZE}`, borderRadius: 10, padding: '7px 14px',
+            animation: 'glowPulse 2.4s ease-in-out infinite',
+          }}>
+            {t('home.mission.see')} <ChevronRight size={18} />
+          </div>
+          </div>
+        </button>
+
+        {lastProgram && (
+          <button onClick={() => onOpenProgram(lastProgram)} style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', marginTop: 10,
+            background: 'transparent', border: `1px dashed ${OLIVE}`, borderRadius: 10, padding: 10, cursor: 'pointer',
+          }}>
+            <RotateCcw size={13} color={STEEL} />
+            <span className="o40-mono" style={{ color: STEEL, fontSize: 11.5 }}>{t('home.repeat', { name: tr(lastProgram.name, lang) })}</span>
+          </button>
+        )}
+
+        <button onClick={() => onOpenProgram(QUICK_PROGRAM)} style={{
+          display: 'flex', alignItems: 'center', gap: 12, width: '100%', marginTop: 10,
+          background: `linear-gradient(135deg, ${INK_2}, ${INK})`, border: `1px solid ${KHAKI}`, borderRadius: 12, padding: 12, cursor: 'pointer', textAlign: 'left',
+        }}>
+          <div style={{ width: 34, height: 34, borderRadius: '50%', background: `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Zap size={17} color={KHAKI} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ color: PAPER, fontSize: 13.5, fontWeight: 600 }}>{tr(QUICK_PROGRAM.name, lang)}</div>
+            <div style={{ color: STEEL, fontSize: 11.5 }}>{tr(QUICK_PROGRAM.tagline, lang)} · {t('home.quick.min')}</div>
+          </div>
+          <ChevronRight size={16} color={STEEL} />
+        </button>
+
+        <div style={{ margin: '12px 0 8px', background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Star size={16} color={KHAKI} />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>SFIDA DEL GIORNO • {dailyChallenge.bonus}</div>
+            <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>{tr(dailyChallenge.program.name, lang)}</div>
+            <div style={{ color: STEEL, fontSize: 11 }}>{tr(dailyChallenge.program.tagline, lang)}</div>
+          </div>
+          <button onClick={() => onOpenProgram(dailyChallenge.program)} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}>Vai</button>
+        </div>
+
+        <button onClick={() => setShowOthers(v => !v)} style={{
+          display: 'flex', alignItems: 'center', gap: 12, width: '100%',
+          background: showOthers ? OLIVE_DARK : INK_2, border: `1px solid ${showOthers ? BLAZE : OLIVE}`, borderRadius: 12, padding: '12px 14px', cursor: 'pointer', margin: '20px 0 12px',
+          boxShadow: showOthers ? `0 4px 12px rgba(0,0,0,0.3)` : 'none', transition: 'all 0.2s ease'
+        }}>
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: showOthers ? BLAZE : `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <BookOpen size={16} color={showOthers ? PAPER : KHAKI} />
+          </div>
+          <div style={{ flex: 1, textAlign: 'left' }}>
+            <div className="o40-mono" style={{ color: showOthers ? BLAZE : KHAKI, fontSize: 11, letterSpacing: '0.06em' }}>{t('home.other')} • {others.length} missioni</div>
+            <div style={{ color: STEEL, fontSize: 11, marginTop: 2 }}>{showOthers ? 'Tocca per chiudere' : 'Esplora tutte le missioni disponibili'}</div>
+          </div>
+          <div style={{ width: 28, height: 28, borderRadius: '50%', background: showOthers ? BLAZE : OLIVE_DARK, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: showOthers ? 'rotate(90deg)' : 'none', transition: 'all 0.2s ease' }}>
+            <ChevronRight size={14} color={showOthers ? PAPER : KHAKI} />
+          </div>
+        </button>
+        {showOthers && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {others.map((p, idx) => (
+              <button key={p.id} onClick={() => onOpenProgram(p)} style={{
+                display: 'flex', alignItems: 'center', gap: 12, background: idx === 0 ? `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})` : INK_2, border: `1px solid ${idx === 0 ? KHAKI : ['H','I','J'].includes(p.id) ? BLAZE : OLIVE}`,
+                borderRadius: 10, padding: 12, cursor: 'pointer', textAlign: 'left', position: 'relative',
+              }}>
+                {idx === 0 && <span style={{ position: 'absolute', top: 6, left: 6, background: KHAKI, color: INK, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>★ Consigliata</span>}
+                {['H','I','J','K','L','M'].includes(p.id) && <span style={{ position: 'absolute', top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>NEW</span>}
+                <div style={{ width: 40, height: 40, flexShrink: 0 }}>
+                  <ExerciseFigure pose={EXERCISES[p.exercises[0]].pose} color={KHAKI} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ color: PAPER, fontSize: 14.5, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>{tr(p.name, lang)}<span style={{ display: 'flex', gap: 1 }}>{Array.from({ length: 3 }).map((_, i) => (<Star key={i} size={9} color={i < (p.difficulty || 2) ? KHAKI : STEEL} fill={i < (p.difficulty || 2) ? KHAKI : 'none'} />))}</span></div>
+                  <div style={{ color: STEEL, fontSize: 12 }}>{tr(p.tagline, lang)}</div>
+                </div>
+                <ChevronRight size={18} color={STEEL} />
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '20px 0 8px' }}>{(() => {
         const wp = getWeeklyProgress(sessions, weeklyGoal);
         const cons = getConsistencyScore(sessions);
         const risk = getStreakRisk(sessions);
@@ -1694,138 +1825,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         );
       })()}
 
-      <div style={{ padding: '4px 16px 16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '12px 0 8px' }}>
-          <svg width="64" height="12" viewBox="0 0 64 12" fill="none" style={{ flexShrink: 0 }}>
-            <path d="M0 6 H10 L14 2 L18 10 L22 4 L26 8 L30 6 H40 L44 2 L48 10 L52 4 L56 8 L60 6 H64"
-              stroke={BLAZE} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" className="o40-ecg" />
-          </svg>
-          <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{t('home.mission.title')}</div>
-        </div>
-        <button className="o40-card o40-ring-border o40-sheen" onClick={() => { vibrate(10); onOpenProgram(todayProgram); }} style={{
-          width: '100%', textAlign: 'left', border: `1px solid ${BLAZE}`,
-          background: `linear-gradient(150deg, ${INK_2} 0%, ${OLIVE_DARK} 55%, ${OLIVE} 130%)`,
-          borderRadius: 18, padding: 20, cursor: 'pointer', position: 'relative', overflow: 'hidden',
-          boxShadow: `0 10px 30px rgba(0,0,0,0.45), 0 0 0 1px ${BLAZE}22 inset`,
-        }}>
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(music-bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,12,10,0.6)' }} />
-          <div style={{ position: 'relative' }}>
-          <div className="o40-embers">
-            {[['8%', '0s', '3.2s'], ['22%', '1.1s', '3.8s'], ['38%', '0.5s', '3.4s'], ['55%', '1.7s', '3.6s'], ['70%', '0.9s', '3.3s'], ['84%', '1.4s', '3.9s'], ['93%', '0.3s', '3.5s']].map(([l, d, du], i) => (
-              <span key={i} className="o40-ember" style={{ left: l, animationDelay: d, animationDuration: du }} />
-            ))}
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <div className="o40-mono" style={{ color: BLAZE, fontSize: 11, letterSpacing: '0.1em' }}>{t('home.mission.tag', { id: todayProgram.id })}</div>
-            <div className="o40-mono" style={{ color: KHAKI, fontSize: 9.5, letterSpacing: '0.08em', background: `${KHAKI}18`, border: `1px solid ${KHAKI}44`, borderRadius: 6, padding: '2px 7px' }}>
-              {tr(todayProgram.focus, lang)}
-            </div>
-            <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              {Array.from({ length: 3 }).map((_, i) => (
-                <Star key={i} size={10} color={i < (todayProgram.difficulty || 2) ? BLAZE : STEEL} fill={i < (todayProgram.difficulty || 2) ? BLAZE : 'none'} />
-              ))}
-            </div>
-            {['H','I','J','K','L','M'].includes(todayProgram.id) && (
-              <div className="o40-mono" style={{ color: PAPER, fontSize: 9, letterSpacing: '0.08em', background: BLAZE, borderRadius: 6, padding: '2px 7px' }}>NEW</div>
-            )}
-          </div>
-          <div className="o40-display" style={{ color: PAPER, fontSize: 30, marginTop: 2 }}>{tr(todayProgram.name, lang)}</div>
-          <div style={{ color: KHAKI, fontSize: 13.5, marginTop: 2 }}>{tr(todayProgram.tagline, lang)}</div>
-          {adaptive && (
-            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10.5, marginTop: 8, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: '4px 8px', display: 'inline-block' }}>
-              {t('home.mission.adaptive')}
-            </div>
-          )}
-          <div style={{ display: 'flex', gap: 14, marginTop: 12, color: STEEL, fontSize: 12.5 }}>
-            <span>{t('home.mission.min')}</span><span>·</span><span>{t('home.mission.noequip')}</span><span>·</span><span>{t('home.mission.ex', { n: todayProgram.exercises.length })}</span>
-          </div>
-          <div style={{
-            marginTop: 14, display: 'inline-flex', alignItems: 'center', gap: 4, color: PAPER,
-            fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em',
-            background: `${BLAZE}33`, border: `1px solid ${BLAZE}`, borderRadius: 10, padding: '7px 14px',
-            animation: 'glowPulse 2.4s ease-in-out infinite',
-          }}>
-            {t('home.mission.see')} <ChevronRight size={18} />
-          </div>
-          </div>
-        </button>
-
-        {lastProgram && (
-          <button onClick={() => onOpenProgram(lastProgram)} style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', marginTop: 10,
-            background: 'transparent', border: `1px dashed ${OLIVE}`, borderRadius: 10, padding: 10, cursor: 'pointer',
-          }}>
-            <RotateCcw size={13} color={STEEL} />
-            <span className="o40-mono" style={{ color: STEEL, fontSize: 11.5 }}>{t('home.repeat', { name: tr(lastProgram.name, lang) })}</span>
-          </button>
-        )}
-
-        <button onClick={() => onOpenProgram(QUICK_PROGRAM)} style={{
-          display: 'flex', alignItems: 'center', gap: 12, width: '100%', marginTop: 10,
-          background: `linear-gradient(135deg, ${INK_2}, ${INK})`, border: `1px solid ${KHAKI}`, borderRadius: 12, padding: 12, cursor: 'pointer', textAlign: 'left',
-        }}>
-          <div style={{ width: 34, height: 34, borderRadius: '50%', background: `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <Zap size={17} color={KHAKI} />
-          </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ color: PAPER, fontSize: 13.5, fontWeight: 600 }}>{tr(QUICK_PROGRAM.name, lang)}</div>
-            <div style={{ color: STEEL, fontSize: 11.5 }}>{tr(QUICK_PROGRAM.tagline, lang)} · {t('home.quick.min')}</div>
-          </div>
-          <ChevronRight size={16} color={STEEL} />
-        </button>
-
-        <div style={{ margin: '12px 0 8px', background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 36, height: 36, borderRadius: '50%', background: `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <Star size={16} color={KHAKI} />
-          </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>SFIDA DEL GIORNO • {dailyChallenge.bonus}</div>
-            <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>{tr(dailyChallenge.program.name, lang)}</div>
-            <div style={{ color: STEEL, fontSize: 11 }}>{tr(dailyChallenge.program.tagline, lang)}</div>
-          </div>
-          <button onClick={() => onOpenProgram(dailyChallenge.program)} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}>Vai</button>
-        </div>
-
-        <button onClick={() => setShowOthers(v => !v)} style={{
-          display: 'flex', alignItems: 'center', gap: 12, width: '100%',
-          background: showOthers ? OLIVE_DARK : INK_2, border: `1px solid ${showOthers ? BLAZE : OLIVE}`, borderRadius: 12, padding: '12px 14px', cursor: 'pointer', margin: '20px 0 12px',
-          boxShadow: showOthers ? `0 4px 12px rgba(0,0,0,0.3)` : 'none', transition: 'all 0.2s ease'
-        }}>
-          <div style={{ width: 36, height: 36, borderRadius: '50%', background: showOthers ? BLAZE : `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <BookOpen size={16} color={showOthers ? PAPER : KHAKI} />
-          </div>
-          <div style={{ flex: 1, textAlign: 'left' }}>
-            <div className="o40-mono" style={{ color: showOthers ? BLAZE : KHAKI, fontSize: 11, letterSpacing: '0.06em' }}>{t('home.other')} • {others.length} missioni</div>
-            <div style={{ color: STEEL, fontSize: 11, marginTop: 2 }}>{showOthers ? 'Tocca per chiudere' : 'Esplora tutte le missioni disponibili'}</div>
-          </div>
-          <div style={{ width: 28, height: 28, borderRadius: '50%', background: showOthers ? BLAZE : OLIVE_DARK, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: showOthers ? 'rotate(90deg)' : 'none', transition: 'all 0.2s ease' }}>
-            <ChevronRight size={14} color={showOthers ? PAPER : KHAKI} />
-          </div>
-        </button>
-        {showOthers && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {others.map((p, idx) => (
-              <button key={p.id} onClick={() => onOpenProgram(p)} style={{
-                display: 'flex', alignItems: 'center', gap: 12, background: idx === 0 ? `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})` : INK_2, border: `1px solid ${idx === 0 ? KHAKI : ['H','I','J'].includes(p.id) ? BLAZE : OLIVE}`,
-                borderRadius: 10, padding: 12, cursor: 'pointer', textAlign: 'left', position: 'relative',
-              }}>
-                {idx === 0 && <span style={{ position: 'absolute', top: 6, left: 6, background: KHAKI, color: INK, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>★ Consigliata</span>}
-                {['H','I','J','K','L','M'].includes(p.id) && <span style={{ position: 'absolute', top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>NEW</span>}
-                <div style={{ width: 40, height: 40, flexShrink: 0 }}>
-                  <ExerciseFigure pose={EXERCISES[p.exercises[0]].pose} color={KHAKI} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ color: PAPER, fontSize: 14.5, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>{tr(p.name, lang)}<span style={{ display: 'flex', gap: 1 }}>{Array.from({ length: 3 }).map((_, i) => (<Star key={i} size={9} color={i < (p.difficulty || 2) ? KHAKI : STEEL} fill={i < (p.difficulty || 2) ? KHAKI : 'none'} />))}</span></div>
-                  <div style={{ color: STEEL, fontSize: 12 }}>{tr(p.tagline, lang)}</div>
-                </div>
-                <ChevronRight size={18} color={STEEL} />
-              </button>
-            ))}
-          </div>
-        )}
-
-        <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '20px 0 8px' }}>{t('home.yours')}</div>
+      {t('home.yours')}</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {customPrograms.map(p => (
             <div key={p.id} style={{
