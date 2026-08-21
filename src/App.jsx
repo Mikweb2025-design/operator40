@@ -25,6 +25,8 @@ import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.
 import { loadFavorites, toggleFavorite } from './utils/favorites.js';
 import { WeeklyChallenge } from './components/WeeklyChallenge.jsx';
 import { loadPhotos, savePhotos, fileToDataUrl } from './utils/photos.js';
+import { requestWakeLock, releaseWakeLock } from './utils/wakeLock.js';
+import { shareStatsImage } from './utils/shareImage.js';
 
 function exportData(profile, sessions) {
   try {
@@ -333,6 +335,7 @@ export default function App() {
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showTour, setShowTour] = useState(false);
   const [photos, setPhotos] = useState(() => loadPhotos());
+  const [largeText, setLargeText] = useState(() => { try { return localStorage.getItem('o40_largeText') === '1'; } catch { return false; } });
   const [previewProgram, setPreviewProgram] = useState(null);
 
   const [activeProgram, setActiveProgram] = useState(null);
@@ -464,6 +467,11 @@ export default function App() {
       if (!seen) setShowTour(true);
     }
   }, [screen, profile]);
+  // ---- large text ----
+  useEffect(() => {
+    document.documentElement.style.fontSize = largeText ? '18px' : '';
+    try { localStorage.setItem('o40_largeText', largeText ? '1' : '0'); } catch {}
+  }, [largeText]);
 
   // ---- motivational music: plays while on, adapts volume to the phase ----
   useEffect(() => {
@@ -897,7 +905,7 @@ export default function App() {
             intervalPreset={(profile && profile.intervalPreset) || 'standard'} onSetIntervalPreset={setIntervalPreset}
             onImportHealth={importAppleHealth} healthImportStatus={healthImportStatus}
             healthWeightSuggestion={healthWeightSuggestion} onApplyHealthWeight={applyHealthWeight}
-            showToast={showToast}
+            showToast={showToast} largeText={largeText} setLargeText={setLargeText}
           />
         )}
 
@@ -1039,7 +1047,7 @@ function CountdownScreen({ program, onDone }) {
 }
 
 /* ================= SETUP SCREEN ================= */
-function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, skipWarmup, onToggleSkipWarmup, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast }) {
+function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, skipWarmup, onToggleSkipWarmup, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || 'combattente');
   return (
@@ -1056,6 +1064,12 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
               {l === 'it' ? 'ITALIANO' : l === 'en' ? 'ENGLISH' : 'DEUTSCH'}
             </button>
           ))}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '8px 12px' }}>
+          <span className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>A11Y · Testo grande</span>
+          <button onClick={() => setLargeText(v => !v)} style={{ padding: '6px 10px', borderRadius: 8, border: `1px solid ${largeText ? BLAZE : OLIVE}`, background: largeText ? `${BLAZE}22` : 'transparent', color: largeText ? BLAZE : STEEL, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+            {largeText ? 'A Grande ✓' : 'A Normale'}
+          </button>
         </div>
         <p style={{ color: STEEL, fontSize: 14, lineHeight: 1.5 }} dangerouslySetInnerHTML={{ __html: t('setup.intro') }} />
         <Field label={t('setup.name')}>
@@ -1916,6 +1930,7 @@ function SessionScreen({ program, seq, phaseIdx, secondsLeft, paused, setPaused,
   const ex = phase.exerciseId ? EXERCISES[phase.exerciseId] : null;
   const nextEx = next && next.exerciseId ? EXERCISES[next.exerciseId] : null;
   const progress = 1 - secondsLeft / phase.duration;
+  useEffect(() => { requestWakeLock(); function onVis(){ if (!document.hidden) requestWakeLock(); } document.addEventListener('visibilitychange', onVis); return () => { document.removeEventListener('visibilitychange', onVis); releaseWakeLock(); }; }, []);
 
   const phaseLabel = phase.type === 'warmup' ? t('ses.warmup')
     : phase.type === 'cooldown' ? t('ses.cooldown')
@@ -2542,6 +2557,9 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
             </button>
             <button onClick={() => exportCSV(sessions, waistHistory, weightHistory)} style={{ ...secondaryBtn, flex: 1, minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
               {t('export.csv')}
+            </button>
+            <button onClick={async () => { const r = await shareStatsImage({ sessions, profile, t, tr }); showToast(r === 'share' ? 'Condiviso' : 'Immagine scaricata'); }} style={{ ...secondaryBtn, flex: 1, minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+              <Sparkles size={14} /> {lang === 'it' ? 'Condividi PNG' : 'Share PNG'}
             </button>
             <button onClick={() => setConfirmClear(true)} style={{ ...secondaryBtn, flex: 1, minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
               <RotateCcw size={15} /> {t('hist.clear')}
