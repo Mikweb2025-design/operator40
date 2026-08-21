@@ -27,6 +27,7 @@ import { WeeklyChallenge } from './components/WeeklyChallenge.jsx';
 import { loadPhotos, savePhotos, fileToDataUrl } from './utils/photos.js';
 import { requestWakeLock, releaseWakeLock } from './utils/wakeLock.js';
 import { shareStatsImage } from './utils/shareImage.js';
+import { estimateBodyFat, whtCategory } from './utils/body.js';
 
 function exportData(profile, sessions) {
   try {
@@ -350,6 +351,7 @@ export default function App() {
   const [musicVolume, setMusicVolume] = useState(0.55);
   const [exitConfirm, setExitConfirm] = useState(false);
   const [customPrograms, setCustomPrograms] = useState([]);
+  const [editingCustom, setEditingCustom] = useState(null);
   const [toast, setToast] = useState(null);
   const toastTimerRef = useRef(null);
   const [healthWeightSuggestion, setHealthWeightSuggestion] = useState(null);
@@ -790,7 +792,15 @@ export default function App() {
     setScreen('preview');
     showToast(t('toast.created'));
   }
-
+  async function updateCustomProgram(program) {
+    const updated = customPrograms.map(p => p.id === program.id ? program : p);
+    setCustomPrograms(updated);
+    try { await window.storage.set('o40_custom_programs', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+    setEditingCustom(null);
+    setPreviewProgram(program);
+    setScreen('preview');
+    showToast('Missione aggiornata');
+  }
   async function deleteCustomProgram(id) {
     const updated = customPrograms.filter(p => p.id !== id);
     setCustomPrograms(updated);
@@ -914,7 +924,8 @@ export default function App() {
             profile={profile} sessions={sessions} customPrograms={customPrograms}
             waistHistory={waistHistory} weightHistory={weightHistory}
             onOpenProgram={(p) => { setPreviewProgram(p); setScreen('preview'); }}
-            onBuild={() => setScreen('builder')}
+            onBuild={() => { setEditingCustom(null); setScreen('builder'); }}
+            onEditCustom={(p) => { setEditingCustom(p); setScreen('builder'); }}
             onDeleteCustom={deleteCustomProgram}
             onDismissIntro={dismissIntro}
             onPromote={promoteLevel}
@@ -928,8 +939,10 @@ export default function App() {
         {screen === 'builder' && (
           <BuilderScreen
             profile={profile}
-            onCancel={() => setScreen('home')}
+            initial={editingCustom}
+            onCancel={() => { setEditingCustom(null); setScreen('home'); }}
             onCreate={createCustomProgram}
+            onUpdate={updateCustomProgram}
           />
         )}
 
@@ -1267,7 +1280,7 @@ const primaryBtn = {
 };
 
 /* ================= HOME SCREEN ================= */
-function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHistory, onOpenProgram, onBuild, onDeleteCustom, onDismissIntro, onPromote }) {
+function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHistory, onOpenProgram, onBuild, onEditCustom, onDeleteCustom, onDismissIntro, onPromote }) {
   const { lang, t } = useT();
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [showOthers, setShowOthers] = useState(false);
@@ -1562,6 +1575,9 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
                   <div style={{ color: STEEL, fontSize: 12 }}>{tr(p.tagline, lang)} · {t('home.custom.ex', { n: p.exercises.length })}</div>
                 </div>
               </button>
+              <button onClick={() => onEditCustom(p)} style={{ ...btnIcon, background: 'transparent' }} aria-label="Modifica">
+                <Settings size={14} color={KHAKI} />
+              </button>
               <button onClick={() => {
                 if (confirmDeleteId === p.id) { onDeleteCustom(p.id); setConfirmDeleteId(null); }
                 else { setConfirmDeleteId(p.id); setTimeout(() => setConfirmDeleteId(c => c === p.id ? null : c), 3000); }
@@ -1711,19 +1727,20 @@ function LibraryScreen({ sessions, profile }) {
 }
 
 /* ================= BUILDER SCREEN (custom mission) ================= */
-function BuilderScreen({ profile, onCancel, onCreate }) {
+function BuilderScreen({ profile, initial, onCancel, onCreate, onUpdate }) {
   const { lang, t } = useT();
-  const [selected, setSelected] = useState([]);
-  const [rounds, setRounds] = useState(2);
-  const [name, setName] = useState('');
+  const [selected, setSelected] = useState(initial ? initial.exercises : []);
+  const [rounds, setRounds] = useState(initial ? initial.rounds : 2);
+  const [name, setName] = useState(initial ? initial.name : '');
   const [filter, setFilter] = useState('all');
 
   function toggleEx(id) {
     setSelected(s => s.includes(id) ? s.filter(x => x !== id) : (s.length < 10 ? [...s, id] : s));
   }
 
+  const isEdit = !!initial;
   const canCreate = selected.length >= 3;
-  const draft = { id: `custom-${Date.now()}`, name: name.trim() || t('bld.draft.name'), tagline: t('bld.draft.tagline'), rounds, exercises: selected };
+  const draft = { id: initial ? initial.id : `custom-${Date.now()}`, name: name.trim() || t('bld.draft.name'), tagline: t('bld.draft.tagline'), rounds, exercises: selected };
   const preset = levelPreset(profile);
   const kcal = canCreate ? Math.round(estimateProgramKcal(draft, profile.weight, !!profile.skipWarmup, preset.work, preset.rest)) : 0;
   const mins = canCreate ? Math.round(totalSeqSeconds(draft, !!profile.skipWarmup, preset.work, preset.rest) / 60) : 0;
@@ -1800,7 +1817,7 @@ function BuilderScreen({ profile, onCancel, onCreate }) {
             <div style={{ display: 'flex', gap: 14, marginBottom: 10, color: STEEL, fontSize: 12.5, justifyContent: 'center' }}>
               <span>{t('bld.min', { m: mins })}</span><span>·</span><span>{t('bld.kcal', { k: kcal })}</span>
             </div>
-            <button onClick={() => onCreate(draft)} style={primaryBtn}><Check size={18} /> {t('bld.create.go')}</button>
+            <button onClick={() => isEdit ? onUpdate(draft) : onCreate(draft)} style={primaryBtn}><Check size={18} /> {isEdit ? 'AGGIORNA' : t('bld.create.go')}</button>
           </>
         ) : (
           <div style={{ color: STEEL, fontSize: 13, textAlign: 'center' }}>{t('bld.hint')}</div>
@@ -2530,11 +2547,19 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           const bmi = calcBMI(latestKg, profile.heightCm);
           const cat = bmiCategory(bmi);
           const tdee = estimateTDEE(latestKg, profile.heightCm, profile.age);
+          const waistLatest = waistHistory.length ? waistHistory[waistHistory.length - 1].cm : null;
+          const bf = estimateBodyFat({ waistCm: waistLatest, weightKg: latestKg, heightCm: profile.heightCm, age: profile.age });
+          const wht = waistLatest ? waistLatest / profile.heightCm : null;
+          const wcat = wht != null ? whtCategory(wht) : null;
           return (
             <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }}>
               <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.06em', marginBottom: 6 }}>{t('bmi.title')} · {bmi} {cat && <span style={{ color: cat.color }}>· {t('bmi.' + cat.key)}</span>}</div>
-              {tdee && <div style={{ color: STEEL, fontSize: 12 }}>{t('bmi.tdee', { v: tdee })}</div>}
-              <div style={{ color: STEEL, fontSize: 11.5, marginTop: 6, opacity: 0.8 }}>{tr(simpleMealHint(bmi > 27 ? 'cut' : 'maintain'), lang)}</div>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 6 }}>
+                {tdee && <span style={{ color: STEEL, fontSize: 12 }}>{t('bmi.tdee', { v: tdee })}</span>}
+                {bf != null && <span style={{ color: KHAKI, fontSize: 12 }}>· BF {bf}%</span>}
+                {wht != null && <span style={{ color: wcat.color, fontSize: 12 }}>· WHtR {(wht).toFixed(2)}</span>}
+              </div>
+              <div style={{ color: STEEL, fontSize: 11.5, marginTop: 4, opacity: 0.8 }}>{tr(simpleMealHint(bmi > 27 ? 'cut' : 'maintain'), lang)}</div>
             </div>
           );
         })()}
