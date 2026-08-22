@@ -70,6 +70,16 @@ export const PROGRAMS = [
     exercises: ['burpeetattico', 'skater', 'ginocchiaalte', 'jumpingjack', 'mountainclimber', 'squat'] },
   { id: 'M', difficulty: 3, name: { it: 'CORE ESTREMO', en: 'EXTREME CORE', de: 'EXTREMER CORE' }, tagline: { it: 'Addome d’acciaio — 6 colpi al core', en: 'Steel abs — 6 core hits', de: 'Stahlbauch — 6 Core-Treffer' }, focus: { it: 'CORE', en: 'CORE', de: 'CORE' }, rounds: 2,
     exercises: ['vup', 'russiantwist', 'legraise', 'crunchbici', 'flutterkick', 'heeltap'] },
+  // ── PANCIA DEDICATA — 3 nuove missioni over-40, tutte con clip MP4 + focus girovita ──
+  { id: 'N', difficulty: 2, name: { it: 'OMBELICO PIATTO', en: 'FLAT NAVEL', de: 'FLACHER NABEL' }, tagline: { it: 'Addome basso + obliqui — pancia piatta in 15′', en: 'Lower abs + obliques — flat belly in 15′', de: 'Unterbauch + Obliques — flacher Bauch in 15 Min' }, focus: { it: 'PANCIA', en: 'BELLY', de: 'BAUCH' }, rounds: 2,
+    exercises: ['legraise', 'flutterkick', 'heeltap', 'deadbug', 'crunch', 'sideplank'],
+    belly: true },
+  { id: 'O', difficulty: 2, name: { it: 'OBLIQUI GUERRIERO', en: 'WARRIOR OBLIQUES', de: 'KRIEGER OBLIQUES' }, tagline: { it: 'Fianchi scolpiti e girovita stretto — maniglie addio', en: 'Sculpted sides & tight waist — love handles gone', de: 'Geformte Seiten & schmale Taille — Love Handles weg' }, focus: { it: 'OBLIQUI', en: 'OBLIQUES', de: 'OBLIQUES' }, rounds: 2,
+    exercises: ['russiantwist', 'sideplank', 'heeltap', 'crunchbici', 'plankjack', 'vup'],
+    belly: true },
+  { id: 'P', difficulty: 3, name: { it: 'CINTURA D’ACCIAIO', en: 'STEEL BELT', de: 'STAHLGÜRTEL' }, tagline: { it: 'Core 360° — cintura addominale a tutta vita', en: 'Core 360° — steel belt around your waist', de: 'Core 360° — Stahlgürtel um die Taille' }, focus: { it: 'CINTURA', en: 'BELT', de: 'GÜRTEL' }, rounds: 2,
+    exercises: ['vup', 'legraise', 'russiantwist', 'flutterkick', 'deadbug', 'heeltap'],
+    belly: true },
 ];
 
 export const QUICK_PROGRAM = {
@@ -78,7 +88,10 @@ export const QUICK_PROGRAM = {
 };
 
 export const CAMP_DAYS = 30;
-export const DAY_CYCLE = ['A', 'B', 'C', 'K', 'H', 'I', 'J', 'L', 'M', 'D', 'E', 'F', 'G', 'A', 'B', 'C', 'D'];
+export const DAY_CYCLE = ['A', 'N', 'B', 'O', 'C', 'P', 'K', 'H', 'I', 'J', 'L', 'M', 'D', 'E', 'F', 'G', 'A', 'B', 'C', 'D'];
+// Missioni pancia dedicate — per filtri rapidi e sezione Home
+export const BELLY_IDS = ['N', 'O', 'P'];
+export const BELLY_PROGRAMS = PROGRAMS.filter(p => p.belly);
 
 export function campDayIndex(profile) {
   const start = profile && profile.campStart ? new Date(profile.campStart) : null;

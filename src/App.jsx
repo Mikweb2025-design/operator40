@@ -35,7 +35,8 @@ import { getSmartInsight, getSmartRecommendation } from './utils/smart.js';
 import { getPersonalChallenge, getRecoveryTip } from './utils/personalChallenge.js';
 import { getAchievementsProgress, getNextAchievements } from './utils/achievements.js';
 import { getDailyInsight, getWeeklyInsight } from './utils/insights.js';
-import { getRecommendedMissions, getDailyChallenge } from './utils/missions.js';
+import { getRecommendedMissions, getDailyChallenge, getBellyMissions } from './utils/missions.js';
+import { getBellyProgress, getBellyStreak, getBellyInsight } from './utils/belly.js';
 
 const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
 
@@ -1518,7 +1519,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
                 <Star key={i} size={10} color={i < (todayProgram.difficulty || 2) ? BLAZE : STEEL} fill={i < (todayProgram.difficulty || 2) ? BLAZE : 'none'} />
               ))}
             </div>
-            {['H','I','J','K','L','M'].includes(todayProgram.id) && (
+            {['H','I','J','K','L','M','N','O','P'].includes(todayProgram.id) && (
               <div className="o40-mono" style={{ color: PAPER, fontSize: 9, letterSpacing: '0.08em', background: BLAZE, borderRadius: 6, padding: '2px 7px' }}>NEW</div>
             )}
           </div>
@@ -1568,18 +1569,60 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         </button>
 
         <div style={{ margin: '12px 0 8px', background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 36, height: 36, borderRadius: '50%', background: `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <Star size={16} color={KHAKI} />
-          </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>SFIDA DEL GIORNO • {dailyChallenge.bonus}</div>
-            <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>{tr(dailyChallenge.program.name, lang)}</div>
-            <div style={{ color: STEEL, fontSize: 11 }}>{tr(dailyChallenge.program.tagline, lang)}</div>
-          </div>
-          <button onClick={() => onOpenProgram(dailyChallenge.program)} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}>Vai</button>
-        </div>
+           <div style={{ width: 36, height: 36, borderRadius: '50%', background: `${KHAKI}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+             <Star size={16} color={KHAKI} />
+           </div>
+           <div style={{ flex: 1, minWidth: 0 }}>
+             <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>SFIDA DEL GIORNO • {dailyChallenge.bonus}</div>
+             <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>{tr(dailyChallenge.program.name, lang)}</div>
+             <div style={{ color: STEEL, fontSize: 11 }}>{tr(dailyChallenge.program.tagline, lang)}</div>
+           </div>
+           <button onClick={() => onOpenProgram(dailyChallenge.program)} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}>Vai</button>
+         </div>
 
-        <button onClick={() => setShowOthers(v => !v)} style={{
+         {(() => {
+           const bellyMissions = getBellyMissions({ sessions, profile, waistHistory });
+           const bellyProgress = getBellyProgress(sessions, 3);
+           const bellyStreak = getBellyStreak(sessions);
+           const bellyInsight = getBellyInsight({ sessions, waistHistory, lang });
+           return (
+             <div style={{ margin: '12px 0 8px', background: `linear-gradient(135deg, ${BLAZE}14, ${INK_2})`, border: `1px solid ${BLAZE}66`, borderRadius: 14, padding: 12 }}>
+               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                 <div style={{ width: 32, height: 32, borderRadius: '50%', background: `${BLAZE}22`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Target size={16} color={BLAZE} /></div>
+                 <div style={{ flex: 1 }}>
+                   <div className="o40-mono" style={{ color: BLAZE, fontSize: 11, letterSpacing: '0.08em' }}>PANCIA • 3 MISSIONI DEDICATE</div>
+                   <div style={{ color: KHAKI, fontSize: 11 }}>{bellyInsight}</div>
+                 </div>
+                 <div style={{ textAlign: 'right' }}>
+                   <div className="o40-display" style={{ color: bellyProgress.isDone ? '#7FB069' : BLAZE, fontSize: 18 }}>{bellyProgress.done}/{bellyProgress.total}</div>
+                   <div className="o40-mono" style={{ color: STEEL, fontSize: 8 }}>SETTIMANA</div>
+                 </div>
+               </div>
+               <div style={{ height: 6, borderRadius: 3, background: OLIVE_DARK, overflow: 'hidden', marginBottom: 10 }}>
+                 <div style={{ width: `${Math.round(bellyProgress.pct*100)}%`, height: '100%', background: bellyProgress.isDone ? '#7FB069' : BLAZE, transition: 'width 0.4s ease' }} />
+               </div>
+               <div style={{ display: 'flex', gap: 8 }}>
+                 {bellyMissions.map(p => (
+                   <button key={p.id} onClick={() => onOpenProgram(p)} style={{
+                     flex: 1, background: INK, border: `1px solid ${p.id === 'P' ? BLAZE : OLIVE}`, borderRadius: 10, padding: '10px 8px', cursor: 'pointer', textAlign: 'center', position: 'relative'
+                   }}>
+                     <div className="o40-mono" style={{ color: BLAZE, fontSize: 9, letterSpacing: '0.08em' }}>{p.id} • {tr(p.focus, lang)}</div>
+                     <div style={{ color: PAPER, fontSize: 11, fontWeight: 700, lineHeight: 1.2, marginTop: 2 }}>{tr(p.name, lang)}</div>
+                     <div style={{ display: 'flex', gap: 1, justifyContent: 'center', marginTop: 4 }}>{Array.from({length:3}).map((_,i)=><Star key={i} size={8} color={i < (p.difficulty||2) ? BLAZE : STEEL} fill={i < (p.difficulty||2) ? BLAZE : 'none'} />)}</div>
+                     <div style={{ color: STEEL, fontSize: 9, marginTop: 4 }}>{p.exercises.length} esercizi • {p.exercises.slice(0,2).map(e=>EXERCISES[e]?.name?.it || e).join(' + ')}</div>
+                     {bellyStreak >= 2 && <span style={{ position:'absolute', top:4, right:4, background: BLAZE, color: PAPER, fontSize:7, fontWeight:700, borderRadius:4, padding:'1px 4px' }}>🔥{bellyStreak}</span>}
+                   </button>
+                 ))}
+               </div>
+               <div style={{ display:'flex', justifyContent:'space-between', marginTop:8, color: STEEL, fontSize:10 }}>
+                 <span>Streak pancia: <b style={{color: KHAKI}}>{bellyStreak} gg</b></span>
+                 <span>{bellyProgress.isDone ? 'Obiettivo pancia raggiunto ✓' : `${bellyProgress.remain} pancia alla meta`}</span>
+               </div>
+             </div>
+           );
+         })()}
+
+         <button onClick={() => setShowOthers(v => !v)} style={{
           display: 'flex', alignItems: 'center', gap: 12, width: '100%',
           background: showOthers ? OLIVE_DARK : INK_2, border: `1px solid ${showOthers ? BLAZE : OLIVE}`, borderRadius: 12, padding: '12px 14px', cursor: 'pointer', margin: '20px 0 12px',
           boxShadow: showOthers ? `0 4px 12px rgba(0,0,0,0.3)` : 'none', transition: 'all 0.2s ease'
@@ -1603,7 +1646,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
                 borderRadius: 10, padding: 12, cursor: 'pointer', textAlign: 'left', position: 'relative',
               }}>
                 {idx === 0 && <span style={{ position: 'absolute', top: 6, left: 6, background: KHAKI, color: INK, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>★ Consigliata</span>}
-                {['H','I','J','K','L','M'].includes(p.id) && <span style={{ position: 'absolute', top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>NEW</span>}
+                {['H','I','J','K','L','M','N','O','P'].includes(p.id) && <span style={{ position: 'absolute', top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: '1px 4px' }}>NEW</span>}
                 <div style={{ width: 40, height: 40, flexShrink: 0 }}>
                   <ExerciseFigure pose={EXERCISES[p.exercises[0]].pose} color={KHAKI} />
                 </div>

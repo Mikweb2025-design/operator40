@@ -1,5 +1,6 @@
-import { PROGRAMS } from '../data/programs.js';
+import { PROGRAMS, BELLY_IDS } from '../data/programs.js';
 import { getConsistencyScore } from './progress.js';
+import { isBellyProgram, getBellyCount } from './belly.js';
 
 // Ritorna le "altre missioni" ordinate per rilevanza smart (consistenza, RPE, uso)
 export function getRecommendedMissions({ sessions, profile, others }) {
@@ -47,4 +48,28 @@ export function formatMissionDifficulty(d) {
   if (d === 2) return 'Medio';
   if (d === 3) return 'Intenso';
   return 'Medio';
+}
+
+// ── Pancia: missioni dedicate + boost se girovita fermo / poche pancia ──
+export function getBellyMissions({ sessions, profile, waistHistory }) {
+  const belly = PROGRAMS.filter(p => BELLY_IDS.includes(p.id));
+  const counts = {};
+  (sessions || []).forEach(s => { counts[s.programId] = (counts[s.programId] || 0) + 1; });
+  const bellyCount = getBellyCount(sessions, 4);
+  const waist = waistHistory?.length ? waistHistory[waistHistory.length - 1] : null;
+  const first = waistHistory?.length ? waistHistory[0] : null;
+  const delta = waist && first && waistHistory.length > 1 ? waist.cm - first.cm : null;
+  const needsBelly = bellyCount < 6 || (delta != null && delta > -1);
+
+  // se serve spinta pancia, metti N/O/P in testa, altrimenti ordina per meno usate
+  return [...belly].sort((a, b) => {
+    if (needsBelly) return (counts[a.id] || 0) - (counts[b.id] || 0);
+    return (counts[a.id] || 0) - (counts[b.id] || 0);
+  }).map(p => ({ ...p, _needsBelly: needsBelly }));
+}
+
+export function getBellyBooster({ sessions, waistHistory }) {
+  const c = getBellyCount(sessions, 2);
+  if (c >= 3) return null;
+  return c === 0 ? 'Pancia ferma da 2 sett. — riparti con OMBELICO PIATTO' : `Solo ${c} pancia / 2 sett. — aggiungi una missione pancia`;
 }
