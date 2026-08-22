@@ -10,7 +10,10 @@ export const CLIP_FILES = {
   crunch: 'clips/crunch.mp4',
   burpeetattico: 'clips/burpeetattico.mp4',
   burpee: 'clips/burpeetattico.mp4',
-  sideplank: 'clips/sideplank.mp4'
+  sideplank: 'clips/sideplank.mp4',
+  legraise: 'clips/legraise.mp4',
+  flutterkick: 'clips/flutterkick.mp4',
+  deadbug: 'clips/deadbug.mp4'
 };
 
 export function hasClip(exerciseId, pose) {
