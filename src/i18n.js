@@ -375,6 +375,11 @@ export const I18N = {
   'bmi.obese': { it: 'Obesità', en: 'Obesity', de: 'Adipositas' },
   'bmi.tdee': { it: 'TDEE stimato: {v} kcal/giorno', en: 'Est. TDEE: {v} kcal/day', de: 'Gesch. TDEE: {v} kcal/Tag' },
   'setup.custom': { it: 'Timer custom (sec)', en: 'Custom timer (sec)', de: 'Custom Timer (Sek)' },
+  'setup.executionMode': { it: 'Modalità esecuzione', en: 'Execution mode', de: 'Ausführungsmodus' },
+  'setup.mode.time': { it: 'Tempo (standard)', en: 'Time (standard)', de: 'Zeit (Standard)' },
+  'setup.mode.reps': { it: 'Ripetizioni', en: 'Reps', de: 'Wiederholungen' },
+  'setup.mode.time.hint': { it: '40″ lavoro / 20″ recupero — 15′ fissi, avanzamento automatico. Perfetto per dimagrimento.', en: '40″ work / 20″ rest — fixed 15′, auto-advance. Best for fat loss.', de: '40″ Arbeit / 20″ Pause — feste 15 Min.' },
+  'setup.mode.reps.hint': { it: 'Es. 12× squat, 10× affondo — tocchi FATTO quando hai finito. Hold (plank…) resta a tempo. Più controllo per articolazioni.', en: 'E.g. 12× squat — tap DONE when finished. Holds stay timed. More joint control.', de: 'z. B. 12× Kniebeuge — tippe FERTIG. Halten bleibt Zeit.' },
   'setup.custom.work': { it: 'Lavoro', en: 'Work', de: 'Arbeit' },
   'setup.custom.rest': { it: 'Recupero', en: 'Rest', de: 'Pause' },
 };

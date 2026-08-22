@@ -32,6 +32,22 @@ export const LEVELS = [
   { key: 'elite', label: { it: 'ELITE', en: 'ELITE', de: 'ELITE' }, preset: 'lungo', work: 45, rest: 15, desc: { it: 'Ritmo sostenuto 45″/15″', en: 'Brisk pace 45s/15s', de: 'Zügiges Tempo 45s/15s' } },
 ];
 
+export const HOLD_EXERCISES = new Set(['plank', 'wallsit', 'sideplank']);
+export const REPS_BASE = {
+  squat: 12, affondo: 10, flessioni: 8, jumpingjack: 20, mountainclimber: 20,
+  superman: 10, ponte: 12, crunchbici: 12, russiantwist: 12, ginocchiaalte: 20, burpeetattico: 6,
+  crunch: 15, legraise: 12, flutterkick: 20, deadbug: 10, vup: 10, plankjack: 15, skater: 10, heeltap: 14,
+};
+export function getReps(exId, levelKey) {
+  if (HOLD_EXERCISES.has(exId)) return null;
+  const base = REPS_BASE[exId] || 10;
+  const factor = levelKey === 'recluta' ? 0.75 : levelKey === 'elite' ? 1.35 : 1;
+  const v = Math.round(base * factor);
+  // per gamba → arrotonda pari
+  if (exId === 'affondo' || exId === 'skater') return v % 2 ? v+1 : v;
+  return v;
+}
+
 export function getLevel(key) { return LEVELS.find(l => l.key === key) || LEVELS[1]; }
 
 export function levelPreset(profile) {

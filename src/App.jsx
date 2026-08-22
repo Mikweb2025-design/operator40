@@ -11,7 +11,7 @@ import { LANGS, LOCALES, detectLang, tr, translate } from './i18n';
 import { hasClip } from './clips.js';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from './constants/theme.js';
 import { EXERCISES, EXERCISE_GROUPS } from './data/exercises.js';
-import { PROGRAMS, QUICK_PROGRAM, WORK_SEC, REST_SEC, WARM_SEC, COOL_SEC, INTERVAL_PRESETS, LEVELS, CAMP_DAYS, DAY_CYCLE, getIntervalPreset, getLevel, levelPreset, campDayIndex, campDayDisplay, programById, pickNextProgram } from './data/programs.js';
+import { PROGRAMS, QUICK_PROGRAM, WORK_SEC, REST_SEC, WARM_SEC, COOL_SEC, INTERVAL_PRESETS, LEVELS, CAMP_DAYS, DAY_CYCLE, getIntervalPreset, getLevel, levelPreset, campDayIndex, campDayDisplay, programById, pickNextProgram, HOLD_EXERCISES, getReps } from './data/programs.js';
 import { buildSequence, kcalForSeconds, estimateProgramKcal, totalSeqSeconds } from './utils/workout.js';
 import { formatTime, dayKey, sessionDayKey } from './utils/date.js';
 import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, KCAL_BADGES, CONSISTENCY_BADGES, PERFECT_WEEK_BADGES, MEDAL_DEFS, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, getMedalProgress, getNextMedals, greeting, buildHeatmap, buildYearHeatmap, getPersonalRecords, getMonthlyTrend } from './utils/stats.js';
@@ -538,9 +538,12 @@ export default function App() {
     return () => musicSetOnTrackChange(null);
   }, [profile]);
 
-  // ---- session countdown ----
+  // ---- session countdown (pausa su reps: avanza solo su tap FATTO) ----
   useEffect(() => {
     if (screen !== 'session' || paused) return;
+    const cur = seq[phaseIdx];
+    if (!cur) return;
+    if (cur.mode === 'reps') return; // reps: manuale
     if (secondsLeft <= 0) {
       advancePhase();
       return;
@@ -548,7 +551,7 @@ export default function App() {
     const t = setTimeout(() => setSecondsLeft(s => s - 1), 1000);
     return () => clearTimeout(t);
     // eslint-disable-next-line
-  }, [screen, paused, secondsLeft]);
+  }, [screen, paused, secondsLeft, phaseIdx, seq]);
 
   function announcePhase(phase) {
     if (!soundRef.current) return;
@@ -567,7 +570,7 @@ export default function App() {
     if (vibrationRef.current) vibrate(seq[nextIdx].type === 'work' ? [60] : [30, 40, 30]);
     announcePhase(seq[nextIdx]);
     setPhaseIdx(nextIdx);
-    setSecondsLeft(seq[nextIdx].duration);
+    setSecondsLeft(seq[nextIdx].duration ?? 0);
   }
 
   function goPrev() {
@@ -576,17 +579,19 @@ export default function App() {
     if (soundRef.current) playBeep(440);
     announcePhase(seq[idx]);
     setPhaseIdx(idx);
-    setSecondsLeft(seq[idx].duration);
+    setSecondsLeft(seq[idx].duration ?? 0);
   }
 
   function startSession(program) {
     const skip = !!profile.skipWarmup;
     const preset = levelPreset(profile);
-    const s = buildSequence(program, skip, preset.work, preset.rest);
+    const mode = (profile && profile.executionMode) || 'time';
+    const levelKey = (profile && profile.level) || 'combattente';
+    const s = buildSequence(program, skip, preset.work, preset.rest, mode, levelKey);
     setActiveProgram(program);
     setSeq(s);
     setPhaseIdx(0);
-    setSecondsLeft(s[0].duration);
+    setSecondsLeft(s[0].duration ?? 0);
     setPaused(false);
     setRpe(null);
     if (soundRef.current) { playBeep(660); announcePhase(s[0]); }
@@ -596,10 +601,12 @@ export default function App() {
   function finishSession() {
     const skip = !!profile.skipWarmup;
     const preset = levelPreset(profile);
-    const kcal = Math.round(estimateProgramKcal(activeProgram, profile.weight, skip, preset.work, preset.rest));
+    const mode = (profile && profile.executionMode) || 'time';
+    const levelKey = (profile && profile.level) || 'combattente';
+    const kcal = Math.round(estimateProgramKcal(activeProgram, profile.weight, skip, preset.work, preset.rest, mode, levelKey));
     if (soundRef.current) playBeep(1000, 0.25);
     if (vibrationRef.current) vibrate([80, 60, 80, 60, 150]);
-    setLastStats({ program: activeProgram, kcal, durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest) });
+    setLastStats({ program: activeProgram, kcal, durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey) });
     setScreen('summary');
   }
 
@@ -623,6 +630,7 @@ export default function App() {
       seenIntro: profile ? !!profile.seenIntro : false,
       intervalPreset: (formCustomWork !== '40' || formCustomRest !== '20') ? 'custom' : ((profile && profile.intervalPreset) || 'standard'),
       level: prevLevel || 'combattente',
+      executionMode: (profile && profile.executionMode) || 'time',
       lang: lang,
       campStart: profile && profile.campStart ? profile.campStart : new Date().toISOString(),
     };
@@ -680,6 +688,13 @@ export default function App() {
 
   async function setIntervalPreset(key) {
     const p = { ...profile, intervalPreset: key };
+    setProfile(p);
+    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+  }
+
+  async function setExecutionMode(mode) {
+    const m = mode === 'reps' ? 'reps' : 'time';
+    const p = { ...profile, executionMode: m };
     setProfile(p);
     try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
   }
@@ -1003,6 +1018,7 @@ export default function App() {
             level={(profile && (profile.level || (profile.intervalPreset === 'breve' ? 'recluta' : profile.intervalPreset === 'lungo' ? 'elite' : 'combattente'))) || 'combattente'}
             onSetLevel={applyLevel}
             intervalPreset={(profile && profile.intervalPreset) || 'standard'} onSetIntervalPreset={setIntervalPreset}
+            executionMode={(profile && profile.executionMode) || 'time'} onSetExecutionMode={setExecutionMode}
             onImportHealth={importAppleHealth} healthImportStatus={healthImportStatus}
             healthWeightSuggestion={healthWeightSuggestion} onApplyHealthWeight={applyHealthWeight}
             showToast={showToast} largeText={largeText} setLargeText={setLargeText}
@@ -1155,7 +1171,7 @@ function CountdownScreen({ program, onDone }) {
 }
 
 /* ================= SETUP SCREEN ================= */
-function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText }) {
+function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, executionMode, onSetExecutionMode, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || 'combattente');
   return (
@@ -1299,6 +1315,20 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
                 </Field>
               </div>
             ) : null}
+            <div style={{ background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: 10, marginBottom: 12 }}>
+              <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.07em', marginBottom: 6 }}>{t('setup.executionMode')}</div>
+              <div style={{ display: 'flex', gap: 6 }}>
+                <button onClick={() => onSetExecutionMode('time')} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, padding: '10px 8px', borderRadius: 8, border: `1px solid ${executionMode === 'time' ? BLAZE : OLIVE}`, background: executionMode === 'time' ? `${BLAZE}22` : 'transparent', color: executionMode === 'time' ? BLAZE : STEEL, cursor: 'pointer' }}>
+                  <span style={{ fontSize: 11, fontWeight: 700 }}>{t('setup.mode.time')}</span>
+                  <span style={{ fontSize: 9, color: STEEL, textAlign: 'center', lineHeight: 1.3 }}>{t('setup.mode.time.hint')}</span>
+                </button>
+                <button onClick={() => onSetExecutionMode('reps')} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, padding: '10px 8px', borderRadius: 8, border: `1px solid ${executionMode === 'reps' ? BLAZE : OLIVE}`, background: executionMode === 'reps' ? `${BLAZE}22` : 'transparent', color: executionMode === 'reps' ? BLAZE : STEEL, cursor: 'pointer' }}>
+                  <span style={{ fontSize: 11, fontWeight: 700 }}>{t('setup.mode.reps')}</span>
+                  <span style={{ fontSize: 9, color: STEEL, textAlign: 'center', lineHeight: 1.3 }}>{t('setup.mode.reps.hint')}</span>
+                </button>
+              </div>
+              <div style={{ color: KHAKI, fontSize: 10, marginTop: 6, textAlign: 'center' }}>{executionMode === 'reps' ? 'Es: 12× squat → FATTO → recupero 20″ (auto)' : 'Standard tempo — adatto a dimagrimento'}</div>
+            </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {LEVELS.map(l => (
                 <button key={l.key} onClick={() => onSetLevel(l.key)} style={{
@@ -2173,8 +2203,10 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
   const effectiveExercises = program.exercises.map(id => subs[id] || id);
   const effectiveProgram = { ...program, exercises: effectiveExercises };
   const preset = levelPreset(profile);
-  const kcal = Math.round(estimateProgramKcal(effectiveProgram, profile.weight, !!profile.skipWarmup, preset.work, preset.rest));
-  const mins = Math.round(totalSeqSeconds(effectiveProgram, !!profile.skipWarmup, preset.work, preset.rest) / 60);
+  const mode = (profile && profile.executionMode) || 'time';
+  const levelKey = (profile && profile.level) || 'combattente';
+  const kcal = Math.round(estimateProgramKcal(effectiveProgram, profile.weight, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey));
+  const mins = Math.round(totalSeqSeconds(effectiveProgram, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey) / 60);
 
   return (
     <div className="o40-screen-in" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -2189,8 +2221,9 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
         </div>
 
         <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '4px 0 10px' }}>
-          {t('prev.sub', { n: program.exercises.length, r: program.rounds, p: tr(preset.label, lang) })}
+          {t('prev.sub', { n: program.exercises.length, r: program.rounds, p: mode === 'reps' ? (lang==='it'?'Ripetizioni': lang==='de'?'Wiederholungen':'Reps') : tr(preset.label, lang) })}
         </div>
+        {mode === 'reps' && <div style={{ color: BLAZE, fontSize: 11, marginBottom: 8, background: `${BLAZE}14`, border: `1px solid ${BLAZE}44`, borderRadius: 8, padding: '6px 10px', textAlign: 'center' }}>{lang==='it'?'Modalità ripetizioni: tocca FATTO quando hai finito ogni esercizio. Hold resta a tempo.':'Reps mode: tap DONE when finished each exercise. Holds stay timed.'}</div>}
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {program.exercises.map((originalId, i) => {
@@ -2226,7 +2259,11 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
                         <span style={{ color: PAPER, fontWeight: 700, fontSize: 14.5 }}>{tr(ex.name, lang)}</span>
                         {isSubbed && <span className="o40-mono" style={{ color: KHAKI, fontSize: 9, border: `1px solid ${OLIVE}`, borderRadius: 4, padding: '1px 4px' }}>{t('prev.swapped')}</span>}
                       </div>
-                      <div style={{ color: KHAKI, fontSize: 12 }}>{tr(ex.repGuide, lang)}</div>
+                      <div style={{ color: KHAKI, fontSize: 12, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
+                        {(() => { const reps = mode === 'reps' ? getReps(currentId, levelKey) : null; return reps ? <span style={{ background: `${BLAZE}22`, border: `1px solid ${BLAZE}55`, color: BLAZE, padding: '1px 6px', borderRadius: 6, fontWeight: 700 }}>×{reps}</span> : null; })()}
+                        <span>{tr(ex.repGuide, lang)}</span>
+                        {mode === 'reps' && !HOLD_EXERCISES.has(currentId) && <span style={{ color: STEEL, fontSize: 10 }}>· {lang==='it'?'tocca FATTO':'tap DONE'}</span>}
+                      </div>
                       {isOpen && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginTop: 5, textAlign: 'left' }}>
                           {ex.steps.map((s, k) => (
@@ -2287,8 +2324,9 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
   const next = seq[phaseIdx + 1];
   const ex = phase.exerciseId ? EXERCISES[phase.exerciseId] : null;
   const nextEx = next && next.exerciseId ? EXERCISES[next.exerciseId] : null;
-  const progress = 1 - secondsLeft / phase.duration;
-  useEffect(() => { if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === 'work') speak(String(secondsLeft), lang, LOCALES); }, [secondsLeft, phase.type, soundOn, profile]);
+  const isRepsWork = phase.type === 'work' && phase.mode === 'reps';
+  const progress = isRepsWork ? 1 : (phase.duration ? 1 - secondsLeft / phase.duration : 0);
+  useEffect(() => { if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === 'work' && !isRepsWork) speak(String(secondsLeft), lang, LOCALES); }, [secondsLeft, phase.type, soundOn, profile, isRepsWork]);
   useEffect(() => { requestWakeLock(); function onVis(){ if (!document.hidden) requestWakeLock(); } document.addEventListener('visibilitychange', onVis); return () => { document.removeEventListener('visibilitychange', onVis); releaseWakeLock(); }; }, []);
 
   const phaseLabel = phase.type === 'warmup' ? t('ses.warmup')
@@ -2299,7 +2337,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
   const ringColor = phase.type === 'rest' ? OLIVE : phase.type === 'work' ? BLAZE : KHAKI;
   const doneWork = seq.slice(0, phaseIdx).filter(p => p.type === 'work').length;
   const totalWork = seq.filter(p => p.type === 'work').length;
-  const elapsedSec = seq.slice(0, phaseIdx).reduce((a, p) => a + p.duration, 0) + (phase.duration - secondsLeft);
+  const elapsedSec = seq.slice(0, phaseIdx).reduce((a, p) => a + (p.duration || (p.reps ? p.reps * 3 : 0)), 0) + (phase.duration ? phase.duration - secondsLeft : 0);
 
   return (
     <div className="o40-screen-in" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -2342,11 +2380,22 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
             )}
           </div>
         </div>
-        {ex && <div className="o40-display" style={{ color: PAPER, fontSize: 40 }}>{formatTime(secondsLeft)}</div>}
-
+        {ex && (
+          <div style={{ textAlign: 'center' }}>
+            {isRepsWork ? (
+              <>
+                <div className="o40-display" style={{ color: PAPER, fontSize: 48, lineHeight: 1 }}>×{phase.reps}</div>
+                <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.08em' }}>{lang==='it'?'RIPETIZIONI':'REPS'}</div>
+                <div style={{ marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }}>{lang==='it'?'Tocca FATTO quando hai finito':'Tap DONE when finished'}</div>
+              </>
+            ) : (
+              <div className="o40-display" style={{ color: PAPER, fontSize: 40 }}>{formatTime(secondsLeft)}</div>
+            )}
+          </div>
+        )}
         {ex && (
           <div style={{ textAlign: 'center', maxWidth: 330 }}>
-            <div style={{ color: KHAKI, fontSize: 13 }}>{tr(ex.repGuide, lang)}</div>
+            <div style={{ color: KHAKI, fontSize: 13 }}>{isRepsWork ? `${phase.reps}× ${tr(ex.name, lang)} — ${tr(ex.repGuide, lang)}` : tr(ex.repGuide, lang)}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 8, textAlign: 'left' }}>
               {ex.steps.map((s, i) => (
                 <div key={i} style={{ display: 'flex', gap: 7, alignItems: 'flex-start' }}>
@@ -2395,8 +2444,8 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
         <button onClick={onPrev} disabled={phaseIdx === 0} style={{ ...pillBtn, opacity: phaseIdx === 0 ? 0.4 : 1 }}>
           <ChevronLeft size={15} /> PREV
         </button>
-        <button onClick={onSkip} style={pillBtn}>
-          NEXT <SkipForward size={15} />
+        <button onClick={onSkip} style={{ ...pillBtn, background: isRepsWork ? BLAZE : pillBtn.background, color: isRepsWork ? PAPER : undefined, fontWeight: isRepsWork ? 700 : undefined, flex: isRepsWork ? 1.6 : 1 }}>
+          {isRepsWork ? (lang==='it' ? 'FATTO ✓' : 'DONE ✓') : 'NEXT'} {isRepsWork ? <Check size={16} /> : <SkipForward size={15} />}
         </button>
       </div>
 
