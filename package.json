@@ -18,9 +18,11 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx}\"",
     "cap:add:ios": "cap add ios",
+    "cap:add:android": "cap add android",
     "cap:add:mac": "cap add @capacitor-community/electron",
     "cap:sync": "npm run build && cap sync",
     "cap:open:ios": "cap open ios",
+    "cap:open:android": "cap open android",
     "cap:open:mac": "cap open @capacitor-community/electron"
   },
   "engines": {
@@ -28,6 +30,7 @@
   },
   "dependencies": {
     "@capacitor-community/electron": "^5.0.1",
+    "@capacitor/android": "^6.2.1",
     "@capacitor/core": "^6.1.2",
     "@capacitor/preferences": "^6.0.2",
     "lucide-react": "^0.462.0",
