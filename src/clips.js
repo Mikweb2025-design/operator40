@@ -14,7 +14,8 @@ export const CLIP_FILES = {
   legraise: 'clips/legraise.mp4',
   flutterkick: 'clips/flutterkick.mp4',
   deadbug: 'clips/deadbug.mp4',
-  vup: 'clips/vup.mp4'
+  vup: 'clips/vup.mp4',
+  plankjack: 'clips/plankjack.mp4'
 };
 
 export function hasClip(exerciseId, pose) {
