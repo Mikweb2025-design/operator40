@@ -16,9 +16,27 @@ if (empty($subs)) { echo json_encode(['sent'=>0, 'total'=>0]); exit; }
 
 $raw = file_get_contents('php://input');
 $input = json_decode($raw, true) ?: [];
-$title = $input['title'] ?? 'Operator 40 — Missione pronta';
-$body = $input['body'] ?? 'La tua missione di 15 min ti aspetta. Andiamo!';
-$tag = $input['tag'] ?? 'o40-push';
+// test per-lingua: se test e lang, usa messaggi test localizzati
+if (!empty($input['test']) && empty($input['title'])) {
+  $lang = $input['lang'] ?? null;
+  // se filterSelf e subscription, prova a leggere lang da push-stats.json
+  if (!$lang && !empty($input['subscription']['endpoint'])) {
+    $statsFileTmp = __DIR__ . '/push-stats.json';
+    if (file_exists($statsFileTmp)) {
+      $statsTmp = json_decode(file_get_contents($statsFileTmp), true) ?: [];
+      $lang = $statsTmp[$input['subscription']['endpoint']]['lang'] ?? null;
+    }
+  }
+  $lang = in_array($lang, ['it','en','de']) ? $lang : 'it';
+  $titles = ['it'=>'Operator 40 — Test push','en'=>'Operator 40 — Push test','de'=>'Operator 40 — Push-Test'];
+  $bodies = ['it'=>'Se vedi questo, il push PWA funziona (via server).','en'=>'If you see this, PWA push works (via server).','de'=>'Wenn du das siehst, funktioniert PWA-Push (via Server).'];
+  $title = $titles[$lang];
+  $body = $bodies[$lang];
+  $tag = 'o40-test';
+}
+$title = $input['title'] ?? $title ?? 'Operator 40 — Missione pronta';
+$body = $input['body'] ?? $body ?? 'La tua missione di 15 min ti aspetta. Andiamo!';
+$tag = $input['tag'] ?? $tag ?? 'o40-push';
 $url = $input['url'] ?? './';
 $payload = json_encode(['title'=>$title,'body'=>$body,'tag'=>$tag,'url'=>$url], JSON_UNESCAPED_SLASHES);
 

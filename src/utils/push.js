@@ -105,14 +105,15 @@ export async function updatePushStats(sessions, profile, lang) {
   } catch {}
 }
 
-export async function testPushViaSW() {
+export async function testPushViaSW(lang = 'it') {
   const reg = await navigator.serviceWorker.ready;
   // prova via backend se possibile, altrimenti mostra notifica locale dal SW
   try {
+    const sub = await getExistingSubscription();
     const res = await fetch(`${API_BASE}/push-send.php`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ test: true, filterSelf: true }),
+      body: JSON.stringify({ test: true, filterSelf: true, lang, subscription: sub ? { endpoint: sub.endpoint } : null }),
     });
     if (res.ok) {
       const j = await res.json();
@@ -121,11 +122,17 @@ export async function testPushViaSW() {
     }
   } catch {}
 
-  // fallback: mostra notifica locale via SW (funziona anche con app chiusa se SW attivo, ma non è vero push remoto)
+  // fallback: mostra notifica locale via SW (per-lingua)
+  const l = lang || 'it';
+  const titles = { it: 'Operator 40 — Test push', en: 'Operator 40 — Push test', de: 'Operator 40 — Push-Test' };
+  const bodies = {
+    it: 'Se vedi questo, il push PWA funziona (via SW).',
+    en: 'If you see this, PWA push works (via SW).',
+    de: 'Wenn du das siehst, funktioniert PWA-Push (via SW).',
+  };
   if ('showNotification' in ServiceWorkerRegistration.prototype) {
-    // usa il SW per mostrare — più affidabile di new Notification quando in PWA
-    await reg.showNotification('Operator 40 — Test push', {
-      body: 'Se vedi questo, il push PWA funziona (via SW).',
+    await reg.showNotification(titles[l] || titles.it, {
+      body: bodies[l] || bodies.it,
       icon: './icons/icon-192.png',
       badge: './icons/icon-192.png',
       tag: 'o40-test',
@@ -133,8 +140,7 @@ export async function testPushViaSW() {
     });
     return { localOnly: true };
   }
-  // ultimo fallback
-  new Notification('Operator 40 — Test', { body: 'Notifica locale (fallback).' });
+  new Notification(titles[l] || titles.it, { body: bodies[l] || bodies.it });
   return { localOnly: true };
 }
 

@@ -798,11 +798,11 @@ export default function App() {
     try {
       // se push non attivo, fallback a notifica locale
       if (pushEnabled && isPushSupported()) {
-        await testPushViaSW();
-        showToast(lang === 'it' ? 'Test push inviato' : 'Test push sent');
+        await testPushViaSW(lang);
+        showToast(lang === 'it' ? 'Test push inviato' : lang === 'de' ? 'Test-Push gesendet' : 'Test push sent');
       } else {
         const ok = fireTestNotification(t);
-        showToast(ok ? (lang === 'it' ? 'Notifica di test inviata' : 'Test notification sent') : 'Permesso negato');
+        showToast(ok ? (lang === 'it' ? 'Notifica di test inviata' : lang === 'de' ? 'Testbenachrichtigung gesendet' : 'Test notification sent') : 'Permesso negato');
       }
     } catch (e) {
       showToast(e.message || 'Test fallito');
