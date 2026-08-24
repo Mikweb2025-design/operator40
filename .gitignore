@@ -8,3 +8,9 @@ capacitor
 ios/App/Pods
 ios/App/build
 ios/App/public
+public/api/vendor
+public/api/subscriptions.json
+public/api/vapid-private.json
+dist/api/vendor
+dist/api/subscriptions.json
+dist/api/vapid-private.json

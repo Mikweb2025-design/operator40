@@ -3,7 +3,7 @@ import {
   Play, Pause, SkipForward, Flame, HeartPulse, Trophy, ChevronRight,
   ChevronLeft, RotateCcw, Settings, X, Check, Volume2, VolumeX, Vibrate, History as HistoryIcon, Info, Dog, Plus, Trash2,
   Home as HomeIcon, BookOpen, Zap, RefreshCw, TrendingUp, TrendingDown, Ruler, Target, Medal, Crown,
-  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye, Watch, Share2
+  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye, Watch, Share2, Bell, BellOff, Send
 } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay, musicSetAutoPlay, musicGetAutoPlay, musicSetShuffle, musicGetShuffle, musicNext, musicPrev, musicSetOnTrackChange, musicGetCurrentId, musicGetQueue } from './music';
@@ -19,6 +19,7 @@ import { getAudioCtx, unlockAudio, playBeep, playClick, vibrate, speak } from '.
 import { STYLES } from './styles/appStyles.js';
 import { ExerciseFigure } from './components/ExerciseFigure.jsx';
 import { requestNotificationPermission, scheduleDailyReminder, disableReminder, getReminder, checkAndFireReminder, fireTestNotification } from './utils/notifications.js';
+import { isPushSupported, isStandalonePWA, getExistingSubscription, subscribePush, unsubscribePush, testPushViaSW } from './utils/push.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
 import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.js';
@@ -354,6 +355,9 @@ export default function App() {
   const [reminderHour, setReminderHour] = useState('8');
   const [reminderMinute, setReminderMinute] = useState('0');
   const [reminderEnabled, setReminderEnabled] = useState(false);
+  const [pushEnabled, setPushEnabled] = useState(() => { try { return !!localStorage.getItem('o40_push_sub'); } catch { return false; } });
+  const [pushSupported, setPushSupported] = useState(() => isPushSupported());
+  const [pushBusy, setPushBusy] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showTour, setShowTour] = useState(false);
   const [photos, setPhotos] = useState(() => loadPhotos());
@@ -728,6 +732,55 @@ export default function App() {
     try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
   }
 
+  async function togglePush() {
+    if (pushBusy) return;
+    setPushBusy(true);
+    try {
+      if (pushEnabled) {
+        await unsubscribePush();
+        setPushEnabled(false);
+        showToast(lang === 'it' ? 'Push disattivato' : 'Push disabled');
+      } else {
+        await subscribePush();
+        setPushEnabled(true);
+        showToast(lang === 'it' ? 'Push attivato — anche con PWA chiusa' : 'Push enabled — works with PWA closed');
+      }
+    } catch (e) {
+      showToast(e.message || 'Push non disponibile');
+    } finally { setPushBusy(false); }
+  }
+
+  async function handleTestPush() {
+    if (pushBusy) return;
+    setPushBusy(true);
+    try {
+      // se push non attivo, fallback a notifica locale
+      if (pushEnabled && isPushSupported()) {
+        await testPushViaSW();
+        showToast(lang === 'it' ? 'Test push inviato' : 'Test push sent');
+      } else {
+        const ok = fireTestNotification(t);
+        showToast(ok ? (lang === 'it' ? 'Notifica di test inviata' : 'Test notification sent') : 'Permesso negato');
+      }
+    } catch (e) {
+      showToast(e.message || 'Test fallito');
+    } finally { setPushBusy(false); }
+  }
+
+  // sync push state at startup (verifica subscription reale)
+  useEffect(() => {
+    if (!isPushSupported()) { setPushSupported(false); return; }
+    getExistingSubscription().then(sub => {
+      const has = !!sub;
+      setPushEnabled(has);
+      setPushSupported(true);
+      try {
+        if (has) localStorage.setItem('o40_push_sub', JSON.stringify({ endpoint: sub.endpoint }));
+        else localStorage.removeItem('o40_push_sub');
+      } catch {}
+    }).catch(() => {});
+  }, []);
+
   function trackSrc(id) {
     const t = TRACKS.find(x => x.id === id);
     return (t || TRACKS[0]).src;
@@ -1022,6 +1075,7 @@ export default function App() {
             onImportHealth={importAppleHealth} healthImportStatus={healthImportStatus}
             healthWeightSuggestion={healthWeightSuggestion} onApplyHealthWeight={applyHealthWeight}
             showToast={showToast} largeText={largeText} setLargeText={setLargeText}
+            pushEnabled={pushEnabled} pushSupported={pushSupported} pushBusy={pushBusy} onTogglePush={togglePush} onTestPush={handleTestPush}
           />
         )}
 
@@ -1171,7 +1225,7 @@ function CountdownScreen({ program, onDone }) {
 }
 
 /* ================= SETUP SCREEN ================= */
-function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, executionMode, onSetExecutionMode, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText }) {
+function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, executionMode, onSetExecutionMode, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText, pushEnabled, pushSupported, pushBusy, onTogglePush, onTestPush }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || 'combattente');
   return (
@@ -1373,6 +1427,54 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
             )}
           </div>
         )}
+
+        {/* Push PWA — funziona anche con app chiusa (via SW) */}
+        <div style={{ background: INK_2, border: `1px solid ${pushEnabled ? BLAZE : OLIVE}`, borderRadius: 14, padding: 14 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+            {pushEnabled ? <Bell size={16} color={BLAZE} /> : <BellOff size={16} color={STEEL} />}
+            <div className="o40-mono" style={{ color: pushEnabled ? BLAZE : KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', flex: 1 }}>
+              {lang === 'it' ? 'Push PWA — anche con app chiusa' : lang === 'de' ? 'Push PWA — auch geschlossen' : 'PWA Push — works when closed'}
+            </div>
+            <span className="o40-mono" style={{ fontSize: 9, color: pushEnabled ? BLAZE : STEEL, border: `1px solid ${pushEnabled ? BLAZE : OLIVE}`, borderRadius: 6, padding: '2px 6px', background: pushEnabled ? `${BLAZE}18` : 'transparent' }}>
+              {pushEnabled ? (lang === 'it' ? 'ON' : 'ON') : 'OFF'}
+            </span>
+          </div>
+          {!pushSupported ? (
+            <div style={{ color: STEEL, fontSize: 12, lineHeight: 1.5 }}>
+              {lang === 'it' ? 'Push non supportato su questo browser (usa Chrome/Android o Safari iOS 16.4+ con PWA installata).' : 'Push not supported in this browser.'}
+            </div>
+          ) : (
+            <>
+              <div style={{ color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }}>
+                {lang === 'it'
+                  ? 'Ricevi la missione giornaliera anche con PWA chiusa. Su iPhone: installa con “Aggiungi a Home” poi attiva.'
+                  : lang === 'de' ? 'Tägliche Mission auch bei geschlossener PWA erhalten.' : 'Get daily mission even when PWA is closed. On iPhone: Add to Home Screen first.'}
+                {!isStandalonePWA?.() && pushSupported && (
+                  <span style={{ color: KHAKI, display: 'block', marginTop: 4 }}>⚠️ {lang === 'it' ? 'Apri come PWA installata per push in background su iOS.' : 'Open as installed PWA for background push on iOS.'}</span>
+                )}
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button onClick={onTogglePush} disabled={pushBusy} style={{
+                  flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '10px 12px', borderRadius: 10, cursor: pushBusy ? 'wait' : 'pointer',
+                  background: pushEnabled ? INK : `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: pushEnabled ? KHAKI : PAPER, border: `1px solid ${pushEnabled ? OLIVE : BLAZE}`, fontSize: 12, fontWeight: 700,
+                  opacity: pushBusy ? 0.6 : 1,
+                }}>
+                  {pushBusy ? <RefreshCw size={14} className="o40-spin" /> : pushEnabled ? <BellOff size={14} /> : <Bell size={14} />}
+                  {pushBusy ? '...' : pushEnabled ? (lang === 'it' ? 'Disattiva push' : 'Disable push') : (lang === 'it' ? 'Attiva push' : 'Enable push')}
+                </button>
+                <button onClick={onTestPush} disabled={pushBusy} style={{
+                  padding: '10px 14px', borderRadius: 10, cursor: pushBusy ? 'wait' : 'pointer', background: INK, border: `1px solid ${OLIVE}`, color: KHAKI, fontSize: 12, fontWeight: 600,
+                  display: 'flex', alignItems: 'center', gap: 6, opacity: pushBusy ? 0.6 : 1,
+                }}>
+                  <Send size={14} /> Test
+                </button>
+              </div>
+              <div style={{ color: STEEL, fontSize: 10, marginTop: 8, lineHeight: 1.4 }}>
+                {lang === 'it' ? 'Privacy: subscription salvata solo su mikweb.eu, nessun tracking.' : 'Privacy: subscription stored only on mikweb.eu'}
+              </div>
+            </>
+          )}
+        </div>
 
         <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12, display: 'flex', gap: 10 }}>
           <HeartPulse size={20} color={BLAZE} style={{ flexShrink: 0, marginTop: 2 }} />
