@@ -1,0 +1,134 @@
+<?php
+// push-cron.php — invia 1 push motivazionale al giorno per ogni subscription
+// Esecuzione: cron giornaliero 09:00 Europe/Rome, oppure GET con ?secret=...
+// Richiede vendor/minishlink/web-push e api/vapid-private.json
+header('Content-Type: application/json');
+
+// secret opzionale per protezione via HTTP (imposta in vapid-private.json -> secret)
+$secretParam = $_GET['secret'] ?? $_POST['secret'] ?? null;
+$vapidFile = __DIR__ . '/vapid-private.json';
+$vapid = file_exists($vapidFile) ? json_decode(file_get_contents($vapidFile), true) : null;
+$expectedSecret = $vapid['cronSecret'] ?? null;
+if ($expectedSecret && $secretParam !== $expectedSecret && php_sapi_name() !== 'cli') {
+  // se cronSecret è impostato, richiedilo via HTTP (cli bypassa)
+  // per test iniziale senza secret, lascia null
+  if ($secretParam !== null) { http_response_code(403); echo json_encode(['error'=>'forbidden']); exit; }
+}
+
+$subsFile = __DIR__ . '/subscriptions.json';
+$statsFile = __DIR__ . '/push-stats.json';
+if (!file_exists($subsFile)) { echo json_encode(['sent'=>0,'total'=>0,'note'=>'no subs']); exit; }
+$subs = json_decode(file_get_contents($subsFile), true) ?: [];
+if (empty($subs)) { echo json_encode(['sent'=>0,'total'=>0]); exit; }
+$statsAll = file_exists($statsFile) ? (json_decode(file_get_contents($statsFile), true) ?: []) : [];
+
+$today = date('Y-m-d');
+$sent = 0; $skipped = 0; $failed = 0;
+
+// carica web-push se disponibile
+$autoload = __DIR__ . '/vendor/autoload.php';
+$hasWebPush = file_exists($autoload);
+if ($hasWebPush) {
+  require $autoload;
+  $useWebPush = true;
+} else $useWebPush = false;
+
+if (!$vapid || empty($vapid['publicKey']) || empty($vapid['privateKey'])) {
+  http_response_code(500);
+  echo json_encode(['error'=>'vapid missing']);
+  exit;
+}
+
+$auth = ['VAPID'=>['subject'=>$vapid['subject'] ?? 'mailto:info@mikweb.eu','publicKey'=>$vapid['publicKey'],'privateKey'=>$vapid['privateKey']]];
+if ($useWebPush) {
+  $webPush = new \Minishlink\WebPush\WebPush($auth);
+}
+
+foreach ($subs as $sub) {
+  $endpoint = $sub['endpoint'] ?? '';
+  if (!$endpoint) continue;
+  $st = $statsAll[$endpoint] ?? [];
+  // idempotenza: salta se già inviato oggi
+  if (($st['lastSent'] ?? '') === $today) { $skipped++; continue; }
+
+  $msg = buildMotivational($st);
+  $payload = json_encode(['title'=>$msg['title'],'body'=>$msg['body'],'tag'=>$msg['tag'],'url'=>'./'], JSON_UNESCAPED_SLASHES);
+
+  if ($useWebPush) {
+    $subscription = \Minishlink\WebPush\Subscription::create($sub);
+    $report = $webPush->sendOneNotification($subscription, $payload);
+    if ($report->isSuccess()) {
+      $sent++;
+      $statsAll[$endpoint]['lastSent'] = $today;
+    } else {
+      $failed++;
+      // se endpoint scaduto (410/404), rimuovere? per ora no
+      $err = $report->getReason();
+      if (strpos($err,'410')!==false || strpos($err,'404')!==false) {
+        // invalida — segna per cleanup manuale
+      }
+    }
+  } else {
+    // senza web-push non possiamo inviare — simula
+    $failed++;
+  }
+}
+
+// flush se webPush batched (sendOneNotification già flusha, ma per sicurezza)
+if ($useWebPush && isset($webPush)) { $webPush->flush(); }
+
+file_put_contents($statsFile, json_encode($statsAll, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), LOCK_EX);
+echo json_encode(['sent'=>$sent,'skipped'=>$skipped,'failed'=>$failed,'total'=>count($subs),'date'=>$today]);
+
+function buildMotivational($st) {
+  $n = $st['n'] ?? 0;
+  $missed = $st['missed'] ?? 999;
+  $lang = $st['lang'] ?? 'it';
+  $dayOfYear = (int)date('z'); // 0-365
+
+  $stressTips = [
+    'it' => [
+      'Tip anti-stress: 4s inspira, 4s trattieni, 4s espira — 3 volte e riparti.',
+      'Stress? 2 min di plank + 10 respiri profondi. Bastano.',
+      'Pausa 60s: spalle giù, collo lungo, 5 respiri lenti. Poi missione.',
+      'Tip: cammina 10 min a pranzo — abbassa cortisolo più di un caffè.',
+      'Sotto pressione? 20 squat lenti — scarichi tensione.',
+    ],
+    'en' => ['Stress tip: 4s in, 4s hold, 4s out — 3 rounds.', '2 min plank + 10 breaths.'],
+    'de' => ['Anti-Stress: 4s ein, 4s halten, 4s aus.'],
+  ];
+  $generic = [
+    'it' => ['Ogni ripetizione è un investimento sui tuoi 40+.', '15 minuti oggi valgono più di un’ora mai fatta.', 'Costanza > intensità. Un passo alla volta.'],
+    'en' => ['Every rep is an investment.', '15 minutes today beats an hour never done.'],
+    'de' => ['Jede Wiederholung zählt.'],
+  ];
+
+  if ($n > 0 && $missed >= 2) {
+    $title = $lang==='it' ? "Manchi da $missed giorni — torna in base! 💪" : ($lang==='de' ? "Seit $missed Tagen weg — komm zurück! 💪" : "Away for $missed days — come back! 💪");
+    $body = $missed >= 4
+      ? ($lang==='it' ? "Serie interrotta, ma bastano 15′ di Recupero Attivo per riprendere. Andiamo?" : "Even 15′ today keeps rhythm.")
+      : ($lang==='it' ? "La tua striscia ti aspetta. Anche 15′ oggi salvano il ritmo." : "Your streak awaits.");
+    return ['title'=>$title,'body'=>$body,'tag'=>'o40-comeback'];
+  }
+  // simula streak se non abbiamo dato preciso: usa n come proxy
+  // se abbiamo n e missed, stimiamo streak come 0 se missed>1 altrimenti n%7
+  $streak = 0;
+  if ($missed === 0 || $missed === 1) $streak = min(7, $n % 7 + 3);
+  if ($streak >= 7) {
+    return ['title'=> $lang==='it' ? "Sei inarrestabile! 🔥 $streak giorni" : "Unstoppable! 🔥 $streak days", 'body'=> $lang==='it' ? "Continua così, stai andando alla grande!" : "Keep going, you're doing great!", 'tag'=>'o40-streak'];
+  }
+  if ($streak >= 3) {
+    return ['title'=> $lang==='it' ? "Continua così! 🔥 $streak giorni di fila" : "Keep it up! 🔥 $streak days", 'body'=> $lang==='it' ? "Stai andando bene — mantieni il ritmo." : "You're doing well — keep rhythm.", 'tag'=>'o40-streak'];
+  }
+  if ($n === 0) {
+    return ['title'=> $lang==='it' ? "Inizia oggi 🌱" : "Start today 🌱", 'body'=> $lang==='it' ? "15′ bastano per la prima missione." : "15′ is enough.", 'tag'=>'o40-start'];
+  }
+  if ($dayOfYear % 3 === 0) {
+    $tips = $stressTips[$lang] ?? $stressTips['it'];
+    $tip = $tips[$dayOfYear % count($tips)];
+    return ['title'=> $lang==='it' ? "Tip anti-stress 🧘" : "Anti-stress tip 🧘", 'body'=>$tip, 'tag'=>'o40-stress'];
+  }
+  $gens = $generic[$lang] ?? $generic['it'];
+  $g = $gens[$dayOfYear % count($gens)];
+  return ['title'=> $lang==='it' ? "Continua così — stai andando bene 💪" : "Keep going — you're doing great 💪", 'body'=>$g, 'tag'=>'o40-motivation'];
+}

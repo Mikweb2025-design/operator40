@@ -19,7 +19,8 @@ import { getAudioCtx, unlockAudio, playBeep, playClick, vibrate, speak } from '.
 import { STYLES } from './styles/appStyles.js';
 import { ExerciseFigure } from './components/ExerciseFigure.jsx';
 import { requestNotificationPermission, scheduleDailyReminder, disableReminder, getReminder, checkAndFireReminder, fireTestNotification } from './utils/notifications.js';
-import { isPushSupported, isStandalonePWA, getExistingSubscription, subscribePush, unsubscribePush, testPushViaSW } from './utils/push.js';
+import { isPushSupported, isStandalonePWA, getExistingSubscription, subscribePush, unsubscribePush, testPushViaSW, updatePushStats } from './utils/push.js';
+import { getMotivationalMessage } from './utils/motivation.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
 import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.js';
@@ -484,6 +485,45 @@ export default function App() {
     return () => clearInterval(id);
   }, [t]);
 
+  // ---- motivational local (1/giorno alle 9, se PWA aperta e push non attivo o fallback) ----
+  useEffect(() => {
+    function checkMotivational() {
+      if (Notification.permission !== 'granted') return;
+      const now = new Date();
+      // se push attivo, il server manda già il push giornaliero — evita doppio locale
+      if (pushEnabled) return;
+      if (now.getHours() !== 9 || now.getMinutes() !== 0) return;
+      const key = `o40_motiv_fired_${now.toISOString().slice(0,10)}`;
+      if (localStorage.getItem(key)) return;
+      localStorage.setItem(key, '1');
+      try {
+        const msg = getMotivationalMessage({ sessions, profile, lang });
+        // usa SW se disponibile per coerenza PWA, altrimenti Notification diretta
+        navigator.serviceWorker?.ready?.then(reg => {
+          if (reg && 'showNotification' in reg) {
+            reg.showNotification(msg.title, { body: msg.body, icon: './icons/icon-192.png', badge: './icons/icon-192.png', tag: msg.tag, data: { url: './' } });
+          } else {
+            new Notification(msg.title, { body: msg.body, icon: './icons/icon-192.png', tag: msg.tag });
+          }
+        }).catch(() => {
+          new Notification(msg.title, { body: msg.body, icon: './icons/icon-192.png', tag: msg.tag });
+        });
+      } catch {}
+    }
+    const id = setInterval(checkMotivational, 60000);
+    // prova subito se sono le 9 (per chi apre app a quell'ora)
+    checkMotivational();
+    function onVis() { if (!document.hidden) checkMotivational(); }
+    document.addEventListener('visibilitychange', onVis);
+    return () => { clearInterval(id); document.removeEventListener('visibilitychange', onVis); };
+  }, [sessions, profile, lang, pushEnabled]);
+
+  // ---- sync push stats per personalizzazione server (se push attivo) ----
+  useEffect(() => {
+    if (!pushEnabled) return;
+    updatePushStats(sessions, profile, lang);
+  }, [sessions, profile, lang, pushEnabled]);
+
   // ---- install prompt ----
   useEffect(() => {
     function onReady() { setInstallPrompt(window.__o40DeferPrompt); }
@@ -743,6 +783,8 @@ export default function App() {
       } else {
         await subscribePush();
         setPushEnabled(true);
+        // sync stats subito per personalizzazione push giornaliero
+        updatePushStats(sessions, profile, lang).catch(() => {});
         showToast(lang === 'it' ? 'Push attivato — anche con PWA chiusa' : 'Push enabled — works with PWA closed');
       }
     } catch (e) {

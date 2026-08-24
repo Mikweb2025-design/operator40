@@ -78,6 +78,33 @@ async function sendSubscriptionToServer(subscription, action = 'subscribe') {
   }
 }
 
+export async function updatePushStats(sessions, profile, lang) {
+  const sub = await getExistingSubscription();
+  if (!sub) return;
+  try {
+    // derived stats per personalizzazione (non inviamo full sessions per privacy/banda)
+    const now = Date.now();
+    const last = sessions.length ? sessions.reduce((a, b) => new Date(b.date) > new Date(a.date) ? b : a) : null;
+    const missed = last ? Math.floor((now - new Date(last.date).getTime()) / 86400000) : 999;
+    // compute streak/cons locally if stats available, altrimenti lascia calcolare al server
+    const payload = {
+      endpoint: sub.endpoint,
+      stats: {
+        n: sessions.length,
+        missed,
+        lang: lang || profile?.lang || 'it',
+        name: profile?.name || '',
+        ts: new Date().toISOString(),
+      },
+    };
+    await fetch(`${API_BASE}/push-update-stats.php`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+  } catch {}
+}
+
 export async function testPushViaSW() {
   const reg = await navigator.serviceWorker.ready;
   // prova via backend se possibile, altrimenti mostra notifica locale dal SW

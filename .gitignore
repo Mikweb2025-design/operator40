@@ -11,6 +11,10 @@ ios/App/public
 public/api/vendor
 public/api/subscriptions.json
 public/api/vapid-private.json
+public/api/push-stats.json
+public/api/composer.lock
 dist/api/vendor
 dist/api/subscriptions.json
 dist/api/vapid-private.json
+dist/api/push-stats.json
+dist/api/composer.lock
