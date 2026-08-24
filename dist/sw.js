@@ -2,7 +2,7 @@
    Same-origin assets are hashed by Vite (immutable) so cache-first is safe;
    navigations are network-first with the cached shell as offline fallback. */
 
-const CACHE = 'o40-vaa1a983d';
+const CACHE = 'o40-v434931f7';
 
 // Clip critici per le prime 3 missioni + pancia — precache per offline immediato (~14M, non blocca install se fallisce)
 const PRECACHE_CLIPS = [
