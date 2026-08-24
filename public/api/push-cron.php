@@ -83,7 +83,7 @@ echo json_encode(['sent'=>$sent,'skipped'=>$skipped,'failed'=>$failed,'total'=>c
 function buildMotivational($st) {
   $n = $st['n'] ?? 0;
   $missed = $st['missed'] ?? 999;
-  $lang = 'it'; // sempre italiano su richiesta
+  $lang = $st['lang'] ?? 'it';
   $dayOfYear = (int)date('z'); // 0-365
 
   $stressTips = [
@@ -104,31 +104,41 @@ function buildMotivational($st) {
   ];
 
   if ($n > 0 && $missed >= 2) {
-    $title = $lang==='it' ? "Manchi da $missed giorni — torna in base! 💪" : ($lang==='de' ? "Seit $missed Tagen weg — komm zurück! 💪" : "Away for $missed days — come back! 💪");
-    $body = $missed >= 4
-      ? ($lang==='it' ? "Serie interrotta, ma bastano 15′ di Recupero Attivo per riprendere. Andiamo?" : "Even 15′ today keeps rhythm.")
-      : ($lang==='it' ? "La tua striscia ti aspetta. Anche 15′ oggi salvano il ritmo." : "Your streak awaits.");
-    return ['title'=>$title,'body'=>$body,'tag'=>'o40-comeback'];
+    $titles = ['it'=>"Manchi da $missed giorni — torna in base! 💪",'en'=>"Away for $missed days — come back! 💪",'de'=>"Seit $missed Tagen weg — komm zurück! 💪"];
+    $bodies = [
+      'it' => $missed >= 4 ? "Serie interrotta, ma bastano 15′ di Recupero Attivo per riprendere. Andiamo?" : "La tua striscia ti aspetta. Anche 15′ oggi salvano il ritmo.",
+      'en' => $missed >= 4 ? "Streak broken, but 15′ Active Recovery is enough to restart. Let's go?" : "Your streak awaits. Even 15′ today keeps rhythm.",
+      'de' => $missed >= 4 ? "Serie unterbrochen, aber 15′ Aktive Erholung reichen zum Neustart. Los geht's?" : "Deine Serie wartet. Schon 15′ heute halten den Rhythmus."
+    ];
+    return ['title'=>$titles[$lang]??$titles['it'],'body'=>$bodies[$lang]??$bodies['it'],'tag'=>'o40-comeback'];
   }
   // simula streak se non abbiamo dato preciso: usa n come proxy
   // se abbiamo n e missed, stimiamo streak come 0 se missed>1 altrimenti n%7
   $streak = 0;
   if ($missed === 0 || $missed === 1) $streak = min(7, $n % 7 + 3);
   if ($streak >= 7) {
-    return ['title'=> $lang==='it' ? "Sei inarrestabile! 🔥 $streak giorni" : "Unstoppable! 🔥 $streak days", 'body'=> $lang==='it' ? "Continua così, stai andando alla grande!" : "Keep going, you're doing great!", 'tag'=>'o40-streak'];
+    $titles = ['it'=>"Sei inarrestabile! 🔥 $streak giorni",'en'=>"Unstoppable! 🔥 $streak days",'de'=>"Unaufhaltsam! 🔥 $streak Tage"];
+    $bodies = ['it'=>"Costanza al $n% — continua così, stai andando alla grande!",'en'=>"Consistency — keep going, you're doing great!",'de'=>"Konstanz — weiter so, du machst es großartig!"];
+    return ['title'=>$titles[$lang]??$titles['it'],'body'=>$bodies[$lang]??$bodies['it'],'tag'=>'o40-streak'];
   }
   if ($streak >= 3) {
-    return ['title'=> $lang==='it' ? "Continua così! 🔥 $streak giorni di fila" : "Keep it up! 🔥 $streak days", 'body'=> $lang==='it' ? "Stai andando bene — mantieni il ritmo." : "You're doing well — keep rhythm.", 'tag'=>'o40-streak'];
+    $titles = ['it'=>"Continua così! 🔥 $streak giorni di fila",'en'=>"Keep it up! 🔥 $streak days",'de'=>"Weiter so! 🔥 $streak Tage"];
+    $bodies = ['it'=>"Stai andando bene — mantieni il ritmo.",'en'=>"You're doing well — keep rhythm.",'de'=>"Du machst es gut — halte den Rhythmus."];
+    return ['title'=>$titles[$lang]??$titles['it'],'body'=>$bodies[$lang]??$bodies['it'],'tag'=>'o40-streak'];
   }
   if ($n === 0) {
-    return ['title'=> $lang==='it' ? "Inizia oggi 🌱" : "Start today 🌱", 'body'=> $lang==='it' ? "15′ bastano per la prima missione." : "15′ is enough.", 'tag'=>'o40-start'];
+    $titles = ['it'=>"Inizia oggi 🌱",'en'=>"Start today 🌱",'de'=>"Starte heute 🌱"];
+    $bodies = ['it'=>"15′ bastano per la prima missione.",'en'=>"15′ is enough for your first mission.",'de'=>"15′ reichen für die erste Mission."];
+    return ['title'=>$titles[$lang]??$titles['it'],'body'=>$bodies[$lang]??$bodies['it'],'tag'=>'o40-start'];
   }
   if ($dayOfYear % 3 === 0) {
     $tips = $stressTips[$lang] ?? $stressTips['it'];
     $tip = $tips[$dayOfYear % count($tips)];
-    return ['title'=> $lang==='it' ? "Tip anti-stress 🧘" : "Anti-stress tip 🧘", 'body'=>$tip, 'tag'=>'o40-stress'];
+    $titles = ['it'=>"Tip anti-stress 🧘",'en'=>"Anti-stress tip 🧘",'de'=>"Anti-Stress Tipp 🧘"];
+    return ['title'=>$titles[$lang]??$titles['it'],'body'=>$tip,'tag'=>'o40-stress'];
   }
   $gens = $generic[$lang] ?? $generic['it'];
   $g = $gens[$dayOfYear % count($gens)];
-  return ['title'=> $lang==='it' ? "Continua così — stai andando bene 💪" : "Keep going — you're doing great 💪", 'body'=>$g, 'tag'=>'o40-motivation'];
+  $titles = ['it'=>"Continua così — stai andando bene 💪",'en'=>"Keep going — you're doing great 💪",'de'=>"Weiter so — du machst es gut 💪"];
+  return ['title'=>$titles[$lang]??$titles['it'],'body'=>$g,'tag'=>'o40-motivation'];
 }

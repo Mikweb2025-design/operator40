@@ -52,7 +52,6 @@ const MOTIVATIONAL_GENERIC = {
 };
 
 export function getMotivationalMessage({ sessions = [], profile = null, lang = 'it', date = new Date() } = {}) {
-  lang = 'it'; // sempre italiano su richiesta
   const n = sessions.length;
   const streak = computeStreak(sessions);
   const best = computeBestStreak(sessions);
@@ -86,18 +85,28 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
   // 2) streak celebration
   if (streak >= 7) {
     const titles = { it: `Sei inarrestabile! 🔥 ${streak} giorni`, en: `Unstoppable! 🔥 ${streak} days`, de: `Unaufhaltsam! 🔥 ${streak} Tage` };
+    const bodies = {
+      it: `Costanza al ${cons}% — continua così, stai andando alla grande!`,
+      en: `Consistency ${cons}% — keep going, you're doing great!`,
+      de: `Konstanz ${cons}% — weiter so, du machst es großartig!`,
+    };
     return {
       title: titles[lang] || titles.it,
-      body: lang === 'it' ? `Costanza al ${cons}% — continua così, stai andando alla grande!` : `Consistency ${cons}% — keep going, you're doing great!`,
+      body: bodies[lang] || bodies.it,
       tag: 'o40-streak',
       type: 'streak',
     };
   }
   if (streak >= 3) {
     const titles = { it: `Continua così! 🔥 ${streak} giorni di fila`, en: `Keep it up! 🔥 ${streak} days`, de: `Weiter so! 🔥 ${streak} Tage` };
+    const bodies = {
+      it: `Stai andando bene — mantieni il ritmo, il risultato arriva.`,
+      en: `You're doing well — keep rhythm.`,
+      de: `Du machst es gut — halte den Rhythmus.`,
+    };
     return {
       title: titles[lang] || titles.it,
-      body: lang === 'it' ? `Stai andando bene — mantieni il ritmo, il risultato arriva.` : `You're doing well — keep rhythm.`,
+      body: bodies[lang] || bodies.it,
       tag: 'o40-streak',
       type: 'streak',
     };
@@ -105,9 +114,15 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
 
   // 3) at-risk
   if (risk === 'at-risk') {
+    const titles = { it: 'Streak a rischio ⏰', en: 'Streak at risk ⏰', de: 'Serie in Gefahr ⏰' };
+    const bodies = {
+      it: 'Un giorno al break — 15′ di Recupero Attivo oggi salvano la serie.',
+      en: 'One day to break — 15′ Active Recovery saves the streak.',
+      de: 'Ein Tag bis zum Bruch — 15′ Aktive Erholung retten die Serie.',
+    };
     return {
-      title: lang === 'it' ? 'Streak a rischio ⏰' : 'Streak at risk ⏰',
-      body: lang === 'it' ? 'Un giorno al break — 15′ di Recupero Attivo oggi salvano la serie.' : 'One day to break — 15′ Active Recovery saves the streak.',
+      title: titles[lang] || titles.it,
+      body: bodies[lang] || bodies.it,
       tag: 'o40-risk',
       type: 'risk',
     };
@@ -115,9 +130,15 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
 
   // 4) prima sessione
   if (n === 0) {
+    const titles = { it: 'Inizia oggi 🌱', en: 'Start today 🌱', de: 'Starte heute 🌱' };
+    const bodies = {
+      it: '15′ bastano per la prima missione. Pancia piatta inizia da qui.',
+      en: '15′ is enough for your first mission.',
+      de: '15′ reichen für die erste Mission.',
+    };
     return {
-      title: lang === 'it' ? 'Inizia oggi 🌱' : 'Start today 🌱',
-      body: lang === 'it' ? '15′ bastano per la prima missione. Pancia piatta inizia da qui.' : '15′ is enough for your first mission.',
+      title: titles[lang] || titles.it,
+      body: bodies[lang] || bodies.it,
       tag: 'o40-start',
       type: 'start',
     };
@@ -127,8 +148,9 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
   if (dayOfYear % 3 === 0) {
     const tips = STRESS_TIPS[lang] || STRESS_TIPS.it;
     const tip = tips[dayOfYear % tips.length];
+    const titles = { it: 'Tip anti-stress 🧘', en: 'Anti-stress tip 🧘', de: 'Anti-Stress Tipp 🧘' };
     return {
-      title: lang === 'it' ? 'Tip anti-stress 🧘' : 'Anti-stress tip 🧘',
+      title: titles[lang] || titles.it,
       body: tip,
       tag: 'o40-stress',
       type: 'stress',
