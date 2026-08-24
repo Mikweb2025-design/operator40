@@ -21,6 +21,10 @@ import { ExerciseFigure } from './components/ExerciseFigure.jsx';
 import { requestNotificationPermission, scheduleDailyReminder, disableReminder, getReminder, checkAndFireReminder, fireTestNotification } from './utils/notifications.js';
 import { isPushSupported, isStandalonePWA, getExistingSubscription, subscribePush, unsubscribePush, testPushViaSW, updatePushStats } from './utils/push.js';
 import { getMotivationalMessage } from './utils/motivation.js';
+import BellyTest from './components/BellyTest.jsx';
+import BeforeAfterSlider from './components/BeforeAfterSlider.jsx';
+import PoseCounter from './components/PoseCounter.jsx';
+import { getBellyLevelForTest, shouldProgressBellyLevel } from './utils/bellyTest.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
 import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.js';
@@ -364,6 +368,8 @@ export default function App() {
   const [photos, setPhotos] = useState(() => loadPhotos());
   const [largeText, setLargeText] = useState(() => { try { return localStorage.getItem('o40_largeText') === '1'; } catch { return false; } });
   const [previewProgram, setPreviewProgram] = useState(null);
+  const [showBellyTest, setShowBellyTest] = useState(false);
+  const [showPose, setShowPose] = useState(null);
 
   // hydrate photos from IndexedDB (migration from localStorage, async)
   useEffect(() => {
@@ -803,6 +809,15 @@ export default function App() {
     } finally { setPushBusy(false); }
   }
 
+  async function saveBellyTest({ plankSec, crunchReps, level, date }) {
+    const p = { ...profile, bellyTest: { plankSec, crunchReps, level, date }, bellyLevel: level, bellyLevelUpdated: date };
+    setProfile(p);
+    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch {}
+    setShowBellyTest(false);
+    showToast(`Livello pancia: ${level.toUpperCase()} ✓`);
+    updatePushStats(sessions, p, lang).catch(() => {});
+  }
+
   async function handleTestPush() {
     if (pushBusy) return;
     setPushBusy(true);
@@ -1142,6 +1157,8 @@ export default function App() {
             onDeleteCustom={deleteCustomProgram}
             onDismissIntro={dismissIntro}
             onPromote={promoteLevel}
+            onBellyTest={() => setShowBellyTest(true)}
+            onPose={(ex) => setShowPose(ex)}
           />
         )}
 
@@ -1248,6 +1265,20 @@ export default function App() {
                 <button onClick={() => { setShowTour(false); try { localStorage.setItem('o40_seenTour','1'); } catch {} }} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 10, padding: '10px 0', fontWeight: 700, cursor: 'pointer' }}>INIZIA</button>
                 <button onClick={() => { setShowTour(false); try { localStorage.setItem('o40_seenTour','1'); } catch {} }} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 14px', cursor: 'pointer' }}><Eye size={16} color={OLIVE} /></button>
               </div>
+            </div>
+          </div>
+        )}
+        {showBellyTest && (
+          <div className="o40-tour-mask" onClick={() => setShowBellyTest(false)} style={{ zIndex: 20 }}>
+            <div className="o40-tour-card" onClick={e => e.stopPropagation()} style={{ maxHeight: '90vh', overflowY: 'auto', maxWidth: 440, width: '92vw' }}>
+              <BellyTest lang={lang} initial={profile?.bellyTest} onSave={saveBellyTest} onClose={() => setShowBellyTest(false)} />
+            </div>
+          </div>
+        )}
+        {showPose && (
+          <div className="o40-tour-mask" onClick={() => setShowPose(null)} style={{ zIndex: 20 }}>
+            <div className="o40-tour-card" onClick={e => e.stopPropagation()} style={{ maxHeight: '90vh', overflowY: 'auto', maxWidth: 500, width: '92vw', padding: 0, overflow: 'hidden' }}>
+              <PoseCounter exercise={showPose} onCount={(n) => { /* could auto-complete */ }} onClose={() => setShowPose(null)} />
             </div>
           </div>
         )}
@@ -1584,7 +1615,7 @@ const primaryBtn = {
 };
 
 /* ================= HOME SCREEN ================= */
-function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHistory, onOpenProgram, onBuild, onEditCustom, onDeleteCustom, onDismissIntro, onPromote }) {
+function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHistory, onOpenProgram, onBuild, onEditCustom, onDeleteCustom, onDismissIntro, onPromote, onBellyTest, onPose }) {
   const { lang, t } = useT();
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [showOthers, setShowOthers] = useState(false);
@@ -1799,13 +1830,42 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
                    </button>
                  ))}
                </div>
-               <div style={{ display:'flex', justifyContent:'space-between', marginTop:8, color: STEEL, fontSize:10 }}>
-                 <span>Streak pancia: <b style={{color: KHAKI}}>{bellyStreak} gg</b></span>
-                 <span>{bellyProgress.isDone ? 'Obiettivo pancia raggiunto ✓' : `${bellyProgress.remain} pancia alla meta`}</span>
-               </div>
-             </div>
-           );
-         })()}
+                <div style={{ display:'flex', justifyContent:'space-between', marginTop:8, color: STEEL, fontSize:10 }}>
+                  <span>Streak pancia: <b style={{color: KHAKI}}>{bellyStreak} gg</b></span>
+                  <span>{bellyProgress.isDone ? 'Obiettivo pancia raggiunto ✓' : `${bellyProgress.remain} pancia alla meta`}</span>
+                </div>
+                {(() => {
+                  const next = shouldProgressBellyLevel({ sessions, currentLevelKey: profile.bellyLevel || 'recluta', profile });
+                  const curLevel = profile.bellyLevel || 'recluta';
+                  return (
+                    <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+                      <button onClick={onBellyTest} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '8px 10px', borderRadius: 8, border: `1px solid ${BLAZE}`, background: profile.bellyTest ? INK : `${BLAZE}18`, color: profile.bellyTest ? KHAKI : BLAZE, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+                        <Trophy size={12} /> {profile.bellyTest ? `Test: ${profile.bellyTest.level.toUpperCase()} · Rifai` : 'Test Pancia 2.0'}
+                      </button>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 4, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: '6px 10px', color: KHAKI, fontSize: 10, fontWeight: 600 }}>
+                        Liv. {curLevel.toUpperCase()}
+                      </span>
+                      {next && (
+                        <button onClick={async () => {
+                          const p = { ...profile, bellyLevel: next, bellyLevelUpdated: new Date().toISOString() };
+                          // update profile via parent handler? use direct storage for now
+                          try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch {}
+                          window.location.reload();
+                        }} style={{ padding: '6px 10px', borderRadius: 8, border: `1px solid ${KHAKI}`, background: KHAKI, color: INK, fontSize: 10, fontWeight: 700, cursor: 'pointer' }}>
+                          → {next.toUpperCase()}?
+                        </button>
+                      )}
+                    </div>
+                  );
+                })()}
+                <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
+                  <button onClick={() => onPose && onPose('squat')} style={{ flex: 1, padding: '6px 8px', borderRadius: 8, border: `1px solid ${OLIVE}`, background: INK, color: STEEL, fontSize: 10, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                    <Eye size={12} /> Conta squat (camera)
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
 
          <button onClick={() => setShowOthers(v => !v)} style={{
           display: 'flex', alignItems: 'center', gap: 12, width: '100%',
@@ -3253,13 +3313,20 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
             </label>
           </div>
           {photos.length === 0 ? <div style={{ color: STEEL, fontSize: 12 }}>Nessuna foto — aggiungi la prima per vedere il prima/dopo</div> : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6 }}>
-              {photos.slice(-6).map(ph => (
-                <div key={ph.id} style={{ aspectRatio: '3/4', borderRadius: 8, overflow: 'hidden', border: `1px solid ${OLIVE}`, background: INK }}>
-                  <img src={ph.url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6 }}>
+                {photos.slice(-6).map(ph => (
+                  <div key={ph.id} style={{ aspectRatio: '3/4', borderRadius: 8, overflow: 'hidden', border: `1px solid ${OLIVE}`, background: INK }}>
+                    <img src={ph.url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                ))}
+              </div>
+              {photos.length >= 2 && (
+                <div style={{ marginTop: 12 }}>
+                  <BeforeAfterSlider before={photos[0]} after={photos[photos.length - 1]} />
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </div>
         <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>{t('hist.sessions.title')}</div>
