@@ -2,12 +2,26 @@
    Same-origin assets are hashed by Vite (immutable) so cache-first is safe;
    navigations are network-first with the cached shell as offline fallback. */
 
-const CACHE = 'o40-v3730e0eb';
+const CACHE = 'o40-vaa1a983d';
+
+// Clip critici per le prime 3 missioni + pancia — precache per offline immediato (~14M, non blocca install se fallisce)
+const PRECACHE_CLIPS = [
+  './clips/squat.mp4',
+  './clips/flessioni.mp4',
+  './clips/deadbug.mp4',
+  './clips/ponte.mp4',
+  './clips/wallsit.mp4',
+  './clips/superman.mp4',
+];
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE).then((c) => c.addAll(['./index.html']))
+    caches.open(CACHE).then(async (c) => {
+      await c.addAll(['./index.html']);
+      // precache clip critici in background — non faila install
+      await Promise.allSettled(PRECACHE_CLIPS.map((url) => c.add(url).catch(() => {})));
+    })
   );
 });
 
