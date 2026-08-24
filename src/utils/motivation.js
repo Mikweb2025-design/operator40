@@ -51,6 +51,17 @@ const MOTIVATIONAL_GENERIC = {
   ],
 };
 
+function personalize(base, name, lang) {
+  if (!name || !name.trim() || name.trim().toLowerCase() === 'operatore') return base;
+  const clean = name.trim().split(' ')[0]; // solo nome
+  const prefixes = {
+    it: `Ciao ${clean}, `,
+    en: `Hey ${clean}, `,
+    de: `Hey ${clean}, `,
+  };
+  return (prefixes[lang] || prefixes.it) + base.charAt(0).toLowerCase() + base.slice(1);
+}
+
 export function getMotivationalMessage({ sessions = [], profile = null, lang = 'it', date = new Date() } = {}) {
   const n = sessions.length;
   const streak = computeStreak(sessions);
@@ -59,6 +70,7 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
   const cons = (() => { try { return getConsistencyScore(sessions, 8); } catch { return 0; } })();
   const risk = getStreakRisk(sessions);
   const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+  const name = profile?.name?.trim() || null;
 
   // 1) comeback se manchi da 2+ giorni
   if (n > 0 && missed >= 2) {
@@ -76,7 +88,7 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
     };
     return {
       title: titles[lang] || titles.it,
-      body: bodies[lang] || bodies.it,
+      body: personalize(bodies[lang] || bodies.it, name, lang),
       tag: 'o40-comeback',
       type: 'comeback',
     };
@@ -92,7 +104,7 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
     };
     return {
       title: titles[lang] || titles.it,
-      body: bodies[lang] || bodies.it,
+      body: personalize(bodies[lang] || bodies.it, name, lang),
       tag: 'o40-streak',
       type: 'streak',
     };
@@ -106,7 +118,7 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
     };
     return {
       title: titles[lang] || titles.it,
-      body: bodies[lang] || bodies.it,
+      body: personalize(bodies[lang] || bodies.it, name, lang),
       tag: 'o40-streak',
       type: 'streak',
     };
@@ -122,7 +134,7 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
     };
     return {
       title: titles[lang] || titles.it,
-      body: bodies[lang] || bodies.it,
+      body: personalize(bodies[lang] || bodies.it, name, lang),
       tag: 'o40-risk',
       type: 'risk',
     };
@@ -138,7 +150,7 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
     };
     return {
       title: titles[lang] || titles.it,
-      body: bodies[lang] || bodies.it,
+      body: personalize(bodies[lang] || bodies.it, name, lang),
       tag: 'o40-start',
       type: 'start',
     };
@@ -151,7 +163,7 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
     const titles = { it: 'Tip anti-stress 🧘', en: 'Anti-stress tip 🧘', de: 'Anti-Stress Tipp 🧘' };
     return {
       title: titles[lang] || titles.it,
-      body: tip,
+      body: personalize(tip, name, lang),
       tag: 'o40-stress',
       type: 'stress',
     };
@@ -160,9 +172,14 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
   // 6) generic motivational
   const generics = MOTIVATIONAL_GENERIC[lang] || MOTIVATIONAL_GENERIC.it;
   const g = generics[dayOfYear % generics.length];
+  const titles = {
+    it: 'Continua così — stai andando bene 💪',
+    de: 'Weiter so — du machst es gut 💪',
+    en: 'Keep going — you\'re doing great 💪',
+  };
   return {
-    title: lang === 'it' ? 'Continua così — stai andando bene 💪' : lang === 'de' ? 'Weiter so — du machst es gut 💪' : 'Keep going — you\'re doing great 💪',
-    body: g,
+    title: titles[lang] || titles.it,
+    body: personalize(g, name, lang),
     tag: 'o40-motivation',
     type: 'motivation',
   };
