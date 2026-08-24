@@ -83,7 +83,7 @@ echo json_encode(['sent'=>$sent,'skipped'=>$skipped,'failed'=>$failed,'total'=>c
 function buildMotivational($st) {
   $n = $st['n'] ?? 0;
   $missed = $st['missed'] ?? 999;
-  $lang = $st['lang'] ?? 'it';
+  $lang = 'it'; // sempre italiano su richiesta
   $dayOfYear = (int)date('z'); // 0-365
 
   $stressTips = [

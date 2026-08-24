@@ -52,6 +52,7 @@ const MOTIVATIONAL_GENERIC = {
 };
 
 export function getMotivationalMessage({ sessions = [], profile = null, lang = 'it', date = new Date() } = {}) {
+  lang = 'it'; // sempre italiano su richiesta
   const n = sessions.length;
   const streak = computeStreak(sessions);
   const best = computeBestStreak(sessions);
