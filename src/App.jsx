@@ -24,9 +24,9 @@ import { getMotivationalMessage } from './utils/motivation.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
 import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.js';
-import { loadFavorites, toggleFavorite } from './utils/favorites.js';
+import { loadFavorites, toggleFavorite, loadFavoritesAsync } from './utils/favorites.js';
 import { WeeklyChallenge } from './components/WeeklyChallenge.jsx';
-import { loadPhotos, savePhotos, fileToDataUrl } from './utils/photos.js';
+import { loadPhotos, savePhotos, fileToDataUrl, loadPhotosAsync } from './utils/photos.js';
 import { requestWakeLock, releaseWakeLock } from './utils/wakeLock.js';
 import { shareStatsImage } from './utils/shareImage.js';
 import { estimateBodyFat, whtCategory } from './utils/body.js';
@@ -364,6 +364,17 @@ export default function App() {
   const [photos, setPhotos] = useState(() => loadPhotos());
   const [largeText, setLargeText] = useState(() => { try { return localStorage.getItem('o40_largeText') === '1'; } catch { return false; } });
   const [previewProgram, setPreviewProgram] = useState(null);
+
+  // hydrate photos from IndexedDB (migration from localStorage, async)
+  useEffect(() => {
+    let cancelled = false;
+    loadPhotosAsync().then((asyncPhotos) => {
+      if (cancelled) return;
+      if (JSON.stringify(asyncPhotos) !== JSON.stringify(photos)) setPhotos(asyncPhotos);
+    }).catch(() => {});
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [activeProgram, setActiveProgram] = useState(null);
   const [seq, setSeq] = useState([]);
