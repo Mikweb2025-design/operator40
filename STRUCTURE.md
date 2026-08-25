@@ -1,199 +1,142 @@
 # Operator40 — Complete Structure & Functions
 
-> **Read this to understand everything in 5 minutes.** Updated **2026-08-25** — `main` @ `e773ee6→PRODUCTION-AI` (index-9ytO-Phc.js / o40-vade03eed) + `deploy-tmp` pending. Deterministic build `2.8.3 · <git-short>` + **Production AI Fitness Coach Engine**.
+> **Read this to continue tomorrow without re-discovering the repo.** Updated **2026-08-25** — `main @ 170c558` (`index-BtRuuVLP.js / o40-v76178e8f`) + `deploy-tmp @ 7b420a9` (live). Build `2.8.3 · <git-short>` + **22 AI analyzers** (all trackingSupported).
 
 ---
 
 ## 1. Overview
 
-**Operator40** — fitness coach for over-40, 15′/day, no equipment, **PWA offline + iOS/Android native (Capacitor 6)**.  
-Dark military UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N,O,P + Q), 22 exercises with MP4/WebP local, streak/goal/medals, NEFFEX music offline, Apple Health import, **PWA push (works with app closed)**, **Belly 2.0 test**, **Production AI Fitness Coach Engine (22 exercise definitions, poseQuality 0-100, debug HUD)**.
+**Operator40** — over-40 fitness coach, 15′/day, no equipment, **PWA offline + iOS/Android Capacitor 6**.  
+Dark military UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N,O,P + Q) for 30-day Camp, 22 exercises with local MP4, streak/goal/medals, NEFFEX offline music, Apple Health import, **push when closed**, **22 exercise-specific AI analyzers**.
 
 - **Live:** https://mikweb.eu/operator40/ (PWA installable, `dist/` → `mikweb.eu/httpdocs/operator40/`)
-- **Repo:** https://github.com/Mikweb2025-design/operator40 — `main` (no Huawei) + `operator40-Watch` (with Huawei)
- - **Tech:** React 18, Vite 5, Capacitor 6, `idb` 8, `@mediapipe/tasks-vision` 0.10 (lite/heavy/full + GPU→CPU + WASM offline), lucide-react, recharts, Playwright, Vitest 1, PHP 8.3 `web-push` 9.0
+- **Repo:** https://github.com/Mikweb2025-design/operator40
+  - `main` — source (no `dist` history drift, deterministic build)
+  - `deploy-tmp` — `dist` for hosting (force-pushed, `curl raw` to server)
+  - `operator40-Watch` — with Huawei (separate branch)
+- **Stack:** React 18, Vite 5, Capacitor 6 (`idb 8`, `@mediapipe/tasks-vision 0.10` lite/heavy/auto + GPU→CPU + WASM offline `fetch-mediapipe.mjs`), `lucide-react`, `recharts`, Vitest 1, Playwright, PHP 8.3 `web-push` 9.0
+
+**v2.8 what changed:** `src/ai/` modular engine (Geometry + PoseQuality + 22 analyzers + MotionFusion + LandmarkRecorder), `trackingSupported 22/22`, `repConfidence` gating, debug HUD with `landmarks.json` replay, `wallsit/sideplank` hold etc.
 
 ---
 
-## 2. Folder Tree
+## 2. Folder Tree (for tomorrow)
 
 ```
 operator40/
 ├── public/                 # copied as-is to dist/
-│   ├── clips/              # 18 mp4 local (2.3–2.6M): bicyclecrunch, russiantwist, wallsit, superman, bridge, highknees, crunch, burpee, sideplank, legraise, flutterkick, deadbug, vup, plankjack, skater, heeltap, squat, flessioni/push-up
-│   ├── wasm/               # NEW offline MediaPipe WASM (fetched via npm run fetch:mediapipe, gitignored *.wasm/*.js)
-│   ├── models/             # NEW pose_landmarker_{lite,heavy}.task (fetched via npm run fetch:mediapipe, gitignored *.task)
-│   ├── icons/              # icon-180/192/512.png
-│   ├── tracks/             # 12 mp3 NEFFEX (offline)
-│   ├── api/                # push backend (VAPID) — push-subscribe/unsubscribe/update-stats/send/cron + vapid.json + subscriptions.json/push-stats.json (gitignored)
+│   ├── clips/              # 18 MP4 (2.3 MB): bicyclecrunch, russiantwist, wallsit, superman, bridge, highknees, crunch, burpee, sideplank, legraise, flutterkick, deadbug, vup, plankjack, skater, heeltap, squat, flessioni/push-up
+│   ├── wasm/               # offline MediaPipe WASM (npm run fetch:mediapipe, gitignored *.wasm/*.js)
+│   ├── models/             # pose_landmarker_{lite,heavy}.task (gitignored *.task)
+│   ├── icons/              # icon-180/192/512
+│   ├── tracks/             # 12 MP3 NEFFEX offline
+│   ├── api/                # push backend VAPID — push-subscribe/unsubscribe/update-stats/send/cron + vapid.json (not in repo)
 │   ├── manifest.webmanifest
-│   └── sw.js               # offline + push (push/notificationclick) + precache 6 clips + WASM/models if present, __VERSION__ → o40-v<hash>
+│   └── sw.js               # offline cache-first + push + precache 6 clips + wasm/models if present, CACHE o40-v<hash>
 ├── src/
-│   ├── App.jsx             # ★ ENTIRE APP (~3300 lines) — see §3 (now with isAiWork gated SessionAIOverlay)
-│   ├── main.jsx            # bootstrap React + window.storage (IDB/Preferences) + PWA install + SW reload defer
-│   ├── storage.js          # IndexedDB (idb) for web + Capacitor Preferences for native, migration from localStorage
-│   ├── media.js            # VIDEO_B64 (WebP base64) lazy chunk 1.7M
-│   ├── clips.js            # CLIP_FILES 18 MP4 local (public/clips/) + hasClip()
-│   ├── music.js            # playlist autoplay (see §3.3)
-│   ├── i18n.js             # LANGS, LOCALES, detectLang, tr/translate, t('nav.*','setup.*','home.*','hist.*')
+│   ├── App.jsx             # ★ ENTIRE APP ~3300 lines — screens + isAiWork gated SessionAIOverlay, aiEnabled toggle
+│   ├── main.jsx            # bootstrap React + window.storage (IDB/Preferences) + PWA install defer
+│   ├── storage.js          # IndexedDB (idb) web + Preferences native, migration from localStorage
+│   ├── media.js            # VIDEO_B64 WebP lazy 1.7M
+│   ├── clips.js            # CLIP_FILES 18 MP4 + hasClip()
+│   ├── music.js            # playlist autoplay
+│   ├── i18n.js             # LANGS [it,en,de], detectLang, tr/translate
 │   ├── data/
-│   │   ├── exercises.js    # EXERCISES 22 { squat, flessioni/pushup, deadbug… } + EXERCISE_GROUPS
-│   │   └── programs.js     # PROGRAMS 18, QUICK_PROGRAM, LEVELS, INTERVAL_PRESETS, pickNextProgram, campDay*
-│   ├── engine/             # ★ PRODUCTION AI FITNESS COACH ENGINE (prompt vincolante §3)
-│   │   ├── FitnessEngine.ts # rAF 28fps + OneEuro + hysteresis FSM + poseQuality 0-100 + auto-start timer
-│   │   ├── PoseLandmarkerManager.ts # MediaPipe Tasks Vision lite/heavy/auto + GPU→CPU + ./wasm fallback
-│   │   ├── MissionManager.ts # buildMissionPlan + exerciseFromPhase + trackingSupported false (no fake fallback)
-│   │   ├── LocalizationManager.ts # COACH_I18N it/en/de/fr + moveBack/poseQuality
-│   │   ├── CoachEngine.ts  # priority 1 safety → 4 motivation + cooldown + speech queue
-│   │   ├── math.ts         # LM 0-32, angleDeg, bilateralAngle, visibilityScore, clamp, velocity
-│   │   ├── stateMachine.ts # Hysteresis  idle→ready→down→bottom→up→rep_completed + minDown/minUp/minInterval
-│   │   ├── types.ts        # ExerciseId 27, ExerciseDefinition + requiredLandmarks/movementPattern/safetyRules
-│   │   ├── exercises/definitions.ts # 22 definitions + thresholds + evaluateForm + customTransition + requiredLandmarks
-│   │   ├── filters/LandmarkSmoother.ts + OneEuroFilter.ts # jitter-free 1.15/0.008 (+hold 0.75)
-│   │   ├── coach/SpeechCoach.ts # Web Speech queue + per-lang rate
-│   │   ├── overlay/poseConnections.ts # drawSkeleton + angle badge
+│   │   ├── exercises.js    # EXERCISES 22 + EXERCISE_GROUPS (standing/ground/core)
+│   │   └── programs.js     # PROGRAMS 18, QUICK_PROGRAM, LEVELS, INTERVAL_PRESETS, DAY_CYCLE 20, BELLY_IDS, CAMP_DAYS 30, pickNextProgram
+│   ├── ai/                 # ★ NEW modular AI (spec §3) — continue here tomorrow
+│   │   ├── pose/
+│   │   │   ├── Geometry.ts          # 11 utils: Angle/Distance/Midpoint/Velocity/Acceleration/BodyLine/Torso/Leg/Arm/ROM/Symmetry (torso-normalized)
+│   │   │   ├── PoseQuality.ts       # poseConfidence / landmarkConfidence / exerciseConfidence 0-100, pause if <42
+│   │   │   └── LandmarkSmoother.ts  # re-export OneEuro
+│   │   ├── motion/
+│   │   │   ├── MotionFeatures.ts    # history 900ms, velocity/direction/ROM
+│   │   │   ├── Geometry.ts          # re-export
+│   │   │   └── MotionFusion.ts      # secondary sensor (jumpingJack/highKnees/burpee), PWA works without
+│   │   ├── exercises/
+│   │   │   ├── ExerciseAnalyzer.ts  # base: phase, repConfidence, formScore, requiredLandmarks
+│   │   │   ├── ExerciseRegistry.ts  # 22/22 — getAnalyzer(id) from mission
+│   │   │   ├── analyzers.test.ts    # 5 tests
+│   │   │   └── analyzers/           # 22 dedicated: pushup, squat, crunch, plank, legRaise, flutterKick, deadBug, vUp, mountainClimber, jumpingJack, bicycleCrunch, heelTap, burpee, affondo, skater, ginocchiaAlte, superman, ponte, russianTwist, wallsit, sideplank, plankJack
+│   │   ├── debug/
+│   │   │   └── LandmarkRecorder.ts  # record/replay landmarks.json (no video, dev-only)
+│   │   └── session/                 # placeholder ExerciseSession
+│   ├── engine/             # legacy core kept for compat, now delegates to src/ai when analyzer exists
+│   │   ├── FitnessEngine.ts         # rAF 28fps + OneEuro + delegates to analyzer + repConfidence gating + poseQuality
+│   │   ├── PoseLandmarkerManager.ts # lite/heavy/auto + GPU→CPU + ./wasm fallback
+│   │   ├── MissionManager.ts        # buildMissionPlan + exerciseFromPhase (22 true)
+│   │   ├── LocalizationManager.ts   # COACH_I18N it/en/de/fr
+│   │   ├── CoachEngine.ts           # priority 1 safety →5 motivation
+│   │   ├── math.ts                  # LM 0-32, angleDeg, bilateralAngle, visibilityScore
+│   │   ├── stateMachine.ts          # hysteresis idle→ready→down→bottom→up→rep_completed
+│   │   ├── types.ts                 # ExerciseId 27 + repConfidence
+│   │   ├── exercises/definitions.ts # 22 definitions (now all true) + thresholds + evaluateForm (kept for fallback)
+│   │   ├── filters/LandmarkSmoother.ts + OneEuroFilter.ts
+│   │   ├── coach/SpeechCoach.ts
+│   │   ├── overlay/poseConnections.ts
 │   │   └── hooks/useFitnessEngine.ts
 │   ├── utils/
-│   │   ├── date.js         # formatTime, dayKey, sessionDayKey
-│   │   ├── stats.js        # streak, rank, badges, heatmap (see §4.1)
-│   │   ├── progress.js     # getWeeklyProgress, getConsistencyScore, getAveragePace, getStreakRisk
-│   │   ├── goals.js        # getGoalProgress, getGoalHistory(8w), suggestNextGoal, formatGoal, estimateWeeklyCalories
-│   │   ├── personalChallenge.js # getPersonalChallenge, getRecoveryTip
-│   │   ├── achievements.js # ACHIEVEMENTS 8, getAchievementsProgress, getNextAchievements
-│   │   ├── insights.js     # getDailyInsight, getWeeklyInsight
-│   │   ├── missions.js     # getRecommendedMissions, getDailyChallenge
-│   │   ├── motivation.js   # getMotivationalMessage 6 types per it/en/de + personalize(name), buildPushPayload
-│   │   ├── push.js         # VAPID, subscribePush, unsubscribePush, updatePushStats, testPushViaSW(lang), isPushSupported
-│   │   ├── belly.js        # isBellyProgram, getBellySessions, getBellyCount, getBellyStreak, getBellyProgress, pickBellyNext, getBellyInsight
-│   │   ├── bellyTest.js    # BELLY_LEVELS, getBellyLevelForTest({plankSec,crunchReps}), shouldProgressBellyLevel 7d
-│   │   ├── workout.js      # buildSequence, kcalForSeconds, estimateProgramKcal, totalSeqSeconds
-│   │   ├── audio.js        # getAudioCtx, unlockAudio, playBeep, playClick, vibrate, speak
-│   │   ├── export.js       # exportCSV, buildCalendarGrid
-│   │   ├── share.js        # shareResults (Web Share)
-│   │   ├── shareImage.js   # shareStatsImage (1080×1350 canvas)
-│   │   ├── bmi.js          # calcBMI, bmiCategory, estimateTDEE, simpleMealHint
-│   │   ├── body.js         # estimateBodyFat, whtCategory
-│   │   ├── favorites.js    # loadFavoritesAsync (IDB) + sync fallback, toggleFavorite
-│   │   ├── photos.js       # loadPhotosAsync (IDB) + sync fallback, savePhotos, fileToDataUrl (max 4M)
-│   │   ├── wakeLock.js     # requestWakeLock, releaseWakeLock
-│   │   ├── notifications.js# requestNotificationPermission, scheduleDailyReminder, checkAndFireReminder (local 09:00 fallback)
-│   │   └── huawei*         # (only Watch branch)
+│   │   ├── stats.js, progress.js, goals.js, missions.js, motivation.js, push.js, belly.js, bellyTest.js, workout.js, audio.js, export.js, share*.js, bmi.js, body.js, favorites.js, photos.js, wakeLock.js, notifications.js
+│   │   └── ...
 │   ├── components/
-│   │   ├── ExerciseFigure.jsx # stylized SVG pose (fallback if no clip)
-│   │   ├── WeeklyChallenge.jsx# weekly % circle
-│   │   ├── GoalRing.jsx    # GoalRing + MiniGoalBar (8w)
-│   │   ├── BellyTest.jsx   # plank timer + crunch 30s counter → auto level
-│   │   ├── BeforeAfterSlider.jsx # before/after photo slider
-│   │   ├── FitnessEngineView.tsx # AI view 22 esercizi + poseQuality 0-100 + debug HUD + heavy model
-│   │   ├── SessionAIOverlay.tsx  # mission→exercise auto, trackingSupported gate, voice it/en/de/fr
-│   │   ├── PoseCounter.jsx # DEPRECATED → delega a FitnessEngineView (compat)
-│   │   ├── PositioningMask.tsx # sagoma posizionamento + alignmentScore
-│   │   └── ErrorBoundary.jsx # OPERATION INTERRUPTED + RELOAD
-│   ├── constants/theme.js  # INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL
-│   └── styles/appStyles.js # STYLES (aura, ticker, camo, etc.)
+│   │   ├── FitnessEngineView.tsx    # AI view 22 switcher + poseQuality bar + DEBUG HUD (PHASE/REP CONF/POSE/FORM/FPS/ANGLE/VEL/REQ/DET) + recorder
+│   │   ├── SessionAIOverlay.tsx     # mission→exercise auto, trackingSupported gate, voice it/en/de/fr
+│   │   ├── PoseCounter.jsx          # DEPRECATED → FitnessEngineView
+│   │   ├── PositioningMask.tsx      # alignmentScore
+│   │   ├── BellyTest.jsx, BeforeAfterSlider.jsx, ExerciseFigure.jsx, etc.
+│   │   └── ErrorBoundary.jsx
+│   ├── constants/theme.js
+│   └── styles/appStyles.js
 ├── scripts/
-│   ├── version-sw.mjs      # post-build: hash dist/assets → o40-v<8hex> in sw.js (deterministic)
-│   ├── fetch-mediapipe.mjs # NEW: fetch WASM + pose_landmarker_{lite,heavy}.task → public/wasm,models
-│   ├── verify.mjs          # check ReferenceError sessions before build
-│   ├── deploy.mjs          # deterministic deploy --local/--remote/--ios (--skip-build)
-│   └── screenshots.mjs     # Playwright 390×844 @2x → docs/screenshots/ 5 views
-├── docs/screenshots/       # 01-home, 02-libreria, 03-esercizio, 04-sessione, 05-statistiche (+full)
-├── ios/                    # Capacitor iOS (App/App.xcodeproj, App/App/public ← dist)
-├── android/                # Capacitor Android (app/src/main/assets/public ← dist)
-├── vite.config.js          # define __APP_VERSION__/__BUILD_ID__ = "2.0.0 · <git-short>" deterministic
-├── capacitor.config.json   # webDir: dist, appId: com.operator40.app
-└── STRUCTURE.md            # ← this file
+│   ├── version-sw.mjs
+│   ├── fetch-mediapipe.mjs  # WASM + task download
+│   ├── verify.mjs
+│   ├── deploy.mjs           # --local/--remote/--ios
+│   └── screenshots.mjs      # Playwright 390×844 @2x → docs/screenshots/
+├── docs/screenshots/        # 01-home, 02-libreria, 03-esercizio, 04-sessione (AI debug), 05-statistiche (+06-ai-debug next)
+├── ios/ + android/          # Capacitor shells (public ← dist)
+├── vite.config.js           # __APP_VERSION__ + vitest
+└── STRUCTURE.md             # ← this file
 ```
 
 ---
 
-## 3. `src/App.jsx` — Core (~3300 lines)
+## 3. App.jsx Core
 
-### 3.1 Global state (useState)
-```
-profile, sessions, customPrograms, waistHistory, weightHistory, photos
-screen: loading | setup | home | library | builder | preview | countdown | session | summary | history
-seq, phaseIdx, secondsLeft, paused, activeProgram, lastStats
-form*: formName/Age/Weight/Waist/Height/CustomWork/CustomRest, reminderHour/Minute
-UI: installPrompt, showTour, largeText, previewProgram, editingCustom, toast, exitConfirm, showBellyTest, showPose
-Health: healthImportStatus/WeightSuggestion
-HR: hrInput, waistInput, rpe, notes, weightInput
-Audio: soundOn, vibrationOn, musicOn, musicTrack, musicVolume, musicAutoPlay, musicShuffle
-Push: pushEnabled, pushSupported, pushBusy
-```
+**State:** `profile, sessions, customPrograms, waistHistory, weightHistory, photos, screen (loading/setup/home/library/builder/preview/countdown/session/summary/history), seq, phaseIdx, secondsLeft, paused, activeProgram, lastStats, form*, reminderHour/Minute, installPrompt, showTour, largeText, previewProgram, editingCustom, toast, exitConfirm, showBellyTest, showPose, healthImport, hrInput/waistInput/rpe/notes, sound/vibration/music*, push*, aiCoachEnabled`
 
-### 3.2 Key functions
-| Function | What it does |
-|---|---|
-| `load persisted data` useEffect | `window.storage.get('o40_profile/sessions/...')` via IDB/Preferences → setState |
-| `saveProfile()` | validates, saves `o40_profile`, `recordWaist` |
-| `saveBellyTest()` | saves `profile.bellyTest` + `bellyLevel` + `bellyLevelUpdated`, toast, sync push stats |
-| `togglePush()` / `handleTestPush()` | `subscribePush`/`unsubscribePush`/`testPushViaSW(lang)` + `updatePushStats` |
-| `startSession(program)` | `buildSequence(...)` → `seq` |
-| `finishSession()` / `saveSession()` | `estimateProgramKcal` → `o40_sessions` (IDB) |
-| `checkMotivational` useEffect | local 09:00 daily if push off → `getMotivationalMessage` → `showNotification` |
-| `sync push stats` useEffect | `updatePushStats(sessions,profile,lang)` on change if pushEnabled |
-
-### 3.3 Screens
-`HomeScreen` (today mission + belly 3 with Test + Before/After + Pose), `LibraryScreen`, `BuilderScreen`, `PreviewScreen`, `CountdownScreen`, `SessionScreen` (ring + EqBars), `SummaryScreen` (RPE + photos), `HistoryScreen` (heatmap + BeforeAfterSlider), `SetupScreen` (form + Push PWA card + BellyTest trigger).
+**Key functions:** `load persisted data (IDB/Preferences) → saveProfile → saveBellyTest → togglePush → startSession(buildSequence) → finishSession/saveSession (kcal) → checkMotivational (09:00) → sync push stats`. `SessionScreen` uses `isAiWork = aiEnabled && phase.type==='work'` → `SessionAIOverlay` else `ProgressRing`.
 
 ---
 
-## 4. Utils Detail
+## 4. AI Engine Detail (tomorrow start here)
 
-### 4.1 `stats.js` / `progress.js` / `belly.js` / `bellyTest.js` / `motivation.js` / `push.js`
-- `stats`: `computeBestStreak`, `computeStreakWithFreeze`, `getRank`, `getMedalProgress`, `buildHeatmap(35)`
-- `progress`: `getWeeklyProgress`, `getConsistencyScore`, `getStreakRisk`
-- `belly`: `isBellyProgram`, `getBellyProgress(3/w)`, `getBellyStreak`, `getBellyInsight`
-- `bellyTest`: `getBellyLevelForTest` (<30/<10 recluta, 30-60/10-20 combattente, >60/>20 elite, takes min), `shouldProgressBellyLevel` every 7d if 3/3
-- `motivation`: `getMotivationalMessage` 6 types per `it/en/de` with `personalize(name)` (Ciao/Hey), `buildPushPayload`
-- `push`: `VAPID_PUBLIC_KEY`, `subscribePush`, `updatePushStats({n,missed,lang,name})`, `testPushViaSW(lang)` per-language fallback
-- `storage`: IDB `operator40/kv` for large keys, migration from LS, native `Preferences`
-
-### 4.2 Other
-`workout` → `buildSequence` with warmup/cooldown + levels, `photos` → IDB async + LS sync fallback, `favorites` → IDB, `notifications` → local 09:00 fallback, `bmi/body` → BMI/TDEE/BF.
+- `Geometry.ts` 11 functions torso-normalized
+- `PoseQuality.ts` `evaluatePoseQuality(lm, required)` → `pose 20% + avgReq 60% + minReq 20%`
+- `ExerciseAnalyzer` base: `analyze(lm, ts, dt, quality) → {phase, enginePhase, repIncrement, repConfidence, formScore, cues}`
+- 22 analyzers: `pushup` elbow + bodyLine, `squat` knee + hipY, `crunch` hipFlex, `plank` hold, `legRaise` hipFlex + kneeExt, `flutterKick` asym, `deadBug` XOR, `vUp` pike, `mountainClimber` knee-to-chest alternate, `jumpingJack` CLOSED→OPEN→CLOSED, `bicycleCrunch` elbow-knee contact, `heelTap` wrist-heel, `burpee` 7-phase, `affondo` knee, `skater` lateral, `ginocchiaAlte` highKnee, `superman` hip, `ponte` hip elevation, `russianTwist` wrist-midHip, `wallsit/sideplank` hold, `plankJack` spread
+- `FitnessEngine` delegates if analyzer exists, else fallback with `trackingSupported` check; `repConfidence` gating `>65-78`; `landmarkRecorder` pushed each frame when `debug REC` on
+- `MissionManager` `buildMissionPlan` → `exerciseId` → `Registry` auto-load, no manual picker
 
 ---
 
-## 5. Storage & i18n
+## 5. Storage & i18n & Build
 
-- `window.storage = {get,set,remove,clear}` → `Capacitor Preferences` (native) / `IndexedDB` (web, `idb`) + `localStorage` fallback — keys `o40_profile`, `o40_sessions`, `o40_waist`, `o40_weight`, `o40_custom_programs`, `o40_photos` (IDB), `o40_favs`
-- `push` backend: `public/api/` → `subscriptions.json` (endpoints), `push-stats.json` (per endpoint `{n,missed,lang,name,lastSent}`), `vapid-private.json` (not in repo), `push-cron.php` 09:00 daily per-user, per-language, with name, idempotent
-- `i18n.js` → `LANGS [it,en,de]`, `detectLang`, `tr/translate`, `t('setup.*','home.*')` — push respects `profile.lang`
-
----
-
-## 6. Build & Deploy (deterministic)
-
-```bash
-npm run verify   # check sessions ReferenceError
-npm run build    # vite + scripts/version-sw.mjs → dist/index-<hash>.js + sw.js o40-v<8hex> (+ vision_bundle 154k)
-npm run deploy:local  # verify + build + info
-npm run deploy -- --remote --ios # push dist to GitHub branch deploy-tmp + curl raw to mikweb.eu + npx cap sync
-```
-
-- `vite.config.js` → `__APP_VERSION__ = "2.0.0 · <git rev-parse --short HEAD>"`
-- `scripts/version-sw.mjs` → `o40-v<hash>` in `sw.js`
-- `public/sw.js` → offline + push + precache 6 clips (`squat/flessioni/deadbug/ponte/wallsit/superman`) on install
-- `mikweb.eu` deploy: `git push -f deploy-tmp` → `curl raw` to `/var/www/vhosts/mikweb.eu/httpdocs/operator40/` + `chown 501:staff` + `composer install` for `web-push`
-- iOS/Android: `npx cap sync` → `ios/App/App/public` + `android/app/src/main/assets/public` (now with `vision_bundle` + IDB + 18 clips)
+- `window.storage` IDB `operator40/kv` + Preferences fallback, keys `o40_profile/sessions/waist/weight/custom_programs/photos/favs`
+- `push` backend `public/api/` `subscriptions.json` etc., cron `0 9 * * * php push-cron.php` Europe/Rome
+- `i18n.js` `LANGS [it,en,de]` + `detectLang` + `LocalizationManager` `it/en/de/fr` for coach
+- Build: `npm run verify → build → version-sw.mjs → o40-v<8hex>` deterministic via `git rev-parse --short HEAD`; `sw.js` cache-first + `Range` bypass; `npx cap sync` → `ios/App/App/public` + `android/app/src/main/assets/public`
 
 ---
 
-## 7. Branch & Git
+## 6. Git Strategy (for tomorrow)
 
-- `main` @ `5898c39` — no Huawei, with push/motivation/bellyTest/pose/IDB/precache
-- `deploy-tmp` @ `deffecb` — dist for mikweb (gitignored on main)
-- `origin/main` aligned, `dist` gitignored, `ios/App/App/public` ignored (regenerated via `cap sync`)
+- `git checkout main && git pull` — work here, `npm run verify && npm run build && npm run test` (24 tests)
+- `git add src/ai/... && git commit -m "feat(ai): ..."` + `git push origin main`
+- For live: `git checkout deploy-tmp && git merge main && npm run build && git add -f dist && git commit -m "deploy: <hash>" && git push origin deploy-tmp -f` then `curl raw` to `/var/www/vhosts/mikweb.eu/httpdocs/operator40/` (or `node scripts/deploy.mjs --remote`)
+- Screenshots: `npm run preview` on `:4173` + `node scripts/screenshots.mjs` → `docs/screenshots/06-ai-debug.png` (commit with `git add docs/screenshots`)
+- Continue tomorrow: tune thresholds in `src/ai/exercises/analyzers/*.ts` using `landmarks.json` replay, add fixtures to `tests/fixtures/`, bump `2.9.0` when ready
 
----
+**Current:** `main 170c558` (`index-BtRuuVLP.js / o40-v76178e8f`) + `deploy-tmp 7b420a9` live verified.
 
-## 8. Checklist
-
-1. `git checkout main && git pull`
-2. `npm run verify && npm run build` → check `v2.0.0 · <hash>` in Home
-3. `npx cap sync` if you touch `public`/`src`
-4. For web deploy: `node scripts/deploy.mjs --remote` or manual `deploy-tmp` + `curl` to mikweb + `composer install` if api changed
-5. For push test: Setup → Push → Test (per-language), or `curl -X POST https://mikweb.eu/operator40/api/push-send.php -d '{"test":true,"lang":"de"}'`
-
-All set — good work!
+All set — continue tomorrow from `src/ai/exercises/analyzers/` with device testing.

@@ -1,160 +1,158 @@
 # Operator 40
 
-Fitness coach for people over 40. A 15-minutes-a-day training camp to lose belly fat and tone up, built for **Mac (web/PWA)**, **iOS (native)**, **Android (native)** and any modern browser.
+**Fitness coach for over-40. 15 minutes a day to lose belly fat and tone up — PWA + iOS + Android.**
 
-Dark, military-themed UI with **18 local MP4 clips + WebP**, full exercise library, adaptive weekly programs, dedicated **belly missions**, session tracking, statistics, offline **motivational music** (royalty-free MP3 shipped locally), and **PWA push notifications** (works with app closed).
+Military dark UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N,O,P belly + Q), **22 AI-tracked exercises**, adaptive camp, Apple Health import, NEFFEX offline music, **on-device AI coach** with camera, **push notifications that work with the app closed**.
 
-> **Try it live:** <https://mikweb.eu/operator40/> — installable as PWA on iPhone/Mac/Android, or as native iOS/Android app.
+> **Live:** https://mikweb.eu/operator40/ — install as PWA on iPhone/Mac/Android, or as native Capacitor app (`com.operator40.app`).
+> Repo: https://github.com/Mikweb2025-design/operator40 — `main` + `deploy-tmp` (dist for hosting)
 
 ---
 
-## Screenshots (v2.6 — belly 2.0 + pose + push)
+## Screenshots (v2.8 — 22 AI analyzers + poseQuality)
 
-| Home — mission + belly + adherence | Library — smart tips + clips |
+| Home — mission + belly + adherence | Library — 18 clips + AI tips |
 |:---:|:---:|
 | ![Home](docs/screenshots/01-home.png) | ![Library](docs/screenshots/02-libreria.png) |
 
-| Exercise detail (MP4) | Live session |
+| Exercise detail (MP4) | Live AI Session — poseQuality + repConfidence + debug HUD |
 |:---:|:---:|
-| ![Exercise detail](docs/screenshots/03-esercizio-superman.png) | ![Workout session](docs/screenshots/04-sessione-allenamento.png) |
+| ![Exercise detail](docs/screenshots/03-esercizio-superman.png) | ![AI Session](docs/screenshots/04-sessione-allenamento.png) |
 
-| Statistics — 8-week adherence + streak risk + avg pace |
-|:---:|
-| ![Statistics](docs/screenshots/05-statistiche.png) |
-| _Full scroll:_ [`05-statistiche-full.png`](docs/screenshots/05-statistiche-full.png) |
+| Statistics — 8-week adherence | Full scroll |
+|:---:|:---:|
+| ![Statistics](docs/screenshots/05-statistiche.png) | [`05-statistiche-full.png`](docs/screenshots/05-statistiche-full.png) |
 
----
-
-## Features
-
-- **Enrollment** — age, weight, waist and weekly goal calibrate calories and training zones.
-- **Daily missions — 18 programs (A–M + N,O,P + Quick Burst)** — work/rest + levels Recruit/Fighter/Elite and 30-day Camp cycle (20-day `DAY_CYCLE` with belly every 2 days), adaptive on RPE.
-- **Belly 2.0 (NEW v2.6)** — initial test **plank max (sec) + crunch in 30s → auto level** (`src/utils/bellyTest.js` `getBellyLevelForTest`), **progression every 7 days** if 3/3 belly (`shouldProgressBellyLevel`), **Before/After slider** for progress photos (`src/components/BeforeAfterSlider.jsx`), enhanced waist chart. Home **BELLY • 3 DEDICATED MISSIONS** now shows *Test Belly 2.0* button, current level badge, and *→ NEXT?* progression.
-- **Pose real-time (NEW v2.6)** — on-device **MediaPipe Tasks Vision** (`src/components/PoseCounter.jsx`, `vision_bundle 154k`) counts **squat** (knee <80° → >160°) and **push-up** (elbow <90° → >160°) via camera, offline, no video sent. Trigger: *Home → Count squat (camera)* or during session preview.
-- **Exercise library — 18 MP4 local** — `public/clips/` 18 videos (bicyclecrunch, russiantwist, wallsit, superman, bridge, highknees, crunch, burpee, sideplank, **legraise, flutterkick, deadbug, vup, plankjack, skater, heeltap, squat, flessioni/push-up**) + WebP fallback (`src/media.js` 1.7 MB) + `src/clips.js` `CLIP_FILES` + smart recommendations.
-- **Live session** — voice guidance, countdown, kcal/HR/RPE, progress ring and wake-lock.
-- **Progress & Adherence** — `getWeeklyProgress`, `getConsistencyScore(8w)`, `getAveragePace`, `getStreakRisk` → **Adherence** card in Home and **8-week Adherence** in Statistics.
-- **Statistics** — streak/best, heatmap 35d + year, kcal 7d & monthly trend, BMI/WhtR/BF + TDEE, progress photos with **Before/After slider**, calendar, export CSV/JSON.
-- **Motivational push — 1/day, personalized, per-language & per-user** — `src/utils/motivation.js` (`getMotivationalMessage` 6 types: comeback if missed ≥2d, streak ≥3/7, at-risk, start, stress tip 1/3 days, generic) with name `Ciao {name}, …` and `it/en/de`. **PWA push works with app closed** (`public/sw.js` `push` + `notificationclick`), **VAPID** `BHwro8…`, backend `public/api/push-*.php` (`subscriptions.json` + `push-stats.json` per endpoint `{n,missed,lang,name}`), cron `0 9 * * * php push-cron.php` (09:00 Europe/Rome, idempotent `lastSent`), local 09:00 fallback if push off. Test button per-language.
-- **Music** — 12 royalty-free tracks (NEFFEX, CC BY 3.0) local, offline, volume adaptive per phase.
-- **Storage optimized** — web/PWA now **IndexedDB** (`idb 8.0.3`, DB `operator40` store `kv`) for large keys (`o40_sessions`, `o40_photos` etc.) with migration from `localStorage`, native still `Capacitor Preferences`. No more 5 MB quota or UI blocking. Photos: `loadPhotosAsync`/`savePhotosAsync`.
-- **Offline** — service worker `o40-v<hash>` deterministic, **precache 6 critical clips** (`squat/flessioni/deadbug/ponte/wallsit/superman` ~14M) on `install` via `Promise.allSettled`, `Range` bypass for audio, cache-first for assets.
-- **Privacy** — everything on-device (`IndexedDB` / `Capacitor Preferences`). Apple Health `export.xml` import 100% local. Push stats are minimal `{n,missed,lang,name}` per subscription, no full history.
-- **Installable PWA** — standalone, offline, service worker cache `o40-v<hash>` deterministic (git hash, no drift).
-- **Native apps** — **iOS** (Capacitor 6, `ios/App`) + **Android** (Capacitor 6, `android/`) — same `dist`, `npx cap sync` + `npx cap open`.
-- **Deploy verified** — `npm run verify` + `npm run deploy` (`--local/--remote/--ios/--android`) deterministic, `dist` gitignored (only on `deploy-tmp`).
+> **New in v2.8:** `src/ai/` 22 dedicated analyzers. Debug HUD (`◇ DEBUG`) shows `EXERCISE / PHASE / REPS / REP CONF / POSE / FORM / FPS / ANGLE / VEL` and `landmarks.json` recorder. Generate fresh shots: `npm run build && npm run preview` then `node scripts/screenshots.mjs` (Playwright 390×844 @2x).
 
 ---
 
-## Run locally (Mac)
+## Features (v2.8)
+
+- **Onboarding** — age, weight, waist, height, weekly goal → TDEE / BMI / kcal zones. Stays on device.
+- **18 programs + 22 exercises** — `A–M` + `N,O,P` belly + `Q` Quick Burst, 30-day Camp (`DAY_CYCLE` 20, belly every 2 days), adaptive via RPE, levels `Recruit / Fighter / Elite`.
+- **Belly 2.0** — plank max + crunch 30s → auto level `getBellyLevelForTest`, 7-day progression `shouldProgressBellyLevel`, Before/After slider.
+- **AI Fitness Coach — 22 exercise-specific analyzers (NEW v2.8)** — `src/ai/exercises/analyzers/{pushup,squat,crunch,plank,legRaise,flutterKick,deadBug,vUp,mountainClimber,jumpingJack,bicycleCrunch,heelTap,burpee,affondo,skater,ginocchiaAlte,superman,ponte,russianTwist,wallsit,sideplank,plankJack}.ts`
+  - `src/ai/pose/Geometry.ts` 11 utilities (`calculateAngle/Distance/Midpoint/Velocity/Acceleration/BodyLine/TorsoAngle/LegAngle/ArmAngle/RangeOfMotion/Symmetry`) normalized by torso length
+  - `src/ai/pose/PoseQuality.ts` — `poseConfidence / landmarkConfidence / exerciseConfidence 0-100`, pause if required landmarks `<42`
+  - `OneEuro` smoothing (`LandmarkSmoother 1.15/0.008`, hold `0.75/0.004`) — no raw jitter
+  - Per-exercise `ExerciseAnalyzer` with phases (`READY/DESCENDING/BOTTOM/ASCENDING/TOP` etc.), hysteresis, `minDown/Ms`, `minRepsInterval`, `ROM`, `velocity`, `phase history`
+  - `repConfidence 0-100` gating (`>70-78`) — prefers not counting uncertain rep over false positive
+  - `formScore 0-100` from `ROM / alignment / control / symmetry` per exercise
+  - `src/ai/motion/MotionFusion.ts` placeholder for Capacitor motion sensors (jumpingJack/highKnees/burpee) — PWA works without
+- **Exercise library — 18 MP4 local** `public/clips/` (2.3 MB each) + WebP `src/media.js` + `hasClip()` fallback to `ExerciseFigure` SVG.
+- **Live session** — `SessionAIOverlay` auto-loads analyzer from `phase.exerciseId` (mission → registry), `READY` check, auto-start timer on first `DOWN`, `poseQuality` bar + voice `it/en/de/fr`, wake-lock, haptics.
+- **Debug HUD** — `FitnessEngineView ◇ DEBUG` shows `EXERCISE / PHASE / REPS / REP CONF / POSE / FORM / FPS / ANGLE / VEL / DIR / VIS / REQ / DET` + `landmarks.json` recorder (developer-only, no video uploaded).
+- **Progress & Adherence** — `getWeeklyProgress / getConsistencyScore(8w) / getAveragePace / getStreakRisk` → Home Adherence + Statistics 8-week.
+- **Statistics** — streak/best, heatmap 35d + year, kcal 7d/monthly, BMI/WhtR/BF + TDEE, photos Before/After, calendar, `exportCSV` + `shareStatsImage` 1080×1350.
+- **Push 1/day personalized** — `getMotivationalMessage` 6 types + `VAPID BHwro8…`, `public/api/push-*.php` + `push-cron 09:00 Europe/Rome` + local 09:00 fallback. Works with PWA closed (`sw.js push/notificationclick`).
+- **Music** — 12 NEFFEX CC BY 3.0 local, adaptive volume per phase.
+- **Storage** — `idb 8.0.3` (`operator40/kv`) web + `Capacitor Preferences` native, migration from `localStorage`. No 5 MB limit.
+- **Offline** — `sw.js o40-v<hash>` cache-first assets, `Range` bypass for audio, precache 6 clips + `wasm/models` if bundled (`npm run fetch:mediapipe`). `PoseLandmarkerManager` tries CDN then `./wasm`/`./models` with `lite/heavy/auto` + `GPU→CPU` fallback.
+- **Privacy** — 100% on-device (`IndexedDB` / `Preferences`). Health `export.xml` parsed locally. MediaPipe never uploads video. Minimal push stats `{n,missed,lang,name}`.
+- **PWA** — standalone, offline, deterministic `o40-v<hash>` via `git rev-parse --short HEAD`.
+- **Native** — iOS + Android Capacitor 6, same `dist`, `npx cap sync`.
+
+---
+
+## Quick start (Mac)
 
 ```bash
-npm install
-npm run dev        # dev server on http://localhost:5173
-npm run build      # production build into dist/
-npm run preview    # serve the production build
+npm install          # node >=18
+npm run dev          # http://localhost:5173
+npm run build        # dist/ + sw.js o40-v<hash>
+npm run preview      # http://localhost:4173 (for phone on same Wi-Fi)
+npm run verify       # ReferenceError check
+npm run test         # vitest 24 tests (stateMachine + definitions + MissionManager + 22 analyzers)
+npm run fetch:mediapipe # optional: copy wasm + download pose_landmarker_{lite,heavy}.task → public/wasm,models
 ```
 
-### Reach it from your phone on the same Wi-Fi
-
-Find your Mac's local IP, then open it on the phone browser:
-
-```bash
-ipconfig getifaddr en0    # e.g. 192.168.1.84
-```
-
-Open `http://192.168.1.84:4173` (Vite preview) on the phone → works just like the hosted version.
+**Phone on Wi-Fi:** `ipconfig getifaddr en0` → open `http://<ip>:4173` (Vite preview) on iPhone.
 
 ---
 
-## Install as a PWA
+## Install PWA
 
-The live app is already set up as an installable PWA (manifest + icons + offline service worker, relative paths so it also works under a sub-path). Always open the URL **with the trailing slash**: <https://mikweb.eu/operator40/>
+Open **with trailing slash**: https://mikweb.eu/operator40/
 
-- **iPhone/iPad (Safari):** open <https://mikweb.eu/operator40/> → **Share** → **Add to Home Screen** → the "Op40" icon appears on the home screen, full-screen, offline.
-- **Mac — Chrome:** open <https://mikweb.eu/operator40/> → click the **install icon** (monitor with a `+`) at the right end of the address bar → **Install Operator 40**. A standalone app window is added to the Dock/Applications. If you don't see the icon, reload the page once (the service worker must finish registering) and try again.
-- **Mac — Safari (macOS 15.2+):** open the page → **Share** → **Add to Dock** → the app runs in its own window with the Op40 icon.
-
----
-
-## iOS native build
-
-Prerequisites (one-time):
-- Xcode with the **"iOS 26.5"** component installed (Xcode → Settings → Components). Without it the build fails with `iOS 26.5 Platform Not Installed`.
-- CocoaPods (`brew install cocoapods`).
-
-```bash
-npx cap add ios       # creates ios/App (already done)
-npx cap sync          # copies the web build + pod install
-npx cap open ios      # opens Xcode; pick your iPhone and press Run
-```
-
-After a web code change: `npm run build && npx cap sync`.
-
-## Android native build
-
-Prerequisites (one-time):
-- Android Studio + SDK 34/35 + Platform-Tools (via `sdkmanager` or Android Studio → SDK Manager)
-- Java 17, Gradle (`brew install gradle` already on this Mac)
-
-```bash
-npx cap add android   # creates android/ (already done, @capacitor/android 6.2.1)
-npx cap sync          # copies the web build to android/app/src/main/assets/public
-npx cap open android  # opens Android Studio; Run on emulator or USB device
-# or via CLI:
-./android/gradlew -p android assembleDebug   # APK in android/app/build/outputs/apk/debug/app-debug.apk
-./android/gradlew -p android bundleRelease   # AAB for Play Store
-```
-
-After a web code change: `npm run build && npx cap sync` (updates both iOS and Android). The appId is `com.operator40.app` (`capacitor.config.json`), `webDir: dist`.
-
-Test on Mac emulator: `emulator -avd TestAVD` (API 37.1 ps16k arm64 already created on `/Volumes/USB`) or start an AVD from Android Studio → Run.
+- **iPhone (Safari):** Share → Add to Home Screen → `Op40` icon, full-screen offline
+- **Mac Chrome:** address bar `+` → Install Operator 40 → Dock/Applications
+- **Mac Safari 15.2+:** Share → Add to Dock
 
 ---
 
-## Project structure
+## Native builds
 
-- `src/App.jsx` — main app (~3300 lines, audio, local dates, safe-area, 100dvh) + `v<version> · <hash>` badge + **BELLY** + **PoseCounter** modals + **Push PWA** + **BellyTest** + **BeforeAfterSlider`.
-- `src/data/programs.js` — 18 programs (A–M + N,O,P belly + Q) + `DAY_CYCLE` 20d + `BELLY_IDS`/`BELLY_PROGRAMS` + `CAMP_DAYS` 30.
-- `src/data/exercises.js` — 20+ exercises + `EXERCISE_GROUPS` (standing/ground/core).
-- `src/clips.js` + `src/media.js` — `CLIP_FILES` 18 MP4 local (`public/clips/`) + `VIDEO_B64` WebP lazy (chunk ~1.7 MB) + `hasClip()`.
-- `src/utils/belly.js` — `isBellyProgram`, `getBellySessions`, `getBellyCount`, `getBellyStreak`, `getBellyProgress`, `pickBellyNext`, `getBellyInsight`.
-- `src/utils/bellyTest.js` **(NEW v2.6)** — `BELLY_LEVELS`, `getBellyLevelForTest({plankSec, crunchReps})`, `shouldProgressBellyLevel` (7-day), `formatBellyTestResult`.
-- `src/utils/motivation.js` **(NEW)** — `getMotivationalMessage` 6 types per `it/en/de` with `personalize(name)`, `buildPushPayload`.
-- `src/utils/push.js` **(NEW)** — `VAPID_PUBLIC_KEY`, `subscribePush`, `unsubscribePush`, `updatePushStats`, `testPushViaSW(lang)`, `isPushSupported`.
-- `src/utils/missions.js` — `getRecommendedMissions`, `getDailyChallenge` + `getBellyMissions`, `getBellyBooster`.
-- `src/utils/progress.js` — `getWeeklyProgress`, `getConsistencyScore`, `getAveragePace`, `formatDuration`, `getStreakRisk`.
-- `src/utils/stats.js` — streak, heatmap, rank, badges, trend.
-- `src/music.js` — audio engine + 12 local tracks.
-- `src/storage.js` — **IndexedDB** (`idb`) for web + `Capacitor Preferences` for native, migration from `localStorage`.
-- `src/components/BellyTest.jsx` **(NEW)** — plank timer + crunch 30″ counter → auto level.
-- `src/components/BeforeAfterSlider.jsx` **(NEW)** — before/after photo slider.
-- `src/components/PoseCounter.jsx` **(NEW)** — MediaPipe Pose real-time squat/push-up counting, offline, no video sent.
-- `src/components/ExerciseFigure.jsx` — stylized SVG pose (fallback if no clip).
-- `public/sw.js` — offline-first + **push** (`push`/`notificationclick`) + **precache 6 critical clips** on install.
-- `public/api/` **(NEW)** — `push-subscribe.php`, `push-unsubscribe.php`, `push-update-stats.php`, `push-send.php`, `push-cron.php` (09:00 daily, per-user, per-language, with name), `vapid.json` + `vapid-private.json` (not in repo) + `subscriptions.json`/`push-stats.json`.
-- `public/manifest.webmanifest` + `public/icons/` — PWA.
-- `public/clips/` — 18 MP4 (2.3–2.6 MB each) local.
-- `public/tracks/` — 12 MP3 NEFFEX offline.
-- `ios/` — Capacitor iOS (App/App.xcodeproj, `ios/App/App/public` ← dist, gitignored).
-- `android/` — Capacitor Android (app/src/main/assets/public ← dist, gitignored, `appId com.operator40.app`).
+**iOS**
+```bash
+npx cap add ios      # already done
+npx cap sync         # copy dist + pod install
+npx cap open ios     # Xcode → Run on device (needs iOS 26.5 component)
+# after web change: npm run build && npx cap sync
+```
+
+**Android**
+```bash
+npx cap add android  # already done @capacitor/android 6.2.1
+npx cap sync
+npx cap open android # Android Studio → Run (emulator TestAVD API 37.1 ps16k on /Volumes/USB)
+./android/gradlew -p android assembleDebug   # APK
+./android/gradlew -p android bundleRelease   # AAB
+```
+
+`appId com.operator40.app`, `webDir dist`, `androidScheme https`.
+
+---
+
+## Project structure (v2.8)
+
+- `src/App.jsx` ~3300 lines — screens + `isAiWork` gated `SessionAIOverlay`, `aiEnabled` toggle
+- `src/data/programs.js` 18 programs + `DAY_CYCLE 20` + `BELLY_IDS` + `CAMP_DAYS 30`
+- `src/data/exercises.js` 22 exercises + `EXERCISE_GROUPS`
+- `src/clips.js` + `src/media.js` 18 MP4 + WebP fallback
+- `src/ai/` **NEW — modular AI engine (spec §3)**
+  - `pose/Geometry.ts` 11 utils, `PoseQuality.ts`, `LandmarkSmoother.ts`
+  - `motion/MotionFeatures.ts` + `MotionFusion.ts` (secondary sensors)
+  - `exercises/ExerciseAnalyzer.ts` base + `ExerciseRegistry.ts` 22 + `analyzers/{22}.ts` per exercise
+  - `coaching/` (FormScore via analyzers), `debug/LandmarkRecorder.ts` (landmarks.json), `session/ExerciseSession.ts` placeholder
+- `src/engine/` — legacy engine kept for compat: `FitnessEngine.ts` now delegates to `src/ai` when analyzer exists, fallback blocked if `trackingSupported=false`; `PoseLandmarkerManager.ts` lite/heavy/auto + `./wasm` fallback; `stateMachine.ts` hysteresis; `types.ts` 27 `ExerciseId` + `repConfidence`
+- `src/utils/` — `stats.js / progress.js / belly.js / bellyTest.js / motivation.js / push.js / workout.js / bmi.js / body.js / ...`
+- `src/components/` — `FitnessEngineView.tsx` (22 switcher + poseQuality bar + debug HUD + recorder), `SessionAIOverlay.tsx`, `PoseCounter.jsx` (deprecated → delegate), `PositioningMask.tsx`, `BellyTest.jsx`, `BeforeAfterSlider.jsx`
+- `public/{clips,icons,tracks,wasm,models,api,sw.js,manifest.webmanifest}` — `wasm/models` gitignored `*.task/*.wasm`
+- `ios/ + android/` — Capacitor shells (public ← dist, gitignored)
+- `scripts/{version-sw.mjs,fetch-mediapipe.mjs,verify.mjs,deploy.mjs,screenshots.mjs}` + `vite.config.js` `__APP_VERSION__` deterministic + `vitest`
+- `docs/screenshots/` — `01-home … 05-statistiche` (+ `06-ai-debug` after `screenshots.mjs`)
 
 ---
 
 ## Deploy & Screenshots
 
 ```bash
-npm run verify              # check ReferenceError sessions
-npm run build               # vite build + SW version o40-v<hash> deterministic
-npm run deploy:local        # verify + build + info asset
-npm run deploy -- --remote --ios  # + push mikweb.eu via GitHub raw + cap sync
-node scripts/screenshots.mjs # Playwright 390×844 @2x → docs/screenshots/ (requires preview on :4173)
+npm run verify && npm run build    # o40-v<8hex> in sw.js
+npm run test                       # 24 tests
+npm run deploy:local               # info only
+npm run deploy -- --remote --ios   # push deploy-tmp + curl raw to mikweb.eu + cap sync
+node scripts/screenshots.mjs       # Playwright 390×844 @2x → docs/screenshots/ (needs preview on :4173)
 ```
 
-Build deterministic: `vite.config.js` uses `git rev-parse --short HEAD` → same commit = same hash asset → local and `mikweb.eu` stay aligned.
+Deterministic: `vite.config.js` `git rev-parse --short HEAD` → same commit = same hash asset.
 
 ---
 
 ## Tech stack
 
-React 18 · Vite 5 · Capacitor 6 (iOS + Android) · `idb` 8 · `@mediapipe/tasks-vision` 0.10 · lucide-react · recharts · Playwright (screenshots) · Gradle 8 + Android SDK 34/35/36 · PHP 8.3 + `minishlink/web-push` 9.0 (VAPID) · `composer`
+React 18 · Vite 5 · Capacitor 6 · `idb 8` · `@mediapipe/tasks-vision 0.10` · OneEuro · `lucide-react` · `recharts` · Vitest 1 · Playwright · Gradle 8 · PHP 8.3 `web-push 9.0` · Composer
+
+---
+
+## Roadmap — continue tomorrow
+
+- [ ] Tune remaining 14 analyzers thresholds on-device (iPhone side-view vs front-view) + `landmarks.json` replay dataset
+- [ ] Add per-exercise `landmarks.json` fixtures to `tests/fixtures/` for CI
+- [ ] Benchmark `lite vs heavy` FPS on iPhone 14/15, document `auto` heuristic
+- [ ] Wire `MotionFusion` to Capacitor `Motion` plugin for `jumpingJack`/`highKnees`/`burpee` (opt-in)
+- [ ] Regenerate `06-ai-debug.png` + `07-burpee.png` via `screenshots.mjs` with `?debug=1`
+- [ ] Bump `package.json` to `2.9.0` and update `STRUCTURE.md` with new screenshots
+
+Local: `git checkout main && git pull && npm run dev` — continue on `src/ai/exercises/analyzers/*`.
+GitHub: `main` (source) + `deploy-tmp` (dist for hosting) — see `STRUCTURE.md §7` for branch strategy.
