@@ -249,18 +249,19 @@ export class FitnessEngine {
     const lm = result.landmarks;
     const vis = result.visibilityScore;
     const primVis = this.primaryVisibility(lm);
-    // Visibility gate: primary joints must be visible, but we are permissive (0.38) to keep over-40 partial views
-    // Use max of average and primary — side view often hides one leg
+    // Permissivo: side view / luce bassa su iPhone abbassa visibility MediaPipe a 0.20-0.35
+    // Prima bloccava in idle se primVis<0.38 — ora lasciamo passare con quality degradata
     const visEffective = Math.max(vis, primVis);
-    if (primVis < 0.38) {
-      // still update but don't drive state machine — frame is unreliable
+    const lowVis = primVis < 0.22 && vis < 0.28; // quasi invisibile -> resta idle ma non bloccare transizione READY
+    if (lowVis) {
       this.updateTimers(now);
       this.lastTs = now;
       if (this.currentForm) {
         this.currentForm = { ...this.currentForm, visibility: visEffective, cues: ['move into frame'] };
       }
-      return;
+      // non fare return duro: lascia comunque SM tentare READY se qualche landmark c'è
     }
+    // se primVis basso ma non bassissimo, degrada quality ma continua
 
     const primaryAngle = this.getPrimaryAngle(lm);
     const secondary = this.computeSecondaryAngles(lm);

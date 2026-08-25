@@ -57,7 +57,7 @@ export class HysteresisStateMachine {
    */
   step(angle: number, timestampMs: number, visibility: number): { nextPhase: EnginePhase; didRep: boolean } {
     const { downThreshold, upThreshold, minDownMs, minRepsIntervalMs } = this.cfg;
-    const visOk = visibility >= 0.35;
+    const visOk = visibility >= 0.22; // permissivo per iPhone luce bassa / laterale
     let p = this.state.phase;
     let didRep = false;
 
