@@ -282,8 +282,11 @@ export class FitnessEngine {
     this.troughInRep = Math.min(this.troughInRep, primaryAngle);
     this.peakInRep = Math.max(this.peakInRep, primaryAngle);
 
+    // State machine: check custom transition first for complex exercises
+    let phase: EnginePhase = this.currentPhase;
+
     // --- Adaptive calibration: learn user's ROM in first ~1.2s of ready ---
-    if (!this.calibDone && (phase === 'ready' || phase === 'idle') && this.currentPhase === phase) {
+    if (!this.calibDone && (phase === 'ready' || phase === 'idle')) {
       this.calibSamples.push(primaryAngle);
       if (this.calibSamples.length >= 32) {
         const sorted = [...this.calibSamples].sort((a, b) => a - b);
@@ -293,19 +296,13 @@ export class FitnessEngine {
         if (span > 22) {
           const origDown = this.def.thresholds.downThreshold;
           const origUp = this.def.thresholds.upThreshold;
-          // adapt: down = closer to observed min, up = closer to observed max, but clamp to sane bounds
           const adaptDown = clamp(minObs + span * 0.18, origDown - 12, origDown + 10);
           const adaptUp = clamp(maxObs - span * 0.12, origUp - 10, origUp + 14);
           this.sm.updateConfig({ downThreshold: adaptDown, upThreshold: adaptUp });
         }
         this.calibDone = true;
       }
-    } else if (phase !== 'ready' && phase !== 'idle') {
-      // once motion started, freeze calibration unless reset
     }
-
-    // State machine: check custom transition first for complex exercises
-    let phase: EnginePhase = this.currentPhase;
     let didRep = false;
     if (this.def?.customTransition) {
       const custom = this.def.customTransition(primaryAngle, this.velocityFiltered, phase, { landmarks: lm, timestampMs: now });
