@@ -53,6 +53,7 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
   const [alignOkSince, setAlignOkSince] = useState<number | null>(null);
 
   const missionEx = exerciseFromPhase(phase, lang as any, levelKey);
+  const trackingSupported = missionEx?.trackingSupported !== false && (missionEx?.definition as any)?.trackingSupported !== false;
   const targetReps = missionEx?.targetReps ?? phase?.reps ?? null;
   const isHold = !!missionEx?.isHold;
   const exerciseId = missionEx?.exerciseId ?? phase?.exerciseId ?? 'squat';
@@ -185,9 +186,19 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
 
   const normLang = normalizeLang(lang as any);
   const formVal = Math.round(metrics?.avgQuality ?? metrics?.currentForm?.quality ?? 0);
+  const poseQuality = Math.round(metrics?.poseQuality ?? metrics?.currentForm?.poseQuality ?? 0);
   const statusText = !metrics ? tCoach('coach.moveIntoFrame', normLang) : formVal > 68 ? tCoach('coach.status.good', normLang) : tCoach('coach.status.fix', normLang);
 
   if (!aiEnabled) return null;
+  if (!trackingSupported) {
+    return (
+      <div style={{ width: '100%', background: INK, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, textAlign: 'center' }}>
+        <div className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>AI TRACKING</div>
+        <div style={{ color: PAPER, fontSize: 13, marginTop: 6 }}>{lang === 'it' ? 'Tracciamento AI non ancora calibrato per questo esercizio — usa timer standard.' : 'AI tracking not yet calibrated for this exercise — using standard timer.'}</div>
+        <div style={{ color: STEEL, fontSize: 11, marginTop: 8 }}>{exerciseId}</div>
+      </div>
+    );
+  }
 
   const progressPct = targetReps ? Math.min(1, reps / targetReps) : (metrics?.elapsedMs && phase?.duration ? Math.min(1, metrics.elapsedMs / (phase.duration * 1000)) : 0);
 
@@ -213,6 +224,11 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
         </div>
       </div>
 
+      {poseQuality < 42 && metrics?.currentPhase !== 'idle' && (
+        <div style={{ margin: '8px 8px 0', padding: '6px 8px', borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: 'center' }}>
+          {lang === 'it' ? 'Allontanati così vedo tutto il corpo.' : lang === 'de' ? 'Geh zurück, damit ich deinen ganzen Körper sehe.' : 'Move back so I can see your whole body.'}
+        </div>
+      )}
       {coachingText && (
         <div style={{ margin: '8px 8px 0', padding: '8px 10px', borderRadius: 10, background: `${BLAZE}14`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 12, textAlign: 'center' }}>
           {coachingText}
@@ -237,6 +253,7 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
         )}
         <div style={{ position: 'absolute', bottom: 6, left: 6, right: 6, display: 'flex', justifyContent: 'space-between', pointerEvents: 'none' }}>
           <span className="o40-mono" style={{ background: `${INK}DD`, color: KHAKI, fontSize: 9, padding: '3px 7px', borderRadius: 20, border: `1px solid ${OLIVE}55` }}>{exerciseId} · {status === 'running' ? 'AI' : status}</span>
+          <span className="o40-mono" style={{ background: `${INK}DD`, color: poseQuality > 60 ? '#7FB069' : poseQuality > 40 ? '#D4A017' : BLAZE, fontSize: 9, padding: '3px 7px', borderRadius: 20, border: `1px solid ${OLIVE}55` }}>POSE {poseQuality}%</span>
           <span className="o40-mono" style={{ background: formVal > 68 ? '#7FB069DD' : `${BLAZE}DD`, color: PAPER, fontSize: 9, padding: '3px 8px', borderRadius: 20 }}>{metrics?.currentPhase ?? 'idle'}</span>
         </div>
       </div>

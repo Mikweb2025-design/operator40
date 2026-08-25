@@ -14,16 +14,31 @@ import { LandmarkSmoother } from './filters/LandmarkSmoother';
 type MPVision = typeof import('@mediapipe/tasks-vision');
 
 const DEFAULT_WASM_BASE = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm';
-const DEFAULT_MODEL = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task';
-// For offline PWA, also try local copy if CDN fails (add to public/ if you want fully offline)
+const LITE_MODEL = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task';
+const HEAVY_MODEL = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_heavy/float16/1/pose_landmarker_heavy.task';
+const FULL_MODEL = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task';
+// For offline PWA: local copies in public/wasm + public/models (see scripts/fetch-mediapipe.mjs)
 const FALLBACK_WASM_BASES = [
   DEFAULT_WASM_BASE,
-  './wasm', // if you bundle wasm locally
+  './wasm',
 ];
-const FALLBACK_MODELS = [
-  DEFAULT_MODEL,
-  './models/pose_landmarker_lite.task',
-];
+function modelUrlsForVariant(variant: string): string[] {
+  const localMap: Record<string, string> = {
+    lite: './models/pose_landmarker_lite.task',
+    heavy: './models/pose_landmarker_heavy.task',
+    full: './models/pose_landmarker_full.task',
+  };
+  const cdnMap: Record<string, string> = { lite: LITE_MODEL, heavy: HEAVY_MODEL, full: FULL_MODEL };
+  if (variant === 'auto') {
+    // try heavy locally then CDN heavy, then lite fallback
+    return [localMap.heavy, HEAVY_MODEL, localMap.lite, LITE_MODEL];
+  }
+  const v = variant as keyof typeof cdnMap;
+  const cdn = cdnMap[v] ?? LITE_MODEL;
+  const local = localMap[v] ?? localMap.lite;
+  return [cdn, local];
+}
+const DEFAULT_MODEL = LITE_MODEL;
 
 export class PoseLandmarkerManager {
   private landmarker: any | null = null;
@@ -47,13 +62,28 @@ export class PoseLandmarkerManager {
 
   isReady(): boolean { return this.ready && !!this.landmarker; }
 
+  private modelVariant: string = 'lite';
+
   async init(onProgress?: (msg: string) => void): Promise<void> {
     if (this.ready) return;
     const vision: MPVision = await import('@mediapipe/tasks-vision');
     const { PoseLandmarker, FilesetResolver } = vision as any;
 
+    // Resolve variant: explicit > auto-heuristic (heavy if deviceMemory>=4 && not low-end iPhone)
+    const requested = (this.opts as any).modelVariant ?? 'lite';
+    if (requested === 'auto') {
+      try {
+        const mem = (navigator as any).deviceMemory ?? 4;
+        const ua = navigator.userAgent ?? '';
+        const isOldIOS = /iPhone OS 1[0-4]_/.test(ua);
+        this.modelVariant = (mem >= 4 && !isOldIOS) ? 'heavy' : 'lite';
+      } catch { this.modelVariant = 'lite'; }
+    } else {
+      this.modelVariant = requested;
+    }
+
     let lastErr: any = null;
-    // Try wasm bases
+    // Try wasm bases (CDN first, then local offline copy)
     for (const wasmBase of FALLBACK_WASM_BASES) {
       try {
         onProgress?.(`wasm:${wasmBase}`);
@@ -63,11 +93,13 @@ export class PoseLandmarkerManager {
     }
     if (!this.fileset) throw new Error(`Fileset failed: ${String(lastErr)}`);
 
-    // Try model paths with GPU then CPU fallback
+    const candidateModels = modelUrlsForVariant(this.modelVariant);
+    // Try model paths with GPU then CPU fallback, with heavy->lite fallback on failure
     for (const delegate of [this.delegate, 'CPU' as const]) {
-      for (const modelPath of FALLBACK_MODELS) {
+      for (const modelPath of candidateModels) {
         try {
           onProgress?.(`model:${delegate}:${modelPath}`);
+          const t0 = performance.now();
           this.landmarker = await PoseLandmarker.createFromOptions(this.fileset, {
             baseOptions: { modelAssetPath: modelPath, delegate },
             runningMode: 'VIDEO',
@@ -79,6 +111,9 @@ export class PoseLandmarkerManager {
           });
           this.delegate = delegate;
           this.ready = true;
+          // Heavy model performance guard: if init >4s, will auto-throttle fps in FitnessEngine
+          const dt = performance.now() - t0;
+          if (dt > 3800) onProgress?.('heavy_slow');
           return;
         } catch (e) { lastErr = e; }
       }

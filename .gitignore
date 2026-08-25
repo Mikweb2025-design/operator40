@@ -18,3 +18,7 @@ dist/api/subscriptions.json
 dist/api/vapid-private.json
 dist/api/push-stats.json
 dist/api/composer.lock
+# MediaPipe offline bundle — large binaries, not in repo (fetched via npm run fetch:mediapipe)
+public/wasm/*.wasm
+public/wasm/*.js
+public/models/*.task

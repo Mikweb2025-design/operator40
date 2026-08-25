@@ -52,6 +52,7 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
   const [lastForm, setLastForm] = useState<FormMetrics | null>(null);
   const [reps, setReps] = useState(0);
   const [showSkeleton, setShowSkeleton] = useState(true);
+  const [debugMode, setDebugMode] = useState(false);
   const [speechOn, setSpeechOn] = useState(false);
   const [coachingText, setCoachingText] = useState<string>('');
   const [alignOkSince, setAlignOkSince] = useState<number | null>(null);
@@ -245,6 +246,13 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
             {showSkeleton ? '◉ Skeleton' : '◎ Skeleton'}
           </button>
           <button
+            onClick={() => setDebugMode((v) => !v)}
+            style={{ padding: '6px 8px', borderRadius: 20, border: `1px solid ${debugMode ? BLAZE : OLIVE}`, background: debugMode ? `${BLAZE}22` : INK, color: debugMode ? BLAZE : STEEL, fontSize: 11, cursor: 'pointer' }}
+            title="Debug: exercise/state/reps/form/pose/fps/angles"
+          >
+            {debugMode ? '◆ DEBUG' : '◇ DEBUG'}
+          </button>
+          <button
             onClick={handleClose}
             style={{ padding: '6px 10px', borderRadius: 20, border: `1px solid ${OLIVE}`, background: INK, color: STEEL, fontSize: 11, cursor: 'pointer' }}
           >
@@ -255,7 +263,7 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
 
       {/* exercise switcher */}
       <div style={{ display: 'flex', gap: 6, padding: '8px 10px', overflowX: 'auto', background: `${INK}F0`, borderBottom: `1px solid ${OLIVE}22` }}>
-        {(["squat", "pushup", "crunch", "plank", "mountainclimber", "jumpingjack", "flutterkick", "bicyclecrunch", "legraise", "deadbug", "heeltap", "vup", "burpee"] as const).map((id) => (
+        {(["squat", "pushup", "crunch", "plank", "mountainclimber", "jumpingjack", "flutterkick", "bicyclecrunch", "legraise", "deadbug", "heeltap", "vup", "burpee", "affondo", "skater", "ginocchiaalte", "superman", "ponte", "russiantwist", "wallsit", "sideplank", "plankjack"] as const).map((id) => (
           <button
             key={id}
             onClick={() => setExId(id)}
@@ -271,6 +279,21 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
         ))}
       </div>
 
+      {/* Pose quality bar (prompt §7) */}
+      {metrics?.poseQuality != null && (
+        <div style={{ margin: '0 12px', marginTop: 8, display: 'flex', alignItems: 'center', gap: 8, fontSize: 10 }}>
+          <span className="o40-mono" style={{ color: STEEL, minWidth: 90 }}>POSE {(metrics.poseQuality ?? 0)}%</span>
+          <div style={{ flex: 1, height: 6, background: `${OLIVE}55`, borderRadius: 3, overflow: 'hidden' }}>
+            <div style={{ width: `${Math.round(metrics.poseQuality ?? 0)}%`, height: '100%', background: (metrics.poseQuality ?? 0) > 70 ? '#7FB069' : (metrics.poseQuality ?? 0) > 45 ? '#D4A017' : BLAZE, transition: 'width 0.2s' }} />
+          </div>
+          <span className="o40-mono" style={{ color: (metrics.poseQuality ?? 0) < 45 ? BLAZE : STEEL, fontSize: 9 }}>{(metrics.poseQuality ?? 0) < 45 ? (lang === 'it' ? 'Allontanati' : lang === 'de' ? 'Zurück' : 'Move back') : (metrics.poseQuality ?? 0) > 75 ? 'OK' : '—'}</span>
+        </div>
+      )}
+      {(metrics?.poseQuality ?? 100) < 42 && metrics?.currentPhase !== 'idle' && (
+        <div style={{ margin: '6px 12px 0', padding: '6px 8px', borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: 'center' }}>
+          {lang === 'it' ? 'Allontanati così vedo tutto il corpo.' : lang === 'de' ? 'Geh zurück, damit ich deinen ganzen Körper sehe.' : 'Move back so I can see your whole body.'}
+        </div>
+      )}
       {/* HUD */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, padding: '10px 12px', background: INK }}>
         <div style={{ background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', textAlign: 'center' }}>
@@ -295,6 +318,27 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
           <span style={{ fontSize: 14 }}>💡</span> {coachingText}
         </div>
       ) : null}
+      {debugMode && metrics && lastForm && (
+        <div style={{ margin: '8px 12px 0', padding: '8px 10px', borderRadius: 10, background: `${INK_2}EE`, border: `1px solid ${OLIVE}66`, fontFamily: 'ui-monospace, monospace', fontSize: 10, lineHeight: 1.5, color: PAPER }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 14px' }}>
+            <span style={{ color: KHAKI }}>EXERCISE:</span><span>{exId.toUpperCase()}</span>
+            <span style={{ color: KHAKI }}>STATE:</span><span style={{ color: BLAZE }}>{metrics.currentPhase.toUpperCase()}</span>
+            <span style={{ color: KHAKI }}>REPS:</span><span>{reps}{def && (def as any).trackingSupported === false ? ' (no AI)' : ''}</span>
+            <span style={{ color: KHAKI }}>POSE:</span><span>{Math.round(metrics.poseQuality ?? 0)}%</span>
+            <span style={{ color: KHAKI }}>FORM:</span><span>{Math.round(lastForm.quality)}</span>
+            <span style={{ color: KHAKI }}>FPS:</span><span>{Math.round(metrics.fps)}</span>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 14px', marginTop: 4 }}>
+            <span style={{ color: KHAKI }}>ELBOW/KNEE:</span><span>{Math.round(lastForm.primaryAngle)}°</span>
+            <span style={{ color: KHAKI }}>VEL:</span><span>{Math.round(lastForm.velocity)}°/s</span>
+            <span style={{ color: KHAKI }}>DIR:</span><span>{lastForm.direction}</span>
+            <span style={{ color: KHAKI }}>VIS:</span><span>{(lastForm.visibility*100).toFixed(0)}%</span>
+          </div>
+          {Object.keys(lastForm.secondaryAngles).length > 0 && (
+            <div style={{ color: STEEL, marginTop: 4 }}>secondary: {Object.entries(lastForm.secondaryAngles).map(([k,v])=>`${k}:${Math.round(v as number)}°`).join(' · ')}</div>
+          )}
+        </div>
+      )}
 
       {/* video stage */}
       {error ? (

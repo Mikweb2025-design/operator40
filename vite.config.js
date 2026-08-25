@@ -41,4 +41,9 @@ export default defineConfig({
     port: 4173,
     host: true,
   },
+  test: {
+    environment: 'node',
+    include: ['src/**/*.test.{js,ts,jsx,tsx}', 'tests/**/*.{test,spec}.{js,ts}'],
+    globals: true,
+  },
 });

@@ -8,6 +8,7 @@ export type ExerciseId =
   | 'pushup'
   | 'flessioni' // alias pushup
   | 'crunch'
+  | 'crunchbici' // alias bicyclecrunch
   | 'plank'
   | 'mountainclimber'
   | 'jumpingjack'
@@ -17,9 +18,22 @@ export type ExerciseId =
   | 'deadbug'
   | 'heeltap'
   | 'vup'
-  | 'burpee';
+  | 'burpee'
+  | 'burpeetattico' // alias burpee
+  | 'affondo'
+  | 'lunge' // alias affondo
+  | 'skater'
+  | 'ginocchiaalte'
+  | 'highknees' // alias ginocchiaalte
+  | 'superman'
+  | 'ponte'
+  | 'bridge' // alias ponte
+  | 'russiantwist'
+  | 'wallsit'
+  | 'sideplank'
+  | 'plankjack';
 
-export type NormalizedExerciseId = Exclude<ExerciseId, 'flessioni'>;
+export type NormalizedExerciseId = Exclude<ExerciseId, 'flessioni' | 'crunchbici' | 'burpeetattico' | 'lunge' | 'highknees' | 'bridge'>;
 
 export interface Landmark {
   x: number; // 0..1
@@ -74,6 +88,7 @@ export interface FormMetrics {
   quality: number; // 0..100 instantaneous
   cues: string[]; // e.g. 'keep your back straight'
   visibility: number;
+  poseQuality?: number; // 0-100 aggregate required-landmarks visibility (prompt §7)
 }
 
 export interface EngineMetrics {
@@ -86,6 +101,8 @@ export interface EngineMetrics {
   currentForm: FormMetrics | null;
   caloriesEst?: number;
   fps: number;
+  poseQuality?: number; // 0-100 (prompt §7)
+  trackingSupported?: boolean;
 }
 
 export interface EngineConfig {
@@ -107,9 +124,13 @@ export interface ExerciseDefinition {
   id: NormalizedExerciseId;
   aliases?: ExerciseId[];
   label: Record<string, string>;
+  trackingSupported: boolean; // false => exercise recognized but AI tracking not yet implemented (prompt §36)
+  requiredLandmarks: number[]; // MediaPipe indices required to be visible for valid tracking
   primaryAngle: { a: number; b: number; c: number; name: string }; // landmark indices
   secondaryAngles?: Array<{ a: number; b: number; c: number; name: string; ideal?: [number, number] }>;
   thresholds: StateMachineConfig;
+  movementPattern?: string; // e.g. 'squat_down_up', 'plank_hold', 'alternating'
+  safetyRules?: string[]; // cue keys that are safety-critical (priority 1)
   // Quality evaluation
   evaluateForm: (
     landmarks: PoseLandmarks,
@@ -128,8 +149,11 @@ export interface ExerciseDefinition {
   isHold?: boolean;
 }
 
+export type ModelVariant = 'lite' | 'heavy' | 'full' | 'auto';
+
 export interface LandmarkerOptions {
   modelAssetPath?: string;
+  modelVariant?: ModelVariant; // 'lite' default (mobile), 'heavy'/'full' for modern iPhone, 'auto' picks heavy if device high-end
   delegate?: 'GPU' | 'CPU';
   numPoses?: number;
   minPoseDetectionConfidence?: number;

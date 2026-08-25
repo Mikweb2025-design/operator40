@@ -1,6 +1,6 @@
 /**
  * Operator40 — Exercise Definitions
- * 13 exercises: pushup/squat/crunch/plank/mountainclimber/jumpingjack/flutterkick/bicyclecrunch/legraise/deadbug/heeltap/vup/burpee
+ * 22 exercises: pushup/squat/crunch/plank/mountainclimber/jumpingjack/flutterkick/bicyclecrunch/legraise/deadbug/heeltap/vup/burpee/affondo/skater/ginocchiaalte/superman/ponte/russiantwist/wallsit/sideplank/plankjack
  * Each defines primary joint, thresholds (hysteresis), form evaluation & cues.
  * Angles computed from MediaPipe 33 landmarks (bilateral where useful).
  */
@@ -84,6 +84,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'squat',
     aliases: [],
     label: { it: 'Squat', en: 'Squat', de: 'Kniebeuge' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle, LM.left_shoulder, LM.right_shoulder],
+    movementPattern: 'squat_down_up',
+    safetyRules: ['backStraight','kneesOverToes'],
     primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
     secondaryAngles: [
       { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex', ideal: [40, 90] },
@@ -129,6 +133,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'pushup',
     aliases: ['flessioni'],
     label: { it: 'Piegamenti', en: 'Push-up', de: 'Liegestütz' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_elbow, LM.right_elbow, LM.left_wrist, LM.right_wrist, LM.left_hip, LM.right_hip, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'pushup_down_up',
+    safetyRules: ['coreTight','elbows45'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_elbow, c: LM.left_wrist, name: 'elbow' },
     secondaryAngles: [
       { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_ankle, name: 'plankLine', ideal: [160, 185] },
@@ -156,6 +164,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'crunch',
     aliases: [],
     label: { it: 'Crunch', en: 'Crunch', de: 'Crunch' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ear, LM.right_ear],
+    movementPattern: 'hip_flexion',
+    safetyRules: ['backStraight'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
     secondaryAngles: [{ a: LM.left_hip, b: LM.left_shoulder, c: LM.left_ear, name: 'neck', ideal: [70, 110] }],
     thresholds: { downThreshold: 95, upThreshold: 125, hysteresis: 6, minDownMs: 180, minUpMs: 140 },
@@ -175,6 +187,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'plank',
     aliases: [],
     label: { it: 'Plank', en: 'Plank', de: 'Plank' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'hold_plank',
+    safetyRules: ['coreTight','hipsUp'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipLine' },
     secondaryAngles: [{ a: LM.left_shoulder, b: LM.left_hip, c: LM.left_ankle, name: 'fullLine', ideal: [160, 180] }],
     thresholds: { downThreshold: 150, upThreshold: 160, hysteresis: 5, minDownMs: 300, minUpMs: 300 },
@@ -196,6 +212,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'mountainclimber',
     aliases: [],
     label: { it: 'Mountain climber', en: 'Mountain climber', de: 'Mountain Climber' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'alternating_knee_drive',
+    safetyRules: ['coreTight'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'leftHipFlex' },
     secondaryAngles: [{ a: LM.right_shoulder, b: LM.right_hip, c: LM.right_knee, name: 'rightHipFlex' }],
     thresholds: { downThreshold: 65, upThreshold: 120, hysteresis: 8, minDownMs: 120, minUpMs: 100 },
@@ -229,6 +249,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'jumpingjack',
     aliases: [],
     label: { it: 'Jumping jack', en: 'Jumping jack', de: 'Jumping Jack' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_elbow, LM.right_elbow, LM.left_wrist, LM.right_wrist, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'closed_open_closed',
+    safetyRules: ['steady'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_elbow, c: LM.left_wrist, name: 'arms' },
     secondaryAngles: [{ a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'legs' }],
     thresholds: { downThreshold: 60, upThreshold: 140, hysteresis: 12, minDownMs: 160, minUpMs: 120 },
@@ -256,6 +280,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'flutterkick',
     aliases: ['flutterkicks'],
     label: { it: 'Forbici', en: 'Flutter kicks', de: 'Flutter Kicks' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'alternating_hip_flex',
+    safetyRules: ['coreTight'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
     thresholds: { downThreshold: 145, upThreshold: 165, hysteresis: 5, minDownMs: 140, minUpMs: 120 },
     customTransition(_angle, _vel, prev, ctx) {
@@ -285,6 +313,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'bicyclecrunch',
     aliases: ['crunchbici'],
     label: { it: 'Bicycle crunch', en: 'Bicycle crunch', de: 'Bicycle Crunch' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_elbow, LM.right_elbow],
+    movementPattern: 'cross_elbow_knee',
+    safetyRules: ['control'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.right_knee, name: 'crossA' },
     thresholds: { downThreshold: 45, upThreshold: 95, hysteresis: 10, minDownMs: 160, minUpMs: 120 },
     customTransition(_a, _vel, prev, ctx) {
@@ -314,6 +346,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'legraise',
     aliases: [],
     label: { it: 'Leg raise', en: 'Leg raise', de: 'Beinheben' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'hip_flexion_extended',
+    safetyRules: ['control'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
     thresholds: { downThreshold: 90, upThreshold: 155, hysteresis: 8, minDownMs: 260, minUpMs: 160 },
     evaluateForm(lm, _angles, _phase, _ctx) {
@@ -333,6 +369,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'deadbug',
     aliases: [],
     label: { it: 'Dead bug', en: 'Dead bug', de: 'Dead Bug' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_elbow, LM.right_elbow, LM.left_wrist, LM.right_wrist, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'contralateral_extension',
+    safetyRules: ['coreTight'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
     thresholds: { downThreshold: 95, upThreshold: 155, hysteresis: 10, minDownMs: 220, minUpMs: 160 },
     customTransition(_a, _vel, prev, ctx) {
@@ -364,6 +404,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'heeltap',
     aliases: [],
     label: { it: 'Heel tap', en: 'Heel tap', de: 'Heel Tap' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_wrist, LM.right_wrist, LM.left_heel, LM.right_heel],
+    movementPattern: 'lateral_flexion',
+    safetyRules: ['control'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'lateral' },
     thresholds: { downThreshold: 28, upThreshold: 65, hysteresis: 8, minDownMs: 180, minUpMs: 120 },
     customTransition(_a, _vel, prev, ctx) {
@@ -388,6 +432,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'vup',
     aliases: [],
     label: { it: 'V-up', en: 'V-up', de: 'V-Up' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle, LM.left_wrist, LM.right_wrist],
+    movementPattern: 'pike_compression',
+    safetyRules: ['control'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'pike' },
     thresholds: { downThreshold: 60, upThreshold: 155, hysteresis: 10, minDownMs: 260, minUpMs: 180 },
     evaluateForm(lm, _a, _p, ctx) {
@@ -406,6 +454,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'burpee',
     aliases: ['burpeetattico'],
     label: { it: 'Burpee', en: 'Burpee', de: 'Burpee' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle, LM.left_shoulder, LM.right_shoulder, LM.left_elbow, LM.right_elbow],
+    movementPattern: 'multi_phase_stand_squat_plank_jump',
+    safetyRules: ['backStraight','control'],
     primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
     thresholds: { downThreshold: 85, upThreshold: 155, hysteresis: 9, minDownMs: 340, minUpMs: 240 },
     customTransition(_a, _vel, prev, ctx) {
@@ -434,6 +486,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'affondo' as any,
     aliases: ['lunge'],
     label: { it: 'Affondo', en: 'Lunge', de: 'Ausfallschritt' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle, LM.left_shoulder, LM.right_shoulder],
+    movementPattern: 'lunge_down_up',
+    safetyRules: ['backStraight'],
     primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
     thresholds: { downThreshold: 92, upThreshold: 150, hysteresis: 6, minDownMs: 220, minUpMs: 140, minRepsIntervalMs: 450 },
     evaluateForm(lm, angles, phase, ctx) {
@@ -452,6 +508,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
   skater: {
     id: 'skater' as any,
     label: { it: 'Skater', en: 'Skater', de: 'Skater' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'lateral_hop',
+    safetyRules: ['control'],
     primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
     thresholds: { downThreshold: 95, upThreshold: 155, hysteresis: 8, minDownMs: 180, minUpMs: 140, minRepsIntervalMs: 380 },
     customTransition(_a, _vel, prev, ctx) {
@@ -478,6 +538,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'ginocchiaalte' as any,
     aliases: ['highknees'],
     label: { it: 'Ginocchia alte', en: 'High knees', de: 'Knie hoch' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee],
+    movementPattern: 'alternating_high_knee',
+    safetyRules: ['kneesToChest'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
     thresholds: { downThreshold: 78, upThreshold: 125, hysteresis: 8, minDownMs: 130, minUpMs: 110, minRepsIntervalMs: 280 },
     customTransition(_a, _vel, prev, ctx) {
@@ -503,6 +567,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
   superman: {
     id: 'superman' as any,
     label: { it: 'Superman', en: 'Superman', de: 'Superman' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee],
+    movementPattern: 'prone_extension',
+    safetyRules: ['control'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
     thresholds: { downThreshold: 155, upThreshold: 170, hysteresis: 5, minDownMs: 300, minUpMs: 220, minRepsIntervalMs: 500 },
     customTransition(_a, _vel, prev, ctx) {
@@ -525,6 +593,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
     id: 'ponte' as any,
     aliases: ['bridge'],
     label: { it: 'Ponte glutei', en: 'Glute bridge', de: 'Glute Bridge' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'hip_extension',
+    safetyRules: ['coreTight'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
     thresholds: { downThreshold: 100, upThreshold: 160, hysteresis: 8, minDownMs: 250, minUpMs: 180, minRepsIntervalMs: 500 },
     evaluateForm(lm, angles, phase, ctx) {
@@ -541,6 +613,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
   russiantwist: {
     id: 'russiantwist' as any,
     label: { it: 'Russian twist', en: 'Russian twist', de: 'Russian Twist' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_wrist, LM.right_wrist, LM.left_knee, LM.right_knee],
+    movementPattern: 'torso_rotation',
+    safetyRules: ['control'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.right_knee, name: 'twist' },
     thresholds: { downThreshold: 30, upThreshold: 70, hysteresis: 10, minDownMs: 180, minUpMs: 140, minRepsIntervalMs: 350 },
     customTransition(_a, _vel, prev, ctx) {
@@ -565,6 +641,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
   wallsit: {
     id: 'wallsit' as any,
     label: { it: 'Wall sit', en: 'Wall sit', de: 'Wandsitz' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle, LM.left_shoulder, LM.right_shoulder],
+    movementPattern: 'hold_knee_90',
+    safetyRules: ['backStraight'],
     primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
     thresholds: { downThreshold: 80, upThreshold: 110, hysteresis: 6, minDownMs: 400, minUpMs: 300 },
     isHold: true,
@@ -583,6 +663,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
   sideplank: {
     id: 'sideplank' as any,
     label: { it: 'Plank laterale', en: 'Side plank', de: 'Seitstütz' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'hold_lateral',
+    safetyRules: ['hipsUp','coreTight'],
     primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_ankle, name: 'fullLine' },
     thresholds: { downThreshold: 155, upThreshold: 168, hysteresis: 5, minDownMs: 350, minUpMs: 300 },
     isHold: true,
@@ -600,6 +684,10 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
   plankjack: {
     id: 'plankjack' as any,
     label: { it: 'Plank jack', en: 'Plank jack', de: 'Plank Jack' },
+    trackingSupported: true,
+    requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
+    movementPattern: 'hold_plank_legs_open_close',
+    safetyRules: ['coreTight'],
     primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
     thresholds: { downThreshold: 40, upThreshold: 120, hysteresis: 10, minDownMs: 150, minUpMs: 120, minRepsIntervalMs: 300 },
     customTransition(_a, _vel, prev, ctx) {
@@ -624,6 +712,9 @@ export function normalizeExerciseId(id: string): string {
   if (id === 'flessioni') return 'pushup';
   if (id === 'crunchbici') return 'bicyclecrunch';
   if (id === 'burpeetattico') return 'burpee';
+  if (id === 'highknees') return 'ginocchiaalte';
+  if (id === 'bridge') return 'ponte';
+  if (id === 'lunge') return 'affondo';
   return id;
 }
 

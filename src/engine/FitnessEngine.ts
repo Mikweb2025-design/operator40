@@ -61,6 +61,8 @@ export class FitnessEngine {
     this.onMetrics = cfg.onMetrics;
   }
 
+  private lastPoseQuality = 0;
+
   get metrics(): EngineMetrics {
     const now = performance.now();
     const elapsedMs = this.startedAt ? now - this.startedAt : 0;
@@ -73,7 +75,27 @@ export class FitnessEngine {
       currentPhase: this.currentPhase,
       currentForm: this.currentForm,
       fps: Math.round(this.fpsEma),
+      poseQuality: Math.round(this.lastPoseQuality),
+      trackingSupported: this.def?.trackingSupported !== false,
     };
+  }
+
+  private computePoseQuality(lm: PoseLandmarks | null, visibilityScore: number): number {
+    if (!lm) return 0;
+    const req = this.def?.requiredLandmarks ?? [11,12,23,24,25,26,27,28];
+    let minVis = 1;
+    let sumVis = 0;
+    let n = 0;
+    for (const idx of req) {
+      const v = lm[idx]?.visibility ?? 0;
+      sumVis += v; n++;
+      minVis = Math.min(minVis, v);
+    }
+    const avgReq = n ? sumVis / n : visibilityScore;
+    // composite: avg required 60% + overall visibility 20% + worst joint penalty 20%
+    const quality = avgReq * 60 + visibilityScore * 20 + minVis * 20;
+    // clamp 0-100
+    return Math.max(0, Math.min(100, Math.round(quality * 100) / 100 * 100));
   }
 
   async init(video: HTMLVideoElement, onProgress?: (s: string) => void): Promise<void> {
@@ -232,12 +254,14 @@ export class FitnessEngine {
     const instFps = 1000 / Math.max(1, now - (this.lastTs || now - 16));
     this.fpsEma = this.fpsEma ? this.fpsEma * 0.9 + instFps * 0.1 : instFps;
     this.frameCount++;
+    // Pose quality 0-100 (prompt §7)
+    this.lastPoseQuality = this.computePoseQuality(result.landmarks ?? null, result.visibilityScore ?? 0);
 
     if (!result.landmarks) {
       // No person — idle, but keep timers
       if (this.currentPhase !== 'idle') {
         this.currentPhase = 'idle';
-        this.currentForm = { primaryAngle: this.lastAngle, secondaryAngles: {}, velocity: 0, direction: 'idle', quality: 0, cues: ['move into frame'], visibility: 0 };
+        this.currentForm = { primaryAngle: this.lastAngle, secondaryAngles: {}, velocity: 0, direction: 'idle', quality: 0, cues: ['moveIntoFrame'], visibility: 0, poseQuality: this.lastPoseQuality } as any;
         this.onPhaseChange?.('idle', this.currentForm);
       }
       this.updateTimers(now);

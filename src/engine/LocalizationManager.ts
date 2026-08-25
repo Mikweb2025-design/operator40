@@ -47,6 +47,11 @@ export const COACH_I18N: Record<string, Record<SupportedLang, string>> = {
   'coach.ready': { it: 'Pronto? Inizia quando vuoi.', en: 'Ready? Start when you are.', de: 'Bereit? Starte wenn du willst.', fr: 'Prêt ? Démarre quand tu veux.' },
   'coach.holdPosition': { it: 'Mantieni la posizione...', en: 'Hold the position...', de: 'Position halten...', fr: 'Garde la position...' },
   'coach.moveIntoFrame': { it: 'Entra nell’inquadratura.', en: 'Move into frame.', de: 'Komm ins Bild.', fr: 'Place-toi dans le cadre.' },
+  'coach.poseQuality': { it: 'Qualità posa', en: 'Pose quality', de: 'Pose-Qualität', fr: 'Qualité pose' },
+  'coach.moveBack': { it: 'Allontanati così vedo tutto il corpo.', en: 'Move back so I can see your whole body.', de: 'Geh zurück, damit ich deinen ganzen Körper sehe.', fr: 'Recule pour que je voie tout le corps.' },
+  'coach.feetOutside': { it: 'Piedi fuori dall’inquadratura.', en: 'Your feet are outside the camera.', de: 'Füße außerhalb des Bildes.', fr: 'Pieds hors du cadre.' },
+  'coach.turnSideways': { it: 'Girati di lato.', en: 'Turn sideways.', de: 'Dreh dich seitlich.', fr: 'Tourne-toi de côté.' },
+  'coach.upperBodyHidden': { it: 'Non vedo la parte superiore del corpo.', en: "I can't see your upper body.", de: 'Oberkörper nicht sichtbar.', fr: "Je ne vois pas le haut du corps." },
   // Misc
   'coach.rep': { it: 'Ripetizione', en: 'Rep', de: 'Wdh', fr: 'Rép' },
   'coach.time': { it: 'Tempo', en: 'Time', de: 'Zeit', fr: 'Temps' },

@@ -20,7 +20,8 @@ import { EXERCISES } from '../data/exercises.js';
 export interface MissionExercise {
   exerciseId: NormalizedExerciseId;
   originalId: string;
-  definition: ExerciseDefinition;
+  definition: ExerciseDefinition | null; // null when trackingSupported===false
+  trackingSupported: boolean;
   targetReps: number | null; // null for time-based (plank) or repMode off
   targetDurationMs: number | null; // for time-based
   isTimeBased: boolean;
@@ -41,16 +42,17 @@ export function buildMissionPlan(program: any, lang: string = 'it', levelKey: st
   const exercises: MissionExercise[] = program.exercises.map((rawId: string) => {
     const nid = normalizeExerciseId(rawId) as NormalizedExerciseId;
     const def = getDefinition(nid);
-    // fallback: if no definition (e.g. affondo not yet in AI definitions), create a generic time-based placeholder
-    // but still try to map; for unsupported we treat as time-based with generic squat thresholds so it doesn't crash
-    const definition = def ?? (getDefinition('squat') as ExerciseDefinition);
-    const hold = HOLD_EXERCISES.has(rawId) || !!definition.isHold;
+    // Prompt §36: do NOT fake tracking with generic fallback — return trackingSupported=false explicitly
+    const trackingSupported = !!def && def.trackingSupported !== false;
+    const definition = def ?? null;
+    const hold = HOLD_EXERCISES.has(rawId) || !!definition?.isHold;
     const reps = !hold ? getReps(rawId, levelKey) : null;
     const isTimeBased = hold || reps == null;
     return {
       exerciseId: nid,
       originalId: rawId,
       definition,
+      trackingSupported,
       targetReps: reps,
       targetDurationMs: isTimeBased ? workSec * 1000 : null,
       isTimeBased,
@@ -71,13 +73,15 @@ export function exerciseFromPhase(phase: any, lang: string = 'it', levelKey: str
   if (!phase || !phase.exerciseId) return null;
   const rawId = phase.exerciseId;
   const nid = normalizeExerciseId(rawId) as NormalizedExerciseId;
-  const def = getDefinition(nid) ?? (getDefinition('squat') as ExerciseDefinition);
-  const hold = HOLD_EXERCISES.has(rawId) || !!def.isHold;
+  const def = getDefinition(nid) ?? null;
+  const trackingSupported = !!def && def.trackingSupported !== false;
+  const hold = HOLD_EXERCISES.has(rawId) || !!def?.isHold;
   const reps = phase.reps ?? (!hold ? getReps(rawId, levelKey) : null);
   return {
     exerciseId: nid,
     originalId: rawId,
     definition: def,
+    trackingSupported,
     targetReps: reps,
     targetDurationMs: hold ? (phase.duration != null ? phase.duration * 1000 : 40 * 1000) : null,
     isTimeBased: hold || reps == null,

@@ -23,8 +23,8 @@ import { isPushSupported, isStandalonePWA, getExistingSubscription, subscribePus
 import { getMotivationalMessage } from './utils/motivation.js';
 import BellyTest from './components/BellyTest.jsx';
 import BeforeAfterSlider from './components/BeforeAfterSlider.jsx';
-import PoseCounter from './components/PoseCounter.jsx';
 import FitnessEngineView from './components/FitnessEngineView.tsx';
+// PoseCounter deprecated → delega a FitnessEngineView (preservato in src/components/PoseCounter.jsx per compatibilità)
 import ChangelogModal, { CHANGELOG_STORAGE_KEY } from './components/ChangelogModal.tsx';
 import SessionAIOverlay from './components/SessionAIOverlay.tsx';
 import { getBellyLevelForTest, shouldProgressBellyLevel } from './utils/bellyTest.js';
