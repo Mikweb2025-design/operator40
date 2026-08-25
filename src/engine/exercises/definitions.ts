@@ -399,11 +399,9 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
       const lm = ctx.landmarks;
       const knee = kneeAngle(lm);
       const elbow = elbowAngle(lm);
-      const leap = lm[LM.left_ankle]?.y ?? 0.5; // normalized y: smaller = higher jump (y origin top)
       const standing = knee > 150;
       const squatDown = knee < 95;
-      const inPlank = elbow > 150 && knee > 140; // roughly straight in plank
-      // Burpee cycle: ready(standing) -> down(squat) -> bottom(plank/pushup) -> up(jump apex = standing + feet off ground slight)
+      const inPlank = elbow > 150 && knee > 140;
       if (prev === 'ready' && squatDown) return 'down';
       if (prev === 'down' && (inPlank || knee < 80)) return 'bottom';
       if ((prev === 'down' || prev === 'bottom') && standing) return 'up';
@@ -415,6 +413,196 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
       if (Math.abs(ctx.velocity) > 650) { q -= 6; cues.push('control'); }
       if (trunkLean(lm) < 145) { cues.push('backStraight'); }
       return { quality: clamp(q, 0, 100), cues };
+    },
+  },
+
+  // 14. AFFONDO — lunge, knee 160->80, usare lato migliore, scendi ancora / distendi
+  affondo: {
+    id: 'affondo' as any,
+    aliases: ['lunge'],
+    label: { it: 'Affondo', en: 'Lunge', de: 'Ausfallschritt' },
+    primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
+    thresholds: { downThreshold: 92, upThreshold: 150, hysteresis: 6, minDownMs: 220, minUpMs: 140, minRepsIntervalMs: 450 },
+    evaluateForm(lm, angles, phase, ctx) {
+      const cues: string[] = [];
+      let q = 90;
+      const knee = (angles['primary'] ?? kneeAngleBest(lm));
+      if ((phase === 'down' || phase === 'ready') && knee > 108 && knee < 138 && ctx.direction === 'down') cues.push('scendiAncora');
+      else if ((phase === 'up' || phase === 'bottom') && knee > 130 && knee < 149 && ctx.direction === 'up') cues.push('distendiGambe');
+      if (trunkLean(lm) < 150) { q -= 14; cues.unshift('backStraight'); }
+      if (Math.abs(ctx.velocity) > 450) { q -= 8; cues.push('control'); }
+      return { quality: clamp(q, 0, 100), cues };
+    },
+  },
+
+  // 15. SKATER — hop laterale, usare ankle distance + knee, ritmo costante
+  skater: {
+    id: 'skater' as any,
+    label: { it: 'Skater', en: 'Skater', de: 'Skater' },
+    primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
+    thresholds: { downThreshold: 95, upThreshold: 155, hysteresis: 8, minDownMs: 180, minUpMs: 140, minRepsIntervalMs: 380 },
+    customTransition(_a, _vel, prev, ctx) {
+      const lm = ctx.landmarks;
+      const spread = ankleDistance(lm); // 0.05 chiuso, 0.45 aperto
+      const knee = kneeAngleBest(lm);
+      const bent = knee < 125;
+      const wide = spread > 0.28;
+      if (prev === 'ready' && bent && wide) return 'down';
+      if (prev === 'down' && spread < 0.14) return 'up';
+      if (prev === 'bottom' && spread < 0.14) return 'up';
+      if (prev === 'down' && knee < 105) return 'bottom';
+      return null;
+    },
+    evaluateForm(_lm, _a, _p, ctx) {
+      let q = 88;
+      if (Math.abs(ctx.velocity) > 600) { q -= 7; }
+      return { quality: clamp(q, 0, 100), cues: [] };
+    },
+  },
+
+  // 16. GINOCCHIA ALTE — high knees, hipFlex alternato, ginocchio al petto — permissivo 75/125
+  ginocchiaalte: {
+    id: 'ginocchiaalte' as any,
+    aliases: ['highknees'],
+    label: { it: 'Ginocchia alte', en: 'High knees', de: 'Knie hoch' },
+    primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
+    thresholds: { downThreshold: 78, upThreshold: 125, hysteresis: 8, minDownMs: 130, minUpMs: 110, minRepsIntervalMs: 280 },
+    customTransition(_a, _vel, prev, ctx) {
+      const lm = ctx.landmarks;
+      const l = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
+      const r = angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
+      const driving = Math.min(l, r); // più flesso = ginocchio alto
+      if (prev === 'ready' && driving < 78) return 'down';
+      if (prev === 'down' && driving > 115) return 'up';
+      if (prev === 'bottom' && driving > 115) return 'up';
+      if (prev === 'down' && driving < 62) return 'bottom';
+      return null;
+    },
+    evaluateForm(lm, _a, _p, ctx) {
+      let q = 87;
+      if (trunkLean(lm) < 152) { q -= 10; }
+      if (Math.abs(ctx.velocity) > 650) { q -= 7; }
+      return { quality: clamp(q, 0, 100), cues: q < 72 ? ['kneesToChest'] : [] };
+    },
+  },
+
+  // 17. SUPERMAN — sdraiato prono, braccia+gambe su, angolo shoulder-hip-knee esteso
+  superman: {
+    id: 'superman' as any,
+    label: { it: 'Superman', en: 'Superman', de: 'Superman' },
+    primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
+    thresholds: { downThreshold: 155, upThreshold: 170, hysteresis: 5, minDownMs: 300, minUpMs: 220, minRepsIntervalMs: 500 },
+    customTransition(_a, _vel, prev, ctx) {
+      const lm = ctx.landmarks;
+      // prono: hip ~170 riposo, ~155 sollevato (leggero), ma usiamo distanza spalle-terra proxy: y di shoulder vs hip
+      const hip = hipAngleBest(lm);
+      const up = hip < 162; // sollevato
+      const down = hip > 170;
+      if (prev === 'ready' && down) return 'down';
+      if (prev === 'down' && up) return 'bottom';
+      if ((prev === 'down' || prev === 'bottom') && down) return 'up';
+      return null;
+    },
+    evaluateForm(_lm, _a, _p, _ctx) { return { quality: 88, cues: [] }; },
+    isHold: false,
+  },
+
+  // 18. PONTE — bridge glutei, hip 95->170, bacino alto
+  ponte: {
+    id: 'ponte' as any,
+    aliases: ['bridge'],
+    label: { it: 'Ponte glutei', en: 'Glute bridge', de: 'Glute Bridge' },
+    primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex' },
+    thresholds: { downThreshold: 100, upThreshold: 160, hysteresis: 8, minDownMs: 250, minUpMs: 180, minRepsIntervalMs: 500 },
+    evaluateForm(lm, angles, phase, ctx) {
+      const cues: string[] = [];
+      let q = 90;
+      const hip = (angles['primary'] ?? hipAngleBest(lm));
+      if ((phase === 'down' || phase === 'ready') && hip < 135 && hip > 105 && ctx.direction === 'up') cues.push('hipsUp');
+      if (trunkLean(lm) < 150) { q -= 12; cues.push('coreTight'); }
+      return { quality: clamp(q, 0, 100), cues };
+    },
+  },
+
+  // 19. RUSSIAN TWIST — rotazione busto, shoulder-hip alternato, distanza mano-ginocchio
+  russiantwist: {
+    id: 'russiantwist' as any,
+    label: { it: 'Russian twist', en: 'Russian twist', de: 'Russian Twist' },
+    primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.right_knee, name: 'twist' },
+    thresholds: { downThreshold: 30, upThreshold: 70, hysteresis: 10, minDownMs: 180, minUpMs: 140, minRepsIntervalMs: 350 },
+    customTransition(_a, _vel, prev, ctx) {
+      const lm = ctx.landmarks;
+      const lw = lm[LM.left_wrist], rw = lm[LM.right_wrist];
+      if (!lw || !rw) return null;
+      // twist: wrists move lateralmente rispetto a hip center
+      const midHip = { x: (lm[LM.left_hip].x + lm[LM.right_hip].x) / 2, y: (lm[LM.left_hip].y + lm[LM.right_hip].y) / 2 } as any;
+      const left = Math.abs(lw.x - midHip.x), right = Math.abs(rw.x - midHip.x);
+      const maxLateral = Math.max(left, right); // ~0.18 centro, ~0.38 lato
+      const centered = maxLateral < 0.20;
+      const twisted = maxLateral > 0.30;
+      if (prev === 'ready' && centered) return 'down';
+      if (prev === 'down' && twisted) return 'bottom';
+      if ((prev === 'down' || prev === 'bottom') && centered) return 'up';
+      return null;
+    },
+    evaluateForm(_lm, _a, _p, _ctx) { return { quality: 86, cues: [] }; },
+  },
+
+  // 20. WALLSIT — hold, knee 90°, schiena al muro
+  wallsit: {
+    id: 'wallsit' as any,
+    label: { it: 'Wall sit', en: 'Wall sit', de: 'Wandsitz' },
+    primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
+    thresholds: { downThreshold: 80, upThreshold: 110, hysteresis: 6, minDownMs: 400, minUpMs: 300 },
+    isHold: true,
+    evaluateForm(lm) {
+      const k = kneeAngleBest(lm);
+      let q = 95;
+      const cues: string[] = [];
+      if (k < 75 || k > 115) { q -= 22; cues.push('control'); }
+      else if (k < 82 || k > 105) { q -= 10; cues.push('control'); }
+      if (trunkLean(lm) < 155) { q -= 10; cues.push('backStraight'); }
+      return { quality: clamp(q, 0, 100), cues };
+    },
+  },
+
+  // 21. SIDEPLANK — hold laterale
+  sideplank: {
+    id: 'sideplank' as any,
+    label: { it: 'Plank laterale', en: 'Side plank', de: 'Seitstütz' },
+    primaryAngle: { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_ankle, name: 'fullLine' },
+    thresholds: { downThreshold: 155, upThreshold: 168, hysteresis: 5, minDownMs: 350, minUpMs: 300 },
+    isHold: true,
+    evaluateForm(lm) {
+      const line = trunkLean(lm);
+      let q = 94;
+      const cues: string[] = [];
+      if (line < 150) { q = 52; cues.push('hipsUp'); }
+      else if (line < 162) { q -= 12; cues.push('coreTight'); }
+      return { quality: clamp(q, 0, 100), cues };
+    },
+  },
+
+  // 22. PLANKJACK — plank + gambe che si aprono, ankle distance
+  plankjack: {
+    id: 'plankjack' as any,
+    label: { it: 'Plank jack', en: 'Plank jack', de: 'Plank Jack' },
+    primaryAngle: { a: LM.left_hip, b: LM.left_knee, c: LM.left_ankle, name: 'knee' },
+    thresholds: { downThreshold: 40, upThreshold: 120, hysteresis: 10, minDownMs: 150, minUpMs: 120, minRepsIntervalMs: 300 },
+    customTransition(_a, _vel, prev, ctx) {
+      const spread = ankleDistance(ctx.landmarks);
+      const closed = spread < 0.12;
+      const open = spread > 0.30;
+      if (prev === 'ready' && closed) return 'down';
+      if (prev === 'down' && open) return 'bottom';
+      if ((prev === 'down' || prev === 'bottom') && closed) return 'up';
+      return null;
+    },
+    evaluateForm(lm, _a, _p, ctx) {
+      let q = 88;
+      if (trunkLean(lm) < 153) { q -= 14; }
+      if (Math.abs(ctx.velocity) > 700) { q -= 7; }
+      return { quality: clamp(q, 0, 100), cues: [] };
     },
   },
 };
