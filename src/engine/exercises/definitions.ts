@@ -7,7 +7,7 @@
 import type { ExerciseDefinition, PoseLandmarks, EnginePhase } from '../types';
 import { LM, angleFromLandmarks, bilateralAngle, clamp, qualityFromDeviation } from '../math';
 
-// Localized cue helpers
+// Localized cue helpers — real-time coaching strings (es. scendi ancora, braccia completamente distese)
 type Lang = 'it' | 'en' | 'de';
 const CUE = {
   backStraight: { it: 'Schiena dritta', en: 'Keep your back straight', de: 'Rücken gerade halten' },
@@ -20,6 +20,12 @@ const CUE = {
   control: { it: 'Movimento controllato', en: 'Controlled motion', de: 'Kontrollierte Bewegung' },
   kneesToChest: { it: 'Ginocchio al petto', en: 'Knee to chest', de: 'Knie zur Brust' },
   steady: { it: 'Ritmo costante', en: 'Steady rhythm', de: 'Gleichmäßiges Tempo' },
+  scendiAncora: { it: 'Scendi ancora', en: 'Lower still', de: 'Noch tiefer' },
+  distendiBraccia: { it: 'Braccia completamente distese', en: 'Fully extend arms', de: 'Arme ganz strecken' },
+  distendiGambe: { it: 'Distendi le gambe', en: 'Fully extend legs', de: 'Beine ganz strecken' },
+  pettoATerra: { it: 'Petto a terra', en: 'Chest to floor', de: 'Brust zum Boden' },
+  schienaDritta: { it: 'Schiena dritta', en: 'Keep back straight', de: 'Rücken gerade halten' },
+  addomeStretto: { it: 'Addome stretto', en: 'Tighten core', de: 'Core anspannen' },
 } as const;
 
 function tr(cue: Record<string,string>, lang: Lang): string {
@@ -50,15 +56,30 @@ function ankleDistance(lm: PoseLandmarks): number {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
 
+function bestSideAngle(lm: PoseLandmarks, left: [number, number, number], right: [number, number, number]): number {
+  const al = angleFromLandmarks(lm, left[0], left[1], left[2]);
+  const ar = angleFromLandmarks(lm, right[0], right[1], right[2]);
+  const vl = Math.min(lm[left[0]]?.visibility ?? 0, lm[left[1]]?.visibility ?? 0, lm[left[2]]?.visibility ?? 0);
+  const vr = Math.min(lm[right[0]]?.visibility ?? 0, lm[right[1]]?.visibility ?? 0, lm[right[2]]?.visibility ?? 0);
+  // pick most visible side, not average — more stable on lateral camera
+  if (vl > vr + 0.12) return al;
+  if (vr > vl + 0.12) return ar;
+  return (al + ar) / 2;
+}
+function kneeAngleBest(lm: PoseLandmarks): number { return bestSideAngle(lm, [LM.left_hip, LM.left_knee, LM.left_ankle], [LM.right_hip, LM.right_knee, LM.right_ankle]); }
+function hipAngleBest(lm: PoseLandmarks): number { return bestSideAngle(lm, [LM.left_shoulder, LM.left_hip, LM.left_knee], [LM.right_shoulder, LM.right_hip, LM.right_knee]); }
+function elbowAngleBest(lm: PoseLandmarks): number { return bestSideAngle(lm, [LM.left_shoulder, LM.left_elbow, LM.left_wrist], [LM.right_shoulder, LM.right_elbow, LM.right_wrist]); }
+
 function makeQualityLogger() {
   // placeholder for future per-rep smoothing
   return (scores: number[]) => clamp(scores.reduce((s,v)=>s+v,0)/(scores.length||1), 0, 100);
 }
 
 // ---- Definitions ----
+// Thresholds tuned for over-40 partial ROM (permits shallower reps with quality penalty, not dropped counts)
 
 export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
-  // 1. SQUAT — knee 160->75, trunk quality
+  // 1. SQUAT — permissive: down 92 (was 85), up 150 (was 155). Real-time cues scendi ancora / distendi gambe.
   squat: {
     id: 'squat',
     aliases: [],
@@ -68,30 +89,29 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
       { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex', ideal: [40, 90] },
       { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_ankle, name: 'trunk', ideal: [160, 180] },
     ],
-    thresholds: { downThreshold: 85, upThreshold: 155, hysteresis: 7, minDownMs: 220, minUpMs: 140 },
+    thresholds: { downThreshold: 92, upThreshold: 150, hysteresis: 6, minDownMs: 200, minUpMs: 130, minRepsIntervalMs: 420 },
     evaluateForm(lm, angles, phase, ctx) {
       const cues: string[] = [];
       let quality = 92;
       const trunk = trunkLean(lm);
-      const hipF = hipAngle(lm);
-      // Back straight: trunk ~170-180 when standing, ~150-170 at bottom acceptable leaning
-      if (trunk < 150) { quality -= 18; cues.push('backStraight'); }
-      else if (trunk < 160) { quality -= 8; cues.push('backStraight'); }
-      // Knee tracking proxy: hip angle symmetry (if one knee collapses, angles diverge)
+      const knee = (angles['primary'] ?? angles['knee'] ?? kneeAngleBest(lm));
+      // Real-time coaching: scendi ancora / distendi
+      if ((phase === 'down' || phase === 'ready') && knee > 105 && knee < 135 && ctx.direction === 'down') {
+        cues.push('scendiAncora');
+      } else if ((phase === 'up' || phase === 'bottom') && knee > 125 && knee < 148 && ctx.direction === 'up') {
+        cues.push('distendiGambe');
+      }
+      if (trunk < 148) { quality -= 18; cues.unshift('backStraight'); }
+      else if (trunk < 162) { quality -= 7; cues.unshift('backStraight'); }
       const leftK = angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle);
       const rightK = angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle);
-      if (Math.abs(leftK - rightK) > 18) { quality -= 10; cues.push('kneesOverToes'); }
-      // Velocity too fast → less control
-      if (Math.abs(ctx.velocity) > 420) { quality -= 10; cues.push('control'); }
-      // Depth: if never goes below 95 deg, flag partial
-      if (ctx.repCount === 0 && phase === 'up' && (angles['knee'] ?? 180) > 100) {
-        // not yet penalize, just hint
-      }
+      if (Math.abs(leftK - rightK) > 20) { quality -= 9; cues.push('kneesOverToes'); }
+      if (Math.abs(ctx.velocity) > 430) { quality -= 9; cues.push('control'); }
       return { quality: clamp(quality, 0, 100), cues };
     },
   },
 
-  // 2. PUSHUP
+  // 2. PUSHUP — permissive down 88→95 (was 90), up 148 (was 155). Cues scendi ancora / braccia distese.
   pushup: {
     id: 'pushup',
     aliases: ['flessioni'],
@@ -101,17 +121,19 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
       { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_ankle, name: 'plankLine', ideal: [160, 185] },
       { a: LM.left_hip, b: LM.left_shoulder, c: LM.left_elbow, name: 'shoulder', ideal: [20, 70] },
     ],
-    thresholds: { downThreshold: 90, upThreshold: 155, hysteresis: 8, minDownMs: 200, minUpMs: 130 },
+    thresholds: { downThreshold: 95, upThreshold: 148, hysteresis: 7, minDownMs: 190, minUpMs: 130, minRepsIntervalMs: 380 },
     evaluateForm(lm, angles, phase, ctx) {
       const cues: string[] = [];
       let q = 90;
-      const line = trunkLean(lm); // shoulder-hip-ankle straight
-      if (line < 155) { q -= 20; cues.push('coreTight'); }
-      else if (line < 165) { q -= 8; cues.push('coreTight'); }
-      // Elbow flare proxy: shoulder angle > 80 at bottom = flared
+      const elbow = (angles['primary'] ?? angles['elbow'] ?? elbowAngleBest(lm));
+      if ((phase === 'down' || phase === 'ready') && elbow > 102 && elbow < 132 && ctx.direction === 'down') cues.push('scendiAncora');
+      else if ((phase === 'up' || phase === 'bottom') && elbow > 128 && elbow < 147 && ctx.direction === 'up') cues.push('distendiBraccia');
+      const line = trunkLean(lm);
+      if (line < 152) { q -= 20; cues.unshift('coreTight'); }
+      else if (line < 164) { q -= 8; cues.unshift('coreTight'); }
       const shoulderL = angleFromLandmarks(lm, LM.left_hip, LM.left_shoulder, LM.left_elbow);
-      if (shoulderL > 85) { q -= 10; cues.push('elbows45'); }
-      if (Math.abs(ctx.velocity) > 500) { q -= 8; cues.push('control'); }
+      if (shoulderL > 84) { q -= 10; cues.push('elbows45'); }
+      if (Math.abs(ctx.velocity) > 520) { q -= 8; cues.push('control'); }
       return { quality: clamp(q, 0, 100), cues };
     },
   },

@@ -37,7 +37,12 @@ export class PoseLandmarkerManager {
     private enableSmoothing = true
   ) {
     this.delegate = opts.delegate ?? 'GPU';
-    if (enableSmoothing) this.smoother = new LandmarkSmoother(33, 1.0, 0.007);
+    // For over-40 partial ROM at 25-30 FPS, a slightly higher cutoff (1.15) keeps motion responsive
+    // while beta 0.008 compensates derivative drift on shaky iPhone handheld camera.
+    if (enableSmoothing) this.smoother = new LandmarkSmoother(33, 1.15, 0.008);
+  }
+  setSmoothingTuning(minCutoff: number, beta: number): void {
+    this.smoother?.setTuning(minCutoff, beta);
   }
 
   isReady(): boolean { return this.ready && !!this.landmarker; }
@@ -67,8 +72,8 @@ export class PoseLandmarkerManager {
             baseOptions: { modelAssetPath: modelPath, delegate },
             runningMode: 'VIDEO',
             numPoses: this.opts.numPoses ?? 1,
-            minPoseDetectionConfidence: this.opts.minPoseDetectionConfidence ?? 0.5,
-            minPosePresenceConfidence: this.opts.minPosePresenceConfidence ?? 0.5,
+            minPoseDetectionConfidence: this.opts.minPoseDetectionConfidence ?? 0.45,
+            minPosePresenceConfidence: this.opts.minPosePresenceConfidence ?? 0.45,
             minTrackingConfidence: this.opts.minTrackingConfidence ?? 0.5,
             outputSegmentationMasks: false,
           });

@@ -52,6 +52,10 @@ export class FitnessEngine {
     const thresholds = { ...def.thresholds, ...(cfg.thresholdsOverride ?? {}) };
     this.sm = new HysteresisStateMachine(thresholds);
     this.landmarker = new PoseLandmarkerManager({}, cfg.enableFiltering !== false);
+    // initial smoother tuning per exercise type
+    if (def.isHold) this.landmarker.setSmoothingTuning(0.75, 0.004);
+    else if (['mountainclimber', 'jumpingjack', 'burpee'].includes(def.id)) this.landmarker.setSmoothingTuning(1.35, 0.012);
+    else this.landmarker.setSmoothingTuning(1.15, 0.008);
     this.onRep = cfg.onRep;
     this.onPhaseChange = cfg.onPhaseChange;
     this.onMetrics = cfg.onMetrics;
@@ -89,6 +93,10 @@ export class FitnessEngine {
     const thresholds = { ...def.thresholds, ...(this.cfg.thresholdsOverride ?? {}) };
     this.sm = new HysteresisStateMachine(thresholds);
     this.resetCounters();
+    // per-exercise smoother tuning: hold needs stable 0.75, dynamic 1.2
+    if (def.isHold) this.landmarker.setSmoothingTuning(0.75, 0.004);
+    else if (['mountainclimber', 'jumpingjack', 'burpee'].includes(def.id)) this.landmarker.setSmoothingTuning(1.35, 0.012);
+    else this.landmarker.setSmoothingTuning(1.15, 0.008);
   }
 
   updateConfig(patch: Partial<EngineConfig>): void {
@@ -109,6 +117,7 @@ export class FitnessEngine {
     this.sm.reset(); this.landmarker.resetSmoother();
     this.lastAngle = 180; this.velocity = 0; this.velocityFiltered = 0;
     this.angleHistory = [];
+    this.calibSamples = []; this.calibDone = false;
   }
 
   start(): void {
@@ -134,18 +143,49 @@ export class FitnessEngine {
   private lastResult: PoseResult | null = null;
   getLastResult(): PoseResult | null { return this.lastResult; }
 
+  // calibration for adaptive ROM
+  private calibSamples: number[] = [];
+  private calibDone = false;
+
+  private bestSideAngle(lm: PoseLandmarks, left: [number, number, number], right: [number, number, number]): number {
+    const al = angleFromLandmarks(lm, left[0], left[1], left[2]);
+    const ar = angleFromLandmarks(lm, right[0], right[1], right[2]);
+    const vl = Math.min(lm[left[0]]?.visibility ?? 0, lm[left[1]]?.visibility ?? 0, lm[left[2]]?.visibility ?? 0);
+    const vr = Math.min(lm[right[0]]?.visibility ?? 0, lm[right[1]]?.visibility ?? 0, lm[right[2]]?.visibility ?? 0);
+    if (vl > vr + 0.12) return al;
+    if (vr > vl + 0.12) return ar;
+    return (al + ar) / 2;
+  }
+
   private getPrimaryAngle(lm: PoseLandmarks): number {
     const d = this.def!;
-    // If exercise has custom composite, let definition compute via heuristic angle
-    // otherwise use bilateral or single angle from landmark indices
     const pa = d.primaryAngle;
-    // For generic: use bilateral if both sides exist (knee/hip/elbow), else single
-    // Heuristic: if name is knee/hip/elbow we bilateralize
     const name = pa.name;
-    if (name === 'knee') return bilateralAngle(lm, [LM.left_hip, LM.left_knee, LM.left_ankle], [LM.right_hip, LM.right_knee, LM.right_ankle]);
-    if (name === 'hipFlex' || name === 'pike' || name === 'hipLine') return bilateralAngle(lm, [LM.left_shoulder, LM.left_hip, LM.left_knee], [LM.right_shoulder, LM.right_hip, LM.right_knee]);
-    if (name === 'elbow') return bilateralAngle(lm, [LM.left_shoulder, LM.left_elbow, LM.left_wrist], [LM.right_shoulder, LM.right_elbow, LM.right_wrist]);
+    if (name === 'knee') return this.bestSideAngle(lm, [LM.left_hip, LM.left_knee, LM.left_ankle], [LM.right_hip, LM.right_knee, LM.right_ankle]);
+    if (name === 'hipFlex' || name === 'pike' || name === 'hipLine') return this.bestSideAngle(lm, [LM.left_shoulder, LM.left_hip, LM.left_knee], [LM.right_shoulder, LM.right_hip, LM.right_knee]);
+    if (name === 'elbow') return this.bestSideAngle(lm, [LM.left_shoulder, LM.left_elbow, LM.left_wrist], [LM.right_shoulder, LM.right_elbow, LM.right_wrist]);
+    // generic single angle
     return angleFromLandmarks(lm, pa.a, pa.b, pa.c);
+  }
+
+  private primaryVisibility(lm: PoseLandmarks): number {
+    const d = this.def!;
+    const pa = d.primaryAngle;
+    const name = pa.name;
+    // return best side visibility for primary joint triple
+    if (name === 'knee') {
+      const vl = Math.min(lm[LM.left_hip]?.visibility ?? 0, lm[LM.left_knee]?.visibility ?? 0, lm[LM.left_ankle]?.visibility ?? 0);
+      const vr = Math.min(lm[LM.right_hip]?.visibility ?? 0, lm[LM.right_knee]?.visibility ?? 0, lm[LM.right_ankle]?.visibility ?? 0);
+      return Math.max(vl, vr);
+    }
+    if (name === 'elbow') {
+      const vl = Math.min(lm[LM.left_shoulder]?.visibility ?? 0, lm[LM.left_elbow]?.visibility ?? 0, lm[LM.left_wrist]?.visibility ?? 0);
+      const vr = Math.min(lm[LM.right_shoulder]?.visibility ?? 0, lm[LM.right_elbow]?.visibility ?? 0, lm[LM.right_wrist]?.visibility ?? 0);
+      return Math.max(vl, vr);
+    }
+    // hipFlex etc
+    const v = Math.min(lm[pa.a]?.visibility ?? 0, lm[pa.b]?.visibility ?? 0, lm[pa.c]?.visibility ?? 0);
+    return v;
   }
 
   private computeSecondaryAngles(lm: PoseLandmarks): Record<string, number> {
@@ -173,8 +213,11 @@ export class FitnessEngine {
       return;
     }
 
+    // Safari: use video time as pose timestamp when possible (more stable than perf.now for rAF)
+    const videoTs = this.video.currentTime ? Math.round(this.video.currentTime * 1000) : now;
+    const ts = videoTs || now;
     const t0 = performance.now();
-    const result = this.landmarker.detect(this.video, now);
+    const result = this.landmarker.detect(this.video, ts);
     const dtInfer = performance.now() - t0;
 
     // Adaptive throttle if inference is heavy (> 40ms) — drop to 20fps to save battery
@@ -205,11 +248,17 @@ export class FitnessEngine {
 
     const lm = result.landmarks;
     const vis = result.visibilityScore;
-
-    // Visibility gate: if too low, treat as idle and don't transition
-    if (vis < 0.30) {
+    const primVis = this.primaryVisibility(lm);
+    // Visibility gate: primary joints must be visible, but we are permissive (0.38) to keep over-40 partial views
+    // Use max of average and primary — side view often hides one leg
+    const visEffective = Math.max(vis, primVis);
+    if (primVis < 0.38) {
+      // still update but don't drive state machine — frame is unreliable
       this.updateTimers(now);
       this.lastTs = now;
+      if (this.currentForm) {
+        this.currentForm = { ...this.currentForm, visibility: visEffective, cues: ['move into frame'] };
+      }
       return;
     }
 
@@ -232,43 +281,62 @@ export class FitnessEngine {
     this.troughInRep = Math.min(this.troughInRep, primaryAngle);
     this.peakInRep = Math.max(this.peakInRep, primaryAngle);
 
+    // --- Adaptive calibration: learn user's ROM in first ~1.2s of ready ---
+    if (!this.calibDone && (phase === 'ready' || phase === 'idle') && this.currentPhase === phase) {
+      this.calibSamples.push(primaryAngle);
+      if (this.calibSamples.length >= 32) {
+        const sorted = [...this.calibSamples].sort((a, b) => a - b);
+        const minObs = sorted[Math.floor(sorted.length * 0.08)];
+        const maxObs = sorted[Math.floor(sorted.length * 0.92)];
+        const span = maxObs - minObs;
+        if (span > 22) {
+          const origDown = this.def.thresholds.downThreshold;
+          const origUp = this.def.thresholds.upThreshold;
+          // adapt: down = closer to observed min, up = closer to observed max, but clamp to sane bounds
+          const adaptDown = clamp(minObs + span * 0.18, origDown - 12, origDown + 10);
+          const adaptUp = clamp(maxObs - span * 0.12, origUp - 10, origUp + 14);
+          this.sm.updateConfig({ downThreshold: adaptDown, upThreshold: adaptUp });
+        }
+        this.calibDone = true;
+      }
+    } else if (phase !== 'ready' && phase !== 'idle') {
+      // once motion started, freeze calibration unless reset
+    }
+
     // State machine: check custom transition first for complex exercises
     let phase: EnginePhase = this.currentPhase;
     let didRep = false;
     if (this.def?.customTransition) {
       const custom = this.def.customTransition(primaryAngle, this.velocityFiltered, phase, { landmarks: lm, timestampMs: now });
       if (custom) {
-        // custom returns next phase directly (down/bottom/up/ready/idle)
-        // Bridge to SM internal state to keep ROM tracking coherent when custom is used
-        // For custom paths we bypass SM step but still synthesize rep detection:
-        // rep occurs when custom moves from down/bottom -> up
         const wasDownLike = phase === 'down' || phase === 'bottom';
         if (wasDownLike && custom === 'up') {
           const timeOk = this.lastRepAt === 0 || (now - this.lastRepAt) > (this.def.thresholds.minRepsIntervalMs ?? 300);
-          const romOk = this.troughInRep < ((this.def.thresholds.downThreshold + 8));
+          const romOk = this.troughInRep < ((this.def.thresholds.downThreshold + 10));
           if (timeOk && romOk) didRep = true;
         }
         phase = custom;
-        // keep SM in sync roughly
-        if (phase === 'down' || phase === 'bottom') this.sm['state'].phase = phase as any;
-        else if (phase === 'up') this.sm['state'].phase = 'up' as any;
-        else if (phase === 'ready') this.sm['state'].phase = 'ready' as any;
+        if (phase === 'down' || phase === 'bottom') (this.sm as any).state.phase = phase as any;
+        else if (phase === 'up') (this.sm as any).state.phase = 'up' as any;
+        else if (phase === 'ready') (this.sm as any).state.phase = 'ready' as any;
       } else {
-        const step = this.sm.step(primaryAngle, now, vis);
+        const step = this.sm.step(primaryAngle, now, visEffective);
         phase = step.nextPhase;
         didRep = step.didRep;
       }
     } else {
-      const step = this.sm.step(primaryAngle, now, vis);
+      const step = this.sm.step(primaryAngle, now, visEffective);
       phase = step.nextPhase;
       didRep = step.didRep;
     }
 
-    // Timer: start on first down/bottom
+    // Timer: start on first down/bottom — auto riconoscimento inizio esercizio
+    // Also auto-arm when person holds ready stable 500ms and then moves -> start
     if (!this.startedAt && (phase === 'down' || phase === 'bottom')) {
       this.startedAt = now;
       this.lastRepAt = now;
     }
+    // Auto-end: if idle for 4s while we had reps, keep timer but don't reset (exercise fine)
 
     // Form evaluation
     const formEval = this.def?.evaluateForm(lm, { ...secondary, knee: primaryAngle, primary: primaryAngle }, phase, {

@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.7.0';
+export const CHANGELOG_VERSION = '2.7.2';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,18 +22,27 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NOVITÀ',
-    title: 'AI Fitness Engine',
-    subtitle: 'v2.7 · MediaPipe su dispositivo · 100% offline',
-    intro: 'Il tuo coach personale ora ti vede, conta e corregge — tutto sul telefono, nessun video sul server.',
+    badge: 'FIX v2.7.2',
+    title: 'AI Fitness Engine · Rilevamento stabilizzato',
+    subtitle: 'v2.7.2 · 25-30 FPS · Auto-calibrazione · 100% offline',
+    intro: 'Fix rilevamento: ora conta anche mezze ripetizioni over-40, riconosce inizio/fine esercizio automatico, feedback “Scendi ancora / Braccia completamente distese” in tempo reale — nessun video sul server.',
     groups: [
+      {
+        icon: '🔧',
+        title: 'Fix rilevamento (NUOVO v2.7.2)',
+        items: [
+          'Soglie più permissive + auto-calibrazione ROM nei primi 1.2s (impara la tua escursione reale)',
+          'Scelta lato migliore (visibility) per camera laterale + OneEuro per-esercizio (0.75 hold / 1.35 burpee)',
+          'Gate visibility 0.38 + timestamp video*1000 per Safari + isteresi calibrata — zero doppi conteggi',
+        ],
+      },
       {
         icon: '🧠',
         title: 'Motore AI client-side',
         items: [
-          'Google MediaPipe Tasks Vision — Pose Landmarker Lite (GPU su iPhone, fallback CPU)',
-          '33 landmark in tempo reale, nessun upload video (privacy 100%)',
-          'PWA ottimizzata: iOS Safari 16.4+ & Android Chrome, funziona anche offline dopo il primo caricamento',
+          'Google MediaPipe Tasks Vision — Pose Landmarker Lite (GPU su iPhone, fallback CPU) — 33 landmark',
+          'Nessun upload video (privacy 100%), soglie detection 0.45 per luce bassa iPhone',
+          'PWA 25-30 FPS garantiti: rAF + inferenza throttled 28→22 fps, nessuna immagine al server',
         ],
       },
       {
