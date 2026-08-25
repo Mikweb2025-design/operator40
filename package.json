@@ -1,7 +1,7 @@
 {
   "name": "operator40",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.7.0",
   "type": "module",
   "description": "Operator 40 — allenamento funzionale per over 40. iOS (Capacitor) + Mac (PWA/Electron).",
   "scripts": {

@@ -24,6 +24,8 @@ import { getMotivationalMessage } from './utils/motivation.js';
 import BellyTest from './components/BellyTest.jsx';
 import BeforeAfterSlider from './components/BeforeAfterSlider.jsx';
 import PoseCounter from './components/PoseCounter.jsx';
+import FitnessEngineView from './components/FitnessEngineView.tsx';
+import ChangelogModal, { CHANGELOG_STORAGE_KEY } from './components/ChangelogModal.tsx';
 import { getBellyLevelForTest, shouldProgressBellyLevel } from './utils/bellyTest.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
@@ -46,12 +48,24 @@ import { getBellyProgress, getBellyStreak, getBellyInsight } from './utils/belly
 
 const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
 
-function VersionBadge() {
+function VersionBadge({ onClick }) {
   return (
-    <div className="o40-mono" style={{ color: STEEL, fontSize: 9, textAlign: 'center', opacity: 0.75, marginTop: 18, letterSpacing: '0.07em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '6px 12px', background: `${INK_2}88`, border: `1px solid ${OLIVE}44`, borderRadius: 20, alignSelf: 'center' }}>
+    <div
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      title={onClick ? 'Novità v2.7 — clic per riaprire changelog' : undefined}
+      className="o40-mono"
+      style={{
+        color: STEEL, fontSize: 9, textAlign: 'center', opacity: onClick ? 0.95 : 0.75, marginTop: 18, letterSpacing: '0.07em',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '6px 12px',
+        background: `${INK_2}88`, border: `1px solid ${onClick ? KHAKI + '88' : OLIVE + '44'}`, borderRadius: 20, alignSelf: 'center',
+        cursor: onClick ? 'pointer' : 'default',
+      }}
+    >
       <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#7FB069', boxShadow: '0 0 6px #7FB06988' }} />
       v{BUILD_VERSION}
       <span style={{ width: 6, height: 6, borderRadius: '50%', background: BLAZE, boxShadow: `0 0 6px ${BLAZE}88` }} />
+      {onClick && <span className="o40-mono" style={{ color: KHAKI, fontSize: 8, border: `1px solid ${KHAKI}66`, borderRadius: 6, padding: '1px 5px', marginLeft: 2 }}>NOVITÀ</span>}
     </div>
   );
 }
@@ -370,6 +384,7 @@ export default function App() {
   const [previewProgram, setPreviewProgram] = useState(null);
   const [showBellyTest, setShowBellyTest] = useState(false);
   const [showPose, setShowPose] = useState(null);
+  const [showChangelog, setShowChangelog] = useState(false);
 
   // hydrate photos from IndexedDB (migration from localStorage, async)
   useEffect(() => {
@@ -557,6 +572,18 @@ export default function App() {
       if (!seen) setShowTour(true);
     }
   }, [screen, profile]);
+  // ---- changelog (v2.7 AI Engine) — once per version, after tour dismissed or 1.2s delay ----
+  useEffect(() => {
+    if (screen !== 'home' || !profile) return;
+    if (showTour) return;
+    try {
+      const seen = localStorage.getItem(CHANGELOG_STORAGE_KEY);
+      if (!seen) {
+        const t = setTimeout(() => setShowChangelog(true), 900);
+        return () => clearTimeout(t);
+      }
+    } catch {}
+  }, [screen, profile, showTour]);
   // ---- large text ----
   useEffect(() => {
     document.documentElement.style.fontSize = largeText ? '18px' : '';
@@ -1223,10 +1250,13 @@ export default function App() {
           <BottomNav active={screen} onNavigate={setScreen} />
         )}
 
-        {/* VersionBadge sempre visibile - corretta e deterministica */}
+        {/* VersionBadge sempre visibile - corretta e deterministica — tap riapre changelog v2.7 */}
         <div style={{ display: 'flex', justifyContent: 'center', padding: screen === 'loading' ? '12px 0' : '6px 0 10px', opacity: 0.85 }}>
-          <VersionBadge />
+          <VersionBadge onClick={() => setShowChangelog(true)} />
         </div>
+        {showChangelog && (
+          <ChangelogModal lang={lang} onClose={() => setShowChangelog(false)} />
+        )}
 
         {toast && (
           <div style={{
@@ -1277,8 +1307,21 @@ export default function App() {
         )}
         {showPose && (
           <div className="o40-tour-mask" onClick={() => setShowPose(null)} style={{ zIndex: 20 }}>
-            <div className="o40-tour-card" onClick={e => e.stopPropagation()} style={{ maxHeight: '90vh', overflowY: 'auto', maxWidth: 500, width: '92vw', padding: 0, overflow: 'hidden' }}>
-              <PoseCounter exercise={showPose} onCount={(n) => { /* could auto-complete */ }} onClose={() => setShowPose(null)} />
+            <div className="o40-tour-card" onClick={e => e.stopPropagation()} style={{ maxHeight: '90vh', overflowY: 'auto', maxWidth: 540, width: '96vw', padding: 0, overflow: 'hidden' }}>
+              <FitnessEngineView
+                exercise={typeof showPose === 'string' ? showPose : 'squat'}
+                lang={lang}
+                onClose={() => setShowPose(null)}
+                onDone={({ reps, elapsedMs, avgQuality }) => {
+                  showToast(`${reps} rep · ${Math.round(elapsedMs/1000)}s · Q ${Math.round(avgQuality)}/100`);
+                }}
+              />
+              <div style={{ padding: '8px 12px', textAlign: 'center' }}>
+                <button onClick={() => setShowPose(null)} style={{ fontSize: 11, color: STEEL, background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Usa PoseCounter legacy ↓</button>
+                <div style={{ marginTop: 6 }}>
+                  <PoseCounter exercise={showPose} onCount={(n) => {}} onClose={() => setShowPose(null)} />
+                </div>
+              </div>
             </div>
           </div>
         )}

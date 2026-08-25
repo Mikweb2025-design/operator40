@@ -27,6 +27,7 @@ export default defineConfig({
           vendor: ['react', 'react-dom'],
           charts: ['recharts'],
           icons: ['lucide-react'],
+          vision: ['@mediapipe/tasks-vision'],
         },
       },
     },
