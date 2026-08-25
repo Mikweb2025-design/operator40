@@ -593,22 +593,31 @@ export default function App() {
   }, [largeText]);
   // ---- AI Coach enabled persist ----
   useEffect(() => { try { localStorage.setItem('o40_aiCoach', aiCoachEnabled ? '1' : '0'); } catch {} }, [aiCoachEnabled]);
-  // ---- PWA update checker — ripristina comportamento pre-2h: update automatico su focus/visibility ----
+  // ---- PWA update checker — fetch sw.js hash, confronta con lastSeen in localStorage ----
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [updateVersion, setUpdateVersion] = useState(null);
   useEffect(() => {
     let cancelled = false;
     async function checkSwUpdate() {
       try {
-        if (!('serviceWorker' in navigator)) return;
-        const reg = await navigator.serviceWorker.getRegistration();
-        if (!reg) return;
-        await reg.update();
-        // Se c'è un SW in waiting/installing, c'è davvero un update (metodo affidabile)
-        if ((reg.waiting || reg.installing) && !cancelled) {
-          const v = await fetch('./sw.js', { cache: 'no-store' }).then(r => r.text()).then(t => t.match(/o40-v[0-9a-f]{8}/)?.[0]).catch(() => null);
-          if (v) setUpdateVersion(v);
+        const res = await fetch('./sw.js', { cache: 'no-store' });
+        const text = await res.text();
+        const remote = text.match(/o40-v[0-9a-f]{8}/)?.[0];
+        if (!remote || cancelled) return;
+        let lastSeen = null;
+        try { lastSeen = localStorage.getItem('o40_lastSw'); } catch {}
+        if (!lastSeen) {
+          try { localStorage.setItem('o40_lastSw', remote); } catch {}
+          return;
+        }
+        if (remote !== lastSeen && !cancelled) {
+          setUpdateVersion(remote);
           setUpdateAvailable(true);
+        }
+        // trigger SW update check in background (per controllerchange reload)
+        if ('serviceWorker' in navigator) {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg) await reg.update().catch(() => {});
         }
       } catch {}
     }
@@ -1291,11 +1300,10 @@ export default function App() {
             <button
               onClick={async () => {
                 try {
+                  try { if (updateVersion) localStorage.setItem('o40_lastSw', updateVersion); } catch {}
                   const reg = await navigator.serviceWorker.getRegistration();
                   if (reg && reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-                  // forza reload bypassando cache PWA
-                  const sw = await fetch('./sw.js', { cache: 'reload' });
-                  // aggiungi cache-bust e ricarica
+                  await fetch('./sw.js', { cache: 'reload' });
                   window.location.href = window.location.pathname + '?v=' + (updateVersion || Date.now()) + window.location.hash;
                   setTimeout(() => window.location.reload(), 400);
                 } catch { window.location.reload(); }
