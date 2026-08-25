@@ -17,6 +17,7 @@ type Lang = 'it' | 'en' | 'de';
 interface Props {
   lang?: Lang;
   onClose: () => void;
+  onTry?: () => void;
 }
 
 const COPY: Record<Lang, any> = {
@@ -223,7 +224,7 @@ const COPY: Record<Lang, any> = {
   },
 };
 
-export default function ChangelogModal({ lang = 'it', onClose }: Props) {
+export default function ChangelogModal({ lang = 'it', onClose, onTry }: Props) {
   const l = (['it', 'en', 'de'].includes(lang) ? lang : 'it') as Lang;
   const c = COPY[l];
 
@@ -312,7 +313,7 @@ export default function ChangelogModal({ lang = 'it', onClose }: Props) {
         <div style={{ padding: '12px 14px', borderTop: `1px solid ${OLIVE}33`, background: INK_2, display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ display: 'flex', gap: 8 }}>
             <button
-              onClick={handleClose}
+              onClick={() => { handleClose(); if (onTry) setTimeout(onTry, 150); }}
               style={{
                 flex: 1, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 12,
                 padding: '12px 14px', fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: '0.06em', cursor: 'pointer',

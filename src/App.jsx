@@ -1255,7 +1255,7 @@ export default function App() {
           <VersionBadge onClick={() => setShowChangelog(true)} />
         </div>
         {showChangelog && (
-          <ChangelogModal lang={lang} onClose={() => setShowChangelog(false)} />
+          <ChangelogModal lang={lang} onClose={() => setShowChangelog(false)} onTry={() => setShowPose('squat')} />
         )}
 
         {toast && (
@@ -1306,8 +1306,8 @@ export default function App() {
           </div>
         )}
         {showPose && (
-          <div className="o40-tour-mask" onClick={() => setShowPose(null)} style={{ zIndex: 20 }}>
-            <div className="o40-tour-card" onClick={e => e.stopPropagation()} style={{ maxHeight: '90vh', overflowY: 'auto', maxWidth: 540, width: '96vw', padding: 0, overflow: 'hidden' }}>
+          <div className="o40-tour-mask" onClick={() => setShowPose(null)} style={{ zIndex: 25 }}>
+            <div className="o40-tour-card" onClick={e => e.stopPropagation()} style={{ maxHeight: '90vh', overflowY: 'auto', maxWidth: 560, width: '96vw', padding: 0, overflow: 'hidden', border: `1px solid ${OLIVE}`, borderRadius: 18 }}>
               <FitnessEngineView
                 exercise={typeof showPose === 'string' ? showPose : 'squat'}
                 lang={lang}
@@ -1316,12 +1316,6 @@ export default function App() {
                   showToast(`${reps} rep · ${Math.round(elapsedMs/1000)}s · Q ${Math.round(avgQuality)}/100`);
                 }}
               />
-              <div style={{ padding: '8px 12px', textAlign: 'center' }}>
-                <button onClick={() => setShowPose(null)} style={{ fontSize: 11, color: STEEL, background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Usa PoseCounter legacy ↓</button>
-                <div style={{ marginTop: 6 }}>
-                  <PoseCounter exercise={showPose} onCount={(n) => {}} onClose={() => setShowPose(null)} />
-                </div>
-              </div>
             </div>
           </div>
         )}
