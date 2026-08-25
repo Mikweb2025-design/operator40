@@ -13,6 +13,7 @@ import { drawSkeleton, drawAngleBadge } from '../engine/overlay/poseConnections'
 import { EXERCISE_DEFINITIONS, normalizeExerciseId, getDefinition } from '../engine/exercises/definitions';
 import { localizedCue } from '../engine/exercises/definitions';
 import PositioningMask, { alignmentScore } from './PositioningMask';
+import { LandmarkRecorder } from '../ai/debug/LandmarkRecorder';
 import type { EngineMetrics, RepEvent, FormMetrics } from '../engine/types';
 
 type Lang = 'it' | 'en' | 'de';
@@ -56,6 +57,9 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
   const [speechOn, setSpeechOn] = useState(false);
   const [coachingText, setCoachingText] = useState<string>('');
   const [alignOkSince, setAlignOkSince] = useState<number | null>(null);
+  const recorderRef = useRef<LandmarkRecorder | null>(null);
+  const [recCount, setRecCount] = useState(0);
+  if (!recorderRef.current) recorderRef.current = new LandmarkRecorder();
 
   // init speech
   useEffect(() => {
@@ -90,6 +94,7 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
 
       const res = engine.getLastResult();
       const lm = res?.landmarks ?? null;
+      if (recorderRef.current?.isRecording()) { recorderRef.current.push(lm); if (Math.random()<0.05) setRecCount(recorderRef.current.count); }
       if (showSkeleton && lm) {
         drawSkeleton(ctx, lm, W, H, { mirror: true, color: BLAZE, jointColor: PAPER });
       }
@@ -322,21 +327,31 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
         <div style={{ margin: '8px 12px 0', padding: '8px 10px', borderRadius: 10, background: `${INK_2}EE`, border: `1px solid ${OLIVE}66`, fontFamily: 'ui-monospace, monospace', fontSize: 10, lineHeight: 1.5, color: PAPER }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 14px' }}>
             <span style={{ color: KHAKI }}>EXERCISE:</span><span>{exId.toUpperCase()}</span>
-            <span style={{ color: KHAKI }}>STATE:</span><span style={{ color: BLAZE }}>{metrics.currentPhase.toUpperCase()}</span>
+            <span style={{ color: KHAKI }}>PHASE:</span><span style={{ color: BLAZE }}>{metrics.currentPhase.toUpperCase()}</span>
             <span style={{ color: KHAKI }}>REPS:</span><span>{reps}{def && (def as any).trackingSupported === false ? ' (no AI)' : ''}</span>
+            <span style={{ color: KHAKI }}>REP CONF:</span><span>{Math.round(metrics.lastRepConfidence ?? 0)}%</span>
             <span style={{ color: KHAKI }}>POSE:</span><span>{Math.round(metrics.poseQuality ?? 0)}%</span>
             <span style={{ color: KHAKI }}>FORM:</span><span>{Math.round(lastForm.quality)}</span>
             <span style={{ color: KHAKI }}>FPS:</span><span>{Math.round(metrics.fps)}</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 14px', marginTop: 4 }}>
-            <span style={{ color: KHAKI }}>ELBOW/KNEE:</span><span>{Math.round(lastForm.primaryAngle)}°</span>
+            <span style={{ color: KHAKI }}>ANGLE:</span><span>{Math.round(lastForm.primaryAngle)}°</span>
             <span style={{ color: KHAKI }}>VEL:</span><span>{Math.round(lastForm.velocity)}°/s</span>
             <span style={{ color: KHAKI }}>DIR:</span><span>{lastForm.direction}</span>
             <span style={{ color: KHAKI }}>VIS:</span><span>{(lastForm.visibility*100).toFixed(0)}%</span>
+            <span style={{ color: KHAKI }}>REQ:</span><span>{(def as any)?.requiredLandmarks?.length ?? 0}</span>
+            <span style={{ color: KHAKI }}>DET:</span><span>{engineRef.current?.getLastResult()?.landmarks ? 'yes' : 'no'}</span>
           </div>
           {Object.keys(lastForm.secondaryAngles).length > 0 && (
             <div style={{ color: STEEL, marginTop: 4 }}>secondary: {Object.entries(lastForm.secondaryAngles).map(([k,v])=>`${k}:${Math.round(v as number)}°`).join(' · ')}</div>
           )}
+          <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
+            <button onClick={()=>{ const r=recorderRef.current!; if(r.isRecording()){ r.stop(); setRecCount(r.count); } else { r.start(); setRecCount(0); } }} style={{ padding:'4px 8px', borderRadius:6, border:`1px solid ${OLIVE}`, background: recorderRef.current?.isRecording()? BLAZE: INK, color: PAPER, fontSize:10, cursor:'pointer' }}>
+              {recorderRef.current?.isRecording()? `● REC ${recCount}` : '○ REC landmarks'}
+            </button>
+            <button onClick={()=>recorderRef.current?.download(`landmarks-${exId}-${Date.now()}.json`)} disabled={(recorderRef.current?.count ?? 0)===0} style={{ padding:'4px 8px', borderRadius:6, border:`1px solid ${OLIVE}`, background: INK, color: STEEL, fontSize:10, cursor:'pointer', opacity: (recorderRef.current?.count ?? 0)===0?0.5:1 }}>↓ JSON</button>
+            <span style={{ color: STEEL, fontSize:9, alignSelf:'center' }}>{recCount} frames · replay offline without video</span>
+          </div>
         </div>
       )}
 

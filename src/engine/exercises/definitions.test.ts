@@ -3,12 +3,13 @@ import { getDefinition, normalizeExerciseId, EXERCISE_DEFINITIONS } from './defi
 import { LM } from '../math';
 
 describe('ExerciseDefinitions', () => {
-  it('all 22 exercises have definitions and trackingSupported=true', () => {
-    const ids = ['squat','pushup','crunch','plank','mountainclimber','jumpingjack','flutterkick','bicyclecrunch','legraise','deadbug','heeltap','vup','burpee','affondo','skater','ginocchiaalte','superman','ponte','russiantwist','wallsit','sideplank','plankjack'];
-    for (const id of ids) {
+  it('22 definitions exist, 8 priority trackingSupported=true, 14 remaining false (spec §24)', () => {
+    const all = ['squat','pushup','crunch','plank','mountainclimber','jumpingjack','flutterkick','bicyclecrunch','legraise','deadbug','heeltap','vup','burpee','affondo','skater','ginocchiaalte','superman','ponte','russiantwist','wallsit','sideplank','plankjack'];
+    const priority = new Set(['squat','pushup','crunch','plank','legraise','flutterkick','deadbug','vup']);
+    for (const id of all) {
       const d = getDefinition(id);
       expect(d, `missing ${id}`).toBeTruthy();
-      expect(d!.trackingSupported).toBe(true);
+      expect(d!.trackingSupported).toBe(priority.has(id));
       expect(d!.requiredLandmarks.length).toBeGreaterThan(3);
       expect(d!.movementPattern).toBeTruthy();
       expect(d!.thresholds.downThreshold).toBeGreaterThan(20);

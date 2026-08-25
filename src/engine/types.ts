@@ -97,6 +97,7 @@ export interface EngineMetrics {
   elapsedActiveMs: number; // total time in motion (excludes idle)
   avgQuality: number; // 0..100
   lastRepQuality: number | null;
+  lastRepConfidence?: number | null; // 0-100 (spec §12)
   currentPhase: EnginePhase;
   currentForm: FormMetrics | null;
   caloriesEst?: number;

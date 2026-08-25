@@ -7,11 +7,15 @@ import type { EngineConfig, EngineMetrics, EnginePhase, FormMetrics, PoseLandmar
 import { HysteresisStateMachine } from './stateMachine';
 import { getDefinition, normalizeExerciseId } from './exercises/definitions';
 import { PoseLandmarkerManager } from './PoseLandmarkerManager';
+import { getAnalyzer } from '../ai/exercises/ExerciseRegistry';
+import { evaluatePoseQuality } from '../ai/pose/PoseQuality';
+import type { ExerciseAnalyzer } from '../ai/exercises/ExerciseAnalyzer';
 import { LM, angleFromLandmarks, bilateralAngle, clamp } from './math';
 
 export class FitnessEngine {
   private cfg: EngineConfig;
   private def: ReturnType<typeof getDefinition>;
+  private analyzer: ExerciseAnalyzer | null = null;
   private sm: HysteresisStateMachine;
   private landmarker: PoseLandmarkerManager;
 
@@ -32,6 +36,7 @@ export class FitnessEngine {
   private qualityWindow: number[] = [];
   private avgQuality = 0;
   private lastRepQuality: number | null = null;
+  private lastRepConfidence: number | null = null;
   private currentPhase: EnginePhase = 'idle';
   private currentForm: FormMetrics | null = null;
   private troughInRep = 180;
@@ -49,6 +54,7 @@ export class FitnessEngine {
     if (!def) throw new Error(`Unknown exercise: ${cfg.exerciseId}`);
     this.cfg = { targetFps: 30, enableFiltering: true, ...cfg, exerciseId: nid as any };
     this.def = def;
+    this.analyzer = getAnalyzer(nid as any);
     const thresholds = { ...def.thresholds, ...(cfg.thresholdsOverride ?? {}) };
     this.sm = new HysteresisStateMachine(thresholds);
     this.landmarker = new PoseLandmarkerManager({}, cfg.enableFiltering !== false);
@@ -72,6 +78,7 @@ export class FitnessEngine {
       elapsedActiveMs: this.elapsedActiveMs,
       avgQuality: this.avgQuality,
       lastRepQuality: this.lastRepQuality,
+      lastRepConfidence: this.lastRepConfidence,
       currentPhase: this.currentPhase,
       currentForm: this.currentForm,
       fps: Math.round(this.fpsEma),
@@ -111,6 +118,7 @@ export class FitnessEngine {
     const def = getDefinition(nid);
     if (!def) return;
     this.def = def;
+    this.analyzer = getAnalyzer(nid as any);
     this.cfg.exerciseId = nid as any;
     const thresholds = { ...def.thresholds, ...(this.cfg.thresholdsOverride ?? {}) };
     this.sm = new HysteresisStateMachine(thresholds);
@@ -133,7 +141,7 @@ export class FitnessEngine {
 
   private resetCounters(): void {
     this.reps = 0; this.startedAt = null; this.elapsedActiveMs = 0; this.lastRepAt = 0;
-    this.qualityWindow = []; this.avgQuality = 0; this.lastRepQuality = null;
+    this.qualityWindow = []; this.avgQuality = 0; this.lastRepQuality = null; this.lastRepConfidence = null;
     this.currentPhase = 'idle'; this.currentForm = null;
     this.troughInRep = 180; this.peakInRep = 0;
     this.sm.reset(); this.landmarker.resetSmoother();
@@ -254,8 +262,9 @@ export class FitnessEngine {
     const instFps = 1000 / Math.max(1, now - (this.lastTs || now - 16));
     this.fpsEma = this.fpsEma ? this.fpsEma * 0.9 + instFps * 0.1 : instFps;
     this.frameCount++;
-    // Pose quality 0-100 (prompt §7)
-    this.lastPoseQuality = this.computePoseQuality(result.landmarks ?? null, result.visibilityScore ?? 0);
+    // Pose quality via dedicated module (spec §6) + fallback
+    const pq = evaluatePoseQuality(result.landmarks ?? null, this.def?.requiredLandmarks ?? [11,12,23,24,25,26,27,28]);
+    this.lastPoseQuality = pq.exerciseConfidence; // exerciseConfidence is the gated one
 
     if (!result.landmarks) {
       // No person — idle, but keep timers
@@ -287,6 +296,64 @@ export class FitnessEngine {
     }
     // se primVis basso ma non bassissimo, degrada quality ma continua
 
+    // If dedicated analyzer exists, delegate (spec §10 priority path)
+    if (this.analyzer) {
+      const dtAna = now - (this.lastTs || now - 16);
+      const pqForAna = evaluatePoseQuality(lm, this.analyzer.requiredLandmarks);
+      // Pause analysis if essential landmarks unreliable (spec §6)
+      if (pqForAna.exerciseConfidence < 42) {
+        this.updateTimers(now);
+        this.lastTs = now;
+        this.lastAngle = this.getPrimaryAngle(lm); // keep angle for fallback
+        this.emitMetrics();
+        return;
+      }
+      const aRes = this.analyzer.analyze(lm, now, dtAna, pqForAna);
+      // Map analyzer result to engine metrics
+      this.currentPhase = aRes.enginePhase as any;
+      this.currentForm = {
+        primaryAngle: aRes.primaryAngle,
+        secondaryAngles: aRes.secondaryAngles,
+        velocity: aRes.velocity,
+        direction: aRes.direction,
+        quality: aRes.formScore,
+        cues: aRes.cues,
+        visibility: pqForAna.exerciseConfidence/100,
+        poseQuality: pqForAna.exerciseConfidence,
+      } as any;
+      // Timer start on first movement
+      if (!this.startedAt && (aRes.phase==='DESCENDING' || aRes.phase==='FLEXING' || aRes.phase==='BOTTOM' || aRes.phase==='HOLD_GOOD')){
+        this.startedAt = now; this.lastRepAt = now;
+      }
+      if (aRes.phase !== this.currentPhase) this.onPhaseChange?.(aRes.enginePhase as any, this.currentForm);
+      if (aRes.repIncrement){
+        const repDuration = this.lastRepAt ? now - this.lastRepAt : (this.startedAt ? now - this.startedAt : 0);
+        this.reps += 1; this.lastRepAt = now; this.lastRepQuality = aRes.formScore; this.lastRepConfidence = aRes.repConfidence;
+        this.qualityWindow.push(aRes.formScore); if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
+        this.avgQuality = this.qualityWindow.reduce((a,b)=>a+b,0)/this.qualityWindow.length;
+        const evt = { repIndex: this.reps, timestampMs: now, durationMs: repDuration, peakAngle: this.peakInRep, troughAngle: this.troughInRep, quality: aRes.formScore, cues: aRes.cues, velocity: aRes.velocity, confidence: aRes.repConfidence } as any;
+        this.onRep?.(evt);
+        try { navigator.vibrate?.(28); } catch {}
+        this.troughInRep = aRes.primaryAngle; this.peakInRep = aRes.primaryAngle;
+        this.sm.consumeRep(now, aRes.primaryAngle);
+        this.currentPhase = 'ready'; this.onPhaseChange?.('ready', this.currentForm);
+      }
+      // Hold handling
+      if (this.def?.isHold) {
+        this.qualityWindow.push(aRes.formScore); if (this.qualityWindow.length > 8) this.qualityWindow.shift();
+        this.avgQuality = this.qualityWindow.reduce((a,b)=>a+b,0)/this.qualityWindow.length;
+        if (!this.startedAt && pqForAna.exerciseConfidence >= 50) this.startedAt = this.startedAt ?? now;
+      }
+      this.lastAngle = aRes.primaryAngle; this.lastTs = now; this.updateTimers(now); this.emitMetrics(); return;
+    }
+    // If exercise marked trackingSupported false, do not attempt generic counting (spec §24)
+    if (this.def && this.def.trackingSupported === false) {
+      // Still compute form for display but never rep
+      const pqTmp = evaluatePoseQuality(lm, this.def.requiredLandmarks ?? []);
+      const formEvalTmp = this.def?.evaluateForm(lm, {}, this.currentPhase as any, { velocity: 0, direction: 'hold', visibility: pqTmp.exerciseConfidence/100, repCount: this.reps }) ?? { quality: 0, cues: [] };
+      this.currentForm = { primaryAngle: 0, secondaryAngles: {}, velocity: 0, direction: 'hold', quality: formEvalTmp.quality, cues: ['tracking not supported'], visibility: pqTmp.exerciseConfidence/100, poseQuality: pqTmp.exerciseConfidence } as any;
+      this.updateTimers(now); this.lastTs = now; this.emitMetrics(); return;
+    }
     const primaryAngle = this.getPrimaryAngle(lm);
     const secondary = this.computeSecondaryAngles(lm);
 
@@ -397,7 +464,7 @@ export class FitnessEngine {
 
       this.reps += 1;
       this.lastRepAt = now;
-      this.lastRepQuality = repQuality;
+      this.lastRepQuality = repQuality; this.lastRepConfidence = (evt as any).confidence ?? repQuality;
       this.qualityWindow.push(repQuality);
       if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
       this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;

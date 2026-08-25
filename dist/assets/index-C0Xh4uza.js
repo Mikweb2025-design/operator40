@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-DMBH4vlI.js","./icons-CNn8_pbx.js","./charts-BGQLz4RT.js","./web-7YfNm_cW.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-EIQy5eGu.js","./icons-CNn8_pbx.js","./charts-BGQLz4RT.js","./web-BDrmmooG.js"])))=>i.map(i=>d[i]);
 import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ShieldCheck, F as Flame, e as RefreshCw, E as Eye, V as Volume2, f as VolumeX, h as Vibrate, i as SkipForward, M as Music, j as Music2, H as HeadphoneOff, k as ChevronLeft, l as Crown, m as Medal, B as Bell, n as BellOff, o as Send, p as HeartPulse, I as Info, q as Star, s as RotateCcw, t as Target, u as BookOpen, v as TrendingUp, L as Lightbulb, w as Ruler, x as TrendingDown, y as Scale, z as Settings, A as Trash2, P as Plus, W as Wind, D as Play, G as Pause, J as House, K as History } from "./icons-CNn8_pbx.js";
 import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-BGQLz4RT.js";
 (function polyfill() {
@@ -3126,31 +3126,31 @@ const EXERCISE_DEFINITIONS = {
     customTransition(angle, _vel, prev, ctx) {
       var _a, _b;
       const lm = ctx.landmarks;
-      const knee = angle;
+      const knee2 = angle;
       const hipY = ((((_a = lm[LM.left_hip]) == null ? void 0 : _a.y) ?? 0.5) + (((_b = lm[LM.right_hip]) == null ? void 0 : _b.y) ?? 0.5)) / 2;
-      const kneeDown = knee < 115;
+      const kneeDown = knee2 < 115;
       const hipDown = hipY > 0.61;
-      const kneeUp = knee > 145;
+      const kneeUp = knee2 > 145;
       const hipUp = hipY < 0.6;
       if (prev === "ready" && (kneeDown || hipDown)) return "down";
-      if (prev === "down" && (knee < 105 || hipY > 0.65)) return "bottom";
+      if (prev === "down" && (knee2 < 105 || hipY > 0.65)) return "bottom";
       if ((prev === "down" || prev === "bottom") && (kneeUp && hipUp)) return "up";
       return null;
     },
     evaluateForm(lm, angles, phase, ctx) {
       const cues = [];
       let quality = 92;
-      const trunk = trunkLean(lm);
-      const knee = angles["primary"] ?? angles["knee"] ?? kneeAngleBest(lm);
-      if ((phase === "down" || phase === "ready") && knee > 105 && knee < 135 && ctx.direction === "down") {
+      const trunk2 = trunkLean(lm);
+      const knee2 = angles["primary"] ?? angles["knee"] ?? kneeAngleBest(lm);
+      if ((phase === "down" || phase === "ready") && knee2 > 105 && knee2 < 135 && ctx.direction === "down") {
         cues.push("scendiAncora");
-      } else if ((phase === "up" || phase === "bottom") && knee > 125 && knee < 148 && ctx.direction === "up") {
+      } else if ((phase === "up" || phase === "bottom") && knee2 > 125 && knee2 < 148 && ctx.direction === "up") {
         cues.push("distendiGambe");
       }
-      if (trunk < 148) {
+      if (trunk2 < 148) {
         quality -= 18;
         cues.unshift("backStraight");
-      } else if (trunk < 162) {
+      } else if (trunk2 < 162) {
         quality -= 7;
         cues.unshift("backStraight");
       }
@@ -3185,9 +3185,9 @@ const EXERCISE_DEFINITIONS = {
     evaluateForm(lm, angles, phase, ctx) {
       const cues = [];
       let q2 = 90;
-      const elbow = angles["primary"] ?? angles["elbow"] ?? elbowAngleBest(lm);
-      if ((phase === "down" || phase === "ready") && elbow > 102 && elbow < 132 && ctx.direction === "down") cues.push("scendiAncora");
-      else if ((phase === "up" || phase === "bottom") && elbow > 128 && elbow < 147 && ctx.direction === "up") cues.push("distendiBraccia");
+      const elbow2 = angles["primary"] ?? angles["elbow"] ?? elbowAngleBest(lm);
+      if ((phase === "down" || phase === "ready") && elbow2 > 102 && elbow2 < 132 && ctx.direction === "down") cues.push("scendiAncora");
+      else if ((phase === "up" || phase === "bottom") && elbow2 > 128 && elbow2 < 147 && ctx.direction === "up") cues.push("distendiBraccia");
       const line = trunkLean(lm);
       if (line < 152) {
         q2 -= 20;
@@ -3272,7 +3272,7 @@ const EXERCISE_DEFINITIONS = {
     id: "mountainclimber",
     aliases: [],
     label: { it: "Mountain climber", en: "Mountain climber", de: "Mountain Climber" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
     movementPattern: "alternating_knee_drive",
     safetyRules: ["coreTight"],
@@ -3310,7 +3310,7 @@ const EXERCISE_DEFINITIONS = {
     id: "jumpingjack",
     aliases: [],
     label: { it: "Jumping jack", en: "Jumping jack", de: "Jumping Jack" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_elbow, LM.right_elbow, LM.left_wrist, LM.right_wrist, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
     movementPattern: "closed_open_closed",
     safetyRules: ["steady"],
@@ -3363,8 +3363,8 @@ const EXERCISE_DEFINITIONS = {
     evaluateForm(lm, _angles, _phase, _ctx) {
       let q2 = 88;
       const cues = [];
-      const trunk = hipAngle(lm);
-      if (trunk > 185) {
+      const trunk2 = hipAngle(lm);
+      if (trunk2 > 185) {
         q2 -= 10;
         cues.push("coreTight");
       }
@@ -3376,7 +3376,7 @@ const EXERCISE_DEFINITIONS = {
     id: "bicyclecrunch",
     aliases: ["crunchbici"],
     label: { it: "Bicycle crunch", en: "Bicycle crunch", de: "Bicycle Crunch" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_elbow, LM.right_elbow],
     movementPattern: "cross_elbow_knee",
     safetyRules: ["control"],
@@ -3468,7 +3468,7 @@ const EXERCISE_DEFINITIONS = {
     id: "heeltap",
     aliases: [],
     label: { it: "Heel tap", en: "Heel tap", de: "Heel Tap" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_wrist, LM.right_wrist, LM.left_heel, LM.right_heel],
     movementPattern: "lateral_flexion",
     safetyRules: ["control"],
@@ -3523,7 +3523,7 @@ const EXERCISE_DEFINITIONS = {
     id: "burpee",
     aliases: ["burpeetattico"],
     label: { it: "Burpee", en: "Burpee", de: "Burpee" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle, LM.left_shoulder, LM.right_shoulder, LM.left_elbow, LM.right_elbow],
     movementPattern: "multi_phase_stand_squat_plank_jump",
     safetyRules: ["backStraight", "control"],
@@ -3531,13 +3531,13 @@ const EXERCISE_DEFINITIONS = {
     thresholds: { downThreshold: 85, upThreshold: 155, hysteresis: 9, minDownMs: 340, minUpMs: 240 },
     customTransition(_a, _vel, prev, ctx) {
       const lm = ctx.landmarks;
-      const knee = kneeAngle(lm);
-      const elbow = elbowAngle(lm);
-      const standing = knee > 150;
-      const squatDown = knee < 95;
-      const inPlank = elbow > 150 && knee > 140;
+      const knee2 = kneeAngle(lm);
+      const elbow2 = elbowAngle(lm);
+      const standing = knee2 > 150;
+      const squatDown = knee2 < 95;
+      const inPlank = elbow2 > 150 && knee2 > 140;
       if (prev === "ready" && squatDown) return "down";
-      if (prev === "down" && (inPlank || knee < 80)) return "bottom";
+      if (prev === "down" && (inPlank || knee2 < 80)) return "bottom";
       if ((prev === "down" || prev === "bottom") && standing) return "up";
       return null;
     },
@@ -3559,7 +3559,7 @@ const EXERCISE_DEFINITIONS = {
     id: "affondo",
     aliases: ["lunge"],
     label: { it: "Affondo", en: "Lunge", de: "Ausfallschritt" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle, LM.left_shoulder, LM.right_shoulder],
     movementPattern: "lunge_down_up",
     safetyRules: ["backStraight"],
@@ -3568,9 +3568,9 @@ const EXERCISE_DEFINITIONS = {
     evaluateForm(lm, angles, phase, ctx) {
       const cues = [];
       let q2 = 90;
-      const knee = angles["primary"] ?? kneeAngleBest(lm);
-      if ((phase === "down" || phase === "ready") && knee > 108 && knee < 138 && ctx.direction === "down") cues.push("scendiAncora");
-      else if ((phase === "up" || phase === "bottom") && knee > 130 && knee < 149 && ctx.direction === "up") cues.push("distendiGambe");
+      const knee2 = angles["primary"] ?? kneeAngleBest(lm);
+      if ((phase === "down" || phase === "ready") && knee2 > 108 && knee2 < 138 && ctx.direction === "down") cues.push("scendiAncora");
+      else if ((phase === "up" || phase === "bottom") && knee2 > 130 && knee2 < 149 && ctx.direction === "up") cues.push("distendiGambe");
       if (trunkLean(lm) < 150) {
         q2 -= 14;
         cues.unshift("backStraight");
@@ -3586,7 +3586,7 @@ const EXERCISE_DEFINITIONS = {
   skater: {
     id: "skater",
     label: { it: "Skater", en: "Skater", de: "Skater" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
     movementPattern: "lateral_hop",
     safetyRules: ["control"],
@@ -3595,13 +3595,13 @@ const EXERCISE_DEFINITIONS = {
     customTransition(_a, _vel, prev, ctx) {
       const lm = ctx.landmarks;
       const spread = ankleDistance(lm);
-      const knee = kneeAngleBest(lm);
-      const bent = knee < 125;
+      const knee2 = kneeAngleBest(lm);
+      const bent = knee2 < 125;
       const wide = spread > 0.28;
       if (prev === "ready" && bent && wide) return "down";
       if (prev === "down" && spread < 0.14) return "up";
       if (prev === "bottom" && spread < 0.14) return "up";
-      if (prev === "down" && knee < 105) return "bottom";
+      if (prev === "down" && knee2 < 105) return "bottom";
       return null;
     },
     evaluateForm(_lm, _a, _p, ctx) {
@@ -3617,7 +3617,7 @@ const EXERCISE_DEFINITIONS = {
     id: "ginocchiaalte",
     aliases: ["highknees"],
     label: { it: "Ginocchia alte", en: "High knees", de: "Knie hoch" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee],
     movementPattern: "alternating_high_knee",
     safetyRules: ["kneesToChest"],
@@ -3649,7 +3649,7 @@ const EXERCISE_DEFINITIONS = {
   superman: {
     id: "superman",
     label: { it: "Superman", en: "Superman", de: "Superman" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee],
     movementPattern: "prone_extension",
     safetyRules: ["control"],
@@ -3675,7 +3675,7 @@ const EXERCISE_DEFINITIONS = {
     id: "ponte",
     aliases: ["bridge"],
     label: { it: "Ponte glutei", en: "Glute bridge", de: "Glute Bridge" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
     movementPattern: "hip_extension",
     safetyRules: ["coreTight"],
@@ -3697,7 +3697,7 @@ const EXERCISE_DEFINITIONS = {
   russiantwist: {
     id: "russiantwist",
     label: { it: "Russian twist", en: "Russian twist", de: "Russian Twist" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_wrist, LM.right_wrist, LM.left_knee, LM.right_knee],
     movementPattern: "torso_rotation",
     safetyRules: ["control"],
@@ -3725,7 +3725,7 @@ const EXERCISE_DEFINITIONS = {
   wallsit: {
     id: "wallsit",
     label: { it: "Wall sit", en: "Wall sit", de: "Wandsitz" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle, LM.left_shoulder, LM.right_shoulder],
     movementPattern: "hold_knee_90",
     safetyRules: ["backStraight"],
@@ -3754,7 +3754,7 @@ const EXERCISE_DEFINITIONS = {
   sideplank: {
     id: "sideplank",
     label: { it: "Plank laterale", en: "Side plank", de: "Seitstütz" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_ankle, LM.right_ankle],
     movementPattern: "hold_lateral",
     safetyRules: ["hipsUp", "coreTight"],
@@ -3779,7 +3779,7 @@ const EXERCISE_DEFINITIONS = {
   plankjack: {
     id: "plankjack",
     label: { it: "Plank jack", en: "Plank jack", de: "Plank Jack" },
-    trackingSupported: true,
+    trackingSupported: false,
     requiredLandmarks: [LM.left_shoulder, LM.right_shoulder, LM.left_hip, LM.right_hip, LM.left_knee, LM.right_knee, LM.left_ankle, LM.right_ankle],
     movementPattern: "hold_plank_legs_open_close",
     safetyRules: ["coreTight"],
@@ -4058,8 +4058,531 @@ class PoseLandmarkerManager {
     this.ready = false;
   }
 }
+class ExerciseAnalyzer {
+  constructor() {
+    this.phase = "READY";
+    this.lastTransitionAt = 0;
+    this.trough = 180;
+    this.peak = 0;
+    this.lastRepAt = 0;
+  }
+  reset() {
+    this.phase = "READY";
+    this.lastTransitionAt = 0;
+    this.trough = 180;
+    this.peak = 0;
+    this.lastRepAt = 0;
+  }
+  shouldCountRep(now, repConf, thresh = 80) {
+    if (repConf < thresh) return false;
+    if (this.lastRepAt && now - this.lastRepAt < 300) return false;
+    return true;
+  }
+}
+function elbow(lm) {
+  var _a, _b, _c, _d, _e, _f;
+  const al = angleFromLandmarks(lm, LM.left_shoulder, LM.left_elbow, LM.left_wrist);
+  const ar = angleFromLandmarks(lm, LM.right_shoulder, LM.right_elbow, LM.right_wrist);
+  const vl = Math.min(((_a = lm[LM.left_shoulder]) == null ? void 0 : _a.visibility) ?? 0, ((_b = lm[LM.left_elbow]) == null ? void 0 : _b.visibility) ?? 0, ((_c = lm[LM.left_wrist]) == null ? void 0 : _c.visibility) ?? 0);
+  const vr = Math.min(((_d = lm[LM.right_shoulder]) == null ? void 0 : _d.visibility) ?? 0, ((_e = lm[LM.right_elbow]) == null ? void 0 : _e.visibility) ?? 0, ((_f = lm[LM.right_wrist]) == null ? void 0 : _f.visibility) ?? 0);
+  if (vl > vr + 0.12) return al;
+  if (vr > vl + 0.12) return ar;
+  return (al + ar) / 2;
+}
+function bodyLine(lm) {
+  const al = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle);
+  const ar = angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle);
+  return (al + ar) / 2;
+}
+class PushupAnalyzer extends ExerciseAnalyzer {
+  constructor() {
+    super(...arguments);
+    this.id = "pushup";
+    this.requiredLandmarks = [11, 12, 13, 14, 15, 16, 23, 24, 27, 28];
+    this.velFilt = 0;
+    this.lastAngle = 180;
+    this.lastT = 0;
+  }
+  analyze(lm, ts, dtMs, q2) {
+    const ang = elbow(lm);
+    const dt = dtMs || 16;
+    const rawV = (ang - this.lastAngle) / (dt / 1e3);
+    this.velFilt = this.velFilt * 0.75 + rawV * 0.25;
+    const dir = Math.abs(this.velFilt) < 18 ? "hold" : this.velFilt < 0 ? "down" : "up";
+    const line = bodyLine(lm);
+    this.trough = Math.min(this.trough, ang);
+    this.peak = Math.max(this.peak, ang);
+    let next = this.phase;
+    if (this.phase === "READY" && ang < 115) next = "DESCENDING";
+    else if (this.phase === "DESCENDING" && ang < 102) next = "BOTTOM";
+    else if (this.phase === "BOTTOM" && ang > 128) next = "ASCENDING";
+    else if (this.phase === "ASCENDING" && ang > 145) next = "TOP";
+    let repInc = false, repConf = 0;
+    if (next === "TOP" && this.phase === "ASCENDING") {
+      const rom = this.peak - this.trough;
+      const depthOk = this.trough < 102;
+      const extOk = ang > 145;
+      const velScore = clamp(100 - Math.abs(this.velFilt) * 0.06, 0, 100);
+      const alignScore = line > 152 ? 95 : line > 164 ? 80 : 40;
+      repConf = clamp(depthOk && extOk ? velScore * 0.3 + alignScore * 0.4 + (rom > 35 ? 30 : 10) : 25, 0, 100);
+      if (depthOk && extOk && repConf > 78 && q2.exerciseConfidence > 50) {
+        if (this.shouldCountRep(ts, repConf, 78)) {
+          repInc = true;
+          this.lastRepAt = ts;
+          this.trough = ang;
+          this.peak = ang;
+          next = "READY";
+        }
+      } else if (!depthOk || !extOk) {
+        next = "READY";
+      }
+    }
+    if (repInc) {
+      this.phase = "READY";
+      this.lastTransitionAt = ts;
+    } else if (next !== this.phase) {
+      this.phase = next;
+      this.lastTransitionAt = ts;
+    }
+    let form = 90, cues = [];
+    if (line < 152) {
+      form -= 20;
+      cues.push("coreTight");
+    } else if (line < 164) {
+      form -= 8;
+      cues.push("coreTight");
+    }
+    if (this.phase === "DESCENDING" && ang > 102 && ang < 132 && dir === "down") cues.push("scendiAncora");
+    if (this.phase === "ASCENDING" && ang > 128 && ang < 147 && dir === "up") cues.push("distendiBraccia");
+    if (Math.abs(this.velFilt) > 520) {
+      form -= 8;
+      cues.push("control");
+    }
+    this.lastAngle = ang;
+    this.lastT = ts;
+    const enginePhase = this.phase === "BOTTOM" ? "bottom" : this.phase === "DESCENDING" ? "down" : this.phase === "ASCENDING" ? "up" : this.phase === "TOP" ? "up" : "ready";
+    return { phase: this.phase, enginePhase, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form, 0, 100), poseQuality: q2, cues, primaryAngle: ang, secondaryAngles: { line }, velocity: this.velFilt, direction: dir };
+  }
+}
+function knee(lm) {
+  var _a, _b, _c, _d, _e, _f;
+  const al = angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle);
+  const ar = angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle);
+  const vl = Math.min(((_a = lm[LM.left_hip]) == null ? void 0 : _a.visibility) ?? 0, ((_b = lm[LM.left_knee]) == null ? void 0 : _b.visibility) ?? 0, ((_c = lm[LM.left_ankle]) == null ? void 0 : _c.visibility) ?? 0);
+  const vr = Math.min(((_d = lm[LM.right_hip]) == null ? void 0 : _d.visibility) ?? 0, ((_e = lm[LM.right_knee]) == null ? void 0 : _e.visibility) ?? 0, ((_f = lm[LM.right_ankle]) == null ? void 0 : _f.visibility) ?? 0);
+  if (vl > vr + 0.12) return al;
+  if (vr > vl + 0.12) return ar;
+  return (al + ar) / 2;
+}
+function trunk$1(lm) {
+  const al = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle);
+  const ar = angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle);
+  return (al + ar) / 2;
+}
+class SquatAnalyzer extends ExerciseAnalyzer {
+  constructor() {
+    super(...arguments);
+    this.id = "squat";
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28];
+    this.velFilt = 0;
+    this.lastA = 180;
+  }
+  analyze(lm, ts, dtMs, q2) {
+    var _a, _b;
+    const ang = knee(lm);
+    const hipY = ((((_a = lm[LM.left_hip]) == null ? void 0 : _a.y) ?? 0.5) + (((_b = lm[LM.right_hip]) == null ? void 0 : _b.y) ?? 0.5)) / 2;
+    const dt = dtMs || 16;
+    const rawV = (ang - this.lastA) / (dt / 1e3);
+    this.velFilt = this.velFilt * 0.75 + rawV * 0.25;
+    const dir = Math.abs(this.velFilt) < 18 ? "hold" : this.velFilt < 0 ? "down" : "up";
+    this.trough = Math.min(this.trough, ang);
+    this.peak = Math.max(this.peak, ang);
+    let next = this.phase;
+    if (this.phase === "READY" && (ang < 115 || hipY > 0.61)) next = "DESCENDING";
+    else if (this.phase === "DESCENDING" && (ang < 105 || hipY > 0.65)) next = "BOTTOM";
+    else if (this.phase === "BOTTOM" && ang > 145 && hipY < 0.6) next = "ASCENDING";
+    else if (this.phase === "ASCENDING" && ang > 148) next = "STANDING";
+    let repInc = false, repConf = 0;
+    if (next === "STANDING" && (this.phase === "ASCENDING" || this.phase === "BOTTOM")) {
+      const rom = this.peak - this.trough;
+      const depthOk = this.trough < 108;
+      const extOk = ang > 148;
+      const velScore = clamp(100 - Math.abs(this.velFilt) * 0.06, 0, 100);
+      repConf = clamp(depthOk && extOk ? velScore * 0.3 + (rom > 30 ? 30 : 10) + (trunk$1(lm) > 155 ? 40 : 20) : 20, 0, 100);
+      if (depthOk && extOk && repConf > 75 && q2.exerciseConfidence > 45) {
+        if (this.shouldCountRep(ts, repConf, 75)) {
+          repInc = true;
+          this.lastRepAt = ts;
+          this.trough = ang;
+          this.peak = ang;
+          next = "READY";
+        }
+      }
+    }
+    if (repInc) {
+      this.phase = "READY";
+      this.lastTransitionAt = ts;
+    } else if (next !== this.phase) {
+      this.phase = next;
+      this.lastTransitionAt = ts;
+    }
+    let form = 92, cues = [];
+    const tr2 = trunk$1(lm);
+    if (tr2 < 148) {
+      form -= 18;
+      cues.push("backStraight");
+    } else if (tr2 < 162) {
+      form -= 7;
+      cues.push("backStraight");
+    }
+    if (this.phase === "DESCENDING" && ang > 105 && ang < 135 && dir === "down") cues.push("scendiAncora");
+    if (this.phase === "ASCENDING" && ang > 125 && ang < 148 && dir === "up") cues.push("distendiGambe");
+    if (Math.abs(this.velFilt) > 430) {
+      form -= 9;
+      cues.push("control");
+    }
+    this.lastA = ang;
+    const eng = this.phase === "BOTTOM" ? "bottom" : this.phase === "DESCENDING" ? "down" : this.phase === "ASCENDING" ? "up" : this.phase === "STANDING" ? "up" : "ready";
+    return { phase: this.phase, enginePhase: eng, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form, 0, 100), poseQuality: q2, cues, primaryAngle: ang, secondaryAngles: { trunk: tr2, hipY }, velocity: this.velFilt, direction: dir };
+  }
+}
+class CrunchAnalyzer extends ExerciseAnalyzer {
+  constructor() {
+    super(...arguments);
+    this.id = "crunch";
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 7, 8];
+    this.velFilt = 0;
+    this.lastA = 120;
+  }
+  analyze(lm, ts, dtMs, q2) {
+    const hipFlex = (() => {
+      const al = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
+      const ar = angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
+      return (al + ar) / 2;
+    })();
+    const dt = dtMs || 16;
+    const rawV = (hipFlex - this.lastA) / (dt / 1e3);
+    this.velFilt = this.velFilt * 0.75 + rawV * 0.25;
+    const dir = Math.abs(this.velFilt) < 18 ? "hold" : this.velFilt < 0 ? "down" : "up";
+    this.trough = Math.min(this.trough, hipFlex);
+    this.peak = Math.max(this.peak, hipFlex);
+    let next = this.phase;
+    if (this.phase === "READY" && hipFlex < 108) next = "FLEXING";
+    else if (this.phase === "FLEXING" && hipFlex < 95) next = "CONTRACTED";
+    else if (this.phase === "CONTRACTED" && hipFlex > 110) next = "RETURNING";
+    else if (this.phase === "RETURNING" && hipFlex > 122) next = "EXTENDED";
+    let repInc = false, repConf = 0;
+    if (next === "EXTENDED" && (this.phase === "RETURNING" || this.phase === "CONTRACTED")) {
+      const rom = this.peak - this.trough;
+      const contractOk = this.trough < 95;
+      const extOk = hipFlex > 122;
+      const neck = angleFromLandmarks(lm, LM.left_hip, LM.left_shoulder, LM.left_ear);
+      const neckOk = neck > 60 && neck < 120;
+      repConf = clamp(contractOk && extOk ? 60 + (neckOk ? 20 : 5) + (rom > 25 ? 15 : 0) + (Math.abs(this.velFilt) < 380 ? 5 : 0) : 20, 0, 100);
+      if (contractOk && extOk && repConf > 70 && q2.exerciseConfidence > 45) {
+        if (this.shouldCountRep(ts, repConf, 70)) {
+          repInc = true;
+          this.lastRepAt = ts;
+          this.trough = hipFlex;
+          this.peak = hipFlex;
+          next = "READY";
+        }
+      }
+    }
+    if (repInc) {
+      this.phase = "READY";
+      this.lastTransitionAt = ts;
+    } else if (next !== this.phase) {
+      this.phase = next;
+      this.lastTransitionAt = ts;
+    }
+    let form = 88, cues = [];
+    const neckA = angleFromLandmarks(lm, LM.left_hip, LM.left_shoulder, LM.left_ear);
+    if (neckA < 60 || neckA > 120) {
+      form -= 10;
+      cues.push("backStraight");
+    }
+    if (Math.abs(this.velFilt) > 380) {
+      form -= 8;
+      cues.push("control");
+    }
+    this.lastA = hipFlex;
+    const eng = this.phase === "CONTRACTED" ? "bottom" : this.phase === "FLEXING" ? "down" : this.phase === "RETURNING" ? "up" : "ready";
+    return { phase: this.phase, enginePhase: eng, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form, 0, 100), poseQuality: q2, cues, primaryAngle: hipFlex, secondaryAngles: { neck: neckA }, velocity: this.velFilt, direction: dir };
+  }
+}
+function trunk(lm) {
+  const al = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle);
+  const ar = angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle);
+  return (al + ar) / 2;
+}
+class PlankAnalyzer extends ExerciseAnalyzer {
+  constructor() {
+    super(...arguments);
+    this.id = "plank";
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28];
+    this.goodSince = null;
+    this.graceMs = 600;
+  }
+  analyze(lm, ts, _dt, q2) {
+    const line = trunk(lm);
+    const hip = (() => {
+      const al = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
+      const ar = angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
+      return (al + ar) / 2;
+    })();
+    const valid = line > 155 && hip > 150 && q2.exerciseConfidence > 50;
+    if (valid) {
+      if (this.goodSince == null) this.goodSince = ts;
+      this.phase = "HOLD_GOOD";
+    } else {
+      if (this.goodSince != null && ts - this.goodSince < this.graceMs) {
+        this.phase = "HOLD_GOOD";
+      } else {
+        this.phase = "HOLD_BAD";
+        this.goodSince = null;
+      }
+    }
+    const form = line < 155 ? 55 : line < 165 ? 83 : 95 - (hip < 150 ? 10 : 0);
+    const cues = line < 155 ? ["hipsUp"] : line < 165 ? ["coreTight"] : [];
+    return { phase: this.phase, enginePhase: "ready", repIncrement: false, repConfidence: 0, formScore: clamp(form, 0, 100), poseQuality: q2, cues, primaryAngle: line, secondaryAngles: { hip, line }, velocity: 0, direction: "hold" };
+  }
+}
+class LegRaiseAnalyzer extends ExerciseAnalyzer {
+  constructor() {
+    super(...arguments);
+    this.id = "legraise";
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28];
+    this.velFilt = 0;
+    this.lastA = 170;
+  }
+  analyze(lm, ts, dtMs, q2) {
+    const hipFlex = (angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee) + angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee)) / 2;
+    const dt = dtMs || 16;
+    const rawV = (hipFlex - this.lastA) / (dt / 1e3);
+    this.velFilt = this.velFilt * 0.75 + rawV * 0.25;
+    const dir = Math.abs(this.velFilt) < 18 ? "hold" : this.velFilt < 0 ? "down" : "up";
+    this.trough = Math.min(this.trough, hipFlex);
+    this.peak = Math.max(this.peak, hipFlex);
+    let next = this.phase;
+    if (this.phase === "READY" && hipFlex < 140) next = "RAISING";
+    else if (this.phase === "RAISING" && hipFlex < 95) next = "TOP";
+    else if (this.phase === "TOP" && hipFlex > 120) next = "LOWERING";
+    else if (this.phase === "LOWERING" && hipFlex > 155) next = "DOWN";
+    let repInc = false, repConf = 0;
+    if (next === "DOWN" && (this.phase === "LOWERING" || this.phase === "TOP")) {
+      const rom = this.peak - this.trough;
+      const topOk = this.trough < 95;
+      const downOk = hipFlex > 155;
+      const lk2 = (angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle) + angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle)) / 2;
+      const kneeOk = lk2 > 155;
+      repConf = clamp(topOk && downOk ? 50 + (kneeOk ? 20 : 0) + (rom > 55 ? 15 : 5) + (Math.abs(this.velFilt) < 300 ? 10 : 0) : 15, 0, 100);
+      if (topOk && downOk && kneeOk && repConf > 72 && q2.exerciseConfidence > 45) {
+        if (this.shouldCountRep(ts, repConf, 72)) {
+          repInc = true;
+          this.lastRepAt = ts;
+          this.trough = hipFlex;
+          this.peak = hipFlex;
+          next = "READY";
+        }
+      }
+    }
+    if (repInc) {
+      this.phase = "READY";
+      this.lastTransitionAt = ts;
+    } else if (next !== this.phase) {
+      this.phase = next;
+      this.lastTransitionAt = ts;
+    }
+    let form = 90, cues = [];
+    const lk = (angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle) + angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle)) / 2;
+    if (lk < 155) {
+      form -= 12;
+      cues.push("control");
+    }
+    this.lastA = hipFlex;
+    const eng = this.phase === "TOP" ? "bottom" : this.phase === "RAISING" ? "down" : this.phase === "LOWERING" ? "up" : "ready";
+    return { phase: this.phase, enginePhase: eng, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form, 0, 100), poseQuality: q2, cues, primaryAngle: hipFlex, secondaryAngles: { kneeExt: lk }, velocity: this.velFilt, direction: dir };
+  }
+}
+class FlutterKickAnalyzer extends ExerciseAnalyzer {
+  constructor() {
+    super(...arguments);
+    this.id = "flutterkick";
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28];
+    this.cycle = "center";
+    this.lastSwitch = 0;
+  }
+  analyze(lm, ts, _dt, q2) {
+    const lHip = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
+    const rHip = angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
+    const asym = Math.abs(lHip - rHip);
+    const mean = (lHip + rHip) / 2;
+    let repInc = false, repConf = 0;
+    if (this.phase === "READY" && asym > 14 && mean < 168) {
+      this.phase = "LEFT_UP";
+      this.lastTransitionAt = ts;
+    } else if (this.phase === "LEFT_UP" && asym > 14 && mean < 168 && (lHip < rHip && this.cycle !== "leftUp" || rHip < lHip && this.cycle !== "rightUp")) {
+      const nowCycle = lHip < rHip ? "leftUp" : "rightUp";
+      if (nowCycle !== this.cycle && ts - this.lastSwitch > 250) {
+        this.cycle = nowCycle;
+        this.lastSwitch = ts;
+        this._alt = (this._alt || 0) + 1;
+        if (this._alt % 2 === 0) {
+          repConf = clamp(70 + (asym > 18 ? 10 : 0) + (q2.exerciseConfidence > 60 ? 10 : 0), 0, 100);
+          if (repConf > 68 && q2.exerciseConfidence > 45 && this.shouldCountRep(ts, repConf, 68)) {
+            repInc = true;
+            this.lastRepAt = ts;
+          }
+        }
+      }
+    } else if (asym < 6) {
+      this.phase = "READY";
+    }
+    let form = 88;
+    const cues = [];
+    if ((lHip + rHip) / 2 > 185) {
+      form -= 10;
+      cues.push("coreTight");
+    }
+    return { phase: this.phase, enginePhase: this.phase === "LEFT_UP" ? "down" : "ready", repIncrement: repInc, repConfidence: repConf, formScore: clamp(form, 0, 100), poseQuality: q2, cues, primaryAngle: mean, secondaryAngles: { lHip, rHip, asym }, velocity: 0, direction: "hold" };
+  }
+}
+class DeadBugAnalyzer extends ExerciseAnalyzer {
+  constructor() {
+    super(...arguments);
+    this.id = "deadbug";
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 13, 14, 15, 16, 27, 28];
+  }
+  analyze(lm, ts, _dt, q2) {
+    const lHip = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
+    const rHip = angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
+    const lSh = angleFromLandmarks(lm, LM.left_hip, LM.left_shoulder, LM.left_elbow);
+    const rSh = angleFromLandmarks(lm, LM.right_hip, LM.right_shoulder, LM.right_elbow);
+    const extL = lHip > 150 && lSh > 130;
+    const extR = rHip > 150 && rSh > 130;
+    const oneExt = extL !== extR;
+    let repInc = false, repConf = 0;
+    if (this.phase === "READY" && !oneExt) this.phase = "TUCKED";
+    else if (this.phase === "TUCKED" && oneExt) {
+      this.phase = "EXTENDED";
+      this.lastTransitionAt = ts;
+    } else if (this.phase === "EXTENDED" && !oneExt) {
+      repConf = clamp(65 + (q2.exerciseConfidence > 60 ? 15 : 0) + (Math.abs(lHip - rHip) > 30 ? 10 : 0), 0, 100);
+      if (repConf > 70 && q2.exerciseConfidence > 45 && this.shouldCountRep(ts, repConf, 70)) {
+        repInc = true;
+        this.lastRepAt = ts;
+        this.phase = "READY";
+      } else this.phase = "READY";
+    }
+    let form = 90;
+    const cues = [];
+    const trunk2 = (angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle) + angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle)) / 2;
+    if (trunk2 < 160) {
+      form -= 10;
+      cues.push("coreTight");
+    }
+    return { phase: this.phase, enginePhase: this.phase === "EXTENDED" ? "bottom" : this.phase === "TUCKED" ? "down" : "ready", repIncrement: repInc, repConfidence: repConf, formScore: clamp(form, 0, 100), poseQuality: q2, cues, primaryAngle: (lHip + rHip) / 2, secondaryAngles: { lHip, rHip, lSh, rSh }, velocity: 0, direction: "hold" };
+  }
+}
+class VUpAnalyzer extends ExerciseAnalyzer {
+  constructor() {
+    super(...arguments);
+    this.id = "vup";
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28, 15, 16];
+    this.velFilt = 0;
+    this.lastA = 160;
+  }
+  analyze(lm, ts, dtMs, q2) {
+    const pike = (angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee) + angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee)) / 2;
+    const dt = dtMs || 16;
+    const rawV = (pike - this.lastA) / (dt / 1e3);
+    this.velFilt = this.velFilt * 0.75 + rawV * 0.25;
+    const dir = Math.abs(this.velFilt) < 18 ? "hold" : this.velFilt < 0 ? "down" : "up";
+    this.trough = Math.min(this.trough, pike);
+    this.peak = Math.max(this.peak, pike);
+    let next = this.phase;
+    if (this.phase === "READY" && pike < 130) next = "FOLDING";
+    else if (this.phase === "FOLDING" && pike < 65) next = "V_POSITION";
+    else if (this.phase === "V_POSITION" && pike > 100) next = "EXTENDING";
+    else if (this.phase === "EXTENDING" && pike > 150) next = "EXTENDED";
+    let repInc = false, repConf = 0;
+    if (next === "EXTENDED" && (this.phase === "EXTENDING" || this.phase === "V_POSITION")) {
+      const rom = this.peak - this.trough;
+      const foldOk = this.trough < 65;
+      const extOk = pike > 150;
+      const lk2 = (angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle) + angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle)) / 2;
+      const legsStraight = lk2 > 150;
+      repConf = clamp(foldOk && extOk ? 55 + (legsStraight ? 15 : 0) + (rom > 85 ? 15 : 5) + (Math.abs(this.velFilt) < 550 ? 10 : 0) : 15, 0, 100);
+      if (foldOk && extOk && repConf > 72 && q2.exerciseConfidence > 45) {
+        if (this.shouldCountRep(ts, repConf, 72)) {
+          repInc = true;
+          this.lastRepAt = ts;
+          this.trough = pike;
+          this.peak = pike;
+          next = "READY";
+        }
+      }
+    }
+    if (repInc) {
+      this.phase = "READY";
+      this.lastTransitionAt = ts;
+    } else if (next !== this.phase) {
+      this.phase = next;
+      this.lastTransitionAt = ts;
+    }
+    this.lastA = pike;
+    let form = 88;
+    const cues = [];
+    const lk = (angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle) + angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle)) / 2;
+    if (lk < 150) {
+      form -= 10;
+      cues.push("control");
+    }
+    const eng = this.phase === "V_POSITION" ? "bottom" : this.phase === "FOLDING" ? "down" : this.phase === "EXTENDING" ? "up" : "ready";
+    return { phase: this.phase, enginePhase: eng, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form, 0, 100), poseQuality: q2, cues, primaryAngle: pike, secondaryAngles: { kneeExt: lk }, velocity: this.velFilt, direction: dir };
+  }
+}
+const REGISTRY = {
+  pushup: PushupAnalyzer,
+  squat: SquatAnalyzer,
+  crunch: CrunchAnalyzer,
+  plank: PlankAnalyzer,
+  legraise: LegRaiseAnalyzer,
+  flutterkick: FlutterKickAnalyzer,
+  deadbug: DeadBugAnalyzer,
+  vup: VUpAnalyzer
+};
+function getAnalyzer(exerciseId) {
+  const nid = normalizeExerciseId(exerciseId);
+  const Cls = REGISTRY[nid];
+  if (!Cls) return null;
+  return new Cls();
+}
+function evaluatePoseQuality(lm, required, thresholds) {
+  var _a;
+  if (!lm) return { poseConfidence: 0, landmarkConfidence: {}, exerciseConfidence: 0, requiredVisible: false, missing: required.slice() };
+  const landmarkConfidence = {};
+  for (let i = 0; i < lm.length; i++) landmarkConfidence[i] = Math.round((((_a = lm[i]) == null ? void 0 : _a.visibility) ?? 0) * 100);
+  const poseConfidence = Math.round(visibilityScore(lm, [11, 12, 23, 24, 25, 26, 13, 14, 15, 16]) * 100);
+  const reqScores = required.map((idx) => {
+    var _a2;
+    return (((_a2 = lm[idx]) == null ? void 0 : _a2.visibility) ?? 0) * 100;
+  });
+  const avgReq = reqScores.length ? reqScores.reduce((a, b) => a + b, 0) / reqScores.length : poseConfidence;
+  const minReq = reqScores.length ? Math.min(...reqScores) : poseConfidence;
+  const exerciseConfidence = Math.round(clamp(avgReq * 0.7 + minReq * 0.3, 0, 100));
+  const requiredMin = 38;
+  const missing = required.filter((idx) => {
+    var _a2;
+    return (((_a2 = lm[idx]) == null ? void 0 : _a2.visibility) ?? 0) * 100 < requiredMin;
+  });
+  const requiredVisible = missing.length === 0 && exerciseConfidence >= 45;
+  return { poseConfidence, landmarkConfidence, exerciseConfidence, requiredVisible, missing };
+}
 class FitnessEngine {
   constructor(cfg) {
+    this.analyzer = null;
     this.video = null;
     this.running = false;
     this.rafId = null;
@@ -4076,6 +4599,7 @@ class FitnessEngine {
     this.qualityWindow = [];
     this.avgQuality = 0;
     this.lastRepQuality = null;
+    this.lastRepConfidence = null;
     this.currentPhase = "idle";
     this.currentForm = null;
     this.troughInRep = 180;
@@ -4088,7 +4612,7 @@ class FitnessEngine {
     this.calibSamples = [];
     this.calibDone = false;
     this.loop = (now) => {
-      var _a, _b, _c, _d, _e, _f, _g, _h;
+      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
       this.rafId = requestAnimationFrame(this.loop);
       if (!this.running || !this.video) return;
       const fpsTarget = this.cfg.targetFps ?? 30;
@@ -4114,12 +4638,13 @@ class FitnessEngine {
       const instFps = 1e3 / Math.max(1, now - (this.lastTs || now - 16));
       this.fpsEma = this.fpsEma ? this.fpsEma * 0.9 + instFps * 0.1 : instFps;
       this.frameCount++;
-      this.lastPoseQuality = this.computePoseQuality(result.landmarks ?? null, result.visibilityScore ?? 0);
+      const pq = evaluatePoseQuality(result.landmarks ?? null, ((_a = this.def) == null ? void 0 : _a.requiredLandmarks) ?? [11, 12, 23, 24, 25, 26, 27, 28]);
+      this.lastPoseQuality = pq.exerciseConfidence;
       if (!result.landmarks) {
         if (this.currentPhase !== "idle") {
           this.currentPhase = "idle";
           this.currentForm = { primaryAngle: this.lastAngle, secondaryAngles: {}, velocity: 0, direction: "idle", quality: 0, cues: ["moveIntoFrame"], visibility: 0, poseQuality: this.lastPoseQuality };
-          (_a = this.onPhaseChange) == null ? void 0 : _a.call(this, "idle", this.currentForm);
+          (_b = this.onPhaseChange) == null ? void 0 : _b.call(this, "idle", this.currentForm);
         }
         this.updateTimers(now);
         this.lastTs = now;
@@ -4137,6 +4662,75 @@ class FitnessEngine {
         if (this.currentForm) {
           this.currentForm = { ...this.currentForm, visibility: visEffective, cues: ["move into frame"] };
         }
+      }
+      if (this.analyzer) {
+        const dtAna = now - (this.lastTs || now - 16);
+        const pqForAna = evaluatePoseQuality(lm, this.analyzer.requiredLandmarks);
+        if (pqForAna.exerciseConfidence < 42) {
+          this.updateTimers(now);
+          this.lastTs = now;
+          this.lastAngle = this.getPrimaryAngle(lm);
+          this.emitMetrics();
+          return;
+        }
+        const aRes = this.analyzer.analyze(lm, now, dtAna, pqForAna);
+        this.currentPhase = aRes.enginePhase;
+        this.currentForm = {
+          primaryAngle: aRes.primaryAngle,
+          secondaryAngles: aRes.secondaryAngles,
+          velocity: aRes.velocity,
+          direction: aRes.direction,
+          quality: aRes.formScore,
+          cues: aRes.cues,
+          visibility: pqForAna.exerciseConfidence / 100,
+          poseQuality: pqForAna.exerciseConfidence
+        };
+        if (!this.startedAt && (aRes.phase === "DESCENDING" || aRes.phase === "FLEXING" || aRes.phase === "BOTTOM" || aRes.phase === "HOLD_GOOD")) {
+          this.startedAt = now;
+          this.lastRepAt = now;
+        }
+        if (aRes.phase !== this.currentPhase) (_c = this.onPhaseChange) == null ? void 0 : _c.call(this, aRes.enginePhase, this.currentForm);
+        if (aRes.repIncrement) {
+          const repDuration = this.lastRepAt ? now - this.lastRepAt : this.startedAt ? now - this.startedAt : 0;
+          this.reps += 1;
+          this.lastRepAt = now;
+          this.lastRepQuality = aRes.formScore;
+          this.lastRepConfidence = aRes.repConfidence;
+          this.qualityWindow.push(aRes.formScore);
+          if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
+          this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
+          const evt = { repIndex: this.reps, timestampMs: now, durationMs: repDuration, peakAngle: this.peakInRep, troughAngle: this.troughInRep, quality: aRes.formScore, cues: aRes.cues, velocity: aRes.velocity, confidence: aRes.repConfidence };
+          (_d = this.onRep) == null ? void 0 : _d.call(this, evt);
+          try {
+            (_e = navigator.vibrate) == null ? void 0 : _e.call(navigator, 28);
+          } catch {
+          }
+          this.troughInRep = aRes.primaryAngle;
+          this.peakInRep = aRes.primaryAngle;
+          this.sm.consumeRep(now, aRes.primaryAngle);
+          this.currentPhase = "ready";
+          (_f = this.onPhaseChange) == null ? void 0 : _f.call(this, "ready", this.currentForm);
+        }
+        if ((_g = this.def) == null ? void 0 : _g.isHold) {
+          this.qualityWindow.push(aRes.formScore);
+          if (this.qualityWindow.length > 8) this.qualityWindow.shift();
+          this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
+          if (!this.startedAt && pqForAna.exerciseConfidence >= 50) this.startedAt = this.startedAt ?? now;
+        }
+        this.lastAngle = aRes.primaryAngle;
+        this.lastTs = now;
+        this.updateTimers(now);
+        this.emitMetrics();
+        return;
+      }
+      if (this.def && this.def.trackingSupported === false) {
+        const pqTmp = evaluatePoseQuality(lm, this.def.requiredLandmarks ?? []);
+        const formEvalTmp = ((_h = this.def) == null ? void 0 : _h.evaluateForm(lm, {}, this.currentPhase, { velocity: 0, direction: "hold", visibility: pqTmp.exerciseConfidence / 100, repCount: this.reps })) ?? { quality: 0 };
+        this.currentForm = { primaryAngle: 0, secondaryAngles: {}, velocity: 0, direction: "hold", quality: formEvalTmp.quality, cues: ["tracking not supported"], visibility: pqTmp.exerciseConfidence / 100, poseQuality: pqTmp.exerciseConfidence };
+        this.updateTimers(now);
+        this.lastTs = now;
+        this.emitMetrics();
+        return;
       }
       const primaryAngle = this.getPrimaryAngle(lm);
       const secondary = this.computeSecondaryAngles(lm);
@@ -4169,7 +4763,7 @@ class FitnessEngine {
         }
       }
       let didRep = false;
-      if ((_b = this.def) == null ? void 0 : _b.customTransition) {
+      if ((_i = this.def) == null ? void 0 : _i.customTransition) {
         const custom = this.def.customTransition(primaryAngle, this.velocityFiltered, phase, { landmarks: lm, timestampMs: now });
         if (custom) {
           const wasDownLike = phase === "down" || phase === "bottom";
@@ -4196,7 +4790,7 @@ class FitnessEngine {
         this.startedAt = now;
         this.lastRepAt = now;
       }
-      const formEval = ((_c = this.def) == null ? void 0 : _c.evaluateForm(lm, { ...secondary, knee: primaryAngle, primary: primaryAngle }, phase, {
+      const formEval = ((_j = this.def) == null ? void 0 : _j.evaluateForm(lm, { ...secondary, knee: primaryAngle, primary: primaryAngle }, phase, {
         velocity: this.velocityFiltered,
         direction,
         visibility: vis,
@@ -4214,7 +4808,7 @@ class FitnessEngine {
       this.currentForm = form;
       if (phase !== this.currentPhase) {
         this.currentPhase = phase;
-        (_d = this.onPhaseChange) == null ? void 0 : _d.call(this, phase, form);
+        (_k = this.onPhaseChange) == null ? void 0 : _k.call(this, phase, form);
       }
       if (didRep) {
         const repDuration = this.lastRepAt ? now - this.lastRepAt : this.startedAt ? now - this.startedAt : 0;
@@ -4226,6 +4820,7 @@ class FitnessEngine {
         this.reps += 1;
         this.lastRepAt = now;
         this.lastRepQuality = repQuality;
+        this.lastRepConfidence = evt.confidence ?? repQuality;
         this.qualityWindow.push(repQuality);
         if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
         this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
@@ -4239,18 +4834,18 @@ class FitnessEngine {
           cues: form.cues,
           velocity: this.velocityFiltered
         };
-        (_e = this.onRep) == null ? void 0 : _e.call(this, evt);
+        (_l = this.onRep) == null ? void 0 : _l.call(this, evt);
         try {
-          (_f = navigator.vibrate) == null ? void 0 : _f.call(navigator, 28);
+          (_m = navigator.vibrate) == null ? void 0 : _m.call(navigator, 28);
         } catch {
         }
         this.troughInRep = primaryAngle;
         this.peakInRep = primaryAngle;
         this.sm.consumeRep(now, primaryAngle);
         this.currentPhase = "ready";
-        (_g = this.onPhaseChange) == null ? void 0 : _g.call(this, "ready", form);
+        (_n = this.onPhaseChange) == null ? void 0 : _n.call(this, "ready", form);
       }
-      if ((_h = this.def) == null ? void 0 : _h.isHold) {
+      if ((_o = this.def) == null ? void 0 : _o.isHold) {
         this.qualityWindow.push(form.quality);
         if (this.qualityWindow.length > 8) this.qualityWindow.shift();
         this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
@@ -4266,6 +4861,7 @@ class FitnessEngine {
     if (!def) throw new Error(`Unknown exercise: ${cfg.exerciseId}`);
     this.cfg = { targetFps: 30, enableFiltering: true, ...cfg, exerciseId: nid };
     this.def = def;
+    this.analyzer = getAnalyzer(nid);
     const thresholds = { ...def.thresholds, ...cfg.thresholdsOverride ?? {} };
     this.sm = new HysteresisStateMachine(thresholds);
     this.landmarker = new PoseLandmarkerManager({}, cfg.enableFiltering !== false);
@@ -4286,6 +4882,7 @@ class FitnessEngine {
       elapsedActiveMs: this.elapsedActiveMs,
       avgQuality: this.avgQuality,
       lastRepQuality: this.lastRepQuality,
+      lastRepConfidence: this.lastRepConfidence,
       currentPhase: this.currentPhase,
       currentForm: this.currentForm,
       fps: Math.round(this.fpsEma),
@@ -4323,6 +4920,7 @@ class FitnessEngine {
     const def = getDefinition(nid);
     if (!def) return;
     this.def = def;
+    this.analyzer = getAnalyzer(nid);
     this.cfg.exerciseId = nid;
     const thresholds = { ...def.thresholds, ...this.cfg.thresholdsOverride ?? {} };
     this.sm = new HysteresisStateMachine(thresholds);
@@ -4348,6 +4946,7 @@ class FitnessEngine {
     this.qualityWindow = [];
     this.avgQuality = 0;
     this.lastRepQuality = null;
+    this.lastRepConfidence = null;
     this.currentPhase = "idle";
     this.currentForm = null;
     this.troughInRep = 180;
@@ -4719,6 +5318,51 @@ function PositioningMask({ exerciseId, landmarks, lang = "it", width = 640, heig
     ] })
   ] });
 }
+class LandmarkRecorder {
+  constructor() {
+    this.frames = [];
+    this.recording = false;
+    this.startT = 0;
+  }
+  start() {
+    this.frames = [];
+    this.recording = true;
+    this.startT = performance.now();
+  }
+  stop() {
+    this.recording = false;
+  }
+  isRecording() {
+    return this.recording;
+  }
+  push(landmarks) {
+    if (!this.recording) return;
+    this.frames.push({ t: Math.round(performance.now() - this.startT), landmarks: landmarks ? JSON.parse(JSON.stringify(landmarks)) : null });
+    if (this.frames.length > 1200) this.frames.shift();
+  }
+  exportJson() {
+    return JSON.stringify({ version: 1, created: (/* @__PURE__ */ new Date()).toISOString(), frames: this.frames }, null, 2);
+  }
+  download(filename = "landmarks.json") {
+    const blob = new Blob([this.exportJson()], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1e3);
+  }
+  load(json) {
+    const data = JSON.parse(json);
+    this.frames = data.frames ?? [];
+  }
+  *replay() {
+    for (const f2 of this.frames) yield f2;
+  }
+  get count() {
+    return this.frames.length;
+  }
+}
 Object.values(EXERCISE_DEFINITIONS).map((d) => ({
   id: d.id,
   label: d.label.it + (d.id !== d.label.it.toLowerCase() ? ` · ${d.label.en}` : "")
@@ -4730,7 +5374,7 @@ function fmtMs$1(ms) {
   return `${mm}:${ss}`;
 }
 function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, onDone }) {
-  var _a, _b, _c;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
   const videoRef = reactExports.useRef(null);
   const canvasRef = reactExports.useRef(null);
   const engineRef = reactExports.useRef(null);
@@ -4747,6 +5391,9 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
   const [speechOn, setSpeechOn] = reactExports.useState(false);
   const [coachingText, setCoachingText] = reactExports.useState("");
   const [alignOkSince, setAlignOkSince] = reactExports.useState(null);
+  const recorderRef = reactExports.useRef(null);
+  const [recCount, setRecCount] = reactExports.useState(0);
+  if (!recorderRef.current) recorderRef.current = new LandmarkRecorder();
   reactExports.useEffect(() => {
     speechRef.current = new SpeechCoach(speechOn, lang, 3e3);
     return () => {
@@ -4766,6 +5413,7 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     let raf = 0;
     let lastDrawAt = 0;
     const draw = (now) => {
+      var _a2;
       raf = requestAnimationFrame(draw);
       const canvas = canvasRef.current;
       const video = videoRef.current;
@@ -4783,6 +5431,10 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
       }
       const res = engine.getLastResult();
       const lm = (res == null ? void 0 : res.landmarks) ?? null;
+      if ((_a2 = recorderRef.current) == null ? void 0 : _a2.isRecording()) {
+        recorderRef.current.push(lm);
+        if (Math.random() < 0.05) setRecCount(recorderRef.current.count);
+      }
       if (showSkeleton && lm) {
         drawSkeleton(ctx, lm, W, H, { mirror: true, color: BLAZE, jointColor: PAPER });
       }
@@ -5020,12 +5672,17 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px 14px" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "EXERCISE:" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: exId.toUpperCase() }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "STATE:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "PHASE:" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: BLAZE }, children: metrics.currentPhase.toUpperCase() }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "REPS:" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
           reps,
           def && def.trackingSupported === false ? " (no AI)" : ""
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "REP CONF:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+          Math.round(metrics.lastRepConfidence ?? 0),
+          "%"
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "POSE:" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
@@ -5038,7 +5695,7 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: Math.round(metrics.fps) })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px 14px", marginTop: 4 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "ELBOW/KNEE:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "ANGLE:" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
           Math.round(lastForm.primaryAngle),
           "°"
@@ -5054,11 +5711,35 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
           (lastForm.visibility * 100).toFixed(0),
           "%"
-        ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "REQ:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: ((_a = def == null ? void 0 : def.requiredLandmarks) == null ? void 0 : _a.length) ?? 0 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: KHAKI }, children: "DET:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: ((_c = (_b = engineRef.current) == null ? void 0 : _b.getLastResult()) == null ? void 0 : _c.landmarks) ? "yes" : "no" })
       ] }),
       Object.keys(lastForm.secondaryAngles).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, marginTop: 4 }, children: [
         "secondary: ",
         Object.entries(lastForm.secondaryAngles).map(([k2, v]) => `${k2}:${Math.round(v)}°`).join(" · ")
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, marginTop: 6 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+          const r = recorderRef.current;
+          if (r.isRecording()) {
+            r.stop();
+            setRecCount(r.count);
+          } else {
+            r.start();
+            setRecCount(0);
+          }
+        }, style: { padding: "4px 8px", borderRadius: 6, border: `1px solid ${OLIVE}`, background: ((_d = recorderRef.current) == null ? void 0 : _d.isRecording()) ? BLAZE : INK, color: PAPER, fontSize: 10, cursor: "pointer" }, children: ((_e = recorderRef.current) == null ? void 0 : _e.isRecording()) ? `● REC ${recCount}` : "○ REC landmarks" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+          var _a2;
+          return (_a2 = recorderRef.current) == null ? void 0 : _a2.download(`landmarks-${exId}-${Date.now()}.json`);
+        }, disabled: (((_f = recorderRef.current) == null ? void 0 : _f.count) ?? 0) === 0, style: { padding: "4px 8px", borderRadius: 6, border: `1px solid ${OLIVE}`, background: INK, color: STEEL, fontSize: 10, cursor: "pointer", opacity: (((_g = recorderRef.current) == null ? void 0 : _g.count) ?? 0) === 0 ? 0.5 : 1 }, children: "↓ JSON" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, fontSize: 9, alignSelf: "center" }, children: [
+          recCount,
+          " frames · replay offline without video"
+        ] })
       ] })
     ] }),
     error ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: 12, padding: 14, borderRadius: 12, background: `${BLAZE}14`, border: `1px solid ${BLAZE}55`, color: BLAZE, fontSize: 12, lineHeight: 1.5 }, children: [
@@ -5090,13 +5771,13 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
           style: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scaleX(-1)", pointerEvents: "none" }
         }
       ),
-      reps === 0 && status === "running" && ((metrics == null ? void 0 : metrics.currentPhase) === "ready" || (metrics == null ? void 0 : metrics.currentPhase) === "idle" || !metrics) && /* @__PURE__ */ jsxRuntimeExports.jsx(PositioningMask, { exerciseId: exId, landmarks: ((_b = (_a = engineRef.current) == null ? void 0 : _a.getLastResult()) == null ? void 0 : _b.landmarks) ?? null, lang, width: 640, height: 480 }),
+      reps === 0 && status === "running" && ((metrics == null ? void 0 : metrics.currentPhase) === "ready" || (metrics == null ? void 0 : metrics.currentPhase) === "idle" || !metrics) && /* @__PURE__ */ jsxRuntimeExports.jsx(PositioningMask, { exerciseId: exId, landmarks: ((_i = (_h = engineRef.current) == null ? void 0 : _h.getLastResult()) == null ? void 0 : _i.landmarks) ?? null, lang, width: 640, height: 480 }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "absolute", bottom: 8, left: 8, right: 8, display: "flex", justifyContent: "space-between", gap: 6, pointerEvents: "none" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { background: `${INK}DD`, color: KHAKI, fontSize: 10, padding: "4px 8px", borderRadius: 20, border: `1px solid ${OLIVE}55` }, children: lastForm ? `∠ ${Math.round(lastForm.primaryAngle)}° · v ${Math.round(lastForm.velocity)}°/s` : "—" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { background: `${BLAZE}DD`, color: PAPER, fontSize: 10, padding: "4px 10px", borderRadius: 20 }, children: [
           (metrics == null ? void 0 : metrics.currentPhase) ?? "idle",
           " ",
-          ((_c = metrics == null ? void 0 : metrics.currentForm) == null ? void 0 : _c.direction) ? `· ${metrics.currentForm.direction}` : ""
+          ((_j = metrics == null ? void 0 : metrics.currentForm) == null ? void 0 : _j.direction) ? `· ${metrics.currentForm.direction}` : ""
         ] })
       ] }),
       status === "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, display: "grid", placeItems: "center", background: "rgba(0,0,0,0.42)", backdropFilter: "blur(2px)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -6828,7 +7509,7 @@ function getBellyMissions({ sessions, profile, waistHistory }) {
     return (counts[a.id] || 0) - (counts[b.id] || 0);
   }).map((p2) => ({ ...p2, _needsBelly: needsBelly }));
 }
-const BUILD_VERSION = "2.8.3 · e773ee6";
+const BUILD_VERSION = "2.8.3 · 993f837";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -6945,7 +7626,7 @@ function useT() {
 }
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-DMBH4vlI.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-EIQy5eGu.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -11207,7 +11888,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-7YfNm_cW.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-BDrmmooG.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
