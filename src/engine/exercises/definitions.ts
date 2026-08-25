@@ -90,6 +90,20 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
       { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_ankle, name: 'trunk', ideal: [160, 180] },
     ],
     thresholds: { downThreshold: 92, upThreshold: 150, hysteresis: 6, minDownMs: 200, minUpMs: 130, minRepsIntervalMs: 420 },
+    customTransition(angle, _vel, prev, ctx) {
+      const lm = ctx.landmarks as PoseLandmarks;
+      const knee = angle; // best side knee
+      const hipY = ((lm[LM.left_hip]?.y ?? 0.5) + (lm[LM.right_hip]?.y ?? 0.5)) / 2;
+      const kneeDown = knee < 108;
+      const hipDown = hipY > 0.64;
+      const kneeUp = knee > 148;
+      const hipUp = hipY < 0.60;
+      // frontal view: knee angle stays ~150 but hip drops → still counts via hip
+      if (prev === 'ready' && (kneeDown || hipDown)) return 'down';
+      if (prev === 'down' && (knee < 95 || hipY > 0.68)) return 'bottom';
+      if ((prev === 'down' || prev === 'bottom') && (kneeUp && hipUp)) return 'up';
+      return null;
+    },
     evaluateForm(lm, angles, phase, ctx) {
       const cues: string[] = [];
       let quality = 92;

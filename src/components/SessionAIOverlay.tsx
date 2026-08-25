@@ -16,6 +16,7 @@ import { CoachEngine } from '../engine/CoachEngine';
 import { drawSkeleton } from '../engine/overlay/poseConnections';
 import { exerciseFromPhase } from '../engine/MissionManager';
 import { tCoach, normalizeLang } from '../engine/LocalizationManager';
+import PositioningMask, { alignmentScore } from './PositioningMask';
 import type { EngineMetrics } from '../engine/types';
 
 type Lang = 'it' | 'en' | 'de' | 'fr';
@@ -49,6 +50,7 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
   const [metrics, setMetrics] = useState<EngineMetrics | null>(null);
   const [coachingText, setCoachingText] = useState<string>('');
   const [reps, setReps] = useState(0);
+  const [alignOkSince, setAlignOkSince] = useState<number | null>(null);
 
   const missionEx = exerciseFromPhase(phase, lang as any, levelKey);
   const targetReps = missionEx?.targetReps ?? phase?.reps ?? null;
@@ -167,10 +169,19 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
       try { if (video.readyState >= 2) ctx.drawImage(video, 0, 0, W, H); } catch {}
       const res = eng.getLastResult()?.landmarks;
       if (res) drawSkeleton(ctx, res, W, H, { mirror: true, color: BLAZE, jointColor: PAPER });
+      // alignment stable tracking for mask fade
+      if (res && reps === 0 && (metrics?.currentPhase === 'ready' || metrics?.currentPhase === 'idle')) {
+        const s = alignmentScore(res, exerciseId);
+        if (s > 0.68) {
+          if (alignOkSince == null) setAlignOkSince(performance.now());
+        } else {
+          if (alignOkSince != null) setAlignOkSince(null);
+        }
+      }
     };
     raf = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [reps, metrics?.currentPhase, exerciseId, alignOkSince]);
 
   const normLang = normalizeLang(lang as any);
   const formVal = Math.round(metrics?.avgQuality ?? metrics?.currentForm?.quality ?? 0);
@@ -211,6 +222,9 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
       <div style={{ position: 'relative', width: '100%', aspectRatio: '4/3', background: '#050608', marginTop: coachingText ? 8 : 0 }}>
         <video ref={videoRef} autoPlay muted playsInline webkit-playsinline="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)', background: '#000' }} />
         <canvas ref={canvasRef} width={640} height={480} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)', pointerEvents: 'none' }} />
+        {reps === 0 && status === 'running' && (metrics?.currentPhase === 'ready' || metrics?.currentPhase === 'idle' || !metrics) && (
+          <PositioningMask exerciseId={exerciseId} landmarks={engineRef.current?.getLastResult()?.landmarks ?? null} lang={lang} width={640} height={480} />
+        )}
         {status === 'loading' && (
           <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'rgba(0,0,0,0.45)', color: PAPER }}>
             <div className="o40-mono" style={{ fontSize: 10, color: KHAKI }}>AI Coach loading…</div>
