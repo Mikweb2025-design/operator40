@@ -593,35 +593,30 @@ export default function App() {
   }, [largeText]);
   // ---- AI Coach enabled persist ----
   useEffect(() => { try { localStorage.setItem('o40_aiCoach', aiCoachEnabled ? '1' : '0'); } catch {} }, [aiCoachEnabled]);
-  // ---- PWA update checker — mostra banner quando sw.js nuovo disponibile ----
+  // ---- PWA update checker — ripristina comportamento pre-2h: update automatico su focus/visibility ----
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [updateVersion, setUpdateVersion] = useState(null);
   useEffect(() => {
     let cancelled = false;
     async function checkSwUpdate() {
       try {
-        const res = await fetch('./sw.js', { cache: 'no-store' });
-        const text = await res.text();
-        const m = text.match(/o40-v[0-9a-f]{8}/);
-        if (!m) return;
-        const remote = m[0];
-        const local = (() => { try { return BUILD_VERSION.split('·')[1]?.trim(); } catch { return null; } })();
-        // BUILD_VERSION è "2.8.0 · abc1234", estraiamo hash; se remote diverso da local, c'è update
-        // In alternativa confronta direttamente con current sw.js cache name se disponibile
-        if (remote && !BUILD_VERSION.includes(remote) && !cancelled) {
-          // verifica che non sia già la versione in esecuzione (evita falso positivo su dev)
-          if (remote !== `o40-v${local}`) {
-            setUpdateVersion(remote);
-            setUpdateAvailable(true);
-          }
+        if (!('serviceWorker' in navigator)) return;
+        const reg = await navigator.serviceWorker.getRegistration();
+        if (!reg) return;
+        await reg.update();
+        // Se c'è un SW in waiting/installing, c'è davvero un update (metodo affidabile)
+        if ((reg.waiting || reg.installing) && !cancelled) {
+          const v = await fetch('./sw.js', { cache: 'no-store' }).then(r => r.text()).then(t => t.match(/o40-v[0-9a-f]{8}/)?.[0]).catch(() => null);
+          if (v) setUpdateVersion(v);
+          setUpdateAvailable(true);
         }
       } catch {}
     }
     checkSwUpdate();
     const id = setInterval(checkSwUpdate, 30000);
-    function onFocus() { checkSwUpdate(); if (navigator.serviceWorker) navigator.serviceWorker.getRegistration().then(r => r && r.update()); }
+    function onFocus() { checkSwUpdate(); }
     window.addEventListener('focus', onFocus);
-    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { checkSwUpdate(); if (navigator.serviceWorker) navigator.serviceWorker.getRegistration().then(r => r && r.update()); } });
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkSwUpdate(); });
     return () => { cancelled = true; clearInterval(id); window.removeEventListener('focus', onFocus); };
   }, []);
 
