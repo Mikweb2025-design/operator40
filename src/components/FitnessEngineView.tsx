@@ -12,6 +12,7 @@ import { SpeechCoach } from '../engine/coach/SpeechCoach';
 import { drawSkeleton, drawAngleBadge } from '../engine/overlay/poseConnections';
 import { EXERCISE_DEFINITIONS, normalizeExerciseId, getDefinition } from '../engine/exercises/definitions';
 import { localizedCue } from '../engine/exercises/definitions';
+import PositioningMask, { alignmentScore } from './PositioningMask';
 import type { EngineMetrics, RepEvent, FormMetrics } from '../engine/types';
 
 type Lang = 'it' | 'en' | 'de';
@@ -53,6 +54,7 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [speechOn, setSpeechOn] = useState(false);
   const [coachingText, setCoachingText] = useState<string>('');
+  const [alignOkSince, setAlignOkSince] = useState<number | null>(null);
 
   // init speech
   useEffect(() => {
@@ -89,6 +91,15 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
       const lm = res?.landmarks ?? null;
       if (showSkeleton && lm) {
         drawSkeleton(ctx, lm, W, H, { mirror: true, color: BLAZE, jointColor: PAPER });
+      }
+      // alignment tracking for mask fade (when reps 0 and ready/idle)
+      if (lm && reps === 0 && (metrics?.currentPhase === 'ready' || metrics?.currentPhase === 'idle')) {
+        const s = alignmentScore(lm, exId);
+        if (s > 0.68) {
+          if (alignOkSince == null) setAlignOkSince(performance.now());
+        } else {
+          if (alignOkSince != null) setAlignOkSince(null);
+        }
       }
       // HUD badges: angle + phase
       if (lastForm) {
@@ -308,6 +319,9 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
             height={480}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)', pointerEvents: 'none' }}
           />
+          {reps === 0 && status === 'running' && (metrics?.currentPhase === 'ready' || metrics?.currentPhase === 'idle' || !metrics) && (
+            <PositioningMask exerciseId={exId} landmarks={engineRef.current?.getLastResult()?.landmarks ?? null} lang={lang} width={640} height={480} />
+          )}
           {/* bottom chips */}
           <div style={{ position: 'absolute', bottom: 8, left: 8, right: 8, display: 'flex', justifyContent: 'space-between', gap: 6, pointerEvents: 'none' }}>
             <span style={{ background: `${INK}DD`, color: KHAKI, fontSize: 10, padding: '4px 8px', borderRadius: 20, border: `1px solid ${OLIVE}55` }}>
