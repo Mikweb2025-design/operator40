@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.7.2';
+export const CHANGELOG_VERSION = '2.8.0';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,10 +22,10 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'FIX v2.7.2',
-    title: 'AI Fitness Engine · Rilevamento stabilizzato',
-    subtitle: 'v2.7.2 · 25-30 FPS · Auto-calibrazione · 100% offline',
-    intro: 'Fix rilevamento: ora conta anche mezze ripetizioni over-40, riconosce inizio/fine esercizio automatico, feedback “Scendi ancora / Braccia completamente distese” in tempo reale — nessun video sul server.',
+    badge: 'NUOVO v2.8',
+    title: 'AI Fitness Coach automatico',
+    subtitle: 'v2.8 · Riconosce la missione → coach dal vivo · 100% offline',
+    intro: 'Ogni missione ora si auto-configura: l’app legge l’esercizio (es. “20 push-up”), carica l’algoritmo giusto, conta reps, cronometra, valuta forma 0-100 e ti corregge a voce nella tua lingua — senza toccare nulla.',
     groups: [
       {
         icon: '🔧',

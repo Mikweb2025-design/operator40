@@ -26,6 +26,7 @@ import BeforeAfterSlider from './components/BeforeAfterSlider.jsx';
 import PoseCounter from './components/PoseCounter.jsx';
 import FitnessEngineView from './components/FitnessEngineView.tsx';
 import ChangelogModal, { CHANGELOG_STORAGE_KEY } from './components/ChangelogModal.tsx';
+import SessionAIOverlay from './components/SessionAIOverlay.tsx';
 import { getBellyLevelForTest, shouldProgressBellyLevel } from './utils/bellyTest.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
@@ -385,6 +386,7 @@ export default function App() {
   const [showBellyTest, setShowBellyTest] = useState(false);
   const [showPose, setShowPose] = useState(null);
   const [showChangelog, setShowChangelog] = useState(false);
+  const [aiCoachEnabled, setAiCoachEnabled] = useState(() => { try { return localStorage.getItem('o40_aiCoach') !== '0'; } catch { return true; } });
 
   // hydrate photos from IndexedDB (migration from localStorage, async)
   useEffect(() => {
@@ -589,6 +591,8 @@ export default function App() {
     document.documentElement.style.fontSize = largeText ? '18px' : '';
     try { localStorage.setItem('o40_largeText', largeText ? '1' : '0'); } catch {}
   }, [largeText]);
+  // ---- AI Coach enabled persist ----
+  useEffect(() => { try { localStorage.setItem('o40_aiCoach', aiCoachEnabled ? '1' : '0'); } catch {} }, [aiCoachEnabled]);
 
   // ---- motivational music: plays while on, adapts volume to the phase + autoplay playlist ----
   useEffect(() => {
@@ -626,12 +630,14 @@ export default function App() {
     return () => musicSetOnTrackChange(null);
   }, [profile]);
 
-  // ---- session countdown (pausa su reps: avanza solo su tap FATTO) ----
+  // ---- session countdown (pausa su reps: avanza solo su tap FATTO) — AI Coach gestisce work quando attivo ----
   useEffect(() => {
     if (screen !== 'session' || paused) return;
     const cur = seq[phaseIdx];
     if (!cur) return;
-    if (cur.mode === 'reps') return; // reps: manuale
+    // AI Coach: per work phases gestisce automaticamente reps/timer — disabilita countdown manuale
+    if (cur.type === 'work' && aiCoachEnabled) return;
+    if (cur.mode === 'reps') return; // reps manuale senza AI
     if (secondsLeft <= 0) {
       advancePhase();
       return;
@@ -639,7 +645,7 @@ export default function App() {
     const t = setTimeout(() => setSecondsLeft(s => s - 1), 1000);
     return () => clearTimeout(t);
     // eslint-disable-next-line
-  }, [screen, paused, secondsLeft, phaseIdx, seq]);
+  }, [screen, paused, secondsLeft, phaseIdx, seq, aiCoachEnabled]);
 
   function announcePhase(phase) {
     if (!soundRef.current) return;
@@ -1220,6 +1226,8 @@ export default function App() {
             program={activeProgram} profile={profile} seq={seq} phaseIdx={phaseIdx} secondsLeft={secondsLeft}
             paused={paused} setPaused={setPaused} soundOn={soundOn} setSoundOn={setSoundOn}
             musicOn={musicOn} onToggleMusic={toggleMusic}
+            aiEnabled={aiCoachEnabled} onToggleAi={() => setAiCoachEnabled(v => !v)}
+            lang={lang}
             onSkip={advancePhase} onPrev={goPrev} exitConfirm={exitConfirm} setExitConfirm={setExitConfirm}
             onExit={() => { setExitConfirm(false); setScreen('home'); }}
           />
@@ -2570,13 +2578,15 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
 }
 
 /* ================= SESSION SCREEN ================= */
-function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, setPaused, soundOn, setSoundOn, musicOn, onToggleMusic, onSkip, onPrev, exitConfirm, setExitConfirm, onExit }) {
-  const { lang, t } = useT();
+function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, setPaused, soundOn, setSoundOn, musicOn, onToggleMusic, aiEnabled, onToggleAi, lang: langProp, onSkip, onPrev, exitConfirm, setExitConfirm, onExit }) {
+  const { lang: ctxLang, t } = useT();
+  const lang = langProp ?? ctxLang;
   const phase = seq[phaseIdx];
   const next = seq[phaseIdx + 1];
   const ex = phase.exerciseId ? EXERCISES[phase.exerciseId] : null;
   const nextEx = next && next.exerciseId ? EXERCISES[next.exerciseId] : null;
   const isRepsWork = phase.type === 'work' && phase.mode === 'reps';
+  const isAiWork = aiEnabled && phase.type === 'work' && !!phase.exerciseId;
   const progress = isRepsWork ? 1 : (phase.duration ? 1 - secondsLeft / phase.duration : 0);
   useEffect(() => { if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === 'work' && !isRepsWork) speak(String(secondsLeft), lang, LOCALES); }, [secondsLeft, phase.type, soundOn, profile, isRepsWork]);
   useEffect(() => { requestWakeLock(); function onVis(){ if (!document.hidden) requestWakeLock(); } document.addEventListener('visibilitychange', onVis); return () => { document.removeEventListener('visibilitychange', onVis); releaseWakeLock(); }; }, []);
@@ -2597,6 +2607,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
         onBack={() => setExitConfirm(true)}
         right={<div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           {musicOn && <EqBars tone={ringColor} bars={4} speed={phase.type === 'work' ? 1.4 : phase.type === 'rest' ? 0.5 : 0.8} style={{ marginRight: 6, height: 12 }} />}
+          <button onClick={onToggleAi} title={aiEnabled ? 'AI Coach ON' : 'AI Coach OFF'} style={{ ...btnIcon, border: `1px solid ${aiEnabled ? BLAZE : 'transparent'}`, borderRadius: 8, background: aiEnabled ? `${BLAZE}22` : 'transparent' }}>{aiEnabled ? <Eye size={16} color={BLAZE} /> : <Eye size={16} color={STEEL} />}</button>
           <button onClick={onToggleMusic} style={btnIcon} aria-label={t('ses.music')}>{musicOn ? <Music2 size={18} color={BLAZE} /> : <HeadphoneOff size={18} color={STEEL} />}</button>
           <button onClick={() => setSoundOn(!soundOn)} style={btnIcon}>{soundOn ? <Volume2 size={18} color={PAPER} /> : <VolumeX size={18} color={STEEL} />}</button>
         </div>}
@@ -2613,37 +2624,56 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, padding: 16 }}>
         <div key={phaseIdx} className={`o40-mono o40-expand ${phase.type === 'work' ? 'o40-gradtext' : ''}`} style={{ color: ringColor, fontSize: 13, letterSpacing: '0.1em' }}>{phaseLabel}</div>
 
-        <div style={{ position: 'relative', width: 240, height: 240 }}>
-          <div style={{
-            position: 'absolute', inset: -18, borderRadius: '50%',
-            background: `radial-gradient(circle, ${ringColor}30 0%, transparent 70%)`,
-            transition: 'background 0.3s ease',
-            animation: phase.type === 'rest' ? 'restBreath 2.4s ease-in-out infinite' : 'none',
-          }} />
-          {phase.type === 'work' && (
-            <div style={{ position: 'absolute', inset: -10, borderRadius: '50%', border: `2px solid ${ringColor}44`, animation: 'ringPulse 1.5s ease-out infinite' }} />
-          )}
-          <ProgressRing progress={progress} color={ringColor} />
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {ex ? (
-              <div style={{ width: 150, height: 150 }}><ExerciseMedia exerciseId={phase.exerciseId} pose={ex.pose} color={PAPER} rounded={14} /></div>
-            ) : (
-              <div className="o40-display" style={{ color: PAPER, fontSize: 44 }}>{formatTime(secondsLeft)}</div>
-            )}
+        {isAiWork ? (
+          <div style={{ width: '100%', maxWidth: 420 }}>
+            <SessionAIOverlay
+              key={`${phase.exerciseId}-${phaseIdx}`}
+              phase={phase}
+              lang={lang}
+              levelKey={profile?.level ?? 'combattente'}
+              aiEnabled={aiEnabled}
+              onCompletePhase={() => { if (soundOn) playBeep(880); if (vibrate) vibrate([30]); onSkip(); }}
+              onRep={() => {}}
+            />
+            <div className="o40-mono" style={{ color: STEEL, fontSize: 9, textAlign: 'center', marginTop: 6 }}>
+              {aiEnabled ? (lang==='it' ? 'AI Coach attivo — conta automatico, voce nella tua lingua' : 'AI Coach on — auto-count, voice in your language') : ''}
+            </div>
           </div>
-        </div>
-        {ex && (
-          <div style={{ textAlign: 'center' }}>
-            {isRepsWork ? (
-              <>
-                <div className="o40-display" style={{ color: PAPER, fontSize: 48, lineHeight: 1 }}>×{phase.reps}</div>
-                <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.08em' }}>{lang==='it'?'RIPETIZIONI':'REPS'}</div>
-                <div style={{ marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }}>{lang==='it'?'Tocca FATTO quando hai finito':'Tap DONE when finished'}</div>
-              </>
-            ) : (
-              <div className="o40-display" style={{ color: PAPER, fontSize: 40 }}>{formatTime(secondsLeft)}</div>
+        ) : (
+          <>
+            <div style={{ position: 'relative', width: 240, height: 240 }}>
+              <div style={{
+                position: 'absolute', inset: -18, borderRadius: '50%',
+                background: `radial-gradient(circle, ${ringColor}30 0%, transparent 70%)`,
+                transition: 'background 0.3s ease',
+                animation: phase.type === 'rest' ? 'restBreath 2.4s ease-in-out infinite' : 'none',
+              }} />
+              {phase.type === 'work' && (
+                <div style={{ position: 'absolute', inset: -10, borderRadius: '50%', border: `2px solid ${ringColor}44`, animation: 'ringPulse 1.5s ease-out infinite' }} />
+              )}
+              <ProgressRing progress={progress} color={ringColor} />
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {ex ? (
+                  <div style={{ width: 150, height: 150 }}><ExerciseMedia exerciseId={phase.exerciseId} pose={ex.pose} color={PAPER} rounded={14} /></div>
+                ) : (
+                  <div className="o40-display" style={{ color: PAPER, fontSize: 44 }}>{formatTime(secondsLeft)}</div>
+                )}
+              </div>
+            </div>
+            {ex && (
+              <div style={{ textAlign: 'center' }}>
+                {isRepsWork ? (
+                  <>
+                    <div className="o40-display" style={{ color: PAPER, fontSize: 48, lineHeight: 1 }}>×{phase.reps}</div>
+                    <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.08em' }}>{lang==='it'?'RIPETIZIONI':'REPS'}</div>
+                    <div style={{ marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }}>{lang==='it'?'Tocca FATTO quando hai finito':'Tap DONE when finished'}</div>
+                  </>
+                ) : (
+                  <div className="o40-display" style={{ color: PAPER, fontSize: 40 }}>{formatTime(secondsLeft)}</div>
+                )}
+              </div>
             )}
-          </div>
+          </>
         )}
         {ex && (
           <div style={{ textAlign: 'center', maxWidth: 330 }}>
@@ -2696,10 +2726,25 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
         <button onClick={onPrev} disabled={phaseIdx === 0} style={{ ...pillBtn, opacity: phaseIdx === 0 ? 0.4 : 1 }}>
           <ChevronLeft size={15} /> PREV
         </button>
-        <button onClick={onSkip} style={{ ...pillBtn, background: isRepsWork ? BLAZE : pillBtn.background, color: isRepsWork ? PAPER : undefined, fontWeight: isRepsWork ? 700 : undefined, flex: isRepsWork ? 1.6 : 1 }}>
-          {isRepsWork ? (lang==='it' ? 'FATTO ✓' : 'DONE ✓') : 'NEXT'} {isRepsWork ? <Check size={16} /> : <SkipForward size={15} />}
+        <button
+          onClick={onSkip}
+          style={{
+            ...pillBtn,
+            background: isAiWork ? `${OLIVE}88` : (isRepsWork ? BLAZE : pillBtn.background),
+            color: isAiWork ? KHAKI : (isRepsWork ? PAPER : undefined),
+            fontWeight: isRepsWork || isAiWork ? 700 : undefined, flex: isRepsWork || isAiWork ? 1.6 : 1,
+            opacity: isAiWork ? 0.9 : 1,
+          }}
+          title={isAiWork ? (lang==='it' ? 'AI conta auto — puoi saltare manualmente' : 'AI auto-count — you can skip manually') : undefined}
+        >
+          {isAiWork ? (lang==='it' ? 'SALTA →' : 'SKIP →') : (isRepsWork ? (lang==='it' ? 'FATTO ✓' : 'DONE ✓') : 'NEXT')} {isAiWork ? <SkipForward size={15} /> : (isRepsWork ? <Check size={16} /> : <SkipForward size={15} />)}
         </button>
       </div>
+      {isAiWork && (
+        <div className="o40-mono" style={{ color: STEEL, fontSize: 9, textAlign: 'center', paddingBottom: 8 }}>
+          {lang==='it' ? 'AI avanzerà da solo al target · disattiva con 👁️' : 'AI will auto-advance at target · disable with 👁️'}
+        </div>
+      )}
 
       {exitConfirm && (
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,29,22,0.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
