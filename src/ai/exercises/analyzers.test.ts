@@ -32,10 +32,10 @@ describe('ExerciseRegistry + Analyzers', ()=>{
     }
   });
 
-  it('unsupported exercises return null (trackingSupported false)', ()=>{
-    const rest = ['mountainclimber','jumpingjack','bicyclecrunch','heeltap','burpee','affondo','skater','ginocchiaalte','superman','ponte','russiantwist','wallsit','sideplank','plankjack'];
-    for (const id of rest){
-      expect(getAnalyzer(id)).toBeNull();
+  it('all 22 exercises now supported (no generic fallback)', ()=>{
+    const all = ['pushup','squat','crunch','plank','legraise','flutterkick','deadbug','vup','mountainclimber','jumpingjack','bicyclecrunch','heeltap','burpee','affondo','skater','ginocchiaalte','superman','ponte','russiantwist','wallsit','sideplank','plankjack'];
+    for (const id of all){
+      expect(getAnalyzer(id), `missing analyzer ${id}`).not.toBeNull();
     }
   });
 
