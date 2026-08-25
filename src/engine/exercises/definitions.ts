@@ -89,18 +89,17 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
       { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_knee, name: 'hipFlex', ideal: [40, 90] },
       { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_ankle, name: 'trunk', ideal: [160, 180] },
     ],
-    thresholds: { downThreshold: 92, upThreshold: 150, hysteresis: 6, minDownMs: 200, minUpMs: 130, minRepsIntervalMs: 420 },
+    thresholds: { downThreshold: 108, upThreshold: 148, hysteresis: 5, minDownMs: 160, minUpMs: 110, minRepsIntervalMs: 380 },
     customTransition(angle, _vel, prev, ctx) {
       const lm = ctx.landmarks as PoseLandmarks;
-      const knee = angle; // best side knee
+      const knee = angle;
       const hipY = ((lm[LM.left_hip]?.y ?? 0.5) + (lm[LM.right_hip]?.y ?? 0.5)) / 2;
-      const kneeDown = knee < 108;
-      const hipDown = hipY > 0.64;
-      const kneeUp = knee > 148;
+      const kneeDown = knee < 115; // più sensibile: basta 115° (prima 108°)
+      const hipDown = hipY > 0.61; // più sensibile: prima 0.64
+      const kneeUp = knee > 145;
       const hipUp = hipY < 0.60;
-      // frontal view: knee angle stays ~150 but hip drops → still counts via hip
       if (prev === 'ready' && (kneeDown || hipDown)) return 'down';
-      if (prev === 'down' && (knee < 95 || hipY > 0.68)) return 'bottom';
+      if (prev === 'down' && (knee < 105 || hipY > 0.65)) return 'bottom';
       if ((prev === 'down' || prev === 'bottom') && (kneeUp && hipUp)) return 'up';
       return null;
     },
@@ -135,7 +134,7 @@ export const EXERCISE_DEFINITIONS: Record<string, ExerciseDefinition> = {
       { a: LM.left_shoulder, b: LM.left_hip, c: LM.left_ankle, name: 'plankLine', ideal: [160, 185] },
       { a: LM.left_hip, b: LM.left_shoulder, c: LM.left_elbow, name: 'shoulder', ideal: [20, 70] },
     ],
-    thresholds: { downThreshold: 95, upThreshold: 148, hysteresis: 7, minDownMs: 190, minUpMs: 130, minRepsIntervalMs: 380 },
+    thresholds: { downThreshold: 102, upThreshold: 145, hysteresis: 6, minDownMs: 160, minUpMs: 110, minRepsIntervalMs: 340 },
     evaluateForm(lm, angles, phase, ctx) {
       const cues: string[] = [];
       let q = 90;

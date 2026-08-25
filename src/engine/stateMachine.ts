@@ -111,8 +111,8 @@ export class HysteresisStateMachine {
         // stay up until we count rep on return to ready zone with timing guard
         // we count rep when we are solidly in up band
         if (isUpBand && dtSince >= (this.cfg.minUpMs ?? 100)) {
-          // did rep if we had a valid down excursion
-          const hasValidRom = this.state.minAngleInRep <= (downThreshold + 8);
+          // sensibile: basta 60% del ROM per contare (permette mezze ripetizioni over-40)
+          const hasValidRom = this.state.minAngleInRep <= (downThreshold + 18);
           const timeOk = dtSince >= minRepsIntervalMs || this.state.lastTransitionAt === 0;
           // allow rep completion via explicit gate: we were down/bottom before
           if (hasValidRom && timeOk) {
