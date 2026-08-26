@@ -63,3 +63,15 @@ Esercizi dove sinistra≠destra è il **segnale stesso**, non un errore da corre
 - Test su device reale (iPhone/Android) in side-view con occlusione volontaria di un lato, per confermare che il conteggio rep non scatti più.
 - Eventuale estensione dello stesso principio (visibility-aware + isteresi) alle metriche a distanza di `russianTwist.ts`/`heelTap.ts`/`bicycleCrunch.ts` — richiede un helper diverso (non angolo, distanza normalizzata).
 - Sync del dist aggiornato sul server live (`curl raw` da `deploy-tmp`, vedi `scripts/deploy.mjs --remote`).
+
+## Aggiornamento — framing troppo largo (fotocamera frontale, stesso giorno)
+
+**Problema segnalato dall'utente:** per far entrare tutto il corpo nell'inquadratura della fotocamera frontale (FOV stretta) bisogna allontanarsi troppo dal telefono.
+
+**Causa:** `requiredLandmarks` di `squat`/`affondo`/`wallsit`/`pushup` includeva le caviglie (27/28). `PoseQuality.evaluatePoseQuality` usa quell'elenco per decidere se mettere in pausa il tracking (`shouldPauseAnalysis`/`requiredVisible`) — se i piedi escono anche di poco dall'inquadratura (framing testa-a-stinco, tipico con la selfie-camera), la visibilità delle caviglie crolla e l'app blocca/segnala malposizionamento, spingendo l'utente ad allontanarsi.
+
+**Fix:** rimosse le caviglie da `requiredLandmarks` in questi 4 analyzer (rimangono comunque usate nel calcolo dell'angolo ginocchio/linea corpo quando visibili — MediaPipe stima comunque una posizione plausibile anche quando il piede è appena fuori dal crop, grazie al prior full-body del modello; qui si è tolto solo il *gate* che bloccava la sessione, non la geometria). Lasciati invariati `skater`/`jumpingJack`/`burpee`, dove la posizione della caviglia è il segnale primario (spread laterale dei piedi) e non un semplice "nice to have" — lì il vincolo di framing è reale e non eliminabile via gating.
+
+Non toccato: nessuna soglia di fase/conteggio rep, nessun cambio di fotocamera (restava `facingMode: 'user'`, front-camera).
+
+Verifica: `npm run test` 24/24, `npm run build`, `npm run verify` OK.

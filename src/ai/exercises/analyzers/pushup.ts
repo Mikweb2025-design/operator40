@@ -5,7 +5,9 @@ import { LM, clamp } from '../../pose/Geometry';
 
 export class PushupAnalyzer extends ExerciseAnalyzer {
   readonly id = 'pushup';
-  readonly requiredLandmarks = [11,12,13,14,15,16,23,24,27,28];
+  // Ankles (27,28) not required for gating — the rep signal is the elbow angle (shoulder-elbow-wrist);
+  // ankle/hip only feed the body-line form check, still used when visible. See squat.ts comment.
+  readonly requiredLandmarks = [11,12,13,14,15,16,23,24];
   protected minRepIntervalMs = 320;
   protected minPhaseMs = 65;
   private velFilt=0; private lastAngle=180; private lastT=0;

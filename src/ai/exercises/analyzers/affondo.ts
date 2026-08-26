@@ -3,7 +3,8 @@ import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
 export class AffondoAnalyzer extends ExerciseAnalyzer{
-  readonly id='affondo'; readonly requiredLandmarks=[23,24,25,26,27,28,11,12];
+  // Ankles (27,28) not required for gating — see squat.ts comment (narrow phone FOV, feet often cropped).
+  readonly id='affondo'; readonly requiredLandmarks=[23,24,25,26,11,12];
   protected minRepIntervalMs = 350;
   protected minPhaseMs = 70;
   private velFilt=0; private lastA=160;

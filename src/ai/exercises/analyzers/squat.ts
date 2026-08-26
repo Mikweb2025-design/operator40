@@ -3,7 +3,10 @@ import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, clamp } from '../../pose/Geometry';
 export class SquatAnalyzer extends ExerciseAnalyzer{
-  readonly id='squat'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
+  // Ankles (27,28) intentionally NOT required: at home users often frame head-to-shin on a
+  // phone (narrow selfie-camera FOV) and feet fall just outside the crop. The knee angle
+  // still uses ankle coordinates when available; we just don't gate/pause on their visibility.
+  readonly id='squat'; readonly requiredLandmarks=[11,12,23,24,25,26];
   protected minRepIntervalMs = 340;
   protected minPhaseMs = 70;
   private velFilt=0; private lastA=180;

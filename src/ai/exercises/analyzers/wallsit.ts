@@ -3,7 +3,8 @@ import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, clamp } from '../../pose/Geometry';
 export class WallsitAnalyzer extends ExerciseAnalyzer{
-  readonly id='wallsit'; readonly requiredLandmarks=[23,24,25,26,27,28,11,12];
+  // Ankles (27,28) not required for gating — see squat.ts comment (narrow phone FOV, feet often cropped).
+  readonly id='wallsit'; readonly requiredLandmarks=[23,24,25,26,11,12];
   private goodSince:number|null=null; private graceMs=500;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
     const k=this.bilateralJointAngle('knee', lm, [LM.left_hip,LM.left_knee,LM.left_ankle], [LM.right_hip,LM.right_knee,LM.right_ankle]);
