@@ -75,3 +75,22 @@ Esercizi dove sinistra≠destra è il **segnale stesso**, non un errore da corre
 Non toccato: nessuna soglia di fase/conteggio rep, nessun cambio di fotocamera (restava `facingMode: 'user'`, front-camera).
 
 Verifica: `npm run test` 24/24, `npm run build`, `npm run verify` OK.
+
+## Aggiornamento 2 — "resta ancora in idle" dopo il deploy (stesso giorno)
+
+Sincronizzato il server live via SSH (utente/operatore) allo stato `af20ab0` — verificato lato client (`sw.js` → `CACHE = 'o40-v90615e0b'`). L'utente segnala che il problema persiste identico.
+
+**Causa reale, più a monte del fix precedente:**
+
+1. [`FitnessEngine.ts`](../src/engine/FitnessEngine.ts) calcolava il `poseQuality` mostrato in UI (badge POSE%, messaggio "allontanati") usando **sempre** la lista generica `def.requiredLandmarks` (piena, con caviglie) invece della lista specifica — già ridotta — dell'analyzer attivo. Il gate che conta le rep era stato corretto, ma il numero mostrato all'utente no: restava basso e fuorviante anche quando il tracking funzionava.
+2. In [`SessionAIOverlay.tsx`](../src/components/SessionAIOverlay.tsx) e [`FitnessEngineView.tsx`](../src/components/FitnessEngineView.tsx) il banner con l'istruzione ("Allontanati così vedo tutto il corpo") aveva la condizione **invertita**: `poseQuality < 42 && currentPhase !== 'idle'` — si nascondeva esattamente quando `currentPhase === 'idle'`, cioè nello stato in cui l'utente più aveva bisogno di sapere cosa fare. Restava a guardare un badge "idle" senza alcuna spiegazione.
+3. Altri 6 analyzer a terra (`legRaise`, `deadBug`, `flutterKick`, `mountainClimber`, `vUp`, `ponte`) avevano ancora le caviglie in `requiredLandmarks` pur usandole solo in un check di form secondario (mai nel segnale principale della rep) — stesso meccanismo di blocco già risolto ieri per gli esercizi in piedi, ma non estesso a questi. `flutterKick` in particolare richiedeva le caviglie senza usarle in nessuna formula — puro overhead di gating.
+
+**Fix:**
+- `FitnessEngine.ts`: il calcolo di `poseQuality`/badge ora usa `this.analyzer.requiredLandmarks` quando esiste un analyzer dedicato (sempre il caso per i 22 esercizi), coerente col gate reale.
+- Rimossa la condizione `currentPhase !== 'idle'` dal banner guida in entrambe le view.
+- Rimosse le caviglie da `requiredLandmarks` in `legRaise`/`deadBug`/`flutterKick`/`mountainClimber`/`vUp`/`ponte`. Lasciati invariati `plank`/`sideplank` (la linea spalla-anca-caviglia È il controllo, non rimovibile) e `plankJack`/`skater`/`jumpingJack`/`burpee` (lo spread caviglie È il segnale primario).
+
+Verifica: `npm run test` 24/24, `npm run build`, `npm run verify` OK.
+
+Commit: [`134cc49`](https://github.com/Mikweb2025-design/operator40/commit/134cc49) su `main`, [`730dd0f`](https://github.com/Mikweb2025-design/operator40/commit/730dd0f) su `deploy-tmp` (dist `o40-vb241e378`). **Non ancora sincronizzato sul server live** — richiede lo stesso passaggio SSH di prima.
