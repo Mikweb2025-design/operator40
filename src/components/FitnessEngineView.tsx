@@ -6,7 +6,7 @@
  * - Speech coach optional, skeleton overlay toggle, exercise switcher
  */
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { INK, OLIVE, KHAKI, PAPER, STEEL, BLAZE } from '../constants/theme.js';
+import { INK, INK_2, OLIVE, KHAKI, PAPER, STEEL, BLAZE } from '../constants/theme.js';
 import { FitnessEngine } from '../engine/FitnessEngine';
 import { SpeechCoach } from '../engine/coach/SpeechCoach';
 import { drawSkeleton, drawAngleBadge } from '../engine/overlay/poseConnections';
