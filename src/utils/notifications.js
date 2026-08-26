@@ -29,7 +29,7 @@ export function getReminder() {
 export function checkAndFireReminder(t) {
   const r = getReminder();
   if (!r || !r.enabled) return false;
-  if (Notification.permission !== 'granted') return false;
+  if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return false;
   const now = new Date();
   if (now.getHours() !== r.hour || now.getMinutes() !== r.minute) return false;
   // Once per day guard
@@ -48,7 +48,7 @@ export function checkAndFireReminder(t) {
 }
 
 export function fireTestNotification(t) {
-  if (Notification.permission !== 'granted') return false;
+  if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return false;
   try {
     new Notification('Operator 40 — Test', {
       body: t ? t('notif.test.body') : 'Le notifiche funzionano. A domani per la missione!',

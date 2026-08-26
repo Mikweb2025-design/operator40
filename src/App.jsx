@@ -466,7 +466,7 @@ export default function App() {
   // ---- motivational local (1/giorno alle 9, se PWA aperta e push non attivo o fallback) ----
   useEffect(() => {
     function checkMotivational() {
-      if (Notification.permission !== 'granted') return;
+      if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
       const now = new Date();
       // se push attivo, il server manda già il push giornaliero — evita doppio locale
       if (pushEnabled) return;
@@ -480,11 +480,13 @@ export default function App() {
         navigator.serviceWorker?.ready?.then(reg => {
           if (reg && 'showNotification' in reg) {
             reg.showNotification(msg.title, { body: msg.body, icon: './icons/icon-192.png', badge: './icons/icon-192.png', tag: msg.tag, data: { url: './' } });
-          } else {
+          } else if (typeof Notification !== 'undefined') {
             new Notification(msg.title, { body: msg.body, icon: './icons/icon-192.png', tag: msg.tag });
           }
         }).catch(() => {
-          new Notification(msg.title, { body: msg.body, icon: './icons/icon-192.png', tag: msg.tag });
+          if (typeof Notification !== 'undefined') {
+            try { new Notification(msg.title, { body: msg.body, icon: './icons/icon-192.png', tag: msg.tag }); } catch {}
+          }
         });
       } catch {}
     }

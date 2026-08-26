@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-gwAaEny7.js","./icons-Hx31Og9a.js","./charts-Blf2Cagf.js","./web-C1CMj97x.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-ZZQqscOs.js","./icons-Hx31Og9a.js","./charts-Blf2Cagf.js","./web-Ce-7wfrY.js"])))=>i.map(i=>d[i]);
 import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ChevronLeft, H as House, B as BookOpen, e as History, f as Settings, h as ShieldCheck, F as Flame, i as RefreshCw, E as Eye, V as Volume2, j as VolumeX, k as Vibrate, l as SkipForward, M as Music, m as Music2, n as HeadphoneOff, o as Crown, p as Medal, q as Bell, s as BellOff, t as Send, u as HeartPulse, I as Info, v as Star, w as RotateCcw, x as Target, y as TrendingUp, L as Lightbulb, z as Ruler, A as TrendingDown, D as Scale, G as Trash2, P as Plus, W as Wind, J as Play, K as Pause } from "./icons-Hx31Og9a.js";
 import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-Blf2Cagf.js";
 (function polyfill() {
@@ -2249,7 +2249,7 @@ function getReminder() {
 function checkAndFireReminder(t) {
   const r = getReminder();
   if (!r || !r.enabled) return false;
-  if (Notification.permission !== "granted") return false;
+  if (typeof Notification === "undefined" || Notification.permission !== "granted") return false;
   const now = /* @__PURE__ */ new Date();
   if (now.getHours() !== r.hour || now.getMinutes() !== r.minute) return false;
   const key = `o40_reminder_fired_${now.toISOString().slice(0, 10)}`;
@@ -2267,7 +2267,7 @@ function checkAndFireReminder(t) {
   return true;
 }
 function fireTestNotification(t) {
-  if (Notification.permission !== "granted") return false;
+  if (typeof Notification === "undefined" || Notification.permission !== "granted") return false;
   try {
     new Notification("Operator 40 — Test", {
       body: t ? t("notif.test.body") : "Le notifiche funzionano. A domani per la missione!",
@@ -2305,6 +2305,7 @@ async function getExistingSubscription() {
 }
 async function subscribePush() {
   if (!isPushSupported()) throw new Error("Push non supportato su questo browser");
+  if (typeof Notification === "undefined") throw new Error("Notification non disponibile");
   const perm = Notification.permission === "granted" ? "granted" : await Notification.requestPermission();
   if (perm !== "granted") throw new Error("Permesso notifiche negato");
   const reg = await navigator.serviceWorker.ready;
@@ -2413,7 +2414,9 @@ async function testPushViaSW(lang = "it") {
     });
     return { localOnly: true };
   }
-  new Notification(titles[l2] || titles.it, { body: bodies[l2] || bodies.it });
+  if (typeof Notification !== "undefined") {
+    new Notification(titles[l2] || titles.it, { body: bodies[l2] || bodies.it });
+  }
   return { localOnly: true };
 }
 function getWeeklyProgress(sessions, weeklyGoal = WEEKLY_GOAL) {
@@ -8259,7 +8262,7 @@ function getBellyMissions({ sessions, profile, waistHistory }) {
     return (counts[a.id] || 0) - (counts[b.id] || 0);
   }).map((p2) => ({ ...p2, _needsBelly: needsBelly }));
 }
-const BUILD_VERSION = "2.8.4 · c0a6e2e";
+const BUILD_VERSION = "2.8.4 · e199db1";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -8371,7 +8374,7 @@ function parseAppleHealthExport(xmlText) {
 }
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-gwAaEny7.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-ZZQqscOs.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -8718,7 +8721,7 @@ function App() {
   reactExports.useEffect(() => {
     function checkMotivational() {
       var _a, _b;
-      if (Notification.permission !== "granted") return;
+      if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
       const now = /* @__PURE__ */ new Date();
       if (pushEnabled) return;
       if (now.getHours() !== 9 || now.getMinutes() !== 0) return;
@@ -8730,11 +8733,16 @@ function App() {
         (_b = (_a = navigator.serviceWorker) == null ? void 0 : _a.ready) == null ? void 0 : _b.then((reg) => {
           if (reg && "showNotification" in reg) {
             reg.showNotification(msg.title, { body: msg.body, icon: "./icons/icon-192.png", badge: "./icons/icon-192.png", tag: msg.tag, data: { url: "./" } });
-          } else {
+          } else if (typeof Notification !== "undefined") {
             new Notification(msg.title, { body: msg.body, icon: "./icons/icon-192.png", tag: msg.tag });
           }
         }).catch(() => {
-          new Notification(msg.title, { body: msg.body, icon: "./icons/icon-192.png", tag: msg.tag });
+          if (typeof Notification !== "undefined") {
+            try {
+              new Notification(msg.title, { body: msg.body, icon: "./icons/icon-192.png", tag: msg.tag });
+            } catch {
+            }
+          }
         });
       } catch {
       }
@@ -12630,7 +12638,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-C1CMj97x.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-Ce-7wfrY.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;

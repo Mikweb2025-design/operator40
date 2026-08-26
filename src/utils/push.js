@@ -30,6 +30,7 @@ export async function getExistingSubscription() {
 
 export async function subscribePush() {
   if (!isPushSupported()) throw new Error('Push non supportato su questo browser');
+  if (typeof Notification === 'undefined') throw new Error('Notification non disponibile');
   const perm = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
   if (perm !== 'granted') throw new Error('Permesso notifiche negato');
 
@@ -140,7 +141,9 @@ export async function testPushViaSW(lang = 'it') {
     });
     return { localOnly: true };
   }
-  new Notification(titles[l] || titles.it, { body: bodies[l] || bodies.it });
+  if (typeof Notification !== 'undefined') {
+    new Notification(titles[l] || titles.it, { body: bodies[l] || bodies.it });
+  }
   return { localOnly: true };
 }
 
