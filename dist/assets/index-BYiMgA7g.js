@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-Dp3YYvmA.js","./icons-CNn8_pbx.js","./charts-BGQLz4RT.js","./web-CLFVzqA_.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-D_I7TPvA.js","./icons-CNn8_pbx.js","./charts-BGQLz4RT.js","./web-Cy09GzZA.js"])))=>i.map(i=>d[i]);
 import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ShieldCheck, F as Flame, e as RefreshCw, E as Eye, V as Volume2, f as VolumeX, h as Vibrate, i as SkipForward, M as Music, j as Music2, H as HeadphoneOff, k as ChevronLeft, l as Crown, m as Medal, B as Bell, n as BellOff, o as Send, p as HeartPulse, I as Info, q as Star, s as RotateCcw, t as Target, u as BookOpen, v as TrendingUp, L as Lightbulb, w as Ruler, x as TrendingDown, y as Scale, z as Settings, A as Trash2, P as Plus, W as Wind, D as Play, G as Pause, J as House, K as History } from "./icons-CNn8_pbx.js";
 import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-BGQLz4RT.js";
 (function polyfill() {
@@ -681,7 +681,7 @@ function hasClip(exerciseId, pose) {
   return !!(CLIP_FILES[exerciseId] || CLIP_FILES[pose]);
 }
 const INK = "#1B1D16";
-const INK_2$1 = "#242820";
+const INK_2 = "#242820";
 const PAPER = "#EDE8D8";
 const OLIVE = "#4A5233";
 const OLIVE_DARK = "#333823";
@@ -1787,7 +1787,7 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 }
 
 /* ---- UI upgrade: glass + light mode + search + favorites ---- */
-:root { --bg: ${INK}; --bg2: ${INK_2$1}; --surface: ${OLIVE_DARK}; --text: ${PAPER}; --muted: ${STEEL}; --accent: ${BLAZE}; --accent2: ${KHAKI}; }
+:root { --bg: ${INK}; --bg2: ${INK_2}; --surface: ${OLIVE_DARK}; --text: ${PAPER}; --muted: ${STEEL}; --accent: ${BLAZE}; --accent2: ${KHAKI}; }
 .o40-glass { background: color-mix(in srgb, var(--bg2) 92%, transparent); backdrop-filter: blur(10px) saturate(1.2); border: 1px solid color-mix(in srgb, var(--accent2) 22%, transparent); box-shadow: 0 8px 24px rgba(0,0,0,0.28); }
 .o40-card-glass { background: linear-gradient(165deg, color-mix(in srgb, var(--bg2) 96%, transparent), color-mix(in srgb, var(--bg) 96%, transparent)); backdrop-filter: blur(8px); border: 1px solid rgba(184,174,140,0.18); box-shadow: 0 6px 20px rgba(0,0,0,0.32); transition: transform 0.18s ease, box-shadow 0.22s ease, border-color 0.22s ease; }
 .o40-card-glass:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.42); border-color: rgba(184,174,140,0.28); }
@@ -1798,7 +1798,7 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-fav { transition: transform 0.15s, color 0.15s; }
 .o40-fav:active { transform: scale(1.15); }
 .o40-skeleton { background: linear-gradient(90deg, ${OLIVE_DARK} 25%, ${OLIVE} 50%, ${OLIVE_DARK} 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 10px; }
-.o40-install { position: fixed; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); left: 12px; right: 12px; z-index: 40; background: ${INK_2$1}; border: 1px solid ${KHAKI}; border-radius: 14px; padding: 12px; display: flex; align-items: center; gap: 10; box-shadow: 0 12px 30px rgba(0,0,0,0.45); animation: popIn 0.32s ease; }
+.o40-install { position: fixed; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); left: 12px; right: 12px; z-index: 40; background: ${INK_2}; border: 1px solid ${KHAKI}; border-radius: 14px; padding: 12px; display: flex; align-items: center; gap: 10; box-shadow: 0 12px 30px rgba(0,0,0,0.45); animation: popIn 0.32s ease; }
 .o40-tour-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.58); z-index: 50; display: flex; align-items: flex-end; justify-content: center; padding: 16px; }
 .o40-tour-card { background: ${PAPER}; color: ${INK}; border-radius: 16px; padding: 18px; max-width: 360px; width: 100%; box-shadow: 0 16px 40px rgba(0,0,0,0.5); }
 /* dark polish: stronger TopBar blur, card depth, noise */
@@ -2675,7 +2675,7 @@ function BellyTest({ onSave, onClose, lang = "it", initial = null }) {
   const hasInput = p2 > 0 || c > 0;
   const suggested = hasInput ? getBellyLevelForTest({ plankSec: p2, crunchReps: c }) : null;
   const t = (it, en, de) => lang === "en" ? en : lang === "de" ? de : it;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${BLAZE}66`, borderRadius: 14, padding: 14 }, children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${BLAZE}66`, borderRadius: 14, padding: 14 }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 18, color: BLAZE }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: BLAZE, fontSize: 11, letterSpacing: "0.08em" }, children: t("TEST PANCIA 2.0 — TROVA IL TUO LIVELLO", "BELLY TEST 2.0 — FIND YOUR LEVEL", "BAUCH-TEST 2.0") })
@@ -2695,7 +2695,7 @@ function BellyTest({ onSave, onClose, lang = "it", initial = null }) {
             onChange: (e) => setPlankSec(e.target.value.replace(/\D/g, "").slice(0, 3)),
             placeholder: "es. 45",
             inputMode: "numeric",
-            style: { width: "100%", background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: "10px 12px", color: PAPER, fontSize: 16, outline: "none" }
+            style: { width: "100%", background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: "10px 12px", color: PAPER, fontSize: 16, outline: "none" }
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, marginTop: 8 }, children: [
@@ -2721,7 +2721,7 @@ function BellyTest({ onSave, onClose, lang = "it", initial = null }) {
                 setPlankSec(String(seconds));
                 setRunning(null);
               },
-              style: { padding: "6px 10px", borderRadius: 8, border: `1px solid ${OLIVE}`, background: INK_2$1, color: KHAKI, fontSize: 11, cursor: "pointer" },
+              style: { padding: "6px 10px", borderRadius: 8, border: `1px solid ${OLIVE}`, background: INK_2, color: KHAKI, fontSize: 11, cursor: "pointer" },
               children: [
                 "Usa ",
                 seconds,
@@ -2741,7 +2741,7 @@ function BellyTest({ onSave, onClose, lang = "it", initial = null }) {
             onChange: (e) => setCrunchReps(e.target.value.replace(/\D/g, "").slice(0, 2)),
             placeholder: "es. 14",
             inputMode: "numeric",
-            style: { width: "100%", background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: "10px 12px", color: PAPER, fontSize: 16, outline: "none" }
+            style: { width: "100%", background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: "10px 12px", color: PAPER, fontSize: 16, outline: "none" }
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, marginTop: 8 }, children: [
@@ -2767,7 +2767,7 @@ function BellyTest({ onSave, onClose, lang = "it", initial = null }) {
             {
               onClick: () => setCrunchCount((c2) => c2 + 1),
               disabled: running !== "crunch",
-              style: { padding: "6px 10px", borderRadius: 8, border: `1px solid ${OLIVE}`, background: running === "crunch" ? BLAZE : INK_2$1, color: running === "crunch" ? PAPER : STEEL, fontSize: 14, fontWeight: 700, cursor: running === "crunch" ? "pointer" : "not-allowed" },
+              style: { padding: "6px 10px", borderRadius: 8, border: `1px solid ${OLIVE}`, background: running === "crunch" ? BLAZE : INK_2, color: running === "crunch" ? PAPER : STEEL, fontSize: 14, fontWeight: 700, cursor: running === "crunch" ? "pointer" : "not-allowed" },
               children: [
                 "+1 (",
                 crunchCount,
@@ -2807,7 +2807,7 @@ function BellyTest({ onSave, onClose, lang = "it", initial = null }) {
         {
           onClick: () => hasInput && suggested && onSave({ plankSec: p2, crunchReps: c, level: suggested.key, date: (/* @__PURE__ */ new Date()).toISOString() }),
           disabled: !hasInput || !suggested,
-          style: { flex: 2, padding: "10px 12px", borderRadius: 10, border: `1px solid ${BLAZE}`, background: hasInput ? `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})` : INK_2$1, color: PAPER, fontSize: 12, fontWeight: 700, cursor: hasInput ? "pointer" : "not-allowed", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: hasInput ? 1 : 0.5 },
+          style: { flex: 2, padding: "10px 12px", borderRadius: 10, border: `1px solid ${BLAZE}`, background: hasInput ? `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})` : INK_2, color: PAPER, fontSize: 12, fontWeight: 700, cursor: hasInput ? "pointer" : "not-allowed", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: hasInput ? 1 : 0.5 },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 14 }),
             " ",
@@ -4178,11 +4178,11 @@ class PushupAnalyzer extends ExerciseAnalyzer {
         if (this.shouldCountRep(ts, repConf, 62)) {
           repInc = true;
           this.lastRepAt = ts;
-          this.trough = ang;
-          this.peak = ang;
-          next = "READY";
         }
       }
+      this.trough = ang;
+      this.peak = ang;
+      next = "READY";
     }
     if (repInc) {
       this.phase = "READY";
@@ -4220,13 +4220,18 @@ class SquatAnalyzer extends ExerciseAnalyzer {
     this.minPhaseMs = 70;
     this.velFilt = 0;
     this.lastA = 180;
+    this.restingHipY = null;
   }
   analyze(lm, ts, dtMs, q2) {
     var _a, _b;
     const ang = this.bilateralJointAngle("knee", lm, [LM.left_hip, LM.left_knee, LM.left_ankle], [LM.right_hip, LM.right_knee, LM.right_ankle]);
     const tr2 = this.bilateralJointAngle("trunk", lm, [LM.left_shoulder, LM.left_hip, LM.left_ankle], [LM.right_shoulder, LM.right_hip, LM.right_ankle]);
     const hipY = ((((_a = lm[LM.left_hip]) == null ? void 0 : _a.y) ?? 0.5) + (((_b = lm[LM.right_hip]) == null ? void 0 : _b.y) ?? 0.5)) / 2;
-    const hipYDelta = hipY - 0.55;
+    if (ang > 160 && Math.abs(this.velFilt) < 15) {
+      this.restingHipY = this.restingHipY == null ? hipY : this.restingHipY * 0.92 + hipY * 0.08;
+    }
+    const baseline = this.restingHipY ?? 0.55;
+    const hipYDelta = hipY - baseline;
     const dt = dtMs || 16;
     const rawV = (ang - this.lastA) / (dt / 1e3);
     this.velFilt = this.velFilt * 0.7 + rawV * 0.3;
@@ -4234,10 +4239,10 @@ class SquatAnalyzer extends ExerciseAnalyzer {
     this.trough = Math.min(this.trough, ang);
     this.peak = Math.max(this.peak, ang);
     let next = this.phase;
-    if (this.phase === "READY" && (ang <= 122 || hipY > 0.58 || hipYDelta > 0.04)) next = "DESCENDING";
-    else if (this.phase === "DESCENDING" && (ang <= 113 || hipY > 0.62 || hipYDelta > 0.07)) next = "BOTTOM";
-    else if (this.phase === "DESCENDING" && ang > 142 && hipY < 0.6 && this.trough < 122 && this.canTransition(ts, 55)) next = "ASCENDING";
-    else if (this.phase === "BOTTOM" && (ang > 140 || hipY < 0.62) && this.canTransition(ts, 70)) next = "ASCENDING";
+    if (this.phase === "READY" && (ang <= 122 || hipYDelta > 0.05)) next = "DESCENDING";
+    else if (this.phase === "DESCENDING" && (ang <= 113 || hipYDelta > 0.09)) next = "BOTTOM";
+    else if (this.phase === "DESCENDING" && ang > 142 && hipYDelta < 0.05 && this.trough < 122 && this.canTransition(ts, 55)) next = "ASCENDING";
+    else if (this.phase === "BOTTOM" && (ang > 140 || hipYDelta < 0.09) && this.canTransition(ts, 70)) next = "ASCENDING";
     else if (this.phase === "ASCENDING" && ang > 146 && this.canTransition(ts, 55)) next = "STANDING";
     let repInc = false, repConf = 0;
     if (next === "STANDING" && (this.phase === "ASCENDING" || this.phase === "BOTTOM" || this.phase === "DESCENDING")) {
@@ -4257,13 +4262,11 @@ class SquatAnalyzer extends ExerciseAnalyzer {
         if (this.shouldCountRep(ts, repConf, 62)) {
           repInc = true;
           this.lastRepAt = ts;
-          this.trough = ang;
-          this.peak = ang;
-          next = "READY";
         }
-      } else if (depthOk && extOk) {
-        repConf = Math.max(repConf, 0);
       }
+      this.trough = ang;
+      this.peak = ang;
+      next = "READY";
     }
     if (repInc) {
       this.phase = "READY";
@@ -4328,11 +4331,11 @@ class CrunchAnalyzer extends ExerciseAnalyzer {
         if (this.shouldCountRep(ts, repConf, 62)) {
           repInc = true;
           this.lastRepAt = ts;
-          this.trough = hipFlex;
-          this.peak = hipFlex;
-          next = "READY";
         }
       }
+      this.trough = hipFlex;
+      this.peak = hipFlex;
+      next = "READY";
     }
     if (repInc) {
       this.phase = "READY";
@@ -4390,7 +4393,7 @@ class LegRaiseAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "legraise";
-    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28];
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26];
     this.velFilt = 0;
     this.lastA = 170;
   }
@@ -4423,11 +4426,11 @@ class LegRaiseAnalyzer extends ExerciseAnalyzer {
         if (this.shouldCountRep(ts, repConf, 60)) {
           repInc = true;
           this.lastRepAt = ts;
-          this.trough = hipFlex;
-          this.peak = hipFlex;
-          next = "READY";
         }
       }
+      this.trough = hipFlex;
+      this.peak = hipFlex;
+      next = "READY";
     }
     if (repInc) {
       this.phase = "READY";
@@ -4455,7 +4458,7 @@ class FlutterKickAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "flutterkick";
-    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28];
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26];
     this.cycle = "center";
     this.lastSwitch = 0;
   }
@@ -4498,7 +4501,7 @@ class DeadBugAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "deadbug";
-    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 13, 14, 15, 16, 27, 28];
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 13, 14, 15, 16];
   }
   analyze(lm, ts, _dt, q2) {
     const lHip = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
@@ -4535,7 +4538,7 @@ class VUpAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "vup";
-    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28, 15, 16];
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 15, 16];
     this.velFilt = 0;
     this.lastA = 160;
   }
@@ -4568,11 +4571,11 @@ class VUpAnalyzer extends ExerciseAnalyzer {
         if (this.shouldCountRep(ts, repConf, 60)) {
           repInc = true;
           this.lastRepAt = ts;
-          this.trough = pike;
-          this.peak = pike;
-          next = "READY";
         }
       }
+      this.trough = pike;
+      this.peak = pike;
+      next = "READY";
     }
     if (repInc) {
       this.phase = "READY";
@@ -4598,7 +4601,7 @@ class MountainClimberAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "mountainclimber";
-    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28];
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26];
     this.lastSwitch = 0;
     this.cycle = null;
     this.alt = 0;
@@ -4848,10 +4851,10 @@ class AffondoAnalyzer extends ExerciseAnalyzer {
       if (depthOk && extOk && repConf > 60 && q2.exerciseConfidence > 38 && this.shouldCountRep(ts, repConf, 60)) {
         repInc = true;
         this.lastRepAt = ts;
-        this.trough = knee;
-        this.peak = knee;
-        next = "READY";
       }
+      this.trough = knee;
+      this.peak = knee;
+      next = "READY";
     }
     if (repInc) {
       this.phase = "READY";
@@ -4986,7 +4989,7 @@ class PonteAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "ponte";
-    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28];
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26];
     this.velFilt = 0;
     this.lastA = 100;
   }
@@ -5016,10 +5019,10 @@ class PonteAnalyzer extends ExerciseAnalyzer {
       if (topOk && downOk && repConf > 60 && q2.exerciseConfidence > 38 && this.shouldCountRep(ts, repConf, 60)) {
         repInc = true;
         this.lastRepAt = ts;
-        this.trough = hip;
-        this.peak = hip;
-        next = "READY";
       }
+      this.trough = hip;
+      this.peak = hip;
+      next = "READY";
     }
     if (repInc) {
       this.phase = "READY";
@@ -5268,11 +5271,12 @@ class FitnessEngine {
     this.frameCount = 0;
     this.angleHistory = [];
     this.lastPoseQuality = 0;
+    this.liveRepConfidence = 0;
     this.lastResult = null;
     this.calibSamples = [];
     this.calibDone = false;
     this.loop = (now) => {
-      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
+      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
       this.rafId = requestAnimationFrame(this.loop);
       if (!this.running || !this.video) return;
       const fpsTarget = this.cfg.targetFps ?? 30;
@@ -5298,13 +5302,13 @@ class FitnessEngine {
       const instFps = 1e3 / Math.max(1, now - (this.lastTs || now - 16));
       this.fpsEma = this.fpsEma ? this.fpsEma * 0.9 + instFps * 0.1 : instFps;
       this.frameCount++;
-      const pq = evaluatePoseQuality(result.landmarks ?? null, ((_a = this.def) == null ? void 0 : _a.requiredLandmarks) ?? [11, 12, 23, 24, 25, 26, 27, 28]);
+      const pq = evaluatePoseQuality(result.landmarks ?? null, ((_a = this.analyzer) == null ? void 0 : _a.requiredLandmarks) ?? ((_b = this.def) == null ? void 0 : _b.requiredLandmarks) ?? [11, 12, 23, 24, 25, 26, 27, 28]);
       this.lastPoseQuality = pq.exerciseConfidence;
       if (!result.landmarks) {
         if (this.currentPhase !== "idle") {
           this.currentPhase = "idle";
           this.currentForm = { primaryAngle: this.lastAngle, secondaryAngles: {}, velocity: 0, direction: "idle", quality: 0, cues: ["moveIntoFrame"], visibility: 0, poseQuality: this.lastPoseQuality };
-          (_b = this.onPhaseChange) == null ? void 0 : _b.call(this, "idle", this.currentForm);
+          (_c = this.onPhaseChange) == null ? void 0 : _c.call(this, "idle", this.currentForm);
         }
         this.updateTimers(now);
         this.lastTs = now;
@@ -5334,6 +5338,7 @@ class FitnessEngine {
           return;
         }
         const aRes = this.analyzer.analyze(lm, now, dtAna, pqForAna);
+        this.liveRepConfidence = aRes.repConfidence;
         this.currentPhase = aRes.enginePhase;
         this.currentForm = {
           primaryAngle: aRes.primaryAngle,
@@ -5349,7 +5354,7 @@ class FitnessEngine {
           this.startedAt = now;
           this.lastRepAt = now;
         }
-        if (aRes.phase !== this.currentPhase) (_c = this.onPhaseChange) == null ? void 0 : _c.call(this, aRes.enginePhase, this.currentForm);
+        if (aRes.phase !== this.currentPhase) (_d = this.onPhaseChange) == null ? void 0 : _d.call(this, aRes.enginePhase, this.currentForm);
         if (aRes.repIncrement) {
           const repDuration = this.lastRepAt ? now - this.lastRepAt : this.startedAt ? now - this.startedAt : 0;
           this.reps += 1;
@@ -5360,18 +5365,18 @@ class FitnessEngine {
           if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
           this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
           const evt = { repIndex: this.reps, timestampMs: now, durationMs: repDuration, peakAngle: this.peakInRep, troughAngle: this.troughInRep, quality: aRes.formScore, cues: aRes.cues, velocity: aRes.velocity, confidence: aRes.repConfidence };
-          (_d = this.onRep) == null ? void 0 : _d.call(this, evt);
+          (_e = this.onRep) == null ? void 0 : _e.call(this, evt);
           try {
-            (_e = navigator.vibrate) == null ? void 0 : _e.call(navigator, 28);
+            (_f = navigator.vibrate) == null ? void 0 : _f.call(navigator, 28);
           } catch {
           }
           this.troughInRep = aRes.primaryAngle;
           this.peakInRep = aRes.primaryAngle;
           this.sm.consumeRep(now, aRes.primaryAngle);
           this.currentPhase = "ready";
-          (_f = this.onPhaseChange) == null ? void 0 : _f.call(this, "ready", this.currentForm);
+          (_g = this.onPhaseChange) == null ? void 0 : _g.call(this, "ready", this.currentForm);
         }
-        if ((_g = this.def) == null ? void 0 : _g.isHold) {
+        if ((_h = this.def) == null ? void 0 : _h.isHold) {
           this.qualityWindow.push(aRes.formScore);
           if (this.qualityWindow.length > 8) this.qualityWindow.shift();
           this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
@@ -5385,7 +5390,7 @@ class FitnessEngine {
       }
       if (this.def && this.def.trackingSupported === false) {
         const pqTmp = evaluatePoseQuality(lm, this.def.requiredLandmarks ?? []);
-        const formEvalTmp = ((_h = this.def) == null ? void 0 : _h.evaluateForm(lm, {}, this.currentPhase, { velocity: 0, direction: "hold", visibility: pqTmp.exerciseConfidence / 100, repCount: this.reps })) ?? { quality: 0 };
+        const formEvalTmp = ((_i = this.def) == null ? void 0 : _i.evaluateForm(lm, {}, this.currentPhase, { velocity: 0, direction: "hold", visibility: pqTmp.exerciseConfidence / 100, repCount: this.reps })) ?? { quality: 0 };
         this.currentForm = { primaryAngle: 0, secondaryAngles: {}, velocity: 0, direction: "hold", quality: formEvalTmp.quality, cues: ["tracking not supported"], visibility: pqTmp.exerciseConfidence / 100, poseQuality: pqTmp.exerciseConfidence };
         this.updateTimers(now);
         this.lastTs = now;
@@ -5423,7 +5428,7 @@ class FitnessEngine {
         }
       }
       let didRep = false;
-      if ((_i = this.def) == null ? void 0 : _i.customTransition) {
+      if ((_j = this.def) == null ? void 0 : _j.customTransition) {
         const custom = this.def.customTransition(primaryAngle, this.velocityFiltered, phase, { landmarks: lm, timestampMs: now });
         if (custom) {
           const wasDownLike = phase === "down" || phase === "bottom";
@@ -5450,7 +5455,7 @@ class FitnessEngine {
         this.startedAt = now;
         this.lastRepAt = now;
       }
-      const formEval = ((_j = this.def) == null ? void 0 : _j.evaluateForm(lm, { ...secondary, knee: primaryAngle, primary: primaryAngle }, phase, {
+      const formEval = ((_k = this.def) == null ? void 0 : _k.evaluateForm(lm, { ...secondary, knee: primaryAngle, primary: primaryAngle }, phase, {
         velocity: this.velocityFiltered,
         direction,
         visibility: vis,
@@ -5468,7 +5473,7 @@ class FitnessEngine {
       this.currentForm = form;
       if (phase !== this.currentPhase) {
         this.currentPhase = phase;
-        (_k = this.onPhaseChange) == null ? void 0 : _k.call(this, phase, form);
+        (_l = this.onPhaseChange) == null ? void 0 : _l.call(this, phase, form);
       }
       if (didRep) {
         const repDuration = this.lastRepAt ? now - this.lastRepAt : this.startedAt ? now - this.startedAt : 0;
@@ -5494,18 +5499,18 @@ class FitnessEngine {
           cues: form.cues,
           velocity: this.velocityFiltered
         };
-        (_l = this.onRep) == null ? void 0 : _l.call(this, evt);
+        (_m = this.onRep) == null ? void 0 : _m.call(this, evt);
         try {
-          (_m = navigator.vibrate) == null ? void 0 : _m.call(navigator, 28);
+          (_n = navigator.vibrate) == null ? void 0 : _n.call(navigator, 28);
         } catch {
         }
         this.troughInRep = primaryAngle;
         this.peakInRep = primaryAngle;
         this.sm.consumeRep(now, primaryAngle);
         this.currentPhase = "ready";
-        (_n = this.onPhaseChange) == null ? void 0 : _n.call(this, "ready", form);
+        (_o = this.onPhaseChange) == null ? void 0 : _o.call(this, "ready", form);
       }
-      if ((_o = this.def) == null ? void 0 : _o.isHold) {
+      if ((_p = this.def) == null ? void 0 : _p.isHold) {
         this.qualityWindow.push(form.quality);
         if (this.qualityWindow.length > 8) this.qualityWindow.shift();
         this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
@@ -5543,6 +5548,7 @@ class FitnessEngine {
       avgQuality: this.avgQuality,
       lastRepQuality: this.lastRepQuality,
       lastRepConfidence: this.lastRepConfidence,
+      liveRepConfidence: Math.round(this.liveRepConfidence),
       currentPhase: this.currentPhase,
       currentForm: this.currentForm,
       fps: Math.round(this.fpsEma),
@@ -6302,7 +6308,7 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flex: 1, height: 6, background: `${OLIVE}55`, borderRadius: 3, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: `${Math.round(metrics.poseQuality ?? 0)}%`, height: "100%", background: (metrics.poseQuality ?? 0) > 70 ? "#7FB069" : (metrics.poseQuality ?? 0) > 45 ? "#D4A017" : BLAZE, transition: "width 0.2s" } }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: (metrics.poseQuality ?? 0) < 45 ? BLAZE : STEEL, fontSize: 9 }, children: (metrics.poseQuality ?? 0) < 45 ? lang === "it" ? "Allontanati" : lang === "de" ? "Zurück" : "Move back" : (metrics.poseQuality ?? 0) > 75 ? "OK" : "—" })
     ] }),
-    ((metrics == null ? void 0 : metrics.poseQuality) ?? 100) < 42 && (metrics == null ? void 0 : metrics.currentPhase) !== "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { margin: "6px 12px 0", padding: "6px 8px", borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: "center" }, children: lang === "it" ? "Allontanati così vedo tutto il corpo." : lang === "de" ? "Geh zurück, damit ich deinen ganzen Körper sehe." : "Move back so I can see your whole body." }),
+    metrics != null && ((metrics == null ? void 0 : metrics.poseQuality) ?? 100) < 42 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { margin: "6px 12px 0", padding: "6px 8px", borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: "center" }, children: lang === "it" ? "Allontanati così vedo tutto il corpo." : lang === "de" ? "Geh zurück, damit ich deinen ganzen Körper sehe." : "Move back so I can see your whole body." }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, padding: "10px 12px", background: INK }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", textAlign: "center" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "REPS" }),
@@ -6464,89 +6470,88 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     ] })
   ] });
 }
-const CHANGELOG_VERSION = "2.8.0";
+const CHANGELOG_VERSION = "2.8.4";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.8",
-    title: "AI Fitness Coach automatico",
-    subtitle: "v2.8 · Riconosce la missione → coach dal vivo · 100% offline",
-    intro: "Ogni missione ora si auto-configura: l’app legge l’esercizio (es. “20 push-up”), carica l’algoritmo giusto, conta reps, cronometra, valuta forma 0-100 e ti corregge a voce nella tua lingua — senza toccare nulla.",
+    badge: "NUOVO v2.8.4",
+    title: "Sessione tracking — 7 fix in 1 giorno",
+    subtitle: "v2.8.4 · 26 Agosto 2026 · Framing + pose + conteggio — 100% offline",
+    intro: "Giornata intera di debug col replay dei tuoi landmarks reali: framing frontale che non blocca più, angoli stabili in side-view, blocco “idle” eliminato e bug root del conteggio risolto. Tutto verificato con i tuoi file landmarks-squat-*.json (0→7 rep).",
     groups: [
       {
-        icon: "🔧",
-        title: "Fix rilevamento (NUOVO v2.7.2)",
+        icon: "📐",
+        title: "1. Framing frontale — caviglie non bloccano più",
         items: [
-          "Soglie più permissive + auto-calibrazione ROM nei primi 1.2s (impara la tua escursione reale)",
-          "Scelta lato migliore (visibility) per camera laterale + OneEuro per-esercizio (0.75 hold / 1.35 burpee)",
-          "Gate visibility 0.38 + timestamp video*1000 per Safari + isteresi calibrata — zero doppi conteggi"
+          "Problema: con la selfie-camera (FOV stretta) dovevi allontanarti troppo; se i piedi uscivano dal frame, il tracking si metteva in pausa per “pose bassa”.",
+          "Fix: rimosso gate caviglie (27/28) da requiredLandmarks in 10 esercizi: squat, affondo, wallsit, pushup, legRaise, deadBug, flutterKick, mountainClimber, vUp, ponte",
+          "Geometria invariata: l’angolo ginocchio/tronco usa ancora le caviglie quando visibili — tolto solo il blocco"
         ]
       },
       {
-        icon: "🧠",
-        title: "Motore AI client-side",
+        icon: "👁️",
+        title: "2. Side-view stabile — angolo bilaterale visibility-aware",
         items: [
-          "Google MediaPipe Tasks Vision — Pose Landmarker Lite (GPU su iPhone, fallback CPU) — 33 landmark",
-          "Nessun upload video (privacy 100%), soglie detection 0.45 per luce bassa iPhone",
-          "PWA 25-30 FPS garantiti: rAF + inferenza throttled 28→22 fps, nessuna immagine al server"
+          "Problema: 16/22 analyzer mediavano (sx+dx)/2 senza guardare la visibilità → in side-view il lato occluso (vis. bassa, stima “indovinata”) distorceva l’angolo",
+          "Fix: nuovo helper bilateralJointAngle() — EMA visibilità α0.35 + isteresi 0.12 per cambio lato + hold ultimo lato buono",
+          "Applicato a 16 esercizi, pulizia duplicate knee()/trunk() in squat/pushup + ricalcolo unico in legRaise/vUp"
         ]
       },
       {
-        icon: "🏋️",
-        title: "13 esercizi con analisi articolare",
+        icon: "🔓",
+        title: "3. “Resta in idle” — badge e hint corretti",
         items: [
-          "Push-up, squat, crunch, plank, mountain climber, jumping jack, flutter kicks, bicycle crunch, leg raise, dead bug, heel taps, V-up, burpee",
-          "Angoli in tempo reale: ginocchio (hip-knee-ankle), gomito (shoulder-elbow-wrist), anca, busto",
-          "Calcolo direzione e velocità (°/s) per distinguere controllo vs. slancio"
+          "Causa: FitnessEngine calcolava POSE% con lista generica (con caviglie) anche quando l’analyzer ne usava una ridotta + banner “Allontanati” nascosto proprio in idle (condizione invertita)",
+          "Fix: POSE% ora usa analyzer.requiredLandmarks; rimossa condizione currentPhase!=idle in SessionAIOverlay + FitnessEngineView",
+          "Estese le caviglie rimosse ad altri 6 a terra (vedi sopra) — risolto lo stesso gate anche lì"
         ]
       },
       {
-        icon: "🔁",
-        title: "Conteggio ripetizioni + timer intelligente",
+        icon: "🐛",
+        title: "4. Bug root: STANDING/TOP senza uscita → conteggio bloccato",
         items: [
-          "State machine configurabile: idle → ready → down → bottom → up → rep_completed",
-          "Isteresi anti-rimbalzo (banda 5-12°) + dwell times (120-340 ms) — zero doppi conteggi",
-          "Timer parte al primo movimento, traccia tempo totale e tempo attivo (esclude idle)"
+          "Trovato col replay landmarks reali (1200 frame): un colpo a vuoto iniziale lasciava phase=STANDING per sempre — reset a READY solo su rep riuscita",
+          "Stesso schema in 7 analyzer: squat(STANDING), pushup(TOP), crunch(EXTENDED), legRaise(DOWN), vUp(EXTENDED), ponte(DOWN), affondo(STANDING)",
+          "Fix: reset a READY + azimuth trough/peak anche su rep non contata — prima 0 rep, dopo 7 rep sugli stessi dati + test regressione"
         ]
       },
       {
-        icon: "⭐",
-        title: "Quality Score 0-100 & coaching",
+        icon: "📏",
+        title: "5. Squat — hipY calibrato per sessione",
         items: [
-          "Score per rep: forma 55% + ROM 30% + controllo velocità 15% → media mobile 5 rep",
-          "Feedback live: “Schiena dritta”, “Ginocchia sopra le punte”, “Gomiti a 45°”, “Addome contratto”",
-          "Cues localizzati it / en / de, con vibrazione aptica al completamento rep"
+          "Problema: soglia fissa hipY 0.55 per “sei abbastanza vicino” non adatta a tutte le altezze/distances",
+          "Fix: calibrazione hipY nei primi 300ms della sessione (media dei frame iniziali) invece di soglia fissa",
+          "Elimina flicker di fase spurio a inizio sessione"
         ]
       },
       {
-        icon: "〰️",
-        title: "Filtri e performance",
+        icon: "🔍",
+        title: "6. Diagnostica + fix DEBUG",
         items: [
-          "One Euro Filter per landmark (x,y) → jitter eliminato senza lag — alternativa Kalman, più leggera",
-          "requestAnimationFrame + inferenza throttled 28 fps (auto 22 fps se CPU calda) → batteria risparmiata",
-          "Codice TypeScript modulare: FitnessEngine, PoseLandmarkerManager, LandmarkSmoother, SpeechCoach"
+          "Nuovo badge CONF live nell’HUD (repConfidence) per capire al volo se la rep è “scarsa” o “bloccata”",
+          "Fix crash pannello ◇ DEBUG: ReferenceError INK_2 (colore non importato) → app non crasha più aprendo AI ENGINE",
+          "LandmarkRecorder ◯ REC → landmarks-*.json: il replay offline è il modo più rapido per replicare un bug reale"
         ]
       },
       {
-        icon: "🎤",
-        title: "Coach vocale + overlay scheletro",
+        icon: "⚡",
+        title: "7. Affinamento 22 esercizi (mattina)",
         items: [
-          "Sintesi vocale opzionale (Web Speech API) throttled 3 s — annuncia reps e correzioni",
-          "Skeleton overlay su canvas (specchio) + badge angolo + barra qualità + FPS",
-          "Pannello HUD: REPS / TIME / QUALITY + selezione esercizio live senza ricaricare il modello"
+          "Loop 10 giri perfezionamento: squat/pushup/affondo soglie shallow, PoseQuality 38 side-view, hold grace 500ms, normalizzazione torsoLength",
+          "Burpee/jumpingJack adaptive + jitter 28fps stabilizzato — harness 7/7 PASS, 22/22 smoke OK"
         ]
       }
     ],
-    cta: "PROVALO",
-    ctaHint: "Home → Conta squat (camera) · o da qualsiasi missione",
+    cta: "PROVA ORA",
+    ctaHint: "Home → Missione → Avvia · verifica su https://mikweb.eu/operator40/ con iPhone frontale",
     dismiss: "Non mostrare più",
     close: "Chiudi",
-    footer: "Tutto gira sul dispositivo. Se vuoi offline 100%, copia wasm + modello in public/wasm (vedi docs/ENGINE.md)."
+    footer: "Tutto on-device (IndexedDB, MediaPipe mai su server). Per replay: ◯ REC durante sessione → ↓ JSON → test analyzer. Docs completi in docs/FIX-tracking-2026-08-26.md"
   },
   en: {
-    badge: "NEW",
-    title: "AI Fitness Engine",
-    subtitle: "v2.7 · On-device MediaPipe · 100% offline",
+    badge: "NEW v2.8.4",
+    title: "Tracking session — 7 fixes in one day",
+    subtitle: "v2.8.4 · Aug 26 2026 · Framing + pose + counting — 100% offline",
     intro: "Your personal coach now sees you, counts and corrects — all on your phone, no video uploaded.",
     groups: [
       {
@@ -6611,9 +6616,9 @@ const COPY = {
     footer: "Everything runs on-device. For 100% offline, copy wasm + model to public/wasm (see docs/ENGINE.md)."
   },
   de: {
-    badge: "NEU",
-    title: "AI Fitness Engine",
-    subtitle: "v2.7 · MediaPipe on-device · 100% offline",
+    badge: "NEU v2.8.4",
+    title: "Tracking-Session — 7 Fixes an einem Tag",
+    subtitle: "v2.8.4 · 26. Aug 2026 · Framing + Pose + Zählung — 100% offline",
     intro: "Dein persönlicher Coach sieht dich jetzt, zählt und korrigiert — alles auf dem Handy, kein Video-Upload.",
     groups: [
       {
@@ -6726,7 +6731,7 @@ function ChangelogModal({ lang = "it", onClose, onTry }) {
             width: "min(560px, 96vw)",
             maxHeight: "90vh",
             overflow: "hidden",
-            background: `linear-gradient(180deg, ${INK_2$1} 0%, ${INK} 100%)`,
+            background: `linear-gradient(180deg, ${INK_2} 0%, ${INK} 100%)`,
             border: `1px solid ${OLIVE}`,
             borderRadius: 18,
             boxShadow: "0 20px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(193,68,14,0.14) inset",
@@ -6765,7 +6770,7 @@ function ChangelogModal({ lang = "it", onClose, onTry }) {
               ] }, i)),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: `${BLAZE}12`, border: `1px dashed ${BLAZE}55`, borderRadius: 10, padding: "10px 12px", color: STEEL, fontSize: 10.5, lineHeight: 1.4 }, children: c.footer })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "12px 14px", borderTop: `1px solid ${OLIVE}33`, background: INK_2$1, display: "flex", flexDirection: "column", gap: 8 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "12px 14px", borderTop: `1px solid ${OLIVE}33`, background: INK_2, display: "flex", flexDirection: "column", gap: 8 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "button",
                 {
@@ -7206,7 +7211,7 @@ function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep,
   }
   const progressPct = targetReps ? Math.min(1, reps / targetReps) : (metrics == null ? void 0 : metrics.elapsedMs) && (phase == null ? void 0 : phase.duration) ? Math.min(1, metrics.elapsedMs / (phase.duration * 1e3)) : 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%", background: INK, border: `1px solid ${OLIVE}`, borderRadius: 14, overflow: "hidden" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6, padding: 8, background: INK_2$1, borderBottom: `1px solid ${OLIVE}33` }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6, padding: 8, background: INK_2, borderBottom: `1px solid ${OLIVE}33` }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "6px 8px", textAlign: "center" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 8 }, children: tCoach("coach.time", normLang) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 16, lineHeight: 1 }, children: fmtMs((metrics == null ? void 0 : metrics.elapsedMs) ?? 0) })
@@ -7228,7 +7233,7 @@ function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep,
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: formVal > 68 ? "#7FB069" : BLAZE, fontSize: 7 }, children: statusText })
       ] })
     ] }),
-    poseQuality < 42 && (metrics == null ? void 0 : metrics.currentPhase) !== "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { margin: "8px 8px 0", padding: "6px 8px", borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: "center" }, children: lang === "it" ? "Allontanati così vedo tutto il corpo." : lang === "de" ? "Geh zurück, damit ich deinen ganzen Körper sehe." : "Move back so I can see your whole body." }),
+    metrics && poseQuality < 42 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { margin: "8px 8px 0", padding: "6px 8px", borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: "center" }, children: lang === "it" ? "Allontanati così vedo tutto il corpo." : lang === "de" ? "Geh zurück, damit ich deinen ganzen Körper sehe." : "Move back so I can see your whole body." }),
     coachingText && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { margin: "8px 8px 0", padding: "8px 10px", borderRadius: 10, background: `${BLAZE}14`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 12, textAlign: "center" }, children: coachingText }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: "100%", aspectRatio: "4/3", background: "#050608", marginTop: coachingText ? 8 : 0 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("video", { ref: videoRef, autoPlay: true, muted: true, playsInline: true, "webkit-playsinline": "true", style: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scaleX(-1)", background: "#000" } }),
@@ -7254,8 +7259,12 @@ function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep,
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { background: formVal > 68 ? "#7FB069DD" : `${BLAZE}DD`, color: PAPER, fontSize: 9, padding: "3px 8px", borderRadius: 20 }, children: (metrics == null ? void 0 : metrics.currentPhase) ?? "idle" })
       ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "6px 8px", background: INK_2$1, borderTop: `1px solid ${OLIVE}22`, display: "flex", justifyContent: "space-between", alignItems: "center" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "6px 8px", background: INK_2, borderTop: `1px solid ${OLIVE}22`, display: "flex", justifyContent: "space-between", alignItems: "center" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: isHold ? tCoach("coach.holdPosition", normLang) : `${tCoach("coach.rep", normLang)} ${reps}${targetReps ? `/${targetReps}` : ""} · ${formVal}/100` }),
+      !isHold && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", title: "Confidenza dell'ultimo movimento rilevato — sotto ~62 la rep non viene contata", style: { color: ((metrics == null ? void 0 : metrics.liveRepConfidence) ?? 0) > 62 ? "#7FB069" : STEEL, fontSize: 8 }, children: [
+        "CONF ",
+        (metrics == null ? void 0 : metrics.liveRepConfidence) ?? 0
+      ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 8 }, children: [
         "AI · ",
         exerciseId,
@@ -7389,7 +7398,7 @@ function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
   const remain = Math.max(0, weeklyGoal - done);
   const isDone = done >= weeklyGoal;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card-glass", style: { borderRadius: 14, padding: 14, display: "flex", gap: 12, alignItems: "center" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 56, height: 56, borderRadius: "50%", background: `conic-gradient(${BLAZE} ${pct * 360}deg, ${OLIVE} 0deg)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, borderRadius: "50%", background: INK_2$1, display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid ${OLIVE}` }, children: isDone ? /* @__PURE__ */ jsxRuntimeExports.jsx(ShieldCheck, { size: 20, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 20, color: KHAKI }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 56, height: 56, borderRadius: "50%", background: `conic-gradient(${BLAZE} ${pct * 360}deg, ${OLIVE} 0deg)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, borderRadius: "50%", background: INK_2, display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid ${OLIVE}` }, children: isDone ? /* @__PURE__ */ jsxRuntimeExports.jsx(ShieldCheck, { size: 20, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 20, color: KHAKI }) }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.07em" }, children: "SFIDA SETTIMANALE" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 800, fontSize: 14 }, children: isDone ? "Completata!" : `${done}/${weeklyGoal} missioni` }),
@@ -8169,7 +8178,7 @@ function getBellyMissions({ sessions, profile, waistHistory }) {
     return (counts[a.id] || 0) - (counts[b.id] || 0);
   }).map((p2) => ({ ...p2, _needsBelly: needsBelly }));
 }
-const BUILD_VERSION = "2.8.3 · 764bba7";
+const BUILD_VERSION = "2.8.4 · ac45e28";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -8190,7 +8199,7 @@ function VersionBadge({ onClick }) {
         justifyContent: "center",
         gap: 8,
         padding: "6px 12px",
-        background: `${INK_2$1}88`,
+        background: `${INK_2}88`,
         border: `1px solid ${onClick ? KHAKI + "88" : OLIVE + "44"}`,
         borderRadius: 20,
         alignSelf: "center",
@@ -8286,7 +8295,7 @@ function useT() {
 }
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-Dp3YYvmA.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-D_I7TPvA.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -8420,7 +8429,7 @@ function SegmentedProgress({ total, current, currentProgress, color }) {
 function DogTag({ label, value, sub }) {
   const numeric = typeof value === "number";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card", style: {
-    background: `linear-gradient(160deg, ${INK_2$1}, ${INK})`,
+    background: `linear-gradient(160deg, ${INK_2}, ${INK})`,
     border: `1px solid ${OLIVE}`,
     borderRadius: 14,
     padding: "12px 13px",
@@ -8545,6 +8554,13 @@ function App() {
   const [showBellyTest, setShowBellyTest] = reactExports.useState(false);
   const [showPose, setShowPose] = reactExports.useState(null);
   const [showChangelog, setShowChangelog] = reactExports.useState(false);
+  const [showReleaseBanner, setShowReleaseBanner] = reactExports.useState(() => {
+    try {
+      return localStorage.getItem("o40_release_2.8.4") !== "dismissed";
+    } catch {
+      return true;
+    }
+  });
   const [aiCoachEnabled, setAiCoachEnabled] = reactExports.useState(() => {
     try {
       return localStorage.getItem("o40_aiCoach") !== "0";
@@ -9482,6 +9498,72 @@ function App() {
           onTestPush: handleTestPush
         }
       ),
+      screen === "home" && profile && showReleaseBanner && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+        margin: "10px 16px 0",
+        padding: "12px 14px",
+        borderRadius: 14,
+        background: `linear-gradient(135deg, ${BLAZE}18, ${INK_2})`,
+        border: `1px solid ${BLAZE}55`,
+        boxShadow: `0 4px 16px rgba(0,0,0,0.35), 0 0 0 1px ${BLAZE}22 inset`,
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+        position: "relative",
+        overflow: "hidden"
+      }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, opacity: 0.06, background: `repeating-linear-gradient(90deg, ${OLIVE} 0 1px, transparent 1px 14px)`, pointerEvents: "none" } }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, alignItems: "center", flex: 1, minWidth: 0 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 18, color: PAPER }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { minWidth: 0 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { background: BLAZE, color: PAPER, fontSize: 9, fontWeight: 800, letterSpacing: "0.08em", padding: "2px 6px", borderRadius: 6 }, children: "NUOVO v2.8.4" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "26 AGO 2026 · 7 FIX TRACKING" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }, children: "Sessione tracking sbloccata — prova con frontale!" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+            try {
+              localStorage.setItem("o40_release_2.8.4", "dismissed");
+            } catch {
+            }
+            setShowReleaseBanner(false);
+          }, "aria-label": "Chiudi", style: { width: 28, height: 28, borderRadius: "50%", border: `1px solid ${OLIVE}`, background: INK, color: STEEL, display: "grid", placeItems: "center", cursor: "pointer", flexShrink: 0, position: "relative" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14 }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { style: { position: "relative", margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 3, listStyle: "disc" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Framing" }),
+            ": caviglie non bloccano più — squat/affondo/wallsit/pushup +6 a terra visibili anche a mezzo busto"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Side-view" }),
+            ": angolo bilaterale visibility-aware (EMA+isteresi) — 16 esercizi stabili anche di lato"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Idle → READY" }),
+            ": badge POSE% corretto + bug root STANDING/TOP risolto (0→7 rep su tuoi landmarks)"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Squat" }),
+            ": hipY calibrato a inizio sessione + badge CONF diagnostico + fix DEBUG INK_2"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "flex", gap: 8, marginTop: 2 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setShowChangelog(true), style: { flex: 1, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 10, padding: "9px 12px", fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: "0.06em", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 14 }),
+            " DETTAGLI ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 14 })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+            try {
+              localStorage.setItem("o40_release_2.8.4", "dismissed");
+            } catch {
+            }
+            setShowReleaseBanner(false);
+          }, style: { background: INK, border: `1px solid ${OLIVE}`, color: KHAKI, borderRadius: 10, padding: "9px 14px", fontSize: 11, fontWeight: 600, cursor: "pointer" }, children: "Chiudi" })
+        ] })
+      ] }),
       screen === "home" && profile && /* @__PURE__ */ jsxRuntimeExports.jsx(
         HomeScreen,
         {
@@ -9758,7 +9840,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         fontWeight: 700,
         letterSpacing: "0.05em"
       }, children: l2 === "it" ? "ITALIANO" : l2 === "en" ? "ENGLISH" : "DEUTSCH" }, l2)) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "8px 12px" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "8px 12px" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em" }, children: "A11Y · Testo grande" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setLargeText((v) => !v), style: { padding: "6px 10px", borderRadius: 8, border: `1px solid ${largeText ? BLAZE : OLIVE}`, background: largeText ? `${BLAZE}22` : "transparent", color: largeText ? BLAZE : STEEL, fontSize: 11, fontWeight: 700, cursor: "pointer" }, children: largeText ? "A Grande ✓" : "A Normale" })
       ] }),
@@ -9817,7 +9899,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           style: inputStyle
         }
       ) }),
-      canCancel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 4 }, children: [
+      canCancel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 4 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleRow, { label: t("setup.sounds"), icon: soundOn ? Volume2 : VolumeX, on: soundOn, onClick: onToggleSound }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: 1, background: OLIVE_DARK, margin: "0 12px" } }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleRow, { label: t("setup.vibration"), icon: Vibrate, on: vibrationOn, onClick: onToggleVibration }),
@@ -9826,7 +9908,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: 1, background: OLIVE_DARK, margin: "0 12px" } }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleRow, { label: lang === "it" ? "Conto vocale" : lang === "de" ? "Sprach-Countdown" : "Voice countdown", icon: Music, on: voiceCountdown, onClick: onToggleVoiceCountdown })
       ] }),
-      canCancel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-sheen", style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 4, position: "relative", overflow: "hidden" }, children: [
+      canCancel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-sheen", style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 4, position: "relative", overflow: "hidden" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleRow, { label: t("setup.music"), icon: musicOn ? Music2 : HeadphoneOff, on: musicOn, onClick: onToggleMusic }),
         musicOn && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "8px 10px 12px" }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }, children: [
@@ -9909,7 +9991,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 8, color: STEEL, fontSize: 10, lineHeight: 1.4 }, children: musicAutoPlay ? lang === "it" ? "▶ Tutte le canzoni in sequenza automatica. Shuffle per ordine casuale." : "All songs autoplay in sequence. Shuffle for random." : t("setup.music.note") })
         ] })
       ] }),
-      canCancel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
+      canCancel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }, children: t("setup.level") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginBottom: 10 }, children: t("setup.level.hint") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }, children: INTERVAL_PRESETS.map((pr) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
@@ -9961,7 +10043,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           ] })
         ] }, l2.key)) })
       ] }),
-      canCancel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
+      canCancel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("setup.health") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }, dangerouslySetInnerHTML: { __html: t("setup.health.body") } }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { style: {
@@ -10001,7 +10083,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onApplyHealthWeight, style: { ...primaryBtn, width: "auto", padding: "8px 14px", fontSize: 13 }, children: t("setup.health.apply") })
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${pushEnabled ? BLAZE : OLIVE}`, borderRadius: 14, padding: 14 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${pushEnabled ? BLAZE : OLIVE}`, borderRadius: 14, padding: 14 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
           pushEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(Bell, { size: 16, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BellOff, { size: 16, color: STEEL }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: pushEnabled ? BLAZE : KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", flex: 1 }, children: lang === "it" ? "Push PWA — anche con app chiusa" : lang === "de" ? "Push PWA — auch geschlossen" : "PWA Push — works when closed" }),
@@ -10056,7 +10138,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 10, marginTop: 8, lineHeight: 1.4 }, children: lang === "it" ? "Privacy: subscription salvata solo su mikweb.eu, nessun tracking." : "Privacy: subscription stored only on mikweb.eu" })
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12, display: "flex", gap: 10 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12, display: "flex", gap: 10 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 20, color: BLAZE, style: { flexShrink: 0, marginTop: 2 } }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 12.5, lineHeight: 1.5 }, children: t("setup.tech.note") })
       ] }),
@@ -10107,7 +10189,7 @@ function Field({ label, children }) {
 }
 const inputStyle = {
   width: "100%",
-  background: INK_2$1,
+  background: INK_2,
   border: `1px solid ${OLIVE}`,
   borderRadius: 12,
   padding: "12px 14px",
@@ -10200,7 +10282,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       s,
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: BLAZE }, children: "◆" })
     ] }, i)) }) }),
-    !profile.seenIntro && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "10px 16px 0", background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2$1})`, border: `1px solid ${BLAZE}`, borderRadius: 12, padding: 12, display: "flex", gap: 10, alignItems: "flex-start" }, children: [
+    !profile.seenIntro && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "10px 16px 0", background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${BLAZE}`, borderRadius: 12, padding: 12, display: "flex", gap: 10, alignItems: "flex-start" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Info, { size: 16, color: BLAZE, style: { flexShrink: 0, marginTop: 1 } }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flex: 1, color: KHAKI, fontSize: 12, lineHeight: 1.4 }, dangerouslySetInnerHTML: { __html: t("home.intro") } }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onDismissIntro, style: { background: "transparent", border: "none", cursor: "pointer", padding: 2, flexShrink: 0 }, "aria-label": t("home.intro.close"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 16, color: STEEL }) })
@@ -10232,7 +10314,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         width: "100%",
         textAlign: "left",
         border: `1px solid ${BLAZE}`,
-        background: `linear-gradient(150deg, ${INK_2$1} 0%, ${OLIVE_DARK} 55%, ${OLIVE} 130%)`,
+        background: `linear-gradient(150deg, ${INK_2} 0%, ${OLIVE_DARK} 55%, ${OLIVE} 130%)`,
         borderRadius: 18,
         padding: 20,
         cursor: "pointer",
@@ -10303,7 +10385,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         gap: 12,
         width: "100%",
         marginTop: 10,
-        background: `linear-gradient(135deg, ${INK_2$1}, ${INK})`,
+        background: `linear-gradient(135deg, ${INK_2}, ${INK})`,
         border: `1px solid ${KHAKI}`,
         borderRadius: 12,
         padding: 12,
@@ -10321,7 +10403,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 16, color: STEEL })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "12px 0 8px", background: `linear-gradient(135deg, ${INK_2$1}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", display: "flex", alignItems: "center", gap: 10 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "12px 0 8px", background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", display: "flex", alignItems: "center", gap: 10 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, borderRadius: "50%", background: `${KHAKI}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { size: 16, color: KHAKI }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em" }, children: [
@@ -10338,7 +10420,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         const bellyProgress = getBellyProgress(sessions, 3);
         const bellyStreak = getBellyStreak(sessions);
         const bellyInsight = getBellyInsight({ sessions, waistHistory, lang });
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "12px 0 8px", background: `linear-gradient(135deg, ${BLAZE}14, ${INK_2$1})`, border: `1px solid ${BLAZE}66`, borderRadius: 14, padding: 12 }, children: [
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "12px 0 8px", background: `linear-gradient(135deg, ${BLAZE}14, ${INK_2})`, border: `1px solid ${BLAZE}66`, borderRadius: 14, padding: 12 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 32, height: 32, borderRadius: "50%", background: `${BLAZE}22`, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Target, { size: 16, color: BLAZE }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
@@ -10433,7 +10515,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         alignItems: "center",
         gap: 12,
         width: "100%",
-        background: showOthers ? OLIVE_DARK : INK_2$1,
+        background: showOthers ? OLIVE_DARK : INK_2,
         border: `1px solid ${showOthers ? BLAZE : OLIVE}`,
         borderRadius: 12,
         padding: "12px 14px",
@@ -10458,7 +10540,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         display: "flex",
         alignItems: "center",
         gap: 12,
-        background: idx === 0 ? `linear-gradient(135deg, ${INK_2$1}, ${OLIVE_DARK})` : INK_2$1,
+        background: idx === 0 ? `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})` : INK_2,
         border: `1px solid ${idx === 0 ? KHAKI : ["H", "I", "J"].includes(p2.id) ? BLAZE : OLIVE}`,
         borderRadius: 10,
         padding: 12,
@@ -10484,7 +10566,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           const cons = getConsistencyScore(sessions);
           const risk = getStreakRisk(sessions);
           const pace = getAveragePace(sessions);
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${INK_2$1}, ${OLIVE_DARK})`, border: `1px solid ${risk === "at-risk" ? KHAKI : risk === "break" ? BLAZE : OLIVE}`, borderRadius: 12, padding: "11px 13px", display: "flex", alignItems: "center", gap: 11 }, children: [
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${risk === "at-risk" ? KHAKI : risk === "break" ? BLAZE : OLIVE}`, borderRadius: 12, padding: "11px 13px", display: "flex", alignItems: "center", gap: 11 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 34, height: 34, borderRadius: "50%", background: `${BLAZE}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { size: 16, color: risk === "break" ? BLAZE : KHAKI }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 12.5, fontWeight: 600 }, children: [
@@ -10517,7 +10599,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         (() => {
           const smart = getSmartInsight({ sessions, profile, waistHistory, weightHistory, lang });
           const rec = getSmartRecommendation({ sessions, profile, lang });
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${smart.color}18, ${INK_2$1})`, border: `1px solid ${smart.color}55`, borderRadius: 12, padding: "11px 13px", display: "flex", gap: 11, alignItems: "center" }, children: [
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${smart.color}18, ${INK_2})`, border: `1px solid ${smart.color}55`, borderRadius: 12, padding: "11px 13px", display: "flex", gap: 11, alignItems: "center" }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 34, height: 34, borderRadius: "50%", background: `${smart.color}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 18 }, children: smart.icon }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 12.5, fontWeight: 600 }, children: smart.title }),
@@ -10532,7 +10614,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         })(),
         (() => {
           const ch = getPersonalChallenge(sessions, profile);
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${INK_2$1}, ${OLIVE_DARK})`, border: `1px solid ${ch.color}55`, borderRadius: 12, padding: "11px 13px" }, children: [
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${ch.color}55`, borderRadius: 12, padding: "11px 13px" }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 16 }, children: ch.icon }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em" }, children: [
@@ -10560,7 +10642,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           const ach = getAchievementsProgress(sessions);
           const nextAch = getNextAchievements(sessions, 3);
           const unlocked = ach.filter((a) => a.unlocked).length;
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${INK_2$1}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "11px 13px" }, children: [
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "11px 13px" }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(Medal, { size: 14, color: KHAKI }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em" }, children: [
@@ -10586,7 +10668,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
             ] }, a.id)) })
           ] });
         })(),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2$1})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "11px 13px", display: "flex", alignItems: "center", gap: 11 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "11px 13px", display: "flex", alignItems: "center", gap: 11 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 34, height: 34, borderRadius: "50%", background: `${BLAZE}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Ruler, { size: 16, color: BLAZE }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 12.5, fontWeight: 600 }, children: [
@@ -10605,7 +10687,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           ] }),
           waist && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: waistDelta != null && waistDelta <= 0 ? "#7FB069" : KHAKI, fontSize: 11 }, children: waistDelta != null && waistDelta <= 0 ? t("home.trendok") : t("home.start") })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2$1})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "11px 13px", display: "flex", alignItems: "center", gap: 11 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "11px 13px", display: "flex", alignItems: "center", gap: 11 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 34, height: 34, borderRadius: "50%", background: `${KHAKI}1f`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Scale, { size: 16, color: KHAKI }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 12.5, fontWeight: 600 }, children: [
@@ -10624,7 +10706,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           ] }),
           weight && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: weightDelta != null && weightDelta <= 0 ? "#7FB069" : KHAKI, fontSize: 11 }, children: weightDelta != null && weightDelta <= 0 ? t("home.trendok") : t("home.start") })
         ] }),
-        nextLevel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "8px 16px 0", display: "flex", alignItems: "center", gap: 10, background: `linear-gradient(135deg, ${BLAZE_DEEP}, ${INK_2$1})`, border: `1px solid ${BLAZE}`, borderRadius: 12, padding: "11px 13px" }, children: [
+        nextLevel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "8px 16px 0", display: "flex", alignItems: "center", gap: 10, background: `linear-gradient(135deg, ${BLAZE_DEEP}, ${INK_2})`, border: `1px solid ${BLAZE}`, borderRadius: 12, padding: "11px 13px" }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Crown, { size: 16, color: PAPER, style: { flexShrink: 0 } }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 12.5, fontWeight: 600 }, children: t("home.promote.title", { lvl: tr$1(nextLevel.label, lang) }) }),
@@ -10645,7 +10727,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
             const hist = getGoalHistory(sessions, weeklyGoal, 6);
             const sugg = suggestNextGoal(sessions, weeklyGoal);
             const kcalWeekEst = estimateWeeklyCalories(sessions, weeklyGoal);
-            return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${INK_2$1}, ${OLIVE_DARK})`, border: `1px solid ${gp.isDone ? "#7FB069" : OLIVE}`, borderRadius: 14, padding: 12, display: "flex", gap: 12, alignItems: "center" }, children: [
+            return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${gp.isDone ? "#7FB069" : OLIVE}`, borderRadius: 14, padding: 12, display: "flex", gap: 12, alignItems: "center" }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(GoalRing, { done: gp.done, total: gp.total, size: 64, stroke: 6 }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em" }, children: [
@@ -10682,7 +10764,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         (() => {
           const next = getNextMedals(sessions, 3);
           if (!next.length) return null;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "0 16px 8px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", display: "flex", alignItems: "center", gap: 10 }, children: [
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "0 16px 8px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", display: "flex", alignItems: "center", gap: 10 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Medal, { size: 16, color: KHAKI }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em" }, children: "PROSSIME MEDAGLIE" }),
@@ -10706,7 +10788,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           display: "flex",
           alignItems: "center",
           gap: 12,
-          background: INK_2$1,
+          background: INK_2,
           border: `1px solid ${OLIVE}`,
           borderRadius: 10,
           padding: 12
@@ -10818,7 +10900,7 @@ function LibraryScreen({ sessions, profile }) {
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }, children: rec.map((rid) => {
           const ex = EXERCISES[rid];
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setSelectedId(rid), style: { minWidth: 110, background: `linear-gradient(135deg, ${INK_2$1}, ${INK})`, border: `1px solid ${favs.includes(rid) ? BLAZE : OLIVE}`, borderRadius: 12, padding: 10, cursor: "pointer", textAlign: "center", boxShadow: favs.includes(rid) ? `0 0 0 1px ${BLAZE}22` : "none" }, children: [
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setSelectedId(rid), style: { minWidth: 110, background: `linear-gradient(135deg, ${INK_2}, ${INK})`, border: `1px solid ${favs.includes(rid) ? BLAZE : OLIVE}`, borderRadius: 12, padding: 10, cursor: "pointer", textAlign: "center", boxShadow: favs.includes(rid) ? `0 0 0 1px ${BLAZE}22` : "none" }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, margin: "0 auto 6px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: ex.pose, color: favs.includes(rid) ? BLAZE : KHAKI }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 11, fontWeight: 700 }, children: tr$1(ex.name, lang) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: favs.includes(rid) ? BLAZE : STEEL, fontSize: 9 }, children: favs.includes(rid) ? "★ preferito" : "tap per aprire" })
@@ -10838,7 +10920,7 @@ function LibraryScreen({ sessions, profile }) {
         display: "flex",
         flexDirection: "column",
         gap: 12,
-        background: INK_2$1,
+        background: INK_2,
         border: `1px solid ${isOpen ? BLAZE : OLIVE}`,
         borderRadius: 14,
         padding: 12,
@@ -10918,7 +11000,7 @@ function BuilderScreen({ profile, initial, onCancel, onCreate, onUpdate }) {
           borderRadius: 10,
           cursor: "pointer",
           textAlign: "center",
-          background: rounds === r ? BLAZE : INK_2$1,
+          background: rounds === r ? BLAZE : INK_2,
           border: `1px solid ${rounds === r ? BLAZE : OLIVE}`
         }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { color: PAPER, fontSize: 18 }, children: r }) }, r)) })
       ] }),
@@ -10930,7 +11012,7 @@ function BuilderScreen({ profile, initial, onCancel, onCreate, onUpdate }) {
         background: filter === key ? BLAZE : "transparent",
         border: `1px solid ${filter === key ? BLAZE : OLIVE}`
       }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: filter === key ? PAPER : STEEL, fontSize: 11 }, children: label }) }, key)) }),
-      selected.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 12, background: INK_2$1, border: `1px solid ${BLAZE}`, borderRadius: 10, padding: 10 }, children: [
+      selected.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 12, background: INK_2, border: `1px solid ${BLAZE}`, borderRadius: 10, padding: 10 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em", marginBottom: 6 }, children: "Ordine selezionati · trascina su/giù" }),
         selected.map((sid, idx) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: idx < selected.length - 1 ? `1px solid ${OLIVE_DARK}` : "none" }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: STEEL, fontSize: 10 }, children: [
@@ -10958,7 +11040,7 @@ function BuilderScreen({ profile, initial, onCancel, onCreate, onUpdate }) {
           display: "flex",
           alignItems: "center",
           gap: 12,
-          background: on ? OLIVE_DARK : INK_2$1,
+          background: on ? OLIVE_DARK : INK_2,
           border: `1px solid ${on ? BLAZE : OLIVE}`,
           borderRadius: 10,
           padding: 10,
@@ -11037,7 +11119,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
           display: "flex",
           flexDirection: "column",
           gap: 12,
-          background: INK_2$1,
+          background: INK_2,
           border: `1px solid ${isOpen ? BLAZE : OLIVE}`,
           borderRadius: 10,
           padding: 12
@@ -11284,7 +11366,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
       )
     ] }),
     isAiWork && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, textAlign: "center", paddingBottom: 8 }, children: lang === "it" ? "AI avanzerà da solo al target · disattiva con 👁️" : "AI will auto-advance at target · disable with 👁️" }),
-    exitConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, background: "rgba(27,29,22,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 22, maxWidth: 320, textAlign: "center" }, children: [
+    exitConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, background: "rgba(27,29,22,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 22, maxWidth: 320, textAlign: "center" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22, marginBottom: 8 }, children: t("ses.quit.title") }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, marginBottom: 18 }, children: t("ses.quit.body") }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10 }, children: [
@@ -11294,11 +11376,11 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
     ] }) })
   ] });
 }
-const iconCircle = { borderRadius: "50%", border: `1px solid ${OLIVE}`, background: `linear-gradient(160deg, ${INK_2$1}, ${INK})`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 4px 12px rgba(0,0,0,0.35)" };
-const secondaryBtn = { background: INK_2$1, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
+const iconCircle = { borderRadius: "50%", border: `1px solid ${OLIVE}`, background: `linear-gradient(160deg, ${INK_2}, ${INK})`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 4px 12px rgba(0,0,0,0.35)" };
+const secondaryBtn = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
 const pillBtn = {
   flex: 1,
-  background: INK_2$1,
+  background: INK_2,
   border: `1px solid ${OLIVE}`,
   color: PAPER,
   borderRadius: 10,
@@ -11359,7 +11441,7 @@ function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInp
         /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.kcal"), value: stats.kcal })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(WeeklyChallenge, { sessions, weeklyGoal: profile.weeklyGoal || WEEKLY_GOAL }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.rpe.title") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 6, marginTop: 10 }, children: RPE_LABELS.map((lbl, i) => {
           const val = i + 1;
@@ -11380,7 +11462,7 @@ function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInp
           ] }, val);
         }) })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.notes.title") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "textarea",
@@ -11394,7 +11476,7 @@ function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInp
           }
         )
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Ruler, { size: 18, color: BLAZE }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.waist.title") })
@@ -11412,7 +11494,7 @@ function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInp
           }
         )
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Scale, { size: 18, color: BLAZE }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.weight.title") })
@@ -11430,7 +11512,7 @@ function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInp
           }
         )
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 18, color: BLAZE }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.hr.title") }),
@@ -11500,7 +11582,7 @@ function Badge({ label, unlocked, value, color = BLAZE, icon = "trophy", progres
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      background: unlocked ? `radial-gradient(circle at 30% 30%, ${color}, ${INK})` : INK_2$1,
+      background: unlocked ? `radial-gradient(circle at 30% 30%, ${color}, ${INK})` : INK_2,
       border: `1px solid ${unlocked ? color : OLIVE}`,
       boxShadow: unlocked ? `0 0 12px ${color}66, inset 0 1px 1px rgba(255,255,255,0.15)` : "none",
       position: "relative",
@@ -11646,7 +11728,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           ] })
         ] })
       ] }),
-      avgRpe !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2$1})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
+      avgRpe !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 17, color: BLAZE }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.avgint") }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginLeft: "auto", display: "flex", alignItems: "baseline", gap: 4 }, children: [
@@ -11654,7 +11736,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: "/ 6" })
         ] })
       ] }),
-      bestWeekKcal > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 18, background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
+      bestWeekKcal > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 18, background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 16, color: KHAKI, style: { flexShrink: 0 } }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13, fontWeight: 600 }, children: t("hist.bestweek.title") }),
@@ -11668,7 +11750,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
         const cons = getConsistencyScore(sessions);
         const pace = getAveragePace(sessions);
         const risk = getStreakRisk(sessions);
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2$1})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 12, color: BLAZE }),
             " ADERENZA 8 SETTIMANE"
@@ -11712,7 +11794,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
         const daily = getDailyInsight({ sessions, profile, waistHistory, weightHistory, lang });
         const weekly = getWeeklyInsight({ sessions, profile, lang });
         return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 18, display: "flex", flexDirection: "column", gap: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${daily.color}18, ${INK_2$1})`, border: `1px solid ${daily.color}55`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${daily.color}18, ${INK_2})`, border: `1px solid ${daily.color}55`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center" }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 22 }, children: daily.icon }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 13, fontWeight: 600 }, children: [
@@ -11727,7 +11809,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 16, color: daily.color, style: { flexShrink: 0 } })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center" }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 18 }, children: weekly.icon }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13, fontWeight: 600 }, children: weekly.title }),
@@ -11739,7 +11821,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
       })(),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.goal.title") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontSize: 13 }, children: t("hist.goal.label") }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 14 }, children: [
@@ -11780,7 +11862,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.35d") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 5 }, children: heatmap.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: c.key, style: {
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 5 }, children: heatmap.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: c.key, style: {
           aspectRatio: "1 / 1",
           borderRadius: 3,
           background: c.active ? BLAZE : OLIVE_DARK,
@@ -11792,7 +11874,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           "Anno · ",
           (/* @__PURE__ */ new Date()).getFullYear()
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(26, 1fr)", gap: 2 }, children: yearHeat.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: `${c.key} · ${c.count || 0}`, style: { aspectRatio: "1/1", borderRadius: 2, background: c.count ? c.count > 1 ? BLAZE : OLIVE : OLIVE_DARK, opacity: c.count ? 1 : 0.5 } }, c.key)) }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(26, 1fr)", gap: 2 }, children: yearHeat.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: `${c.key} · ${c.count || 0}`, style: { aspectRatio: "1/1", borderRadius: 2, background: c.count ? c.count > 1 ? BLAZE : OLIVE : OLIVE_DARK, opacity: c.count ? 1 : 0.5 } }, c.key)) }) })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }, children: [
@@ -11807,14 +11889,14 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
             " sbloccate"
           ] })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MedalGrid, { sessions }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MedalGrid, { sessions }) })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.kcal7") }),
           trendPct !== null && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 11 }, children: t("hist.vsweek", { p: (trendPct > 0 ? "+" : "") + trendPct }) })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 140 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(BarChart, { data: weekData, margin: { top: 8, right: 8, left: -22, bottom: 0 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 140 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(BarChart, { data: weekData, margin: { top: 8, right: 8, left: -22, bottom: 0 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3", vertical: false }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
@@ -11827,7 +11909,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
         const maxK = Math.max(1, ...months.map((m2) => m2.kcal));
         return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: "Trend mensile · kcal" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 10px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "flex-end", gap: 6, height: 80 }, children: months.map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 10px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "flex-end", gap: 6, height: 80 }, children: months.map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%", height: `${Math.round(m2.kcal / maxK * 60) + 4}px`, background: m2.kcal ? BLAZE : OLIVE_DARK, borderRadius: 3, opacity: m2.kcal ? 1 : 0.5 } }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: m2.label })
           ] }, m2.key)) }) })
@@ -11835,7 +11917,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
       })(),
       sessions.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.fav") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, display: "flex", flexDirection: "column", gap: 10 }, children: PROGRAMS.map((p2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, display: "flex", flexDirection: "column", gap: 10 }, children: PROGRAMS.map((p2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 3 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER }, children: tr$1(p2.name, lang) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL }, children: counts[p2.id] })
@@ -11845,7 +11927,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
       ] }),
       hrData.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.hr") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: hrData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: hrData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
@@ -11858,7 +11940,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.waist") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: waistData[0].cm <= waistData[waistData.length - 1].cm ? BLAZE : "#7FB069", fontSize: 11 }, children: t("hist.waist.total", { v: (waistData[waistData.length - 1].cm - waistData[0].cm > 0 ? "+" : "") + (waistData[waistData.length - 1].cm - waistData[0].cm) }) })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: waistData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: waistData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { domain: ["dataMin - 2", "dataMax + 2"], tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
@@ -11871,7 +11953,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.weight") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: weightData[weightData.length - 1].kg <= weightData[0].kg ? "#7FB069" : BLAZE, fontSize: 11 }, children: t("hist.weight.total", { v: (weightData[weightData.length - 1].kg - weightData[0].kg > 0 ? "+" : "") + (weightData[weightData.length - 1].kg - weightData[0].kg).toFixed(1) }) })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: weightData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: weightData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { domain: ["dataMin - 1.5", "dataMax + 1.5"], tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
@@ -11881,7 +11963,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
       ] }),
       rpeSeries.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.rpe") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: rpeSeries, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: rpeSeries, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { domain: [1, 6], ticks: [1, 2, 3, 4, 5, 6], tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
@@ -11898,7 +11980,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
         const bf = estimateBodyFat({ waistCm: waistLatest, weightKg: latestKg, heightCm: profile.heightCm, age: profile.age });
         const wht = waistLatest ? waistLatest / profile.heightCm : null;
         const wcat = wht != null ? whtCategory(wht) : null;
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 6 }, children: [
             t("bmi.title"),
             " · ",
@@ -11927,7 +12009,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
       (() => {
         const now2 = /* @__PURE__ */ new Date();
         const { pad, days } = buildCalendarGrid(sessions, now2.getFullYear(), now2.getMonth());
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 8 }, children: [
             t("export.calendar"),
             " · ",
@@ -11940,7 +12022,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           ] })
         ] });
       })(),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em" }, children: "Foto progressi" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { style: { background: BLAZE, color: PAPER, borderRadius: 8, padding: "6px 10px", fontSize: 11, fontWeight: 700, cursor: "pointer" }, children: [
@@ -11961,7 +12043,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
       ordered.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13 }, children: t("hist.empty") }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: ordered.map((s, i) => {
         const zone = s.peakHR ? hrZone(s.peakHR, profile.age, lang) : null;
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 6, background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 6, background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 14, fontWeight: 600 }, children: s.programName }),
@@ -12014,7 +12096,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
         ] })
       ] })
     ] }),
-    confirmClear && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, background: "rgba(27,29,22,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2$1, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 22, maxWidth: 320, textAlign: "center" }, children: [
+    confirmClear && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, background: "rgba(27,29,22,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 22, maxWidth: 320, textAlign: "center" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22, marginBottom: 8 }, children: t("hist.clear.title") }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, marginBottom: 18 }, children: t("hist.clear.body") }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10 }, children: [
@@ -12548,7 +12630,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-CLFVzqA_.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-Cy09GzZA.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;

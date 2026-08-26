@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.8.0';
+export const CHANGELOG_VERSION = '2.8.4';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,85 +22,84 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.8',
-    title: 'AI Fitness Coach automatico',
-    subtitle: 'v2.8 · Riconosce la missione → coach dal vivo · 100% offline',
-    intro: 'Ogni missione ora si auto-configura: l’app legge l’esercizio (es. “20 push-up”), carica l’algoritmo giusto, conta reps, cronometra, valuta forma 0-100 e ti corregge a voce nella tua lingua — senza toccare nulla.',
+    badge: 'NUOVO v2.8.4',
+    title: 'Sessione tracking — 7 fix in 1 giorno',
+    subtitle: 'v2.8.4 · 26 Agosto 2026 · Framing + pose + conteggio — 100% offline',
+    intro: 'Giornata intera di debug col replay dei tuoi landmarks reali: framing frontale che non blocca più, angoli stabili in side-view, blocco “idle” eliminato e bug root del conteggio risolto. Tutto verificato con i tuoi file landmarks-squat-*.json (0→7 rep).',
     groups: [
       {
-        icon: '🔧',
-        title: 'Fix rilevamento (NUOVO v2.7.2)',
+        icon: '📐',
+        title: '1. Framing frontale — caviglie non bloccano più',
         items: [
-          'Soglie più permissive + auto-calibrazione ROM nei primi 1.2s (impara la tua escursione reale)',
-          'Scelta lato migliore (visibility) per camera laterale + OneEuro per-esercizio (0.75 hold / 1.35 burpee)',
-          'Gate visibility 0.38 + timestamp video*1000 per Safari + isteresi calibrata — zero doppi conteggi',
+          'Problema: con la selfie-camera (FOV stretta) dovevi allontanarti troppo; se i piedi uscivano dal frame, il tracking si metteva in pausa per “pose bassa”.',
+          'Fix: rimosso gate caviglie (27/28) da requiredLandmarks in 10 esercizi: squat, affondo, wallsit, pushup, legRaise, deadBug, flutterKick, mountainClimber, vUp, ponte',
+          'Geometria invariata: l’angolo ginocchio/tronco usa ancora le caviglie quando visibili — tolto solo il blocco',
         ],
       },
       {
-        icon: '🧠',
-        title: 'Motore AI client-side',
+        icon: '👁️',
+        title: '2. Side-view stabile — angolo bilaterale visibility-aware',
         items: [
-          'Google MediaPipe Tasks Vision — Pose Landmarker Lite (GPU su iPhone, fallback CPU) — 33 landmark',
-          'Nessun upload video (privacy 100%), soglie detection 0.45 per luce bassa iPhone',
-          'PWA 25-30 FPS garantiti: rAF + inferenza throttled 28→22 fps, nessuna immagine al server',
+          'Problema: 16/22 analyzer mediavano (sx+dx)/2 senza guardare la visibilità → in side-view il lato occluso (vis. bassa, stima “indovinata”) distorceva l’angolo',
+          'Fix: nuovo helper bilateralJointAngle() — EMA visibilità α0.35 + isteresi 0.12 per cambio lato + hold ultimo lato buono',
+          'Applicato a 16 esercizi, pulizia duplicate knee()/trunk() in squat/pushup + ricalcolo unico in legRaise/vUp',
         ],
       },
       {
-        icon: '🏋️',
-        title: '13 esercizi con analisi articolare',
+        icon: '🔓',
+        title: '3. “Resta in idle” — badge e hint corretti',
         items: [
-          'Push-up, squat, crunch, plank, mountain climber, jumping jack, flutter kicks, bicycle crunch, leg raise, dead bug, heel taps, V-up, burpee',
-          'Angoli in tempo reale: ginocchio (hip-knee-ankle), gomito (shoulder-elbow-wrist), anca, busto',
-          'Calcolo direzione e velocità (°/s) per distinguere controllo vs. slancio',
+          'Causa: FitnessEngine calcolava POSE% con lista generica (con caviglie) anche quando l’analyzer ne usava una ridotta + banner “Allontanati” nascosto proprio in idle (condizione invertita)',
+          'Fix: POSE% ora usa analyzer.requiredLandmarks; rimossa condizione currentPhase!=idle in SessionAIOverlay + FitnessEngineView',
+          'Estese le caviglie rimosse ad altri 6 a terra (vedi sopra) — risolto lo stesso gate anche lì',
         ],
       },
       {
-        icon: '🔁',
-        title: 'Conteggio ripetizioni + timer intelligente',
+        icon: '🐛',
+        title: '4. Bug root: STANDING/TOP senza uscita → conteggio bloccato',
         items: [
-          'State machine configurabile: idle → ready → down → bottom → up → rep_completed',
-          'Isteresi anti-rimbalzo (banda 5-12°) + dwell times (120-340 ms) — zero doppi conteggi',
-          'Timer parte al primo movimento, traccia tempo totale e tempo attivo (esclude idle)',
+          'Trovato col replay landmarks reali (1200 frame): un colpo a vuoto iniziale lasciava phase=STANDING per sempre — reset a READY solo su rep riuscita',
+          'Stesso schema in 7 analyzer: squat(STANDING), pushup(TOP), crunch(EXTENDED), legRaise(DOWN), vUp(EXTENDED), ponte(DOWN), affondo(STANDING)',
+          'Fix: reset a READY + azimuth trough/peak anche su rep non contata — prima 0 rep, dopo 7 rep sugli stessi dati + test regressione',
         ],
       },
       {
-        icon: '⭐',
-        title: 'Quality Score 0-100 & coaching',
+        icon: '📏',
+        title: '5. Squat — hipY calibrato per sessione',
         items: [
-          'Score per rep: forma 55% + ROM 30% + controllo velocità 15% → media mobile 5 rep',
-          'Feedback live: “Schiena dritta”, “Ginocchia sopra le punte”, “Gomiti a 45°”, “Addome contratto”',
-          'Cues localizzati it / en / de, con vibrazione aptica al completamento rep',
+          'Problema: soglia fissa hipY 0.55 per “sei abbastanza vicino” non adatta a tutte le altezze/distances',
+          'Fix: calibrazione hipY nei primi 300ms della sessione (media dei frame iniziali) invece di soglia fissa',
+          'Elimina flicker di fase spurio a inizio sessione',
         ],
       },
       {
-        icon: '〰️',
-        title: 'Filtri e performance',
+        icon: '🔍',
+        title: '6. Diagnostica + fix DEBUG',
         items: [
-          'One Euro Filter per landmark (x,y) → jitter eliminato senza lag — alternativa Kalman, più leggera',
-          'requestAnimationFrame + inferenza throttled 28 fps (auto 22 fps se CPU calda) → batteria risparmiata',
-          'Codice TypeScript modulare: FitnessEngine, PoseLandmarkerManager, LandmarkSmoother, SpeechCoach',
+          'Nuovo badge CONF live nell’HUD (repConfidence) per capire al volo se la rep è “scarsa” o “bloccata”',
+          'Fix crash pannello ◇ DEBUG: ReferenceError INK_2 (colore non importato) → app non crasha più aprendo AI ENGINE',
+          'LandmarkRecorder ◯ REC → landmarks-*.json: il replay offline è il modo più rapido per replicare un bug reale',
         ],
       },
       {
-        icon: '🎤',
-        title: 'Coach vocale + overlay scheletro',
+        icon: '⚡',
+        title: '7. Affinamento 22 esercizi (mattina)',
         items: [
-          'Sintesi vocale opzionale (Web Speech API) throttled 3 s — annuncia reps e correzioni',
-          'Skeleton overlay su canvas (specchio) + badge angolo + barra qualità + FPS',
-          'Pannello HUD: REPS / TIME / QUALITY + selezione esercizio live senza ricaricare il modello',
+          'Loop 10 giri perfezionamento: squat/pushup/affondo soglie shallow, PoseQuality 38 side-view, hold grace 500ms, normalizzazione torsoLength',
+          'Burpee/jumpingJack adaptive + jitter 28fps stabilizzato — harness 7/7 PASS, 22/22 smoke OK',
         ],
       },
     ],
-    cta: 'PROVALO',
-    ctaHint: 'Home → Conta squat (camera) · o da qualsiasi missione',
+    cta: 'PROVA ORA',
+    ctaHint: 'Home → Missione → Avvia · verifica su https://mikweb.eu/operator40/ con iPhone frontale',
     dismiss: 'Non mostrare più',
     close: 'Chiudi',
-    footer: 'Tutto gira sul dispositivo. Se vuoi offline 100%, copia wasm + modello in public/wasm (vedi docs/ENGINE.md).',
+    footer: 'Tutto on-device (IndexedDB, MediaPipe mai su server). Per replay: ◯ REC durante sessione → ↓ JSON → test analyzer. Docs completi in docs/FIX-tracking-2026-08-26.md',
   },
   en: {
-    badge: 'NEW',
-    title: 'AI Fitness Engine',
-    subtitle: 'v2.7 · On-device MediaPipe · 100% offline',
+    badge: 'NEW v2.8.4',
+    title: 'Tracking session — 7 fixes in one day',
+    subtitle: 'v2.8.4 · Aug 26 2026 · Framing + pose + counting — 100% offline',
     intro: 'Your personal coach now sees you, counts and corrects — all on your phone, no video uploaded.',
     groups: [
       {
@@ -165,9 +164,9 @@ const COPY: Record<Lang, any> = {
     footer: 'Everything runs on-device. For 100% offline, copy wasm + model to public/wasm (see docs/ENGINE.md).',
   },
   de: {
-    badge: 'NEU',
-    title: 'AI Fitness Engine',
-    subtitle: 'v2.7 · MediaPipe on-device · 100% offline',
+    badge: 'NEU v2.8.4',
+    title: 'Tracking-Session — 7 Fixes an einem Tag',
+    subtitle: 'v2.8.4 · 26. Aug 2026 · Framing + Pose + Zählung — 100% offline',
     intro: 'Dein persönlicher Coach sieht dich jetzt, zählt und korrigiert — alles auf dem Handy, kein Video-Upload.',
     groups: [
       {
