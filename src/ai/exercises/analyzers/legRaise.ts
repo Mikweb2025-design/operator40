@@ -28,7 +28,10 @@ export class LegRaiseAnalyzer extends ExerciseAnalyzer{
         repConf=clamp(52 + kneeScore + (rom>45?14: rom>30?8:4) + (Math.abs(this.velFilt)<350?8:0),0,100);
       } else { repConf=clamp(14,0,100); }
       // kneeOk not blocking rep, only lowers repConf
-      if (topOk&&downOk&&repConf>60 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; this.trough=hipFlex; this.peak=hipFlex; next='READY'; } }
+      if (topOk&&downOk&&repConf>60 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; } }
+      // Always cycle back to READY — DOWN has no other exit transition, so a single
+      // low-confidence attempt would otherwise lock tracking forever.
+      this.trough=hipFlex; this.peak=hipFlex; next='READY';
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     let form=90, cues:string[]=[];

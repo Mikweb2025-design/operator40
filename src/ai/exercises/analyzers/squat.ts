@@ -49,11 +49,12 @@ export class SquatAnalyzer extends ExerciseAnalyzer{
       }
       // Lower gate 62 (was 75) — prefer counting uncertain rep with lower conf over false negative
       if (depthOk && extOk && repConf>62 && q.exerciseConfidence>38){
-        if (this.shouldCountRep(ts,repConf,62)){ repInc=true; this.lastRepAt=ts; this.trough=ang; this.peak=ang; next='READY'; }
-      } else if (depthOk && extOk) {
-        // Keep repConf for HUD even when not counting (debug visibility)
-        repConf = Math.max(repConf, 0);
+        if (this.shouldCountRep(ts,repConf,62)){ repInc=true; this.lastRepAt=ts; }
       }
+      // Always cycle back to READY once a full down-up attempt resolves, whether or not it
+      // counted — STANDING has no other exit transition, so a single low-confidence attempt
+      // (e.g. while still adjusting position) would otherwise lock tracking forever.
+      this.trough=ang; this.peak=ang; next='READY';
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
 

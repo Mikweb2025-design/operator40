@@ -27,7 +27,10 @@ export class VUpAnalyzer extends ExerciseAnalyzer{
       if (foldOk&&extOk){
         repConf=clamp(54 + legScore + (rom>75?14: rom>55?8:4) + (Math.abs(this.velFilt)<600?8:0),0,100);
       } else { repConf=clamp(14,0,100); }
-      if (foldOk&&extOk&&repConf>60 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; this.trough=pike; this.peak=pike; next='READY'; } }
+      if (foldOk&&extOk&&repConf>60 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; } }
+      // Always cycle back to READY — EXTENDED has no other exit transition, so a single
+      // low-confidence attempt would otherwise lock tracking forever.
+      this.trough=pike; this.peak=pike; next='READY';
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     this.lastA=pike;

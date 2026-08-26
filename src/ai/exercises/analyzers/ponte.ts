@@ -23,7 +23,10 @@ export class PonteAnalyzer extends ExerciseAnalyzer{
       if (topOk&&downOk){
         repConf=clamp(62 + (rom>45?14: rom>30?8:4) + (q.exerciseConfidence>60?5:0),0,100);
       } else { repConf=clamp(12,0,100); }
-      if(topOk&&downOk&&repConf>60 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; this.trough=hip; this.peak=hip; next='READY'; }
+      if(topOk&&downOk&&repConf>60 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; }
+      // Always cycle back to READY — DOWN has no other exit transition, so a single
+      // low-confidence attempt would otherwise lock tracking forever.
+      this.trough=hip; this.peak=hip; next='READY';
     }
     if(repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if(next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     this.lastA=hip;

@@ -24,7 +24,10 @@ export class CrunchAnalyzer extends ExerciseAnalyzer{
       if (contractOk&&extOk){
         repConf=clamp(60 + (neckOk?16:6) + (rom>22?12: rom>14?6:3) + (Math.abs(this.velFilt)<420?6:0),0,100);
       } else { repConf=clamp(18,0,100); }
-      if (contractOk && extOk && repConf>62 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,62)){ repInc=true; this.lastRepAt=ts; this.trough=hipFlex; this.peak=hipFlex; next='READY'; } }
+      if (contractOk && extOk && repConf>62 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,62)){ repInc=true; this.lastRepAt=ts; } }
+      // Always cycle back to READY — EXTENDED has no other exit transition, so a single
+      // low-confidence attempt would otherwise lock tracking forever.
+      this.trough=hipFlex; this.peak=hipFlex; next='READY';
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     let form=88, cues:string[]=[]; const neckA=angleFromLandmarks(lm, LM.left_hip, LM.left_shoulder, LM.left_ear);

@@ -95,4 +95,39 @@ describe('ExerciseRegistry + Analyzers', ()=>{
     // With our thresholds and confidence, should get at least 0-1, but importantly not throw and not double-count tiny
     expect(reps).toBeLessThanOrEqual(1);
   });
+
+  it('a low-confidence squat attempt does not permanently lock the state machine', () => {
+    // Regression: the terminal phase (STANDING) had no transition out of it — a single rep
+    // that didn't clear the confidence gate (shallow bounce, bad framing, etc.) left `phase`
+    // stuck there forever, so no later — even perfect — squat could ever be detected again.
+    const ana = getAnalyzer('squat')!;
+    function kneeAngleLm(angleDeg: number): PoseLandmarks {
+      const rad = (180 - angleDeg) * Math.PI / 180;
+      const ankleX = 0.5 + Math.sin(rad) * 0.15;
+      const ankleY = 0.65 + Math.cos(rad) * 0.15;
+      return makeLm({
+        [LM.left_hip]: { x: 0.5, y: 0.5 }, [LM.right_hip]: { x: 0.5, y: 0.5 },
+        [LM.left_knee]: { x: 0.5, y: 0.65 }, [LM.right_knee]: { x: 0.5, y: 0.65 },
+        [LM.left_ankle]: { x: ankleX, y: ankleY }, [LM.right_ankle]: { x: ankleX, y: ankleY },
+        [LM.left_shoulder]: { x: 0.5, y: 0.3 }, [LM.right_shoulder]: { x: 0.5, y: 0.3 },
+      });
+    }
+    let t = 0;
+    function run(angleDeg: number) {
+      t += 80;
+      const lm = kneeAngleLm(angleDeg);
+      const q = qualityFor(lm, ana.requiredLandmarks);
+      return ana.analyze(lm, t, 80, q);
+    }
+    // First: a shallow bounce that reaches the terminal phase without clearing depthOk (>122°) —
+    // never counts, and used to leave `phase` stuck at 'STANDING'.
+    for (const a of [170, 150, 140, 150, 170]) run(a);
+    // Second: a full, clean, high-confidence squat — must still be detectable afterwards.
+    let reps = 0;
+    for (const a of [170, 140, 115, 95, 92, 92, 100, 120, 145, 165, 175]) {
+      const r = run(a);
+      if (r.repIncrement) reps++;
+    }
+    expect(reps).toBeGreaterThanOrEqual(1);
+  });
 });

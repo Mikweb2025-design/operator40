@@ -33,7 +33,10 @@ export class AffondoAnalyzer extends ExerciseAnalyzer{
       if (depthOk&&extOk){
         repConf=clamp(62 + symScore + romScore + (q.exerciseConfidence>60?6:0),0,100);
       } else { repConf=clamp(18,0,100); }
-      if(depthOk&&extOk&&repConf>60 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; this.trough=knee; this.peak=knee; next='READY'; }
+      if(depthOk&&extOk&&repConf>60 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; }
+      // Always cycle back to READY — STANDING has no other exit transition, so a single
+      // low-confidence attempt would otherwise lock tracking forever.
+      this.trough=knee; this.peak=knee; next='READY';
     }
     if(repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if(next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     this.lastA=knee;
