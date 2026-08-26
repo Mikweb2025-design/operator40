@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-B39siEcK.js","./icons-CNn8_pbx.js","./charts-BGQLz4RT.js","./web-ZEzlmpAy.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-Dp3YYvmA.js","./icons-CNn8_pbx.js","./charts-BGQLz4RT.js","./web-CLFVzqA_.js"])))=>i.map(i=>d[i]);
 import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ShieldCheck, F as Flame, e as RefreshCw, E as Eye, V as Volume2, f as VolumeX, h as Vibrate, i as SkipForward, M as Music, j as Music2, H as HeadphoneOff, k as ChevronLeft, l as Crown, m as Medal, B as Bell, n as BellOff, o as Send, p as HeartPulse, I as Info, q as Star, s as RotateCcw, t as Target, u as BookOpen, v as TrendingUp, L as Lightbulb, w as Ruler, x as TrendingDown, y as Scale, z as Settings, A as Trash2, P as Plus, W as Wind, D as Play, G as Pause, J as House, K as History } from "./icons-CNn8_pbx.js";
 import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-BGQLz4RT.js";
 (function polyfill() {
@@ -4139,7 +4139,7 @@ class PushupAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "pushup";
-    this.requiredLandmarks = [11, 12, 13, 14, 15, 16, 23, 24, 27, 28];
+    this.requiredLandmarks = [11, 12, 13, 14, 15, 16, 23, 24];
     this.minRepIntervalMs = 320;
     this.minPhaseMs = 65;
     this.velFilt = 0;
@@ -4215,7 +4215,7 @@ class SquatAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "squat";
-    this.requiredLandmarks = [11, 12, 23, 24, 25, 26, 27, 28];
+    this.requiredLandmarks = [11, 12, 23, 24, 25, 26];
     this.minRepIntervalMs = 340;
     this.minPhaseMs = 70;
     this.velFilt = 0;
@@ -4811,7 +4811,7 @@ class AffondoAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "affondo";
-    this.requiredLandmarks = [23, 24, 25, 26, 27, 28, 11, 12];
+    this.requiredLandmarks = [23, 24, 25, 26, 11, 12];
     this.minRepIntervalMs = 350;
     this.minPhaseMs = 70;
     this.velFilt = 0;
@@ -5086,7 +5086,7 @@ class WallsitAnalyzer extends ExerciseAnalyzer {
   constructor() {
     super(...arguments);
     this.id = "wallsit";
-    this.requiredLandmarks = [23, 24, 25, 26, 27, 28, 11, 12];
+    this.requiredLandmarks = [23, 24, 25, 26, 11, 12];
     this.goodSince = null;
     this.graceMs = 500;
   }
@@ -8169,7 +8169,7 @@ function getBellyMissions({ sessions, profile, waistHistory }) {
     return (counts[a.id] || 0) - (counts[b.id] || 0);
   }).map((p2) => ({ ...p2, _needsBelly: needsBelly }));
 }
-const BUILD_VERSION = "2.8.3 · eab3f5e";
+const BUILD_VERSION = "2.8.3 · 764bba7";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -8286,7 +8286,7 @@ function useT() {
 }
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-B39siEcK.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-Dp3YYvmA.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -12548,7 +12548,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-ZEzlmpAy.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-CLFVzqA_.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
