@@ -98,6 +98,7 @@ export interface EngineMetrics {
   avgQuality: number; // 0..100
   lastRepQuality: number | null;
   lastRepConfidence?: number | null; // 0-100 (spec §12)
+  liveRepConfidence?: number; // 0-100, this frame's repConfidence even when it didn't count — diagnostic
   currentPhase: EnginePhase;
   currentForm: FormMetrics | null;
   caloriesEst?: number;

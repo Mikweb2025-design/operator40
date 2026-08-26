@@ -68,6 +68,10 @@ export class FitnessEngine {
   }
 
   private lastPoseQuality = 0;
+  // Live repConfidence from the most recent analyzer frame, updated whether or not it
+  // crossed the counting threshold — lets the UI explain "why didn't that rep count" instead
+  // of only ever showing the confidence of reps that already succeeded.
+  private liveRepConfidence = 0;
 
   get metrics(): EngineMetrics {
     const now = performance.now();
@@ -79,6 +83,7 @@ export class FitnessEngine {
       avgQuality: this.avgQuality,
       lastRepQuality: this.lastRepQuality,
       lastRepConfidence: this.lastRepConfidence,
+      liveRepConfidence: Math.round(this.liveRepConfidence),
       currentPhase: this.currentPhase,
       currentForm: this.currentForm,
       fps: Math.round(this.fpsEma),
@@ -312,6 +317,7 @@ export class FitnessEngine {
         return;
       }
       const aRes = this.analyzer.analyze(lm, now, dtAna, pqForAna);
+      this.liveRepConfidence = aRes.repConfidence;
       // Map analyzer result to engine metrics
       this.currentPhase = aRes.enginePhase as any;
       this.currentForm = {

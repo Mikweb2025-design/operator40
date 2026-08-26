@@ -259,6 +259,9 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
       </div>
       <div style={{ padding: '6px 8px', background: INK_2, borderTop: `1px solid ${OLIVE}22`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>{isHold ? tCoach('coach.holdPosition', normLang) : `${tCoach('coach.rep', normLang)} ${reps}${targetReps ? `/${targetReps}` : ''} · ${formVal}/100`}</span>
+        {!isHold && (
+          <span className="o40-mono" title="Confidenza dell'ultimo movimento rilevato — sotto ~62 la rep non viene contata" style={{ color: (metrics?.liveRepConfidence ?? 0) > 62 ? '#7FB069' : STEEL, fontSize: 8 }}>CONF {metrics?.liveRepConfidence ?? 0}</span>
+        )}
         <span className="o40-mono" style={{ color: KHAKI, fontSize: 8 }}>AI · {exerciseId} · {fmtMs(metrics?.elapsedActiveMs ?? 0)} active</span>
       </div>
     </div>
