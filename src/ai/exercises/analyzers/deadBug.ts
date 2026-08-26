@@ -3,7 +3,8 @@ import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
 export class DeadBugAnalyzer extends ExerciseAnalyzer{
-  readonly id='deadbug'; readonly requiredLandmarks=[11,12,23,24,25,26,13,14,15,16,27,28];
+  // Ankles (27,28) not required for gating — only feed the secondary trunk form check.
+  readonly id='deadbug'; readonly requiredLandmarks=[11,12,23,24,25,26,13,14,15,16];
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
     const lHip=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
     const rHip=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);

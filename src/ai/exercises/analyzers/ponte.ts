@@ -3,7 +3,8 @@ import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, clamp } from '../../pose/Geometry';
 export class PonteAnalyzer extends ExerciseAnalyzer{
-  readonly id='ponte'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
+  // Ankles (27,28) not required for gating — only feed the secondary trunk form check.
+  readonly id='ponte'; readonly requiredLandmarks=[11,12,23,24,25,26];
   private velFilt=0; private lastA=100;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
     const hip=this.bilateralJointAngle('hip', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);

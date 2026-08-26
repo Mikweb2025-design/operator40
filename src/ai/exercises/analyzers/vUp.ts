@@ -3,7 +3,9 @@ import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, clamp } from '../../pose/Geometry';
 export class VUpAnalyzer extends ExerciseAnalyzer{
-  readonly id='vup'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28,15,16];
+  // Ankles (27,28) not required for gating — only feed the secondary kneeExt form check, not the
+  // pike (fold/extend) rep signal.
+  readonly id='vup'; readonly requiredLandmarks=[11,12,23,24,25,26,15,16];
   private velFilt=0; private lastA=160;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
     const pike=this.bilateralJointAngle('pike', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);

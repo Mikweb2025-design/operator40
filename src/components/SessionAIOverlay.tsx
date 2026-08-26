@@ -224,7 +224,7 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
         </div>
       </div>
 
-      {poseQuality < 42 && metrics?.currentPhase !== 'idle' && (
+      {metrics && poseQuality < 42 && (
         <div style={{ margin: '8px 8px 0', padding: '6px 8px', borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: 'center' }}>
           {lang === 'it' ? 'Allontanati così vedo tutto il corpo.' : lang === 'de' ? 'Geh zurück, damit ich deinen ganzen Körper sehe.' : 'Move back so I can see your whole body.'}
         </div>

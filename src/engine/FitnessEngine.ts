@@ -263,7 +263,10 @@ export class FitnessEngine {
     this.fpsEma = this.fpsEma ? this.fpsEma * 0.9 + instFps * 0.1 : instFps;
     this.frameCount++;
     // Pose quality via dedicated module (spec §6) + fallback
-    const pq = evaluatePoseQuality(result.landmarks ?? null, this.def?.requiredLandmarks ?? [11,12,23,24,25,26,27,28]);
+    // Use the analyzer's own (often trimmed) requiredLandmarks when available, so the displayed
+    // POSE% / "move back" hint matches what's actually gating rep counting below — not a stale,
+    // always-full-body generic list that nags the user even when tracking is working fine.
+    const pq = evaluatePoseQuality(result.landmarks ?? null, this.analyzer?.requiredLandmarks ?? this.def?.requiredLandmarks ?? [11,12,23,24,25,26,27,28]);
     this.lastPoseQuality = pq.exerciseConfidence; // exerciseConfidence is the gated one
 
     if (!result.landmarks) {

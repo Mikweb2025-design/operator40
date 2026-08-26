@@ -3,7 +3,9 @@ import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
 export class FlutterKickAnalyzer extends ExerciseAnalyzer{
-  readonly id='flutterkick'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
+  // Ankles (27,28) were required but never actually used by this analyzer (hip-knee is the whole
+  // signal) — dropped so low foot visibility can't gate a metric that doesn't depend on it.
+  readonly id='flutterkick'; readonly requiredLandmarks=[11,12,23,24,25,26];
   private cycle: 'leftUp'|'rightUp'|'center'='center'; private lastSwitch=0;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
     const lHip=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);

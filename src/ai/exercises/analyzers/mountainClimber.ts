@@ -3,7 +3,8 @@ import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
 export class MountainClimberAnalyzer extends ExerciseAnalyzer{
-  readonly id='mountainclimber'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
+  // Ankles (27,28) not required for gating — only feed the secondary trunk form check.
+  readonly id='mountainclimber'; readonly requiredLandmarks=[11,12,23,24,25,26];
   private lastSwitch=0; private cycle: 'left'|'right'|null=null; private alt=0;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
     const lHip=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);

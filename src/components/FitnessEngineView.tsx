@@ -294,7 +294,7 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
           <span className="o40-mono" style={{ color: (metrics.poseQuality ?? 0) < 45 ? BLAZE : STEEL, fontSize: 9 }}>{(metrics.poseQuality ?? 0) < 45 ? (lang === 'it' ? 'Allontanati' : lang === 'de' ? 'Zurück' : 'Move back') : (metrics.poseQuality ?? 0) > 75 ? 'OK' : '—'}</span>
         </div>
       )}
-      {(metrics?.poseQuality ?? 100) < 42 && metrics?.currentPhase !== 'idle' && (
+      {metrics != null && (metrics?.poseQuality ?? 100) < 42 && (
         <div style={{ margin: '6px 12px 0', padding: '6px 8px', borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: 'center' }}>
           {lang === 'it' ? 'Allontanati così vedo tutto il corpo.' : lang === 'de' ? 'Geh zurück, damit ich deinen ganzen Körper sehe.' : 'Move back so I can see your whole body.'}
         </div>
