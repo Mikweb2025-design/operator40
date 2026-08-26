@@ -36,7 +36,7 @@ export class AffondoAnalyzer extends ExerciseAnalyzer{
     }
     if(repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if(next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     this.lastA=knee;
-    const trunk=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;
+    const trunk=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     let form=90; const cues:string[]=[];
     if(trunk<150){ form-=14; cues.push('backStraight'); }
     if(this.phase==='DESCENDING' && knee>108 && knee<138 && dir==='down') cues.push('scendiAncora');

@@ -5,6 +5,7 @@
  */
 import type { PoseLandmarks, EnginePhase } from '../../engine/types';
 import type { PoseQualityResult } from '../pose/PoseQuality';
+import { angleFromLandmarks } from '../pose/Geometry';
 
 export type AnalyzerPhase = string; // e.g. READY/DESCENDING/BOTTOM/ASCENDING/TOP
 
@@ -37,6 +38,54 @@ export abstract class ExerciseAnalyzer {
     this.phase='READY';
     this.lastTransitionAt=0;
     this.trough=180; this.peak=0; this.lastRepAt=0;
+    this.bilateralVisEma={}; this.bilateralSide={};
+  }
+
+  // Visibility state for bilateralJointAngle, keyed by joint name (e.g. 'knee', 'trunk')
+  private bilateralVisEma: Record<string, { l: number; r: number }> = {};
+  private bilateralSide: Record<string, 'left'|'right'|'avg'> = {};
+
+  /**
+   * Angle at a bilateral joint (e.g. both knees, shoulder-hip-ankle line) picking the
+   * more visible side instead of always averaging left+right. A plain average lets an
+   * occluded/estimated side (very common in side-view filming) drag the angle toward a
+   * value neither leg actually has. EMA-smooths visibility and requires a clear margin
+   * to switch sides, so the choice doesn't flicker frame-to-frame near the threshold.
+   */
+  protected bilateralJointAngle(
+    key: string,
+    lm: PoseLandmarks,
+    left: [number, number, number],
+    right: [number, number, number],
+    opts?: { visThreshold?: number; switchMargin?: number; emaAlpha?: number }
+  ): number {
+    const visThreshold = opts?.visThreshold ?? 0.4;
+    const switchMargin = opts?.switchMargin ?? 0.12;
+    const alpha = opts?.emaAlpha ?? 0.35;
+    const al = angleFromLandmarks(lm, left[0], left[1], left[2]);
+    const ar = angleFromLandmarks(lm, right[0], right[1], right[2]);
+    const rawVl = Math.min(lm[left[0]]?.visibility ?? 0, lm[left[1]]?.visibility ?? 0, lm[left[2]]?.visibility ?? 0);
+    const rawVr = Math.min(lm[right[0]]?.visibility ?? 0, lm[right[1]]?.visibility ?? 0, lm[right[2]]?.visibility ?? 0);
+    const prevEma = this.bilateralVisEma[key] ?? { l: rawVl, r: rawVr };
+    const vl = prevEma.l * (1 - alpha) + rawVl * alpha;
+    const vr = prevEma.r * (1 - alpha) + rawVr * alpha;
+    this.bilateralVisEma[key] = { l: vl, r: vr };
+
+    const lOk = vl >= visThreshold, rOk = vr >= visThreshold;
+    const prevSide = this.bilateralSide[key] ?? 'avg';
+    let side: 'left'|'right'|'avg';
+    if (lOk && rOk) side = Math.abs(vl - vr) < switchMargin ? 'avg' : (vl > vr ? 'left' : 'right');
+    else if (lOk) side = 'left';
+    else if (rOk) side = 'right';
+    else side = prevSide; // both unreliable this frame: hold last known-good side rather than snap to a garbage average
+
+    // Hysteresis: require a clear win to switch away from an already-committed side.
+    if (prevSide !== 'avg' && side !== prevSide && side !== 'avg') {
+      const winMargin = side === 'left' ? vl - vr : vr - vl;
+      if (winMargin < switchMargin) side = prevSide;
+    }
+    this.bilateralSide[key] = side;
+    return side === 'left' ? al : side === 'right' ? ar : (al + ar) / 2;
   }
 
   // Per-exercise tunable debounce (ms)

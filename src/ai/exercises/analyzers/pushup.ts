@@ -1,20 +1,7 @@
 import { ExerciseAnalyzer, AnalyzerResult } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
-
-function elbow(lm: PoseLandmarks){
-  const al = angleFromLandmarks(lm, LM.left_shoulder, LM.left_elbow, LM.left_wrist);
-  const ar = angleFromLandmarks(lm, LM.right_shoulder, LM.right_elbow, LM.right_wrist);
-  const vl = Math.min(lm[LM.left_shoulder]?.visibility??0, lm[LM.left_elbow]?.visibility??0, lm[LM.left_wrist]?.visibility??0);
-  const vr = Math.min(lm[LM.right_shoulder]?.visibility??0, lm[LM.right_elbow]?.visibility??0, lm[LM.right_wrist]?.visibility??0);
-  if (vl > vr+0.12) return al; if (vr > vl+0.12) return ar; return (al+ar)/2;
-}
-function bodyLine(lm: PoseLandmarks){
-  const al = angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle);
-  const ar = angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle);
-  return (al+ar)/2;
-}
+import { LM, clamp } from '../../pose/Geometry';
 
 export class PushupAnalyzer extends ExerciseAnalyzer {
   readonly id = 'pushup';
@@ -23,12 +10,12 @@ export class PushupAnalyzer extends ExerciseAnalyzer {
   protected minPhaseMs = 65;
   private velFilt=0; private lastAngle=180; private lastT=0;
   analyze(lm: PoseLandmarks, ts: number, dtMs: number, q: PoseQualityResult): AnalyzerResult {
-    const ang = elbow(lm);
+    const ang = this.bilateralJointAngle('elbow', lm, [LM.left_shoulder,LM.left_elbow,LM.left_wrist], [LM.right_shoulder,LM.right_elbow,LM.right_wrist]);
     const dt = dtMs || 16;
     const rawV = (ang - this.lastAngle)/(dt/1000);
     this.velFilt = this.velFilt*0.70 + rawV*0.30;
     const dir = Math.abs(this.velFilt)<18?'hold': this.velFilt<0?'down':'up';
-    const line = bodyLine(lm);
+    const line = this.bilateralJointAngle('bodyLine', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     this.trough = Math.min(this.trough, ang);
     this.peak = Math.max(this.peak, ang);
 

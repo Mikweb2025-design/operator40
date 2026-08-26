@@ -1,12 +1,13 @@
 import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+import { LM, clamp } from '../../pose/Geometry';
 export class LegRaiseAnalyzer extends ExerciseAnalyzer{
   readonly id='legraise'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
   private velFilt=0; private lastA=170;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
-    const hipFlex = (angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee))/2;
+    const hipFlex = this.bilateralJointAngle('hipFlex', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
+    const lk = this.bilateralJointAngle('kneeExt', lm, [LM.left_hip,LM.left_knee,LM.left_ankle], [LM.right_hip,LM.right_knee,LM.right_ankle]);
     const dt=dtMs||16; const rawV=(hipFlex-this.lastA)/(dt/1000); this.velFilt=this.velFilt*0.75+rawV*0.25;
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt<0?'down':'up';
     this.trough=Math.min(this.trough, hipFlex); this.peak=Math.max(this.peak, hipFlex);
@@ -19,7 +20,6 @@ export class LegRaiseAnalyzer extends ExerciseAnalyzer{
     let repInc=false, repConf=0;
     if (next==='DOWN' && (this.phase==='LOWERING' || this.phase==='TOP')){
       const rom=this.peak - this.trough; const topOk=this.trough<108; const downOk=hipFlex>148;
-      const lk=(angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle)+angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle))/2;
       const kneeOk=lk>145;
       const kneeScore = lk>155?18: lk>145?10: 2;
       if (topOk&&downOk){
@@ -29,7 +29,7 @@ export class LegRaiseAnalyzer extends ExerciseAnalyzer{
       if (topOk&&downOk&&repConf>60 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; this.trough=hipFlex; this.peak=hipFlex; next='READY'; } }
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
-    let form=90, cues:string[]=[]; const lk=(angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle)+angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle))/2;
+    let form=90, cues:string[]=[];
     if (lk<145){ form-=14; cues.push('control'); } else if (lk<155){ form-=5; cues.push('control'); }
     if (this.phase==='RAISING' && hipFlex>105 && hipFlex<135 && dir==='down') cues.push('sollevaPiu');
     if (this.phase==='LOWERING' && hipFlex>120 && hipFlex<150 && dir==='up') cues.push('abbassaControllo');

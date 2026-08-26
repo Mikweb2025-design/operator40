@@ -9,7 +9,7 @@ export class MountainClimberAnalyzer extends ExerciseAnalyzer{
     const lHip=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
     const rHip=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
     const driving=Math.min(lHip,rHip); // flexed knee-to-chest
-    const trunk=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;
+    const trunk=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     let repInc=false, repConf=0;
     const leftForward = lHip < 78, rightForward = rHip < 78;
     const nowCycle = leftForward ? 'left' : rightForward ? 'right' : null;

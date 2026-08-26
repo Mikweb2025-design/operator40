@@ -1,7 +1,7 @@
 import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp, torsoLength } from '../../pose/Geometry';
+import { LM, clamp, torsoLength } from '../../pose/Geometry';
 export class SkaterAnalyzer extends ExerciseAnalyzer{
   readonly id='skater'; readonly requiredLandmarks=[23,24,25,26,27,28];
   private lastX: number|null=null; private velX=0;
@@ -10,7 +10,7 @@ export class SkaterAnalyzer extends ExerciseAnalyzer{
     const dt=dtMs||16; const rawV = this.lastX===null?0:(cx - this.lastX)/(dt/1000); this.velX=this.velX*0.7 + rawV*0.3;
     const rawSpread=Math.hypot((lm[LM.left_ankle]?.x??0.4)-(lm[LM.right_ankle]?.x??0.6), 0);
     const tl=torsoLength(lm); const spread= tl>1e-6 ? rawSpread / tl : rawSpread;
-    const knee=(angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle)+angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle))/2;
+    const knee=this.bilateralJointAngle('knee', lm, [LM.left_hip,LM.left_knee,LM.left_ankle], [LM.right_hip,LM.right_knee,LM.right_ankle]);
     const bent=knee<128; const wide=spread>0.58;
     let repInc=false, repConf=0;
     // Detect lateral hop: bent + wide -> landed side (normalized)

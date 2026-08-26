@@ -1,26 +1,15 @@
 import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
-function knee(lm: PoseLandmarks){
-  const al = angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle);
-  const ar = angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle);
-  const vl=Math.min(lm[LM.left_hip]?.visibility??0,lm[LM.left_knee]?.visibility??0,lm[LM.left_ankle]?.visibility??0);
-  const vr=Math.min(lm[LM.right_hip]?.visibility??0,lm[LM.right_knee]?.visibility??0,lm[LM.right_ankle]?.visibility??0);
-  if (vl>vr+0.12) return al; if (vr>vl+0.12) return ar; return (al+ar)/2;
-}
-function trunk(lm: PoseLandmarks){
-  const al=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle);
-  const ar=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle);
-  return (al+ar)/2;
-}
+import { LM, clamp } from '../../pose/Geometry';
 export class SquatAnalyzer extends ExerciseAnalyzer{
   readonly id='squat'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
   protected minRepIntervalMs = 340;
   protected minPhaseMs = 70;
   private velFilt=0; private lastA=180;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
-    const ang=knee(lm);
+    const ang=this.bilateralJointAngle('knee', lm, [LM.left_hip,LM.left_knee,LM.left_ankle], [LM.right_hip,LM.right_knee,LM.right_ankle]);
+    const tr=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     // hipY is framing-dependent (distance to camera). Use as helper only, not hard AND.
     const hipY=((lm[LM.left_hip]?.y??0.5)+(lm[LM.right_hip]?.y??0.5))/2;
     const hipYDelta = hipY - 0.55; // >0 means hips lower than standing baseline
@@ -45,9 +34,8 @@ export class SquatAnalyzer extends ExerciseAnalyzer{
       // Extension: >142° (was 148) → not requiring full lockout, over-40 friendly
       const extOk=ang>142;
       const velScore=clamp(100-Math.abs(this.velFilt)*0.06,0,100);
-      const trunkVal=trunk(lm);
       // Trunk not blocking rep — only modulates repConf. 3 tiers: >155:40, >142:30, else 18
-      const trunkScore = trunkVal>155 ? 40 : trunkVal>142 ? 30 : 18;
+      const trunkScore = tr>155 ? 40 : tr>142 ? 30 : 18;
       const romScore = rom>28 ? 32 : rom>20 ? 22 : rom>14 ? 14 : 8;
       // Depth bonus: deepest (<95) gets extra, shallow (<122) still passes
       const depthBonus = this.trough<95 ? 10 : this.trough<108 ? 6 : 0;
@@ -66,7 +54,7 @@ export class SquatAnalyzer extends ExerciseAnalyzer{
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
 
-    let form=92, cues:string[]=[]; const tr=trunk(lm);
+    let form=92, cues:string[]=[];
     if (tr<142){ form-=14; cues.push('backStraight'); } else if (tr<155){ form-=6; cues.push('backStraight'); }
     if (this.phase==='DESCENDING' && ang>108 && ang<135 && dir==='down') cues.push('scendiAncora');
     if (this.phase==='ASCENDING' && ang>125 && ang<146 && dir==='up') cues.push('distendiGambe');

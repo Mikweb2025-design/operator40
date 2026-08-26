@@ -1,11 +1,11 @@
 import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+import { LM, clamp } from '../../pose/Geometry';
 export class SupermanAnalyzer extends ExerciseAnalyzer{
   readonly id='superman'; readonly requiredLandmarks=[11,12,23,24,25,26];
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
-    const hip=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee))/2;
+    const hip=this.bilateralJointAngle('hip', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
     const down=hip>168; const up=hip<162;
     // grace: if prone y spread small, still allow: use also shoulder-hip y diff as fallback
     const shoulderY=(lm[LM.left_shoulder]?.y??0.5 + lm[LM.right_shoulder]?.y??0.5)/2;

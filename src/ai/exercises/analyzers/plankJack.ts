@@ -1,12 +1,12 @@
 import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+import { LM, clamp } from '../../pose/Geometry';
 export class PlankJackAnalyzer extends ExerciseAnalyzer{
   readonly id='plankjack'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
     const spread=(()=>{ const a=lm[LM.left_ankle], b=lm[LM.right_ankle]; if(!a||!b) return 0; return Math.hypot(a.x-b.x, a.y-b.y); })();
-    const line=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;
+    const line=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     const plankOk=line>153;
     const closed=spread<0.12; const open=spread>0.30;
     let repInc=false, repConf=0;

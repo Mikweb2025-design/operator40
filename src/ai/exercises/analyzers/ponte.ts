@@ -1,12 +1,12 @@
 import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+import { LM, clamp } from '../../pose/Geometry';
 export class PonteAnalyzer extends ExerciseAnalyzer{
   readonly id='ponte'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
   private velFilt=0; private lastA=100;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
-    const hip=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee))/2;
+    const hip=this.bilateralJointAngle('hip', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
     const dt=dtMs||16; const rawV=(hip-this.lastA)/(dt/1000); this.velFilt=this.velFilt*0.75+rawV*0.25;
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt>0?'up':'down';
     this.trough=Math.min(this.trough,hip); this.peak=Math.max(this.peak,hip);
@@ -26,7 +26,7 @@ export class PonteAnalyzer extends ExerciseAnalyzer{
     }
     if(repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if(next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     this.lastA=hip;
-    let form=90; const cues:string[]=[]; const trunk=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;
+    let form=90; const cues:string[]=[]; const trunk=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     if(trunk<148){ form-=12; cues.push('coreTight'); }
     if(this.phase==='RISING' && hip>125 && hip<145 && dir==='up') cues.push('spingiAnche');
     if(this.phase==='LOWERING' && hip>115 && hip<135 && dir==='down') cues.push('controllaDiscesa');

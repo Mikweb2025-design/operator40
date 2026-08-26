@@ -9,7 +9,7 @@ export class GinocchiaAlteAnalyzer extends ExerciseAnalyzer{
     const l=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
     const r=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
     const driving=Math.min(l,r);
-    const trunk=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;
+    const trunk=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     const nowCycle = l<r ? 'left':'right';
     const kneeUp = driving < 85;
     let repInc=false, repConf=0;

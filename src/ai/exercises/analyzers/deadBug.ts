@@ -20,7 +20,7 @@ export class DeadBugAnalyzer extends ExerciseAnalyzer{
       if (repConf>60 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; this.phase='READY'; }
       else this.phase='READY';
     }
-    let form=90; const cues:string[]=[]; const trunk=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;
+    let form=90; const cues:string[]=[]; const trunk=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     if (trunk<160){ form-=10; cues.push('coreTight'); }
     return { phase:this.phase, enginePhase: this.phase==='EXTENDED'?'bottom': this.phase==='TUCKED'?'down':'ready' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: (lHip+rHip)/2, secondaryAngles:{ lHip, rHip, lSh, rSh }, velocity:0, direction:'hold' as any };
   }

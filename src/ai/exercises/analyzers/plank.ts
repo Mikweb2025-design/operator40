@@ -1,14 +1,13 @@
 import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
-function trunk(lm: PoseLandmarks){ const al=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle); const ar=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle); return (al+ar)/2; }
+import { LM, clamp } from '../../pose/Geometry';
 export class PlankAnalyzer extends ExerciseAnalyzer{
   readonly id='plank'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
   private goodSince: number|null=null; private graceMs=600;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
-    const line=trunk(lm);
-    const hip=(():number=>{ const al=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee); const ar=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee); return (al+ar)/2; })();
+    const line=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
+    const hip=this.bilateralJointAngle('hip', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
     const valid = line>152 && hip>148 && q.exerciseConfidence>38;
     if (valid){ if (this.goodSince==null) this.goodSince=ts; this.phase='HOLD_GOOD'; }
     else {

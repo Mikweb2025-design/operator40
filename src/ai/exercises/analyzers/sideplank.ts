@@ -1,12 +1,12 @@
 import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+import { LM, clamp } from '../../pose/Geometry';
 export class SideplankAnalyzer extends ExerciseAnalyzer{
   readonly id='sideplank'; readonly requiredLandmarks=[11,12,23,24,27,28];
   private goodSince:number|null=null; private graceMs=500;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
-    const line=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;
+    const line=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     const valid= line>158 && q.exerciseConfidence>38;
     if (valid){ if(this.goodSince==null) this.goodSince=ts; this.phase='HOLD_GOOD'; }
     else { if(this.goodSince!=null && ts - this.goodSince < this.graceMs) this.phase='HOLD_GOOD'; else { this.phase='HOLD_BAD'; this.goodSince=null; } }

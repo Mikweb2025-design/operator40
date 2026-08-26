@@ -6,7 +6,7 @@ export class CrunchAnalyzer extends ExerciseAnalyzer{
   readonly id='crunch'; readonly requiredLandmarks=[11,12,23,24,25,26,7,8];
   private velFilt=0; private lastA=120;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
-    const hipFlex = (()=>{ const al=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee); const ar=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee); return (al+ar)/2; })();
+    const hipFlex = this.bilateralJointAngle('hipFlex', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
     const dt=dtMs||16; const rawV=(hipFlex-this.lastA)/(dt/1000); this.velFilt=this.velFilt*0.75+rawV*0.25;
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt<0?'down':'up';
     this.trough=Math.min(this.trough, hipFlex); this.peak=Math.max(this.peak, hipFlex);
