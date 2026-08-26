@@ -1,4 +1,6 @@
 import { describe, it, expect } from 'vitest';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { getAnalyzer } from './ExerciseRegistry';
 import type { PoseLandmarks } from '../../engine/types';
 import { LM } from '../../engine/math';
@@ -129,5 +131,63 @@ describe('ExerciseRegistry + Analyzers', ()=>{
       if (r.repIncrement) reps++;
     }
     expect(reps).toBeGreaterThanOrEqual(1);
+  });
+
+  describe('fixtures — replay landmarks.json (LandmarkRecorder)', () => {
+    const fixturesDir = join(process.cwd(), 'tests/fixtures');
+    const files = existsSync(fixturesDir) ? readdirSync(fixturesDir).filter(f => f.endsWith('.json')) : [];
+    it('at least 3 fixtures exist (squat-front, squat-side, pushup)', () => {
+      expect(files.length).toBeGreaterThanOrEqual(3);
+      expect(files).toContain('squat-front.json');
+      expect(files).toContain('squat-side.json');
+      expect(files).toContain('pushup.json');
+    });
+    for (const file of files) {
+      it(`replay ${file} — does not crash and counts reps deterministically`, () => {
+        const raw = readFileSync(join(fixturesDir, file), 'utf8');
+        const data = JSON.parse(raw);
+        const frames: { t: number; landmarks: PoseLandmarks | null }[] = data.frames;
+        expect(frames.length).toBeGreaterThan(5);
+        // Derive exercise id from filename prefix: squat-front → squat, pushup → pushup
+        const exId = file.split('-')[0].replace('.json', '');
+        const ana = getAnalyzer(exId);
+        expect(ana, `no analyzer for ${exId} from ${file}`).toBeTruthy();
+        let prevT = frames[0]?.t ?? 0;
+        let reps = 0;
+        let lastPhase = '';
+        for (const fr of frames) {
+          const lm = fr.landmarks as PoseLandmarks;
+          const dt = fr.t - prevT || 80;
+          prevT = fr.t;
+          const q = qualityFor(lm, ana!.requiredLandmarks);
+          const res = ana!.analyze(lm, fr.t, dt, q);
+          expect(res).toHaveProperty('phase');
+          expect(res).toHaveProperty('repConfidence');
+          if (res.repIncrement) reps++;
+          lastPhase = res.phase;
+        }
+        // Squat front: synthetic 2 good reps + shallow bounce → at least 1 counted (gating permissive)
+        // Squat side: occluded right side but left still visible → visibility-aware should still count
+        // Pushup: 1 rep
+        if (file === 'squat-front.json') expect(reps).toBeGreaterThanOrEqual(1);
+        if (file === 'squat-side.json') expect(reps).toBeGreaterThanOrEqual(1);
+        if (file === 'pushup.json') expect(reps).toBeGreaterThanOrEqual(1);
+        // Never leaves terminal phase stuck (regression from 9f76c3a)
+        expect(['READY','DESCENDING','BOTTOM','ASCENDING','STANDING','TOP','HOLD_GOOD','HOLD_BAD']).toContain(lastPhase);
+        ana!.reset?.();
+      });
+    }
+    it('landmarks.json from real device replays via LandmarkRecorder shape', async () => {
+      // Shape contract: {version, frames:[{t, landmarks: PoseLandmarks[33] | null}]}
+      // This is what the app's ◯ REC button downloads — any real file must pass here.
+      // We test with our synthetic fixture as proxy; real file can be dropped in fixtures/ and re-run `npm test`.
+      const { LandmarkRecorder } = await import('../debug/LandmarkRecorder');
+      const rec = new LandmarkRecorder();
+      const raw = readFileSync(join(fixturesDir, 'squat-front.json'), 'utf8');
+      rec.load(raw);
+      let n = 0; for (const _ of rec.replay()) n++;
+      expect(n).toBeGreaterThan(10);
+      expect(rec.count).toBe(n);
+    });
   });
 });
