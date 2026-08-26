@@ -1,4 +1,7 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-ZZQqscOs.js","./icons-Hx31Og9a.js","./charts-Blf2Cagf.js","./web-Ce-7wfrY.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-CKcFWC-r.js","./icons-Hx31Og9a.js","./charts-Blf2Cagf.js","./web-9T3zQcrc.js"])))=>i.map(i=>d[i]);
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ChevronLeft, H as House, B as BookOpen, e as History, f as Settings, h as ShieldCheck, F as Flame, i as RefreshCw, E as Eye, V as Volume2, j as VolumeX, k as Vibrate, l as SkipForward, M as Music, m as Music2, n as HeadphoneOff, o as Crown, p as Medal, q as Bell, s as BellOff, t as Send, u as HeartPulse, I as Info, v as Star, w as RotateCcw, x as Target, y as TrendingUp, L as Lightbulb, z as Ruler, A as TrendingDown, D as Scale, G as Trash2, P as Plus, W as Wind, J as Play, K as Pause } from "./icons-Hx31Og9a.js";
 import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-Blf2Cagf.js";
 (function polyfill() {
@@ -8262,7 +8265,7 @@ function getBellyMissions({ sessions, profile, waistHistory }) {
     return (counts[a.id] || 0) - (counts[b.id] || 0);
   }).map((p2) => ({ ...p2, _needsBelly: needsBelly }));
 }
-const BUILD_VERSION = "2.8.4 · e199db1";
+const BUILD_VERSION = "2.8.4 · 050a90f";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -8374,7 +8377,7 @@ function parseAppleHealthExport(xmlText) {
 }
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-ZZQqscOs.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-CKcFWC-r.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -12638,7 +12641,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-Ce-7wfrY.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-9T3zQcrc.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -12996,7 +12999,35 @@ async function clear() {
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    __publicField(this, "handleFix", async () => {
+      this.setState({ fixing: true, fixLog: "Pulizia cache..." });
+      try {
+        if ("serviceWorker" in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const r of regs) await r.unregister();
+        }
+        if (window.caches) {
+          const keys = await caches.keys();
+          for (const k2 of keys) await caches.delete(k2);
+        }
+        try {
+          localStorage.removeItem("o40_lastSw");
+        } catch {
+        }
+        try {
+          sessionStorage.clear();
+        } catch {
+        }
+        this.setState({ fixLog: "Fatto — ricarico..." });
+        setTimeout(() => {
+          window.location.href = "./?v=" + Date.now() + "#force";
+          window.location.reload();
+        }, 600);
+      } catch (e) {
+        this.setState({ fixing: false, fixLog: "Errore: " + e.message });
+      }
+    });
+    this.state = { hasError: false, error: null, fixing: false, fixLog: "" };
   }
   static getDerivedStateFromError(error) {
     return { hasError: true, error };
@@ -13006,17 +13037,29 @@ class ErrorBoundary extends React.Component {
   }
   render() {
     if (this.state.hasError) {
+      const isFixing = this.state.fixing;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { minHeight: "100dvh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#1B1D16", color: "#EDE8D8", padding: 24, textAlign: "center" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontFamily: "Bebas Neue, sans-serif", fontSize: 28, letterSpacing: "0.05em" }, children: "OPERAZIONE INTERROTTA" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { opacity: 0.7, marginTop: 8, maxWidth: 360 }, children: "Si è verificato un errore imprevisto. Ricarica la pagina — i tuoi dati restano salvati sul dispositivo." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { opacity: 0.7, marginTop: 8, maxWidth: 360 }, children: "Si è verificato un errore imprevisto. I tuoi dati (missioni, foto, profilo) restano salvati — non disinstallare l’app." }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
           {
             onClick: () => window.location.reload(),
-            style: { marginTop: 20, background: "#C1440E", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontWeight: 700, cursor: "pointer" },
+            style: { marginTop: 20, background: "#C1440E", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontWeight: 700, cursor: "pointer", width: "100%", maxWidth: 360 },
             children: "RICARICA"
           }
         ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: this.handleFix,
+            disabled: isFixing,
+            style: { marginTop: 10, background: isFixing ? "#4A5233" : "#242820", color: "#EDE8D8", border: "1px solid #4A5233", borderRadius: 10, padding: "12px 24px", fontWeight: 700, cursor: "pointer", width: "100%", maxWidth: 360 },
+            children: isFixing ? "PULIZIA IN CORSO..." : "PULISCI CACHE PWA (mantiene i dati)"
+          }
+        ),
+        this.state.fixLog && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 10, fontSize: 11, opacity: 0.6 }, children: this.state.fixLog }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "./force-update.html", style: { marginTop: 12, fontSize: 12, color: "#B8AE8C", textDecoration: "underline" }, children: "Apri pagina di recupero" }),
         this.state.error && /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { style: { marginTop: 16, fontSize: 11, opacity: 0.5, maxWidth: 360, overflow: "auto", textAlign: "left" }, children: String(this.state.error.message || this.state.error) })
       ] });
     }
