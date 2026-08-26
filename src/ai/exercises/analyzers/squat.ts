@@ -10,23 +10,32 @@ export class SquatAnalyzer extends ExerciseAnalyzer{
   protected minRepIntervalMs = 340;
   protected minPhaseMs = 70;
   private velFilt=0; private lastA=180;
+  // hipY at rest depends entirely on camera distance (close phone framing → hips sit much
+  // lower in the normalized 0..1 frame than the old fixed 0.55 assumption) — calibrated per
+  // session from observed standing frames instead of a one-size-fits-all constant, so the
+  // OR-helper below doesn't fire spuriously (phase flicker) just because someone stands close.
+  private restingHipY: number | null = null;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
     const ang=this.bilateralJointAngle('knee', lm, [LM.left_hip,LM.left_knee,LM.left_ankle], [LM.right_hip,LM.right_knee,LM.right_ankle]);
     const tr=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     // hipY is framing-dependent (distance to camera). Use as helper only, not hard AND.
     const hipY=((lm[LM.left_hip]?.y??0.5)+(lm[LM.right_hip]?.y??0.5))/2;
-    const hipYDelta = hipY - 0.55; // >0 means hips lower than standing baseline
+    if (ang>160 && Math.abs(this.velFilt)<15){
+      this.restingHipY = this.restingHipY==null ? hipY : this.restingHipY*0.92 + hipY*0.08;
+    }
+    const baseline = this.restingHipY ?? 0.55; // fallback before first calibration settles
+    const hipYDelta = hipY - baseline; // >0 means hips lower than this session's standing baseline
     const dt=dtMs||16; const rawV=(ang-this.lastA)/(dt/1000); this.velFilt=this.velFilt*0.70+rawV*0.30;
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt<0?'down':'up';
     this.trough=Math.min(this.trough,ang); this.peak=Math.max(this.peak,ang);
     let next=this.phase;
     // Over-40 permissive: count shallow squats with quality penalty, not drop.
     // READY->DESCENDING earlier (122°), BOTTOM 115°, ASCENDING needs only one of angle OR hipY (no AND deadlock)
-    if (this.phase==='READY' && (ang<=122 || hipY>0.58 || hipYDelta>0.04)) next='DESCENDING';
-    else if (this.phase==='DESCENDING' && (ang<=113 || hipY>0.62 || hipYDelta>0.07)) next='BOTTOM';
+    if (this.phase==='READY' && (ang<=122 || hipYDelta>0.05)) next='DESCENDING';
+    else if (this.phase==='DESCENDING' && (ang<=113 || hipYDelta>0.09)) next='BOTTOM';
     // Direct shallow path: DESCENDING -> ASCENDING without visiting BOTTOM if user bounces shallow and goes up
-    else if (this.phase==='DESCENDING' && ang>142 && hipY<0.60 && this.trough<122 && this.canTransition(ts, 55)) next='ASCENDING';
-    else if (this.phase==='BOTTOM' && (ang>140 || hipY<0.62) && this.canTransition(ts, 70)) next='ASCENDING';
+    else if (this.phase==='DESCENDING' && ang>142 && hipYDelta<0.05 && this.trough<122 && this.canTransition(ts, 55)) next='ASCENDING';
+    else if (this.phase==='BOTTOM' && (ang>140 || hipYDelta<0.09) && this.canTransition(ts, 70)) next='ASCENDING';
     else if (this.phase==='ASCENDING' && ang>146 && this.canTransition(ts, 55)) next='STANDING';
 
     let repInc=false, repConf=0;
