@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback, createContext, useContext } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { LangContext, useT } from './context/LangContext.jsx';
 import {
   Play, Pause, SkipForward, Flame, HeartPulse, Trophy, ChevronRight,
   ChevronLeft, RotateCcw, Settings, X, Check, Volume2, VolumeX, Vibrate, History as HistoryIcon, Info, Dog, Plus, Trash2,
@@ -27,6 +28,9 @@ import FitnessEngineView from './components/FitnessEngineView.tsx';
 // PoseCounter deprecated → delega a FitnessEngineView (preservato in src/components/PoseCounter.jsx per compatibilità)
 import ChangelogModal, { CHANGELOG_STORAGE_KEY } from './components/ChangelogModal.tsx';
 import SessionAIOverlay from './components/SessionAIOverlay.tsx';
+import CountdownScreen from './screens/CountdownScreen.jsx';
+import TopBar from './components/layout/TopBar.jsx';
+import BottomNav from './components/layout/BottomNav.jsx';
 import { getBellyLevelForTest, shouldProgressBellyLevel } from './utils/bellyTest.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
@@ -145,10 +149,6 @@ function parseAppleHealthExport(xmlText) {
   }
   return result;
 }
-
-/* ================= LANGUAGE CONTEXT ================= */
-const LangContext = createContext({ lang: 'it', t: (k, v) => translate(k, 'it', v), setLang: () => {} });
-function useT() { return useContext(LangContext); }
 
 /* ================= EXERCISE FIGURE (pose-specific drawings) ================= */
 /* ================= EXERCISE MEDIA (real clip when available, else drawn pictogram) ================= */
@@ -290,64 +290,7 @@ function DogTag({ label, value, sub }) {
   );
 }
 
-function TopBar({ title, onBack, right }) {
-  const { t } = useT();
-  return (
-    <div className="o40-topbar-glass" style={{
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'max(14px, env(safe-area-inset-top, 0px)) 16px',
-      position: 'sticky', top: 0, zIndex: 5,
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 32 }}>
-        {onBack && (
-          <button onClick={onBack} aria-label={t('app.back')} style={btnIcon}>
-            <ChevronLeft size={20} color={PAPER} />
-          </button>
-        )}
-      </div>
-      <div className="o40-display" style={{ color: PAPER, fontSize: 22 }}>{title}</div>
-      <div style={{ minWidth: 32, display: 'flex', justifyContent: 'flex-end' }}>{right}</div>
-    </div>
-  );
-}
-
 const btnIcon = { background: 'transparent', border: 'none', padding: 6, cursor: 'pointer', display: 'flex', borderRadius: 10 };
-
-function BottomNav({ active, onNavigate }) {
-  const { t } = useT();
-  const tabs = [
-    { key: 'home', label: t('nav.home'), icon: HomeIcon },
-    { key: 'library', label: t('nav.library'), icon: BookOpen },
-    { key: 'history', label: t('nav.history'), icon: HistoryIcon },
-    { key: 'setup', label: t('nav.setup'), icon: Settings },
-  ];
-  return (
-    <div className="o40-bottomnav-glass" style={{
-      display: 'flex',
-      paddingBottom: 'env(safe-area-inset-bottom, 0px)',
-    }}>
-      {tabs.map(t => {
-        const on = active === t.key;
-        const Icon = t.icon;
-        return (
-          <button key={t.key} onClick={() => onNavigate(t.key)} style={{
-            flex: 1, background: 'transparent', border: 'none', cursor: 'pointer', padding: '8px 4px 6px',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, position: 'relative',
-          }}>
-            {on && <div style={{ position: 'absolute', top: 0, left: '26%', right: '26%', height: 2, borderRadius: 2, background: BLAZE, boxShadow: `0 0 8px ${BLAZE}` }} />}
-            <div style={{
-              width: 40, height: 26, borderRadius: 13, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: on ? `${BLAZE}22` : 'transparent', transition: 'background 0.2s ease',
-              animation: on ? 'tabPop 0.28s cubic-bezier(0.16,1,0.3,1)' : 'none',
-            }}>
-              <Icon size={20} color={on ? BLAZE : STEEL} style={{ transition: 'color 0.2s ease' }} />
-            </div>
-            <span className="o40-mono" style={{ color: on ? BLAZE : STEEL, fontSize: 9.5, letterSpacing: '0.03em' }}>{t.label}</span>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
 
 /* ================= MAIN APP ================= */
 export default function App() {
@@ -1287,7 +1230,7 @@ export default function App() {
         )}
 
         {screen === 'countdown' && previewProgram && (
-          <CountdownScreen program={previewProgram} onDone={() => startSession(previewProgram)} />
+          <CountdownScreen program={previewProgram} lang={lang} t={t} onDone={() => startSession(previewProgram)} />
         )}
 
         {screen === 'session' && seq.length > 0 && (
@@ -1420,26 +1363,6 @@ export default function App() {
       </div>
       </div>
     </LangContext.Provider>
-  );
-}
-
-/* ================= COUNTDOWN SCREEN (3-2-1 before the mission starts) ================= */
-function CountdownScreen({ program, onDone }) {
-  const { lang, t } = useT();
-  const [n, setN] = useState(3);
-  useEffect(() => {
-    if (n <= 0) { onDone(); return; }
-    playBeep(n === 1 ? 880 : 550, 0.15);
-    const t = setTimeout(() => setN(v => v - 1), 800);
-    return () => clearTimeout(t);
-    // eslint-disable-next-line
-  }, [n]);
-  return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-      <div className="o40-mono" style={{ color: KHAKI, fontSize: 13, letterSpacing: '0.15em' }}>{tr(program.name, lang)}</div>
-      <div className="o40-display" style={{ color: BLAZE, fontSize: 110, lineHeight: 1 }}>{n > 0 ? n : t('countdown.go')}</div>
-      <div style={{ color: STEEL, fontSize: 13 }}>{t('countdown.getReady')}</div>
-    </div>
   );
 }
 

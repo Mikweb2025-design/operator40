@@ -1,6 +1,6 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-B1QdD2lO.js","./icons-CNn8_pbx.js","./charts-BGQLz4RT.js","./web-CZmeSlRv.js"])))=>i.map(i=>d[i]);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ShieldCheck, F as Flame, e as RefreshCw, E as Eye, V as Volume2, f as VolumeX, h as Vibrate, i as SkipForward, M as Music, j as Music2, H as HeadphoneOff, k as ChevronLeft, l as Crown, m as Medal, B as Bell, n as BellOff, o as Send, p as HeartPulse, I as Info, q as Star, s as RotateCcw, t as Target, u as BookOpen, v as TrendingUp, L as Lightbulb, w as Ruler, x as TrendingDown, y as Scale, z as Settings, A as Trash2, P as Plus, W as Wind, D as Play, G as Pause, J as House, K as History } from "./icons-CNn8_pbx.js";
-import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-BGQLz4RT.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-gwAaEny7.js","./icons-Hx31Og9a.js","./charts-Blf2Cagf.js","./web-C1CMj97x.js"])))=>i.map(i=>d[i]);
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ChevronLeft, H as House, B as BookOpen, e as History, f as Settings, h as ShieldCheck, F as Flame, i as RefreshCw, E as Eye, V as Volume2, j as VolumeX, k as Vibrate, l as SkipForward, M as Music, m as Music2, n as HeadphoneOff, o as Crown, p as Medal, q as Bell, s as BellOff, t as Send, u as HeartPulse, I as Info, v as Star, w as RotateCcw, x as Target, y as TrendingUp, L as Lightbulb, z as Ruler, A as TrendingDown, D as Scale, G as Trash2, P as Plus, W as Wind, J as Play, K as Pause } from "./icons-Hx31Og9a.js";
+import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-Blf2Cagf.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -144,157 +144,6 @@ const __vitePreload = function preload(baseModule, deps, importerUrl) {
     return baseModule().catch(handlePreloadError);
   });
 };
-const TRACKS = [
-  { id: "hustlin", name: "Hustlin'", artist: "NEFFEX", src: "tracks/hustlin.mp3", tag: "Energetica", lang: "EN" },
-  { id: "manifest", name: "Manifest It", artist: "NEFFEX", src: "tracks/manifest.mp3", tag: "Battuta", lang: "EN" },
-  { id: "born", name: "Born A Rockstar", artist: "NEFFEX", src: "tracks/born.mp3", tag: "Sprint", lang: "EN" },
-  { id: "fightback", name: "Fight Back", artist: "NEFFEX", src: "tracks/fightback.mp3", tag: "Pesante", lang: "EN" },
-  { id: "theitch", name: "The Itch", artist: "NEFFEX ft. Josh A", src: "tracks/theitch.mp3", tag: "Battuta", lang: "EN" },
-  { id: "godown", name: "Go Down Swinging", artist: "NEFFEX", src: "tracks/godown.mp3", tag: "Energetica", lang: "EN" },
-  { id: "addict", name: "Addict", artist: "NEFFEX", src: "tracks/addict.mp3", tag: "Sprint", lang: "EN" },
-  { id: "tellme", name: "Tell Me That I Can't", artist: "NEFFEX", src: "tracks/tellme.mp3", tag: "Pesante", lang: "EN" },
-  { id: "grateful", name: "Grateful", artist: "NEFFEX", src: "tracks/grateful.mp3", tag: "Energetica", lang: "EN" },
-  { id: "unstoppable", name: "Unstoppable", artist: "NEFFEX", src: "tracks/unstoppable.mp3", tag: "Sprint", lang: "EN" },
-  { id: "comeback", name: "Comeback", artist: "NEFFEX", src: "tracks/comeback.mp3", tag: "Pesante", lang: "EN" },
-  { id: "destiny", name: "Destiny", artist: "NEFFEX", src: "tracks/destiny.mp3", tag: "Battuta", lang: "EN" }
-];
-const DEFAULT_TRACK = TRACKS[0].id;
-let audio = null;
-let shouldPlay = false;
-let currentTrackId = DEFAULT_TRACK;
-let autoPlayNext = true;
-let shuffleMode = false;
-let onTrackChange = null;
-function ensureAudio() {
-  if (!audio) {
-    audio = new Audio();
-    audio.loop = false;
-    audio.preload = "auto";
-    audio.addEventListener("ended", () => {
-      if (!shouldPlay || !autoPlayNext) return;
-      const nextId = shuffleMode ? getRandomTrackId() : getNextTrackId(currentTrackId);
-      if (nextId) {
-        currentTrackId = nextId;
-        const nxt = TRACKS.find((t) => t.id === nextId);
-        if (nxt) {
-          musicLoad(nxt.src);
-          if (onTrackChange) try {
-            onTrackChange(nextId);
-          } catch {
-          }
-          musicPlay();
-        }
-      }
-    });
-  }
-  return audio;
-}
-function getNextTrackId(id) {
-  var _a;
-  const idx = TRACKS.findIndex((t) => t.id === id);
-  if (idx === -1) return ((_a = TRACKS[0]) == null ? void 0 : _a.id) || null;
-  return TRACKS[(idx + 1) % TRACKS.length].id;
-}
-function getPrevTrackId(id) {
-  var _a;
-  const idx = TRACKS.findIndex((t) => t.id === id);
-  if (idx === -1) return ((_a = TRACKS[0]) == null ? void 0 : _a.id) || null;
-  return TRACKS[(idx - 1 + TRACKS.length) % TRACKS.length].id;
-}
-function getRandomTrackId() {
-  var _a;
-  if (TRACKS.length <= 1) return ((_a = TRACKS[0]) == null ? void 0 : _a.id) || null;
-  let pick;
-  do {
-    pick = TRACKS[Math.floor(Math.random() * TRACKS.length)].id;
-  } while (pick === currentTrackId);
-  return pick;
-}
-function musicSetShouldPlay(v) {
-  shouldPlay = !!v;
-}
-function musicSetAutoPlay(v) {
-  autoPlayNext = !!v;
-}
-function musicSetShuffle(v) {
-  shuffleMode = !!v;
-}
-function musicSetOnTrackChange(cb) {
-  onTrackChange = typeof cb === "function" ? cb : null;
-}
-function musicLoad(src) {
-  const a = ensureAudio();
-  let resolvedSrc = src;
-  const byId = TRACKS.find((t) => t.id === src);
-  if (byId) {
-    resolvedSrc = byId.src;
-    currentTrackId = byId.id;
-  } else {
-    const found = TRACKS.find((t) => t.src === src);
-    if (found) currentTrackId = found.id;
-  }
-  const want = new URL(resolvedSrc, location.href).href;
-  if (a.src !== want) {
-    a.src = want;
-    a.load();
-  } else {
-    const f2 = TRACKS.find((t) => new URL(t.src, location.href).href === want);
-    if (f2) currentTrackId = f2.id;
-  }
-}
-function musicPlay() {
-  const a = ensureAudio();
-  if (!a.src) {
-    const cur = TRACKS.find((t) => t.id === currentTrackId) || TRACKS[0];
-    if (cur) musicLoad(cur.src);
-  }
-  const p2 = a.play();
-  if (p2 && typeof p2.catch === "function") p2.catch(() => {
-  });
-}
-function musicPause() {
-  if (audio && !audio.paused) audio.pause();
-}
-function musicSetVolume(v) {
-  if (audio) audio.volume = Math.max(0, Math.min(1, v));
-}
-function musicNext() {
-  const nextId = shuffleMode ? getRandomTrackId() : getNextTrackId(currentTrackId);
-  if (!nextId) return null;
-  currentTrackId = nextId;
-  const nxt = TRACKS.find((t) => t.id === nextId);
-  if (nxt) {
-    musicLoad(nxt.src);
-    if (shouldPlay) musicPlay();
-    if (onTrackChange) try {
-      onTrackChange(nextId);
-    } catch {
-    }
-  }
-  return nextId;
-}
-function musicPrev() {
-  const prevId = getPrevTrackId(currentTrackId);
-  if (!prevId) return null;
-  currentTrackId = prevId;
-  const prv = TRACKS.find((t) => t.id === prevId);
-  if (prv) {
-    musicLoad(prv.src);
-    if (shouldPlay) musicPlay();
-    if (onTrackChange) try {
-      onTrackChange(prevId);
-    } catch {
-    }
-  }
-  return prevId;
-}
-if (typeof window !== "undefined") {
-  ["pointerdown", "touchend", "keydown"].forEach(
-    (evt) => window.addEventListener(evt, () => {
-      if (shouldPlay) musicPlay();
-    }, { passive: true })
-  );
-}
 const LANGS = ["it", "en", "de"];
 const LOCALES = { it: "it-IT", en: "en-US", de: "de-DE" };
 function detectLang() {
@@ -653,6 +502,162 @@ const I18N = {
   "setup.custom.work": { it: "Lavoro", en: "Work", de: "Arbeit" },
   "setup.custom.rest": { it: "Recupero", en: "Rest", de: "Pause" }
 };
+const LangContext = reactExports.createContext({ lang: "it", t: (k2, v) => translate(k2, "it", v), setLang: () => {
+} });
+function useT() {
+  return reactExports.useContext(LangContext);
+}
+const TRACKS = [
+  { id: "hustlin", name: "Hustlin'", artist: "NEFFEX", src: "tracks/hustlin.mp3", tag: "Energetica", lang: "EN" },
+  { id: "manifest", name: "Manifest It", artist: "NEFFEX", src: "tracks/manifest.mp3", tag: "Battuta", lang: "EN" },
+  { id: "born", name: "Born A Rockstar", artist: "NEFFEX", src: "tracks/born.mp3", tag: "Sprint", lang: "EN" },
+  { id: "fightback", name: "Fight Back", artist: "NEFFEX", src: "tracks/fightback.mp3", tag: "Pesante", lang: "EN" },
+  { id: "theitch", name: "The Itch", artist: "NEFFEX ft. Josh A", src: "tracks/theitch.mp3", tag: "Battuta", lang: "EN" },
+  { id: "godown", name: "Go Down Swinging", artist: "NEFFEX", src: "tracks/godown.mp3", tag: "Energetica", lang: "EN" },
+  { id: "addict", name: "Addict", artist: "NEFFEX", src: "tracks/addict.mp3", tag: "Sprint", lang: "EN" },
+  { id: "tellme", name: "Tell Me That I Can't", artist: "NEFFEX", src: "tracks/tellme.mp3", tag: "Pesante", lang: "EN" },
+  { id: "grateful", name: "Grateful", artist: "NEFFEX", src: "tracks/grateful.mp3", tag: "Energetica", lang: "EN" },
+  { id: "unstoppable", name: "Unstoppable", artist: "NEFFEX", src: "tracks/unstoppable.mp3", tag: "Sprint", lang: "EN" },
+  { id: "comeback", name: "Comeback", artist: "NEFFEX", src: "tracks/comeback.mp3", tag: "Pesante", lang: "EN" },
+  { id: "destiny", name: "Destiny", artist: "NEFFEX", src: "tracks/destiny.mp3", tag: "Battuta", lang: "EN" }
+];
+const DEFAULT_TRACK = TRACKS[0].id;
+let audio = null;
+let shouldPlay = false;
+let currentTrackId = DEFAULT_TRACK;
+let autoPlayNext = true;
+let shuffleMode = false;
+let onTrackChange = null;
+function ensureAudio() {
+  if (!audio) {
+    audio = new Audio();
+    audio.loop = false;
+    audio.preload = "auto";
+    audio.addEventListener("ended", () => {
+      if (!shouldPlay || !autoPlayNext) return;
+      const nextId = shuffleMode ? getRandomTrackId() : getNextTrackId(currentTrackId);
+      if (nextId) {
+        currentTrackId = nextId;
+        const nxt = TRACKS.find((t) => t.id === nextId);
+        if (nxt) {
+          musicLoad(nxt.src);
+          if (onTrackChange) try {
+            onTrackChange(nextId);
+          } catch {
+          }
+          musicPlay();
+        }
+      }
+    });
+  }
+  return audio;
+}
+function getNextTrackId(id) {
+  var _a;
+  const idx = TRACKS.findIndex((t) => t.id === id);
+  if (idx === -1) return ((_a = TRACKS[0]) == null ? void 0 : _a.id) || null;
+  return TRACKS[(idx + 1) % TRACKS.length].id;
+}
+function getPrevTrackId(id) {
+  var _a;
+  const idx = TRACKS.findIndex((t) => t.id === id);
+  if (idx === -1) return ((_a = TRACKS[0]) == null ? void 0 : _a.id) || null;
+  return TRACKS[(idx - 1 + TRACKS.length) % TRACKS.length].id;
+}
+function getRandomTrackId() {
+  var _a;
+  if (TRACKS.length <= 1) return ((_a = TRACKS[0]) == null ? void 0 : _a.id) || null;
+  let pick;
+  do {
+    pick = TRACKS[Math.floor(Math.random() * TRACKS.length)].id;
+  } while (pick === currentTrackId);
+  return pick;
+}
+function musicSetShouldPlay(v) {
+  shouldPlay = !!v;
+}
+function musicSetAutoPlay(v) {
+  autoPlayNext = !!v;
+}
+function musicSetShuffle(v) {
+  shuffleMode = !!v;
+}
+function musicSetOnTrackChange(cb) {
+  onTrackChange = typeof cb === "function" ? cb : null;
+}
+function musicLoad(src) {
+  const a = ensureAudio();
+  let resolvedSrc = src;
+  const byId = TRACKS.find((t) => t.id === src);
+  if (byId) {
+    resolvedSrc = byId.src;
+    currentTrackId = byId.id;
+  } else {
+    const found = TRACKS.find((t) => t.src === src);
+    if (found) currentTrackId = found.id;
+  }
+  const want = new URL(resolvedSrc, location.href).href;
+  if (a.src !== want) {
+    a.src = want;
+    a.load();
+  } else {
+    const f2 = TRACKS.find((t) => new URL(t.src, location.href).href === want);
+    if (f2) currentTrackId = f2.id;
+  }
+}
+function musicPlay() {
+  const a = ensureAudio();
+  if (!a.src) {
+    const cur = TRACKS.find((t) => t.id === currentTrackId) || TRACKS[0];
+    if (cur) musicLoad(cur.src);
+  }
+  const p2 = a.play();
+  if (p2 && typeof p2.catch === "function") p2.catch(() => {
+  });
+}
+function musicPause() {
+  if (audio && !audio.paused) audio.pause();
+}
+function musicSetVolume(v) {
+  if (audio) audio.volume = Math.max(0, Math.min(1, v));
+}
+function musicNext() {
+  const nextId = shuffleMode ? getRandomTrackId() : getNextTrackId(currentTrackId);
+  if (!nextId) return null;
+  currentTrackId = nextId;
+  const nxt = TRACKS.find((t) => t.id === nextId);
+  if (nxt) {
+    musicLoad(nxt.src);
+    if (shouldPlay) musicPlay();
+    if (onTrackChange) try {
+      onTrackChange(nextId);
+    } catch {
+    }
+  }
+  return nextId;
+}
+function musicPrev() {
+  const prevId = getPrevTrackId(currentTrackId);
+  if (!prevId) return null;
+  currentTrackId = prevId;
+  const prv = TRACKS.find((t) => t.id === prevId);
+  if (prv) {
+    musicLoad(prv.src);
+    if (shouldPlay) musicPlay();
+    if (onTrackChange) try {
+      onTrackChange(prevId);
+    } catch {
+    }
+  }
+  return prevId;
+}
+if (typeof window !== "undefined") {
+  ["pointerdown", "touchend", "keydown"].forEach(
+    (evt) => window.addEventListener(evt, () => {
+      if (shouldPlay) musicPlay();
+    }, { passive: true })
+  );
+}
 const CLIP_FILES = {
   bicyclecrunch: "clips/bicyclecrunch.mp4",
   russiantwist: "clips/russiantwist.mp4",
@@ -7275,6 +7280,82 @@ function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep,
     ] })
   ] });
 }
+function CountdownScreen({ program, onDone, lang, t }) {
+  const [n2, setN] = reactExports.useState(3);
+  reactExports.useEffect(() => {
+    if (n2 <= 0) {
+      onDone();
+      return;
+    }
+    playBeep(n2 === 1 ? 880 : 550, 0.15);
+    const t2 = setTimeout(() => setN((v) => v - 1), 800);
+    return () => clearTimeout(t2);
+  }, [n2]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 13, letterSpacing: "0.15em" }, children: tr$1(program.name, lang) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: BLAZE, fontSize: 110, lineHeight: 1 }, children: n2 > 0 ? n2 : t("countdown.go") }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13 }, children: t("countdown.getReady") })
+  ] });
+}
+const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
+function TopBar({ title, onBack, right }) {
+  const { t } = useT();
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-topbar-glass", style: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "max(14px, env(safe-area-inset-top, 0px)) 16px",
+    position: "sticky",
+    top: 0,
+    zIndex: 5
+  }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "center", gap: 8, minWidth: 32 }, children: onBack && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onBack, "aria-label": t("app.back"), style: btnIcon$1, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 20, color: PAPER }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22 }, children: title }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { minWidth: 32, display: "flex", justifyContent: "flex-end" }, children: right })
+  ] });
+}
+function BottomNav({ active, onNavigate }) {
+  const { t } = useT();
+  const tabs = [
+    { key: "home", label: t("nav.home"), icon: House },
+    { key: "library", label: t("nav.library"), icon: BookOpen },
+    { key: "history", label: t("nav.history"), icon: History },
+    { key: "setup", label: t("nav.setup"), icon: Settings }
+  ];
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-bottomnav-glass", style: {
+    display: "flex",
+    paddingBottom: "env(safe-area-inset-bottom, 0px)"
+  }, children: tabs.map((tab) => {
+    const on = active === tab.key;
+    const Icon = tab.icon;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onNavigate(tab.key), style: {
+      flex: 1,
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+      padding: "8px 4px 6px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 3,
+      position: "relative"
+    }, children: [
+      on && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 0, left: "26%", right: "26%", height: 2, borderRadius: 2, background: BLAZE, boxShadow: `0 0 8px ${BLAZE}` } }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+        width: 40,
+        height: 26,
+        borderRadius: 13,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: on ? `${BLAZE}22` : "transparent",
+        transition: "background 0.2s ease",
+        animation: on ? "tabPop 0.28s cubic-bezier(0.16,1,0.3,1)" : "none"
+      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { size: 20, color: on ? BLAZE : STEEL, style: { transition: "color 0.2s ease" } }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: on ? BLAZE : STEEL, fontSize: 9.5, letterSpacing: "0.03em" }, children: tab.label })
+    ] }, tab.key);
+  }) });
+}
 function csvEscape(v) {
   const s = String(v ?? "");
   if (s.includes(",") || s.includes('"') || s.includes("\n")) return `"${s.replace(/"/g, '""')}"`;
@@ -8178,7 +8259,7 @@ function getBellyMissions({ sessions, profile, waistHistory }) {
     return (counts[a.id] || 0) - (counts[b.id] || 0);
   }).map((p2) => ({ ...p2, _needsBelly: needsBelly }));
 }
-const BUILD_VERSION = "2.8.4 · 589e758";
+const BUILD_VERSION = "2.8.4 · c0a6e2e";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -8288,14 +8369,9 @@ function parseAppleHealthExport(xmlText) {
   }
   return result;
 }
-const LangContext = reactExports.createContext({ lang: "it", t: (k2, v) => translate(k2, "it", v), setLang: () => {
-} });
-function useT() {
-  return reactExports.useContext(LangContext);
-}
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-B1QdD2lO.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-gwAaEny7.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -8444,65 +8520,7 @@ function DogTag({ label, value, sub }) {
     sub && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: sub })
   ] });
 }
-function TopBar({ title, onBack, right }) {
-  const { t } = useT();
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-topbar-glass", style: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "max(14px, env(safe-area-inset-top, 0px)) 16px",
-    position: "sticky",
-    top: 0,
-    zIndex: 5
-  }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "center", gap: 8, minWidth: 32 }, children: onBack && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onBack, "aria-label": t("app.back"), style: btnIcon, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 20, color: PAPER }) }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22 }, children: title }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { minWidth: 32, display: "flex", justifyContent: "flex-end" }, children: right })
-  ] });
-}
 const btnIcon = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
-function BottomNav({ active, onNavigate }) {
-  const { t } = useT();
-  const tabs = [
-    { key: "home", label: t("nav.home"), icon: House },
-    { key: "library", label: t("nav.library"), icon: BookOpen },
-    { key: "history", label: t("nav.history"), icon: History },
-    { key: "setup", label: t("nav.setup"), icon: Settings }
-  ];
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-bottomnav-glass", style: {
-    display: "flex",
-    paddingBottom: "env(safe-area-inset-bottom, 0px)"
-  }, children: tabs.map((t2) => {
-    const on = active === t2.key;
-    const Icon = t2.icon;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onNavigate(t2.key), style: {
-      flex: 1,
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-      padding: "8px 4px 6px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 3,
-      position: "relative"
-    }, children: [
-      on && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 0, left: "26%", right: "26%", height: 2, borderRadius: 2, background: BLAZE, boxShadow: `0 0 8px ${BLAZE}` } }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
-        width: 40,
-        height: 26,
-        borderRadius: 13,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: on ? `${BLAZE}22` : "transparent",
-        transition: "background 0.2s ease",
-        animation: on ? "tabPop 0.28s cubic-bezier(0.16,1,0.3,1)" : "none"
-      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { size: 20, color: on ? BLAZE : STEEL, style: { transition: "color 0.2s ease" } }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: on ? BLAZE : STEEL, fontSize: 9.5, letterSpacing: "0.03em" }, children: t2.label })
-    ] }, t2.key);
-  }) });
-}
 function App() {
   const [screen, setScreen] = reactExports.useState("loading");
   const [profile, setProfile] = reactExports.useState(null);
@@ -9615,7 +9633,7 @@ function App() {
           onStart: () => setScreen("countdown")
         }
       ),
-      screen === "countdown" && previewProgram && /* @__PURE__ */ jsxRuntimeExports.jsx(CountdownScreen, { program: previewProgram, onDone: () => startSession(previewProgram) }),
+      screen === "countdown" && previewProgram && /* @__PURE__ */ jsxRuntimeExports.jsx(CountdownScreen, { program: previewProgram, lang, t, onDone: () => startSession(previewProgram) }),
       screen === "session" && seq.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
         SessionScreen,
         {
@@ -9802,24 +9820,6 @@ function App() {
       ) }) })
     ] })
   ] }) });
-}
-function CountdownScreen({ program, onDone }) {
-  const { lang, t } = useT();
-  const [n2, setN] = reactExports.useState(3);
-  reactExports.useEffect(() => {
-    if (n2 <= 0) {
-      onDone();
-      return;
-    }
-    playBeep(n2 === 1 ? 880 : 550, 0.15);
-    const t2 = setTimeout(() => setN((v) => v - 1), 800);
-    return () => clearTimeout(t2);
-  }, [n2]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 13, letterSpacing: "0.15em" }, children: tr$1(program.name, lang) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: BLAZE, fontSize: 110, lineHeight: 1 }, children: n2 > 0 ? n2 : t("countdown.go") }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13 }, children: t("countdown.getReady") })
-  ] });
 }
 function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, executionMode, onSetExecutionMode, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast: showToast2, largeText, setLargeText, pushEnabled, pushSupported, pushBusy, onTogglePush, onTestPush }) {
   const { lang, t, setLang } = useT();
@@ -12630,7 +12630,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-CZmeSlRv.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-C1CMj97x.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;

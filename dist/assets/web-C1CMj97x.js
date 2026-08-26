@@ -1,6 +1,6 @@
-import { W as WebPlugin } from "./index-CZQM_VWv.js";
-import "./icons-CNn8_pbx.js";
-import "./charts-BGQLz4RT.js";
+import { W as WebPlugin } from "./index-xI1hj4hn.js";
+import "./icons-Hx31Og9a.js";
+import "./charts-Blf2Cagf.js";
 class PreferencesWeb extends WebPlugin {
   constructor() {
     super(...arguments);
