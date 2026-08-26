@@ -94,3 +94,22 @@ Sincronizzato il server live via SSH (utente/operatore) allo stato `af20ab0` —
 Verifica: `npm run test` 24/24, `npm run build`, `npm run verify` OK.
 
 Commit: [`134cc49`](https://github.com/Mikweb2025-design/operator40/commit/134cc49) su `main`, [`730dd0f`](https://github.com/Mikweb2025-design/operator40/commit/730dd0f) su `deploy-tmp` (dist `o40-vb241e378`). **Non ancora sincronizzato sul server live** — richiede lo stesso passaggio SSH di prima.
+
+## Aggiornamento 3 — la causa root, trovata col replay di dati reali
+
+Aggiunto un badge diagnostico `CONF` (repConfidence live) in `SessionAIOverlay.tsx` ([`3deb475`](https://github.com/Mikweb2025-design/operator40/commit/3deb475)) per avere numeri reali invece di continuare a ipotizzare. Nel frattempo, provando ad aprire il pannello `◇ DEBUG` di `FitnessEngineView.tsx` (la schermata "AI ENGINE" usata per testare i singoli analyzer), l'app crashava con `Can't find variable: INK_2` — colore definito in `constants/theme.js` ma mai importato nel file, usato solo nello sfondo del pannello debug (motivo per cui l'errore scattava solo premendo quel pulsante). Fix in [`e8c22df`](https://github.com/Mikweb2025-design/operator40/commit/e8c22df).
+
+Una volta riparato il pannello debug, l'utente ha usato la funzione **`◯ REC landmarks`** già presente nell'app (registra i 33 landmark grezzi per replay offline, nessun video) e mi ha passato il file `landmarks-squat-*.json` di una sessione reale. Ho fatto il replay di quei 1200 frame attraverso `SquatAnalyzer` fuori dall'app (script Node/vitest), loggando ogni transizione di fase:
+
+**Trovato il bug root di tutta la giornata**: nei primi ~200ms di registrazione, l'utente è molto vicino alla camera (hipY ≈ 0.82, framing ravvicinato) — questo fa scattare l'OR-condition su `hipY` in `squat.ts` e produce un ciclo completo `READY→DESCENDING→BOTTOM→ASCENDING→STANDING` **senza che il ginocchio si pieghi quasi per niente** (175°→173°). La rep, giustamente, non supera la soglia di confidenza (23.8 < 62) e non viene contata. Ma da quel momento **`phase` resta bloccato su `STANDING` per il resto della sessione**: nessuna delle condizioni in `squat.ts` gestisce `this.phase==='STANDING'` come stato di partenza — è un vicolo cieco. Il reset a `READY` (e di `trough`/`peak`) avveniva **solo** dentro il ramo "rep contata con successo", mai nel ramo "rep tentata ma non abbastanza sicura". Un solo colpo a vuoto — anche solo dovuto a un aggiustamento della posizione a inizio sessione — disattiva il conteggio per sempre, anche se dopo fai squat perfetti.
+
+Lo stesso identico schema (stato terminale con nome diverso da READY, reset solo sul successo) era presente in **7 analyzer**: `squat` (STANDING), `pushup` (TOP), `crunch` (EXTENDED), `legRaise` (DOWN), `vUp` (EXTENDED), `ponte` (DOWN), `affondo` (STANDING). `burpee.ts` aveva già un fallback a timeout per lo stesso rischio (introdotto nei loop di rifinitura precedenti) — non era mai stato esteso agli altri.
+
+**Fix**: in tutti e 7, al termine di un ciclo completo si torna sempre a `READY` (e si azzerano `trough`/`peak`), indipendentemente dal fatto che la rep abbia superato o meno la soglia di confidenza.
+
+**Verifica con dati reali**: rieseguendo lo stesso file `landmarks-squat-*.json` attraverso l'analyzer corretto → **0 rep prima del fix, 7 rep dopo**, sugli stessi identici dati. Aggiunto anche un test di regressione permanente in `analyzers.test.ts` (simula un colpo a vuoto seguito da uno squat pulito, verifica che il secondo venga comunque contato).
+
+Commit: [`e8c22df`](https://github.com/Mikweb2025-design/operator40/commit/e8c22df) (fix DEBUG panel) + [`9f76c3a`](https://github.com/Mikweb2025-design/operator40/commit/9f76c3a) (fix root) su `main`, [`1102460`](https://github.com/Mikweb2025-design/operator40/commit/1102460) + [`3033715`](https://github.com/Mikweb2025-design/operator40/commit/3033715) su `deploy-tmp` (dist finale `o40-v3ac04ba5`). 25/25 test, build, verify OK. **Serve un nuovo sync SSH** verso `3033715`.
+
+### Lezione per il prossimo giro
+Il replay offline via `LandmarkRecorder` (`◯ REC landmarks` → `↓ JSON`) è enormemente più efficace del guardare screen recording o ipotizzare sui log — con dati reali si trova in minuti quello che altrimenti richiede ore di tentativi. Vale la pena chiedere subito un file `landmarks-*.json` quando si segnala un problema di tracciamento, invece di partire da screenshot o descrizioni.
