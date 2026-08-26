@@ -17,7 +17,7 @@ export class DeadBugAnalyzer extends ExerciseAnalyzer{
     else if (this.phase==='EXTENDED' && !oneExt){
       // returned to tucked -> one rep (contralateral cycle)
       repConf= clamp(65 + (q.exerciseConfidence>60?15:0) + (Math.abs(lHip-rHip)>30?10:0),0,100);
-      if (repConf>70 && q.exerciseConfidence>45 && this.shouldCountRep(ts,repConf,70)){ repInc=true; this.lastRepAt=ts; this.phase='READY'; }
+      if (repConf>60 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; this.phase='READY'; }
       else this.phase='READY';
     }
     let form=90; const cues:string[]=[]; const trunk=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;

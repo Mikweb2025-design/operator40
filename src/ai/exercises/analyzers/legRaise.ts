@@ -11,22 +11,28 @@ export class LegRaiseAnalyzer extends ExerciseAnalyzer{
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt<0?'down':'up';
     this.trough=Math.min(this.trough, hipFlex); this.peak=Math.max(this.peak, hipFlex);
     let next=this.phase;
-    // DOWN (170) -> RAISING -> TOP (90) -> LOWERING -> DOWN
-    if (this.phase==='READY' && hipFlex<140) next='RAISING';
-    else if (this.phase==='RAISING' && hipFlex<95) next='TOP';
-    else if (this.phase==='TOP' && hipFlex>120) next='LOWERING';
-    else if (this.phase==='LOWERING' && hipFlex>155) next='DOWN';
+    // DOWN (170) -> RAISING -> TOP (105) -> LOWERING -> DOWN (148) — over-40 permissivo
+    if (this.phase==='READY' && hipFlex<145) next='RAISING';
+    else if (this.phase==='RAISING' && hipFlex<105) next='TOP';
+    else if (this.phase==='TOP' && hipFlex>118) next='LOWERING';
+    else if (this.phase==='LOWERING' && hipFlex>148) next='DOWN';
     let repInc=false, repConf=0;
     if (next==='DOWN' && (this.phase==='LOWERING' || this.phase==='TOP')){
-      const rom=this.peak - this.trough; const topOk=this.trough<95; const downOk=hipFlex>155;
+      const rom=this.peak - this.trough; const topOk=this.trough<108; const downOk=hipFlex>148;
       const lk=(angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle)+angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle))/2;
-      const kneeOk=lk>155;
-      repConf=clamp(topOk&&downOk? 50 + (kneeOk?20:0) + (rom>55?15:5) + (Math.abs(this.velFilt)<300?10:0) : 15,0,100);
-      if (topOk&&downOk&&kneeOk&&repConf>72 && q.exerciseConfidence>45){ if(this.shouldCountRep(ts,repConf,72)){ repInc=true; this.lastRepAt=ts; this.trough=hipFlex; this.peak=hipFlex; next='READY'; } }
+      const kneeOk=lk>145;
+      const kneeScore = lk>155?18: lk>145?10: 2;
+      if (topOk&&downOk){
+        repConf=clamp(52 + kneeScore + (rom>45?14: rom>30?8:4) + (Math.abs(this.velFilt)<350?8:0),0,100);
+      } else { repConf=clamp(14,0,100); }
+      // kneeOk not blocking rep, only lowers repConf
+      if (topOk&&downOk&&repConf>60 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; this.trough=hipFlex; this.peak=hipFlex; next='READY'; } }
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     let form=90, cues:string[]=[]; const lk=(angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle)+angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle))/2;
-    if (lk<155){ form-=12; cues.push('control'); }
+    if (lk<145){ form-=14; cues.push('control'); } else if (lk<155){ form-=5; cues.push('control'); }
+    if (this.phase==='RAISING' && hipFlex>105 && hipFlex<135 && dir==='down') cues.push('sollevaPiu');
+    if (this.phase==='LOWERING' && hipFlex>120 && hipFlex<150 && dir==='up') cues.push('abbassaControllo');
     this.lastA=hipFlex;
     const eng = this.phase==='TOP'?'bottom': this.phase==='RAISING'?'down': this.phase==='LOWERING'?'up':'ready';
     return { phase:this.phase, enginePhase: eng as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: hipFlex, secondaryAngles:{ kneeExt: lk }, velocity:this.velFilt, direction: dir as any };

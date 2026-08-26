@@ -4,12 +4,14 @@ import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
 export class SideplankAnalyzer extends ExerciseAnalyzer{
   readonly id='sideplank'; readonly requiredLandmarks=[11,12,23,24,27,28];
-  analyze(lm: PoseLandmarks, _ts:number, _dt:number, q:PoseQualityResult){
+  private goodSince:number|null=null; private graceMs=500;
+  analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
     const line=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;
-    const valid= line>162 && q.exerciseConfidence>50;
-    if (valid) this.phase='HOLD_GOOD'; else this.phase='HOLD_BAD';
+    const valid= line>158 && q.exerciseConfidence>38;
+    if (valid){ if(this.goodSince==null) this.goodSince=ts; this.phase='HOLD_GOOD'; }
+    else { if(this.goodSince!=null && ts - this.goodSince < this.graceMs) this.phase='HOLD_GOOD'; else { this.phase='HOLD_BAD'; this.goodSince=null; } }
     let form=94; const cues:string[]=[];
-    if(line<150){ form=52; cues.push('hipsUp'); } else if(line<162){ form-=12; cues.push('coreTight'); }
+    if(line<148){ form=52; cues.push('hipsUp'); } else if(line<158){ form-=12; cues.push('coreTight'); }
     return { phase:this.phase, enginePhase:'ready' as any, repIncrement:false, repConfidence:0, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle:line, secondaryAngles:{ line }, velocity:0, direction:'hold' as any };
   }
 }

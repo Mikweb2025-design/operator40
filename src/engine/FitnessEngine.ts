@@ -300,8 +300,8 @@ export class FitnessEngine {
     if (this.analyzer) {
       const dtAna = now - (this.lastTs || now - 16);
       const pqForAna = evaluatePoseQuality(lm, this.analyzer.requiredLandmarks);
-      // Pause analysis if essential landmarks unreliable (spec §6)
-      if (pqForAna.exerciseConfidence < 42) {
+      // Pause analysis if essential landmarks unreliable (spec §6) — 38 for squat/peripheral ankles (was 42 too strict on side-view/cropped feet)
+      if (pqForAna.exerciseConfidence < 38) {
         this.updateTimers(now);
         this.lastTs = now;
         this.lastAngle = this.getPrimaryAngle(lm); // keep angle for fallback

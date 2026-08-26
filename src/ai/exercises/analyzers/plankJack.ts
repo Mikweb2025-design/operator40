@@ -17,7 +17,7 @@ export class PlankJackAnalyzer extends ExerciseAnalyzer{
       else if (this.phase==='FEET_TOGETHER' && open) this.phase='FEET_APART';
       else if (this.phase==='FEET_APART' && closed){
         repConf=clamp(70 + (q.exerciseConfidence>60?10:0),0,100);
-        if(repConf>65 && q.exerciseConfidence>45 && this.shouldCountRep(ts,repConf,65)){ repInc=true; this.lastRepAt=ts; this.phase='FEET_TOGETHER'; }
+        if(repConf>58 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,58)){ repInc=true; this.lastRepAt=ts; this.phase='FEET_TOGETHER'; }
         else this.phase='FEET_TOGETHER';
       }
       if (this.phase==='READY' && closed) this.phase='FEET_TOGETHER';

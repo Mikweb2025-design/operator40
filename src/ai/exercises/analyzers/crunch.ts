@@ -11,22 +11,26 @@ export class CrunchAnalyzer extends ExerciseAnalyzer{
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt<0?'down':'up';
     this.trough=Math.min(this.trough, hipFlex); this.peak=Math.max(this.peak, hipFlex);
     let next=this.phase;
-    // EXTENDED (120) -> FLEXING -> CONTRACTED (95) -> RETURNING -> EXTENDED
-    if (this.phase==='READY' && hipFlex<108) next='FLEXING';
-    else if (this.phase==='FLEXING' && hipFlex<95) next='CONTRACTED';
-    else if (this.phase==='CONTRACTED' && hipFlex>110) next='RETURNING';
-    else if (this.phase==='RETURNING' && hipFlex>122) next='EXTENDED';
+    // EXTENDED (120) -> FLEXING -> CONTRACTED (100) -> RETURNING -> EXTENDED (118) — permissivo
+    if (this.phase==='READY' && hipFlex<=112) next='FLEXING';
+    else if (this.phase==='FLEXING' && hipFlex<=102) next='CONTRACTED';
+    else if (this.phase==='CONTRACTED' && hipFlex>=108) next='RETURNING';
+    else if (this.phase==='RETURNING' && hipFlex>=118) next='EXTENDED';
     let repInc=false, repConf=0;
     if (next==='EXTENDED' && (this.phase==='RETURNING' || this.phase==='CONTRACTED')){
-      const rom=this.peak - this.trough; const contractOk=this.trough<95; const extOk=hipFlex>122;
+      const rom=this.peak - this.trough; const contractOk=this.trough<=102; const extOk=hipFlex>=118;
       const neck=angleFromLandmarks(lm, LM.left_hip, LM.left_shoulder, LM.left_ear);
-      const neckOk=neck>60 && neck<120;
-      repConf=clamp(contractOk&&extOk? 60 + (neckOk?20:5) + (rom>25?15:0) + (Math.abs(this.velFilt)<380?5:0) : 20,0,100);
-      if (contractOk && extOk && repConf>70 && q.exerciseConfidence>45){ if(this.shouldCountRep(ts,repConf,70)){ repInc=true; this.lastRepAt=ts; this.trough=hipFlex; this.peak=hipFlex; next='READY'; } }
+      const neckOk=neck>58 && neck<122;
+      if (contractOk&&extOk){
+        repConf=clamp(60 + (neckOk?16:6) + (rom>22?12: rom>14?6:3) + (Math.abs(this.velFilt)<420?6:0),0,100);
+      } else { repConf=clamp(18,0,100); }
+      if (contractOk && extOk && repConf>62 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,62)){ repInc=true; this.lastRepAt=ts; this.trough=hipFlex; this.peak=hipFlex; next='READY'; } }
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     let form=88, cues:string[]=[]; const neckA=angleFromLandmarks(lm, LM.left_hip, LM.left_shoulder, LM.left_ear);
     if (neckA<60 || neckA>120){ form-=10; cues.push('backStraight'); }
+    if (this.phase==='FLEXING' && hipFlex>100 && hipFlex<115 && dir==='down') cues.push('scendiAncora');
+    if (this.phase==='RETURNING' && hipFlex>108 && hipFlex<118 && dir==='up') cues.push('distendiSchiena');
     if (Math.abs(this.velFilt)>380){ form-=8; cues.push('control'); }
     this.lastA=hipFlex;
     const eng = this.phase==='CONTRACTED'?'bottom': this.phase==='FLEXING'?'down': this.phase==='RETURNING'?'up':'ready';

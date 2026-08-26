@@ -39,9 +39,19 @@ export abstract class ExerciseAnalyzer {
     this.trough=180; this.peak=0; this.lastRepAt=0;
   }
 
+  // Per-exercise tunable debounce (ms)
+  protected minRepIntervalMs = 320;
+  protected minPhaseMs = 120; // minimum time in phase before transition (anti-jitter)
+
   protected shouldCountRep(now: number, repConf: number, thresh = 80): boolean {
     if (repConf < thresh) return false;
-    if (this.lastRepAt && (now - this.lastRepAt) < 300) return false;
+    if (this.lastRepAt && (now - this.lastRepAt) < this.minRepIntervalMs) return false;
     return true;
+  }
+  protected phaseElapsed(now:number): number {
+    return now - this.lastTransitionAt;
+  }
+  protected canTransition(now:number, minMs?:number): boolean {
+    return this.phaseElapsed(now) >= (minMs ?? this.minPhaseMs);
   }
 }

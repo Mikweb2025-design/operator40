@@ -11,14 +11,14 @@ export class BicycleCrunchAnalyzer extends ExerciseAnalyzer{
     const d1=Math.hypot(le.x-rk.x, le.y-rk.y);
     const d2=Math.hypot(re.x-lk.x, re.y-lk.y);
     const best=Math.min(d1,d2);
-    const contact=best<0.16; const apart=best>0.28;
+    const contact=best<0.18; const apart=best>0.26;
     let repInc=false, repConf=0;
     if (this.phase==='READY' && apart) this.phase='EXTENDED';
     else if (this.phase==='EXTENDED' && contact){
       const nowAlt = d1<d2 ? 'left':'right';
       if (this.lastAlt && this.lastAlt!==nowAlt){
         repConf=clamp(70 + (q.exerciseConfidence>60?10:0),0,100);
-        if(repConf>65 && q.exerciseConfidence>45 && this.shouldCountRep(ts,repConf,65)){ repInc=true; this.lastRepAt=ts; }
+        if(repConf>58 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,58)){ repInc=true; this.lastRepAt=ts; }
       }
       this.lastAlt=nowAlt as any;
       this.phase='CONTRACTED';

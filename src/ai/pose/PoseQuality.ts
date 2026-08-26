@@ -27,10 +27,13 @@ export function evaluatePoseQuality(lm: PoseLandmarks | null, required: number[]
   const exerciseConfidence = Math.round(clamp(avgReq * 0.7 + minReq * 0.3, 0, 100));
   const requiredMin = thresholds?.requiredMin ?? 38; // 0.38 visibility
   const missing = required.filter(idx => (lm[idx]?.visibility ?? 0) * 100 < requiredMin);
-  const requiredVisible = missing.length === 0 && exerciseConfidence >= 45;
+  // Side-view tolerance: allow up to 2 symmetric missing if avg still good (one side occluded)
+  // e.g., squat side view: right hip/knee/ankle occluded but left side perfect → still track
+  const requiredVisible = exerciseConfidence >= 38 && missing.length <= 2;
   return { poseConfidence, landmarkConfidence, exerciseConfidence, requiredVisible, missing };
 }
 
 export function shouldPauseAnalysis(q: PoseQualityResult): boolean {
-  return !q.requiredVisible || q.exerciseConfidence < 42;
+  // Only pause on very low confidence; missing alone not blocking if one side visible
+  return q.exerciseConfidence < 38;
 }

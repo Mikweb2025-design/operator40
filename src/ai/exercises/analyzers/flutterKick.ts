@@ -11,9 +11,9 @@ export class FlutterKickAnalyzer extends ExerciseAnalyzer{
     const asym=Math.abs(lHip - rHip); const mean=(lHip+rHip)/2;
     // Detect alternating: one leg flexed ~140 other extended 175
     let repInc=false, repConf=0;
-    if (this.phase==='READY' && asym>14 && mean<168){
+    if (this.phase==='READY' && asym>12 && mean<170){
       this.phase='LEFT_UP'; this.lastTransitionAt=ts;
-    } else if (this.phase==='LEFT_UP' && asym>14 && mean<168 && ((lHip<rHip && this.cycle!=='leftUp') || (rHip<lHip && this.cycle!=='rightUp'))){
+    } else if (this.phase==='LEFT_UP' && asym>12 && mean<170 && ((lHip<rHip && this.cycle!=='leftUp') || (rHip<lHip && this.cycle!=='rightUp'))){
       // alternate
       const nowCycle = lHip<rHip ? 'leftUp':'rightUp';
       if (nowCycle!==this.cycle && ts - this.lastSwitch > 250){
@@ -24,11 +24,11 @@ export class FlutterKickAnalyzer extends ExerciseAnalyzer{
         // We'll count using a counter
         (this as any)._alt = ((this as any)._alt||0)+1;
         if ((this as any)._alt %2===0){
-          repConf= clamp(70 + (asym>18?10:0) + (q.exerciseConfidence>60?10:0),0,100);
-          if (repConf>68 && q.exerciseConfidence>45 && this.shouldCountRep(ts,repConf,68)){ repInc=true; this.lastRepAt=ts; }
+          repConf= clamp(70 + (asym>16?10:0) + (q.exerciseConfidence>60?10:0),0,100);
+          if (repConf>60 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; }
         }
       }
-    } else if (asym<6){
+    } else if (asym<8){
       this.phase='READY';
     }
     // form: hip stability

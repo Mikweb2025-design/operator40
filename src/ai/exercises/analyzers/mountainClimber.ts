@@ -11,14 +11,14 @@ export class MountainClimberAnalyzer extends ExerciseAnalyzer{
     const driving=Math.min(lHip,rHip); // flexed knee-to-chest
     const trunk=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_ankle)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_ankle))/2;
     let repInc=false, repConf=0;
-    const leftForward = lHip < 70, rightForward = rHip < 70;
+    const leftForward = lHip < 78, rightForward = rHip < 78;
     const nowCycle = leftForward ? 'left' : rightForward ? 'right' : null;
     if (nowCycle && nowCycle!==this.cycle && ts - this.lastSwitch > 180){
       if (this.cycle){
         this.alt++;
         if (this.alt %2===0){
           repConf=clamp(65 + (trunk>155?15:0) + (q.exerciseConfidence>60?10:0),0,100);
-          if (repConf>65 && q.exerciseConfidence>45 && this.shouldCountRep(ts,repConf,65)){ repInc=true; this.lastRepAt=ts; }
+          if (repConf>58 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,58)){ repInc=true; this.lastRepAt=ts; }
         }
       }
       this.cycle=nowCycle as any; this.lastSwitch=ts;
@@ -26,7 +26,7 @@ export class MountainClimberAnalyzer extends ExerciseAnalyzer{
     }
     if (!nowCycle) this.phase='HOLD_PLANK';
     let form=88; const cues:string[]=[];
-    if (trunk<155){ form-=15; cues.push('coreTight'); }
+    if (trunk<152){ form-=13; cues.push('coreTight'); }
     return { phase:this.phase, enginePhase: repInc?'up':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: driving, secondaryAngles:{ lHip, rHip, trunk }, velocity:0, direction:'hold' as any };
   }
 }

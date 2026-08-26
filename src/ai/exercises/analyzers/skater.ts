@@ -1,30 +1,31 @@
 import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
-import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+import { LM, angleFromLandmarks, clamp, torsoLength } from '../../pose/Geometry';
 export class SkaterAnalyzer extends ExerciseAnalyzer{
   readonly id='skater'; readonly requiredLandmarks=[23,24,25,26,27,28];
   private lastX: number|null=null; private velX=0;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
     const cx=((lm[LM.left_hip]?.x??0.5)+(lm[LM.right_hip]?.x??0.5))/2;
     const dt=dtMs||16; const rawV = this.lastX===null?0:(cx - this.lastX)/(dt/1000); this.velX=this.velX*0.7 + rawV*0.3;
-    const spread=Math.hypot((lm[LM.left_ankle]?.x??0.4)-(lm[LM.right_ankle]?.x??0.6), 0);
+    const rawSpread=Math.hypot((lm[LM.left_ankle]?.x??0.4)-(lm[LM.right_ankle]?.x??0.6), 0);
+    const tl=torsoLength(lm); const spread= tl>1e-6 ? rawSpread / tl : rawSpread;
     const knee=(angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle)+angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle))/2;
-    const bent=knee<125; const wide=spread>0.28;
+    const bent=knee<128; const wide=spread>0.58;
     let repInc=false, repConf=0;
-    // Detect lateral hop: bent + wide -> landed side
+    // Detect lateral hop: bent + wide -> landed side (normalized)
     if (this.phase==='READY' && bent && wide){
       this.phase='LANDED';
       this.lastTransitionAt=ts;
-    } else if (this.phase==='LANDED' && spread<0.14){
+    } else if (this.phase==='LANDED' && spread<0.42){
       // returned to center -> need next landing on opposite side to count
       (this as any)._hops = ((this as any)._hops||0)+1;
       if ((this as any)._hops %2===0){
         repConf=clamp(70 + (Math.abs(this.velX)>0.3?10:0),0,100);
-        if(repConf>65 && q.exerciseConfidence>45 && this.shouldCountRep(ts,repConf,65)){ repInc=true; this.lastRepAt=ts; }
+        if(repConf>58 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,58)){ repInc=true; this.lastRepAt=ts; }
       }
       this.phase='CENTER';
-    } else if (this.phase==='CENTER' && bent && wide){
+    } else if (this.phase==='CENTER' && bent && wide && this.canTransition(ts, 120)){
       this.phase='LANDED';
     }
     this.lastX=cx;
