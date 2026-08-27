@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { LangContext, useT } from './context/LangContext.jsx';
 import {
   Play, Pause, SkipForward, Flame, HeartPulse, Trophy, ChevronRight,
@@ -6,7 +6,6 @@ import {
   Home as HomeIcon, BookOpen, Zap, RefreshCw, TrendingUp, TrendingDown, Ruler, Target, Medal, Crown,
   Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye, Watch, Share2, Bell, BellOff, Send
 } from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay, musicSetAutoPlay, musicGetAutoPlay, musicSetShuffle, musicGetShuffle, musicNext, musicPrev, musicSetOnTrackChange, musicGetCurrentId, musicGetQueue } from './music';
 import { LANGS, LOCALES, detectLang, tr, translate } from './i18n';
 import { hasClip } from './clips.js';
@@ -28,18 +27,27 @@ import FitnessEngineView from './components/FitnessEngineView.tsx';
 // PoseCounter deprecated → delega a FitnessEngineView (preservato in src/components/PoseCounter.jsx per compatibilità)
 import ChangelogModal, { CHANGELOG_STORAGE_KEY } from './components/ChangelogModal.tsx';
 import SessionAIOverlay from './components/SessionAIOverlay.tsx';
-import CountdownScreen from './screens/CountdownScreen.jsx';
-import SetupScreen from './screens/SetupScreen.jsx';
-import HomeScreen from './screens/HomeScreen.jsx';
-import LibraryScreen from './screens/LibraryScreen.jsx';
-import BuilderScreen from './screens/BuilderScreen.jsx';
-import PreviewScreen from './screens/PreviewScreen.jsx';
-import SessionScreen from './screens/SessionScreen.jsx';
-import SummaryScreen from './screens/SummaryScreen.jsx';
-import HistoryScreen from './screens/HistoryScreen.jsx';
 import TopBar from './components/layout/TopBar.jsx';
 import BottomNav from './components/layout/BottomNav.jsx';
 import VersionBadge from './components/layout/VersionBadge.jsx';
+// audit/4-lazy: screens lazy — recharts (History) + media (Session/Preview) stay in their chunks
+const CountdownScreen = lazy(() => import('./screens/CountdownScreen.jsx'));
+const SetupScreen = lazy(() => import('./screens/SetupScreen.jsx'));
+const HomeScreen = lazy(() => import('./screens/HomeScreen.jsx'));
+const LibraryScreen = lazy(() => import('./screens/LibraryScreen.jsx'));
+const BuilderScreen = lazy(() => import('./screens/BuilderScreen.jsx'));
+const PreviewScreen = lazy(() => import('./screens/PreviewScreen.jsx'));
+const SessionScreen = lazy(() => import('./screens/SessionScreen.jsx'));
+const SummaryScreen = lazy(() => import('./screens/SummaryScreen.jsx'));
+const HistoryScreen = lazy(() => import('./screens/HistoryScreen.jsx'));
+
+function ScreenFallback() {
+  return (
+    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
+      <div className="o40-mono" style={{ color: '#EDE8D8', fontSize: 12, letterSpacing: '0.08em' }}>CARICAMENTO…</div>
+    </div>
+  );
+}
 import { getBellyLevelForTest, shouldProgressBellyLevel } from './utils/bellyTest.js';
 import { exportBackup, downloadBackup, importBackup } from './utils/backup.js';
 import { migrateStoredDataIfNeeded } from './storage.js';
@@ -983,6 +991,7 @@ export default function App() {
       <div className="o40-phone" style={phone}>
         <div className="o40-gridbg" />
         <div className="o40-camo" style={{ height: 6 }} />
+        <Suspense fallback={<ScreenFallback />}>
 
         {screen === 'setup' && (
           <SetupScreen
@@ -1127,6 +1136,7 @@ export default function App() {
             onDeleteSession={deleteSession}
           />
         )}
+        </Suspense>
 
         {['home', 'library', 'history', 'setup'].includes(screen) && (
           <BottomNav active={screen} onNavigate={setScreen} />

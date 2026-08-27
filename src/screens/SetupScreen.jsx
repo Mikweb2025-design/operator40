@@ -250,7 +250,7 @@ export default function SetupScreen({ formName, setFormName, formAge, setFormAge
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
             <Download size={16} color={KHAKI} />
             <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', flex: 1 }}>
-              {lang === 'it' ? 'Backup & Ripristino' : lang === 'de' ? 'Backup & Wiederherstellung' : 'Backup & Restore'}
+              {t('setup.backup.title')}
             </div>
             <span className="o40-mono" style={{ fontSize: 9, color: STEEL, border: `1px solid ${OLIVE}`, borderRadius: 6, padding: '2px 6px' }}>v1</span>
           </div>
@@ -259,15 +259,15 @@ export default function SetupScreen({ formName, setFormName, formAge, setFormAge
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={onExportBackup} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '10px 12px', borderRadius: 10, cursor: 'pointer', background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: `1px solid ${BLAZE}`, fontSize: 12, fontWeight: 700 }}>
-              <Download size={14} /> {lang === 'it' ? 'Esporta backup' : 'Export backup'}
+              <Download size={14} /> {t('setup.backup.export')}
             </button>
             <label style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '10px 12px', borderRadius: 10, cursor: 'pointer', background: INK, border: `1px solid ${OLIVE}`, color: KHAKI, fontSize: 12, fontWeight: 600 }}>
-              <Upload size={14} /> {lang === 'it' ? 'Ripristina' : 'Restore'}
+              <Upload size={14} /> {t('setup.backup.restore')}
               <input type="file" accept=".json" style={{ display: 'none' }} onChange={e => { const f = e.target.files && e.target.files[0]; if (f) onImportBackup(f); e.target.value = ''; }} />
             </label>
           </div>
           <div style={{ color: STEEL, fontSize: 10, marginTop: 8, lineHeight: 1.4, opacity: 0.8 }}>
-            {lang === 'it' ? 'Sovrascrive i dati locali — esporta prima se non sei sicuro.' : 'Overwrites local data — export first if unsure.'}
+            {t('setup.backup.hint')}
           </div>
         </div>
 
