@@ -1,8 +1,8 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-IGlMtQQV.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-CAArT6Xr.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-BVanbH5E.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles$1, X, Z as Zap, d as ChevronLeft$1, V as Volume2, e as VolumeX, f as Vibrate, h as SkipForward, M as Music, i as Music2, H as HeadphoneOff, j as RefreshCw$1, k as Crown, l as Medal, B as Bell, m as BellOff, n as Send, o as HeartPulse, F as Flame, I as Info, p as Star, q as RotateCcw, s as Target, E as Eye, t as BookOpen, u as TrendingUp, L as Lightbulb, v as Ruler, w as TrendingDown, x as Scale, y as Settings, z as Trash2, P as Plus, A as Play, W as Wind$1, D as Pause, G as ShieldCheck, J as House, K as History } from "./icons-D3QZqbji.js";
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ChevronLeft$1, V as Volume2, e as VolumeX, f as Vibrate, h as SkipForward, M as Music, i as Music2, H as HeadphoneOff, j as RefreshCw, k as Crown, l as Medal, B as Bell, m as BellOff, n as Send, o as HeartPulse, F as Flame, I as Info, p as Star, q as RotateCcw, s as Target, E as Eye, t as BookOpen, u as TrendingUp, L as Lightbulb, v as Ruler, w as TrendingDown, x as Scale, y as Settings, z as Trash2, P as Plus, W as Wind, A as Play, D as Pause, G as ShieldCheck, J as House, K as History } from "./icons-D3QZqbji.js";
 import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-Bi7lEBzN.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
@@ -589,6 +589,33 @@ if (typeof window !== "undefined") {
     }, { passive: true })
   );
 }
+const CLIP_FILES = {
+  bicyclecrunch: "clips/bicyclecrunch.mp4",
+  russiantwist: "clips/russiantwist.mp4",
+  wallsit: "clips/wallsit.mp4",
+  superman: "clips/superman.mp4",
+  ponte: "clips/ponte.mp4",
+  bridge: "clips/ponte.mp4",
+  ginocchiaalte: "clips/ginocchiaalte.mp4",
+  highknees: "clips/ginocchiaalte.mp4",
+  crunch: "clips/crunch.mp4",
+  burpeetattico: "clips/burpeetattico.mp4",
+  burpee: "clips/burpeetattico.mp4",
+  sideplank: "clips/sideplank.mp4",
+  legraise: "clips/legraise.mp4",
+  flutterkick: "clips/flutterkick.mp4",
+  deadbug: "clips/deadbug.mp4",
+  flessioni: "clips/flessioni.mp4",
+  pushup: "clips/flessioni.mp4",
+  vup: "clips/vup.mp4",
+  plankjack: "clips/plankjack.mp4",
+  skater: "clips/skater.mp4",
+  heeltap: "clips/heeltap.mp4",
+  squat: "clips/squat.mp4"
+};
+function hasClip(exerciseId, pose) {
+  return !!(CLIP_FILES[exerciseId] || CLIP_FILES[pose]);
+}
 const INK = "#1B1D16";
 const INK_2 = "#242820";
 const PAPER = "#EDE8D8";
@@ -869,7 +896,7 @@ const LEVELS = [
   { key: "combattente", label: { it: "COMBATTENTE", en: "FIGHTER", de: "KÄMPFER" }, preset: "standard", work: 40, rest: 20, desc: { it: "Ritmo standard 40″/20″", en: "Standard pace 40s/20s", de: "Standardtempo 40s/20s" } },
   { key: "elite", label: { it: "ELITE", en: "ELITE", de: "ELITE" }, preset: "lungo", work: 45, rest: 15, desc: { it: "Ritmo sostenuto 45″/15″", en: "Brisk pace 45s/15s", de: "Zügiges Tempo 45s/15s" } }
 ];
-const HOLD_EXERCISES$1 = /* @__PURE__ */ new Set(["plank", "wallsit", "sideplank"]);
+const HOLD_EXERCISES = /* @__PURE__ */ new Set(["plank", "wallsit", "sideplank"]);
 const REPS_BASE = {
   squat: 12,
   affondo: 10,
@@ -891,8 +918,8 @@ const REPS_BASE = {
   skater: 10,
   heeltap: 14
 };
-function getReps$1(exId, levelKey) {
-  if (HOLD_EXERCISES$1.has(exId)) return null;
+function getReps(exId, levelKey) {
+  if (HOLD_EXERCISES.has(exId)) return null;
   const base = REPS_BASE[exId] || 10;
   const factor = levelKey === "recluta" ? 0.75 : levelKey === "elite" ? 1.35 : 1;
   const v = Math.round(base * factor);
@@ -910,7 +937,7 @@ function levelPreset$1(profile) {
   const lvl = profile && profile.level ? getLevel(profile.level) : null;
   return lvl ? getIntervalPreset(lvl.preset) : getIntervalPreset(profile && profile.intervalPreset || "standard");
 }
-const PROGRAMS$1 = [
+const PROGRAMS = [
   {
     id: "A",
     difficulty: 2,
@@ -1070,7 +1097,7 @@ const QUICK_PROGRAM = {
 const CAMP_DAYS = 30;
 const DAY_CYCLE = ["A", "N", "B", "O", "C", "P", "K", "H", "I", "J", "L", "M", "D", "E", "F", "G", "A", "B", "C", "D"];
 const BELLY_IDS = ["N", "O", "P"];
-PROGRAMS$1.filter((p2) => p2.belly);
+PROGRAMS.filter((p2) => p2.belly);
 function campDayIndex(profile) {
   const start = profile && profile.campStart ? new Date(profile.campStart) : null;
   if (!start) return 1;
@@ -1086,11 +1113,11 @@ function campDayDisplay(profile) {
   return Math.min(CAMP_DAYS, campDayIndex(profile));
 }
 function programById(id) {
-  return PROGRAMS$1.find((p2) => p2.id === id) || PROGRAMS$1[0];
+  return PROGRAMS.find((p2) => p2.id === id) || PROGRAMS[0];
 }
 function pickNextProgram(sessions, profile) {
   if (!profile || !profile.campStart || !sessions.length) {
-    if (!sessions.length) return { program: PROGRAMS$1[0], adaptive: false };
+    if (!sessions.length) return { program: PROGRAMS[0], adaptive: false };
     const order = ["A", "B", "C"];
     const last2 = sessions[sessions.length - 1];
     const rotationNextId = order[(order.indexOf(last2.programId) + 1) % order.length];
@@ -1114,7 +1141,7 @@ function buildSequence(program, skipWarmup, workSec = WORK_SEC, restSec = REST_S
   const seq = skipWarmup ? [] : [{ type: "warmup", duration: WARM_SEC }];
   for (let r = 1; r <= program.rounds; r++) {
     program.exercises.forEach((exId, i) => {
-      const reps = isReps ? getReps$1(exId, levelKey) : null;
+      const reps = isReps ? getReps(exId, levelKey) : null;
       if (isReps && reps) {
         seq.push({ type: "work", exerciseId: exId, reps, duration: null, round: r, mode: "reps" });
       } else {
@@ -1137,7 +1164,7 @@ function estimateProgramKcal$1(program, weightKg, skipWarmup, workSec = WORK_SEC
     const ex = EXERCISES[id];
     for (let r = 0; r < program.rounds; r++) {
       if (isReps) {
-        const reps = getReps$1(id, levelKey);
+        const reps = getReps(id, levelKey);
         const sec = reps ? reps * 3 : workSec;
         kcal += kcalForSeconds(ex.met, weightKg, sec);
       } else {
@@ -1414,7 +1441,7 @@ function vibrate(pattern) {
   } catch {
   }
 }
-function speak$1(text, lang, locales) {
+function speak(text, lang, locales) {
   try {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
@@ -2333,7 +2360,7 @@ function getWeeklyProgress(sessions, weeklyGoal = WEEKLY_GOAL) {
   const remain = Math.max(0, weeklyGoal - done);
   return { done, total: weeklyGoal, pct, remain, isDone: done >= weeklyGoal };
 }
-function getConsistencyScore$1(sessions, weeks = 8) {
+function getConsistencyScore(sessions, weeks = 8) {
   if (!(sessions == null ? void 0 : sessions.length)) return 0;
   const now = /* @__PURE__ */ new Date();
   const byDay = new Set(sessions.map(sessionDayKey$1));
@@ -2354,7 +2381,7 @@ function getAveragePace(sessions) {
   const avgKcal = Math.round(totalKcal / sessions.length);
   return { avgMin, avgKcal, count: sessions.length };
 }
-function getStreakRisk$1(sessions) {
+function getStreakRisk(sessions) {
   if (!(sessions == null ? void 0 : sessions.length)) return "break";
   const last = new Date(sessions[sessions.length - 1].date);
   const diffDays = Math.round((Date.now() - last.getTime()) / 864e5);
@@ -2426,12 +2453,12 @@ function getMotivationalMessage({ sessions = [], profile = null, lang = "it", da
   const missed = daysSinceLastSession(sessions);
   const cons = (() => {
     try {
-      return getConsistencyScore$1(sessions, 8);
+      return getConsistencyScore(sessions, 8);
     } catch {
       return 0;
     }
   })();
-  const risk = getStreakRisk$1(sessions);
+  const risk = getStreakRisk(sessions);
   const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 864e5);
   const name = ((_a = profile == null ? void 0 : profile.name) == null ? void 0 : _a.trim()) || null;
   if (n2 > 0 && missed >= 2) {
@@ -6727,7 +6754,7 @@ function ChangelogModal({ lang = "it", onClose, onTry }) {
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, opacity: 0.08, background: `repeating-linear-gradient(90deg, ${OLIVE} 0 1px, transparent 1px 14px)` } }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }, children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12, alignItems: "center" }, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, borderRadius: 12, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", boxShadow: `0 6px 18px ${BLAZE}66`, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 22, color: PAPER }) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, borderRadius: 12, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", boxShadow: `0 6px 18px ${BLAZE}66`, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 22, color: PAPER }) }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { background: BLAZE, color: PAPER, fontSize: 9, fontWeight: 800, letterSpacing: "0.08em", padding: "2px 6px", borderRadius: 6 }, children: c.badge }),
@@ -6994,8 +7021,8 @@ function exerciseFromPhase(phase, lang = "it", levelKey = "combattente") {
   const nid = normalizeExerciseId(rawId);
   const def = getDefinition(nid) ?? null;
   const trackingSupported = !!def && def.trackingSupported !== false;
-  const hold = HOLD_EXERCISES$1.has(rawId) || !!(def == null ? void 0 : def.isHold);
-  const reps = phase.reps ?? (!hold ? getReps$1(rawId, levelKey) : null);
+  const hold = HOLD_EXERCISES.has(rawId) || !!(def == null ? void 0 : def.isHold);
+  const reps = phase.reps ?? (!hold ? getReps(rawId, levelKey) : null);
   return {
     exerciseId: nid,
     originalId: rawId,
@@ -7456,12 +7483,12 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, marginBottom: 10 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onToggleAutoPlay, style: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "7px 8px", borderRadius: 8, border: `1px solid ${musicAutoPlay ? BLAZE : OLIVE}`, background: musicAutoPlay ? `${BLAZE}22` : "transparent", color: musicAutoPlay ? BLAZE : STEEL, fontSize: 11, fontWeight: 600, cursor: "pointer" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw$1, { size: 12 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 12 }),
               " ",
               musicAutoPlay ? "Auto • Tutte" : "Singola"
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onToggleShuffle, style: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "7px 8px", borderRadius: 8, border: `1px solid ${musicShuffle ? BLAZE : OLIVE}`, background: musicShuffle ? `${BLAZE}22` : "transparent", color: musicShuffle ? BLAZE : STEEL, fontSize: 11, fontWeight: 600, cursor: "pointer" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw$1, { size: 12, style: { transform: musicShuffle ? "rotate(180deg)" : "none" } }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 12, style: { transform: musicShuffle ? "rotate(180deg)" : "none" } }),
               " ",
               musicShuffle ? "Shuffle ON" : "Shuffle OFF"
             ] })
@@ -7648,7 +7675,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
               fontWeight: 700,
               opacity: pushBusy ? 0.6 : 1
             }, children: [
-              pushBusy ? /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw$1, { size: 14, className: "o40-spin" }) : pushEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(BellOff, { size: 14 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Bell, { size: 14 }),
+              pushBusy ? /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 14, className: "o40-spin" }) : pushEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(BellOff, { size: 14 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Bell, { size: 14 }),
               pushBusy ? "..." : pushEnabled ? lang === "it" ? "Disattiva push" : "Disable push" : lang === "it" ? "Attiva push" : "Enable push"
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onTestPush, disabled: pushBusy, style: {
@@ -7741,7 +7768,7 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
 function getRecommendedMissions({ sessions, profile, others }) {
   const cons = (() => {
     try {
-      return getConsistencyScore$1(sessions, 4);
+      return getConsistencyScore(sessions, 4);
     } catch {
       return 50;
     }
@@ -7764,11 +7791,11 @@ function getRecommendedMissions({ sessions, profile, others }) {
   });
 }
 function getDailyChallenge({ sessions, profile }) {
-  const day = (/* @__PURE__ */ new Date()).getDate() % PROGRAMS$1.length;
-  const base = PROGRAMS$1[day];
+  const day = (/* @__PURE__ */ new Date()).getDate() % PROGRAMS.length;
+  const base = PROGRAMS[day];
   const cons = (() => {
     try {
-      return getConsistencyScore$1(sessions, 4);
+      return getConsistencyScore(sessions, 4);
     } catch {
       return 50;
     }
@@ -7791,7 +7818,7 @@ function getDailyChallenge({ sessions, profile }) {
   return { program: base, bonus, cons, streak };
 }
 function getBellyMissions({ sessions, profile, waistHistory }) {
-  const belly = PROGRAMS$1.filter((p2) => BELLY_IDS.includes(p2.id));
+  const belly = PROGRAMS.filter((p2) => BELLY_IDS.includes(p2.id));
   const counts = {};
   (sessions || []).forEach((s) => {
     counts[s.programId] = (counts[s.programId] || 0) + 1;
@@ -7836,7 +7863,7 @@ function getGoalHistory(sessions, weeklyGoal = WEEKLY_GOAL, weeks = 8) {
   return byWeek;
 }
 function suggestNextGoal(sessions, currentGoal = WEEKLY_GOAL) {
-  const cons = getConsistencyScore$1(sessions, 4);
+  const cons = getConsistencyScore(sessions, 4);
   const recent = getGoalHistory(sessions, currentGoal, 4);
   const avgDone = recent.reduce((a, w) => a + w.done, 0) / 4;
   if (cons >= 80 && avgDone >= currentGoal) return Math.min(7, currentGoal + 1);
@@ -7926,8 +7953,8 @@ function getSmartInsight({ sessions, profile, waistHistory, weightHistory, lang 
     }
     return n3;
   })();
-  const cons = getConsistencyScore$1(sessions, 8);
-  const risk = getStreakRisk$1(sessions);
+  const cons = getConsistencyScore(sessions, 8);
+  const risk = getStreakRisk(sessions);
   const waist = (waistHistory == null ? void 0 : waistHistory.length) ? waistHistory[waistHistory.length - 1] : null;
   const waistPrev = (waistHistory == null ? void 0 : waistHistory.length) > 1 ? waistHistory[0] : null;
   const wDelta = waist && waistPrev ? waist.cm - waistPrev.cm : null;
@@ -7955,9 +7982,9 @@ function getSmartRecommendation({ sessions, profile, lang = "it" }) {
   const last = n2 ? sessions[n2 - 1] : null;
   if (!last) return { programId: "A", reason: lang === "it" ? "Parti con Assalto Pancia, tecnico ma dolce." : "Start with Belly Assault." };
   if (last.rpe >= 4) return { programId: "D", reason: lang === "it" ? "Ultima dura — oggi Recupero Attivo." : "Last was hard — Active Recovery today." };
-  const risk = getStreakRisk$1(sessions);
+  const risk = getStreakRisk(sessions);
   if (risk === "at-risk") return { programId: "I", reason: lang === "it" ? "Streak a rischio — Cardio Leggero per non rompere." : "Streak at risk — Light Cardio to keep it." };
-  const cons = getConsistencyScore$1(sessions, 4);
+  const cons = getConsistencyScore(sessions, 4);
   if (cons > 75) return { programId: "L", reason: lang === "it" ? "Costanza top — prova Potenza Esplosiva." : "Top consistency — try Explosive Power." };
   if (cons < 40) return { programId: "H", reason: lang === "it" ? "Riparti con Schiena di Ferro, dolce." : "Restart with Iron Back." };
   const counts = {};
@@ -7971,7 +7998,7 @@ function getPersonalChallenge(sessions, profile) {
   const bestStreak = computeBestStreak(sessions || []);
   const cons = (() => {
     try {
-      return getConsistencyScore$1(sessions, 8);
+      return getConsistencyScore(sessions, 8);
     } catch {
       return 0;
     }
@@ -8004,13 +8031,13 @@ const ACHIEVEMENTS = [
   { id: "k5000", title: { it: "Fornace", en: "Furnace", de: "Ofen" }, desc: { it: "5.000 kcal bruciate", en: "5k kcal burned", de: "5k kcal" }, icon: "🔥", color: "#E84B2A", check: (s) => s.reduce((a, v) => a + (v.kcal || 0), 0) >= 5e3, progress: (s) => Math.min(1, s.reduce((a, v) => a + (v.kcal || 0), 0) / 5e3) },
   { id: "cons70", title: { it: "Metronomo", en: "Metronome", de: "Metronom" }, desc: { it: "70% costanza 8 sett.", en: "70% consistency 8w", de: "70% Konstanz 8W" }, icon: "◎", color: "#7FB069", check: (s) => {
     try {
-      return getConsistencyScore$1(s, 8) >= 70;
+      return getConsistencyScore(s, 8) >= 70;
     } catch {
       return false;
     }
   }, progress: (s) => {
     try {
-      return Math.min(1, getConsistencyScore$1(s, 8) / 70);
+      return Math.min(1, getConsistencyScore(s, 8) / 70);
     } catch {
       return 0;
     }
@@ -8054,12 +8081,12 @@ function getDailyInsight({ sessions, profile, waistHistory, weightHistory, lang 
   const n2 = (sessions == null ? void 0 : sessions.length) || 0;
   const cons = (() => {
     try {
-      return getConsistencyScore$1(sessions, 8);
+      return getConsistencyScore(sessions, 8);
     } catch {
       return 0;
     }
   })();
-  const risk = getStreakRisk$1(sessions);
+  const risk = getStreakRisk(sessions);
   const hist = getGoalHistory(sessions, (profile == null ? void 0 : profile.weeklyGoal) || 3, 4);
   const avgDone = hist.reduce((a, w) => a + w.done, 0) / 4;
   if (n2 === 0) return { icon: "🌱", title: "Inizia", body: lang === "it" ? "Fai la prima sessione oggi — 15′ bastano." : "Do first session today — 15′ is enough.", color: "#7FB069", tip: lang === "it" ? "Scegli Assalto Pancia, ritmo dolce." : "Pick Belly Assault, easy pace." };
@@ -8160,13 +8187,13 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
   const sessionsThisWeek = sessions.filter((s) => new Date(s.date).getTime() > weekAgo).length;
   const weeklyGoal = profile.weeklyGoal || WEEKLY_GOAL;
   const { program: todayProgram, adaptive } = pickNextProgram(sessions, profile);
-  const othersRaw = PROGRAMS$1.filter((p2) => p2.id !== todayProgram.id);
+  const othersRaw = PROGRAMS.filter((p2) => p2.id !== todayProgram.id);
   const others = getRecommendedMissions({ sessions, profile, others: othersRaw });
   const dailyChallenge = getDailyChallenge({ sessions, profile });
   const { current: rank, next: nextRank } = getRank(sessions.length);
   const upcoming = nextBadge(sessions);
   const lastSession = sessions.length ? sessions[sessions.length - 1] : null;
-  const lastProgram = lastSession && lastSession.programId !== "health-import" ? [...PROGRAMS$1, ...customPrograms].find((p2) => p2.id === lastSession.programId) : null;
+  const lastProgram = lastSession && lastSession.programId !== "health-import" ? [...PROGRAMS, ...customPrograms].find((p2) => p2.id === lastSession.programId) : null;
   const campDay = campDayDisplay(profile);
   const lvl = getLevel(profile.level || "combattente");
   const levelIdx = LEVELS.indexOf(lvl);
@@ -8498,8 +8525,8 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", margin: "20px 0 8px" }, children: [
         (() => {
           const wp = getWeeklyProgress(sessions, weeklyGoal);
-          const cons = getConsistencyScore$1(sessions);
-          const risk = getStreakRisk$1(sessions);
+          const cons = getConsistencyScore(sessions);
+          const risk = getStreakRisk(sessions);
           const pace = getAveragePace(sessions);
           return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${risk === "at-risk" ? KHAKI : risk === "break" ? BLAZE : OLIVE}`, borderRadius: 12, padding: "11px 13px", display: "flex", alignItems: "center", gap: 11 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 34, height: 34, borderRadius: "50%", background: `${BLAZE}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { size: 16, color: risk === "break" ? BLAZE : KHAKI }) }),
@@ -8795,6 +8822,36 @@ function toggleFavorite(list, id) {
   saveFavorites(next);
   return next;
 }
+let _mediaPromise$2 = null;
+function getMediaMap$2() {
+  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-CAArT6Xr.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  return _mediaPromise$2;
+}
+function ExerciseMedia$2({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
+  const [src, setSrc] = reactExports.useState(null);
+  const [videoSrc, setVideoSrc] = reactExports.useState(null);
+  const [failed, setFailed] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    let c = false;
+    setSrc(null);
+    setVideoSrc(null);
+    setFailed(false);
+    getMediaMap$2().then(({ b64, files }) => {
+      if (c) return;
+      const clip = files[exerciseId] || files[pose] || null;
+      setVideoSrc(clip);
+      if (!clip) setSrc(b64[exerciseId] || b64[pose] || null);
+    }).catch(() => {
+      if (!c) setFailed(true);
+    });
+    return () => {
+      c = true;
+    };
+  }, [exerciseId]);
+  if (videoSrc && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("video", { src: videoSrc, autoPlay: true, muted: true, loop: true, playsInline: true, preload: "metadata", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
+  if (src && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src, alt: "", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose, color, size });
+}
 function LibraryScreen({ sessions, profile }) {
   const { lang, t } = useT();
   const [filter, setFilter] = reactExports.useState("all");
@@ -8890,9 +8947,9 @@ function LibraryScreen({ sessions, profile }) {
         textAlign: "left",
         width: "100%"
       }, children: [
-        isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-expand", style: { width: "100%", aspectRatio: hasClip(id, ex.pose) ? "9 / 16" : "1 / 1", maxHeight: hasClip(id, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: id, pose: ex.pose, color: BLAZE, rounded: 10 }) }),
+        isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-expand", style: { width: "100%", aspectRatio: hasClip(id, ex.pose) ? "9 / 16" : "1 / 1", maxHeight: hasClip(id, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia$2, { exerciseId: id, pose: ex.pose, color: BLAZE, rounded: 10 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12 }, children: [
-          !isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, flexShrink: 0, background: INK, borderRadius: 8, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: id, pose: ex.pose, color: BLAZE, rounded: 8 }) }),
+          !isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, flexShrink: 0, background: INK, borderRadius: 8, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia$2, { exerciseId: id, pose: ex.pose, color: BLAZE, rounded: 8 }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 14.5, flex: 1 }, children: tr$1(ex.name, lang) }),
@@ -9050,14 +9107,55 @@ function BuilderScreen({ profile, initial, onCancel, onCreate, onUpdate }) {
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, textAlign: "center" }, children: t("bld.hint") }) })
   ] });
 }
+const primaryBtn$3 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, width: "100%" };
+const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
+let _mediaPromise$1 = null;
+function getMediaMap$1() {
+  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-CAArT6Xr.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  return _mediaPromise$1;
+}
+function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
+  const [src, setSrc] = reactExports.useState(null);
+  const [videoSrc, setVideoSrc] = reactExports.useState(null);
+  const [failed, setFailed] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    let c = false;
+    setSrc(null);
+    setVideoSrc(null);
+    setFailed(false);
+    getMediaMap$1().then(({ b64, files }) => {
+      if (c) return;
+      const clip = files[exerciseId] || files[pose] || null;
+      setVideoSrc(clip);
+      if (!clip) setSrc(b64[exerciseId] || b64[pose] || null);
+    }).catch(() => {
+      if (!c) setFailed(true);
+    });
+    return () => {
+      c = true;
+    };
+  }, [exerciseId]);
+  if (videoSrc && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("video", { src: videoSrc, autoPlay: true, muted: true, loop: true, playsInline: true, preload: "metadata", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
+  if (src && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src, alt: "", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose, color, size });
+}
+function DogTag$2({ label, value, sub }) {
+  const numeric = typeof value === "number";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card", style: { background: `linear-gradient(160deg, ${INK_2}, ${INK})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 13px", position: "relative", flex: 1, minWidth: 0, boxShadow: "0 4px 14px rgba(0,0,0,0.35)" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 9, left: -5, width: 10, height: 10, borderRadius: "50%", background: INK, border: `2px solid ${KHAKI}` } }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" }, children: label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26, lineHeight: 1.1 }, children: numeric ? value : value }),
+    sub && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: sub })
+  ] });
+}
 function groupOf(id) {
-  return EXERCISE_GROUPS.standing.includes(id) ? "standing" : "ground";
+  return EXERCISE_GROUPS$1.standing.includes(id) ? "standing" : "ground";
 }
 function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
   const { lang, t } = useT();
-  const [selectedId, setSelectedId] = useState(null);
-  const [subs, setSubs] = useState({});
-  const [swapOpenId, setSwapOpenId] = useState(null);
+  const [selectedId, setSelectedId] = reactExports.useState(null);
+  const [subs, setSubs] = reactExports.useState({});
+  const [swapOpenId, setSwapOpenId] = reactExports.useState(null);
   const effectiveExercises = program.exercises.map((id) => subs[id] || id);
   const effectiveProgram = { ...program, exercises: effectiveExercises };
   const preset = levelPreset$1(profile);
@@ -9066,14 +9164,14 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
   const kcal = Math.round(estimateProgramKcal$1(effectiveProgram, profile.weight, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey));
   const mins = Math.round(totalSeqSeconds$1(effectiveProgram, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey) / 60);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("prev.title", { id: program.id }), onBack }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar$1, { title: t("prev.title", { id: program.id }), onBack }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26 }, children: tr$1(program.name, lang) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 14, marginBottom: 14 }, children: tr$1(program.tagline, lang) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.duration"), value: `${mins}′` }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.estkcal"), value: kcal }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.rounds"), value: program.rounds })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$2, { label: t("dt.duration"), value: `${mins}′` }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$2, { label: t("dt.estkcal"), value: kcal }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$2, { label: t("dt.rounds"), value: program.rounds })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", margin: "4px 0 10px" }, children: t("prev.sub", { n: program.exercises.length, r: program.rounds, p: mode === "reps" ? lang === "it" ? "Ripetizioni" : lang === "de" ? "Wiederholungen" : "Reps" : tr$1(preset.label, lang) }) }),
       mode === "reps" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: BLAZE, fontSize: 11, marginBottom: 8, background: `${BLAZE}14`, border: `1px solid ${BLAZE}44`, borderRadius: 8, padding: "6px 10px", textAlign: "center" }, children: lang === "it" ? "Modalità ripetizioni: tocca FATTO quando hai finito ogni esercizio. Hold resta a tempo." : "Reps mode: tap DONE when finished each exercise. Holds stay timed." }),
@@ -9084,7 +9182,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
         const isSwapping = swapOpenId === originalId;
         const isSubbed = !!subs[originalId];
         const usedElsewhere = effectiveExercises.filter((_, idx) => program.exercises[idx] !== originalId);
-        const alternatives = EXERCISE_GROUPS[groupOf(originalId)].filter((aid) => aid !== currentId && !usedElsewhere.includes(aid));
+        const alternatives = EXERCISE_GROUPS$1[groupOf(originalId)].filter((aid) => aid !== currentId && !usedElsewhere.includes(aid));
         return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
           display: "flex",
           flexDirection: "column",
@@ -9094,7 +9192,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
           borderRadius: 10,
           padding: 12
         }, children: [
-          isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-expand", style: { width: "100%", aspectRatio: hasClip(currentId, ex.pose) ? "9 / 16" : "1 / 1", maxHeight: hasClip(currentId, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: currentId, pose: ex.pose, color: BLAZE, rounded: 10 }) }),
+          isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-expand", style: { width: "100%", aspectRatio: hasClip(currentId, ex.pose) ? "9 / 16" : "1 / 1", maxHeight: hasClip(currentId, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia$1, { exerciseId: currentId, pose: ex.pose, color: BLAZE, rounded: 10 }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => {
               const opening = !isOpen;
@@ -9111,7 +9209,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
               flex: 1,
               minWidth: 0
             }, children: [
-              !isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, flexShrink: 0, background: INK, borderRadius: 8, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: currentId, pose: ex.pose, color: BLAZE, rounded: 8 }) }),
+              !isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, flexShrink: 0, background: INK, borderRadius: 8, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia$1, { exerciseId: currentId, pose: ex.pose, color: BLAZE, rounded: 8 }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }, children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: STEEL, fontSize: 11 }, children: [
@@ -9149,7 +9247,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4, fontStyle: "italic" }, children: tr$1(ex.tip40, lang) })
               ] })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSwapOpenId(isSwapping ? null : originalId), style: { ...btnIcon, flexShrink: 0, alignSelf: "flex-start" }, "aria-label": t("prev.swap"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 16, color: isSwapping ? BLAZE : STEEL }) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSwapOpenId(isSwapping ? null : originalId), style: { ...btnIcon$2, flexShrink: 0, alignSelf: "flex-start" }, "aria-label": t("prev.swap"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 16, color: isSwapping ? BLAZE : STEEL }) })
           ] }),
           isSwapping && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexWrap: "wrap", gap: 6, paddingTop: 4, borderTop: `1px solid ${OLIVE_DARK}` }, children: [
             isSubbed && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
@@ -9180,7 +9278,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
         ] }, originalId);
       }) })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: 16, borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onStart(effectiveProgram), className: "o40-pulsebtn", style: { ...primaryBtn, borderRadius: 14 }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: 16, borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onStart(effectiveProgram), className: "o40-pulsebtn", style: { ...primaryBtn$3, borderRadius: 14 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 18 }),
       " ",
       t("prev.go")
@@ -9207,14 +9305,14 @@ async function releaseWakeLock() {
   } catch {
   }
 }
-const primaryBtn$3 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
-const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
+const primaryBtn$2 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
+const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-_rtSdoti.js"), true ? [] : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-CAArT6Xr.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
-function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
+function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
   const [src, setSrc] = reactExports.useState(null);
   const [videoSrc, setVideoSrc] = reactExports.useState(null);
   const [failed, setFailed] = reactExports.useState(false);
@@ -9281,7 +9379,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
   const isAiWork = aiEnabled && phase.type === "work" && !!phase.exerciseId;
   const progress = isRepsWork ? 1 : phase.duration ? 1 - secondsLeft / phase.duration : 0;
   reactExports.useEffect(() => {
-    if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === "work" && !isRepsWork) speak$1(String(secondsLeft), lang, LOCALES);
+    if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === "work" && !isRepsWork) speak(String(secondsLeft), lang, LOCALES);
   }, [secondsLeft, phase.type, soundOn, profile, isRepsWork]);
   reactExports.useEffect(() => {
     requestWakeLock();
@@ -9307,9 +9405,9 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
         onBack: () => setExitConfirm(true),
         right: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 2 }, children: [
           musicOn && /* @__PURE__ */ jsxRuntimeExports.jsx(EqBars, { tone: ringColor, bars: 4, speed: phase.type === "work" ? 1.4 : phase.type === "rest" ? 0.5 : 0.8, style: { marginRight: 6, height: 12 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleAi, title: aiEnabled ? "AI Coach ON" : "AI Coach OFF", style: { ...btnIcon$2, border: `1px solid ${aiEnabled ? BLAZE : "transparent"}`, borderRadius: 8, background: aiEnabled ? `${BLAZE}22` : "transparent" }, children: aiEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: STEEL }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleMusic, style: btnIcon$2, "aria-label": t("ses.music"), children: musicOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Music2, { size: 18, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(HeadphoneOff, { size: 18, color: STEEL }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSoundOn(!soundOn), style: btnIcon$2, children: soundOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Volume2, { size: 18, color: PAPER }) : /* @__PURE__ */ jsxRuntimeExports.jsx(VolumeX, { size: 18, color: STEEL }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleAi, title: aiEnabled ? "AI Coach ON" : "AI Coach OFF", style: { ...btnIcon$1, border: `1px solid ${aiEnabled ? BLAZE : "transparent"}`, borderRadius: 8, background: aiEnabled ? `${BLAZE}22` : "transparent" }, children: aiEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: STEEL }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleMusic, style: btnIcon$1, "aria-label": t("ses.music"), children: musicOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Music2, { size: 18, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(HeadphoneOff, { size: 18, color: STEEL }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSoundOn(!soundOn), style: btnIcon$1, children: soundOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Volume2, { size: 18, color: PAPER }) : /* @__PURE__ */ jsxRuntimeExports.jsx(VolumeX, { size: 18, color: STEEL }) })
         ] })
       }
     ),
@@ -9353,7 +9451,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
           } }),
           phase.type === "work" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: -10, borderRadius: "50%", border: `2px solid ${ringColor}44`, animation: "ringPulse 1.5s ease-out infinite" } }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressRing, { progress, color: ringColor }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }, children: ex ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 150, height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia$1, { exerciseId: phase.exerciseId, pose: ex.pose, color: PAPER, rounded: 14 }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 44 }, children: formatTime(secondsLeft) }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }, children: ex ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 150, height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: phase.exerciseId, pose: ex.pose, color: PAPER, rounded: 14 }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 44 }, children: formatTime(secondsLeft) }) })
         ] }),
         ex && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { textAlign: "center" }, children: isRepsWork ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: PAPER, fontSize: 48, lineHeight: 1 }, children: [
@@ -9374,7 +9472,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 12, lineHeight: 1.4 }, children: tr$1(s, lang) })
         ] }, i)) }),
         ex.breath && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 7, alignItems: "center", justifyContent: "center", marginTop: 9, color: OLIVE }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Wind$1, { size: 13, style: { flexShrink: 0 } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 13, style: { flexShrink: 0 } }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 11.5, fontStyle: "italic", lineHeight: 1.4 }, children: tr$1(ex.breath, lang) })
         ] }),
         ex.tip40 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, alignItems: "flex-start", marginTop: 10, textAlign: "left", background: `${KHAKI}10`, border: `1px solid ${KHAKI}44`, borderRadius: 10, padding: "8px 10px" }, children: [
@@ -9383,7 +9481,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
         ] })
       ] }),
       phase.type === "rest" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, marginTop: 4 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, borderRadius: "50%", background: OLIVE, opacity: 0.9, animation: "restBreath 3.2s ease-in-out infinite", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Wind$1, { size: 16, color: PAPER }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, borderRadius: "50%", background: OLIVE, opacity: 0.9, animation: "restBreath 3.2s ease-in-out infinite", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 16, color: PAPER }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.08em" }, children: lang === "it" ? "Respira — 4 sec in, 4 sec out" : lang === "de" ? "Atmen — 4s ein, 4s aus" : "Breathe — 4s in, 4s out" })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-card-glass", style: { color: STEEL, fontSize: 12, marginTop: 6, display: "flex", alignItems: "center", gap: 8, borderRadius: 10, padding: "7px 12px" }, children: next ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -9424,7 +9522,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, marginBottom: 18 }, children: t("ses.quit.body") }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setExitConfirm(false), style: { ...secondaryBtn$1, flex: 1 }, children: t("ses.quit.continue") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onExit, style: { ...primaryBtn$3, flex: 1 }, children: t("ses.quit.exit") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onExit, style: { ...primaryBtn$2, flex: 1 }, children: t("ses.quit.exit") })
       ] })
     ] }) })
   ] });
@@ -9477,8 +9575,8 @@ function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
   ] });
 }
 const inputStyle = { width: "100%", background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "12px 14px", color: PAPER, fontSize: 16, fontFamily: "Inter, sans-serif", outline: "none" };
-const primaryBtn$2 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, width: "100%" };
-function DogTag$2({ label, value, sub }) {
+const primaryBtn$1 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, width: "100%" };
+function DogTag$1({ label, value, sub }) {
   const numeric = typeof value === "number";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card", style: { background: `linear-gradient(160deg, ${INK_2}, ${INK})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 13px", position: "relative", flex: 1, minWidth: 0, boxShadow: "0 4px 14px rgba(0,0,0,0.35)" }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 9, left: -5, width: 10, height: 10, borderRadius: "50%", background: INK, border: `2px solid ${KHAKI}` } }),
@@ -9530,8 +9628,8 @@ function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInp
         }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11 }, children: shareState === "copied" ? t("sum.copied") : t("sum.sharebtn") }) })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, margin: "20px 0" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$2, { label: t("dt.duration"), value: `${Math.round(stats.durationSec / 60)}′` }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$2, { label: t("dt.kcal"), value: stats.kcal })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.duration"), value: `${Math.round(stats.durationSec / 60)}′` }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.kcal"), value: stats.kcal })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(WeeklyChallenge, { sessions, weeklyGoal: profile.weeklyGoal || WEEKLY_GOAL }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
@@ -9629,7 +9727,7 @@ function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInp
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "12px 20px 20px", borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onSave, style: primaryBtn$2, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "12px 20px 20px", borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onSave, style: primaryBtn$1, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 18 }),
       " ",
       t("sum.save")
@@ -9820,7 +9918,7 @@ async function shareStatsImage({ sessions, profile, t, tr: tr2 }) {
   const best = computeBestStreak(sessions || []);
   const cons = (() => {
     try {
-      return getConsistencyScore$1(sessions, 8);
+      return getConsistencyScore(sessions, 8);
     } catch {
       return 0;
     }
@@ -10030,9 +10128,9 @@ async function shareStatsImage({ sessions, profile, t, tr: tr2 }) {
   return "download";
 }
 const secondaryBtn = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
-const primaryBtn$1 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
-const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
-function DogTag$1({ label, value, sub }) {
+const primaryBtn = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
+const btnIcon = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
+function DogTag({ label, value, sub }) {
   const numeric = typeof value === "number";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card", style: { background: `linear-gradient(160deg, ${INK_2}, ${INK})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 13px", position: "relative", flex: 1, minWidth: 0, boxShadow: "0 4px 14px rgba(0,0,0,0.35)" }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 9, left: -5, width: 10, height: 10, borderRadius: "50%", background: INK, border: `2px solid ${KHAKI}` } }),
@@ -10124,7 +10222,7 @@ function MedalGrid({ sessions }) {
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 6, overflowX: "auto", paddingBottom: 4 }, children: byType[cat.key].map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { label: m2.label, value: m2.n, unlocked: m2.unlocked, color: m2.color, icon: m2.type === "streak" ? "fire" : m2.type === "kcal" ? "target" : m2.type === "perfect" ? "star" : "trophy", progress: m2.progress }, `${m2.type}-${m2.n}`)) })
     ] }, cat.key)),
     next.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK})`, border: `1px solid ${KHAKI}33`, borderRadius: 10, padding: "10px 12px", display: "flex", alignItems: "center", gap: 8 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 14, color: KHAKI }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 14, color: KHAKI }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: KHAKI, fontSize: 11, flex: 1 }, children: [
         "Prossime: ",
         next.map((m2) => `${m2.icon} ${m2.n}${m2.type === "kcal" ? "" : m2.type === "streak" ? "gg" : ""} (${Math.round(m2.progress * 100)}%)`).join(" • ")
@@ -10195,14 +10293,14 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
     /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar$1, { title: t("hist.title"), onBack }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.streak"), value: streak, sub: streak === 1 ? t("dt.day") : t("dt.days") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.record"), value: bestStreak, sub: t("dt.beststreak") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.kcal"), value: totalKcal, sub: t("dt.total") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.streak"), value: streak, sub: streak === 1 ? t("dt.day") : t("dt.days") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.record"), value: bestStreak, sub: t("dt.beststreak") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.kcal"), value: totalKcal, sub: t("dt.total") })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.minutes"), value: totalMin, sub: t("dt.trained") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.avgkcal"), value: avgKcal, sub: t("dt.permission") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.weeks"), value: sessionsPerWeek.toFixed(1), sub: t("dt.perweek") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.minutes"), value: totalMin, sub: t("dt.trained") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.avgkcal"), value: avgKcal, sub: t("dt.permission") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.weeks"), value: sessionsPerWeek.toFixed(1), sub: t("dt.perweek") })
       ] }),
       pr && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card-glass", style: { display: "flex", gap: 10, marginBottom: 18, padding: 12, borderRadius: 12 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
@@ -10245,9 +10343,9 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
       ] }),
       (() => {
         const wp = getWeeklyProgress(sessions, weeklyGoal);
-        const cons = getConsistencyScore$1(sessions);
+        const cons = getConsistencyScore(sessions);
         const pace = getAveragePace(sessions);
-        const risk = getStreakRisk$1(sessions);
+        const risk = getStreakRisk(sessions);
         return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 12, color: BLAZE }),
@@ -10305,7 +10403,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }, children: daily.body })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 16, color: daily.color, style: { flexShrink: 0 } })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 16, color: daily.color, style: { flexShrink: 0 } })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center" }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 18 }, children: weekly.icon }),
@@ -10415,7 +10513,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
       })(),
       sessions.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.fav") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, display: "flex", flexDirection: "column", gap: 10 }, children: PROGRAMS$1.map((p2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, display: "flex", flexDirection: "column", gap: 10 }, children: PROGRAMS.map((p2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 3 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER }, children: tr$1(p2.name, lang) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL }, children: counts[p2.id] })
@@ -10566,7 +10664,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
                 setConfirmDeleteDate(s.date);
                 setTimeout(() => setConfirmDeleteDate((c) => c === s.date ? null : c), 3e3);
               }
-            }, style: { ...btnIcon$1, padding: 4, background: confirmDeleteDate === s.date ? `${BLAZE}33` : "transparent" }, "aria-label": t("hist.delete"), children: confirmDeleteDate === s.date ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 14, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14, color: STEEL }) })
+            }, style: { ...btnIcon, padding: 4, background: confirmDeleteDate === s.date ? `${BLAZE}33` : "transparent" }, "aria-label": t("hist.delete"), children: confirmDeleteDate === s.date ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 14, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14, color: STEEL }) })
           ] }),
           s.notes && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, fontSize: 11.5, fontStyle: "italic", lineHeight: 1.4 }, children: [
             '"',
@@ -10582,7 +10680,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
           const r = await shareStatsImage({ sessions, profile, t, tr: tr$1 });
           showToast(r === "share" ? "Condiviso" : "Immagine scaricata");
         }, style: { ...secondaryBtn, flex: 1, minWidth: 120, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 14 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 14 }),
           " ",
           lang === "it" ? "Condividi PNG" : "Share PNG"
         ] }),
@@ -10602,7 +10700,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
         /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
           setConfirmClear(false);
           onClear();
-        }, style: { ...primaryBtn$1, flex: 1 }, children: t("hist.clear.confirm") })
+        }, style: { ...primaryBtn, flex: 1 }, children: t("hist.clear.confirm") })
       ] })
     ] }) })
   ] });
@@ -10649,7 +10747,7 @@ function BottomNav({ active, onNavigate }) {
     ] }, tab.key);
   }) });
 }
-const BUILD_VERSION = "2.8.4 · b499ace";
+const BUILD_VERSION = "2.8.4 · 43bb764";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -11175,9 +11273,9 @@ function App() {
   }, [screen, paused, secondsLeft, phaseIdx, seq, aiCoachEnabled]);
   function announcePhase(phase) {
     if (!soundRef.current) return;
-    if (phase.type === "work") speak$1(tr$1(EXERCISES[phase.exerciseId].name, lang));
-    else if (phase.type === "rest") speak$1(t("ses.rest"));
-    else if (phase.type === "cooldown") speak$1(t("ses.cooldown"));
+    if (phase.type === "work") speak(tr$1(EXERCISES[phase.exerciseId].name, lang));
+    else if (phase.type === "rest") speak(t("ses.rest"));
+    else if (phase.type === "cooldown") speak(t("ses.cooldown"));
   }
   function advancePhase() {
     const nextIdx = phaseIdx + 1;
@@ -11801,7 +11899,7 @@ function App() {
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, opacity: 0.06, background: `repeating-linear-gradient(90deg, ${OLIVE} 0 1px, transparent 1px 14px)`, pointerEvents: "none" } }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, alignItems: "center", flex: 1, minWidth: 0 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 18, color: PAPER }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 18, color: PAPER }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { minWidth: 0 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { background: BLAZE, color: PAPER, fontSize: 9, fontWeight: 800, letterSpacing: "0.08em", padding: "2px 6px", borderRadius: 6 }, children: "NUOVO v2.8.4" }),
@@ -12001,7 +12099,7 @@ function App() {
               animation: "glowPulse 1.8s ease-in-out infinite"
             },
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw$1, { size: 12 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 12 }),
               " Aggiorna app → ",
               updateVersion || "nuova versione"
             ]
@@ -12054,7 +12152,7 @@ function App() {
         }
       }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-tour-card", onClick: (e) => e.stopPropagation(), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 18, color: BLAZE }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 18, color: BLAZE }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { fontSize: 20 }, children: "Benvenuto!" })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 13, lineHeight: 1.5, color: "#333" }, children: lang === "it" ? "Tre tap: scegli la missione del giorno, allenati 15 minuti, traccia i progressi. Tutto offline, sulla tua privacy." : "Three taps: pick today's mission, train 15 min, track progress. Fully offline, private." }),
@@ -12611,7 +12709,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-IGlMtQQV.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-BVanbH5E.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -13074,5 +13172,6 @@ root.render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
 );
 export {
+  CLIP_FILES as C,
   WebPlugin as W
 };
