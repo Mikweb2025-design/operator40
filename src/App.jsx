@@ -441,7 +441,7 @@ export default function App() {
   const [showChangelog, setShowChangelog] = useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = useState(() => {
     try {
-      return localStorage.getItem('o40_release_2.9.0') !== 'dismissed';
+      return localStorage.getItem('o40_release_2.9.1') !== 'dismissed';
     } catch {
       return true;
     }
@@ -466,7 +466,7 @@ export default function App() {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 
   const [activeProgram, setActiveProgram] = useState(null);
@@ -799,7 +799,7 @@ export default function App() {
     }
     musicSetVolume(vol);
     musicPlay();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [
     musicOn,
     musicAutoPlay,
@@ -1691,24 +1691,24 @@ export default function App() {
                             borderRadius: 6,
                           }}
                         >
-                          NUOVO v2.9.0
+                          NUOVO v2.9.1
                         </span>
                         <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>
-                          27 AGO 2026 · AUDIT 5 AREE
+                          28 AGO 2026 · LINT+FIXTURES
                         </span>
                       </div>
                       <div
                         className="o40-display"
                         style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}
                       >
-                        Audit completo — backup, performance, PWA!
+                        Audit completato — lint, fixtures, benchmark!
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.9.0', 'dismissed');
+                        localStorage.setItem('o40_release_2.9.1', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
@@ -1783,7 +1783,7 @@ export default function App() {
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.9.0', 'dismissed');
+                        localStorage.setItem('o40_release_2.9.1', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}

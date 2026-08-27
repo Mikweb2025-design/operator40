@@ -1,7 +1,7 @@
 {
   "name": "operator40",
   "private": true,
-  "version": "2.9.0",
+  "version": "2.9.1",
   "type": "module",
   "description": "Operator 40 — allenamento funzionale per over 40. iOS (Capacitor) + Mac (PWA/Electron).",
   "scripts": {
@@ -49,6 +49,7 @@
     "@capacitor/ios": "^6.1.2",
     "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^8.57.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "playwright": "^1.62.1",
     "prettier": "^3.9.6",
     "vite": "^5.4.10",
