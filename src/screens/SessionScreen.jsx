@@ -11,7 +11,7 @@ import SessionAIOverlay from '../components/SessionAIOverlay.tsx';
 import FitnessEngineView from '../components/FitnessEngineView.tsx';
 import { ExerciseFigure } from '../components/ExerciseFigure.jsx';
 import TopBar from '../components/layout/TopBar.jsx';
-import { Play, Pause, SkipForward, X, Eye, Volume2, VolumeX, Music, Music2, HeadphoneOff, Wind, Lightbulb, Check } from 'lucide-react';
+import { Play, Pause, SkipForward, X, Eye, Volume2, VolumeX, Music, Music2, HeadphoneOff, Wind, Lightbulb, Check, ChevronLeft } from 'lucide-react';
 const primaryBtn = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer' };
 // secondaryBtn defined in block below — don't duplicate
 const btnIcon = { background: 'transparent', border: 'none', padding: 6, cursor: 'pointer', display: 'flex', borderRadius: 10 };
