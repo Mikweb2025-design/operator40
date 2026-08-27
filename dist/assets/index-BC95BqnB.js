@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-CAArT6Xr.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-BVanbH5E.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-BtXOToTo.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-B4FJvY1c.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -847,7 +847,7 @@ const EXERCISES = {
     breath: { it: "Espira toccando il tallone.", en: "Exhale as you tap your heel.", de: "Ausatmen beim Berühren der Ferse." }
   }
 };
-const EXERCISE_GROUPS$1 = {
+const EXERCISE_GROUPS = {
   standing: ["squat", "affondo", "jumpingjack", "ginocchiaalte", "burpeetattico", "skater"],
   ground: [
     "flessioni",
@@ -929,7 +929,7 @@ function getReps(exId, levelKey) {
 function getLevel(key) {
   return LEVELS.find((l2) => l2.key === key) || LEVELS[1];
 }
-function levelPreset$1(profile) {
+function levelPreset(profile) {
   if (profile && profile.intervalPreset === "custom") {
     const c = getCustomPreset(profile);
     if (c) return c;
@@ -1157,7 +1157,7 @@ function buildSequence(program, skipWarmup, workSec = WORK_SEC, restSec = REST_S
 function kcalForSeconds(met, weightKg, seconds) {
   return met * 3.5 * weightKg / 200 * (seconds / 60);
 }
-function estimateProgramKcal$1(program, weightKg, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
+function estimateProgramKcal(program, weightKg, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
   let kcal = skipWarmup ? 0 : kcalForSeconds(3, weightKg, WARM_SEC) + kcalForSeconds(3, weightKg, COOL_SEC);
   const isReps = mode === "reps";
   program.exercises.forEach((id) => {
@@ -1175,7 +1175,7 @@ function estimateProgramKcal$1(program, weightKg, skipWarmup, workSec = WORK_SEC
   });
   return kcal;
 }
-function totalSeqSeconds$1(program, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
+function totalSeqSeconds(program, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
   return buildSequence(program, skipWarmup, workSec, restSec, mode, levelKey).reduce((a, p2) => a + (p2.duration || (p2.reps ? p2.reps * 3 : 0)), 0);
 }
 function formatTime(s) {
@@ -1748,7 +1748,7 @@ const floorLine = (x1, y, x2) => /* @__PURE__ */ jsxRuntimeExports.jsx("line", {
 const dot = (cx, cy, r = 4) => /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx, cy, r, fill: "currentColor" });
 const head = (cx, cy, r = 11) => /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx, cy, r, fill: "currentColor", fillOpacity: "0.3", stroke: "currentColor", strokeWidth: "5" });
 const groundShadow = (cx, y) => /* @__PURE__ */ jsxRuntimeExports.jsx("ellipse", { cx, cy: y, rx: "24", ry: "4", fill: KHAKI, opacity: "0.22" });
-function ExerciseFigure$1({ pose, color = BLAZE, size = "100%" }) {
+function ExerciseFigure({ pose, color = BLAZE, size = "100%" }) {
   const wrap2 = (viewBox, children) => /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { viewBox, width: size, height: size, className: `o40-figure pose-${pose}`, style: { color, overflow: "visible" }, children });
   switch (pose) {
     case "squat":
@@ -7304,7 +7304,7 @@ function CountdownScreen({ program, onDone, lang, t }) {
   ] });
 }
 const btnIcon$4 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
-function TopBar$1({ title, onBack, right }) {
+function TopBar({ title, onBack, right }) {
   const { t } = useT();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-topbar-glass", style: {
     display: "flex",
@@ -7386,7 +7386,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || "combattente");
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar$1, { title: t("setup.title"), onBack: canCancel ? onCancel : null }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("setup.title"), onBack: canCancel ? onCancel : null }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 20, display: "flex", flexDirection: "column", gap: 18 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8 }, children: LANGS.map((l2) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setLang(l2), style: {
         flex: 1,
@@ -8512,7 +8512,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       }, children: [
         idx === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { position: "absolute", top: 6, left: 6, background: KHAKI, color: INK, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: "1px 4px" }, children: "★ Consigliata" }),
         ["H", "I", "J", "K", "L", "M", "N", "O", "P"].includes(p2.id) && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { position: "absolute", top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: "1px 4px" }, children: "NEW" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 40, height: 40, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose: EXERCISES[p2.exercises[0]].pose, color: KHAKI }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 40, height: 40, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: EXERCISES[p2.exercises[0]].pose, color: KHAKI }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 14.5, fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }, children: [
             tr$1(p2.name, lang),
@@ -8756,7 +8756,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           padding: 12
         }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onOpenProgram(p2), style: { display: "flex", alignItems: "center", gap: 12, background: "transparent", border: "none", cursor: "pointer", textAlign: "left", flex: 1, padding: 0 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 40, height: 40, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose: EXERCISES[p2.exercises[0]].pose, color: KHAKI }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 40, height: 40, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: EXERCISES[p2.exercises[0]].pose, color: KHAKI }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 14.5, fontWeight: 600 }, children: tr$1(p2.name, lang) }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, fontSize: 12 }, children: [
@@ -8824,7 +8824,7 @@ function toggleFavorite(list, id) {
 }
 let _mediaPromise$2 = null;
 function getMediaMap$2() {
-  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-CAArT6Xr.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-BtXOToTo.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$2;
 }
 function ExerciseMedia$2({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -8850,7 +8850,7 @@ function ExerciseMedia$2({ exerciseId, pose, color = BLAZE, size = "100%", round
   }, [exerciseId]);
   if (videoSrc && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("video", { src: videoSrc, autoPlay: true, muted: true, loop: true, playsInline: true, preload: "metadata", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
   if (src && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src, alt: "", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose, color, size });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose, color, size });
 }
 function LibraryScreen({ sessions, profile }) {
   const { lang, t } = useT();
@@ -8861,7 +8861,7 @@ function LibraryScreen({ sessions, profile }) {
   const [favs, setFavs] = reactExports.useState(() => loadFavorites());
   const visibleIds = Object.keys(EXERCISES).filter((id) => {
     const ex = EXERCISES[id];
-    const byGroup = filter === "all" ? true : EXERCISE_GROUPS$1[filter].includes(id);
+    const byGroup = filter === "all" ? true : EXERCISE_GROUPS[filter].includes(id);
     const byFav = showFavs ? favs.includes(id) : true;
     const q2 = query.trim().toLowerCase();
     const byQuery = !q2 || tr$1(ex.name, lang).toLowerCase().includes(q2) || id.toLowerCase().includes(q2) || tr$1(ex.cue, lang).toLowerCase().includes(q2);
@@ -8920,7 +8920,7 @@ function LibraryScreen({ sessions, profile }) {
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }, children: rec.map((rid) => {
           const ex = EXERCISES[rid];
           return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setSelectedId(rid), style: { minWidth: 110, background: `linear-gradient(135deg, ${INK_2}, ${INK})`, border: `1px solid ${favs.includes(rid) ? BLAZE : OLIVE}`, borderRadius: 12, padding: 10, cursor: "pointer", textAlign: "center", boxShadow: favs.includes(rid) ? `0 0 0 1px ${BLAZE}22` : "none" }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, margin: "0 auto 6px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose: ex.pose, color: favs.includes(rid) ? BLAZE : KHAKI }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, margin: "0 auto 6px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: ex.pose, color: favs.includes(rid) ? BLAZE : KHAKI }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 11, fontWeight: 700 }, children: tr$1(ex.name, lang) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: favs.includes(rid) ? BLAZE : STEEL, fontSize: 9 }, children: favs.includes(rid) ? "★ preferito" : "tap per aprire" })
           ] }, `rec-${rid}`);
@@ -9111,7 +9111,7 @@ const primaryBtn$3 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise$1 = null;
 function getMediaMap$1() {
-  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-CAArT6Xr.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-BtXOToTo.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$1;
 }
 function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9137,7 +9137,7 @@ function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", round
   }, [exerciseId]);
   if (videoSrc && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("video", { src: videoSrc, autoPlay: true, muted: true, loop: true, playsInline: true, preload: "metadata", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
   if (src && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src, alt: "", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose, color, size });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose, color, size });
 }
 function DogTag$2({ label, value, sub }) {
   const numeric = typeof value === "number";
@@ -9149,7 +9149,7 @@ function DogTag$2({ label, value, sub }) {
   ] });
 }
 function groupOf(id) {
-  return EXERCISE_GROUPS$1.standing.includes(id) ? "standing" : "ground";
+  return EXERCISE_GROUPS.standing.includes(id) ? "standing" : "ground";
 }
 function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
   const { lang, t } = useT();
@@ -9158,13 +9158,13 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
   const [swapOpenId, setSwapOpenId] = reactExports.useState(null);
   const effectiveExercises = program.exercises.map((id) => subs[id] || id);
   const effectiveProgram = { ...program, exercises: effectiveExercises };
-  const preset = levelPreset$1(profile);
+  const preset = levelPreset(profile);
   const mode = profile && profile.executionMode || "time";
   const levelKey = profile && profile.level || "combattente";
-  const kcal = Math.round(estimateProgramKcal$1(effectiveProgram, profile.weight, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey));
-  const mins = Math.round(totalSeqSeconds$1(effectiveProgram, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey) / 60);
+  const kcal = Math.round(estimateProgramKcal(effectiveProgram, profile.weight, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey));
+  const mins = Math.round(totalSeqSeconds(effectiveProgram, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey) / 60);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar$1, { title: t("prev.title", { id: program.id }), onBack }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("prev.title", { id: program.id }), onBack }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26 }, children: tr$1(program.name, lang) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 14, marginBottom: 14 }, children: tr$1(program.tagline, lang) }),
@@ -9182,7 +9182,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
         const isSwapping = swapOpenId === originalId;
         const isSubbed = !!subs[originalId];
         const usedElsewhere = effectiveExercises.filter((_, idx) => program.exercises[idx] !== originalId);
-        const alternatives = EXERCISE_GROUPS$1[groupOf(originalId)].filter((aid) => aid !== currentId && !usedElsewhere.includes(aid));
+        const alternatives = EXERCISE_GROUPS[groupOf(originalId)].filter((aid) => aid !== currentId && !usedElsewhere.includes(aid));
         return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
           display: "flex",
           flexDirection: "column",
@@ -9309,7 +9309,7 @@ const primaryBtn$2 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-CAArT6Xr.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-BtXOToTo.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9335,7 +9335,7 @@ function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded
   }, [exerciseId]);
   if (videoSrc && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("video", { src: videoSrc, autoPlay: true, muted: true, loop: true, playsInline: true, preload: "metadata", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
   if (src && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src, alt: "", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose, color, size });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose, color, size });
 }
 function ProgressRing({ progress, size = 240, stroke = 12, color, comet = true }) {
   const radius = (size - stroke) / 2;
@@ -9399,7 +9399,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
   const elapsedSec = seq.slice(0, phaseIdx).reduce((a, p2) => a + (p2.duration || (p2.reps ? p2.reps * 3 : 0)), 0) + (phase.duration ? phase.duration - secondsLeft : 0);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TopBar$1,
+      TopBar,
       {
         title: tr$1(program.name, lang),
         onBack: () => setExitConfirm(true),
@@ -9485,7 +9485,7 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.08em" }, children: lang === "it" ? "Respira — 4 sec in, 4 sec out" : lang === "de" ? "Atmen — 4s ein, 4s aus" : "Breathe — 4s in, 4s out" })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-card-glass", style: { color: STEEL, fontSize: 12, marginTop: 6, display: "flex", alignItems: "center", gap: 8, borderRadius: 10, padding: "7px 12px" }, children: next ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        next.exerciseId && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 26, height: 26, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose: EXERCISES[next.exerciseId].pose, color: KHAKI, size: "100%" }) }),
+        next.exerciseId && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 26, height: 26, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: EXERCISES[next.exerciseId].pose, color: KHAKI, size: "100%" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t("ses.next", { name: next.type === "work" ? tr$1(nextEx.name, lang) : next.type === "rest" ? t("ses.next.rest") : t("ses.next.cooldown") }) })
       ] }) : t("ses.last") })
     ] }),
@@ -10290,7 +10290,7 @@ function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos,
   })();
   const sessionsPerWeek = sessions.length >= 2 ? sessions.length / Math.max(1, Math.round((new Date(sessions[sessions.length - 1].date) - new Date(sessions[0].date)) / (7 * 864e5))) : sessions.length;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar$1, { title: t("hist.title"), onBack }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("hist.title"), onBack }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.streak"), value: streak, sub: streak === 1 ? t("dt.day") : t("dt.days") }),
@@ -10747,7 +10747,7 @@ function BottomNav({ active, onNavigate }) {
     ] }, tab.key);
   }) });
 }
-const BUILD_VERSION = "2.8.4 · 43bb764";
+const BUILD_VERSION = "2.8.4 · 4be96f9";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -11299,7 +11299,7 @@ function App() {
   }
   function startSession(program) {
     const skip = !!profile.skipWarmup;
-    const preset = levelPreset$1(profile);
+    const preset = levelPreset(profile);
     const mode = profile && profile.executionMode || "time";
     const levelKey = profile && profile.level || "combattente";
     const s = buildSequence(program, skip, preset.work, preset.rest, mode, levelKey);
@@ -11317,13 +11317,13 @@ function App() {
   }
   function finishSession() {
     const skip = !!profile.skipWarmup;
-    const preset = levelPreset$1(profile);
+    const preset = levelPreset(profile);
     const mode = profile && profile.executionMode || "time";
     const levelKey = profile && profile.level || "combattente";
-    const kcal = Math.round(estimateProgramKcal$1(activeProgram, profile.weight, skip, preset.work, preset.rest, mode, levelKey));
+    const kcal = Math.round(estimateProgramKcal(activeProgram, profile.weight, skip, preset.work, preset.rest, mode, levelKey));
     if (soundRef.current) playBeep(1e3, 0.25);
     if (vibrationRef.current) vibrate([80, 60, 80, 60, 150]);
-    setLastStats({ program: activeProgram, kcal, durationSec: totalSeqSeconds$1(activeProgram, skip, preset.work, preset.rest, mode, levelKey) });
+    setLastStats({ program: activeProgram, kcal, durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey) });
     setScreen("summary");
   }
   async function saveProfile() {
@@ -12709,7 +12709,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-BVanbH5E.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-B4FJvY1c.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
