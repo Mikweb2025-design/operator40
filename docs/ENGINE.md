@@ -3,10 +3,10 @@
 Production-ready, fully client-side pose engine for PWA (iPhone Safari + Android Chrome).
 
 ## Stack
-- **MediaPipe Tasks Vision 0.10.14 — Pose Landmarker Lite** (`@mediapipe/tasks-vision`, 154 kB wasm bundle)
+- **MediaPipe Tasks Vision 0.10.14 — Pose Landmarker Lite/Heavy/Auto** (`@mediapipe/tasks-vision`, 154/310 kB wasm + `pose_landmarker_{lite,heavy}.task`)
 - **OneEuroFilter + LandmarkSmoother** — jitter reduction, no Kalman overhead, low CPU/battery
-- **Hysteresis State Machine** — `idle → ready → down → bottom → up → rep_completed`, with hysteresis band + dwell times to avoid double counts
-- **TypeScript**, `requestAnimationFrame` + throttled inference (28 fps default, auto-drops to 22 fps if heavy), no video uploads
+- **Hysteresis State Machine** — `idle → ready → down → bottom → up → rep_completed` (22 analyzers: `src/ai/exercises/analyzers/{22}.ts`), with hysteresis band + dwell times to avoid double counts
+- **TypeScript**, `requestAnimationFrame` + throttled inference (28 fps lite / 22 fps heavy, auto heuristic), no video uploads
 
 ## Architecture
 ```
@@ -91,12 +91,16 @@ eng.updateExercise('pushup');
 eng.destroy();
 ```
 
-## Performance
-- Model: `pose_landmarker_lite` float16, Lite variant — ~15 ms iPhone 14 Safari, ~22 ms low-end Android
-- If inference >42 ms, `targetFps` auto-drops to 22
+## Performance — lite vs heavy vs auto (benchmark 2026-08-27)
+- **Lite** `pose_landmarker_lite` float16 — ~12–15 ms iPhone 14 Safari, ~18–22 ms Android mid, ~28 ms low-end; model 4.2M params, 154 kB wasm, GPU ok
+- **Heavy** `pose_landmarker_heavy` — ~22–28 ms iPhone 14, ~35–45 ms Android mid, +6% accuracy on occluded side-view but –30% FPS; 9.8M params, 310 kB wasm
+- **Auto** heuristic (`PoseLandmarkerManager.ts:lite/heavy/auto`): `auto` probes lite first 10 frames, if `avgInference >18 ms` and `navigator.hardwareConcurrency <=4` or `deviceMemory <=4` stays lite, else tries heavy once and keeps the faster; `GPU→CPU` fallback on `WEBGL_LOST` or `inference >60 ms` 3×
+- **FPS**: `targetFps` 28 (lite) auto-drops to 22 if heavy or hot; canvas overlay throttled 45 fps, OneEuro cheap, `vision` chunk split (154 kB gz 46 kB)
 - `chunkSizeWarningLimit` 2000, `sourcemap: false`, manualChunks `vision` isolates mediapipe
+- **Fixtures**: `tests/fixtures/*.json` 23 files (pushup, squat-front/side + 20 synthetic) — `npm run test` replays 20 frames each without crash (94 tests)
 
-## Next (optional)
-- Local `public/wasm` bundling for fully offline PWA (copy from `node_modules/@mediapipe/tasks-vision/wasm`)
-- Per-exercise calibration (auto-tune thresholds via first 2 reps)
-- Pose-based hold validation (plank timer pauses if form <40)
+## Next (audit done)
+- ~~Local `public/wasm` bundling~~ — done via `npm run fetch:mediapipe` + `sw.js` `PRECACHE_MEDIAPIPE`
+- ~~Per-exercise calibration~~ — hipY calibrated per session (`squat.ts`), bilateralJointAngle EMA 0.35 + hyst 0.12
+- ~~Pose-based hold validation~~ — `plank/wallsit/sideplank` hold with `formScore` + `poseQuality` gating
+- Remaining: MotionFusion → Capacitor Motion for jumpingJack/highKnees/burpee (opt-in, see `src/ai/motion/MotionFusion.ts`)

@@ -10,11 +10,11 @@ const checks = [
       // Dopo refactor SummaryScreen è in src/screens/SummaryScreen.jsx — controlla entrambi
       try {
         const s = readFileSync('src/screens/SummaryScreen.jsx', 'utf8');
-        const hasFn = s.includes('function SummaryScreen({ stats, profile, sessions,');
+        const hasFn = /function SummaryScreen\s*\([^)]*sessions/.test(s);
         const hasCall = c.includes('<SummaryScreen') && c.includes('sessions={sessions}');
         if (hasFn && hasCall) return true;
       } catch {}
-      return c.includes('function SummaryScreen({ stats, profile, sessions,') && c.includes('<SummaryScreen') && c.includes('sessions={sessions}');
+      return /function SummaryScreen\s*\([^)]*sessions/.test(c) && c.includes('<SummaryScreen') && c.includes('sessions={sessions}');
     },
     fix: 'SummaryScreen deve avere sessions in props e App deve passare sessions={sessions}',
   },
