@@ -19,12 +19,8 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { Trophy, Flame, HeartPulse, Zap, Star, Target, Medal, Crown, TrendingUp, TrendingDown, Ruler, Scale, Lightbulb, X, Check, RotateCcw, Sparkles } from 'lucide-react';
 import TopBar from '../components/layout/TopBar.jsx';
 import { formatTime, dayKey, sessionDayKey } from '../utils/date.js';
-const secondaryBtn = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer' };
-const primaryBtn = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer' };
-const btnIcon = { background: 'transparent', border: 'none', padding: 6, cursor: 'pointer', display: 'flex', borderRadius: 10 };
-const iconCircle = { borderRadius: '50%', border: `1px solid ${OLIVE}`, background: `linear-gradient(160deg, ${INK_2}, ${INK})`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.35)' };
-const inputStyle = { width: '100%', background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '12px 14px', color: PAPER, fontSize: 16, fontFamily: 'Inter, sans-serif', outline: 'none' };
-function DogTag({ label, value, sub }) { const numeric = typeof value === 'number'; return (<div className="o40-card" style={{ background: `linear-gradient(160deg, ${INK_2}, ${INK})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: '12px 13px', position: 'relative', flex: 1, minWidth: 0, boxShadow: '0 4px 14px rgba(0,0,0,0.35)' }}><div style={{ position: 'absolute', top: 9, left: -5, width: 10, height: 10, borderRadius: '50%', background: INK, border: `2px solid ${KHAKI}` }} /><div className="o40-mono" style={{ color: KHAKI, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</div><div className="o40-display" style={{ color: PAPER, fontSize: 26, lineHeight: 1.1 }}>{numeric ? value : value}</div>{sub && <div style={{ color: STEEL, fontSize: 11 }}>{sub}</div>}</div>); }
+import DogTag from '../components/ui/DogTag.jsx';
+import { inputStyle, primaryBtn, secondaryBtn, btnIcon, iconCircle } from '../components/ui/styles.js';
 // last7DaysKcal, missionCounts, Badge, MedalGrid, formatTime, dayKey, sessionDayKey defined in block below — don't duplicate
 
 /* ================= HISTORY / STATS SCREEN ================= */

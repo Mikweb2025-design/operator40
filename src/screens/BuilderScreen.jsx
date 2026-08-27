@@ -8,8 +8,7 @@ import { tr } from '../i18n.js';
 import { X, Check, Plus, Trash2 } from 'lucide-react';
 import TopBar from '../components/layout/TopBar.jsx';
 import { ExerciseFigure } from '../components/ExerciseFigure.jsx';
-const inputStyle = { width: '100%', background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '12px 14px', color: PAPER, fontSize: 16, fontFamily: 'Inter, sans-serif', outline: 'none' };
-const primaryBtn = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%' };
+import { inputStyle, primaryBtn } from '../components/ui/styles.js';
 function Field({ label, children }) { return (<div><div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>{label}</div>{children}</div>); }
 
 /* ================= BUILDER SCREEN (custom mission) ================= */
