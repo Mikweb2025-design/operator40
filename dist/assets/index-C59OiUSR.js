@@ -1,9 +1,9 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-BrUPtRse.js","./icons-BrM4ITnp.js","./charts-VEz0DK4u.js","./web-JPqNOuCd.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-Cp_wncMu.js","./icons-Ckx_ZzAa.js","./charts-CQJP40Oa.js","./web-CLjez4t6.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ChevronLeft, V as Volume2, e as VolumeX, f as Vibrate, h as SkipForward, M as Music, i as Music2, H as HeadphoneOff, j as RefreshCw, k as Crown, l as Medal, B as Bell, m as BellOff, n as Send, o as HeartPulse, F as Flame, I as Info, p as TrendingUp, q as Star, s as RotateCcw, L as Lightbulb, E as Eye, t as Target, u as BookOpen, v as Settings, w as Trash2, P as Plus, x as Ruler, y as TrendingDown, z as Scale, W as Wind, A as Play, D as Pause, G as ShieldCheck, J as House, K as History } from "./icons-BrM4ITnp.js";
-import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-VEz0DK4u.js";
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ChevronLeft, V as Volume2, e as VolumeX, f as Vibrate, h as SkipForward, M as Music, i as Music2, H as HeadphoneOff, j as RefreshCw, k as Crown, l as Medal, D as Download$1, U as Upload, B as Bell, m as BellOff, n as Send, o as HeartPulse, F as Flame, I as Info, p as TrendingUp, q as Star, s as RotateCcw, L as Lightbulb, E as Eye, t as Target, u as BookOpen, v as Settings, w as Trash2, P as Plus, x as Ruler, y as TrendingDown, z as Scale, W as Wind, A as Play, G as Pause, J as ShieldCheck, K as House, N as History } from "./icons-Ckx_ZzAa.js";
+import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-CQJP40Oa.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -7390,7 +7390,7 @@ function Field$1({ label, children }) {
     children
   ] });
 }
-function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, executionMode, onSetExecutionMode, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast: showToast2, largeText, setLargeText, pushEnabled, pushSupported, pushBusy, onTogglePush, onTestPush }) {
+function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, executionMode, onSetExecutionMode, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast: showToast2, largeText, setLargeText, pushEnabled, pushSupported, pushBusy, onTogglePush, onTestPush, onExportBackup, onImportBackup }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || "combattente");
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
@@ -7651,6 +7651,32 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onApplyHealthWeight, style: { ...primaryBtn$5, width: "auto", padding: "8px 14px", fontSize: 13 }, children: t("setup.health.apply") })
         ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Download$1, { size: 16, color: KHAKI }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", flex: 1 }, children: lang === "it" ? "Backup & Ripristino" : lang === "de" ? "Backup & Wiederherstellung" : "Backup & Restore" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { fontSize: 9, color: STEEL, border: `1px solid ${OLIVE}`, borderRadius: 6, padding: "2px 6px" }, children: "v1" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }, children: lang === "it" ? "Esporta tutti i dati (profilo, sessioni, misure, foto) in un file JSON. Ripristina su altro device o dopo reset." : "Export all data (profile, sessions, measures, photos) to JSON. Restore on another device." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onExportBackup, style: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px 12px", borderRadius: 10, cursor: "pointer", background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: `1px solid ${BLAZE}`, fontSize: 12, fontWeight: 700 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Download$1, { size: 14 }),
+            " ",
+            lang === "it" ? "Esporta backup" : "Export backup"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { style: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px 12px", borderRadius: 10, cursor: "pointer", background: INK, border: `1px solid ${OLIVE}`, color: KHAKI, fontSize: 12, fontWeight: 600 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Upload, { size: 14 }),
+            " ",
+            lang === "it" ? "Ripristina" : "Restore",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "file", accept: ".json", style: { display: "none" }, onChange: (e) => {
+              const f2 = e.target.files && e.target.files[0];
+              if (f2) onImportBackup(f2);
+              e.target.value = "";
+            } })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 10, marginTop: 8, lineHeight: 1.4, opacity: 0.8 }, children: lang === "it" ? "Sovrascrive i dati locali — esporta prima se non sei sicuro." : "Overwrites local data — export first if unsure." })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${pushEnabled ? BLAZE : OLIVE}`, borderRadius: 14, padding: 14 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
@@ -8889,7 +8915,7 @@ function toggleFavorite(list, id) {
 }
 let _mediaPromise$2 = null;
 function getMediaMap$2() {
-  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-BrUPtRse.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-Cp_wncMu.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$2;
 }
 function ExerciseMedia$2({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9176,7 +9202,7 @@ const primaryBtn$3 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise$1 = null;
 function getMediaMap$1() {
-  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-BrUPtRse.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-Cp_wncMu.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$1;
 }
 function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9374,7 +9400,7 @@ const primaryBtn$2 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-BrUPtRse.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-Cp_wncMu.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -10813,7 +10839,7 @@ function BottomNav({ active, onNavigate }) {
     ] }, tab.key);
   }) });
 }
-const BUILD_VERSION = "2.8.4 · 77378c6";
+const BUILD_VERSION = "2.8.4 · bf8cd57";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -10849,6 +10875,105 @@ function VersionBadge({ onClick }) {
       ]
     }
   );
+}
+const BACKUP_VERSION = 1;
+function validateBackup(data) {
+  if (!data || typeof data !== "object") throw new Error("Backup non valido: root non è oggetto");
+  if (data.version != null && typeof data.version !== "number") throw new Error("Backup non valido: version deve essere numero");
+  if (data.profile != null && typeof data.profile !== "object") throw new Error("Backup non valido: profile non è oggetto");
+  if (data.sessions != null && !Array.isArray(data.sessions)) throw new Error("Backup non valido: sessions non è array");
+  if (data.waistHistory != null && !Array.isArray(data.waistHistory)) throw new Error("Backup non valido: waistHistory non è array");
+  if (data.weightHistory != null && !Array.isArray(data.weightHistory)) throw new Error("Backup non valido: weightHistory non è array");
+  if (data.customPrograms != null && !Array.isArray(data.customPrograms)) throw new Error("Backup non valido: customPrograms non è array");
+  return true;
+}
+function migrate(data) {
+  const v = data.version || 0;
+  if (v < 1) {
+    if (data.profile) {
+      if (!data.profile.lang) data.profile.lang = "it";
+      if (!data.profile.weeklyGoal) data.profile.weeklyGoal = 3;
+      if (!data.profile.level) data.profile.level = "combattente";
+    }
+    if (Array.isArray(data.sessions)) {
+      data.sessions = data.sessions.map((s) => ({
+        ...s,
+        date: s.date || (/* @__PURE__ */ new Date()).toISOString(),
+        kcal: typeof s.kcal === "number" ? s.kcal : 0
+      }));
+    }
+    data.version = 1;
+  }
+  return data;
+}
+async function exportBackup() {
+  const keys = ["o40_profile", "o40_sessions", "o40_waist", "o40_weight", "o40_custom_programs", "o40_photos"];
+  const out = { version: BACKUP_VERSION, exportedAt: (/* @__PURE__ */ new Date()).toISOString() };
+  for (const k2 of keys) {
+    try {
+      const r = await window.storage.get(k2, false);
+      if (r && r.value) {
+        const parsed = JSON.parse(r.value);
+        if (k2 === "o40_profile") out.profile = parsed;
+        else if (k2 === "o40_sessions") out.sessions = parsed;
+        else if (k2 === "o40_waist") out.waistHistory = parsed;
+        else if (k2 === "o40_weight") out.weightHistory = parsed;
+        else if (k2 === "o40_custom_programs") out.customPrograms = parsed;
+        else if (k2 === "o40_photos") out.photos = parsed;
+      }
+    } catch {
+    }
+  }
+  try {
+    const fav = localStorage.getItem("o40_favs") || localStorage.getItem("o40_favorites");
+    if (fav) out.favs = JSON.parse(fav);
+  } catch {
+  }
+  return out;
+}
+function downloadBackup(data) {
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `operator40-backup-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}-v${data.version || BACKUP_VERSION}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+async function importBackup(data) {
+  validateBackup(data);
+  const migrated = migrate({ ...data });
+  const toWrite = [
+    ["o40_profile", migrated.profile],
+    ["o40_sessions", migrated.sessions],
+    ["o40_waist", migrated.waistHistory],
+    ["o40_weight", migrated.weightHistory],
+    ["o40_custom_programs", migrated.customPrograms],
+    ["o40_photos", migrated.photos]
+  ];
+  for (const [k2, v] of toWrite) {
+    if (v !== void 0) {
+      try {
+        await window.storage.set(k2, JSON.stringify(v), false);
+      } catch (e) {
+        throw new Error(`Scrittura ${k2} fallita: ${e.message}`);
+      }
+    }
+  }
+  if (migrated.favs !== void 0) {
+    try {
+      localStorage.setItem("o40_favs", JSON.stringify(migrated.favs));
+    } catch {
+    }
+  }
+  try {
+    localStorage.setItem("o40_schemaVersion", String(migrated.version));
+  } catch {
+  }
+  return migrated;
 }
 async function loadPhotosAsync() {
   try {
@@ -10890,6 +11015,34 @@ async function fileToDataUrl(file) {
     r.onerror = reject;
     r.readAsDataURL(file);
   });
+}
+async function exportData$1() {
+  try {
+    const data = await exportBackup();
+    downloadBackup(data);
+  } catch (e) {
+  }
+}
+async function handleImportBackup(file, { setProfile, setSessions, setWaistHistory, setWeightHistory, setCustomPrograms, showToast: showToast2, setScreen }) {
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    await importBackup(data);
+    const p2 = await window.storage.get("o40_profile", false).then((r) => r ? JSON.parse(r.value) : null).catch(() => null);
+    const s = await window.storage.get("o40_sessions", false).then((r) => r ? JSON.parse(r.value) : []).catch(() => []);
+    const wh = await window.storage.get("o40_waist", false).then((r) => r ? JSON.parse(r.value) : []).catch(() => []);
+    const wt = await window.storage.get("o40_weight", false).then((r) => r ? JSON.parse(r.value) : []).catch(() => []);
+    const cp = await window.storage.get("o40_custom_programs", false).then((r) => r ? JSON.parse(r.value) : []).catch(() => []);
+    setProfile(p2);
+    setSessions(s || []);
+    setWaistHistory(wh || []);
+    setWeightHistory(wt || []);
+    setCustomPrograms(cp || []);
+    showToast2("Backup ripristinato — ricarico...");
+    setTimeout(() => window.location.reload(), 800);
+  } catch (e) {
+    showToast2("Backup non valido: " + (e.message || "errore"));
+  }
 }
 const HK_ACTIVITY_MAP = {
   HKWorkoutActivityTypeFunctionalStrengthTraining: { it: "Forza funzionale (Apple Health)", en: "Functional strength (Apple Health)", de: "Funktionelles Krafttraining (Apple Health)" },
@@ -11946,7 +12099,9 @@ function App() {
           pushSupported,
           pushBusy,
           onTogglePush: togglePush,
-          onTestPush: handleTestPush
+          onTestPush: handleTestPush,
+          onExportBackup: exportData$1,
+          onImportBackup: (file) => handleImportBackup(file, { setProfile, setSessions, setWaistHistory, setWeightHistory, setCustomPrograms, showToast: showToast2, setScreen })
         }
       ),
       screen === "home" && profile && showReleaseBanner && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
@@ -12775,7 +12930,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-JPqNOuCd.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-CLjez4t6.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
