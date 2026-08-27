@@ -1,9 +1,9 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-Cx-PcBXv.js","./clips-CZetA5iC.js"])))=>i.map(i=>d[i]);
-import { a2 as detectLang, L as LANGS, a3 as localizedCue, a4 as getDefinition, a1 as HOLD_EXERCISES, a0 as getReps, J as EXERCISES, a5 as normalizeExerciseId, j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, P as PAPER, S as STEEL, b as INK_2, B as BLAZE, a6 as PositioningMask, a7 as FitnessEngine, a8 as drawSkeleton, a9 as alignmentScore, a as OLIVE_DARK, u as useT, V as speak, t as tr, R as btnIcon, aa as formatTime, p as playBeep, G as vibrate, ab as iconCircle, ac as pillBtn, s as secondaryBtn, $ as primaryBtn, _ as __vitePreload, ad as LOCALES } from "./index-BgW1cw35.js";
+import { a2 as detectLang, L as LANGS, a3 as localizedCue, a4 as getDefinition, a1 as HOLD_EXERCISES, a0 as getReps, J as EXERCISES, a5 as normalizeExerciseId, j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, P as PAPER, S as STEEL, b as INK_2, B as BLAZE, a6 as PositioningMask, a7 as FitnessEngine, a8 as drawSkeleton, a9 as alignmentScore, a as OLIVE_DARK, u as useT, V as speak, t as tr, R as btnIcon, aa as formatTime, p as playBeep, G as vibrate, ab as iconCircle, ac as pillBtn, s as secondaryBtn, $ as primaryBtn, _ as __vitePreload, ad as LOCALES } from "./index-DJZc3Rfg.js";
 import { r as reactExports, E as Eye, k as Music2, l as HeadphoneOff, V as Volume2, h as VolumeX, W as Wind, L as Lightbulb, J as Play, K as Pause, m as ChevronLeft, j as SkipForward, C as Check } from "./icons-BHJLJdva.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-CS9pYgNI.js";
-import { T as TopBar } from "./TopBar-Cin9GV9C.js";
-import { P as ProgressRing } from "./ProgressRing-Cmml3N0v.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-DJ6-G0vD.js";
+import { T as TopBar } from "./TopBar-Bnk3cBTg.js";
+import { P as ProgressRing } from "./ProgressRing-BKYGlxqo.js";
 import "./charts-DKCmdoT_.js";
 const FALLBACK = "en";
 function normalizeLang(input) {
@@ -507,7 +507,8 @@ function SegmentedProgress({ total, current, currentProgress, color }) {
 }
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-Cx-PcBXv.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url).then((m) => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
+  if (!_mediaPromise)
+    _mediaPromise = __vitePreload(() => import("./media-Cx-PcBXv.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url).then((m) => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -531,14 +532,89 @@ function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded
       cancelled = true;
     };
   }, [exerciseId]);
-  if (videoSrc && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("video", { src: videoSrc, autoPlay: true, muted: true, loop: true, playsInline: true, preload: "metadata", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
-  if (src && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src, alt: "", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
+  if (videoSrc && !failed)
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "video",
+      {
+        src: videoSrc,
+        autoPlay: true,
+        muted: true,
+        loop: true,
+        playsInline: true,
+        preload: "metadata",
+        onError: () => setFailed(true),
+        style: {
+          width: size,
+          height: size,
+          objectFit: "cover",
+          borderRadius: rounded,
+          display: "block",
+          background: INK
+        }
+      }
+    );
+  if (src && !failed)
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "img",
+      {
+        src,
+        alt: "",
+        onError: () => setFailed(true),
+        style: {
+          width: size,
+          height: size,
+          objectFit: "cover",
+          borderRadius: rounded,
+          display: "block",
+          background: INK
+        }
+      }
+    );
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose, color, size });
 }
 function EqBars({ tone = BLAZE, bars = 5, speed = 1, style }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "flex-end", gap: 3, height: 14, ...style }, "aria-hidden": "true", children: Array.from({ length: bars }).map((_, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-eqbar", style: { width: 3, background: tone, height: 8, animation: `eqPulse ${(0.55 + i % 3 * 0.18) / speed}s ease-in-out ${i * 0.08}s infinite` } }, i)) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      style: { display: "flex", alignItems: "flex-end", gap: 3, height: 14, ...style },
+      "aria-hidden": "true",
+      children: Array.from({ length: bars }).map((_, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "span",
+        {
+          className: "o40-eqbar",
+          style: {
+            width: 3,
+            background: tone,
+            height: 8,
+            animation: `eqPulse ${(0.55 + i % 3 * 0.18) / speed}s ease-in-out ${i * 0.08}s infinite`
+          }
+        },
+        i
+      ))
+    }
+  );
 }
-function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, setPaused, soundOn, setSoundOn, musicOn, onToggleMusic, aiEnabled, onToggleAi, lang: langProp, onSkip, onPrev, exitConfirm, setExitConfirm, onExit }) {
+function SessionScreen({
+  program,
+  profile,
+  seq,
+  phaseIdx,
+  secondsLeft,
+  paused,
+  setPaused,
+  soundOn,
+  setSoundOn,
+  musicOn,
+  onToggleMusic,
+  aiEnabled,
+  onToggleAi,
+  lang: langProp,
+  onSkip,
+  onPrev,
+  exitConfirm,
+  setExitConfirm,
+  onExit
+}) {
   const { lang: ctxLang, t } = useT();
   const lang = langProp ?? ctxLang;
   const phase = seq[phaseIdx];
@@ -549,7 +625,8 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
   const isAiWork = aiEnabled && phase.type === "work" && !!phase.exerciseId;
   const progress = isRepsWork ? 1 : phase.duration ? 1 - secondsLeft / phase.duration : 0;
   reactExports.useEffect(() => {
-    if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === "work" && !isRepsWork) speak(String(secondsLeft), lang, LOCALES);
+    if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === "work" && !isRepsWork)
+      speak(String(secondsLeft), lang, LOCALES);
   }, [secondsLeft, phase.type, soundOn, profile, isRepsWork]);
   reactExports.useEffect(() => {
     requestWakeLock();
@@ -574,97 +651,347 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
         title: tr(program.name, lang),
         onBack: () => setExitConfirm(true),
         right: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 2 }, children: [
-          musicOn && /* @__PURE__ */ jsxRuntimeExports.jsx(EqBars, { tone: ringColor, bars: 4, speed: phase.type === "work" ? 1.4 : phase.type === "rest" ? 0.5 : 0.8, style: { marginRight: 6, height: 12 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleAi, title: aiEnabled ? "AI Coach ON" : "AI Coach OFF", style: { ...btnIcon, border: `1px solid ${aiEnabled ? BLAZE : "transparent"}`, borderRadius: 8, background: aiEnabled ? `${BLAZE}22` : "transparent" }, children: aiEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: STEEL }) }),
+          musicOn && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            EqBars,
+            {
+              tone: ringColor,
+              bars: 4,
+              speed: phase.type === "work" ? 1.4 : phase.type === "rest" ? 0.5 : 0.8,
+              style: { marginRight: 6, height: 12 }
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: onToggleAi,
+              title: aiEnabled ? "AI Coach ON" : "AI Coach OFF",
+              style: {
+                ...btnIcon,
+                border: `1px solid ${aiEnabled ? BLAZE : "transparent"}`,
+                borderRadius: 8,
+                background: aiEnabled ? `${BLAZE}22` : "transparent"
+              },
+              children: aiEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: STEEL })
+            }
+          ),
           /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleMusic, style: btnIcon, "aria-label": t("ses.music"), children: musicOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Music2, { size: 18, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(HeadphoneOff, { size: 18, color: STEEL }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSoundOn(!soundOn), style: btnIcon, children: soundOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Volume2, { size: 18, color: PAPER }) : /* @__PURE__ */ jsxRuntimeExports.jsx(VolumeX, { size: 18, color: STEEL }) })
         ] })
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "10px 16px 0" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(SegmentedProgress, { total: seq.length, current: phaseIdx, currentProgress: progress, color: ringColor }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 8 }, className: "o40-mono", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: t("ses.elapsed", { t: formatTime(elapsedSec) }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: t("ses.ex", { a: doneWork, b: totalWork }) })
-      ] })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        SegmentedProgress,
+        {
+          total: seq.length,
+          current: phaseIdx,
+          currentProgress: progress,
+          color: ringColor
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          style: { display: "flex", justifyContent: "space-between", marginTop: 8 },
+          className: "o40-mono",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: t("ses.elapsed", { t: formatTime(elapsedSec) }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: t("ses.ex", { a: doneWork, b: totalWork }) })
+          ]
+        }
+      )
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10, padding: 16 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `o40-mono o40-expand ${phase.type === "work" ? "o40-gradtext" : ""}`, style: { color: ringColor, fontSize: 13, letterSpacing: "0.1em" }, children: phaseLabel }, phaseIdx),
-      isAiWork ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%", maxWidth: 420 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          SessionAIOverlay,
-          {
-            phase,
-            lang,
-            levelKey: (profile == null ? void 0 : profile.level) ?? "combattente",
-            aiEnabled,
-            onCompletePhase: () => {
-              if (soundOn) playBeep(880);
-              if (vibrate) vibrate([30]);
-              onSkip();
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        style: {
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 10,
+          padding: 16
+        },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: `o40-mono o40-expand ${phase.type === "work" ? "o40-gradtext" : ""}`,
+              style: { color: ringColor, fontSize: 13, letterSpacing: "0.1em" },
+              children: phaseLabel
             },
-            onRep: () => {
+            phaseIdx
+          ),
+          isAiWork ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%", maxWidth: 420 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              SessionAIOverlay,
+              {
+                phase,
+                lang,
+                levelKey: (profile == null ? void 0 : profile.level) ?? "combattente",
+                aiEnabled,
+                onCompletePhase: () => {
+                  if (soundOn) playBeep(880);
+                  if (vibrate) vibrate([30]);
+                  onSkip();
+                },
+                onRep: () => {
+                }
+              },
+              `${phase.exerciseId}-${phaseIdx}`
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "o40-mono",
+                style: { color: STEEL, fontSize: 9, textAlign: "center", marginTop: 6 },
+                children: aiEnabled ? lang === "it" ? "AI Coach attivo — conta automatico, voce nella tua lingua" : "AI Coach on — auto-count, voice in your language" : ""
+              }
+            )
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: 240, height: 240 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  style: {
+                    position: "absolute",
+                    inset: -18,
+                    borderRadius: "50%",
+                    background: `radial-gradient(circle, ${ringColor}30 0%, transparent 70%)`,
+                    transition: "background 0.3s ease",
+                    animation: phase.type === "rest" ? "restBreath 2.4s ease-in-out infinite" : "none"
+                  }
+                }
+              ),
+              phase.type === "work" && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  style: {
+                    position: "absolute",
+                    inset: -10,
+                    borderRadius: "50%",
+                    border: `2px solid ${ringColor}44`,
+                    animation: "ringPulse 1.5s ease-out infinite"
+                  }
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressRing, { progress, color: ringColor }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  style: {
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  },
+                  children: ex ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 150, height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    ExerciseMedia,
+                    {
+                      exerciseId: phase.exerciseId,
+                      pose: ex.pose,
+                      color: PAPER,
+                      rounded: 14
+                    }
+                  ) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 44 }, children: formatTime(secondsLeft) })
+                }
+              )
+            ] }),
+            ex && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { textAlign: "center" }, children: isRepsWork ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "div",
+                {
+                  className: "o40-display",
+                  style: { color: PAPER, fontSize: 48, lineHeight: 1 },
+                  children: [
+                    "×",
+                    phase.reps
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "o40-mono",
+                  style: { color: KHAKI, fontSize: 11, letterSpacing: "0.08em" },
+                  children: lang === "it" ? "RIPETIZIONI" : "REPS"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }, children: lang === "it" ? "Tocca FATTO quando hai finito" : "Tap DONE when finished" })
+            ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 40 }, children: formatTime(secondsLeft) }) })
+          ] }),
+          ex && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", maxWidth: 330 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 13 }, children: isRepsWork ? `${phase.reps}× ${tr(ex.name, lang)} — ${tr(ex.repGuide, lang)}` : tr(ex.repGuide, lang) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                style: {
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 4,
+                  marginTop: 8,
+                  textAlign: "left"
+                },
+                children: ex.steps.map((s, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 7, alignItems: "flex-start" }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10.5, minWidth: 15 }, children: [
+                    i + 1,
+                    "."
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 12, lineHeight: 1.4 }, children: tr(s, lang) })
+                ] }, i))
+              }
+            ),
+            ex.breath && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                style: {
+                  display: "flex",
+                  gap: 7,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: 9,
+                  color: OLIVE
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 13, style: { flexShrink: 0 } }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 11.5, fontStyle: "italic", lineHeight: 1.4 }, children: tr(ex.breath, lang) })
+                ]
+              }
+            ),
+            ex.tip40 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                style: {
+                  display: "flex",
+                  gap: 8,
+                  alignItems: "flex-start",
+                  marginTop: 10,
+                  textAlign: "left",
+                  background: `${KHAKI}10`,
+                  border: `1px solid ${KHAKI}44`,
+                  borderRadius: 10,
+                  padding: "8px 10px"
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Lightbulb, { size: 14, color: KHAKI, style: { flexShrink: 0, marginTop: 1 } }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.45 }, children: tr(ex.tip40, lang) })
+                ]
+              }
+            )
+          ] }),
+          phase.type === "rest" && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              style: {
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 6,
+                marginTop: 4
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    style: {
+                      width: 52,
+                      height: 52,
+                      borderRadius: "50%",
+                      background: OLIVE,
+                      opacity: 0.9,
+                      animation: "restBreath 3.2s ease-in-out infinite",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    },
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 16, color: PAPER })
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "span",
+                  {
+                    className: "o40-mono",
+                    style: { color: KHAKI, fontSize: 10, letterSpacing: "0.08em" },
+                    children: lang === "it" ? "Respira — 4 sec in, 4 sec out" : lang === "de" ? "Atmen — 4s ein, 4s aus" : "Breathe — 4s in, 4s out"
+                  }
+                )
+              ]
             }
-          },
-          `${phase.exerciseId}-${phaseIdx}`
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, textAlign: "center", marginTop: 6 }, children: aiEnabled ? lang === "it" ? "AI Coach attivo — conta automatico, voce nella tua lingua" : "AI Coach on — auto-count, voice in your language" : "" })
-      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: 240, height: 240 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
-            position: "absolute",
-            inset: -18,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, ${ringColor}30 0%, transparent 70%)`,
-            transition: "background 0.3s ease",
-            animation: phase.type === "rest" ? "restBreath 2.4s ease-in-out infinite" : "none"
-          } }),
-          phase.type === "work" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: -10, borderRadius: "50%", border: `2px solid ${ringColor}44`, animation: "ringPulse 1.5s ease-out infinite" } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressRing, { progress, color: ringColor }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }, children: ex ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 150, height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: phase.exerciseId, pose: ex.pose, color: PAPER, rounded: 14 }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 44 }, children: formatTime(secondsLeft) }) })
-        ] }),
-        ex && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { textAlign: "center" }, children: isRepsWork ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: PAPER, fontSize: 48, lineHeight: 1 }, children: [
-            "×",
-            phase.reps
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.08em" }, children: lang === "it" ? "RIPETIZIONI" : "REPS" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }, children: lang === "it" ? "Tocca FATTO quando hai finito" : "Tap DONE when finished" })
-        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 40 }, children: formatTime(secondsLeft) }) })
-      ] }),
-      ex && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", maxWidth: 330 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 13 }, children: isRepsWork ? `${phase.reps}× ${tr(ex.name, lang)} — ${tr(ex.repGuide, lang)}` : tr(ex.repGuide, lang) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 4, marginTop: 8, textAlign: "left" }, children: ex.steps.map((s, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 7, alignItems: "flex-start" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10.5, minWidth: 15 }, children: [
-            i + 1,
-            "."
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 12, lineHeight: 1.4 }, children: tr(s, lang) })
-        ] }, i)) }),
-        ex.breath && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 7, alignItems: "center", justifyContent: "center", marginTop: 9, color: OLIVE }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 13, style: { flexShrink: 0 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 11.5, fontStyle: "italic", lineHeight: 1.4 }, children: tr(ex.breath, lang) })
-        ] }),
-        ex.tip40 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, alignItems: "flex-start", marginTop: 10, textAlign: "left", background: `${KHAKI}10`, border: `1px solid ${KHAKI}44`, borderRadius: 10, padding: "8px 10px" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Lightbulb, { size: 14, color: KHAKI, style: { flexShrink: 0, marginTop: 1 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.45 }, children: tr(ex.tip40, lang) })
-        ] })
-      ] }),
-      phase.type === "rest" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, marginTop: 4 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, borderRadius: "50%", background: OLIVE, opacity: 0.9, animation: "restBreath 3.2s ease-in-out infinite", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 16, color: PAPER }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.08em" }, children: lang === "it" ? "Respira — 4 sec in, 4 sec out" : lang === "de" ? "Atmen — 4s ein, 4s aus" : "Breathe — 4s in, 4s out" })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-card-glass", style: { color: STEEL, fontSize: 12, marginTop: 6, display: "flex", alignItems: "center", gap: 8, borderRadius: 10, padding: "7px 12px" }, children: next ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        next.exerciseId && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 26, height: 26, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: EXERCISES[next.exerciseId].pose, color: KHAKI, size: "100%" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t("ses.next", { name: next.type === "work" ? tr(nextEx.name, lang) : next.type === "rest" ? t("ses.next.rest") : t("ses.next.cooldown") }) })
-      ] }) : t("ses.last") })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 12, padding: "10px 20px 8px", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setPaused(!paused), style: { ...iconCircle, width: 74, height: 74, background: BLAZE, animation: paused ? "glowPulse 1.6s ease-in-out infinite" : "none" }, "aria-label": paused ? t("ses.resume") : t("ses.pause"), children: paused ? /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 30, color: PAPER }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Pause, { size: 30, color: PAPER }) }) }),
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "o40-card-glass",
+              style: {
+                color: STEEL,
+                fontSize: 12,
+                marginTop: 6,
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                borderRadius: 10,
+                padding: "7px 12px"
+              },
+              children: next ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                next.exerciseId && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 26, height: 26, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  ExerciseFigure,
+                  {
+                    pose: EXERCISES[next.exerciseId].pose,
+                    color: KHAKI,
+                    size: "100%"
+                  }
+                ) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t("ses.next", {
+                  name: next.type === "work" ? tr(nextEx.name, lang) : next.type === "rest" ? t("ses.next.rest") : t("ses.next.cooldown")
+                }) })
+              ] }) : t("ses.last")
+            }
+          )
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        style: {
+          display: "flex",
+          gap: 12,
+          padding: "10px 20px 8px",
+          alignItems: "center",
+          justifyContent: "center"
+        },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: () => setPaused(!paused),
+            style: {
+              ...iconCircle,
+              width: 74,
+              height: 74,
+              background: BLAZE,
+              animation: paused ? "glowPulse 1.6s ease-in-out infinite" : "none"
+            },
+            "aria-label": paused ? t("ses.resume") : t("ses.pause"),
+            children: paused ? /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 30, color: PAPER }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Pause, { size: 30, color: PAPER })
+          }
+        )
+      }
+    ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, padding: "0 20px 20px" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onPrev, disabled: phaseIdx === 0, style: { ...pillBtn, opacity: phaseIdx === 0 ? 0.4 : 1 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 15 }),
-        " PREV"
-      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
+        {
+          onClick: onPrev,
+          disabled: phaseIdx === 0,
+          style: { ...pillBtn, opacity: phaseIdx === 0 ? 0.4 : 1 },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 15 }),
+            " PREV"
+          ]
+        }
+      ),
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "button",
         {
@@ -686,15 +1013,49 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
         }
       )
     ] }),
-    isAiWork && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, textAlign: "center", paddingBottom: 8 }, children: lang === "it" ? "AI avanzerà da solo al target · disattiva con 👁️" : "AI will auto-advance at target · disable with 👁️" }),
-    exitConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, background: "rgba(27,29,22,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 22, maxWidth: 320, textAlign: "center" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22, marginBottom: 8 }, children: t("ses.quit.title") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, marginBottom: 18 }, children: t("ses.quit.body") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setExitConfirm(false), style: { ...secondaryBtn, flex: 1 }, children: t("ses.quit.continue") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onExit, style: { ...primaryBtn, flex: 1 }, children: t("ses.quit.exit") })
-      ] })
-    ] }) })
+    isAiWork && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "o40-mono",
+        style: { color: STEEL, fontSize: 9, textAlign: "center", paddingBottom: 8 },
+        children: lang === "it" ? "AI avanzerà da solo al target · disattiva con 👁️" : "AI will auto-advance at target · disable with 👁️"
+      }
+    ),
+    exitConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        style: {
+          position: "absolute",
+          inset: 0,
+          background: "rgba(27,29,22,0.92)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 24
+        },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            style: {
+              background: INK_2,
+              border: `1px solid ${OLIVE}`,
+              borderRadius: 14,
+              padding: 22,
+              maxWidth: 320,
+              textAlign: "center"
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22, marginBottom: 8 }, children: t("ses.quit.title") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, marginBottom: 18 }, children: t("ses.quit.body") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10 }, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setExitConfirm(false), style: { ...secondaryBtn, flex: 1 }, children: t("ses.quit.continue") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onExit, style: { ...primaryBtn, flex: 1 }, children: t("ses.quit.exit") })
+              ] })
+            ]
+          }
+        )
+      }
+    )
   ] });
 }
 export {

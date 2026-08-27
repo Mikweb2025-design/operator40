@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-CFv-Eljc.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./CountdownScreen-D_TK-1Do.js","./SetupScreen-C5D48m_J.js","./TopBar-Cin9GV9C.js","./HomeScreen-D0eSrz52.js","./GoalRing-COGiYxSe.js","./ExerciseFigure-CS9pYgNI.js","./DogTag-DRg2M6I1.js","./ProgressRing-Cmml3N0v.js","./LibraryScreen-CFZfjFIf.js","./clips-CZetA5iC.js","./BuilderScreen-nBCAm681.js","./PreviewScreen-DhWWYcKN.js","./SessionScreen-COZKvM6m.js","./SummaryScreen-lslVnGFR.js","./HistoryScreen-C9P9bm6e.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-DTUZsqoH.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./CountdownScreen-CotBNTqT.js","./SetupScreen-DAOX_mTQ.js","./TopBar-Bnk3cBTg.js","./HomeScreen-DsweVAfg.js","./GoalRing-Fj_yfOHz.js","./ExerciseFigure-DJ6-G0vD.js","./DogTag-CYi_1x9w.js","./ProgressRing-BKYGlxqo.js","./LibraryScreen-Hv4scdYL.js","./clips-CZetA5iC.js","./BuilderScreen-a-_4iSiD.js","./PreviewScreen-NuXqA1DD.js","./SessionScreen-CVTywGJj.js","./SummaryScreen-_2BwbcnH.js","./HistoryScreen-DkZrGqOZ.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -201,13 +201,25 @@ const I18N = {
   "setup.name.ph": { it: "es. Danny", en: "e.g. Danny", de: "z. B. Danny" },
   "setup.age": { it: "Età", en: "Age", de: "Alter" },
   "setup.weight": { it: "Peso (kg)", en: "Weight (kg)", de: "Gewicht (kg)" },
-  "setup.waist": { it: "Girovita (cm) — la misura della pancia", en: "Waist (cm) — the belly measurement", de: "Bauchumfang (cm) — die Bauchmessung" },
+  "setup.waist": {
+    it: "Girovita (cm) — la misura della pancia",
+    en: "Waist (cm) — the belly measurement",
+    de: "Bauchumfang (cm) — die Bauchmessung"
+  },
   "setup.waist.ph": { it: "es. 98", en: "e.g. 98", de: "z. B. 98" },
   "setup.sounds": { it: "Suoni", en: "Sounds", de: "Töne" },
   "setup.vibration": { it: "Vibrazione", en: "Vibration", de: "Vibration" },
-  "setup.skip": { it: "Salta riscaldamento/defaticamento", en: "Skip warm-up/cooldown", de: "Aufwärmen/Abkühlen überspringen" },
+  "setup.skip": {
+    it: "Salta riscaldamento/defaticamento",
+    en: "Skip warm-up/cooldown",
+    de: "Aufwärmen/Abkühlen überspringen"
+  },
   "setup.music": { it: "Musica motivazionale", en: "Motivational music", de: "Motivationsmusik" },
-  "setup.music.pick": { it: "Scegli la colonna sonora del tuo allenamento:", en: "Choose the soundtrack for your workout:", de: "Wähle den Soundtrack für dein Training:" },
+  "setup.music.pick": {
+    it: "Scegli la colonna sonora del tuo allenamento:",
+    en: "Choose the soundtrack for your workout:",
+    de: "Wähle den Soundtrack für dein Training:"
+  },
   "setup.music.playing": { it: "IN SUONO", en: "PLAYING", de: "LÄUFT" },
   "setup.music.listen": { it: "ASCOLTA", en: "LISTEN", de: "HÖREN" },
   "setup.music.note": {
@@ -221,20 +233,32 @@ const I18N = {
     en: "The higher you go, the faster the work/rest rhythm: progression is what guarantees results.",
     de: "Je höher, desto schneller der Arbeits-/Pausentakt: Progression garantiert die Ergebnisse."
   },
-  "setup.health": { it: "Importa da Apple Health", en: "Import from Apple Health", de: "Von Apple Health importieren" },
+  "setup.health": {
+    it: "Importa da Apple Health",
+    en: "Import from Apple Health",
+    de: "Von Apple Health importieren"
+  },
   "setup.health.body": {
     it: "Non posso collegarmi in diretta ad Apple Health (nessuna API web esiste per HealthKit). Puoi però esportare i tuoi dati dall'app Salute (foto profilo → Esporta tutti i dati sanitari) e caricare qui il file <strong>export.xml</strong>: viene letto ed elaborato interamente su questo dispositivo, non lascia mai il telefono. Importo allenamenti di forza/core/HIIT e l'ultimo peso registrato.",
     en: "I can't connect directly to Apple Health (no web API exists for HealthKit). But you can export your data from the Health app (profile photo → Export All Health Data) and upload the export.xml file here: it's read and processed entirely on this device and never leaves your phone. I import strength/core/HIIT workouts and your latest recorded weight.",
     de: "Eine direkte Verbindung zu Apple Health ist nicht möglich (für HealthKit gibt es keine Web-API). Du kannst deine Daten aber in der Health-App exportieren (Profilbild → Alle Gesundheitsdaten exportieren) und hier die Datei export.xml hochladen: Sie wird vollständig auf diesem Gerät gelesen und verarbeitet und verlässt nie dein Handy. Ich importiere Kraft-/Core-/HIIT-Workouts und das zuletzt erfasste Gewicht."
   },
   "setup.health.processing": { it: "ELABORAZIONE…", en: "PROCESSING…", de: "VERARBEITE…" },
-  "setup.health.upload": { it: "CARICA export.xml", en: "UPLOAD export.xml", de: "export.xml HOCHLADEN" },
+  "setup.health.upload": {
+    it: "CARICA export.xml",
+    en: "UPLOAD export.xml",
+    de: "export.xml HOCHLADEN"
+  },
   "setup.health.error": {
     it: "File non riconosciuto: assicurati di caricare export.xml (non lo zip).",
     en: "Unrecognized file: make sure you upload export.xml (not the zip).",
     de: "Datei nicht erkannt: lade export.xml hoch (nicht die ZIP-Datei)."
   },
-  "setup.health.weight": { it: "Peso più recente in Apple Health:", en: "Most recent weight in Apple Health:", de: "Neuestes Gewicht in Apple Health:" },
+  "setup.health.weight": {
+    it: "Peso più recente in Apple Health:",
+    en: "Most recent weight in Apple Health:",
+    de: "Neuestes Gewicht in Apple Health:"
+  },
   "setup.health.apply": { it: "Aggiorna", en: "Update", de: "Aktualisieren" },
   "setup.tech.note": {
     it: "Nota tecnica: dal browser non posso collegarmi direttamente al tuo Huawei Watch (niente accesso Bluetooth/API Huawei Health nell'app). Dopo ogni sessione ti chiederò di leggere il picco battito dal Watch e inserirlo qui a mano — richiede 5 secondi e tengo lo storico.",
@@ -285,17 +309,37 @@ const I18N = {
   /* ---- home cards ---- */
   "home.waist.title": { it: "GIROVITA", en: "WAIST", de: "BAUCHUMFANG" },
   "home.waist.sub": { it: "(pancia)", en: "(belly)", de: "(Bauch)" },
-  "home.waist.last": { it: "Ultima misura: {v} cm", en: "Last measurement: {v} cm", de: "Letzte Messung: {v} cm" },
-  "home.waist.delta": { it: "{v} cm dalla prima", en: "{v} cm from the first", de: "{v} cm seit der ersten" },
+  "home.waist.last": {
+    it: "Ultima misura: {v} cm",
+    en: "Last measurement: {v} cm",
+    de: "Letzte Messung: {v} cm"
+  },
+  "home.waist.delta": {
+    it: "{v} cm dalla prima",
+    en: "{v} cm from the first",
+    de: "{v} cm seit der ersten"
+  },
   "home.waist.empty": {
     it: "Misuralo nel riepilogo: è l'indicatore più affidabile del dimagrimento",
     en: "Measure it in the summary: it's the most reliable fat-loss indicator",
     de: "Miss ihn in der Zusammenfassung: Der zuverlässigste Abnehm-Indikator"
   },
   "home.weight.title": { it: "PESO", en: "WEIGHT", de: "GEWICHT" },
-  "home.weight.sub": { it: "(media settimanale)", en: "(weekly average)", de: "(Wochendurchschnitt)" },
-  "home.weight.last": { it: "Ultima rilevazione: {v} kg", en: "Last reading: {v} kg", de: "Letzte Messung: {v} kg" },
-  "home.weight.delta": { it: "{v} kg dalla prima", en: "{v} kg from the first", de: "{v} kg seit der ersten" },
+  "home.weight.sub": {
+    it: "(media settimanale)",
+    en: "(weekly average)",
+    de: "(Wochendurchschnitt)"
+  },
+  "home.weight.last": {
+    it: "Ultima rilevazione: {v} kg",
+    en: "Last reading: {v} kg",
+    de: "Letzte Messung: {v} kg"
+  },
+  "home.weight.delta": {
+    it: "{v} kg dalla prima",
+    en: "{v} kg from the first",
+    de: "{v} kg seit der ersten"
+  },
   "home.weight.empty": {
     it: "Registralo nel riepilogo dopo l'allenamento",
     en: "Log it in the summary after your workout",
@@ -311,7 +355,11 @@ const I18N = {
   },
   "home.promote.btn": { it: "PROMUOVI", en: "PROMOTE", de: "BEFÖRDERN" },
   "home.goal.title": { it: "Obiettivo settimanale", en: "Weekly goal", de: "Wochenziel" },
-  "home.next.title": { it: "Prossimo traguardo: ancora {n} {unit}", en: "Next milestone: {n} {unit} to go", de: "Nächstes Ziel: noch {n} {unit}" },
+  "home.next.title": {
+    it: "Prossimo traguardo: ancora {n} {unit}",
+    en: "Next milestone: {n} {unit} to go",
+    de: "Nächstes Ziel: noch {n} {unit}"
+  },
   "home.unit.streak1": { it: "giorno di serie", en: "day of streak", de: "Tag in Serie" },
   "home.unit.streakN": { it: "giorni di serie", en: "days of streak", de: "Tage in Serie" },
   "home.unit.session1": { it: "sessione", en: "session", de: "Session" },
@@ -327,34 +375,78 @@ const I18N = {
   "home.mission.noequip": { it: "Senza attrezzi", en: "No equipment", de: "Ohne Geräte" },
   "home.mission.ex": { it: "{n} esercizi", en: "{n} exercises", de: "{n} Übungen" },
   "home.mission.see": { it: "VEDI MISSIONE", en: "VIEW MISSION", de: "MISSION ANSEHEN" },
-  "home.repeat": { it: "RIPETI L'ULTIMA: {name}", en: "REPEAT LAST: {name}", de: "LETZTE WIEDERHOLEN: {name}" },
+  "home.repeat": {
+    it: "RIPETI L'ULTIMA: {name}",
+    en: "REPEAT LAST: {name}",
+    de: "LETZTE WIEDERHOLEN: {name}"
+  },
   "home.quick.min": { it: "~5 min", en: "~5 min", de: "~5 min" },
   "home.other": { it: "Altre missioni", en: "Other missions", de: "Andere Missionen" },
   "home.yours": { it: "Le tue missioni", en: "Your missions", de: "Deine Missionen" },
   "home.custom.ex": { it: "{n} esercizi", en: "{n} exercises", de: "{n} Übungen" },
-  "home.custom.create": { it: "CREA MISSIONE PERSONALIZZATA", en: "CREATE CUSTOM MISSION", de: "EIGENE MISSION ERSTELLEN" },
+  "home.custom.create": {
+    it: "CREA MISSIONE PERSONALIZZATA",
+    en: "CREATE CUSTOM MISSION",
+    de: "EIGENE MISSION ERSTELLEN"
+  },
   "home.custom.delete": { it: "Elimina missione", en: "Delete mission", de: "Mission löschen" },
   "home.section.today": { it: "OGGI", en: "TODAY", de: "HEUTE" },
   "home.section.progress": { it: "PROGRESSI", en: "PROGRESS", de: "FORTSCHRITT" },
-  "home.section.missions": { it: "MISSIONI & OBIETTIVI", en: "MISSIONS & GOALS", de: "MISSIONEN & ZIELE" },
+  "home.section.missions": {
+    it: "MISSIONI & OBIETTIVI",
+    en: "MISSIONS & GOALS",
+    de: "MISSIONEN & ZIELE"
+  },
   "home.section.achievements": { it: "ACHIEVEMENTS", en: "ACHIEVEMENTS", de: "ACHIEVEMENTS" },
   "home.section.measurements": { it: "MISURAZIONI", en: "MEASUREMENTS", de: "MESSUNGEN" },
-  "home.streak.break": { it: "Streak interrotta — riparti oggi", en: "Streak broken — start again today", de: "Serie unterbrochen — heute neu starten" },
-  "home.streak.risk": { it: "Rischio streak — allenati oggi!", en: "Streak at risk — train today!", de: "Serie gefährdet — heute trainieren!" },
+  "home.streak.break": {
+    it: "Streak interrotta — riparti oggi",
+    en: "Streak broken — start again today",
+    de: "Serie unterbrochen — heute neu starten"
+  },
+  "home.streak.risk": {
+    it: "Rischio streak — allenati oggi!",
+    en: "Streak at risk — train today!",
+    de: "Serie gefährdet — heute trainieren!"
+  },
   "home.week.label": { it: "SETTIMANA", en: "WEEK", de: "WOCHE" },
   "home.consistency": { it: "CONSISTENZA 8 SETT.", en: "CONSISTENCY 8 WKS", de: "KONSTANZ 8 WO." },
   "home.average": { it: "MEDIA", en: "AVG", de: "Ø" },
-  "home.belly.title": { it: "PANCIA • 3 MISSIONI DEDICATE", en: "BELLY • 3 DEDICATED MISSIONS", de: "BAUCH • 3 MISSIONEN" },
+  "home.belly.title": {
+    it: "PANCIA • 3 MISSIONI DEDICATE",
+    en: "BELLY • 3 DEDICATED MISSIONS",
+    de: "BAUCH • 3 MISSIONEN"
+  },
   "home.belly.week": { it: "SETTIMANA", en: "WEEK", de: "WOCHE" },
   "home.daily.go": { it: "Vai", en: "Go", de: "Los" },
-  "home.dailyChallenge": { it: "SFIDA DEL GIORNO • {bonus}", en: "DAILY CHALLENGE • {bonus}", de: "TÄGLICHE HERAUSFORDERUNG • {bonus}" },
+  "home.dailyChallenge": {
+    it: "SFIDA DEL GIORNO • {bonus}",
+    en: "DAILY CHALLENGE • {bonus}",
+    de: "TÄGLICHE HERAUSFORDERUNG • {bonus}"
+  },
   "home.other.open": { it: "Tocca per chiudere", en: "Tap to close", de: "Tippen zum Schließen" },
-  "home.other.closed": { it: "Esplora tutte le missioni disponibili", en: "Explore all available missions", de: "Alle verfügbaren Missionen entdecken" },
-  "setup.backup.title": { it: "Backup & Ripristino", en: "Backup & Restore", de: "Backup & Wiederherstellung" },
-  "setup.backup.body": { it: "Esporta tutti i dati (profilo, sessioni, misure, foto) in un file JSON. Ripristina su altro device o dopo reset.", en: "Export all data (profile, sessions, measures, photos) to a JSON file. Restore on another device or after reset.", de: "Exportiere alle Daten (Profil, Sessions, Maße, Fotos) in eine JSON-Datei. Auf anderem Gerät wiederherstellen." },
+  "home.other.closed": {
+    it: "Esplora tutte le missioni disponibili",
+    en: "Explore all available missions",
+    de: "Alle verfügbaren Missionen entdecken"
+  },
+  "setup.backup.title": {
+    it: "Backup & Ripristino",
+    en: "Backup & Restore",
+    de: "Backup & Wiederherstellung"
+  },
+  "setup.backup.body": {
+    it: "Esporta tutti i dati (profilo, sessioni, misure, foto) in un file JSON. Ripristina su altro device o dopo reset.",
+    en: "Export all data (profile, sessions, measures, photos) to a JSON file. Restore on another device or after reset.",
+    de: "Exportiere alle Daten (Profil, Sessions, Maße, Fotos) in eine JSON-Datei. Auf anderem Gerät wiederherstellen."
+  },
   "setup.backup.export": { it: "Esporta backup", en: "Export backup", de: "Backup exportieren" },
   "setup.backup.restore": { it: "Ripristina", en: "Restore", de: "Wiederherstellen" },
-  "setup.backup.hint": { it: "Sovrascrive i dati locali — esporta prima se non sei sicuro.", en: "Overwrites local data — export first if unsure.", de: "Überschreibt lokale Daten — vorher exportieren." },
+  "setup.backup.hint": {
+    it: "Sovrascrive i dati locali — esporta prima se non sei sicuro.",
+    en: "Overwrites local data — export first if unsure.",
+    de: "Überschreibt lokale Daten — vorher exportieren."
+  },
   "setup.backup.version": { it: "v{version}", en: "v{version}", de: "v{version}" },
   /* ---- library ---- */
   "lib.title": { it: "LIBRERIA", en: "LIBRARY", de: "ÜBUNGEN" },
@@ -369,14 +461,26 @@ const I18N = {
   "lib.core": { it: "Addome", en: "Core", de: "Bauch" },
   /* ---- builder ---- */
   "bld.title": { it: "CREA MISSIONE", en: "CREATE MISSION", de: "MISSION ERSTELLEN" },
-  "bld.name": { it: "Nome missione (opzionale)", en: "Mission name (optional)", de: "Missionsname (optional)" },
+  "bld.name": {
+    it: "Nome missione (opzionale)",
+    en: "Mission name (optional)",
+    de: "Missionsname (optional)"
+  },
   "bld.name.ph": { it: "es. Gambe e cuore", en: "e.g. Legs & cardio", de: "z. B. Beine & Herz" },
   "bld.rounds": { it: "Round", en: "Rounds", de: "Runden" },
-  "bld.exercises": { it: "Esercizi ({sel}/10, minimo 3)", en: "Exercises ({sel}/10, min 3)", de: "Übungen ({sel}/10, mind. 3)" },
+  "bld.exercises": {
+    it: "Esercizi ({sel}/10, minimo 3)",
+    en: "Exercises ({sel}/10, min 3)",
+    de: "Übungen ({sel}/10, mind. 3)"
+  },
   "bld.min": { it: "~{m} min", en: "~{m} min", de: "~{m} min" },
   "bld.kcal": { it: "~{k} kcal", en: "~{k} kcal", de: "~{k} kcal" },
   "bld.create.go": { it: "CREA E VAI", en: "CREATE & GO", de: "ERSTELLEN & LOS" },
-  "bld.hint": { it: "Seleziona almeno 3 esercizi per continuare", en: "Select at least 3 exercises to continue", de: "Wähle mindestens 3 Übungen zum Fortfahren" },
+  "bld.hint": {
+    it: "Seleziona almeno 3 esercizi per continuare",
+    en: "Select at least 3 exercises to continue",
+    de: "Wähle mindestens 3 Übungen zum Fortfahren"
+  },
   "bld.draft.name": { it: "Missione personalizzata", en: "Custom mission", de: "Eigene Mission" },
   "bld.draft.tagline": { it: "Creata da te", en: "Made by you", de: "Von dir erstellt" },
   /* ---- preview ---- */
@@ -404,7 +508,11 @@ const I18N = {
   "ses.music": { it: "Musica", en: "Music", de: "Musik" },
   "ses.resume": { it: "Riprendi", en: "Resume", de: "Fortsetzen" },
   "ses.pause": { it: "Pausa", en: "Pause", de: "Pause" },
-  "ses.quit.title": { it: "ABBANDONARE LA MISSIONE?", en: "ABANDON THE MISSION?", de: "MISSION ABBRECHEN?" },
+  "ses.quit.title": {
+    it: "ABBANDONARE LA MISSIONE?",
+    en: "ABANDON THE MISSION?",
+    de: "MISSION ABBRECHEN?"
+  },
   "ses.quit.body": {
     it: "I progressi di questa sessione non verranno salvati.",
     en: "This session's progress won't be saved.",
@@ -423,8 +531,16 @@ const I18N = {
   "sum.sharebtn": { it: "CONDIVIDI", en: "SHARE", de: "TEILEN" },
   "sum.rpe.title": { it: "Come è andata?", en: "How did it go?", de: "Wie war es?" },
   "sum.notes.title": { it: "Note (opzionale)", en: "Notes (optional)", de: "Notizen (optional)" },
-  "sum.notes.ph": { it: "es. ginocchio destro un po' rigido oggi", en: "e.g. right knee a bit stiff today", de: "z. B. rechtes Knie heute etwas steif" },
-  "sum.waist.title": { it: "Girovita oggi (cm)", en: "Waist today (cm)", de: "Bauchumfang heute (cm)" },
+  "sum.notes.ph": {
+    it: "es. ginocchio destro un po' rigido oggi",
+    en: "e.g. right knee a bit stiff today",
+    de: "z. B. rechtes Knie heute etwas steif"
+  },
+  "sum.waist.title": {
+    it: "Girovita oggi (cm)",
+    en: "Waist today (cm)",
+    de: "Bauchumfang heute (cm)"
+  },
   "sum.waist.body": {
     it: 'La misura della pancia è il dato più affidabile: registrala 1 volta a settimana (stessa ora, a stomaco vuoto). La diminuzione qui è il tuo "risultato sicuro".',
     en: 'The belly measurement is the most reliable metric: log it once a week (same time, on an empty stomach). The decrease here is your "guaranteed result".',
@@ -439,7 +555,11 @@ const I18N = {
   },
   "sum.weight.ph": { it: "es. 80.5", en: "e.g. 80.5", de: "z. B. 80.5" },
   "sum.weight.ph.dynamic": { it: "es. {v}", en: "e.g. {v}", de: "z. B. {v}" },
-  "sum.hr.title": { it: "Battito di picco (Huawei Watch)", en: "Peak heart rate (Huawei Watch)", de: "Spitzen-Herzfrequenz (Huawei Watch)" },
+  "sum.hr.title": {
+    it: "Battito di picco (Huawei Watch)",
+    en: "Peak heart rate (Huawei Watch)",
+    de: "Spitzen-Herzfrequenz (Huawei Watch)"
+  },
   "sum.hr.remind": { it: "RICORDA", en: "REMEMBER", de: "ERINNERN" },
   "sum.hr.body": {
     it: "Apri l'app Huawei Health e leggi il valore massimo registrato durante l'allenamento, poi inseriscilo qui.",
@@ -448,30 +568,70 @@ const I18N = {
   },
   "sum.hr.ph": { it: "es. 142", en: "e.g. 142", de: "z. B. 142" },
   "sum.zone": { it: "Zona: {label}", en: "Zone: {label}", de: "Zone: {label}" },
-  "sum.save": { it: "SALVA E TORNA ALLA BASE", en: "SAVE & RETURN TO BASE", de: "SPEICHERN & ZURÜCK ZUR BASIS" },
+  "sum.save": {
+    it: "SALVA E TORNA ALLA BASE",
+    en: "SAVE & RETURN TO BASE",
+    de: "SPEICHERN & ZURÜCK ZUR BASIS"
+  },
   /* ---- history ---- */
   "hist.title": { it: "STATISTICHE", en: "STATISTICS", de: "STATISTIK" },
-  "hist.avgint": { it: "Intensità media (RPE)", en: "Average intensity (RPE)", de: "Durchschnittliche Intensität (RPE)" },
+  "hist.avgint": {
+    it: "Intensità media (RPE)",
+    en: "Average intensity (RPE)",
+    de: "Durchschnittliche Intensität (RPE)"
+  },
   "hist.bestweek.title": { it: "MIGLIORE SETTIMANA", en: "BEST WEEK", de: "BESTE WOCHE" },
-  "hist.bestweek.sub": { it: "Il picco più alto di kcal in 7 giorni", en: "Highest kcal peak over 7 days", de: "Höchster kcal-Wert in 7 Tagen" },
+  "hist.bestweek.sub": {
+    it: "Il picco più alto di kcal in 7 giorni",
+    en: "Highest kcal peak over 7 days",
+    de: "Höchster kcal-Wert in 7 Tagen"
+  },
   "hist.kcal.unit": { it: "kcal", en: "kcal", de: "kcal" },
   "hist.goal.title": { it: "Obiettivo settimanale", en: "Weekly goal", de: "Wochenziel" },
-  "hist.goal.label": { it: "Missioni a settimana", en: "Missions per week", de: "Missionen pro Woche" },
+  "hist.goal.label": {
+    it: "Missioni a settimana",
+    en: "Missions per week",
+    de: "Missionen pro Woche"
+  },
   "hist.35d": { it: "Ultimi 35 giorni", en: "Last 35 days", de: "Letzte 35 Tage" },
   "hist.milestones": { it: "Traguardi", en: "Milestones", de: "Meilensteine" },
   "hist.miles.streak": { it: "{n}gg serie", en: "{n}d streak", de: "{n} Tage Serie" },
   "hist.miles.sessions": { it: "{n} sessioni", en: "{n} sessions", de: "{n} Sessions" },
   "hist.kcal7": { it: "Kcal, ultimi 7 giorni", en: "kcal, last 7 days", de: "kcal, letzte 7 Tage" },
-  "hist.vsweek": { it: "{p}% vs sett. scorsa", en: "{p}% vs last week", de: "{p}% ggü. letzter Woche" },
+  "hist.vsweek": {
+    it: "{p}% vs sett. scorsa",
+    en: "{p}% vs last week",
+    de: "{p}% ggü. letzter Woche"
+  },
   "hist.fav": { it: "Missioni preferite", en: "Favorite missions", de: "Beliebteste Missionen" },
-  "hist.hr": { it: "Battito di picco nel tempo", en: "Peak heart rate over time", de: "Spitzen-Herzfrequenz im Verlauf" },
-  "hist.waist": { it: "Girovita nel tempo (cm)", en: "Waist over time (cm)", de: "Bauchumfang im Verlauf (cm)" },
+  "hist.hr": {
+    it: "Battito di picco nel tempo",
+    en: "Peak heart rate over time",
+    de: "Spitzen-Herzfrequenz im Verlauf"
+  },
+  "hist.waist": {
+    it: "Girovita nel tempo (cm)",
+    en: "Waist over time (cm)",
+    de: "Bauchumfang im Verlauf (cm)"
+  },
   "hist.waist.total": { it: "{v} cm totali", en: "{v} cm total", de: "{v} cm gesamt" },
-  "hist.weight": { it: "Peso nel tempo (kg)", en: "Weight over time (kg)", de: "Gewicht im Verlauf (kg)" },
+  "hist.weight": {
+    it: "Peso nel tempo (kg)",
+    en: "Weight over time (kg)",
+    de: "Gewicht im Verlauf (kg)"
+  },
   "hist.weight.total": { it: "{v} kg totali", en: "{v} kg total", de: "{v} kg gesamt" },
-  "hist.rpe": { it: "Intensità percepita nel tempo (RPE)", en: "Perceived intensity over time (RPE)", de: "Gefühlte Intensität im Verlauf (RPE)" },
+  "hist.rpe": {
+    it: "Intensità percepita nel tempo (RPE)",
+    en: "Perceived intensity over time (RPE)",
+    de: "Gefühlte Intensität im Verlauf (RPE)"
+  },
   "hist.sessions.title": { it: "Sessioni", en: "Sessions", de: "Sessions" },
-  "hist.empty": { it: "Nessuna missione ancora completata. Si parte quando vuoi.", en: "No mission completed yet. Start whenever you like.", de: "Noch keine Mission abgeschlossen. Starte, wann du willst." },
+  "hist.empty": {
+    it: "Nessuna missione ancora completata. Si parte quando vuoi.",
+    en: "No mission completed yet. Start whenever you like.",
+    de: "Noch keine Mission abgeschlossen. Starte, wann du willst."
+  },
   "hist.export": { it: "ESPORTA DATI", en: "EXPORT DATA", de: "DATEN EXPORTIEREN" },
   "hist.clear": { it: "CANCELLA", en: "CLEAR", de: "LÖSCHEN" },
   "hist.clear.title": { it: "CANCELLARE TUTTO?", en: "DELETE EVERYTHING?", de: "ALLES LÖSCHEN?" },
@@ -484,29 +644,89 @@ const I18N = {
   "hist.clear.confirm": { it: "Cancella", en: "Delete", de: "Löschen" },
   "hist.delete": { it: "Elimina sessione", en: "Delete session", de: "Session löschen" },
   /* ---- toasts ---- */
-  "toast.level.up": { it: "Livello promosso: {label}", en: "Level promoted: {label}", de: "Level befördert: {label}" },
-  "toast.promoted": { it: "Promosso a {rank}", en: "Promoted to {rank}", de: "Befördert zu {rank}" },
-  "toast.milestone.streak": { it: "Traguardo sbloccato: {n} giorni di serie", en: "Milestone unlocked: {n}-day streak", de: "Meilenstein freigeschaltet: {n} Tage in Serie" },
-  "toast.milestone.sessions": { it: "Traguardo sbloccato: {n} sessioni", en: "Milestone unlocked: {n} sessions", de: "Meilenstein freigeschaltet: {n} Sessions" },
-  "toast.goal": { it: "Obiettivo settimanale raggiunto", en: "Weekly goal reached", de: "Wochenziel erreicht" },
+  "toast.level.up": {
+    it: "Livello promosso: {label}",
+    en: "Level promoted: {label}",
+    de: "Level befördert: {label}"
+  },
+  "toast.promoted": {
+    it: "Promosso a {rank}",
+    en: "Promoted to {rank}",
+    de: "Befördert zu {rank}"
+  },
+  "toast.milestone.streak": {
+    it: "Traguardo sbloccato: {n} giorni di serie",
+    en: "Milestone unlocked: {n}-day streak",
+    de: "Meilenstein freigeschaltet: {n} Tage in Serie"
+  },
+  "toast.milestone.sessions": {
+    it: "Traguardo sbloccato: {n} sessioni",
+    en: "Milestone unlocked: {n} sessions",
+    de: "Meilenstein freigeschaltet: {n} Sessions"
+  },
+  "toast.goal": {
+    it: "Obiettivo settimanale raggiunto",
+    en: "Weekly goal reached",
+    de: "Wochenziel erreicht"
+  },
   "toast.saved": { it: "Missione salvata", en: "Mission saved", de: "Mission gespeichert" },
   "toast.history": { it: "Cronologia cancellata", en: "History cleared", de: "Verlauf gelöscht" },
   "toast.removed": { it: "Sessione rimossa", en: "Session removed", de: "Session entfernt" },
   "toast.created": { it: "Missione creata", en: "Mission created", de: "Mission erstellt" },
-  "toast.imported": { it: "Importati {n} allenamenti da Apple Health", en: "Imported {n} workouts from Apple Health", de: "{n} Workouts von Apple Health importiert" },
-  "toast.imported.none": { it: "Nessun nuovo allenamento trovato", en: "No new workouts found", de: "Keine neuen Workouts gefunden" },
-  "toast.import.fail": { it: "Import non riuscito: file non valido", en: "Import failed: invalid file", de: "Import fehlgeschlagen: ungültige Datei" },
+  "toast.imported": {
+    it: "Importati {n} allenamenti da Apple Health",
+    en: "Imported {n} workouts from Apple Health",
+    de: "{n} Workouts von Apple Health importiert"
+  },
+  "toast.imported.none": {
+    it: "Nessun nuovo allenamento trovato",
+    en: "No new workouts found",
+    de: "Keine neuen Workouts gefunden"
+  },
+  "toast.import.fail": {
+    it: "Import non riuscito: file non valido",
+    en: "Import failed: invalid file",
+    de: "Import fehlgeschlagen: ungültige Datei"
+  },
   "toast.weight": { it: "Peso aggiornato", en: "Weight updated", de: "Gewicht aktualisiert" },
   /* ---- new features ---- */
-  "notif.body": { it: "La tua missione di 15 min ti aspetta. Andiamo!", en: "Your 15-min mission is ready. Let’s go!", de: "Deine 15-Min-Mission wartet. Los geht’s!" },
-  "notif.test.body": { it: "Le notifiche funzionano. A domani per la missione!", en: "Notifications work. See you tomorrow!", de: "Benachrichtigungen funktionieren. Bis morgen!" },
-  "notif.setup.title": { it: "Promemoria giornaliero", en: "Daily reminder", de: "Tägliche Erinnerung" },
-  "notif.setup.body": { it: "Ti avviso ogni giorno all’ora scelta (serve il permesso).", en: "I’ll remind you daily at the chosen time (permission required).", de: "Ich erinnere dich täglich zur gewählten Zeit (Erlaubnis erforderlich)." },
-  "notif.enable": { it: "ATTIVA NOTIFICHE", en: "ENABLE NOTIFICATIONS", de: "BENACHRICHTIGUNGEN AKTIVIEREN" },
+  "notif.body": {
+    it: "La tua missione di 15 min ti aspetta. Andiamo!",
+    en: "Your 15-min mission is ready. Let’s go!",
+    de: "Deine 15-Min-Mission wartet. Los geht’s!"
+  },
+  "notif.test.body": {
+    it: "Le notifiche funzionano. A domani per la missione!",
+    en: "Notifications work. See you tomorrow!",
+    de: "Benachrichtigungen funktionieren. Bis morgen!"
+  },
+  "notif.setup.title": {
+    it: "Promemoria giornaliero",
+    en: "Daily reminder",
+    de: "Tägliche Erinnerung"
+  },
+  "notif.setup.body": {
+    it: "Ti avviso ogni giorno all’ora scelta (serve il permesso).",
+    en: "I’ll remind you daily at the chosen time (permission required).",
+    de: "Ich erinnere dich täglich zur gewählten Zeit (Erlaubnis erforderlich)."
+  },
+  "notif.enable": {
+    it: "ATTIVA NOTIFICHE",
+    en: "ENABLE NOTIFICATIONS",
+    de: "BENACHRICHTIGUNGEN AKTIVIEREN"
+  },
   "notif.disable": { it: "DISATTIVA", en: "DISABLE", de: "DEAKTIVIEREN" },
   "notif.test": { it: "TEST", en: "TEST", de: "TEST" },
-  "share.session.title": { it: "Missione compiuta — Operator 40", en: "Mission complete — Operator 40", de: "Mission abgeschlossen — Operator 40" },
-  "share.session.text": { it: "{name} — {min} min, {kcal} kcal 💪", en: "{name} — {min} min, {kcal} kcal 💪", de: "{name} — {min} min, {kcal} kcal 💪" },
+  "share.session.title": {
+    it: "Missione compiuta — Operator 40",
+    en: "Mission complete — Operator 40",
+    de: "Mission abgeschlossen — Operator 40"
+  },
+  "share.session.text": {
+    it: "{name} — {min} min, {kcal} kcal 💪",
+    en: "{name} — {min} min, {kcal} kcal 💪",
+    de: "{name} — {min} min, {kcal} kcal 💪"
+  },
   "share.copied": { it: "Link copiato", en: "Link copied", de: "Link kopiert" },
   "export.csv": { it: "ESPORTA CSV", en: "EXPORT CSV", de: "CSV EXPORTIEREN" },
   "export.calendar": { it: "Calendario", en: "Calendar", de: "Kalender" },
@@ -517,34 +737,138 @@ const I18N = {
   "bmi.ok": { it: "Normale", en: "Normal", de: "Normal" },
   "bmi.over": { it: "Sovrappeso", en: "Overweight", de: "Übergewicht" },
   "bmi.obese": { it: "Obesità", en: "Obesity", de: "Adipositas" },
-  "bmi.tdee": { it: "TDEE stimato: {v} kcal/giorno", en: "Est. TDEE: {v} kcal/day", de: "Gesch. TDEE: {v} kcal/Tag" },
+  "bmi.tdee": {
+    it: "TDEE stimato: {v} kcal/giorno",
+    en: "Est. TDEE: {v} kcal/day",
+    de: "Gesch. TDEE: {v} kcal/Tag"
+  },
   "setup.custom": { it: "Timer custom (sec)", en: "Custom timer (sec)", de: "Custom Timer (Sek)" },
-  "setup.executionMode": { it: "Modalità esecuzione", en: "Execution mode", de: "Ausführungsmodus" },
+  "setup.executionMode": {
+    it: "Modalità esecuzione",
+    en: "Execution mode",
+    de: "Ausführungsmodus"
+  },
   "setup.mode.time": { it: "Tempo (standard)", en: "Time (standard)", de: "Zeit (Standard)" },
   "setup.mode.reps": { it: "Ripetizioni", en: "Reps", de: "Wiederholungen" },
-  "setup.mode.time.hint": { it: "40″ lavoro / 20″ recupero — 15′ fissi, avanzamento automatico. Perfetto per dimagrimento.", en: "40″ work / 20″ rest — fixed 15′, auto-advance. Best for fat loss.", de: "40″ Arbeit / 20″ Pause — feste 15 Min." },
-  "setup.mode.reps.hint": { it: "Es. 12× squat, 10× affondo — tocchi FATTO quando hai finito. Hold (plank…) resta a tempo. Più controllo per articolazioni.", en: "E.g. 12× squat — tap DONE when finished. Holds stay timed. More joint control.", de: "z. B. 12× Kniebeuge — tippe FERTIG. Halten bleibt Zeit." },
+  "setup.mode.time.hint": {
+    it: "40″ lavoro / 20″ recupero — 15′ fissi, avanzamento automatico. Perfetto per dimagrimento.",
+    en: "40″ work / 20″ rest — fixed 15′, auto-advance. Best for fat loss.",
+    de: "40″ Arbeit / 20″ Pause — feste 15 Min."
+  },
+  "setup.mode.reps.hint": {
+    it: "Es. 12× squat, 10× affondo — tocchi FATTO quando hai finito. Hold (plank…) resta a tempo. Più controllo per articolazioni.",
+    en: "E.g. 12× squat — tap DONE when finished. Holds stay timed. More joint control.",
+    de: "z. B. 12× Kniebeuge — tippe FERTIG. Halten bleibt Zeit."
+  },
   "setup.custom.work": { it: "Lavoro", en: "Work", de: "Arbeit" },
   "setup.custom.rest": { it: "Recupero", en: "Rest", de: "Pause" }
 };
-const LangContext = reactExports.createContext({ lang: "it", t: (k2, v) => translate(k2, "it", v), setLang: () => {
-} });
+const LangContext = reactExports.createContext({
+  lang: "it",
+  t: (k2, v) => translate(k2, "it", v),
+  setLang: () => {
+  }
+});
 function useT() {
   return reactExports.useContext(LangContext);
 }
 const TRACKS = [
-  { id: "hustlin", name: "Hustlin'", artist: "NEFFEX", src: "tracks/hustlin.mp3", tag: "Energetica", lang: "EN" },
-  { id: "manifest", name: "Manifest It", artist: "NEFFEX", src: "tracks/manifest.mp3", tag: "Battuta", lang: "EN" },
-  { id: "born", name: "Born A Rockstar", artist: "NEFFEX", src: "tracks/born.mp3", tag: "Sprint", lang: "EN" },
-  { id: "fightback", name: "Fight Back", artist: "NEFFEX", src: "tracks/fightback.mp3", tag: "Pesante", lang: "EN" },
-  { id: "theitch", name: "The Itch", artist: "NEFFEX ft. Josh A", src: "tracks/theitch.mp3", tag: "Battuta", lang: "EN" },
-  { id: "godown", name: "Go Down Swinging", artist: "NEFFEX", src: "tracks/godown.mp3", tag: "Energetica", lang: "EN" },
-  { id: "addict", name: "Addict", artist: "NEFFEX", src: "tracks/addict.mp3", tag: "Sprint", lang: "EN" },
-  { id: "tellme", name: "Tell Me That I Can't", artist: "NEFFEX", src: "tracks/tellme.mp3", tag: "Pesante", lang: "EN" },
-  { id: "grateful", name: "Grateful", artist: "NEFFEX", src: "tracks/grateful.mp3", tag: "Energetica", lang: "EN" },
-  { id: "unstoppable", name: "Unstoppable", artist: "NEFFEX", src: "tracks/unstoppable.mp3", tag: "Sprint", lang: "EN" },
-  { id: "comeback", name: "Comeback", artist: "NEFFEX", src: "tracks/comeback.mp3", tag: "Pesante", lang: "EN" },
-  { id: "destiny", name: "Destiny", artist: "NEFFEX", src: "tracks/destiny.mp3", tag: "Battuta", lang: "EN" }
+  {
+    id: "hustlin",
+    name: "Hustlin'",
+    artist: "NEFFEX",
+    src: "tracks/hustlin.mp3",
+    tag: "Energetica",
+    lang: "EN"
+  },
+  {
+    id: "manifest",
+    name: "Manifest It",
+    artist: "NEFFEX",
+    src: "tracks/manifest.mp3",
+    tag: "Battuta",
+    lang: "EN"
+  },
+  {
+    id: "born",
+    name: "Born A Rockstar",
+    artist: "NEFFEX",
+    src: "tracks/born.mp3",
+    tag: "Sprint",
+    lang: "EN"
+  },
+  {
+    id: "fightback",
+    name: "Fight Back",
+    artist: "NEFFEX",
+    src: "tracks/fightback.mp3",
+    tag: "Pesante",
+    lang: "EN"
+  },
+  {
+    id: "theitch",
+    name: "The Itch",
+    artist: "NEFFEX ft. Josh A",
+    src: "tracks/theitch.mp3",
+    tag: "Battuta",
+    lang: "EN"
+  },
+  {
+    id: "godown",
+    name: "Go Down Swinging",
+    artist: "NEFFEX",
+    src: "tracks/godown.mp3",
+    tag: "Energetica",
+    lang: "EN"
+  },
+  {
+    id: "addict",
+    name: "Addict",
+    artist: "NEFFEX",
+    src: "tracks/addict.mp3",
+    tag: "Sprint",
+    lang: "EN"
+  },
+  {
+    id: "tellme",
+    name: "Tell Me That I Can't",
+    artist: "NEFFEX",
+    src: "tracks/tellme.mp3",
+    tag: "Pesante",
+    lang: "EN"
+  },
+  {
+    id: "grateful",
+    name: "Grateful",
+    artist: "NEFFEX",
+    src: "tracks/grateful.mp3",
+    tag: "Energetica",
+    lang: "EN"
+  },
+  {
+    id: "unstoppable",
+    name: "Unstoppable",
+    artist: "NEFFEX",
+    src: "tracks/unstoppable.mp3",
+    tag: "Sprint",
+    lang: "EN"
+  },
+  {
+    id: "comeback",
+    name: "Comeback",
+    artist: "NEFFEX",
+    src: "tracks/comeback.mp3",
+    tag: "Pesante",
+    lang: "EN"
+  },
+  {
+    id: "destiny",
+    name: "Destiny",
+    artist: "NEFFEX",
+    src: "tracks/destiny.mp3",
+    tag: "Battuta",
+    lang: "EN"
+  }
 ];
 const DEFAULT_TRACK = TRACKS[0].id;
 let audio = null;
@@ -566,10 +890,11 @@ function ensureAudio() {
         const nxt = TRACKS.find((t) => t.id === nextId);
         if (nxt) {
           musicLoad(nxt.src);
-          if (onTrackChange) try {
-            onTrackChange(nextId);
-          } catch {
-          }
+          if (onTrackChange)
+            try {
+              onTrackChange(nextId);
+            } catch {
+            }
           musicPlay();
         }
       }
@@ -654,10 +979,11 @@ function musicNext() {
   if (nxt) {
     musicLoad(nxt.src);
     if (shouldPlay) musicPlay();
-    if (onTrackChange) try {
-      onTrackChange(nextId);
-    } catch {
-    }
+    if (onTrackChange)
+      try {
+        onTrackChange(nextId);
+      } catch {
+      }
   }
   return nextId;
 }
@@ -669,18 +995,23 @@ function musicPrev() {
   if (prv) {
     musicLoad(prv.src);
     if (shouldPlay) musicPlay();
-    if (onTrackChange) try {
-      onTrackChange(prevId);
-    } catch {
-    }
+    if (onTrackChange)
+      try {
+        onTrackChange(prevId);
+      } catch {
+      }
   }
   return prevId;
 }
 if (typeof window !== "undefined") {
   ["pointerdown", "touchend", "keydown"].forEach(
-    (evt) => window.addEventListener(evt, () => {
-      if (shouldPlay) musicPlay();
-    }, { passive: true })
+    (evt) => window.addEventListener(
+      evt,
+      () => {
+        if (shouldPlay) musicPlay();
+      },
+      { passive: true }
+    )
   );
 }
 const INK = "#1B1D16";
@@ -698,220 +1029,832 @@ const EXERCISES = {
     pose: "squat",
     met: 5.5,
     repGuide: { it: "12–15 ripetizioni", en: "12–15 reps", de: "12–15 Wiederholungen" },
-    cue: { it: "Schiena dritta, ginocchia in linea con le punte dei piedi.", en: "Straight back, knees in line with your toes.", de: "Gerader Rücken, Knie über den Fußspitzen." },
-    tip40: { it: "Scendi solo fin dove senti il controllo: meglio un range parziale pulito che uno ampio scomposto.", en: "Lower only as far as you feel in control: a clean partial range beats a sloppy deep one.", de: "Geh nur so tief, wie du die Kontrolle behältst: Eine saubere Teilbewegung ist besser als eine wacklige tiefe." },
-    steps: [{ it: "Piedi larghi quanto le spalle, punte leggermente fuori", en: "Feet shoulder-width, toes slightly turned out", de: "Füße schulterbreit, Zehen leicht nach außen" }, { it: "Scendi come per sederti, peso sui talloni", en: "Sit back as if into a chair, weight on your heels", de: "Setz dich ab, Gewicht auf den Fersen" }, { it: "Sali spingendo sui talloni, bacino in avanti", en: "Drive up through your heels, hips forward", de: "Drück dich über die Fersen hoch, Becken nach vorn" }],
-    breath: { it: "Inspira scendendo, espira risalendo.", en: "Breathe in lowering, out rising.", de: "Einatmen beim Runtergehen, ausatmen beim Hochkommen." }
+    cue: {
+      it: "Schiena dritta, ginocchia in linea con le punte dei piedi.",
+      en: "Straight back, knees in line with your toes.",
+      de: "Gerader Rücken, Knie über den Fußspitzen."
+    },
+    tip40: {
+      it: "Scendi solo fin dove senti il controllo: meglio un range parziale pulito che uno ampio scomposto.",
+      en: "Lower only as far as you feel in control: a clean partial range beats a sloppy deep one.",
+      de: "Geh nur so tief, wie du die Kontrolle behältst: Eine saubere Teilbewegung ist besser als eine wacklige tiefe."
+    },
+    steps: [
+      {
+        it: "Piedi larghi quanto le spalle, punte leggermente fuori",
+        en: "Feet shoulder-width, toes slightly turned out",
+        de: "Füße schulterbreit, Zehen leicht nach außen"
+      },
+      {
+        it: "Scendi come per sederti, peso sui talloni",
+        en: "Sit back as if into a chair, weight on your heels",
+        de: "Setz dich ab, Gewicht auf den Fersen"
+      },
+      {
+        it: "Sali spingendo sui talloni, bacino in avanti",
+        en: "Drive up through your heels, hips forward",
+        de: "Drück dich über die Fersen hoch, Becken nach vorn"
+      }
+    ],
+    breath: {
+      it: "Inspira scendendo, espira risalendo.",
+      en: "Breathe in lowering, out rising.",
+      de: "Einatmen beim Runtergehen, ausatmen beim Hochkommen."
+    }
   },
   affondo: {
     name: { it: "Affondo alternato", en: "Alternating lunge", de: "Ausfallschritt (abwechselnd)" },
     pose: "lunge",
     met: 5.5,
     repGuide: { it: "10–12 per gamba", en: "10–12 per leg", de: "10–12 pro Bein" },
-    cue: { it: "Passo lungo, busto verticale, il ginocchio dietro sfiora il pavimento.", en: "Long step, upright torso, rear knee grazes the floor.", de: "Langer Schritt, aufrechter Oberkörper, hinteres Knie berührt fast den Boden." },
-    tip40: { it: "Evita il rimbalzo sul ginocchio a terra: controlla la discesa, niente scatti.", en: "No bouncing on the grounded knee: control the descent, no jerking.", de: "Nicht auf dem Knie abfedern: Die Abwärtsbewegung kontrollieren, keine ruckartigen Bewegungen." },
-    steps: [{ it: "Passo lungo in avanti, busto verticale", en: "Step far forward, torso upright", de: "Großer Schritt nach vorn, Oberkörper aufrecht" }, { it: "Scendi finché il ginocchio dietro sfiora il suolo", en: "Lower until the rear knee grazes the floor", de: "Absenken, bis das hintere Knie den Boden fast berührt" }, { it: "Spingi col piede davanti per risalire", en: "Push off with the front foot to stand back up", de: "Mit dem vorderen Fuß abdrücken und hochkommen" }],
-    breath: { it: "Inspira scendendo, espira spingendo su.", en: "Inhale lowering, exhale pushing up.", de: "Einatmen beim Absenken, ausatmen beim Hochdrücken." }
+    cue: {
+      it: "Passo lungo, busto verticale, il ginocchio dietro sfiora il pavimento.",
+      en: "Long step, upright torso, rear knee grazes the floor.",
+      de: "Langer Schritt, aufrechter Oberkörper, hinteres Knie berührt fast den Boden."
+    },
+    tip40: {
+      it: "Evita il rimbalzo sul ginocchio a terra: controlla la discesa, niente scatti.",
+      en: "No bouncing on the grounded knee: control the descent, no jerking.",
+      de: "Nicht auf dem Knie abfedern: Die Abwärtsbewegung kontrollieren, keine ruckartigen Bewegungen."
+    },
+    steps: [
+      {
+        it: "Passo lungo in avanti, busto verticale",
+        en: "Step far forward, torso upright",
+        de: "Großer Schritt nach vorn, Oberkörper aufrecht"
+      },
+      {
+        it: "Scendi finché il ginocchio dietro sfiora il suolo",
+        en: "Lower until the rear knee grazes the floor",
+        de: "Absenken, bis das hintere Knie den Boden fast berührt"
+      },
+      {
+        it: "Spingi col piede davanti per risalire",
+        en: "Push off with the front foot to stand back up",
+        de: "Mit dem vorderen Fuß abdrücken und hochkommen"
+      }
+    ],
+    breath: {
+      it: "Inspira scendendo, espira spingendo su.",
+      en: "Inhale lowering, exhale pushing up.",
+      de: "Einatmen beim Absenken, ausatmen beim Hochdrücken."
+    }
   },
   flessioni: {
     name: { it: "Piegamenti (push-up)", en: "Push-ups", de: "Liegestütze" },
     pose: "pushup",
     met: 8,
     repGuide: { it: "8–12 ripetizioni", en: "8–12 reps", de: "8–12 Wiederholungen" },
-    cue: { it: "Corpo in linea retta, gomiti a circa 45° dal busto.", en: "Body in a straight line, elbows at about 45° from your torso.", de: "Körper in einer Linie, Ellbogen etwa 45° vom Oberkörper." },
-    tip40: { it: 'Spalle che protestano? Ginocchia a terra: la tecnica conta più della versione "hardcore".', en: 'Shoulders complaining? Drop to your knees: technique beats the "hardcore" version.', de: "Protestieren die Schultern? Auf die Knie gehen: Technik ist wichtiger als die „hardcore“-Variante." },
-    steps: [{ it: "Mani sotto le spalle, corpo in linea retta", en: "Hands under shoulders, body in a straight line", de: "Hände unter den Schultern, Körper in einer Linie" }, { it: "Piega i gomiti a 45° finché il petto sfiora terra", en: "Bend elbows to 45° until your chest grazes the floor", de: "Ellbogen auf 45° beugen, bis die Brust fast den Boden berührt" }, { it: "Spingi via il pavimento, testa neutra", en: "Push the floor away, neutral head", de: "Drück den Boden weg, Kopf neutral" }],
-    breath: { it: "Inspira scendendo, espira spingendo su.", en: "Inhale lowering, exhale pushing up.", de: "Einatmen beim Absenken, ausatmen beim Hochdrücken." }
+    cue: {
+      it: "Corpo in linea retta, gomiti a circa 45° dal busto.",
+      en: "Body in a straight line, elbows at about 45° from your torso.",
+      de: "Körper in einer Linie, Ellbogen etwa 45° vom Oberkörper."
+    },
+    tip40: {
+      it: 'Spalle che protestano? Ginocchia a terra: la tecnica conta più della versione "hardcore".',
+      en: 'Shoulders complaining? Drop to your knees: technique beats the "hardcore" version.',
+      de: "Protestieren die Schultern? Auf die Knie gehen: Technik ist wichtiger als die „hardcore“-Variante."
+    },
+    steps: [
+      {
+        it: "Mani sotto le spalle, corpo in linea retta",
+        en: "Hands under shoulders, body in a straight line",
+        de: "Hände unter den Schultern, Körper in einer Linie"
+      },
+      {
+        it: "Piega i gomiti a 45° finché il petto sfiora terra",
+        en: "Bend elbows to 45° until your chest grazes the floor",
+        de: "Ellbogen auf 45° beugen, bis die Brust fast den Boden berührt"
+      },
+      {
+        it: "Spingi via il pavimento, testa neutra",
+        en: "Push the floor away, neutral head",
+        de: "Drück den Boden weg, Kopf neutral"
+      }
+    ],
+    breath: {
+      it: "Inspira scendendo, espira spingendo su.",
+      en: "Inhale lowering, exhale pushing up.",
+      de: "Einatmen beim Absenken, ausatmen beim Hochdrücken."
+    }
   },
   plank: {
     name: { it: "Plank", en: "Plank", de: "Unterarmstütz" },
     pose: "plank",
     met: 3.5,
     repGuide: { it: "Tieni la posizione", en: "Hold the position", de: "Position halten" },
-    cue: { it: "Addome contratto, bacino né troppo alto né troppo basso, respira.", en: "Core engaged, hips neither too high nor too low, breathe.", de: "Bauch anspannen, Becken weder zu hoch noch zu tief, atmen." },
-    tip40: { it: "Se senti la zona lombare, alza leggermente il bacino: meno estetico, molto più sicuro.", en: "If you feel it in your lower back, lift your hips slightly: less pretty, much safer.", de: "Wenn der untere Rücken zieht, Becken leicht anheben: weniger hübsch, dafür sicherer." },
-    steps: [{ it: "Avambracci a terra, gomiti sotto le spalle", en: "Forearms on the floor, elbows under shoulders", de: "Unterarme auf dem Boden, Ellbogen unter den Schultern" }, { it: "Piedi aperti, corpo in linea retta", en: "Feet apart, body in a straight line", de: "Füße geöffnet, Körper in einer Linie" }, { it: "Contrai glutei e addome, bacino fermo", en: "Squeeze glutes and abs, keep hips still", de: "Gesäß und Bauch anspannen, Becken still" }],
-    breath: { it: "Respiro lento e costante, mai trattenuto.", en: "Slow, steady breathing, never held.", de: "Langsam und gleichmäßig atmen, nie anhalten." }
+    cue: {
+      it: "Addome contratto, bacino né troppo alto né troppo basso, respira.",
+      en: "Core engaged, hips neither too high nor too low, breathe.",
+      de: "Bauch anspannen, Becken weder zu hoch noch zu tief, atmen."
+    },
+    tip40: {
+      it: "Se senti la zona lombare, alza leggermente il bacino: meno estetico, molto più sicuro.",
+      en: "If you feel it in your lower back, lift your hips slightly: less pretty, much safer.",
+      de: "Wenn der untere Rücken zieht, Becken leicht anheben: weniger hübsch, dafür sicherer."
+    },
+    steps: [
+      {
+        it: "Avambracci a terra, gomiti sotto le spalle",
+        en: "Forearms on the floor, elbows under shoulders",
+        de: "Unterarme auf dem Boden, Ellbogen unter den Schultern"
+      },
+      {
+        it: "Piedi aperti, corpo in linea retta",
+        en: "Feet apart, body in a straight line",
+        de: "Füße geöffnet, Körper in einer Linie"
+      },
+      {
+        it: "Contrai glutei e addome, bacino fermo",
+        en: "Squeeze glutes and abs, keep hips still",
+        de: "Gesäß und Bauch anspannen, Becken still"
+      }
+    ],
+    breath: {
+      it: "Respiro lento e costante, mai trattenuto.",
+      en: "Slow, steady breathing, never held.",
+      de: "Langsam und gleichmäßig atmen, nie anhalten."
+    }
   },
   jumpingjack: {
     name: { it: "Jumping jack", en: "Jumping jack", de: "Jumping Jack" },
     pose: "jack",
     met: 8,
     repGuide: { it: "Ritmo costante", en: "Steady rhythm", de: "Gleichmäßiger Rhythmus" },
-    cue: { it: "Atterra morbido sulle punte, braccia sopra la testa.", en: "Land softly on the balls of your feet, arms overhead.", de: "Weich auf den Fußballen landen, Arme über den Kopf." },
-    tip40: { it: "Ginocchia sensibili? Passa allo step jack laterale: stesso battito, meno impatto.", en: "Sensitive knees? Switch to a lateral step jack: same rhythm, less impact.", de: "Empfindliche Knie? Wechsle zum seitlichen Step Jack: gleicher Takt, weniger Belastung." },
-    steps: [{ it: "Piedi uniti, braccia lungo i fianchi", en: "Feet together, arms at your sides", de: "Füße zusammen, Arme seitlich" }, { it: "Salta aprendo gambe e braccia sopra la testa", en: "Jump, opening legs and arms overhead", de: "Springen, Beine öffnen und Arme über den Kopf" }, { it: "Atterra morbido sulle punte e ripeti", en: "Land softly on the balls of your feet and repeat", de: "Weich auf den Fußballen landen und wiederholen" }],
-    breath: { it: "Un ciclo di respiro ogni 2 salti.", en: "One breath cycle every 2 jumps.", de: "Ein Atemzyklus alle 2 Sprünge." }
+    cue: {
+      it: "Atterra morbido sulle punte, braccia sopra la testa.",
+      en: "Land softly on the balls of your feet, arms overhead.",
+      de: "Weich auf den Fußballen landen, Arme über den Kopf."
+    },
+    tip40: {
+      it: "Ginocchia sensibili? Passa allo step jack laterale: stesso battito, meno impatto.",
+      en: "Sensitive knees? Switch to a lateral step jack: same rhythm, less impact.",
+      de: "Empfindliche Knie? Wechsle zum seitlichen Step Jack: gleicher Takt, weniger Belastung."
+    },
+    steps: [
+      {
+        it: "Piedi uniti, braccia lungo i fianchi",
+        en: "Feet together, arms at your sides",
+        de: "Füße zusammen, Arme seitlich"
+      },
+      {
+        it: "Salta aprendo gambe e braccia sopra la testa",
+        en: "Jump, opening legs and arms overhead",
+        de: "Springen, Beine öffnen und Arme über den Kopf"
+      },
+      {
+        it: "Atterra morbido sulle punte e ripeti",
+        en: "Land softly on the balls of your feet and repeat",
+        de: "Weich auf den Fußballen landen und wiederholen"
+      }
+    ],
+    breath: {
+      it: "Un ciclo di respiro ogni 2 salti.",
+      en: "One breath cycle every 2 jumps.",
+      de: "Ein Atemzyklus alle 2 Sprünge."
+    }
   },
   mountainclimber: {
     name: { it: "Mountain climber", en: "Mountain climber", de: "Mountain Climber" },
     pose: "mountainclimber",
     met: 8,
     repGuide: { it: "Ritmo sostenuto", en: "Brisk pace", de: "Zügiges Tempo" },
-    cue: { it: "Bacino basso e stabile, ginocchia verso il petto.", en: "Hips low and stable, knees driving toward your chest.", de: "Becken tief und stabil, Knie zur Brust." },
-    tip40: { it: "Se il polso protesta, rallenta il ritmo: la qualità del gesto viene prima della velocità.", en: "If your wrists complain, slow the pace: quality of movement comes before speed.", de: "Wenn die Handgelenke protestieren, Tempo drosseln: Die Qualität der Bewegung zählt mehr als Tempo." },
-    steps: [{ it: "Plank alto, mani sotto le spalle", en: "High plank, hands under shoulders", de: "Hoher Stütz, Hände unter den Schultern" }, { it: "Porta un ginocchio al petto, poi l’altro in corsa", en: "Drive one knee to your chest, then the other in a running motion", de: "Ein Knie zur Brust, dann das andere im Lauftakt" }, { it: "Bacino basso, core contratto", en: "Hips low, core engaged", de: "Becken tief, Bauch angespannt" }],
-    breath: { it: "Espirazioni brevi e ritmiche, non trattenere.", en: "Short, rhythmic exhales, don’t hold your breath.", de: "Kurze, rhythmische Ausatmungen, nicht anhalten." }
+    cue: {
+      it: "Bacino basso e stabile, ginocchia verso il petto.",
+      en: "Hips low and stable, knees driving toward your chest.",
+      de: "Becken tief und stabil, Knie zur Brust."
+    },
+    tip40: {
+      it: "Se il polso protesta, rallenta il ritmo: la qualità del gesto viene prima della velocità.",
+      en: "If your wrists complain, slow the pace: quality of movement comes before speed.",
+      de: "Wenn die Handgelenke protestieren, Tempo drosseln: Die Qualität der Bewegung zählt mehr als Tempo."
+    },
+    steps: [
+      {
+        it: "Plank alto, mani sotto le spalle",
+        en: "High plank, hands under shoulders",
+        de: "Hoher Stütz, Hände unter den Schultern"
+      },
+      {
+        it: "Porta un ginocchio al petto, poi l’altro in corsa",
+        en: "Drive one knee to your chest, then the other in a running motion",
+        de: "Ein Knie zur Brust, dann das andere im Lauftakt"
+      },
+      {
+        it: "Bacino basso, core contratto",
+        en: "Hips low, core engaged",
+        de: "Becken tief, Bauch angespannt"
+      }
+    ],
+    breath: {
+      it: "Espirazioni brevi e ritmiche, non trattenere.",
+      en: "Short, rhythmic exhales, don’t hold your breath.",
+      de: "Kurze, rhythmische Ausatmungen, nicht anhalten."
+    }
   },
   wallsit: {
     name: { it: "Wall sit", en: "Wall sit", de: "Wandsitz" },
     pose: "wallsit",
     met: 3.5,
     repGuide: { it: "Tieni la posizione", en: "Hold the position", de: "Position halten" },
-    cue: { it: "Ginocchia a 90°, schiena piatta contro il muro.", en: "Knees at 90°, back flat against the wall.", de: "Knie 90°, Rücken flach an der Wand." },
-    tip40: { it: "Ottimo per il ginocchio: carico isometrico, zero impatto.", en: "Great for the knees: isometric load, zero impact.", de: "Schonend für die Knie: isometrische Belastung, null Impact." },
-    steps: [{ it: "Schiena appoggiata al muro, piedi un passo avanti", en: "Back against the wall, feet one step forward", de: "Rücken an der Wand, Füße einen Schritt davor" }, { it: "Scendi fino a ginocchia a 90°", en: "Slide down until knees are at 90°", de: "Absenken bis die Knie 90° ergeben" }, { it: "Resta fermo, cosce parallele al suolo", en: "Hold still, thighs parallel to the floor", de: "Still halten, Oberschenkel parallel zum Boden" }],
-    breath: { it: "Respiro calmo e continuo durante la tenuta.", en: "Calm, continuous breathing during the hold.", de: "Ruhig und durchgehend atmen während der Haltezeit." }
+    cue: {
+      it: "Ginocchia a 90°, schiena piatta contro il muro.",
+      en: "Knees at 90°, back flat against the wall.",
+      de: "Knie 90°, Rücken flach an der Wand."
+    },
+    tip40: {
+      it: "Ottimo per il ginocchio: carico isometrico, zero impatto.",
+      en: "Great for the knees: isometric load, zero impact.",
+      de: "Schonend für die Knie: isometrische Belastung, null Impact."
+    },
+    steps: [
+      {
+        it: "Schiena appoggiata al muro, piedi un passo avanti",
+        en: "Back against the wall, feet one step forward",
+        de: "Rücken an der Wand, Füße einen Schritt davor"
+      },
+      {
+        it: "Scendi fino a ginocchia a 90°",
+        en: "Slide down until knees are at 90°",
+        de: "Absenken bis die Knie 90° ergeben"
+      },
+      {
+        it: "Resta fermo, cosce parallele al suolo",
+        en: "Hold still, thighs parallel to the floor",
+        de: "Still halten, Oberschenkel parallel zum Boden"
+      }
+    ],
+    breath: {
+      it: "Respiro calmo e continuo durante la tenuta.",
+      en: "Calm, continuous breathing during the hold.",
+      de: "Ruhig und durchgehend atmen während der Haltezeit."
+    }
   },
   superman: {
     name: { it: "Superman", en: "Superman", de: "Superman" },
     pose: "superman",
     met: 3.5,
     repGuide: { it: "Contrazioni lente", en: "Slow contractions", de: "Langsame Kontraktionen" },
-    cue: { it: "Solleva braccia e gambe insieme, sguardo verso il basso.", en: "Lift arms and legs together, gaze down.", de: "Arme und Beine gemeinsam anheben, Blick nach unten." },
-    tip40: { it: "Rinforza la zona lombare: un investimento diretto contro il mal di schiena da scrivania.", en: "Strengthens the lower back: a direct investment against desk-back pain.", de: "Stärkt den unteren Rücken: eine direkte Investition gegen Büro-Rückenschmerzen." },
-    steps: [{ it: "A pancia in giù, braccia tese in avanti", en: "Lying face down, arms extended forward", de: "Auf dem Bauch, Arme nach vorn gestreckt" }, { it: "Solleva braccia e gambe insieme", en: "Lift arms and legs together", de: "Arme und Beine gemeinsam anheben" }, { it: "Stringi i glutei, sguardo a terra", en: "Squeeze glutes, eyes to the floor", de: "Gesäß anspannen, Blick zum Boden" }],
-    breath: { it: "Inspira per preparare, espira sollevando.", en: "Inhale to prepare, exhale as you lift.", de: "Einatmen zur Vorbereitung, ausatmen beim Anheben." }
+    cue: {
+      it: "Solleva braccia e gambe insieme, sguardo verso il basso.",
+      en: "Lift arms and legs together, gaze down.",
+      de: "Arme und Beine gemeinsam anheben, Blick nach unten."
+    },
+    tip40: {
+      it: "Rinforza la zona lombare: un investimento diretto contro il mal di schiena da scrivania.",
+      en: "Strengthens the lower back: a direct investment against desk-back pain.",
+      de: "Stärkt den unteren Rücken: eine direkte Investition gegen Büro-Rückenschmerzen."
+    },
+    steps: [
+      {
+        it: "A pancia in giù, braccia tese in avanti",
+        en: "Lying face down, arms extended forward",
+        de: "Auf dem Bauch, Arme nach vorn gestreckt"
+      },
+      {
+        it: "Solleva braccia e gambe insieme",
+        en: "Lift arms and legs together",
+        de: "Arme und Beine gemeinsam anheben"
+      },
+      {
+        it: "Stringi i glutei, sguardo a terra",
+        en: "Squeeze glutes, eyes to the floor",
+        de: "Gesäß anspannen, Blick zum Boden"
+      }
+    ],
+    breath: {
+      it: "Inspira per preparare, espira sollevando.",
+      en: "Inhale to prepare, exhale as you lift.",
+      de: "Einatmen zur Vorbereitung, ausatmen beim Anheben."
+    }
   },
   ponte: {
     name: { it: "Ponte glutei", en: "Glute bridge", de: "Glute Bridge" },
     pose: "bridge",
     met: 3.5,
     repGuide: { it: "12–15 ripetizioni", en: "12–15 reps", de: "12–15 Wiederholungen" },
-    cue: { it: "Spingi sui talloni, contrai i glutei in alto.", en: "Push through your heels, squeeze your glutes at the top.", de: "Durch die Fersen drücken, Gesäß oben anspannen." },
-    tip40: { it: 'Contrasta le ore da seduto: riattiva glutei spesso "addormentati".', en: 'Counteracts hours of sitting: reawakens often "sleepy" glutes.', de: "Wirkt dem vielen Sitzen entgegen: aktiviert oft „eingeschlafene“ Gesäßmuskeln." },
-    steps: [{ it: "Sdraiato, ginocchia piegate, piedi vicini al bacino", en: "Lying down, knees bent, feet close to your hips", de: "Auf dem Rücken, Knie gebeugt, Füße nahe am Becken" }, { it: "Spingi sui talloni e alza il bacino", en: "Push through your heels and lift your hips", de: "Durch die Fersen drücken und Becken anheben" }, { it: "Contrai i glutei in alto, scendi lento", en: "Squeeze glutes at the top, lower slowly", de: "Gesäß oben anspannen, langsam absenken" }],
-    breath: { it: "Espira salendo, inspira scendendo.", en: "Exhale rising, inhale lowering.", de: "Ausatmen beim Hochgehen, einatmen beim Absenken." }
+    cue: {
+      it: "Spingi sui talloni, contrai i glutei in alto.",
+      en: "Push through your heels, squeeze your glutes at the top.",
+      de: "Durch die Fersen drücken, Gesäß oben anspannen."
+    },
+    tip40: {
+      it: 'Contrasta le ore da seduto: riattiva glutei spesso "addormentati".',
+      en: 'Counteracts hours of sitting: reawakens often "sleepy" glutes.',
+      de: "Wirkt dem vielen Sitzen entgegen: aktiviert oft „eingeschlafene“ Gesäßmuskeln."
+    },
+    steps: [
+      {
+        it: "Sdraiato, ginocchia piegate, piedi vicini al bacino",
+        en: "Lying down, knees bent, feet close to your hips",
+        de: "Auf dem Rücken, Knie gebeugt, Füße nahe am Becken"
+      },
+      {
+        it: "Spingi sui talloni e alza il bacino",
+        en: "Push through your heels and lift your hips",
+        de: "Durch die Fersen drücken und Becken anheben"
+      },
+      {
+        it: "Contrai i glutei in alto, scendi lento",
+        en: "Squeeze glutes at the top, lower slowly",
+        de: "Gesäß oben anspannen, langsam absenken"
+      }
+    ],
+    breath: {
+      it: "Espira salendo, inspira scendendo.",
+      en: "Exhale rising, inhale lowering.",
+      de: "Ausatmen beim Hochgehen, einatmen beim Absenken."
+    }
   },
   crunchbici: {
     name: { it: "Bicycle crunch", en: "Bicycle crunch", de: "Bicycle Crunch" },
     pose: "bicyclecrunch",
     met: 4.5,
     repGuide: { it: "10–12 per lato", en: "10–12 per side", de: "10–12 pro Seite" },
-    cue: { it: "Gomito verso il ginocchio opposto, movimento lento e controllato.", en: "Elbow toward the opposite knee, slow and controlled movement.", de: "Ellbogen zum gegenüberliegenden Knie, langsam und kontrolliert." },
-    tip40: { it: "Niente strappi sul collo: la mano è un appoggio leggero, non una leva.", en: "No yanking on your neck: the hand is a light support, not a lever.", de: "Nicht am Nacken ziehen: Die Hand ist eine leichte Stütze, kein Hebel." },
-    steps: [{ it: "Sdraiato, mani dietro la testa, gambe sollevate", en: "Lying down, hands behind your head, legs lifted", de: "Auf dem Rücken, Hände hinter dem Kopf, Beine angehoben" }, { it: "Gomito destro verso ginocchio sinistro, gambe alternate", en: "Right elbow toward left knee, legs alternating", de: "Rechter Ellbogen zum linken Knie, Beine abwechselnd" }, { it: "Movimento lento, scapole sollevate", en: "Slow movement, shoulder blades lifted", de: "Langsame Bewegung, Schulterblätter angehoben" }],
-    breath: { it: "Espira ruotando, inspira al centro.", en: "Exhale rotating, inhale in the middle.", de: "Ausatmen beim Drehen, einatmen in der Mitte." }
+    cue: {
+      it: "Gomito verso il ginocchio opposto, movimento lento e controllato.",
+      en: "Elbow toward the opposite knee, slow and controlled movement.",
+      de: "Ellbogen zum gegenüberliegenden Knie, langsam und kontrolliert."
+    },
+    tip40: {
+      it: "Niente strappi sul collo: la mano è un appoggio leggero, non una leva.",
+      en: "No yanking on your neck: the hand is a light support, not a lever.",
+      de: "Nicht am Nacken ziehen: Die Hand ist eine leichte Stütze, kein Hebel."
+    },
+    steps: [
+      {
+        it: "Sdraiato, mani dietro la testa, gambe sollevate",
+        en: "Lying down, hands behind your head, legs lifted",
+        de: "Auf dem Rücken, Hände hinter dem Kopf, Beine angehoben"
+      },
+      {
+        it: "Gomito destro verso ginocchio sinistro, gambe alternate",
+        en: "Right elbow toward left knee, legs alternating",
+        de: "Rechter Ellbogen zum linken Knie, Beine abwechselnd"
+      },
+      {
+        it: "Movimento lento, scapole sollevate",
+        en: "Slow movement, shoulder blades lifted",
+        de: "Langsame Bewegung, Schulterblätter angehoben"
+      }
+    ],
+    breath: {
+      it: "Espira ruotando, inspira al centro.",
+      en: "Exhale rotating, inhale in the middle.",
+      de: "Ausatmen beim Drehen, einatmen in der Mitte."
+    }
   },
   russiantwist: {
     name: { it: "Russian twist", en: "Russian twist", de: "Russian Twist" },
     pose: "russiantwist",
     met: 4.5,
     repGuide: { it: "10–12 per lato", en: "10–12 per side", de: "10–12 pro Seite" },
-    cue: { it: "Busto inclinato, piedi a terra o sollevati, ruota dal core.", en: "Torso leaned back, feet on the floor or lifted, rotate from the core.", de: "Oberkörper nach hinten geneigt, Füße auf dem Boden oder angehoben, aus dem Core drehen." },
-    tip40: { it: "Piedi a terra è già efficace: non serve la versione acrobatica per lavorare bene.", en: "Feet on the floor is already effective: no need for the acrobatic version to work well.", de: "Füße auf dem Boden sind bereits effektiv: Für gutes Training braucht es keine akrobatische Variante." },
-    steps: [{ it: "Seduto, busto inclinato all’indietro", en: "Seated, torso leaned back", de: "Sitzend, Oberkörper nach hinten geneigt" }, { it: "Piedi a terra (o sollevati) e braccia davanti", en: "Feet on the floor (or lifted) and arms out front", de: "Füße auf dem Boden (oder angehoben), Arme nach vorn" }, { it: "Ruota il busto a destra e sinistra dal core", en: "Rotate your torso right and left from the core", de: "Oberkörper aus dem Core nach rechts und links drehen" }],
-    breath: { it: "Espira a ogni rotazione.", en: "Exhale with each rotation.", de: "Bei jeder Drehung ausatmen." }
+    cue: {
+      it: "Busto inclinato, piedi a terra o sollevati, ruota dal core.",
+      en: "Torso leaned back, feet on the floor or lifted, rotate from the core.",
+      de: "Oberkörper nach hinten geneigt, Füße auf dem Boden oder angehoben, aus dem Core drehen."
+    },
+    tip40: {
+      it: "Piedi a terra è già efficace: non serve la versione acrobatica per lavorare bene.",
+      en: "Feet on the floor is already effective: no need for the acrobatic version to work well.",
+      de: "Füße auf dem Boden sind bereits effektiv: Für gutes Training braucht es keine akrobatische Variante."
+    },
+    steps: [
+      {
+        it: "Seduto, busto inclinato all’indietro",
+        en: "Seated, torso leaned back",
+        de: "Sitzend, Oberkörper nach hinten geneigt"
+      },
+      {
+        it: "Piedi a terra (o sollevati) e braccia davanti",
+        en: "Feet on the floor (or lifted) and arms out front",
+        de: "Füße auf dem Boden (oder angehoben), Arme nach vorn"
+      },
+      {
+        it: "Ruota il busto a destra e sinistra dal core",
+        en: "Rotate your torso right and left from the core",
+        de: "Oberkörper aus dem Core nach rechts und links drehen"
+      }
+    ],
+    breath: {
+      it: "Espira a ogni rotazione.",
+      en: "Exhale with each rotation.",
+      de: "Bei jeder Drehung ausatmen."
+    }
   },
   ginocchiaalte: {
     name: { it: "Ginocchia alte", en: "High knees", de: "Knie hoch" },
     pose: "highknees",
     met: 8,
     repGuide: { it: "Ritmo sostenuto", en: "Brisk pace", de: "Zügiges Tempo" },
-    cue: { it: "Ginocchio a livello anca, braccia in coordinazione.", en: "Knee up to hip level, arms in coordination.", de: "Knie auf Hüfthöhe, Arme im Gleichklang." },
-    tip40: { it: "Ottimo motore cardio a basso impatto se atterri sull’avampiede.", en: "Great low-impact cardio engine if you land on your forefoot.", de: "Ausgezeichnetes gelenkschonendes Cardio-Training, wenn du auf dem Vorfuß landest." },
-    steps: [{ it: "Busto dritto, braccia ai fianchi", en: "Torso upright, arms at your sides", de: "Oberkörper aufrecht, Arme seitlich" }, { it: "Porta le ginocchia all’altezza dell’anca", en: "Drive knees up to hip height", de: "Knie auf Hüfthöhe bringen" }, { it: "Atterra sull’avampiede, ritmo costante", en: "Land on your forefoot, steady rhythm", de: "Auf dem Vorfuß landen, gleichmäßiger Rhythmus" }],
-    breath: { it: "Respiro ritmico: 2 passi a ogni inspirazione.", en: "Rhythmic breathing: 2 steps per inhale.", de: "Rhythmisches Atmen: 2 Schritte pro Einatmung." }
+    cue: {
+      it: "Ginocchio a livello anca, braccia in coordinazione.",
+      en: "Knee up to hip level, arms in coordination.",
+      de: "Knie auf Hüfthöhe, Arme im Gleichklang."
+    },
+    tip40: {
+      it: "Ottimo motore cardio a basso impatto se atterri sull’avampiede.",
+      en: "Great low-impact cardio engine if you land on your forefoot.",
+      de: "Ausgezeichnetes gelenkschonendes Cardio-Training, wenn du auf dem Vorfuß landest."
+    },
+    steps: [
+      {
+        it: "Busto dritto, braccia ai fianchi",
+        en: "Torso upright, arms at your sides",
+        de: "Oberkörper aufrecht, Arme seitlich"
+      },
+      {
+        it: "Porta le ginocchia all’altezza dell’anca",
+        en: "Drive knees up to hip height",
+        de: "Knie auf Hüfthöhe bringen"
+      },
+      {
+        it: "Atterra sull’avampiede, ritmo costante",
+        en: "Land on your forefoot, steady rhythm",
+        de: "Auf dem Vorfuß landen, gleichmäßiger Rhythmus"
+      }
+    ],
+    breath: {
+      it: "Respiro ritmico: 2 passi a ogni inspirazione.",
+      en: "Rhythmic breathing: 2 steps per inhale.",
+      de: "Rhythmisches Atmen: 2 Schritte pro Einatmung."
+    }
   },
   burpeetattico: {
     name: { it: "Burpee tattico", en: "Tactical burpee", de: "Taktischer Burpee" },
     pose: "burpee",
     met: 8,
     repGuide: { it: "6–8 ripetizioni", en: "6–8 reps", de: "6–8 Wiederholungen" },
-    cue: { it: "Passo indietro invece del salto, spinta a terra, risali controllato.", en: "Step back instead of jumping, push-up at the bottom, rise controlled.", de: "Schritt zurück statt Sprung, Liegestütz am Boden, kontrolliert aufstehen." },
-    tip40: { it: 'La variante "senza salto" mantiene l’intensità cardio proteggendo ginocchia e lombari.', en: 'The "no-jump" version keeps cardio intensity while protecting knees and lower back.', de: "Die „ohne Sprung“-Variante hält die Cardio-Intensität und schont Knie und unteren Rücken." },
-    steps: [{ it: "Da in piedi scendi con le mani a terra", en: "From standing, place your hands on the floor", de: "Aus dem Stand die Hände auf den Boden setzen" }, { it: "Porta i piedi indietro in plank, uno alla volta", en: "Step your feet back into a plank, one at a time", de: "Füße einzeln nach hinten in den Stütz bringen" }, { it: "Riporta i piedi avanti e risali, senza salto", en: "Step feet forward and stand up, no jump", de: "Füße nach vorn bringen und aufstehen, ohne Sprung" }],
-    breath: { it: "Espira nella spinta, inspira scendendo.", en: "Exhale on the push, inhale lowering.", de: "Ausatmen beim Drücken, einatmen beim Absenken." }
+    cue: {
+      it: "Passo indietro invece del salto, spinta a terra, risali controllato.",
+      en: "Step back instead of jumping, push-up at the bottom, rise controlled.",
+      de: "Schritt zurück statt Sprung, Liegestütz am Boden, kontrolliert aufstehen."
+    },
+    tip40: {
+      it: 'La variante "senza salto" mantiene l’intensità cardio proteggendo ginocchia e lombari.',
+      en: 'The "no-jump" version keeps cardio intensity while protecting knees and lower back.',
+      de: "Die „ohne Sprung“-Variante hält die Cardio-Intensität und schont Knie und unteren Rücken."
+    },
+    steps: [
+      {
+        it: "Da in piedi scendi con le mani a terra",
+        en: "From standing, place your hands on the floor",
+        de: "Aus dem Stand die Hände auf den Boden setzen"
+      },
+      {
+        it: "Porta i piedi indietro in plank, uno alla volta",
+        en: "Step your feet back into a plank, one at a time",
+        de: "Füße einzeln nach hinten in den Stütz bringen"
+      },
+      {
+        it: "Riporta i piedi avanti e risali, senza salto",
+        en: "Step feet forward and stand up, no jump",
+        de: "Füße nach vorn bringen und aufstehen, ohne Sprung"
+      }
+    ],
+    breath: {
+      it: "Espira nella spinta, inspira scendendo.",
+      en: "Exhale on the push, inhale lowering.",
+      de: "Ausatmen beim Drücken, einatmen beim Absenken."
+    }
   },
   crunch: {
     name: { it: "Crunch", en: "Crunch", de: "Crunch" },
     pose: "crunch",
     met: 4,
     repGuide: { it: "15–20 ripetizioni", en: "15–20 reps", de: "15–20 Wiederholungen" },
-    cue: { it: "Scapole fuori dal pavimento, sguardo al soffitto, espira in alto.", en: "Shoulder blades off the floor, eyes to the ceiling, exhale at the top.", de: "Schulterblätter vom Boden, Blick zur Decke, oben ausatmen." },
-    tip40: { it: "La lombare resta appoggiata: non tirare il collo con le mani.", en: "Keep your lower back down: don’t pull your neck with your hands.", de: "Der untere Rücken bleibt am Boden: Nicht den Nacken mit den Händen ziehen." },
-    steps: [{ it: "Sdraiato, ginocchia piegate, mani alle tempie", en: "Lying down, knees bent, hands at your temples", de: "Auf dem Rücken, Knie gebeugt, Hände an den Schläfen" }, { it: "Solleva le scapole, sguardo al soffitto", en: "Lift your shoulder blades, eyes to the ceiling", de: "Schulterblätter anheben, Blick zur Decke" }, { it: "Scendi controllato, testa non riappoggia", en: "Lower controlled, head doesn’t rest back down", de: "Kontrolliert absenken, Kopf legt sich nicht ab" }],
-    breath: { it: "Espira in alto, inspira scendendo.", en: "Exhale at the top, inhale lowering.", de: "Oben ausatmen, beim Absenken einatmen." }
+    cue: {
+      it: "Scapole fuori dal pavimento, sguardo al soffitto, espira in alto.",
+      en: "Shoulder blades off the floor, eyes to the ceiling, exhale at the top.",
+      de: "Schulterblätter vom Boden, Blick zur Decke, oben ausatmen."
+    },
+    tip40: {
+      it: "La lombare resta appoggiata: non tirare il collo con le mani.",
+      en: "Keep your lower back down: don’t pull your neck with your hands.",
+      de: "Der untere Rücken bleibt am Boden: Nicht den Nacken mit den Händen ziehen."
+    },
+    steps: [
+      {
+        it: "Sdraiato, ginocchia piegate, mani alle tempie",
+        en: "Lying down, knees bent, hands at your temples",
+        de: "Auf dem Rücken, Knie gebeugt, Hände an den Schläfen"
+      },
+      {
+        it: "Solleva le scapole, sguardo al soffitto",
+        en: "Lift your shoulder blades, eyes to the ceiling",
+        de: "Schulterblätter anheben, Blick zur Decke"
+      },
+      {
+        it: "Scendi controllato, testa non riappoggia",
+        en: "Lower controlled, head doesn’t rest back down",
+        de: "Kontrolliert absenken, Kopf legt sich nicht ab"
+      }
+    ],
+    breath: {
+      it: "Espira in alto, inspira scendendo.",
+      en: "Exhale at the top, inhale lowering.",
+      de: "Oben ausatmen, beim Absenken einatmen."
+    }
   },
   sideplank: {
     name: { it: "Plank laterale", en: "Side plank", de: "Seitstütz" },
     pose: "sideplank",
     met: 3.5,
     repGuide: { it: "20–30″ per lato", en: "20–30s per side", de: "20–30 s pro Seite" },
-    cue: { it: "Corpo in linea retta di lato, gomito sotto la spalla, bacino alto.", en: "Body in a straight line on your side, elbow under shoulder, hips high.", de: "Körper seitlich in einer Linie, Ellbogen unter der Schulter, Becken hoch." },
-    tip40: { it: "Lato debole? Ginocchio a terra finché la linea regge: conta la tenuta, non la finta.", en: "Weak side? Knee down until the line holds: what counts is the hold, not the show.", de: "Schwache Seite? Knie absetzen, solange die Linie hält: Zählen tut die Haltezeit, nicht die Pose." },
-    steps: [{ it: "Gomito sotto la spalla, piedi impilati", en: "Elbow under shoulder, feet stacked", de: "Ellbogen unter der Schulter, Füße übereinander" }, { it: "Alza il bacino fino a corpo in linea", en: "Lift hips until your body is in a line", de: "Becken anheben, bis der Körper eine Linie bildet" }, { it: "Tieni senza lasciar cadere l’anca", en: "Hold without letting your hip drop", de: "Halten, ohne die Hüfte sinken zu lassen" }],
-    breath: { it: "Respiro continuo, niente apnee.", en: "Continuous breathing, no breath holding.", de: "Durchgehend atmen, nicht anhalten." }
+    cue: {
+      it: "Corpo in linea retta di lato, gomito sotto la spalla, bacino alto.",
+      en: "Body in a straight line on your side, elbow under shoulder, hips high.",
+      de: "Körper seitlich in einer Linie, Ellbogen unter der Schulter, Becken hoch."
+    },
+    tip40: {
+      it: "Lato debole? Ginocchio a terra finché la linea regge: conta la tenuta, non la finta.",
+      en: "Weak side? Knee down until the line holds: what counts is the hold, not the show.",
+      de: "Schwache Seite? Knie absetzen, solange die Linie hält: Zählen tut die Haltezeit, nicht die Pose."
+    },
+    steps: [
+      {
+        it: "Gomito sotto la spalla, piedi impilati",
+        en: "Elbow under shoulder, feet stacked",
+        de: "Ellbogen unter der Schulter, Füße übereinander"
+      },
+      {
+        it: "Alza il bacino fino a corpo in linea",
+        en: "Lift hips until your body is in a line",
+        de: "Becken anheben, bis der Körper eine Linie bildet"
+      },
+      {
+        it: "Tieni senza lasciar cadere l’anca",
+        en: "Hold without letting your hip drop",
+        de: "Halten, ohne die Hüfte sinken zu lassen"
+      }
+    ],
+    breath: {
+      it: "Respiro continuo, niente apnee.",
+      en: "Continuous breathing, no breath holding.",
+      de: "Durchgehend atmen, nicht anhalten."
+    }
   },
   legraise: {
     name: { it: "Leg raise", en: "Leg raise", de: "Beinheben" },
     pose: "legraise",
     met: 3.5,
     repGuide: { it: "10–12 ripetizioni", en: "10–12 reps", de: "10–12 Wiederholungen" },
-    cue: { it: "Gambe tese, lombare premuta a terra: scendi solo fin dove resta appoggiata.", en: "Legs straight, lower back pressed to the floor: lower only as far as it stays down.", de: "Beine gestreckt, unterer Rücken am Boden: Nur so weit absenken, wie er am Boden bleibt." },
-    tip40: { it: "Se la schiena si inarca, piega leggermente le ginocchia: proteggi i lombari.", en: "If your back arches, bend your knees slightly: protect your lower back.", de: "Wenn der Rücken sich wölbt, Knie leicht beugen: Unteren Rücken schützen." },
-    steps: [{ it: "Sdraiato, gambe tese, lombare a terra", en: "Lying down, legs straight, lower back on the floor", de: "Auf dem Rücken, Beine gestreckt, unterer Rücken am Boden" }, { it: "Solleva le gambe a 90°", en: "Lift your legs to 90°", de: "Beine auf 90° anheben" }, { it: "Scendi lento finché la lombare resta a terra", en: "Lower slowly as long as your lower back stays down", de: "Langsam absenken, solange der untere Rücken am Boden bleibt" }],
-    breath: { it: "Espira salendo, inspira scendendo.", en: "Exhale rising, inhale lowering.", de: "Ausatmen beim Anheben, einatmen beim Absenken." }
+    cue: {
+      it: "Gambe tese, lombare premuta a terra: scendi solo fin dove resta appoggiata.",
+      en: "Legs straight, lower back pressed to the floor: lower only as far as it stays down.",
+      de: "Beine gestreckt, unterer Rücken am Boden: Nur so weit absenken, wie er am Boden bleibt."
+    },
+    tip40: {
+      it: "Se la schiena si inarca, piega leggermente le ginocchia: proteggi i lombari.",
+      en: "If your back arches, bend your knees slightly: protect your lower back.",
+      de: "Wenn der Rücken sich wölbt, Knie leicht beugen: Unteren Rücken schützen."
+    },
+    steps: [
+      {
+        it: "Sdraiato, gambe tese, lombare a terra",
+        en: "Lying down, legs straight, lower back on the floor",
+        de: "Auf dem Rücken, Beine gestreckt, unterer Rücken am Boden"
+      },
+      { it: "Solleva le gambe a 90°", en: "Lift your legs to 90°", de: "Beine auf 90° anheben" },
+      {
+        it: "Scendi lento finché la lombare resta a terra",
+        en: "Lower slowly as long as your lower back stays down",
+        de: "Langsam absenken, solange der untere Rücken am Boden bleibt"
+      }
+    ],
+    breath: {
+      it: "Espira salendo, inspira scendendo.",
+      en: "Exhale rising, inhale lowering.",
+      de: "Ausatmen beim Anheben, einatmen beim Absenken."
+    }
   },
   flutterkick: {
     name: { it: "Forbici", en: "Flutter kicks", de: "Schere (Flutter Kicks)" },
     pose: "flutterkick",
     met: 4.5,
     repGuide: { it: "Ritmo costante", en: "Steady rhythm", de: "Gleichmäßiger Rhythmus" },
-    cue: { it: "Gambe a pochi cm da terra, alterna salita e discesa senza fermarti.", en: "Legs a few cm off the floor, alternate up and down without stopping.", de: "Beine wenige cm über dem Boden, ohne Unterbrechung auf und ab bewegen." },
-    tip40: { it: "Lavoro intenso: se i lombari cedono, alza leggermente le gambe.", en: "Intense work: if your lower back gives out, raise your legs slightly.", de: "Intensives Training: Wenn der untere Rücken nachgibt, Beine leicht anheben." },
-    steps: [{ it: "Sdraiato, gambe sollevate a pochi cm da terra", en: "Lying down, legs lifted a few cm off the floor", de: "Auf dem Rücken, Beine wenige cm über dem Boden" }, { it: "Alterna su e giù senza fermarti", en: "Alternate up and down without stopping", de: "Ohne Unterbrechung auf und ab wechseln" }, { it: "Lombare premuta a terra", en: "Lower back pressed to the floor", de: "Unterer Rücken am Boden" }],
-    breath: { it: "Respiro breve e ritmico, non trattenere.", en: "Short, rhythmic breathing, don’t hold.", de: "Kurz und rhythmisch atmen, nicht anhalten." }
+    cue: {
+      it: "Gambe a pochi cm da terra, alterna salita e discesa senza fermarti.",
+      en: "Legs a few cm off the floor, alternate up and down without stopping.",
+      de: "Beine wenige cm über dem Boden, ohne Unterbrechung auf und ab bewegen."
+    },
+    tip40: {
+      it: "Lavoro intenso: se i lombari cedono, alza leggermente le gambe.",
+      en: "Intense work: if your lower back gives out, raise your legs slightly.",
+      de: "Intensives Training: Wenn der untere Rücken nachgibt, Beine leicht anheben."
+    },
+    steps: [
+      {
+        it: "Sdraiato, gambe sollevate a pochi cm da terra",
+        en: "Lying down, legs lifted a few cm off the floor",
+        de: "Auf dem Rücken, Beine wenige cm über dem Boden"
+      },
+      {
+        it: "Alterna su e giù senza fermarti",
+        en: "Alternate up and down without stopping",
+        de: "Ohne Unterbrechung auf und ab wechseln"
+      },
+      {
+        it: "Lombare premuta a terra",
+        en: "Lower back pressed to the floor",
+        de: "Unterer Rücken am Boden"
+      }
+    ],
+    breath: {
+      it: "Respiro breve e ritmico, non trattenere.",
+      en: "Short, rhythmic breathing, don’t hold.",
+      de: "Kurz und rhythmisch atmen, nicht anhalten."
+    }
   },
   deadbug: {
     name: { it: "Dead bug", en: "Dead bug", de: "Dead Bug" },
     pose: "deadbug",
     met: 3.5,
     repGuide: { it: "8–10 per lato", en: "8–10 per side", de: "8–10 pro Seite" },
-    cue: { it: "Braccio e gamba opposti si abbassano lenti, lombare sempre a terra.", en: "Opposite arm and leg lower slowly, lower back always on the floor.", de: "Gegenüberliegender Arm und Bein senken sich langsam, unterer Rücken bleibt am Boden." },
-    tip40: { it: "L’esercizio lombare-sicuro per eccellenza: rinforza senza dolore.", en: "The lower-back-safe exercise par excellence: strengthens without pain.", de: "Die rückenschonende Übung schlechthin: Stärkt ohne Schmerzen." },
-    steps: [{ it: "Sdraiato, braccia in alto, gambe a 90°", en: "Lying down, arms up, legs at 90°", de: "Auf dem Rücken, Arme nach oben, Beine 90°" }, { it: "Abbassa braccio e gamba opposti, lenti", en: "Lower opposite arm and leg slowly", de: "Gegenüberliegenden Arm und Bein langsam absenken" }, { it: "Torna al centro e cambia lato, lombare a terra", en: "Return to center and switch sides, lower back down", de: "Zur Mitte zurück und Seite wechseln, unterer Rücken am Boden" }],
-    breath: { it: "Espira allungando braccio e gamba.", en: "Exhale as you extend arm and leg.", de: "Ausatmen beim Strecken von Arm und Bein." }
+    cue: {
+      it: "Braccio e gamba opposti si abbassano lenti, lombare sempre a terra.",
+      en: "Opposite arm and leg lower slowly, lower back always on the floor.",
+      de: "Gegenüberliegender Arm und Bein senken sich langsam, unterer Rücken bleibt am Boden."
+    },
+    tip40: {
+      it: "L’esercizio lombare-sicuro per eccellenza: rinforza senza dolore.",
+      en: "The lower-back-safe exercise par excellence: strengthens without pain.",
+      de: "Die rückenschonende Übung schlechthin: Stärkt ohne Schmerzen."
+    },
+    steps: [
+      {
+        it: "Sdraiato, braccia in alto, gambe a 90°",
+        en: "Lying down, arms up, legs at 90°",
+        de: "Auf dem Rücken, Arme nach oben, Beine 90°"
+      },
+      {
+        it: "Abbassa braccio e gamba opposti, lenti",
+        en: "Lower opposite arm and leg slowly",
+        de: "Gegenüberliegenden Arm und Bein langsam absenken"
+      },
+      {
+        it: "Torna al centro e cambia lato, lombare a terra",
+        en: "Return to center and switch sides, lower back down",
+        de: "Zur Mitte zurück und Seite wechseln, unterer Rücken am Boden"
+      }
+    ],
+    breath: {
+      it: "Espira allungando braccio e gamba.",
+      en: "Exhale as you extend arm and leg.",
+      de: "Ausatmen beim Strecken von Arm und Bein."
+    }
   },
   vup: {
     name: { it: "V-up", en: "V-up", de: "V-up" },
     pose: "vup",
     met: 5,
     repGuide: { it: "8–10 ripetizioni", en: "8–10 reps", de: "8–10 Wiederholungen" },
-    cue: { it: "Toccati le punte dei piedi formando una V, scendi controllato.", en: "Touch your toes forming a V, lower controlled.", de: "Zehen berühren und ein V formen, kontrolliert absenken." },
-    tip40: { it: "Troppo? Piegala le ginocchia: la V imperfetta conta, il collo tirato no.", en: "Too much? Bend your knees: an imperfect V counts, a yanked neck doesn’t.", de: "Zu viel? Knie beugen: Ein unvollkommenes V zählt, ein gezogener Nacken nicht." },
-    steps: [{ it: "Sdraiato, braccia tese oltre la testa", en: "Lying down, arms extended past your head", de: "Auf dem Rücken, Arme über den Kopf gestreckt" }, { it: "Solleva gambe e busto insieme verso le punte", en: "Lift legs and torso together toward your toes", de: "Beine und Oberkörper gemeinsam zu den Zehen anheben" }, { it: "Scendi controllato, senza slanci", en: "Lower controlled, no momentum", de: "Kontrolliert absenken, ohne Schwung" }],
-    breath: { it: "Espira toccando le punte, inspira scendendo.", en: "Exhale touching your toes, inhale lowering.", de: "Ausatmen beim Berühren der Zehen, einatmen beim Absenken." }
+    cue: {
+      it: "Toccati le punte dei piedi formando una V, scendi controllato.",
+      en: "Touch your toes forming a V, lower controlled.",
+      de: "Zehen berühren und ein V formen, kontrolliert absenken."
+    },
+    tip40: {
+      it: "Troppo? Piegala le ginocchia: la V imperfetta conta, il collo tirato no.",
+      en: "Too much? Bend your knees: an imperfect V counts, a yanked neck doesn’t.",
+      de: "Zu viel? Knie beugen: Ein unvollkommenes V zählt, ein gezogener Nacken nicht."
+    },
+    steps: [
+      {
+        it: "Sdraiato, braccia tese oltre la testa",
+        en: "Lying down, arms extended past your head",
+        de: "Auf dem Rücken, Arme über den Kopf gestreckt"
+      },
+      {
+        it: "Solleva gambe e busto insieme verso le punte",
+        en: "Lift legs and torso together toward your toes",
+        de: "Beine und Oberkörper gemeinsam zu den Zehen anheben"
+      },
+      {
+        it: "Scendi controllato, senza slanci",
+        en: "Lower controlled, no momentum",
+        de: "Kontrolliert absenken, ohne Schwung"
+      }
+    ],
+    breath: {
+      it: "Espira toccando le punte, inspira scendendo.",
+      en: "Exhale touching your toes, inhale lowering.",
+      de: "Ausatmen beim Berühren der Zehen, einatmen beim Absenken."
+    }
   },
   plankjack: {
     name: { it: "Plank jack", en: "Plank jack", de: "Plank Jack" },
     pose: "plankjack",
     met: 6,
     repGuide: { it: "Ritmo sostenuto", en: "Brisk pace", de: "Zügiges Tempo" },
-    cue: { it: "In plank alto, piedi che saltano fuori e dentro senza muovere il bacino.", en: "In a high plank, feet jumping in and out without moving your hips.", de: "Im hohen Stütz, Füße springen rein und raus, Becken bleibt ruhig." },
-    tip40: { it: "Unisce core e battito: brucia calorie a impatto quasi zero.", en: "Combines core and heartbeat: burns calories with almost zero impact.", de: "Verbinder Core und Puls: Verbrennt Kalorien bei fast null Belastung." },
-    steps: [{ it: "Plank alto, piedi uniti", en: "High plank, feet together", de: "Hoher Stütz, Füße zusammen" }, { it: "Salta aprendo e chiudendo i piedi", en: "Jump feet open and closed", de: "Füße öffnen und schließen springen" }, { it: "Bacino fermo, core stretto", en: "Hips still, core tight", de: "Becken ruhig, Bauch angespannt" }],
-    breath: { it: "Respiro ritmico: 2 salti per ciclo.", en: "Rhythmic breathing: 2 jumps per cycle.", de: "Rhythmisches Atmen: 2 Sprünge pro Zyklus." }
+    cue: {
+      it: "In plank alto, piedi che saltano fuori e dentro senza muovere il bacino.",
+      en: "In a high plank, feet jumping in and out without moving your hips.",
+      de: "Im hohen Stütz, Füße springen rein und raus, Becken bleibt ruhig."
+    },
+    tip40: {
+      it: "Unisce core e battito: brucia calorie a impatto quasi zero.",
+      en: "Combines core and heartbeat: burns calories with almost zero impact.",
+      de: "Verbinder Core und Puls: Verbrennt Kalorien bei fast null Belastung."
+    },
+    steps: [
+      {
+        it: "Plank alto, piedi uniti",
+        en: "High plank, feet together",
+        de: "Hoher Stütz, Füße zusammen"
+      },
+      {
+        it: "Salta aprendo e chiudendo i piedi",
+        en: "Jump feet open and closed",
+        de: "Füße öffnen und schließen springen"
+      },
+      {
+        it: "Bacino fermo, core stretto",
+        en: "Hips still, core tight",
+        de: "Becken ruhig, Bauch angespannt"
+      }
+    ],
+    breath: {
+      it: "Respiro ritmico: 2 salti per ciclo.",
+      en: "Rhythmic breathing: 2 jumps per cycle.",
+      de: "Rhythmisches Atmen: 2 Sprünge pro Zyklus."
+    }
   },
   skater: {
     name: { it: "Skater", en: "Skater", de: "Skater" },
     pose: "skater",
     met: 7,
     repGuide: { it: "10–12 per lato", en: "10–12 per side", de: "10–12 pro Seite" },
-    cue: { it: "Saltello laterale da una gamba all’altra, busto basso e avanti.", en: "Lateral hop from one leg to the other, torso low and forward.", de: "Seitlicher Sprung von einem Bein aufs andere, Oberkörper tief und nach vorn." },
-    tip40: { it: "Grande brucia-grassi a basso impatto: atterra morbido sull’avampiede.", en: "Great low-impact fat burner: land softly on your forefoot.", de: "Starker gelenkschonender Fettverbrenner: Weich auf dem Vorfuß landen." },
-    steps: [{ it: "Peso su una gamba, busto basso e avanti", en: "Weight on one leg, torso low and forward", de: "Gewicht auf einem Bein, Oberkörper tief und nach vorn" }, { it: "Saltella di lato sull’altra gamba", en: "Hop sideways onto the other leg", de: "Seitlich auf das andere Bein hüpfen" }, { it: "Atterra morbido, gesto ampio", en: "Land softly, wide movement", de: "Weich landen, große Bewegung" }],
-    breath: { it: "Espira a ogni atterraggio.", en: "Exhale with each landing.", de: "Bei jeder Landung ausatmen." }
+    cue: {
+      it: "Saltello laterale da una gamba all’altra, busto basso e avanti.",
+      en: "Lateral hop from one leg to the other, torso low and forward.",
+      de: "Seitlicher Sprung von einem Bein aufs andere, Oberkörper tief und nach vorn."
+    },
+    tip40: {
+      it: "Grande brucia-grassi a basso impatto: atterra morbido sull’avampiede.",
+      en: "Great low-impact fat burner: land softly on your forefoot.",
+      de: "Starker gelenkschonender Fettverbrenner: Weich auf dem Vorfuß landen."
+    },
+    steps: [
+      {
+        it: "Peso su una gamba, busto basso e avanti",
+        en: "Weight on one leg, torso low and forward",
+        de: "Gewicht auf einem Bein, Oberkörper tief und nach vorn"
+      },
+      {
+        it: "Saltella di lato sull’altra gamba",
+        en: "Hop sideways onto the other leg",
+        de: "Seitlich auf das andere Bein hüpfen"
+      },
+      {
+        it: "Atterra morbido, gesto ampio",
+        en: "Land softly, wide movement",
+        de: "Weich landen, große Bewegung"
+      }
+    ],
+    breath: {
+      it: "Espira a ogni atterraggio.",
+      en: "Exhale with each landing.",
+      de: "Bei jeder Landung ausatmen."
+    }
   },
   heeltap: {
     name: { it: "Heel tap", en: "Heel tap", de: "Heel Tap" },
     pose: "heeltap",
     met: 3.5,
     repGuide: { it: "12–15 per lato", en: "12–15 per side", de: "12–15 pro Seite" },
-    cue: { it: "Da sdraiato con ginocchia piegate, tocca i talloni in alternanza.", en: "Lying down with knees bent, tap your heels alternately.", de: "Auf dem Rücken mit gebeugten Knien die Fersen abwechselnd berühren." },
-    tip40: { it: "Fatto lento ti fa sentire davvero gli obliqui: niente fretta.", en: "Done slowly you really feel your obliques: no rush.", de: "Langsam ausgeführt spürst du die seitliche Bauchmuskulatur wirklich: Keine Eile." },
-    steps: [{ it: "Sdraiato, ginocchia piegate, piedi a terra", en: "Lying down, knees bent, feet on the floor", de: "Auf dem Rücken, Knie gebeugt, Füße am Boden" }, { it: "Tocca il tallone destro con la mano destra", en: "Tap your right heel with your right hand", de: "Rechte Ferse mit der rechten Hand berühren" }, { it: "Alterna lentamente, obliqui attivi", en: "Alternate slowly, obliques active", de: "Langsam wechseln, seitliche Bauchmuskeln aktiv" }],
-    breath: { it: "Espira toccando il tallone.", en: "Exhale as you tap your heel.", de: "Ausatmen beim Berühren der Ferse." }
+    cue: {
+      it: "Da sdraiato con ginocchia piegate, tocca i talloni in alternanza.",
+      en: "Lying down with knees bent, tap your heels alternately.",
+      de: "Auf dem Rücken mit gebeugten Knien die Fersen abwechselnd berühren."
+    },
+    tip40: {
+      it: "Fatto lento ti fa sentire davvero gli obliqui: niente fretta.",
+      en: "Done slowly you really feel your obliques: no rush.",
+      de: "Langsam ausgeführt spürst du die seitliche Bauchmuskulatur wirklich: Keine Eile."
+    },
+    steps: [
+      {
+        it: "Sdraiato, ginocchia piegate, piedi a terra",
+        en: "Lying down, knees bent, feet on the floor",
+        de: "Auf dem Rücken, Knie gebeugt, Füße am Boden"
+      },
+      {
+        it: "Tocca il tallone destro con la mano destra",
+        en: "Tap your right heel with your right hand",
+        de: "Rechte Ferse mit der rechten Hand berühren"
+      },
+      {
+        it: "Alterna lentamente, obliqui attivi",
+        en: "Alternate slowly, obliques active",
+        de: "Langsam wechseln, seitliche Bauchmuskeln aktiv"
+      }
+    ],
+    breath: {
+      it: "Espira toccando il tallone.",
+      en: "Exhale as you tap your heel.",
+      de: "Ausatmen beim Berühren der Ferse."
+    }
   }
 };
 const EXERCISE_GROUPS = {
@@ -934,7 +1877,20 @@ const EXERCISE_GROUPS = {
     "plankjack",
     "heeltap"
   ],
-  core: ["plank", "crunch", "sideplank", "legraise", "flutterkick", "deadbug", "vup", "heeltap", "crunchbici", "russiantwist", "plankjack", "mountainclimber"]
+  core: [
+    "plank",
+    "crunch",
+    "sideplank",
+    "legraise",
+    "flutterkick",
+    "deadbug",
+    "vup",
+    "heeltap",
+    "crunchbici",
+    "russiantwist",
+    "plankjack",
+    "mountainclimber"
+  ]
 };
 const WORK_SEC = 40;
 const REST_SEC = 20;
@@ -959,9 +1915,38 @@ function getIntervalPreset(key) {
   return INTERVAL_PRESETS.find((p2) => p2.key === key) || INTERVAL_PRESETS[1];
 }
 const LEVELS = [
-  { key: "recluta", label: { it: "RECLUTA", en: "RECRUIT", de: "REKRUT" }, preset: "breve", work: 30, rest: 15, desc: { it: "Ritmo iniziale: recupero pieno", en: "Starting pace: full rest", de: "Starttempo: volle Pause" } },
-  { key: "combattente", label: { it: "COMBATTENTE", en: "FIGHTER", de: "KÄMPFER" }, preset: "standard", work: 40, rest: 20, desc: { it: "Ritmo standard 40″/20″", en: "Standard pace 40s/20s", de: "Standardtempo 40s/20s" } },
-  { key: "elite", label: { it: "ELITE", en: "ELITE", de: "ELITE" }, preset: "lungo", work: 45, rest: 15, desc: { it: "Ritmo sostenuto 45″/15″", en: "Brisk pace 45s/15s", de: "Zügiges Tempo 45s/15s" } }
+  {
+    key: "recluta",
+    label: { it: "RECLUTA", en: "RECRUIT", de: "REKRUT" },
+    preset: "breve",
+    work: 30,
+    rest: 15,
+    desc: {
+      it: "Ritmo iniziale: recupero pieno",
+      en: "Starting pace: full rest",
+      de: "Starttempo: volle Pause"
+    }
+  },
+  {
+    key: "combattente",
+    label: { it: "COMBATTENTE", en: "FIGHTER", de: "KÄMPFER" },
+    preset: "standard",
+    work: 40,
+    rest: 20,
+    desc: {
+      it: "Ritmo standard 40″/20″",
+      en: "Standard pace 40s/20s",
+      de: "Standardtempo 40s/20s"
+    }
+  },
+  {
+    key: "elite",
+    label: { it: "ELITE", en: "ELITE", de: "ELITE" },
+    preset: "lungo",
+    work: 45,
+    rest: 15,
+    desc: { it: "Ritmo sostenuto 45″/15″", en: "Brisk pace 45s/15s", de: "Zügiges Tempo 45s/15s" }
+  }
 ];
 const HOLD_EXERCISES = /* @__PURE__ */ new Set(["plank", "wallsit", "sideplank"]);
 const REPS_BASE = {
@@ -1009,7 +1994,11 @@ const PROGRAMS = [
     id: "A",
     difficulty: 2,
     name: { it: "ASSALTO PANCIA", en: "BELLY ASSAULT", de: "BAUCH-ANGRIFF" },
-    tagline: { it: "Core e addominali — la battaglia decisiva", en: "Core and abs — the decisive battle", de: "Core und Bauch — die entscheidende Schlacht" },
+    tagline: {
+      it: "Core e addominali — la battaglia decisiva",
+      en: "Core and abs — the decisive battle",
+      de: "Core und Bauch — die entscheidende Schlacht"
+    },
     focus: { it: "PANCIA", en: "BELLY", de: "BAUCH" },
     rounds: 2,
     exercises: ["plank", "crunch", "legraise", "sideplank", "flutterkick", "vup"]
@@ -1018,16 +2007,31 @@ const PROGRAMS = [
     id: "B",
     difficulty: 3,
     name: { it: "BRUCIA GRASSI", en: "FAT BURN", de: "FETT VERBRENNEN" },
-    tagline: { it: "Circuito metabolico per dimagrire", en: "Metabolic circuit to lose fat", de: "Metabolischer Zirkel zum Abnehmen" },
+    tagline: {
+      it: "Circuito metabolico per dimagrire",
+      en: "Metabolic circuit to lose fat",
+      de: "Metabolischer Zirkel zum Abnehmen"
+    },
     focus: { it: "BRUCIA", en: "BURN", de: "BRENNEN" },
     rounds: 2,
-    exercises: ["jumpingjack", "skater", "mountainclimber", "plankjack", "burpeetattico", "ginocchiaalte"]
+    exercises: [
+      "jumpingjack",
+      "skater",
+      "mountainclimber",
+      "plankjack",
+      "burpeetattico",
+      "ginocchiaalte"
+    ]
   },
   {
     id: "C",
     difficulty: 2,
     name: { it: "TOTALE FORZA", en: "FULL STRENGTH", de: "VOLLE KRAFT" },
-    tagline: { it: "Full body — brucia e costruisci", en: "Full body — burn and build", de: "Ganzkörper — verbrennen und aufbauen" },
+    tagline: {
+      it: "Full body — brucia e costruisci",
+      en: "Full body — burn and build",
+      de: "Ganzkörper — verbrennen und aufbauen"
+    },
     focus: { it: "TOTALE", en: "TOTAL", de: "TOTAL" },
     rounds: 2,
     exercises: ["squat", "flessioni", "affondo", "deadbug", "superman", "crunch"]
@@ -1036,7 +2040,11 @@ const PROGRAMS = [
     id: "D",
     difficulty: 1,
     name: { it: "RECUPERO ATTIVO", en: "ACTIVE RECOVERY", de: "AKTIVE ERHOLUNG" },
-    tagline: { it: "Mobilità e respiro — giorno di ricarica", en: "Mobility and breath — recharge day", de: "Mobilität und Atmung — Auftanktag" },
+    tagline: {
+      it: "Mobilità e respiro — giorno di ricarica",
+      en: "Mobility and breath — recharge day",
+      de: "Mobilität und Atmung — Auftanktag"
+    },
     focus: { it: "RECUPERO", en: "RECOVERY", de: "ERHOLUNG" },
     rounds: 1,
     exercises: ["wallsit", "ponte", "superman", "sideplank", "deadbug"]
@@ -1045,16 +2053,31 @@ const PROGRAMS = [
     id: "E",
     difficulty: 2,
     name: { it: "PANCIA PIATTA", en: "FLAT BELLY", de: "FLACHER BAUCH" },
-    tagline: { it: "Brucia grasso e scolpisci il girovita — la missione anti-pancetta", en: "Burn fat and sculpt your waist — the anti-belly mission", de: "Fett verbrennen und die Taille formen — die Anti-Bauch-Mission" },
+    tagline: {
+      it: "Brucia grasso e scolpisci il girovita — la missione anti-pancetta",
+      en: "Burn fat and sculpt your waist — the anti-belly mission",
+      de: "Fett verbrennen und die Taille formen — die Anti-Bauch-Mission"
+    },
     focus: { it: "GIROVITA", en: "WAIST", de: "TAILLE" },
     rounds: 2,
-    exercises: ["jumpingjack", "mountainclimber", "crunchbici", "russiantwist", "skater", "heeltap"]
+    exercises: [
+      "jumpingjack",
+      "mountainclimber",
+      "crunchbici",
+      "russiantwist",
+      "skater",
+      "heeltap"
+    ]
   },
   {
     id: "F",
     difficulty: 2,
     name: { it: "ADDOMINALI SCOLPITI", en: "SCULPTED ABS", de: "BAUCH AUS STAHL" },
-    tagline: { it: "Isolamento mirato per addominali definiti come l'acciaio", en: "Targeted isolation for steel-defined abs", de: "Gezieltes Training für stahlharte Bauchmuskeln" },
+    tagline: {
+      it: "Isolamento mirato per addominali definiti come l'acciaio",
+      en: "Targeted isolation for steel-defined abs",
+      de: "Gezieltes Training für stahlharte Bauchmuskeln"
+    },
     focus: { it: "ADDOMINALI", en: "ABS", de: "BAUCH" },
     rounds: 2,
     exercises: ["crunch", "legraise", "vup", "deadbug", "flutterkick", "sideplank"]
@@ -1063,16 +2086,31 @@ const PROGRAMS = [
     id: "G",
     difficulty: 3,
     name: { it: "SNAGLIATURA TOTALE", en: "FULL SLIM", de: "TOTALER SCHLANKHEIT" },
-    tagline: { it: "Dimagrisci su tutto il corpo: metabolismo al massimo", en: "Slim down all over — metabolism on max", de: "Überall abnehmen — Stoffwechsel auf Maximum" },
+    tagline: {
+      it: "Dimagrisci su tutto il corpo: metabolismo al massimo",
+      en: "Slim down all over — metabolism on max",
+      de: "Überall abnehmen — Stoffwechsel auf Maximum"
+    },
     focus: { it: "SNAGLIATURA", en: "SLIM", de: "ABNEHMEN" },
     rounds: 2,
-    exercises: ["burpeetattico", "ginocchiaalte", "mountainclimber", "squat", "flessioni", "skater"]
+    exercises: [
+      "burpeetattico",
+      "ginocchiaalte",
+      "mountainclimber",
+      "squat",
+      "flessioni",
+      "skater"
+    ]
   },
   {
     id: "H",
     difficulty: 1,
     name: { it: "SCHIENA DI FERRO", en: "IRON BACK", de: "EISENRÜCKEN" },
-    tagline: { it: "Postura e lombari — addio mal di schiena", en: "Posture & lower back — goodbye back pain", de: "Haltung & unterer Rücken — bye Rückenschmerz" },
+    tagline: {
+      it: "Postura e lombari — addio mal di schiena",
+      en: "Posture & lower back — goodbye back pain",
+      de: "Haltung & unterer Rücken — bye Rückenschmerz"
+    },
     focus: { it: "SCHIENA", en: "BACK", de: "RÜCKEN" },
     rounds: 2,
     exercises: ["superman", "ponte", "deadbug", "wallsit", "sideplank", "plank"]
@@ -1081,7 +2119,11 @@ const PROGRAMS = [
     id: "I",
     difficulty: 1,
     name: { it: "CARDIO LEGGERO", en: "LIGHT CARDIO", de: "LEICHTES CARDIO" },
-    tagline: { it: "Fiato senza impatto — per ginocchia sensibili", en: "Breath without impact — for sensitive knees", de: "Atem ohne Impact — für empfindliche Knie" },
+    tagline: {
+      it: "Fiato senza impatto — per ginocchia sensibili",
+      en: "Breath without impact — for sensitive knees",
+      de: "Atem ohne Impact — für empfindliche Knie"
+    },
     focus: { it: "FIATO", en: "BREATH", de: "ATEM" },
     rounds: 2,
     exercises: ["ginocchiaalte", "heeltap", "ponte", "crunch", "sideplank", "superman"]
@@ -1090,7 +2132,11 @@ const PROGRAMS = [
     id: "J",
     difficulty: 2,
     name: { it: "BRACCIA D'ACCIAIO", en: "STEEL ARMS", de: "STAHLARME" },
-    tagline: { it: "Petto e braccia — spinta a corpo libero", en: "Chest & arms — bodyweight push", de: "Brust & Arme — Bodyweight Push" },
+    tagline: {
+      it: "Petto e braccia — spinta a corpo libero",
+      en: "Chest & arms — bodyweight push",
+      de: "Brust & Arme — Bodyweight Push"
+    },
     focus: { it: "BRACCIA", en: "ARMS", de: "ARME" },
     rounds: 2,
     exercises: ["flessioni", "plankjack", "mountainclimber", "deadbug", "superman", "crunchbici"]
@@ -1099,7 +2145,11 @@ const PROGRAMS = [
     id: "K",
     difficulty: 1,
     name: { it: "EQUILIBRIO ZEN", en: "ZEN BALANCE", de: "ZEN-GLEICHGEWICHT" },
-    tagline: { it: "Stabilità e respiro — mente e core", en: "Stability & breath — mind and core", de: "Stabilität & Atmung — Geist und Core" },
+    tagline: {
+      it: "Stabilità e respiro — mente e core",
+      en: "Stability & breath — mind and core",
+      de: "Stabilität & Atmung — Geist und Core"
+    },
     focus: { it: "EQUILIBRIO", en: "BALANCE", de: "GLEICHGEWICHT" },
     rounds: 2,
     exercises: ["sideplank", "deadbug", "ponte", "wallsit", "plank", "superman"]
@@ -1108,16 +2158,31 @@ const PROGRAMS = [
     id: "L",
     difficulty: 3,
     name: { it: "POTENZA ESPLOSIVA", en: "EXPLOSIVE POWER", de: "EXPLOSIVE KRAFT" },
-    tagline: { it: "Sprint e salti controllati — potenza over 40", en: "Sprints & controlled jumps — power over 40", de: "Sprints & kontrollierte Sprünge — Kraft über 40" },
+    tagline: {
+      it: "Sprint e salti controllati — potenza over 40",
+      en: "Sprints & controlled jumps — power over 40",
+      de: "Sprints & kontrollierte Sprünge — Kraft über 40"
+    },
     focus: { it: "POTENZA", en: "POWER", de: "KRAFT" },
     rounds: 2,
-    exercises: ["burpeetattico", "skater", "ginocchiaalte", "jumpingjack", "mountainclimber", "squat"]
+    exercises: [
+      "burpeetattico",
+      "skater",
+      "ginocchiaalte",
+      "jumpingjack",
+      "mountainclimber",
+      "squat"
+    ]
   },
   {
     id: "M",
     difficulty: 3,
     name: { it: "CORE ESTREMO", en: "EXTREME CORE", de: "EXTREMER CORE" },
-    tagline: { it: "Addome d’acciaio — 6 colpi al core", en: "Steel abs — 6 core hits", de: "Stahlbauch — 6 Core-Treffer" },
+    tagline: {
+      it: "Addome d’acciaio — 6 colpi al core",
+      en: "Steel abs — 6 core hits",
+      de: "Stahlbauch — 6 Core-Treffer"
+    },
     focus: { it: "CORE", en: "CORE", de: "CORE" },
     rounds: 2,
     exercises: ["vup", "russiantwist", "legraise", "crunchbici", "flutterkick", "heeltap"]
@@ -1127,7 +2192,11 @@ const PROGRAMS = [
     id: "N",
     difficulty: 2,
     name: { it: "OMBELICO PIATTO", en: "FLAT NAVEL", de: "FLACHER NABEL" },
-    tagline: { it: "Addome basso + obliqui — pancia piatta in 15′", en: "Lower abs + obliques — flat belly in 15′", de: "Unterbauch + Obliques — flacher Bauch in 15 Min" },
+    tagline: {
+      it: "Addome basso + obliqui — pancia piatta in 15′",
+      en: "Lower abs + obliques — flat belly in 15′",
+      de: "Unterbauch + Obliques — flacher Bauch in 15 Min"
+    },
     focus: { it: "PANCIA", en: "BELLY", de: "BAUCH" },
     rounds: 2,
     exercises: ["legraise", "flutterkick", "heeltap", "deadbug", "crunch", "sideplank"],
@@ -1137,7 +2206,11 @@ const PROGRAMS = [
     id: "O",
     difficulty: 2,
     name: { it: "OBLIQUI GUERRIERO", en: "WARRIOR OBLIQUES", de: "KRIEGER OBLIQUES" },
-    tagline: { it: "Fianchi scolpiti e girovita stretto — maniglie addio", en: "Sculpted sides & tight waist — love handles gone", de: "Geformte Seiten & schmale Taille — Love Handles weg" },
+    tagline: {
+      it: "Fianchi scolpiti e girovita stretto — maniglie addio",
+      en: "Sculpted sides & tight waist — love handles gone",
+      de: "Geformte Seiten & schmale Taille — Love Handles weg"
+    },
     focus: { it: "OBLIQUI", en: "OBLIQUES", de: "OBLIQUES" },
     rounds: 2,
     exercises: ["russiantwist", "sideplank", "heeltap", "crunchbici", "plankjack", "vup"],
@@ -1147,7 +2220,11 @@ const PROGRAMS = [
     id: "P",
     difficulty: 3,
     name: { it: "CINTURA D’ACCIAIO", en: "STEEL BELT", de: "STAHLGÜRTEL" },
-    tagline: { it: "Core 360° — cintura addominale a tutta vita", en: "Core 360° — steel belt around your waist", de: "Core 360° — Stahlgürtel um die Taille" },
+    tagline: {
+      it: "Core 360° — cintura addominale a tutta vita",
+      en: "Core 360° — steel belt around your waist",
+      de: "Core 360° — Stahlgürtel um die Taille"
+    },
     focus: { it: "CINTURA", en: "BELT", de: "GÜRTEL" },
     rounds: 2,
     exercises: ["vup", "legraise", "russiantwist", "flutterkick", "deadbug", "heeltap"],
@@ -1157,12 +2234,37 @@ const PROGRAMS = [
 const QUICK_PROGRAM = {
   id: "Q",
   name: { it: "RAFFICA LAMPO", en: "QUICK BLAST", de: "BLITZ-RUNDE" },
-  tagline: { it: "Per i giorni senza tempo", en: "For the days with no time", de: "Für Tage ohne Zeit" },
+  tagline: {
+    it: "Per i giorni senza tempo",
+    en: "For the days with no time",
+    de: "Für Tage ohne Zeit"
+  },
   rounds: 1,
   exercises: ["squat", "flessioni", "plank", "jumpingjack"]
 };
 const CAMP_DAYS = 30;
-const DAY_CYCLE = ["A", "N", "B", "O", "C", "P", "K", "H", "I", "J", "L", "M", "D", "E", "F", "G", "A", "B", "C", "D"];
+const DAY_CYCLE = [
+  "A",
+  "N",
+  "B",
+  "O",
+  "C",
+  "P",
+  "K",
+  "H",
+  "I",
+  "J",
+  "L",
+  "M",
+  "D",
+  "E",
+  "F",
+  "G",
+  "A",
+  "B",
+  "C",
+  "D"
+];
 const BELLY_IDS = ["N", "O", "P"];
 PROGRAMS.filter((p2) => p2.belly);
 function campDayIndex(profile) {
@@ -1243,7 +2345,10 @@ function estimateProgramKcal(program, weightKg, skipWarmup, workSec = WORK_SEC, 
   return kcal;
 }
 function totalSeqSeconds(program, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
-  return buildSequence(program, skipWarmup, workSec, restSec, mode, levelKey).reduce((a, p2) => a + (p2.duration || (p2.reps ? p2.reps * 3 : 0)), 0);
+  return buildSequence(program, skipWarmup, workSec, restSec, mode, levelKey).reduce(
+    (a, p2) => a + (p2.duration || (p2.reps ? p2.reps * 3 : 0)),
+    0
+  );
 }
 function formatTime(s) {
   const m2 = Math.floor(s / 60), sec = s % 60;
@@ -1261,9 +2366,15 @@ function sessionDayKey(s) {
 function hrZone(bpm, age, lang) {
   const max = 220 - age;
   const pct = bpm / max * 100;
-  if (pct < 60) return { label: tr$1({ it: "Recupero", en: "Recovery", de: "Erholung" }, lang), color: STEEL };
-  if (pct < 70) return { label: tr$1({ it: "Brucia grassi", en: "Fat burn", de: "Fett verbrennen" }, lang), color: OLIVE };
-  if (pct < 85) return { label: tr$1({ it: "Cardio", en: "Cardio", de: "Cardio" }, lang), color: BLAZE };
+  if (pct < 60)
+    return { label: tr$1({ it: "Recupero", en: "Recovery", de: "Erholung" }, lang), color: STEEL };
+  if (pct < 70)
+    return {
+      label: tr$1({ it: "Brucia grassi", en: "Fat burn", de: "Fett verbrennen" }, lang),
+      color: OLIVE
+    };
+  if (pct < 85)
+    return { label: tr$1({ it: "Cardio", en: "Cardio", de: "Cardio" }, lang), color: BLAZE };
   return { label: tr$1({ it: "Massimale", en: "Max", de: "Maximal" }, lang), color: BLAZE_DEEP };
 }
 function computeBestStreak(sessions) {
@@ -1321,11 +2432,41 @@ const KCAL_BADGES = [1e3, 2500, 5e3, 1e4, 2e4, 5e4];
 const CONSISTENCY_BADGES = [30, 50, 70, 85, 100];
 const PERFECT_WEEK_BADGES = [1, 4, 8, 12, 26];
 ({
-  streak: STREAK_BADGES.map((n2) => ({ type: "streak", n: n2, label: `${n2}gg serie`, icon: "🔥", color: "#C1440E" })),
-  sessions: SESSION_BADGES.map((n2) => ({ type: "sessions", n: n2, label: `${n2} sessioni`, icon: "⚡", color: "#B8AE8C" })),
-  kcal: KCAL_BADGES.map((n2) => ({ type: "kcal", n: n2, label: `${n2 >= 1e3 ? n2 / 1e3 + "k" : n2} kcal`, icon: "🔥", color: "#E84B2A" })),
-  consistency: CONSISTENCY_BADGES.map((n2) => ({ type: "consistency", n: n2, label: `${n2}% costanza`, icon: "◎", color: "#7FB069" })),
-  perfect: PERFECT_WEEK_BADGES.map((n2) => ({ type: "perfect", n: n2, label: `${n2} sett. perfette`, icon: "★", color: "#D9B34C" }))
+  streak: STREAK_BADGES.map((n2) => ({
+    type: "streak",
+    n: n2,
+    label: `${n2}gg serie`,
+    icon: "🔥",
+    color: "#C1440E"
+  })),
+  sessions: SESSION_BADGES.map((n2) => ({
+    type: "sessions",
+    n: n2,
+    label: `${n2} sessioni`,
+    icon: "⚡",
+    color: "#B8AE8C"
+  })),
+  kcal: KCAL_BADGES.map((n2) => ({
+    type: "kcal",
+    n: n2,
+    label: `${n2 >= 1e3 ? n2 / 1e3 + "k" : n2} kcal`,
+    icon: "🔥",
+    color: "#E84B2A"
+  })),
+  consistency: CONSISTENCY_BADGES.map((n2) => ({
+    type: "consistency",
+    n: n2,
+    label: `${n2}% costanza`,
+    icon: "◎",
+    color: "#7FB069"
+  })),
+  perfect: PERFECT_WEEK_BADGES.map((n2) => ({
+    type: "perfect",
+    n: n2,
+    label: `${n2} sett. perfette`,
+    icon: "★",
+    color: "#D9B34C"
+  }))
 });
 const RPE_LABELS = [
   { it: "Facile", en: "Easy", de: "Leicht" },
@@ -1352,8 +2493,16 @@ function getRank(sessionsCount) {
 function nextBadge(sessions) {
   const bestStreak = computeBestStreak(sessions);
   const candidates = [
-    ...STREAK_BADGES.filter((n2) => bestStreak < n2).map((n2) => ({ kind: "serie", n: n2, remaining: n2 - bestStreak })),
-    ...SESSION_BADGES.filter((n2) => sessions.length < n2).map((n2) => ({ kind: "sessioni", n: n2, remaining: n2 - sessions.length }))
+    ...STREAK_BADGES.filter((n2) => bestStreak < n2).map((n2) => ({
+      kind: "serie",
+      n: n2,
+      remaining: n2 - bestStreak
+    })),
+    ...SESSION_BADGES.filter((n2) => sessions.length < n2).map((n2) => ({
+      kind: "sessioni",
+      n: n2,
+      remaining: n2 - sessions.length
+    }))
   ];
   if (!candidates.length) return null;
   candidates.sort((a, b) => a.remaining - b.remaining);
@@ -1386,12 +2535,67 @@ function getMedalProgress(sessions) {
     if (done >= WEEKLY_GOAL) perfectWeeks++;
   }
   const all = [];
-  for (const n2 of STREAK_BADGES) all.push({ type: "streak", n: n2, label: `${n2}gg serie`, icon: "🔥", color: "#C1440E", value: bestStreak, unlocked: bestStreak >= n2, progress: Math.min(1, bestStreak / n2) });
-  for (const n2 of SESSION_BADGES) all.push({ type: "sessions", n: n2, label: `${n2} sessioni`, icon: "⚡", color: "#B8AE8C", value: totalSessions, unlocked: totalSessions >= n2, progress: Math.min(1, totalSessions / n2) });
-  for (const n2 of KCAL_BADGES) all.push({ type: "kcal", n: n2, label: `${n2 >= 1e3 ? n2 / 1e3 + "k" : n2} kcal`, icon: "◆", color: "#E84B2A", value: totalKcal, unlocked: totalKcal >= n2, progress: Math.min(1, totalKcal / n2) });
-  for (const n2 of CONSISTENCY_BADGES) all.push({ type: "consistency", n: n2, label: `${n2}% costanza`, icon: "◎", color: "#7FB069", value: cons, unlocked: cons >= n2, progress: Math.min(1, cons / n2) });
-  for (const n2 of PERFECT_WEEK_BADGES) all.push({ type: "perfect", n: n2, label: `${n2} sett. perfette`, icon: "★", color: "#D9B34C", value: perfectWeeks, unlocked: perfectWeeks >= n2, progress: Math.min(1, perfectWeeks / n2) });
-  return { all, unlocked: all.filter((m2) => m2.unlocked), locked: all.filter((m2) => !m2.unlocked), totals: { bestStreak, totalSessions, totalKcal, cons, perfectWeeks } };
+  for (const n2 of STREAK_BADGES)
+    all.push({
+      type: "streak",
+      n: n2,
+      label: `${n2}gg serie`,
+      icon: "🔥",
+      color: "#C1440E",
+      value: bestStreak,
+      unlocked: bestStreak >= n2,
+      progress: Math.min(1, bestStreak / n2)
+    });
+  for (const n2 of SESSION_BADGES)
+    all.push({
+      type: "sessions",
+      n: n2,
+      label: `${n2} sessioni`,
+      icon: "⚡",
+      color: "#B8AE8C",
+      value: totalSessions,
+      unlocked: totalSessions >= n2,
+      progress: Math.min(1, totalSessions / n2)
+    });
+  for (const n2 of KCAL_BADGES)
+    all.push({
+      type: "kcal",
+      n: n2,
+      label: `${n2 >= 1e3 ? n2 / 1e3 + "k" : n2} kcal`,
+      icon: "◆",
+      color: "#E84B2A",
+      value: totalKcal,
+      unlocked: totalKcal >= n2,
+      progress: Math.min(1, totalKcal / n2)
+    });
+  for (const n2 of CONSISTENCY_BADGES)
+    all.push({
+      type: "consistency",
+      n: n2,
+      label: `${n2}% costanza`,
+      icon: "◎",
+      color: "#7FB069",
+      value: cons,
+      unlocked: cons >= n2,
+      progress: Math.min(1, cons / n2)
+    });
+  for (const n2 of PERFECT_WEEK_BADGES)
+    all.push({
+      type: "perfect",
+      n: n2,
+      label: `${n2} sett. perfette`,
+      icon: "★",
+      color: "#D9B34C",
+      value: perfectWeeks,
+      unlocked: perfectWeeks >= n2,
+      progress: Math.min(1, perfectWeeks / n2)
+    });
+  return {
+    all,
+    unlocked: all.filter((m2) => m2.unlocked),
+    locked: all.filter((m2) => !m2.unlocked),
+    totals: { bestStreak, totalSessions, totalKcal, cons, perfectWeeks }
+  };
 }
 function getNextMedals(sessions, limit = 3) {
   const { locked } = getMedalProgress(sessions);
@@ -1402,7 +2606,8 @@ function greeting(lang) {
   const h = (/* @__PURE__ */ new Date()).getHours();
   if (h < 6) return tr$1({ it: "Ancora sveglio,", en: "Still awake,", de: "Noch wach," }, lang);
   if (h < 12) return tr$1({ it: "Buongiorno,", en: "Good morning,", de: "Guten Morgen," }, lang);
-  if (h < 18) return tr$1({ it: "Buon pomeriggio,", en: "Good afternoon,", de: "Guten Nachmittag," }, lang);
+  if (h < 18)
+    return tr$1({ it: "Buon pomeriggio,", en: "Good afternoon,", de: "Guten Nachmittag," }, lang);
   return tr$1({ it: "Buonasera,", en: "Good evening,", de: "Guten Abend," }, lang);
 }
 function buildHeatmap(sessions, days = 35) {
@@ -1967,7 +3172,12 @@ async function testPushViaSW(lang = "it") {
     const res = await fetch(`${API_BASE}/push-send.php`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ test: true, filterSelf: true, lang, subscription: sub ? { endpoint: sub.endpoint } : null })
+      body: JSON.stringify({
+        test: true,
+        filterSelf: true,
+        lang,
+        subscription: sub ? { endpoint: sub.endpoint } : null
+      })
     });
     if (res.ok) {
       const j = await res.json();
@@ -1977,7 +3187,11 @@ async function testPushViaSW(lang = "it") {
   } catch {
   }
   const l2 = lang || "it";
-  const titles = { it: "Operator 40 — Test push", en: "Operator 40 — Push test", de: "Operator 40 — Push-Test" };
+  const titles = {
+    it: "Operator 40 — Test push",
+    en: "Operator 40 — Push test",
+    de: "Operator 40 — Push-Test"
+  };
   const bodies = {
     it: "Se vedi questo, il push PWA funziona (via SW).",
     en: "If you see this, PWA push works (via SW).",
@@ -2093,7 +3307,12 @@ function personalize(base, name, lang) {
   };
   return (prefixes[lang] || prefixes.it) + base.charAt(0).toLowerCase() + base.slice(1);
 }
-function getMotivationalMessage({ sessions = [], profile = null, lang = "it", date = /* @__PURE__ */ new Date() } = {}) {
+function getMotivationalMessage({
+  sessions = [],
+  profile = null,
+  lang = "it",
+  date = /* @__PURE__ */ new Date()
+} = {}) {
   var _a;
   const n2 = sessions.length;
   const streak = computeStreak(sessions);
@@ -2128,7 +3347,11 @@ function getMotivationalMessage({ sessions = [], profile = null, lang = "it", da
     };
   }
   if (streak >= 7) {
-    const titles2 = { it: `Sei inarrestabile! 🔥 ${streak} giorni`, en: `Unstoppable! 🔥 ${streak} days`, de: `Unaufhaltsam! 🔥 ${streak} Tage` };
+    const titles2 = {
+      it: `Sei inarrestabile! 🔥 ${streak} giorni`,
+      en: `Unstoppable! 🔥 ${streak} days`,
+      de: `Unaufhaltsam! 🔥 ${streak} Tage`
+    };
     const bodies = {
       it: `Costanza al ${cons}% — continua così, stai andando alla grande!`,
       en: `Consistency ${cons}% — keep going, you're doing great!`,
@@ -2142,7 +3365,11 @@ function getMotivationalMessage({ sessions = [], profile = null, lang = "it", da
     };
   }
   if (streak >= 3) {
-    const titles2 = { it: `Continua così! 🔥 ${streak} giorni di fila`, en: `Keep it up! 🔥 ${streak} days`, de: `Weiter so! 🔥 ${streak} Tage` };
+    const titles2 = {
+      it: `Continua così! 🔥 ${streak} giorni di fila`,
+      en: `Keep it up! 🔥 ${streak} days`,
+      de: `Weiter so! 🔥 ${streak} Tage`
+    };
     const bodies = {
       it: `Stai andando bene — mantieni il ritmo, il risultato arriva.`,
       en: `You're doing well — keep rhythm.`,
@@ -2186,7 +3413,11 @@ function getMotivationalMessage({ sessions = [], profile = null, lang = "it", da
   if (dayOfYear % 3 === 0) {
     const tips = STRESS_TIPS[lang] || STRESS_TIPS.it;
     const tip = tips[dayOfYear % tips.length];
-    const titles2 = { it: "Tip anti-stress 🧘", en: "Anti-stress tip 🧘", de: "Anti-Stress Tipp 🧘" };
+    const titles2 = {
+      it: "Tip anti-stress 🧘",
+      en: "Anti-stress tip 🧘",
+      de: "Anti-Stress Tipp 🧘"
+    };
     return {
       title: titles2[lang] || titles2.it,
       body: personalize(tip, name, lang),
@@ -2209,9 +3440,33 @@ function getMotivationalMessage({ sessions = [], profile = null, lang = "it", da
   };
 }
 const BELLY_LEVELS = [
-  { key: "recluta", label: { it: "RECLUTA", en: "RECRUIT", de: "REKRUT" }, minPlank: 0, minCrunch: 0, work: 30, rest: 20, desc: { it: "Base — core sicuro", en: "Base — safe core", de: "Basis — sicher" } },
-  { key: "combattente", label: { it: "COMBATTENTE", en: "FIGHTER", de: "KÄMPFER" }, minPlank: 30, minCrunch: 10, work: 40, rest: 20, desc: { it: "Standard — 40″/20″", en: "Standard — 40s/20s", de: "Standard — 40s/20s" } },
-  { key: "elite", label: { it: "ELITE", en: "ELITE", de: "ELITE" }, minPlank: 60, minCrunch: 20, work: 45, rest: 15, desc: { it: "Avanzato — 45″/15″", en: "Advanced — 45s/15s", de: "Fortgeschritten — 45s/15s" } }
+  {
+    key: "recluta",
+    label: { it: "RECLUTA", en: "RECRUIT", de: "REKRUT" },
+    minPlank: 0,
+    minCrunch: 0,
+    work: 30,
+    rest: 20,
+    desc: { it: "Base — core sicuro", en: "Base — safe core", de: "Basis — sicher" }
+  },
+  {
+    key: "combattente",
+    label: { it: "COMBATTENTE", en: "FIGHTER", de: "KÄMPFER" },
+    minPlank: 30,
+    minCrunch: 10,
+    work: 40,
+    rest: 20,
+    desc: { it: "Standard — 40″/20″", en: "Standard — 40s/20s", de: "Standard — 40s/20s" }
+  },
+  {
+    key: "elite",
+    label: { it: "ELITE", en: "ELITE", de: "ELITE" },
+    minPlank: 60,
+    minCrunch: 20,
+    work: 45,
+    rest: 15,
+    desc: { it: "Avanzato — 45″/15″", en: "Advanced — 45s/15s", de: "Fortgeschritten — 45s/15s" }
+  }
 ];
 function getBellyLevelForTest({ plankSec = 0, crunchReps = 0 } = {}) {
   const p2 = Math.max(0, parseInt(plankSec, 10) || 0);
@@ -2222,7 +3477,12 @@ function getBellyLevelForTest({ plankSec = 0, crunchReps = 0 } = {}) {
   const chosen = order[levelByPlank] < order[levelByCrunch] ? levelByPlank : levelByCrunch;
   return BELLY_LEVELS.find((l2) => l2.key === chosen) || BELLY_LEVELS[0];
 }
-function shouldProgressBellyLevel({ sessions, currentLevelKey = "recluta", waistHistory, profile }) {
+function shouldProgressBellyLevel({
+  sessions,
+  currentLevelKey = "recluta",
+  waistHistory,
+  profile
+}) {
   const levelOrder = ["recluta", "combattente", "elite"];
   const idx = levelOrder.indexOf(currentLevelKey);
   if (idx >= levelOrder.length - 1) return null;
@@ -2232,13 +3492,17 @@ function shouldProgressBellyLevel({ sessions, currentLevelKey = "recluta", waist
     if (diff < 7) return null;
   }
   const weekAgo = Date.now() - 7 * 864e5;
-  const bellySessions = (sessions || []).filter((s) => ["N", "O", "P", "A", "E", "F", "M"].includes(s.programId) && new Date(s.date).getTime() > weekAgo);
+  const bellySessions = (sessions || []).filter(
+    (s) => ["N", "O", "P", "A", "E", "F", "M"].includes(s.programId) && new Date(s.date).getTime() > weekAgo
+  );
   if (bellySessions.length < 3) return null;
   return levelOrder[idx + 1];
 }
 function BellyTest({ onSave, onClose, lang = "it", initial = null }) {
   const [plankSec, setPlankSec] = reactExports.useState((initial == null ? void 0 : initial.plankSec) ? String(initial.plankSec) : "");
-  const [crunchReps, setCrunchReps] = reactExports.useState((initial == null ? void 0 : initial.crunchReps) ? String(initial.crunchReps) : "");
+  const [crunchReps, setCrunchReps] = reactExports.useState(
+    (initial == null ? void 0 : initial.crunchReps) ? String(initial.crunchReps) : ""
+  );
   const [running, setRunning] = reactExports.useState(null);
   const [seconds, setSeconds] = reactExports.useState(0);
   const [crunchCount, setCrunchCount] = reactExports.useState(0);
@@ -2262,151 +3526,312 @@ function BellyTest({ onSave, onClose, lang = "it", initial = null }) {
   const hasInput = p2 > 0 || c > 0;
   const suggested = hasInput ? getBellyLevelForTest({ plankSec: p2, crunchReps: c }) : null;
   const t = (it, en, de) => lang === "en" ? en : lang === "de" ? de : it;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${BLAZE}66`, borderRadius: 14, padding: 14 }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 18, color: BLAZE }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: BLAZE, fontSize: 11, letterSpacing: "0.08em" }, children: t("TEST PANCIA 2.0 — TROVA IL TUO LIVELLO", "BELLY TEST 2.0 — FIND YOUR LEVEL", "BAUCH-TEST 2.0") })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 12 }, children: t(
-      "2 test da 30-60s: tieni il plank più a lungo che puoi e conta i crunch in 30s. Ti assegno Recluta/Combattente/Elite automatico.",
-      "2 quick tests: hold plank as long as you can and count crunches in 30s. You get auto level.",
-      "2 Tests: Plank so lange wie möglich halten und Crunches in 30s zählen."
-    ) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: 10 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, marginBottom: 6 }, children: "PLANK MAX (sec)" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
-          {
-            value: plankSec,
-            onChange: (e) => setPlankSec(e.target.value.replace(/\D/g, "").slice(0, 3)),
-            placeholder: "es. 45",
-            inputMode: "numeric",
-            style: { width: "100%", background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: "10px 12px", color: PAPER, fontSize: 16, outline: "none" }
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, marginTop: 8 }, children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      style: { background: INK_2, border: `1px solid ${BLAZE}66`, borderRadius: 14, padding: 14 },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 18, color: BLAZE }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: BLAZE, fontSize: 11, letterSpacing: "0.08em" }, children: t(
+            "TEST PANCIA 2.0 — TROVA IL TUO LIVELLO",
+            "BELLY TEST 2.0 — FIND YOUR LEVEL",
+            "BAUCH-TEST 2.0"
+          ) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 12 }, children: t(
+          "2 test da 30-60s: tieni il plank più a lungo che puoi e conta i crunch in 30s. Ti assegno Recluta/Combattente/Elite automatico.",
+          "2 quick tests: hold plank as long as you can and count crunches in 30s. You get auto level.",
+          "2 Tests: Plank so lange wie möglich halten und Crunches in 30s zählen."
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
+            "div",
             {
-              onClick: () => {
-                setRunning(running === "plank" ? null : "plank");
-                if (running !== "plank") setSeconds(0);
-              },
-              style: { flex: 1, padding: "6px 8px", borderRadius: 8, border: `1px solid ${running === "plank" ? BLAZE : OLIVE}`, background: running === "plank" ? `${BLAZE}22` : "transparent", color: running === "plank" ? BLAZE : STEEL, fontSize: 11, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4 },
+              style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: 10 },
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Timer, { size: 12 }),
-                " ",
-                running === "plank" ? `${seconds}″ STOP` : "VIA PLANK"
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, marginBottom: 6 }, children: "PLANK MAX (sec)" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    value: plankSec,
+                    onChange: (e) => setPlankSec(e.target.value.replace(/\D/g, "").slice(0, 3)),
+                    placeholder: "es. 45",
+                    inputMode: "numeric",
+                    style: {
+                      width: "100%",
+                      background: INK_2,
+                      border: `1px solid ${OLIVE}`,
+                      borderRadius: 8,
+                      padding: "10px 12px",
+                      color: PAPER,
+                      fontSize: 16,
+                      outline: "none"
+                    }
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, marginTop: 8 }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "button",
+                    {
+                      onClick: () => {
+                        setRunning(running === "plank" ? null : "plank");
+                        if (running !== "plank") setSeconds(0);
+                      },
+                      style: {
+                        flex: 1,
+                        padding: "6px 8px",
+                        borderRadius: 8,
+                        border: `1px solid ${running === "plank" ? BLAZE : OLIVE}`,
+                        background: running === "plank" ? `${BLAZE}22` : "transparent",
+                        color: running === "plank" ? BLAZE : STEEL,
+                        fontSize: 11,
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 4
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(Timer, { size: 12 }),
+                        " ",
+                        running === "plank" ? `${seconds}″ STOP` : "VIA PLANK"
+                      ]
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "button",
+                    {
+                      onClick: () => {
+                        setPlankSec(String(seconds));
+                        setRunning(null);
+                      },
+                      style: {
+                        padding: "6px 10px",
+                        borderRadius: 8,
+                        border: `1px solid ${OLIVE}`,
+                        background: INK_2,
+                        color: KHAKI,
+                        fontSize: 11,
+                        cursor: "pointer"
+                      },
+                      children: [
+                        "Usa ",
+                        seconds,
+                        "″"
+                      ]
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 9, marginTop: 4 }, children: "<30 Recluta · 30-60 Combattente · >60 Elite" })
               ]
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
+            "div",
             {
-              onClick: () => {
-                setPlankSec(String(seconds));
-                setRunning(null);
-              },
-              style: { padding: "6px 10px", borderRadius: 8, border: `1px solid ${OLIVE}`, background: INK_2, color: KHAKI, fontSize: 11, cursor: "pointer" },
+              style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: 10 },
               children: [
-                "Usa ",
-                seconds,
-                "″"
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, marginBottom: 6 }, children: "CRUNCH 30″ (rep)" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    value: crunchReps,
+                    onChange: (e) => setCrunchReps(e.target.value.replace(/\D/g, "").slice(0, 2)),
+                    placeholder: "es. 14",
+                    inputMode: "numeric",
+                    style: {
+                      width: "100%",
+                      background: INK_2,
+                      border: `1px solid ${OLIVE}`,
+                      borderRadius: 8,
+                      padding: "10px 12px",
+                      color: PAPER,
+                      fontSize: 16,
+                      outline: "none"
+                    }
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, marginTop: 8 }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "button",
+                    {
+                      onClick: () => {
+                        if (running === "crunch") {
+                          setRunning(null);
+                          setCrunchReps(String(crunchCount));
+                        } else {
+                          setRunning("crunch");
+                          setSeconds(0);
+                          setCrunchCount(0);
+                        }
+                      },
+                      style: {
+                        flex: 1,
+                        padding: "6px 8px",
+                        borderRadius: 8,
+                        border: `1px solid ${running === "crunch" ? BLAZE : OLIVE}`,
+                        background: running === "crunch" ? `${BLAZE}22` : "transparent",
+                        color: running === "crunch" ? BLAZE : STEEL,
+                        fontSize: 11,
+                        fontWeight: 700,
+                        cursor: "pointer"
+                      },
+                      children: running === "crunch" ? `30″: ${30 - seconds}s` : "VIA 30″"
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "button",
+                    {
+                      onClick: () => setCrunchCount((c2) => c2 + 1),
+                      disabled: running !== "crunch",
+                      style: {
+                        padding: "6px 10px",
+                        borderRadius: 8,
+                        border: `1px solid ${OLIVE}`,
+                        background: running === "crunch" ? BLAZE : INK_2,
+                        color: running === "crunch" ? PAPER : STEEL,
+                        fontSize: 14,
+                        fontWeight: 700,
+                        cursor: running === "crunch" ? "pointer" : "not-allowed"
+                      },
+                      children: [
+                        "+1 (",
+                        crunchCount,
+                        ")"
+                      ]
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 9, marginTop: 4 }, children: "<10 Recluta · 10-20 Combattente · >20 Elite" })
               ]
             }
           )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 9, marginTop: 4 }, children: "<30 Recluta · 30-60 Combattente · >60 Elite" })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: 10 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, marginBottom: 6 }, children: "CRUNCH 30″ (rep)" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
+        suggested && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
           {
-            value: crunchReps,
-            onChange: (e) => setCrunchReps(e.target.value.replace(/\D/g, "").slice(0, 2)),
-            placeholder: "es. 14",
-            inputMode: "numeric",
-            style: { width: "100%", background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: "10px 12px", color: PAPER, fontSize: 16, outline: "none" }
+            style: {
+              background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK})`,
+              border: `1px solid ${BLAZE}`,
+              borderRadius: 10,
+              padding: 10,
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 10
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  style: {
+                    width: 36,
+                    height: 36,
+                    borderRadius: "50%",
+                    background: `${BLAZE}22`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  },
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 16, color: BLAZE })
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "LIVELLO SUGGERITO" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 14, fontWeight: 700 }, children: [
+                  suggested.label.it,
+                  " · ",
+                  suggested.work,
+                  "″/",
+                  suggested.rest,
+                  "″"
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: suggested.desc.it })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { textAlign: "right" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: BLAZE, fontSize: 10 }, children: [
+                p2,
+                "″ / ",
+                c,
+                " rep"
+              ] }) })
+            ]
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, marginTop: 8 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
-              onClick: () => {
-                if (running === "crunch") {
-                  setRunning(null);
-                  setCrunchReps(String(crunchCount));
-                } else {
-                  setRunning("crunch");
-                  setSeconds(0);
-                  setCrunchCount(0);
-                }
+              onClick: onClose,
+              style: {
+                flex: 1,
+                padding: "10px 12px",
+                borderRadius: 10,
+                border: `1px solid ${OLIVE}`,
+                background: INK,
+                color: STEEL,
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: "pointer"
               },
-              style: { flex: 1, padding: "6px 8px", borderRadius: 8, border: `1px solid ${running === "crunch" ? BLAZE : OLIVE}`, background: running === "crunch" ? `${BLAZE}22` : "transparent", color: running === "crunch" ? BLAZE : STEEL, fontSize: 11, fontWeight: 700, cursor: "pointer" },
-              children: running === "crunch" ? `30″: ${30 - seconds}s` : "VIA 30″"
+              children: t("Chiudi", "Close", "Schließen")
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "button",
             {
-              onClick: () => setCrunchCount((c2) => c2 + 1),
-              disabled: running !== "crunch",
-              style: { padding: "6px 10px", borderRadius: 8, border: `1px solid ${OLIVE}`, background: running === "crunch" ? BLAZE : INK_2, color: running === "crunch" ? PAPER : STEEL, fontSize: 14, fontWeight: 700, cursor: running === "crunch" ? "pointer" : "not-allowed" },
+              onClick: () => hasInput && suggested && onSave({
+                plankSec: p2,
+                crunchReps: c,
+                level: suggested.key,
+                date: (/* @__PURE__ */ new Date()).toISOString()
+              }),
+              disabled: !hasInput || !suggested,
+              style: {
+                flex: 2,
+                padding: "10px 12px",
+                borderRadius: 10,
+                border: `1px solid ${BLAZE}`,
+                background: hasInput ? `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})` : INK_2,
+                color: PAPER,
+                fontSize: 12,
+                fontWeight: 700,
+                cursor: hasInput ? "pointer" : "not-allowed",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 6,
+                opacity: hasInput ? 1 : 0.5
+              },
               children: [
-                "+1 (",
-                crunchCount,
-                ")"
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 14 }),
+                " ",
+                t("Salva livello", "Save level", "Level speichern"),
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 14 })
               ]
             }
           )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 9, marginTop: 4 }, children: "<10 Recluta · 10-20 Combattente · >20 Elite" })
-      ] })
-    ] }),
-    suggested && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK})`, border: `1px solid ${BLAZE}`, borderRadius: 10, padding: 10, display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, borderRadius: "50%", background: `${BLAZE}22`, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 16, color: BLAZE }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "LIVELLO SUGGERITO" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 14, fontWeight: 700 }, children: [
-          suggested.label.it,
-          " · ",
-          suggested.work,
-          "″/",
-          suggested.rest,
-          "″"
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: suggested.desc.it })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { textAlign: "right" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: BLAZE, fontSize: 10 }, children: [
-        p2,
-        "″ / ",
-        c,
-        " rep"
-      ] }) })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onClose, style: { flex: 1, padding: "10px 12px", borderRadius: 10, border: `1px solid ${OLIVE}`, background: INK, color: STEEL, fontSize: 12, fontWeight: 600, cursor: "pointer" }, children: t("Chiudi", "Close", "Schließen") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "button",
-        {
-          onClick: () => hasInput && suggested && onSave({ plankSec: p2, crunchReps: c, level: suggested.key, date: (/* @__PURE__ */ new Date()).toISOString() }),
-          disabled: !hasInput || !suggested,
-          style: { flex: 2, padding: "10px 12px", borderRadius: 10, border: `1px solid ${BLAZE}`, background: hasInput ? `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})` : INK_2, color: PAPER, fontSize: 12, fontWeight: 700, cursor: hasInput ? "pointer" : "not-allowed", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: hasInput ? 1 : 0.5 },
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 14 }),
-            " ",
-            t("Salva livello", "Save level", "Level speichern"),
-            " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 14 })
-          ]
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 4, marginTop: 8, justifyContent: "center" }, children: BELLY_LEVELS.map((l2) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 9, color: (suggested == null ? void 0 : suggested.key) === l2.key ? BLAZE : STEEL, border: `1px solid ${(suggested == null ? void 0 : suggested.key) === l2.key ? BLAZE : OLIVE}`, borderRadius: 6, padding: "2px 6px", background: (suggested == null ? void 0 : suggested.key) === l2.key ? `${BLAZE}18` : "transparent" }, children: l2.label.it }, l2.key)) })
-  ] });
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 4, marginTop: 8, justifyContent: "center" }, children: BELLY_LEVELS.map((l2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "span",
+          {
+            style: {
+              fontSize: 9,
+              color: (suggested == null ? void 0 : suggested.key) === l2.key ? BLAZE : STEEL,
+              border: `1px solid ${(suggested == null ? void 0 : suggested.key) === l2.key ? BLAZE : OLIVE}`,
+              borderRadius: 6,
+              padding: "2px 6px",
+              background: (suggested == null ? void 0 : suggested.key) === l2.key ? `${BLAZE}18` : "transparent"
+            },
+            children: l2.label.it
+          },
+          l2.key
+        )) })
+      ]
+    }
+  );
 }
 class HysteresisStateMachine {
   constructor(cfg) {
@@ -6415,41 +7840,90 @@ function BottomNav({ active, onNavigate }) {
     { key: "history", label: t("nav.history"), icon: History },
     { key: "setup", label: t("nav.setup"), icon: Settings }
   ];
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-bottomnav-glass", style: {
-    display: "flex",
-    paddingBottom: "env(safe-area-inset-bottom, 0px)"
-  }, children: tabs.map((tab) => {
-    const on = active === tab.key;
-    const Icon = tab.icon;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onNavigate(tab.key), style: {
-      flex: 1,
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-      padding: "8px 4px 6px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 3,
-      position: "relative"
-    }, children: [
-      on && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 0, left: "26%", right: "26%", height: 2, borderRadius: 2, background: BLAZE, boxShadow: `0 0 8px ${BLAZE}` } }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
-        width: 40,
-        height: 26,
-        borderRadius: 13,
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      className: "o40-bottomnav-glass",
+      style: {
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: on ? `${BLAZE}22` : "transparent",
-        transition: "background 0.2s ease",
-        animation: on ? "tabPop 0.28s cubic-bezier(0.16,1,0.3,1)" : "none"
-      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { size: 20, color: on ? BLAZE : STEEL, style: { transition: "color 0.2s ease" } }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: on ? BLAZE : STEEL, fontSize: 9.5, letterSpacing: "0.03em" }, children: tab.label })
-    ] }, tab.key);
-  }) });
+        paddingBottom: "env(safe-area-inset-bottom, 0px)"
+      },
+      children: tabs.map((tab) => {
+        const on = active === tab.key;
+        const Icon = tab.icon;
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            onClick: () => onNavigate(tab.key),
+            style: {
+              flex: 1,
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              padding: "8px 4px 6px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 3,
+              position: "relative"
+            },
+            children: [
+              on && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  style: {
+                    position: "absolute",
+                    top: 0,
+                    left: "26%",
+                    right: "26%",
+                    height: 2,
+                    borderRadius: 2,
+                    background: BLAZE,
+                    boxShadow: `0 0 8px ${BLAZE}`
+                  }
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  style: {
+                    width: 40,
+                    height: 26,
+                    borderRadius: 13,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: on ? `${BLAZE}22` : "transparent",
+                    transition: "background 0.2s ease",
+                    animation: on ? "tabPop 0.28s cubic-bezier(0.16,1,0.3,1)" : "none"
+                  },
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    Icon,
+                    {
+                      size: 20,
+                      color: on ? BLAZE : STEEL,
+                      style: { transition: "color 0.2s ease" }
+                    }
+                  )
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "span",
+                {
+                  className: "o40-mono",
+                  style: { color: on ? BLAZE : STEEL, fontSize: 9.5, letterSpacing: "0.03em" },
+                  children: tab.label
+                }
+              )
+            ]
+          },
+          tab.key
+        );
+      })
+    }
+  );
 }
-const BUILD_VERSION = "2.9.0 · ddd99e2";
+const BUILD_VERSION = "2.9.0 · 03b13b8";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -6477,11 +7951,47 @@ function VersionBadge({ onClick }) {
         cursor: onClick ? "pointer" : "default"
       },
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { width: 6, height: 6, borderRadius: "50%", background: "#7FB069", boxShadow: "0 0 6px #7FB06988" } }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "span",
+          {
+            style: {
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "#7FB069",
+              boxShadow: "0 0 6px #7FB06988"
+            }
+          }
+        ),
         "v",
         BUILD_VERSION,
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { width: 6, height: 6, borderRadius: "50%", background: BLAZE, boxShadow: `0 0 6px ${BLAZE}88` } }),
-        onClick && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 8, border: `1px solid ${KHAKI}66`, borderRadius: 6, padding: "1px 5px", marginLeft: 2 }, children: "NOVITÀ" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "span",
+          {
+            style: {
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: BLAZE,
+              boxShadow: `0 0 6px ${BLAZE}88`
+            }
+          }
+        ),
+        onClick && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "span",
+          {
+            className: "o40-mono",
+            style: {
+              color: KHAKI,
+              fontSize: 8,
+              border: `1px solid ${KHAKI}66`,
+              borderRadius: 6,
+              padding: "1px 5px",
+              marginLeft: 2
+            },
+            children: "NOVITÀ"
+          }
+        )
       ]
     }
   );
@@ -7007,7 +8517,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-CFv-Eljc.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-DTUZsqoH.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -7398,12 +8908,18 @@ async function migrateStoredDataIfNeeded() {
 const BACKUP_VERSION = STORAGE_SCHEMA_VERSION;
 function validateBackup(data) {
   if (!data || typeof data !== "object") throw new Error("Backup non valido: root non è oggetto");
-  if (data.version != null && typeof data.version !== "number") throw new Error("Backup non valido: version deve essere numero");
-  if (data.profile != null && typeof data.profile !== "object") throw new Error("Backup non valido: profile non è oggetto");
-  if (data.sessions != null && !Array.isArray(data.sessions)) throw new Error("Backup non valido: sessions non è array");
-  if (data.waistHistory != null && !Array.isArray(data.waistHistory)) throw new Error("Backup non valido: waistHistory non è array");
-  if (data.weightHistory != null && !Array.isArray(data.weightHistory)) throw new Error("Backup non valido: weightHistory non è array");
-  if (data.customPrograms != null && !Array.isArray(data.customPrograms)) throw new Error("Backup non valido: customPrograms non è array");
+  if (data.version != null && typeof data.version !== "number")
+    throw new Error("Backup non valido: version deve essere numero");
+  if (data.profile != null && typeof data.profile !== "object")
+    throw new Error("Backup non valido: profile non è oggetto");
+  if (data.sessions != null && !Array.isArray(data.sessions))
+    throw new Error("Backup non valido: sessions non è array");
+  if (data.waistHistory != null && !Array.isArray(data.waistHistory))
+    throw new Error("Backup non valido: waistHistory non è array");
+  if (data.weightHistory != null && !Array.isArray(data.weightHistory))
+    throw new Error("Backup non valido: weightHistory non è array");
+  if (data.customPrograms != null && !Array.isArray(data.customPrograms))
+    throw new Error("Backup non valido: customPrograms non è array");
   return true;
 }
 function migrate(data) {
@@ -7426,7 +8942,14 @@ function migrate(data) {
   return data;
 }
 async function exportBackup() {
-  const keys = ["o40_profile", "o40_sessions", "o40_waist", "o40_weight", "o40_custom_programs", "o40_photos"];
+  const keys = [
+    "o40_profile",
+    "o40_sessions",
+    "o40_waist",
+    "o40_weight",
+    "o40_custom_programs",
+    "o40_photos"
+  ];
   const out = { version: BACKUP_VERSION, exportedAt: (/* @__PURE__ */ new Date()).toISOString() };
   for (const k2 of keys) {
     try {
@@ -7562,8 +9085,16 @@ function getBellyStreak(sessions) {
 }
 function getBellyProgress(sessions, goal = 3) {
   const weekAgo = Date.now() - 7 * 864e5;
-  const done = getBellySessions(sessions).filter((s) => new Date(s.date).getTime() > weekAgo).length;
-  return { done, total: goal, pct: Math.min(1, done / goal), remain: Math.max(0, goal - done), isDone: done >= goal };
+  const done = getBellySessions(sessions).filter(
+    (s) => new Date(s.date).getTime() > weekAgo
+  ).length;
+  return {
+    done,
+    total: goal,
+    pct: Math.min(1, done / goal),
+    remain: Math.max(0, goal - done),
+    isDone: done >= goal
+  };
 }
 function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   const bellyCount = getBellyCount(sessions, 4);
@@ -7585,17 +9116,29 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-D_TK-1Do.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-C5D48m_J.js"), true ? __vite__mapDeps([4,1,5,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-D0eSrz52.js"), true ? __vite__mapDeps([6,1,7,8,9,10,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-CFZfjFIf.js"), true ? __vite__mapDeps([11,1,8,12,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-nBCAm681.js"), true ? __vite__mapDeps([13,1,5,8,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-DhWWYcKN.js"), true ? __vite__mapDeps([14,1,12,8,5,9,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-COZKvM6m.js"), true ? __vite__mapDeps([15,1,8,5,10,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-lslVnGFR.js"), true ? __vite__mapDeps([16,1,9,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-C9P9bm6e.js"), true ? __vite__mapDeps([17,1,7,5,9,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-CotBNTqT.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-DAOX_mTQ.js"), true ? __vite__mapDeps([4,1,5,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-DsweVAfg.js"), true ? __vite__mapDeps([6,1,7,8,9,10,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-Hv4scdYL.js"), true ? __vite__mapDeps([11,1,8,12,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-a-_4iSiD.js"), true ? __vite__mapDeps([13,1,5,8,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-NuXqA1DD.js"), true ? __vite__mapDeps([14,1,12,8,5,9,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-CVTywGJj.js"), true ? __vite__mapDeps([15,1,8,5,10,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-_2BwbcnH.js"), true ? __vite__mapDeps([16,1,9,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-DkZrGqOZ.js"), true ? __vite__mapDeps([17,1,7,5,9,2]) : void 0, import.meta.url));
 function ScreenFallback() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 40 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: "#EDE8D8", fontSize: 12, letterSpacing: "0.08em" }, children: "CARICAMENTO…" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      style: {
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 40
+      },
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: "#EDE8D8", fontSize: 12, letterSpacing: "0.08em" }, children: "CARICAMENTO…" })
+    }
+  );
 }
 async function exportData() {
   try {
@@ -7604,7 +9147,15 @@ async function exportData() {
   } catch (e) {
   }
 }
-async function handleImportBackup(file, { setProfile, setSessions, setWaistHistory, setWeightHistory, setCustomPrograms, showToast, setScreen }) {
+async function handleImportBackup(file, {
+  setProfile,
+  setSessions,
+  setWaistHistory,
+  setWeightHistory,
+  setCustomPrograms,
+  showToast,
+  setScreen
+}) {
   try {
     const text = await file.text();
     const data = JSON.parse(text);
@@ -7626,15 +9177,47 @@ async function handleImportBackup(file, { setProfile, setSessions, setWaistHisto
   }
 }
 const HK_ACTIVITY_MAP = {
-  HKWorkoutActivityTypeFunctionalStrengthTraining: { it: "Forza funzionale (Apple Health)", en: "Functional strength (Apple Health)", de: "Funktionelles Krafttraining (Apple Health)" },
-  HKWorkoutActivityTypeTraditionalStrengthTraining: { it: "Allenamento forza (Apple Health)", en: "Strength training (Apple Health)", de: "Krafttraining (Apple Health)" },
-  HKWorkoutActivityTypeCoreTraining: { it: "Core training (Apple Health)", en: "Core training (Apple Health)", de: "Core-Training (Apple Health)" },
-  HKWorkoutActivityTypeHighIntensityIntervalTraining: { it: "HIIT (Apple Health)", en: "HIIT (Apple Health)", de: "HIIT (Apple Health)" },
-  HKWorkoutActivityTypeCrossTraining: { it: "Cross training (Apple Health)", en: "Cross training (Apple Health)", de: "Cross-Training (Apple Health)" },
-  HKWorkoutActivityTypeFlexibility: { it: "Mobilità (Apple Health)", en: "Flexibility (Apple Health)", de: "Mobilität (Apple Health)" },
-  HKWorkoutActivityTypeCooldown: { it: "Defaticamento (Apple Health)", en: "Cooldown (Apple Health)", de: "Abkühlen (Apple Health)" }
+  HKWorkoutActivityTypeFunctionalStrengthTraining: {
+    it: "Forza funzionale (Apple Health)",
+    en: "Functional strength (Apple Health)",
+    de: "Funktionelles Krafttraining (Apple Health)"
+  },
+  HKWorkoutActivityTypeTraditionalStrengthTraining: {
+    it: "Allenamento forza (Apple Health)",
+    en: "Strength training (Apple Health)",
+    de: "Krafttraining (Apple Health)"
+  },
+  HKWorkoutActivityTypeCoreTraining: {
+    it: "Core training (Apple Health)",
+    en: "Core training (Apple Health)",
+    de: "Core-Training (Apple Health)"
+  },
+  HKWorkoutActivityTypeHighIntensityIntervalTraining: {
+    it: "HIIT (Apple Health)",
+    en: "HIIT (Apple Health)",
+    de: "HIIT (Apple Health)"
+  },
+  HKWorkoutActivityTypeCrossTraining: {
+    it: "Cross training (Apple Health)",
+    en: "Cross training (Apple Health)",
+    de: "Cross-Training (Apple Health)"
+  },
+  HKWorkoutActivityTypeFlexibility: {
+    it: "Mobilità (Apple Health)",
+    en: "Flexibility (Apple Health)",
+    de: "Mobilität (Apple Health)"
+  },
+  HKWorkoutActivityTypeCooldown: {
+    it: "Defaticamento (Apple Health)",
+    en: "Cooldown (Apple Health)",
+    de: "Abkühlen (Apple Health)"
+  }
 };
-const HK_FALLBACK = { it: "Allenamento (Apple Health)", en: "Workout (Apple Health)", de: "Training (Apple Health)" };
+const HK_FALLBACK = {
+  it: "Allenamento (Apple Health)",
+  en: "Workout (Apple Health)",
+  de: "Training (Apple Health)"
+};
 const HK_RELEVANT_TYPES = Object.keys(HK_ACTIVITY_MAP);
 function getXmlAttr(tag, name) {
   const m2 = tag.match(new RegExp(name + '="([^"]*)"'));
@@ -7895,14 +9478,28 @@ function App() {
         const msg = getMotivationalMessage({ sessions, profile, lang });
         (_b = (_a = navigator.serviceWorker) == null ? void 0 : _a.ready) == null ? void 0 : _b.then((reg) => {
           if (reg && "showNotification" in reg) {
-            reg.showNotification(msg.title, { body: msg.body, icon: "./icons/icon-192.png", badge: "./icons/icon-192.png", tag: msg.tag, data: { url: "./" } });
+            reg.showNotification(msg.title, {
+              body: msg.body,
+              icon: "./icons/icon-192.png",
+              badge: "./icons/icon-192.png",
+              tag: msg.tag,
+              data: { url: "./" }
+            });
           } else if (typeof Notification !== "undefined") {
-            new Notification(msg.title, { body: msg.body, icon: "./icons/icon-192.png", tag: msg.tag });
+            new Notification(msg.title, {
+              body: msg.body,
+              icon: "./icons/icon-192.png",
+              tag: msg.tag
+            });
           }
         }).catch(() => {
           if (typeof Notification !== "undefined") {
             try {
-              new Notification(msg.title, { body: msg.body, icon: "./icons/icon-192.png", tag: msg.tag });
+              new Notification(msg.title, {
+                body: msg.body,
+                icon: "./icons/icon-192.png",
+                tag: msg.tag
+              });
             } catch {
             }
           }
@@ -8049,7 +9646,17 @@ function App() {
     }
     musicSetVolume(vol);
     musicPlay();
-  }, [musicOn, musicAutoPlay, musicShuffle, screen, musicTrack, phaseIdx, paused, musicVolume, seq]);
+  }, [
+    musicOn,
+    musicAutoPlay,
+    musicShuffle,
+    screen,
+    musicTrack,
+    phaseIdx,
+    paused,
+    musicVolume,
+    seq
+  ]);
   reactExports.useEffect(() => {
     musicSetOnTrackChange((nextId) => {
       setMusicTrack(nextId);
@@ -8124,10 +9731,24 @@ function App() {
     const preset = levelPreset(profile);
     const mode = profile && profile.executionMode || "time";
     const levelKey = profile && profile.level || "combattente";
-    const kcal = Math.round(estimateProgramKcal(activeProgram, profile.weight, skip, preset.work, preset.rest, mode, levelKey));
+    const kcal = Math.round(
+      estimateProgramKcal(
+        activeProgram,
+        profile.weight,
+        skip,
+        preset.work,
+        preset.rest,
+        mode,
+        levelKey
+      )
+    );
     if (soundRef.current) playBeep(1e3, 0.25);
     if (vibrationRef.current) vibrate([80, 60, 80, 60, 150]);
-    setLastStats({ program: activeProgram, kcal, durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey) });
+    setLastStats({
+      program: activeProgram,
+      kcal,
+      durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey)
+    });
     setScreen("summary");
   }
   async function saveProfile() {
@@ -8285,7 +9906,9 @@ function App() {
         setPushEnabled(true);
         updatePushStats(sessions, profile, lang).catch(() => {
         });
-        showToast(lang === "it" ? "Push attivato — anche con PWA chiusa" : "Push enabled — works with PWA closed");
+        showToast(
+          lang === "it" ? "Push attivato — anche con PWA chiusa" : "Push enabled — works with PWA closed"
+        );
       }
     } catch (e) {
       showToast(e.message || "Push non disponibile");
@@ -8294,7 +9917,12 @@ function App() {
     }
   }
   async function saveBellyTest({ plankSec, crunchReps, level, date }) {
-    const p2 = { ...profile, bellyTest: { plankSec, crunchReps, level, date }, bellyLevel: level, bellyLevelUpdated: date };
+    const p2 = {
+      ...profile,
+      bellyTest: { plankSec, crunchReps, level, date },
+      bellyLevel: level,
+      bellyLevelUpdated: date
+    };
     setProfile(p2);
     try {
       await window.storage.set("o40_profile", JSON.stringify(p2), false);
@@ -8311,10 +9939,14 @@ function App() {
     try {
       if (pushEnabled && isPushSupported()) {
         await testPushViaSW(lang);
-        showToast(lang === "it" ? "Test push inviato" : lang === "de" ? "Test-Push gesendet" : "Test push sent");
+        showToast(
+          lang === "it" ? "Test push inviato" : lang === "de" ? "Test-Push gesendet" : "Test push sent"
+        );
       } else {
         const ok = fireTestNotification(t);
-        showToast(ok ? lang === "it" ? "Notifica di test inviata" : lang === "de" ? "Testbenachrichtigung gesendet" : "Test notification sent" : "Permesso negato");
+        showToast(
+          ok ? lang === "it" ? "Notifica di test inviata" : lang === "de" ? "Testbenachrichtigung gesendet" : "Test notification sent" : "Permesso negato"
+        );
       }
     } catch (e) {
       showToast(e.message || "Test fallito");
@@ -8498,7 +10130,10 @@ function App() {
     if (!file) return;
     try {
       const url = await fileToDataUrl(file);
-      const next = [...photos, { id: Date.now().toString(36), date: (/* @__PURE__ */ new Date()).toISOString(), url }].slice(-12);
+      const next = [
+        ...photos,
+        { id: Date.now().toString(36), date: (/* @__PURE__ */ new Date()).toISOString(), url }
+      ].slice(-12);
       setPhotos(next);
       savePhotos(next);
       showToast("Foto aggiunta");
@@ -8572,7 +10207,9 @@ function App() {
         });
       }
       if (newRecords.length) {
-        const updated = [...sessions, ...newRecords].sort((a, b) => new Date(a.date) - new Date(b.date));
+        const updated = [...sessions, ...newRecords].sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        );
         setSessions(updated);
         try {
           await window.storage.set("o40_sessions", JSON.stringify(updated), false);
@@ -8580,10 +10217,15 @@ function App() {
         }
       }
       if (parsed.weightKg) {
-        setHealthWeightSuggestion({ kg: Math.round(parsed.weightKg * 10) / 10, date: parsed.weightDate });
+        setHealthWeightSuggestion({
+          kg: Math.round(parsed.weightKg * 10) / 10,
+          date: parsed.weightDate
+        });
       }
       setHealthImportStatus("done");
-      showToast(newRecords.length ? t("toast.imported", { n: newRecords.length }) : t("toast.imported.none"));
+      showToast(
+        newRecords.length ? t("toast.imported", { n: newRecords.length }) : t("toast.imported.none")
+      );
     } catch (e) {
       setHealthImportStatus("error");
       showToast(t("toast.import.fail"));
@@ -8602,7 +10244,14 @@ function App() {
     showToast(t("toast.weight"));
   }
   const shell = { minHeight: "100dvh", background: INK, display: "flex", justifyContent: "center" };
-  const phone = { width: "100%", maxWidth: 460, minHeight: "100dvh", display: "flex", flexDirection: "column", position: "relative" };
+  const phone = {
+    width: "100%",
+    maxWidth: 460,
+    minHeight: "100dvh",
+    display: "flex",
+    flexDirection: "column",
+    position: "relative"
+  };
   if (screen === "loading") {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(LangContext.Provider, { value: { lang, t, setLang: handleSetLang }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40", style: { ...shell, alignItems: "center", justifyContent: "center" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("style", { children: STYLES }),
@@ -8687,75 +10336,232 @@ function App() {
             onTogglePush: togglePush,
             onTestPush: handleTestPush,
             onExportBackup: exportData,
-            onImportBackup: (file) => handleImportBackup(file, { setProfile, setSessions, setWaistHistory, setWeightHistory, setCustomPrograms, showToast, setScreen })
+            onImportBackup: (file) => handleImportBackup(file, {
+              setProfile,
+              setSessions,
+              setWaistHistory,
+              setWeightHistory,
+              setCustomPrograms,
+              showToast,
+              setScreen
+            })
           }
         ),
-        screen === "home" && profile && showReleaseBanner && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
-          margin: "10px 16px 0",
-          padding: "12px 14px",
-          borderRadius: 14,
-          background: `linear-gradient(135deg, ${BLAZE}18, ${INK_2})`,
-          border: `1px solid ${BLAZE}55`,
-          boxShadow: `0 4px 16px rgba(0,0,0,0.35), 0 0 0 1px ${BLAZE}22 inset`,
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          position: "relative",
-          overflow: "hidden"
-        }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, opacity: 0.06, background: `repeating-linear-gradient(90deg, ${OLIVE} 0 1px, transparent 1px 14px)`, pointerEvents: "none" } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, alignItems: "center", flex: 1, minWidth: 0 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 18, color: PAPER }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { minWidth: 0 }, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { background: BLAZE, color: PAPER, fontSize: 9, fontWeight: 800, letterSpacing: "0.08em", padding: "2px 6px", borderRadius: 6 }, children: "NUOVO v2.9.0" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "27 AGO 2026 · AUDIT 5 AREE" })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }, children: "Audit completo — backup, performance, PWA!" })
+        screen === "home" && profile && showReleaseBanner && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            style: {
+              margin: "10px 16px 0",
+              padding: "12px 14px",
+              borderRadius: 14,
+              background: `linear-gradient(135deg, ${BLAZE}18, ${INK_2})`,
+              border: `1px solid ${BLAZE}55`,
+              boxShadow: `0 4px 16px rgba(0,0,0,0.35), 0 0 0 1px ${BLAZE}22 inset`,
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+              position: "relative",
+              overflow: "hidden"
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  style: {
+                    position: "absolute",
+                    inset: 0,
+                    opacity: 0.06,
+                    background: `repeating-linear-gradient(90deg, ${OLIVE} 0 1px, transparent 1px 14px)`,
+                    pointerEvents: "none"
+                  }
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "div",
+                {
+                  style: {
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "flex-start",
+                    justifyContent: "space-between",
+                    gap: 10
+                  },
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                      "div",
+                      {
+                        style: { display: "flex", gap: 10, alignItems: "center", flex: 1, minWidth: 0 },
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "div",
+                            {
+                              style: {
+                                width: 36,
+                                height: 36,
+                                borderRadius: 10,
+                                background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`,
+                                display: "grid",
+                                placeItems: "center",
+                                flexShrink: 0
+                              },
+                              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 18, color: PAPER })
+                            }
+                          ),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { minWidth: 0 }, children: [
+                            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                              "div",
+                              {
+                                style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" },
+                                children: [
+                                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                                    "span",
+                                    {
+                                      className: "o40-mono",
+                                      style: {
+                                        background: BLAZE,
+                                        color: PAPER,
+                                        fontSize: 9,
+                                        fontWeight: 800,
+                                        letterSpacing: "0.08em",
+                                        padding: "2px 6px",
+                                        borderRadius: 6
+                                      },
+                                      children: "NUOVO v2.9.0"
+                                    }
+                                  ),
+                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "27 AGO 2026 · AUDIT 5 AREE" })
+                                ]
+                              }
+                            ),
+                            /* @__PURE__ */ jsxRuntimeExports.jsx(
+                              "div",
+                              {
+                                className: "o40-display",
+                                style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 },
+                                children: "Audit completo — backup, performance, PWA!"
+                              }
+                            )
+                          ] })
+                        ]
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "button",
+                      {
+                        onClick: () => {
+                          try {
+                            localStorage.setItem("o40_release_2.9.0", "dismissed");
+                          } catch {
+                          }
+                          setShowReleaseBanner(false);
+                        },
+                        "aria-label": "Chiudi",
+                        style: {
+                          width: 28,
+                          height: 28,
+                          borderRadius: "50%",
+                          border: `1px solid ${OLIVE}`,
+                          background: INK,
+                          color: STEEL,
+                          display: "grid",
+                          placeItems: "center",
+                          cursor: "pointer",
+                          flexShrink: 0,
+                          position: "relative"
+                        },
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14 })
+                      }
+                    )
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "ul",
+                {
+                  style: {
+                    position: "relative",
+                    margin: 0,
+                    paddingLeft: 18,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 3,
+                    listStyle: "disc"
+                  },
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Backup" }),
+                      ": export/import JSON + schema v2 — non perdi più i dati cambiando device"
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Dedup" }),
+                      ": DogTag/ProgressRing/styles centralizzati — Home 65 righe → shared"
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "i18n" }),
+                      ": 15+ hardcoded IT → t() — OGGI/PROGRESSI/MISSIONI + backup"
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Lazy+PWA" }),
+                      ": 9 screen lazy (749k→444k) + SW stale-while-revalidate + 51 test"
+                    ] })
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "flex", gap: 8, marginTop: 2 }, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "button",
+                  {
+                    onClick: () => setShowChangelog(true),
+                    style: {
+                      flex: 1,
+                      background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`,
+                      color: PAPER,
+                      border: "none",
+                      borderRadius: 10,
+                      padding: "9px 12px",
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontSize: 14,
+                      letterSpacing: "0.06em",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 6
+                    },
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 14 }),
+                      " DETTAGLI ",
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 14 })
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    onClick: () => {
+                      try {
+                        localStorage.setItem("o40_release_2.9.0", "dismissed");
+                      } catch {
+                      }
+                      setShowReleaseBanner(false);
+                    },
+                    style: {
+                      background: INK,
+                      border: `1px solid ${OLIVE}`,
+                      color: KHAKI,
+                      borderRadius: 10,
+                      padding: "9px 14px",
+                      fontSize: 11,
+                      fontWeight: 600,
+                      cursor: "pointer"
+                    },
+                    children: "Chiudi"
+                  }
+                )
               ] })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
-              try {
-                localStorage.setItem("o40_release_2.9.0", "dismissed");
-              } catch {
-              }
-              setShowReleaseBanner(false);
-            }, "aria-label": "Chiudi", style: { width: 28, height: 28, borderRadius: "50%", border: `1px solid ${OLIVE}`, background: INK, color: STEEL, display: "grid", placeItems: "center", cursor: "pointer", flexShrink: 0, position: "relative" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14 }) })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { style: { position: "relative", margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 3, listStyle: "disc" }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Backup" }),
-              ": export/import JSON + schema v2 — non perdi più i dati cambiando device"
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Dedup" }),
-              ": DogTag/ProgressRing/styles centralizzati — Home 65 righe → shared"
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "i18n" }),
-              ": 15+ hardcoded IT → t() — OGGI/PROGRESSI/MISSIONI + backup"
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("b", { style: { color: PAPER }, children: "Lazy+PWA" }),
-              ": 9 screen lazy (749k→444k) + SW stale-while-revalidate + 51 test"
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "flex", gap: 8, marginTop: 2 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setShowChangelog(true), style: { flex: 1, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 10, padding: "9px 12px", fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: "0.06em", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 14 }),
-              " DETTAGLI ",
-              /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 14 })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
-              try {
-                localStorage.setItem("o40_release_2.9.0", "dismissed");
-              } catch {
-              }
-              setShowReleaseBanner(false);
-            }, style: { background: INK, border: `1px solid ${OLIVE}`, color: KHAKI, borderRadius: 10, padding: "9px 14px", fontSize: 11, fontWeight: 600, cursor: "pointer" }, children: "Chiudi" })
-          ] })
-        ] }),
+            ]
+          }
+        ),
         screen === "home" && profile && /* @__PURE__ */ jsxRuntimeExports.jsx(
           HomeScreen,
           {
@@ -8807,7 +10613,15 @@ function App() {
             onStart: () => setScreen("countdown")
           }
         ),
-        screen === "countdown" && previewProgram && /* @__PURE__ */ jsxRuntimeExports.jsx(CountdownScreen, { program: previewProgram, lang, t, onDone: () => startSession(previewProgram) }),
+        screen === "countdown" && previewProgram && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          CountdownScreen,
+          {
+            program: previewProgram,
+            lang,
+            t,
+            onDone: () => startSession(previewProgram)
+          }
+        ),
         screen === "session" && seq.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
           SessionScreen,
           {
@@ -8871,128 +10685,284 @@ function App() {
         )
       ] }),
       ["home", "library", "history", "setup"].includes(screen) && /* @__PURE__ */ jsxRuntimeExports.jsx(BottomNav, { active: screen, onNavigate: setScreen }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: screen === "loading" ? "12px 0" : "6px 0 10px", opacity: 0.85 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(VersionBadge, { onClick: () => setShowChangelog(true) }),
-        updateAvailable && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          style: {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 6,
+            padding: screen === "loading" ? "12px 0" : "6px 0 10px",
+            opacity: 0.85
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(VersionBadge, { onClick: () => setShowChangelog(true) }),
+            updateAvailable && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                onClick: async () => {
+                  try {
+                    try {
+                      if (updateVersion) localStorage.setItem("o40_lastSw", updateVersion);
+                    } catch {
+                    }
+                    const reg = await navigator.serviceWorker.getRegistration();
+                    if (reg && reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+                    await fetch("./sw.js", { cache: "reload" });
+                    window.location.href = window.location.pathname + "?v=" + (updateVersion || Date.now()) + window.location.hash;
+                    setTimeout(() => window.location.reload(), 400);
+                  } catch {
+                    window.location.reload();
+                  }
+                },
+                style: {
+                  background: BLAZE,
+                  color: PAPER,
+                  border: `1px solid ${BLAZE}`,
+                  borderRadius: 20,
+                  padding: "6px 14px",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  boxShadow: `0 4px 12px ${BLAZE}66`,
+                  animation: "glowPulse 1.8s ease-in-out infinite"
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 12 }),
+                  " Aggiorna app → ",
+                  updateVersion || "nuova versione"
+                ]
+              }
+            )
+          ]
+        }
+      ),
+      showChangelog && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ChangelogModal,
+        {
+          lang,
+          onClose: () => setShowChangelog(false),
+          onTry: () => setShowPose("squat")
+        }
+      ),
+      toast && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          style: {
+            position: "absolute",
+            left: 16,
+            right: 16,
+            bottom: 20,
+            zIndex: 20,
+            display: "flex",
+            justifyContent: "center",
+            pointerEvents: "none"
+          },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "o40-toast-in",
+              style: {
+                background: `linear-gradient(135deg, ${OLIVE}, ${OLIVE_DARK})`,
+                border: `1px solid ${BLAZE}`,
+                borderRadius: 12,
+                padding: "10px 18px",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+                color: PAPER,
+                fontSize: 13,
+                fontWeight: 600,
+                textAlign: "center",
+                maxWidth: "100%"
+              },
+              children: toast
+            }
+          )
+        }
+      ),
+      installPrompt && ["home", "library", "history", "setup"].includes(screen) && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-install", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            style: {
+              width: 36,
+              height: 36,
+              borderRadius: 8,
+              background: BLAZE,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { size: 18, color: PAPER })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 13 }, children: lang === "it" ? "Installa Operator 40" : lang === "de" ? "Operator 40 installieren" : "Install Operator 40" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 11 }, children: lang === "it" ? "Aggiungi alla home per l’accesso offline" : "Add to home for offline access" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
           {
             onClick: async () => {
               try {
-                try {
-                  if (updateVersion) localStorage.setItem("o40_lastSw", updateVersion);
-                } catch {
-                }
-                const reg = await navigator.serviceWorker.getRegistration();
-                if (reg && reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
-                await fetch("./sw.js", { cache: "reload" });
-                window.location.href = window.location.pathname + "?v=" + (updateVersion || Date.now()) + window.location.hash;
-                setTimeout(() => window.location.reload(), 400);
+                installPrompt.prompt();
+                const c = await installPrompt.userChoice;
+                if (c.outcome === "accepted") setInstallPrompt(null);
               } catch {
-                window.location.reload();
               }
             },
             style: {
               background: BLAZE,
               color: PAPER,
-              border: `1px solid ${BLAZE}`,
-              borderRadius: 20,
-              padding: "6px 14px",
-              fontSize: 11,
+              border: "none",
+              borderRadius: 8,
+              padding: "8px 12px",
               fontWeight: 700,
               cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              boxShadow: `0 4px 12px ${BLAZE}66`,
-              animation: "glowPulse 1.8s ease-in-out infinite"
+              fontSize: 12
             },
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 12 }),
-              " Aggiorna app → ",
-              updateVersion || "nuova versione"
-            ]
+            children: "OK"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: () => setInstallPrompt(null),
+            style: {
+              background: "transparent",
+              border: "none",
+              color: STEEL,
+              cursor: "pointer",
+              padding: 6
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 16 })
           }
         )
       ] }),
-      showChangelog && /* @__PURE__ */ jsxRuntimeExports.jsx(ChangelogModal, { lang, onClose: () => setShowChangelog(false), onTry: () => setShowPose("squat") }),
-      toast && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
-        position: "absolute",
-        left: 16,
-        right: 16,
-        bottom: 20,
-        zIndex: 20,
-        display: "flex",
-        justifyContent: "center",
-        pointerEvents: "none"
-      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-toast-in", style: {
-        background: `linear-gradient(135deg, ${OLIVE}, ${OLIVE_DARK})`,
-        border: `1px solid ${BLAZE}`,
-        borderRadius: 12,
-        padding: "10px 18px",
-        boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-        color: PAPER,
-        fontSize: 13,
-        fontWeight: 600,
-        textAlign: "center",
-        maxWidth: "100%"
-      }, children: toast }) }),
-      installPrompt && ["home", "library", "history", "setup"].includes(screen) && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-install", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, borderRadius: 8, background: BLAZE, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { size: 18, color: PAPER }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 13 }, children: lang === "it" ? "Installa Operator 40" : lang === "de" ? "Operator 40 installieren" : "Install Operator 40" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 11 }, children: lang === "it" ? "Aggiungi alla home per l’accesso offline" : "Add to home for offline access" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: async () => {
-          try {
-            installPrompt.prompt();
-            const c = await installPrompt.userChoice;
-            if (c.outcome === "accepted") setInstallPrompt(null);
-          } catch {
-          }
-        }, style: { background: BLAZE, color: PAPER, border: "none", borderRadius: 8, padding: "8px 12px", fontWeight: 700, cursor: "pointer", fontSize: 12 }, children: "OK" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setInstallPrompt(null), style: { background: "transparent", border: "none", color: STEEL, cursor: "pointer", padding: 6 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 16 }) })
-      ] }),
-      showTour && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-tour-mask", onClick: () => {
-        setShowTour(false);
-        try {
-          localStorage.setItem("o40_seenTour", "1");
-        } catch {
-        }
-      }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-tour-card", onClick: (e) => e.stopPropagation(), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 18, color: BLAZE }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { fontSize: 20 }, children: "Benvenuto!" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 13, lineHeight: 1.5, color: "#333" }, children: lang === "it" ? "Tre tap: scegli la missione del giorno, allenati 15 minuti, traccia i progressi. Tutto offline, sulla tua privacy." : "Three taps: pick today's mission, train 15 min, track progress. Fully offline, private." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, marginTop: 14 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
-            setShowTour(false);
-            try {
-              localStorage.setItem("o40_seenTour", "1");
-            } catch {
-            }
-          }, style: { flex: 1, background: BLAZE, color: PAPER, border: "none", borderRadius: 10, padding: "10px 0", fontWeight: 700, cursor: "pointer" }, children: "INIZIA" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
-            setShowTour(false);
-            try {
-              localStorage.setItem("o40_seenTour", "1");
-            } catch {
-            }
-          }, style: { background: "transparent", border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 14px", cursor: "pointer" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: OLIVE }) })
-        ] })
-      ] }) }),
-      showBellyTest && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-tour-mask", onClick: () => setShowBellyTest(false), style: { zIndex: 20 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-tour-card", onClick: (e) => e.stopPropagation(), style: { maxHeight: "90vh", overflowY: "auto", maxWidth: 440, width: "92vw" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(BellyTest, { lang, initial: profile == null ? void 0 : profile.bellyTest, onSave: saveBellyTest, onClose: () => setShowBellyTest(false) }) }) }),
-      showPose && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-tour-mask", onClick: () => setShowPose(null), style: { zIndex: 25 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-tour-card", onClick: (e) => e.stopPropagation(), style: { maxHeight: "90vh", overflowY: "auto", maxWidth: 560, width: "96vw", padding: 0, overflow: "hidden", border: `1px solid ${OLIVE}`, borderRadius: 18 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        FitnessEngineView,
+      showTour && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
         {
-          exercise: typeof showPose === "string" ? showPose : "squat",
-          lang,
-          onClose: () => setShowPose(null),
-          onDone: ({ reps, elapsedMs, avgQuality }) => {
-            showToast(`${reps} rep · ${Math.round(elapsedMs / 1e3)}s · Q ${Math.round(avgQuality)}/100`);
-          }
+          className: "o40-tour-mask",
+          onClick: () => {
+            setShowTour(false);
+            try {
+              localStorage.setItem("o40_seenTour", "1");
+            } catch {
+            }
+          },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-tour-card", onClick: (e) => e.stopPropagation(), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 18, color: BLAZE }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { fontSize: 20 }, children: "Benvenuto!" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 13, lineHeight: 1.5, color: "#333" }, children: lang === "it" ? "Tre tap: scegli la missione del giorno, allenati 15 minuti, traccia i progressi. Tutto offline, sulla tua privacy." : "Three taps: pick today's mission, train 15 min, track progress. Fully offline, private." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, marginTop: 14 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "button",
+                {
+                  onClick: () => {
+                    setShowTour(false);
+                    try {
+                      localStorage.setItem("o40_seenTour", "1");
+                    } catch {
+                    }
+                  },
+                  style: {
+                    flex: 1,
+                    background: BLAZE,
+                    color: PAPER,
+                    border: "none",
+                    borderRadius: 10,
+                    padding: "10px 0",
+                    fontWeight: 700,
+                    cursor: "pointer"
+                  },
+                  children: "INIZIA"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "button",
+                {
+                  onClick: () => {
+                    setShowTour(false);
+                    try {
+                      localStorage.setItem("o40_seenTour", "1");
+                    } catch {
+                    }
+                  },
+                  style: {
+                    background: "transparent",
+                    border: `1px solid ${OLIVE}`,
+                    borderRadius: 10,
+                    padding: "10px 14px",
+                    cursor: "pointer"
+                  },
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: OLIVE })
+                }
+              )
+            ] })
+          ] })
         }
-      ) }) })
+      ),
+      showBellyTest && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: "o40-tour-mask",
+          onClick: () => setShowBellyTest(false),
+          style: { zIndex: 20 },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "o40-tour-card",
+              onClick: (e) => e.stopPropagation(),
+              style: { maxHeight: "90vh", overflowY: "auto", maxWidth: 440, width: "92vw" },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                BellyTest,
+                {
+                  lang,
+                  initial: profile == null ? void 0 : profile.bellyTest,
+                  onSave: saveBellyTest,
+                  onClose: () => setShowBellyTest(false)
+                }
+              )
+            }
+          )
+        }
+      ),
+      showPose && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-tour-mask", onClick: () => setShowPose(null), style: { zIndex: 25 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: "o40-tour-card",
+          onClick: (e) => e.stopPropagation(),
+          style: {
+            maxHeight: "90vh",
+            overflowY: "auto",
+            maxWidth: 560,
+            width: "96vw",
+            padding: 0,
+            overflow: "hidden",
+            border: `1px solid ${OLIVE}`,
+            borderRadius: 18
+          },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            FitnessEngineView,
+            {
+              exercise: typeof showPose === "string" ? showPose : "squat",
+              lang,
+              onClose: () => setShowPose(null),
+              onDone: ({ reps, elapsedMs, avgQuality }) => {
+                showToast(
+                  `${reps} rep · ${Math.round(elapsedMs / 1e3)}s · Q ${Math.round(avgQuality)}/100`
+                );
+              }
+            }
+          )
+        }
+      ) })
     ] })
   ] }) });
 }
@@ -9038,30 +11008,94 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       const isFixing = this.state.fixing;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { minHeight: "100dvh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#1B1D16", color: "#EDE8D8", padding: 24, textAlign: "center" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontFamily: "Bebas Neue, sans-serif", fontSize: 28, letterSpacing: "0.05em" }, children: "OPERAZIONE INTERROTTA" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { opacity: 0.7, marginTop: 8, maxWidth: 360 }, children: "Si è verificato un errore imprevisto. I tuoi dati (missioni, foto, profilo) restano salvati — non disinstallare l’app." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: () => window.location.reload(),
-            style: { marginTop: 20, background: "#C1440E", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontWeight: 700, cursor: "pointer", width: "100%", maxWidth: 360 },
-            children: "RICARICA"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: this.handleFix,
-            disabled: isFixing,
-            style: { marginTop: 10, background: isFixing ? "#4A5233" : "#242820", color: "#EDE8D8", border: "1px solid #4A5233", borderRadius: 10, padding: "12px 24px", fontWeight: 700, cursor: "pointer", width: "100%", maxWidth: 360 },
-            children: isFixing ? "PULIZIA IN CORSO..." : "PULISCI CACHE PWA (mantiene i dati)"
-          }
-        ),
-        this.state.fixLog && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 10, fontSize: 11, opacity: 0.6 }, children: this.state.fixLog }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "./force-update.html", style: { marginTop: 12, fontSize: 12, color: "#B8AE8C", textDecoration: "underline" }, children: "Apri pagina di recupero" }),
-        this.state.error && /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { style: { marginTop: 16, fontSize: 11, opacity: 0.5, maxWidth: 360, overflow: "auto", textAlign: "left" }, children: String(this.state.error.message || this.state.error) })
-      ] });
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          style: {
+            minHeight: "100dvh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#1B1D16",
+            color: "#EDE8D8",
+            padding: 24,
+            textAlign: "center"
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                style: { fontFamily: "Bebas Neue, sans-serif", fontSize: 28, letterSpacing: "0.05em" },
+                children: "OPERAZIONE INTERROTTA"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { opacity: 0.7, marginTop: 8, maxWidth: 360 }, children: "Si è verificato un errore imprevisto. I tuoi dati (missioni, foto, profilo) restano salvati — non disinstallare l’app." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                onClick: () => window.location.reload(),
+                style: {
+                  marginTop: 20,
+                  background: "#C1440E",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 10,
+                  padding: "12px 24px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  width: "100%",
+                  maxWidth: 360
+                },
+                children: "RICARICA"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                onClick: this.handleFix,
+                disabled: isFixing,
+                style: {
+                  marginTop: 10,
+                  background: isFixing ? "#4A5233" : "#242820",
+                  color: "#EDE8D8",
+                  border: "1px solid #4A5233",
+                  borderRadius: 10,
+                  padding: "12px 24px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  width: "100%",
+                  maxWidth: 360
+                },
+                children: isFixing ? "PULIZIA IN CORSO..." : "PULISCI CACHE PWA (mantiene i dati)"
+              }
+            ),
+            this.state.fixLog && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 10, fontSize: 11, opacity: 0.6 }, children: this.state.fixLog }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "a",
+              {
+                href: "./force-update.html",
+                style: { marginTop: 12, fontSize: 12, color: "#B8AE8C", textDecoration: "underline" },
+                children: "Apri pagina di recupero"
+              }
+            ),
+            this.state.error && /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "pre",
+              {
+                style: {
+                  marginTop: 16,
+                  fontSize: 11,
+                  opacity: 0.5,
+                  maxWidth: 360,
+                  overflow: "auto",
+                  textAlign: "left"
+                },
+                children: String(this.state.error.message || this.state.error)
+              }
+            )
+          ]
+        }
+      );
     }
     return this.props.children;
   }

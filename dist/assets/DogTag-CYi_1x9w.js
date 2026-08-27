@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, K as KHAKI, P as PAPER, S as STEEL } from "./index-BgW1cw35.js";
+import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, K as KHAKI, P as PAPER, S as STEEL } from "./index-DJZc3Rfg.js";
 import "./icons-BHJLJdva.js";
 function DogTag({ label, value, sub }) {
   const numeric = typeof value === "number";
@@ -32,7 +32,14 @@ function DogTag({ label, value, sub }) {
             }
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" }, children: label }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "o40-mono",
+            style: { color: KHAKI, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" },
+            children: label
+          }
+        ),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26, lineHeight: 1.1 }, children: numeric ? value : value }),
         sub && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: sub })
       ]
