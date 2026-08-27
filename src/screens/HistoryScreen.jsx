@@ -5,7 +5,7 @@ import { tr } from '../i18n.js';
 import { LOCALES } from '../i18n.js';
 import { EXERCISES } from '../data/exercises.js';
 import { PROGRAMS } from '../data/programs.js';
-import { computeStreak, computeBestStreak, WEEKLY_GOAL, RPE_LABELS, RPE_COLORS, getRank, nextBadge, getMedalProgress, getNextMedals, getPersonalRecords, getMonthlyTrend, buildHeatmap, buildYearHeatmap } from '../utils/stats.js';
+import { hrZone, computeStreak, computeBestStreak, WEEKLY_GOAL, RPE_LABELS, RPE_COLORS, getRank, nextBadge, getMedalProgress, getNextMedals, getPersonalRecords, getMonthlyTrend, buildHeatmap, buildYearHeatmap } from '../utils/stats.js';
 import { exportCSV, buildCalendarGrid } from '../utils/export.js';
 import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from '../utils/bmi.js';
 import { estimateBodyFat, whtCategory } from '../utils/body.js';
