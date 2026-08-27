@@ -1,4 +1,4 @@
-/* Operator 40 service worker — offline-first PWA.
+/* Operator 40 service worker — offline-first PWA (audit/9-pwa-robust).
    Same-origin assets are hashed by Vite (immutable) so cache-first is safe;
    navigations are network-first with the cached shell as offline fallback. */
 
@@ -19,13 +19,21 @@ const PRECACHE_MEDIAPIPE = [
   './wasm/wasm_nosimd_internal.js',
   './models/pose_landmarker_lite.task',
 ];
+// Shell aggiuntiva per offline robusto — manifest + icone + index
+const PRECACHE_SHELL = [
+  './index.html',
+  './manifest.webmanifest',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+];
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE).then(async (c) => {
-      await c.addAll(['./index.html']);
-      // precache clip critici + mediapipe offline (best-effort) — non faila install
+      // shell critica — deve andare a buon fine altrimenti fallback
+      try { await c.addAll(PRECACHE_SHELL); } catch {}
+      // clip + mediapipe best-effort — non faila install
       await Promise.allSettled([...PRECACHE_CLIPS, ...PRECACHE_MEDIAPIPE].map((url) => c.add(url).catch(() => {})));
     })
   );
@@ -37,6 +45,13 @@ self.addEventListener('activate', (event) => {
       .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
+});
+
+// Messaggio dal client per forzare l'attivazione immediata (usato da App.jsx updateAvailable → SKIP_WAITING)
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 /* ---- Push: mostra notifica anche con PWA chiusa ---- */
@@ -83,29 +98,41 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(req)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put('./index.html', copy));
+          // Aggiorna cache shell in background solo se OK
+          if (res && res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put('./index.html', copy)).catch(() => {});
+          }
           return res;
         })
-        .catch(() => caches.match('./index.html'))
+        .catch(() => caches.match('./index.html').then((cached) => cached || caches.match(PRECACHE_SHELL[0])))
     );
     return;
   }
 
-    // Same-origin assets: cache first, then network (and cache the result).
   // Bypass cache for Vite HMR / dev server and for range requests (audio).
   if (req.headers.has('range')) return;
+
+  // Same-origin assets: stale-while-revalidate — cache first, network aggiorna in background
   event.respondWith(
     caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((res) => {
-        // Only cache successful, non-opaque, non-range responses
-        if (res && res.ok && res.type !== 'opaque') {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put(req, copy));
-        }
-        return res;
-      }).catch(() => caches.match(req));
-    })
+      const networkFetch = fetch(req)
+        .then((res) => {
+          // Only cache successful, non-opaque, non-range responses
+          if (res && res.ok && res.type !== 'opaque') {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+          }
+          return res;
+        })
+        .catch(() => null);
+      // Se abbiamo cache, ritorna subito e aggiorna in background; altrimenti aspetta network
+      if (cached) {
+        // aggiorna in background senza bloccare risposta
+        networkFetch.catch(() => {});
+        return cached;
+      }
+      return networkFetch.then((res) => res || caches.match(req)).then((res) => res || Promise.reject('offline'));
+    }).catch(() => caches.match(req))
   );
 });
