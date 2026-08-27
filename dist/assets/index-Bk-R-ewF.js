@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-BSDtyljS.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-CtqCXpCe.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -1068,6 +1068,7 @@ const QUICK_PROGRAM = {
   exercises: ["squat", "flessioni", "plank", "jumpingjack"]
 };
 const CAMP_DAYS = 30;
+const DAY_CYCLE = ["A", "N", "B", "O", "C", "P", "K", "H", "I", "J", "L", "M", "D", "E", "F", "G", "A", "B", "C", "D"];
 const BELLY_IDS = ["N", "O", "P"];
 PROGRAMS$1.filter((p2) => p2.belly);
 function campDayIndex(profile) {
@@ -1083,6 +1084,30 @@ function campDayIndex(profile) {
 }
 function campDayDisplay(profile) {
   return Math.min(CAMP_DAYS, campDayIndex(profile));
+}
+function programById(id) {
+  return PROGRAMS$1.find((p2) => p2.id === id) || PROGRAMS$1[0];
+}
+function pickNextProgram(sessions, profile) {
+  if (!profile || !profile.campStart || !sessions.length) {
+    if (!sessions.length) return { program: PROGRAMS$1[0], adaptive: false };
+    const order = ["A", "B", "C"];
+    const last2 = sessions[sessions.length - 1];
+    const rotationNextId = order[(order.indexOf(last2.programId) + 1) % order.length];
+    const hoursSince2 = (Date.now() - new Date(last2.date).getTime()) / 36e5;
+    if (last2.rpe >= 4 && hoursSince2 < 20) {
+      return { program: programById("D"), adaptive: true };
+    }
+    return { program: programById(rotationNextId), adaptive: false };
+  }
+  const idx = campDayIndex(profile);
+  let program = programById(DAY_CYCLE[(idx - 1) % DAY_CYCLE.length]);
+  const last = sessions[sessions.length - 1];
+  const hoursSince = (Date.now() - new Date(last.date).getTime()) / 36e5;
+  if (last && last.rpe >= 4 && hoursSince < 20 && program.id !== "D") {
+    return { program: programById("D"), adaptive: true };
+  }
+  return { program, adaptive: false };
 }
 function buildSequence(program, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
   const isReps = mode === "reps";
@@ -10624,7 +10649,7 @@ function BottomNav({ active, onNavigate }) {
     ] }, tab.key);
   }) });
 }
-const BUILD_VERSION = "2.8.4 · 93efefb";
+const BUILD_VERSION = "2.8.4 · bcc1cd5";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -12586,7 +12611,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-BSDtyljS.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-CtqCXpCe.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
