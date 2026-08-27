@@ -1,10 +1,11 @@
+import { STORAGE_SCHEMA_VERSION } from '../storage.js';
 /**
  * Backup/restore + schema versioning per Operator40
  * - export: JSON.stringify({ profile, sessions, waistHistory, weightHistory, customPrograms, photos, version })
  * - import: valida, migra se necessario, sovrascrive storage
- * - version: 1 (iniziale), incrementa ad ogni breaking change di forma dati
+ * - version allineata a STORAGE_SCHEMA_VERSION
  */
-export const BACKUP_VERSION = 1;
+export const BACKUP_VERSION = STORAGE_SCHEMA_VERSION;
 
 function validateBackup(data) {
   if (!data || typeof data !== 'object') throw new Error('Backup non valido: root non è oggetto');
