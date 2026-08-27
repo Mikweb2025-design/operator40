@@ -3,7 +3,7 @@ import { useT } from '../context/LangContext.jsx';
 import { getLevel, INTERVAL_PRESETS, LEVELS } from '../data/programs.js';
 import { TRACKS } from '../music.js';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
-import { LANGS } from '../i18n.js';
+import { LANGS, tr } from '../i18n.js';
 import TopBar from '../components/layout/TopBar.jsx';
 import {
   Volume2, VolumeX, Vibrate, SkipForward, Music, Music2, HeadphoneOff,
@@ -220,8 +220,8 @@ export default function SetupScreen({ formName, setFormName, formAge, setFormAge
                 }}>
                   {curLevel.key === l.key ? <Crown size={15} color={BLAZE} /> : <Medal size={15} color={STEEL} />}
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div className="o40-mono" style={{ color: PAPER, fontSize: 12.5 }}>{l.label}</div>
-                    <div style={{ color: STEEL, fontSize: 11 }}>{l.desc}</div>
+                    <div className="o40-mono" style={{ color: PAPER, fontSize: 12.5 }}>{tr(l.label, lang)}</div>
+                    <div style={{ color: STEEL, fontSize: 11 }}>{tr(l.desc, lang)}</div>
                   </div>
                   <span className="o40-mono" style={{ color: curLevel.key === l.key ? BLAZE : KHAKI, fontSize: 11 }}>{l.work}″/{l.rest}″</span>
                 </button>
