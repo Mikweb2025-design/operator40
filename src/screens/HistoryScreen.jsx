@@ -18,6 +18,7 @@ import { shareStatsImage } from '../utils/shareImage.js';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Trophy, Flame, HeartPulse, Zap, Star, Target, Medal, Crown, TrendingUp, TrendingDown, Ruler, Scale, Lightbulb, X, Check, RotateCcw, Sparkles } from 'lucide-react';
 import TopBar from '../components/layout/TopBar.jsx';
+import { formatTime, dayKey, sessionDayKey } from '../utils/date.js';
 const secondaryBtn = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer' };
 const primaryBtn = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer' };
 const btnIcon = { background: 'transparent', border: 'none', padding: 6, cursor: 'pointer', display: 'flex', borderRadius: 10 };
