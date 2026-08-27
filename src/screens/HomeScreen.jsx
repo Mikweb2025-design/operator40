@@ -131,12 +131,12 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
                 <TrendingUp size={16} color={risk === 'break' ? BLAZE : KHAKI} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>{risk === 'break' ? 'Streak interrotta — riparti oggi' : 'Rischio streak — allenati oggi!'} <span style={{ color: STEEL, fontWeight: 400 }}>· {cons}% · {wp.done}/{wp.total}</span></div>
+                <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>{risk === 'break' ? t('home.streak.break') : t('home.streak.risk')} <span style={{ color: STEEL, fontWeight: 400 }}>· {cons}% · {wp.done}/{wp.total}</span></div>
                 <div style={{ color: STEEL, fontSize: 11.5, marginTop: 1 }}>{pace ? `${pace.avgMin}′ / ${pace.avgKcal} kcal medi` : 'Aderenza ' + cons + '%'}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <div className="o40-display" style={{ color: risk === 'break' ? BLAZE : KHAKI, fontSize: 18 }}>{Math.round(wp.pct * 100)}%</div>
-                <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>SETTIMANA</div>
+                <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>{t('home.week.label')}</div>
               </div>
             </div>
           )}
@@ -157,7 +157,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
 
       {/* OGGI — sempre aperta */}
       <div style={{ margin: '12px 16px 0' }}>
-        <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.08em', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}><Zap size={12} color={BLAZE} /> OGGI</div>
+        <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.08em', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}><Zap size={12} color={BLAZE} /> {t('home.section.today')}</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <button className="o40-card o40-ring-border o40-sheen" onClick={() => { vibrate(10); onOpenProgram(todayProgram); }} style={{
             width: '100%', textAlign: 'left', border: `1px solid ${BLAZE}`,
@@ -237,17 +237,17 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
                <Star size={16} color={KHAKI} />
              </div>
              <div style={{ flex: 1, minWidth: 0 }}>
-               <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>SFIDA DEL GIORNO • {dailyChallenge.bonus}</div>
+               <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}>{t('home.dailyChallenge', { bonus: dailyChallenge.bonus })}</div>
                <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>{tr(dailyChallenge.program.name, lang)}</div>
                <div style={{ color: STEEL, fontSize: 11 }}>{tr(dailyChallenge.program.tagline, lang)}</div>
              </div>
-             <button onClick={() => onOpenProgram(dailyChallenge.program)} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}>Vai</button>
+             <button onClick={() => onOpenProgram(dailyChallenge.program)} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}>{t('home.daily.go')}</button>
            </div>
         </div>
       </div>
 
       {/* PROGRESSI — collassabile */}
-      <CollapsibleSection id="progressi" title="PROGRESSI" icon={TrendingUp} badge={`${cons}% · ${wp.done}/${wp.total} · ${streak}gg`} defaultOpen={showPinnedProgress}>
+      <CollapsibleSection id="progressi" title={t('home.section.progress')} icon={TrendingUp} badge={`${cons}% · ${wp.done}/${wp.total} · ${streak}gg`} defaultOpen={showPinnedProgress}>
         <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
           <DogTag label={t('dt.streak')} value={usedFreeze ? `${streak} ❄️` : streak} sub={streak === 1 ? t('dt.day') : t('dt.days')} />
           <DogTag label={t('dt.sessions')} value={sessions.length} sub={t('dt.total')} />
@@ -264,7 +264,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
             </div>
             <div style={{ textAlign: 'right' }}>
               <div className="o40-display" style={{ color: wp.isDone ? '#7FB069' : BLAZE, fontSize: 18 }}>{Math.round(wp.pct * 100)}%</div>
-              <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>SETTIMANA</div>
+              <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>{t("home.week.label")}</div>
             </div>
           </div>
         )}
@@ -278,11 +278,11 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
         <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
           <div style={{ flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
             <div className="o40-display" style={{ color: cons >= 70 ? '#7FB069' : cons >= 40 ? KHAKI : BLAZE, fontSize: 22 }}>{cons}%</div>
-            <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>CONSISTENZA 8 SETT.</div>
+            <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>{t("home.consistency")}</div>
           </div>
           <div style={{ flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
             <div className="o40-display" style={{ color: pace ? PAPER : STEEL, fontSize: 18 }}>{pace ? `${pace.avgMin}′` : '—'}</div>
-            <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>MEDIA</div>
+            <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>{t("home.average")}</div>
             <div style={{ color: KHAKI, fontSize: 10, marginTop: 4 }}>{pace ? `${pace.avgKcal} kcal` : 'n/d'}</div>
           </div>
         </div>
@@ -326,17 +326,17 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       </CollapsibleSection>
 
       {/* MISSIONI & OBIETTIVI — collassabile */}
-      <CollapsibleSection id="missioni" title="MISSIONI & OBIETTIVI" icon={Target} badge={`${bellyProgress.done}/${bellyProgress.total} · ${customPrograms.length} custom`} defaultOpen={false}>
+      <CollapsibleSection id="missioni" title={t('home.section.missions')} icon={Target} badge={`${bellyProgress.done}/${bellyProgress.total} · ${customPrograms.length} custom`} defaultOpen={false}>
         <div style={{ background: `linear-gradient(135deg, ${BLAZE}14, ${INK_2})`, border: `1px solid ${BLAZE}66`, borderRadius: 14, padding: 12, marginBottom: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
             <div style={{ width: 32, height: 32, borderRadius: '50%', background: `${BLAZE}22`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Target size={16} color={BLAZE} /></div>
             <div style={{ flex: 1 }}>
-              <div className="o40-mono" style={{ color: BLAZE, fontSize: 11, letterSpacing: '0.08em' }}>PANCIA • 3 MISSIONI DEDICATE</div>
+              <div className="o40-mono" style={{ color: BLAZE, fontSize: 11, letterSpacing: '0.08em' }}>{t("home.belly.title")}</div>
               <div style={{ color: KHAKI, fontSize: 11 }}>{getBellyInsight({ sessions, waistHistory, lang })}</div>
             </div>
             <div style={{ textAlign: 'right' }}>
               <div className="o40-display" style={{ color: bellyProgress.isDone ? '#7FB069' : BLAZE, fontSize: 18 }}>{bellyProgress.done}/{bellyProgress.total}</div>
-              <div className="o40-mono" style={{ color: STEEL, fontSize: 8 }}>SETTIMANA</div>
+              <div className="o40-mono" style={{ color: STEEL, fontSize: 8 }}>{t("home.week.label")}</div>
             </div>
           </div>
           <div style={{ height: 6, borderRadius: 3, background: OLIVE_DARK, overflow: 'hidden', marginBottom: 10 }}>
@@ -460,7 +460,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       </CollapsibleSection>
 
       {/* ACHIEVEMENTS — card compatta → modal */}
-      <CollapsibleSection id="achievements" title="ACHIEVEMENTS" icon={Medal} badge={`${unlockedAch}/${ach.length}`} defaultOpen={false}>
+      <CollapsibleSection id="achievements" title={t('home.section.achievements')} icon={Medal} badge={`${unlockedAch}/${ach.length}`} defaultOpen={false}>
         <button onClick={() => setShowAchievements(true)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${KHAKI}44`, borderRadius: 12, padding: 14, cursor: 'pointer', textAlign: 'left' }}>
           <div style={{ width: 40, height: 40, borderRadius: '50%', background: `${KHAKI}22`, display: 'grid', placeItems: 'center', flexShrink: 0 }}><Medal size={18} color={KHAKI} /></div>
           <div style={{ flex: 1, minWidth: 0 }}>
@@ -484,7 +484,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       </CollapsibleSection>
 
       {/* MISURAZIONI — collassabile */}
-      <CollapsibleSection id="misurazioni" title="MISURAZIONI" icon={Ruler} badge={waist || weight ? `${waist ? waist.cm + 'cm' : ''}${waist && weight ? ' · ' : ''}${weight ? weight.kg + 'kg' : ''}` : '—'} defaultOpen={false}>
+      <CollapsibleSection id="misurazioni" title={t('home.section.measurements')} icon={Ruler} badge={waist || weight ? `${waist ? waist.cm + 'cm' : ''}${waist && weight ? ' · ' : ''}${weight ? weight.kg + 'kg' : ''}` : '—'} defaultOpen={false}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '11px 13px', display: 'flex', alignItems: 'center', gap: 11 }}>
             <div style={{ width: 34, height: 34, borderRadius: '50%', background: `${BLAZE}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
