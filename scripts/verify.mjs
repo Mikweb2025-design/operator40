@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 // Verifica pre-deploy: cerca ReferenceError noti (es. sessions non definito in SummaryScreen)
 import { readFileSync } from 'node:fs';
-import { globSync } from 'node:fs';
 
 const checks = [
   {
