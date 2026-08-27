@@ -2,8 +2,7 @@ import React from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { useT } from '../../context/LangContext.jsx';
 import { PAPER } from '../../constants/theme.js';
-
-const btnIcon = { background: 'transparent', border: 'none', padding: 6, cursor: 'pointer', display: 'flex', borderRadius: 10 };
+import { btnIcon } from '../ui/styles.js';
 
 export default function TopBar({ title, onBack, right }) {
   const { t } = useT();
