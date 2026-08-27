@@ -12,9 +12,9 @@ import FitnessEngineView from '../components/FitnessEngineView.tsx';
 import { ExerciseFigure } from '../components/ExerciseFigure.jsx';
 import TopBar from '../components/layout/TopBar.jsx';
 import { Play, Pause, SkipForward, X, Eye, Volume2, VolumeX, Music, Music2, HeadphoneOff, Wind, Lightbulb, Check, ChevronLeft } from 'lucide-react';
-const primaryBtn = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer' };
-// secondaryBtn defined in block below — don't duplicate
-const btnIcon = { background: 'transparent', border: 'none', padding: 6, cursor: 'pointer', display: 'flex', borderRadius: 10 };
+import ProgressRing from '../components/ui/ProgressRing.jsx';
+import SegmentedProgress from '../components/ui/SegmentedProgress.jsx';
+import { primaryBtn, secondaryBtn, btnIcon, iconCircle, pillBtn } from '../components/ui/styles.js';
 let _mediaPromise = null;
 function getMediaMap() { if (!_mediaPromise) _mediaPromise = import('../media.js').then(m => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES })); return _mediaPromise; }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = '100%', rounded = 10 }) {
@@ -24,12 +24,7 @@ function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = '100%', rounded
   if (src && !failed) return (<img src={src} alt="" onError={() => setFailed(true)} style={{ width: size, height: size, objectFit: 'cover', borderRadius: rounded, display: 'block', background: INK }} />);
   return <ExerciseFigure pose={pose} color={color} size={size} />;
 }
-function ProgressRing({ progress, size = 240, stroke = 12, color, comet = true }) {
-  const radius = (size - stroke) / 2; const circumference = 2 * Math.PI * radius; const offset = circumference * (1 - Math.max(0, Math.min(1, progress))); const gradId = `ring-grad-${color.replace('#', '')}`; const angle = Math.max(0.001, Math.min(0.999, progress)) * 2 * Math.PI; const dotX = size / 2 + radius * Math.sin(angle); const dotY = size / 2 - radius * Math.cos(angle);
-  return (<svg width={size} height={size} style={{ transform: 'rotate(-90deg)', filter: `drop-shadow(0 0 10px ${color}55)` }}><defs><linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor={color} stopOpacity="0.65" /><stop offset="100%" stopColor={color} stopOpacity="1" /></linearGradient></defs><circle cx={size / 2} cy={size / 2} r={radius} stroke={OLIVE_DARK} strokeWidth={stroke} fill="none" /><circle cx={size / 2} cy={size / 2} r={radius} stroke={`url(#${gradId})`} strokeWidth={stroke} fill="none" strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1s linear' }} />{comet && progress > 0 && (<><circle cx={dotX} cy={dotY} r={stroke * 2} fill={color} opacity="0.15" /><circle className="o40-comet" cx={dotX} cy={dotY} r={stroke * 0.8} fill={PAPER} /></>)}</svg>);
-}
 function EqBars({ tone = BLAZE, bars = 5, speed = 1, style }) { return (<div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 14, ...style }} aria-hidden="true">{Array.from({ length: bars }).map((_, i) => (<span key={i} className="o40-eqbar" style={{ width: 3, background: tone, height: 8, animation: `eqPulse ${(0.55 + (i % 3) * 0.18) / speed}s ease-in-out ${i * 0.08}s infinite` }} />))}</div>); }
-function SegmentedProgress({ total, current, currentProgress, color }) { return (<div style={{ display: 'flex', gap: 4, width: '100%' }}>{Array.from({ length: total }).map((_, i) => { const isDone = i < current; const isActive = i === current; return (<div key={i} style={{ flex: 1, height: 6, borderRadius: 3, background: isDone || isActive ? color : OLIVE_DARK, opacity: isActive ? 0.5 + 0.5 * currentProgress : 1, transition: 'opacity 0.3s linear, background 0.3s ease', boxShadow: isDone || isActive ? `0 0 8px ${color}66` : 'none' }} />); })}</div>); }
 
 /* ================= SESSION SCREEN ================= */
 function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, setPaused, soundOn, setSoundOn, musicOn, onToggleMusic, aiEnabled, onToggleAi, lang: langProp, onSkip, onPrev, exitConfirm, setExitConfirm, onExit }) {
@@ -215,12 +210,4 @@ function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, s
     </div>
   );
 }
-const iconCircle = { borderRadius: '50%', border: `1px solid ${OLIVE}`, background: `linear-gradient(160deg, ${INK_2}, ${INK})`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.35)' };
-const secondaryBtn = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer' };
-const pillBtn = {
-  flex: 1, background: INK_2, border: `1px solid ${OLIVE}`, color: PAPER, borderRadius: 10, padding: '10px 0',
-  fontFamily: "'IBM Plex Mono', monospace", fontSize: 12, letterSpacing: '0.08em', cursor: 'pointer',
-  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4,
-};
-
 export default SessionScreen;

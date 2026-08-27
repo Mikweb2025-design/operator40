@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:dist/assets/web-Bt5NVVog.js
 import { W as WebPlugin } from "./index-Cj5cmppt.js";
+========
+import { W as WebPlugin } from "./index-AmHIlR5J.js";
+>>>>>>>> main:dist/assets/web-DfwJPCVf.js
 import "./icons-Ckx_ZzAa.js";
 import "./charts-CQJP40Oa.js";
 class PreferencesWeb extends WebPlugin {

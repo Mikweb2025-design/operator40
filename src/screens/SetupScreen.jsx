@@ -10,18 +10,7 @@ import {
   RefreshCw, ChevronLeft, ChevronRight, Bell, BellOff, Send, HeartPulse, Crown, Medal, ChevronRight as ChevronRightIcon, Download, Upload
 } from 'lucide-react';
 import { isStandalonePWA } from '../utils/push.js';
-
-const inputStyle = {
-  width: '100%', background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '12px 14px',
-  color: PAPER, fontSize: 16, fontFamily: 'Inter, sans-serif', outline: 'none',
-};
-const primaryBtn = {
-  background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 14, padding: '15px 18px',
-  fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: '0.06em', cursor: 'pointer',
-  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%',
-  boxShadow: `0 6px 20px ${BLAZE}4d`,
-};
-const secondaryBtn = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer' };
+import { inputStyle, primaryBtnLarge as primaryBtn, secondaryBtn } from '../components/ui/styles.js';
 
 function ToggleRow({ label, icon: Icon, on, onClick }) {
   return (
