@@ -1,8 +1,8 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-UV0HSyq9.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-nD6yIDle.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-C5EZ6aph.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-pM6rhmXf.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ChevronLeft$1, V as Volume2, e as VolumeX, f as Vibrate, h as SkipForward, M as Music, i as Music2, H as HeadphoneOff, j as RefreshCw, k as Crown, l as Medal, B as Bell, m as BellOff, n as Send, o as HeartPulse, F as Flame, I as Info, p as Star, q as RotateCcw, s as Target, E as Eye, t as BookOpen, u as TrendingUp, L as Lightbulb, v as Ruler, w as TrendingDown, x as Scale, y as Settings, z as Trash2, P as Plus, W as Wind, A as Play, D as Pause, G as ShieldCheck, J as House, K as History } from "./icons-D3QZqbji.js";
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ChevronLeft, V as Volume2, e as VolumeX, f as Vibrate, h as SkipForward, M as Music, i as Music2, H as HeadphoneOff, j as RefreshCw, k as Crown, l as Medal, B as Bell, m as BellOff, n as Send, o as HeartPulse, F as Flame, I as Info, p as Star, q as RotateCcw, s as Target, E as Eye, t as BookOpen, u as TrendingUp, L as Lightbulb, v as Ruler, w as TrendingDown, x as Scale, y as Settings, z as Trash2, P as Plus, W as Wind, A as Play, D as Pause, G as ShieldCheck, J as House, K as History } from "./icons-D3QZqbji.js";
 import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-Bi7lEBzN.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
@@ -7323,7 +7323,7 @@ function TopBar({ title, onBack, right }) {
     top: 0,
     zIndex: 5
   }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "center", gap: 8, minWidth: 32 }, children: onBack && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onBack, "aria-label": t("app.back"), style: btnIcon$4, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft$1, { size: 20, color: PAPER }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "center", gap: 8, minWidth: 32 }, children: onBack && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onBack, "aria-label": t("app.back"), style: btnIcon$4, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 20, color: PAPER }) }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22 }, children: title }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { minWidth: 32, display: "flex", justifyContent: "flex-end" }, children: right })
   ] });
@@ -7481,7 +7481,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleRow, { label: t("setup.music"), icon: musicOn ? Music2 : HeadphoneOff, on: musicOn, onClick: onToggleMusic }),
         musicOn && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "8px 10px 12px" }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onPrevTrack, style: { width: 32, height: 32, borderRadius: "50%", background: OLIVE_DARK, border: `1px solid ${OLIVE}`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }, "aria-label": "Prev", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft$1, { size: 16, color: KHAKI }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onPrevTrack, style: { width: 32, height: 32, borderRadius: "50%", background: OLIVE_DARK, border: `1px solid ${OLIVE}`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }, "aria-label": "Prev", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 16, color: KHAKI }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0, textAlign: "center" }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: BLAZE, fontSize: 9, letterSpacing: "0.08em" }, children: musicAutoPlay ? musicShuffle ? "SHUFFLE • AUTOPLAY" : "AUTOPLAY • TUTTE" : "SINGOLA" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 12, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: (TRACKS.find((t2) => t2.id === musicTrack) || TRACKS[0]).name }),
@@ -8832,7 +8832,7 @@ function toggleFavorite(list, id) {
 }
 let _mediaPromise$2 = null;
 function getMediaMap$2() {
-  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-UV0HSyq9.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-C5EZ6aph.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$2;
 }
 function ExerciseMedia$2({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9119,7 +9119,7 @@ const primaryBtn$3 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise$1 = null;
 function getMediaMap$1() {
-  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-UV0HSyq9.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-C5EZ6aph.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$1;
 }
 function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9317,7 +9317,7 @@ const primaryBtn$2 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-UV0HSyq9.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-C5EZ6aph.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -10138,6 +10138,7 @@ async function shareStatsImage({ sessions, profile, t, tr: tr2 }) {
 const secondaryBtn = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
 const primaryBtn = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
 const btnIcon = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
+const iconCircle = { borderRadius: "50%", border: `1px solid ${OLIVE}`, background: `linear-gradient(160deg, ${INK_2}, ${INK})`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 4px 12px rgba(0,0,0,0.35)" };
 function DogTag({ label, value, sub }) {
   const numeric = typeof value === "number";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card", style: { background: `linear-gradient(160deg, ${INK_2}, ${INK})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 13px", position: "relative", flex: 1, minWidth: 0, boxShadow: "0 4px 14px rgba(0,0,0,0.35)" }, children: [
@@ -10755,7 +10756,7 @@ function BottomNav({ active, onNavigate }) {
     ] }, tab.key);
   }) });
 }
-const BUILD_VERSION = "2.8.4 · 2677249";
+const BUILD_VERSION = "2.8.4 · 6a972e0";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -12717,7 +12718,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-nD6yIDle.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-pM6rhmXf.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;

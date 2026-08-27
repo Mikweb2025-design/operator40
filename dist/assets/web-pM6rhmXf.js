@@ -1,4 +1,4 @@
-import { W as WebPlugin } from "./index-DzkW3EXu.js";
+import { W as WebPlugin } from "./index-B1paK6_k.js";
 import "./icons-D3QZqbji.js";
 import "./charts-Bi7lEBzN.js";
 class PreferencesWeb extends WebPlugin {
