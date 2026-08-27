@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useT } from '../context/LangContext.jsx';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { EXERCISES, EXERCISE_GROUPS } from '../data/exercises.js';
+import { PROGRAMS } from '../data/programs.js';
 import { tr } from '../i18n.js';
 import { loadFavorites, toggleFavorite } from '../utils/favorites.js';
 import { ExerciseFigure } from '../components/ExerciseFigure.jsx';
-import { Star, X, Search } from 'lucide-react';
+import { hasClip } from '../clips.js';
+import { getConsistencyScore, getStreakRisk } from '../utils/progress.js';
+import { speak } from '../utils/audio.js';
+import { Star, X, Search, Wind, Sparkles } from 'lucide-react';
+let _mediaPromise = null;
+function getMediaMap() { if (!_mediaPromise) _mediaPromise = import('../media.js').then(m => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES })); return _mediaPromise; }
+function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = '100%', rounded = 10 }) {
+  const [src, setSrc] = useState(null); const [videoSrc, setVideoSrc] = useState(null); const [failed, setFailed] = useState(false);
+  useEffect(() => { let c=false; setSrc(null); setVideoSrc(null); setFailed(false); getMediaMap().then(({b64,files})=>{ if(c) return; const clip=files[exerciseId]||files[pose]||null; setVideoSrc(clip); if(!clip) setSrc(b64[exerciseId]||b64[pose]||null); }).catch(()=>{if(!c) setFailed(true)}); return()=>{c=true}},[exerciseId]);
+  if (videoSrc && !failed) return (<video src={videoSrc} autoPlay muted loop playsInline preload="metadata" onError={()=>setFailed(true)} style={{width:size,height:size,objectFit:'cover',borderRadius:rounded,display:'block',background:INK}}/>);
+  if (src && !failed) return (<img src={src} alt="" onError={()=>setFailed(true)} style={{width:size,height:size,objectFit:'cover',borderRadius:rounded,display:'block',background:INK}}/>);
+  return <ExerciseFigure pose={pose} color={color} size={size} />;
+}
 
 /* ================= LIBRARY SCREEN (browse all exercises) ================= */
 function LibraryScreen({ sessions, profile }) {
