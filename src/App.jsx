@@ -39,6 +39,7 @@ import SummaryScreen from './screens/SummaryScreen.jsx';
 import HistoryScreen from './screens/HistoryScreen.jsx';
 import TopBar from './components/layout/TopBar.jsx';
 import BottomNav from './components/layout/BottomNav.jsx';
+import VersionBadge from './components/layout/VersionBadge.jsx';
 import { getBellyLevelForTest, shouldProgressBellyLevel } from './utils/bellyTest.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
@@ -59,29 +60,7 @@ import { getDailyInsight, getWeeklyInsight } from './utils/insights.js';
 import { getRecommendedMissions, getDailyChallenge, getBellyMissions } from './utils/missions.js';
 import { getBellyProgress, getBellyStreak, getBellyInsight } from './utils/belly.js';
 
-const BUILD_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.0.0 · dev';
 
-function VersionBadge({ onClick }) {
-  return (
-    <div
-      onClick={onClick}
-      role={onClick ? 'button' : undefined}
-      title={onClick ? 'Novità v2.7 — clic per riaprire changelog' : undefined}
-      className="o40-mono"
-      style={{
-        color: STEEL, fontSize: 9, textAlign: 'center', opacity: onClick ? 0.95 : 0.75, marginTop: 18, letterSpacing: '0.07em',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '6px 12px',
-        background: `${INK_2}88`, border: `1px solid ${onClick ? KHAKI + '88' : OLIVE + '44'}`, borderRadius: 20, alignSelf: 'center',
-        cursor: onClick ? 'pointer' : 'default',
-      }}
-    >
-      <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#7FB069', boxShadow: '0 0 6px #7FB06988' }} />
-      v{BUILD_VERSION}
-      <span style={{ width: 6, height: 6, borderRadius: '50%', background: BLAZE, boxShadow: `0 0 6px ${BLAZE}88` }} />
-      {onClick && <span className="o40-mono" style={{ color: KHAKI, fontSize: 8, border: `1px solid ${KHAKI}66`, borderRadius: 6, padding: '1px 5px', marginLeft: 2 }}>NOVITÀ</span>}
-    </div>
-  );
-}
 
 function exportData(profile, sessions) {
   try {
@@ -157,148 +136,6 @@ function parseAppleHealthExport(xmlText) {
   }
   return result;
 }
-
-/* ================= EXERCISE FIGURE (pose-specific drawings) ================= */
-/* ================= EXERCISE MEDIA (real clip when available, else drawn pictogram) ================= */
-let _mediaPromise = null;
-function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = import('./media.js').then(m => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
-  return _mediaPromise;
-}
-function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = '100%', rounded = 10 }) {
-  const [src, setSrc] = useState(null);
-  const [videoSrc, setVideoSrc] = useState(null);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    setSrc(null);
-    setVideoSrc(null);
-    setFailed(false);
-    getMediaMap()
-      .then(({ b64, files }) => {
-        if (cancelled) return;
-        const clip = files[exerciseId] || files[pose] || null;
-        setVideoSrc(clip);
-        if (!clip) setSrc(b64[exerciseId] || b64[pose] || null);
-      })
-      .catch(() => { if (!cancelled) setFailed(true); });
-    return () => { cancelled = true; };
-  }, [exerciseId]);
-
-  if (videoSrc && !failed) {
-    return (
-      <video src={videoSrc} autoPlay muted loop playsInline preload="metadata"
-        onError={() => setFailed(true)}
-        style={{ width: size, height: size, objectFit: 'cover', borderRadius: rounded, display: 'block', background: INK }} />
-    );
-  }
-  if (src && !failed) {
-    return (
-      <img src={src} alt="" onError={() => setFailed(true)}
-        style={{ width: size, height: size, objectFit: 'cover', borderRadius: rounded, display: 'block', background: INK }} />
-    );
-  }
-  return <ExerciseFigure pose={pose} color={color} size={size} />;
-}
-function ProgressRing({ progress, size = 240, stroke = 12, color, comet = true }) {
-  const radius = (size - stroke) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference * (1 - Math.max(0, Math.min(1, progress)));
-  const gradId = `ring-grad-${color.replace('#', '')}`;
-  const angle = Math.max(0.001, Math.min(0.999, progress)) * 2 * Math.PI;
-  const dotX = size / 2 + radius * Math.sin(angle);
-  const dotY = size / 2 - radius * Math.cos(angle);
-  return (
-    <svg width={size} height={size} style={{ transform: 'rotate(-90deg)', filter: `drop-shadow(0 0 10px ${color}55)` }}>
-      <defs>
-        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor={color} stopOpacity="0.65" />
-          <stop offset="100%" stopColor={color} stopOpacity="1" />
-        </linearGradient>
-      </defs>
-      <circle cx={size / 2} cy={size / 2} r={radius} stroke={OLIVE_DARK} strokeWidth={stroke} fill="none" />
-      <circle cx={size / 2} cy={size / 2} r={radius} stroke={`url(#${gradId})`} strokeWidth={stroke} fill="none"
-        strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round"
-        style={{ transition: 'stroke-dashoffset 1s linear' }} />
-      {comet && progress > 0 && (<>
-        <circle cx={dotX} cy={dotY} r={stroke * 2} fill={color} opacity="0.15" />
-        <circle className="o40-comet" cx={dotX} cy={dotY} r={stroke * 0.8} fill={PAPER} />
-      </>)}
-    </svg>
-  );
-}
-
-function EqBars({ tone = BLAZE, bars = 5, speed = 1, style }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 14, ...style }} aria-hidden="true">
-      {Array.from({ length: bars }).map((_, i) => (
-        <span key={i} className="o40-eqbar" style={{
-          width: 3, background: tone, height: 8,
-          animation: `eqPulse ${(0.55 + (i % 3) * 0.18) / speed}s ease-in-out ${i * 0.08}s infinite`,
-        }} />
-      ))}
-    </div>
-  );
-}
-
-function CountUp({ value, duration = 600 }) {
-  const [display, setDisplay] = useState(value);
-  const prevRef = useRef(value);
-  useEffect(() => {
-    const from = prevRef.current;
-    const to = value;
-    if (from === to) return;
-    prevRef.current = to;
-    const start = performance.now();
-    let raf;
-    const tick = (t) => {
-      const p = Math.min(1, (t - start) / duration);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setDisplay(Math.round(from + (to - from) * eased));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [value, duration]);
-  return <>{display}</>;
-}
-
-function SegmentedProgress({ total, current, currentProgress, color }) {
-  return (
-    <div style={{ display: 'flex', gap: 4, width: '100%' }}>
-      {Array.from({ length: total }).map((_, i) => {
-        const isDone = i < current;
-        const isActive = i === current;
-        return (
-          <div key={i} style={{
-            flex: 1, height: 6, borderRadius: 3, background: isDone || isActive ? color : OLIVE_DARK,
-            opacity: isActive ? 0.5 + 0.5 * currentProgress : 1, transition: 'opacity 0.3s linear, background 0.3s ease',
-            boxShadow: isDone || isActive ? `0 0 8px ${color}66` : 'none',
-          }} />
-        );
-      })}
-    </div>
-  );
-}
-
-/* ================= SMALL UI PIECES ================= */
-function DogTag({ label, value, sub }) {
-  const numeric = typeof value === 'number';
-  return (
-    <div className="o40-card" style={{
-      background: `linear-gradient(160deg, ${INK_2}, ${INK})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: '12px 13px',
-      position: 'relative', flex: 1, minWidth: 0, boxShadow: '0 4px 14px rgba(0,0,0,0.35)',
-    }}>
-      <div style={{ position: 'absolute', top: 9, left: -5, width: 10, height: 10, borderRadius: '50%', background: INK, border: `2px solid ${KHAKI}` }} />
-      <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</div>
-      <div className="o40-display" style={{ color: PAPER, fontSize: 26, lineHeight: 1.1 }}>{numeric ? <CountUp value={value} /> : value}</div>
-      {sub && <div style={{ color: STEEL, fontSize: 11 }}>{sub}</div>}
-    </div>
-  );
-}
-
-const btnIcon = { background: 'transparent', border: 'none', padding: 6, cursor: 'pointer', display: 'flex', borderRadius: 10 };
 
 /* ================= MAIN APP ================= */
 export default function App() {
