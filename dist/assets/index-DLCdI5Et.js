@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-BtXOToTo.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-B4FJvY1c.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-DeONlY3i.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-BZ_Y-Nzb.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -1182,14 +1182,14 @@ function formatTime(s) {
   const m2 = Math.floor(s / 60), sec = s % 60;
   return `${m2}:${sec.toString().padStart(2, "0")}`;
 }
-function dayKey$1(d) {
+function dayKey(d) {
   const y = d.getFullYear();
   const m2 = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m2}-${day}`;
 }
-function sessionDayKey$1(s) {
-  return dayKey$1(new Date(s.date));
+function sessionDayKey(s) {
+  return dayKey(new Date(s.date));
 }
 function hrZone$1(bpm, age, lang) {
   const max = 220 - age;
@@ -1200,7 +1200,7 @@ function hrZone$1(bpm, age, lang) {
   return { label: tr$1({ it: "Massimale", en: "Max", de: "Maximal" }, lang), color: BLAZE_DEEP };
 }
 function computeBestStreak(sessions) {
-  const dates = [...new Set(sessions.map(sessionDayKey$1))].sort();
+  const dates = [...new Set(sessions.map(sessionDayKey))].sort();
   if (!dates.length) return 0;
   let best = 1, cur = 1;
   for (let i = 1; i < dates.length; i++) {
@@ -1215,24 +1215,24 @@ function computeBestStreak(sessions) {
   return best;
 }
 function computeStreak(sessions) {
-  const dateSet = new Set(sessions.map(sessionDayKey$1));
+  const dateSet = new Set(sessions.map(sessionDayKey));
   let cursor = /* @__PURE__ */ new Date();
-  if (!dateSet.has(dayKey$1(cursor))) cursor.setDate(cursor.getDate() - 1);
+  if (!dateSet.has(dayKey(cursor))) cursor.setDate(cursor.getDate() - 1);
   let streak = 0;
-  while (dateSet.has(dayKey$1(cursor))) {
+  while (dateSet.has(dayKey(cursor))) {
     streak++;
     cursor.setDate(cursor.getDate() - 1);
   }
   return streak;
 }
 function computeStreakWithFreeze(sessions) {
-  const dateSet = new Set(sessions.map(sessionDayKey$1));
+  const dateSet = new Set(sessions.map(sessionDayKey));
   let cursor = /* @__PURE__ */ new Date();
-  if (!dateSet.has(dayKey$1(cursor))) cursor.setDate(cursor.getDate() - 1);
+  if (!dateSet.has(dayKey(cursor))) cursor.setDate(cursor.getDate() - 1);
   let streak = 0;
   let freezes = 1;
   while (true) {
-    const k2 = dayKey$1(cursor);
+    const k2 = dayKey(cursor);
     if (dateSet.has(k2)) {
       streak++;
       cursor.setDate(cursor.getDate() - 1);
@@ -1296,13 +1296,13 @@ function getMedalProgress(sessions) {
   const bestStreak = computeBestStreak(sessions);
   const totalKcal = Math.round((sessions || []).reduce((a, s) => a + (s.kcal || 0), 0));
   const totalSessions = (sessions == null ? void 0 : sessions.length) || 0;
-  const byDay = new Set((sessions || []).map(sessionDayKey$1));
+  const byDay = new Set((sessions || []).map(sessionDayKey));
   const now = /* @__PURE__ */ new Date();
   let activeDays = 0;
   for (let i = 0; i < 56; i++) {
     const d = new Date(now);
     d.setDate(now.getDate() - i);
-    if (byDay.has(dayKey$1(d))) activeDays++;
+    if (byDay.has(dayKey(d))) activeDays++;
   }
   const cons = Math.round(Math.min(100, activeDays / (8 * WEEKLY_GOAL) * 100));
   let perfectWeeks = 0;
@@ -1339,26 +1339,26 @@ function greeting(lang) {
   return tr$1({ it: "Buonasera,", en: "Good evening,", de: "Guten Abend," }, lang);
 }
 function buildHeatmap(sessions, days = 35) {
-  const dateSet = new Set(sessions.map(sessionDayKey$1));
+  const dateSet = new Set(sessions.map(sessionDayKey));
   const cells = [];
   for (let i = days - 1; i >= 0; i--) {
     const d = /* @__PURE__ */ new Date();
     d.setDate(d.getDate() - i);
-    cells.push({ key: dayKey$1(d), active: dateSet.has(dayKey$1(d)) });
+    cells.push({ key: dayKey(d), active: dateSet.has(dayKey(d)) });
   }
   return cells;
 }
 function buildYearHeatmap(sessions) {
   const byDay = /* @__PURE__ */ new Map();
   sessions.forEach((s) => {
-    const k2 = sessionDayKey$1(s);
+    const k2 = sessionDayKey(s);
     byDay.set(k2, (byDay.get(k2) || 0) + 1);
   });
   const now = /* @__PURE__ */ new Date();
   const start = new Date(now.getFullYear(), 0, 1);
   const days = [];
   for (let d = new Date(start); d <= now; d.setDate(d.getDate() + 1)) {
-    const k2 = dayKey$1(d);
+    const k2 = dayKey(d);
     const c = byDay.get(k2) || 0;
     days.push({ key: k2, date: new Date(d), count: c, active: c > 0 });
   }
@@ -2363,12 +2363,12 @@ function getWeeklyProgress(sessions, weeklyGoal = WEEKLY_GOAL) {
 function getConsistencyScore(sessions, weeks = 8) {
   if (!(sessions == null ? void 0 : sessions.length)) return 0;
   const now = /* @__PURE__ */ new Date();
-  const byDay = new Set(sessions.map(sessionDayKey$1));
+  const byDay = new Set(sessions.map(sessionDayKey));
   let activeDays = 0;
   for (let i = 0; i < weeks * 7; i++) {
     const d = new Date(now);
     d.setDate(now.getDate() - i);
-    if (byDay.has(dayKey$1(d))) activeDays++;
+    if (byDay.has(dayKey(d))) activeDays++;
   }
   const ideal = weeks * WEEKLY_GOAL;
   return Math.round(Math.min(100, activeDays / ideal * 100));
@@ -8824,7 +8824,7 @@ function toggleFavorite(list, id) {
 }
 let _mediaPromise$2 = null;
 function getMediaMap$2() {
-  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-BtXOToTo.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-DeONlY3i.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$2;
 }
 function ExerciseMedia$2({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9111,7 +9111,7 @@ const primaryBtn$3 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise$1 = null;
 function getMediaMap$1() {
-  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-BtXOToTo.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-DeONlY3i.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$1;
 }
 function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9309,7 +9309,7 @@ const primaryBtn$2 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-BtXOToTo.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-DeONlY3i.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -10747,7 +10747,7 @@ function BottomNav({ active, onNavigate }) {
     ] }, tab.key);
   }) });
 }
-const BUILD_VERSION = "2.8.4 · 4be96f9";
+const BUILD_VERSION = "2.8.4 · ce74442";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -11363,7 +11363,7 @@ function App() {
   }
   async function recordWaist(cm) {
     const latest = waistHistory.length ? waistHistory[waistHistory.length - 1] : null;
-    if (latest && latest.cm === cm && dayKey$1(new Date(latest.date)) === dayKey$1(/* @__PURE__ */ new Date())) return;
+    if (latest && latest.cm === cm && dayKey(new Date(latest.date)) === dayKey(/* @__PURE__ */ new Date())) return;
     const updated = [...waistHistory, { date: (/* @__PURE__ */ new Date()).toISOString(), cm }];
     setWaistHistory(updated);
     try {
@@ -11373,7 +11373,7 @@ function App() {
   }
   async function recordWeight(kg) {
     const latest = weightHistory.length ? weightHistory[weightHistory.length - 1] : null;
-    if (latest && latest.kg === kg && dayKey$1(new Date(latest.date)) === dayKey$1(/* @__PURE__ */ new Date())) return;
+    if (latest && latest.kg === kg && dayKey(new Date(latest.date)) === dayKey(/* @__PURE__ */ new Date())) return;
     const updated = [...weightHistory, { date: (/* @__PURE__ */ new Date()).toISOString(), kg }];
     setWeightHistory(updated);
     try {
@@ -12709,7 +12709,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-B4FJvY1c.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-BZ_Y-Nzb.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
