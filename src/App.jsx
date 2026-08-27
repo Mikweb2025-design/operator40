@@ -194,7 +194,7 @@ export default function App() {
   const [showBellyTest, setShowBellyTest] = useState(false);
   const [showPose, setShowPose] = useState(null);
   const [showChangelog, setShowChangelog] = useState(false);
-  const [showReleaseBanner, setShowReleaseBanner] = useState(() => { try { return localStorage.getItem('o40_release_2.8.4') !== 'dismissed'; } catch { return true; } });
+  const [showReleaseBanner, setShowReleaseBanner] = useState(() => { try { return localStorage.getItem('o40_release_2.9.0') !== 'dismissed'; } catch { return true; } });
   const [aiCoachEnabled, setAiCoachEnabled] = useState(() => { try { return localStorage.getItem('o40_aiCoach') !== '0'; } catch { return true; } });
 
   // hydrate photos from IndexedDB (migration from localStorage, async)
@@ -386,7 +386,7 @@ export default function App() {
       if (!seen) setShowTour(true);
     }
   }, [screen, profile]);
-  // ---- changelog (v2.7 AI Engine) — once per version, after tour dismissed or 1.2s delay ----
+  // ---- changelog (v2.9.0 Audit) — once per version, after tour dismissed or 1.2s delay ----
   useEffect(() => {
     if (screen !== 'home' || !profile) return;
     if (showTour) return;
@@ -1043,23 +1043,23 @@ export default function App() {
                 <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: 'grid', placeItems: 'center', flexShrink: 0 }}><Sparkles size={18} color={PAPER} /></div>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-                    <span className="o40-mono" style={{ background: BLAZE, color: PAPER, fontSize: 9, fontWeight: 800, letterSpacing: '0.08em', padding: '2px 6px', borderRadius: 6 }}>NUOVO v2.8.4</span>
-                    <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>26 AGO 2026 · 7 FIX TRACKING</span>
+                    <span className="o40-mono" style={{ background: BLAZE, color: PAPER, fontSize: 9, fontWeight: 800, letterSpacing: '0.08em', padding: '2px 6px', borderRadius: 6 }}>NUOVO v2.9.0</span>
+                    <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>27 AGO 2026 · AUDIT 5 AREE</span>
                   </div>
-                  <div className="o40-display" style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}>Sessione tracking sbloccata — prova con frontale!</div>
+                  <div className="o40-display" style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}>Audit completo — backup, performance, PWA!</div>
                 </div>
               </div>
-              <button onClick={() => { try { localStorage.setItem('o40_release_2.8.4', 'dismissed'); } catch {}; setShowReleaseBanner(false); }} aria-label="Chiudi" style={{ width: 28, height: 28, borderRadius: '50%', border: `1px solid ${OLIVE}`, background: INK, color: STEEL, display: 'grid', placeItems: 'center', cursor: 'pointer', flexShrink: 0, position: 'relative' }}><X size={14} /></button>
+              <button onClick={() => { try { localStorage.setItem('o40_release_2.9.0', 'dismissed'); } catch {}; setShowReleaseBanner(false); }} aria-label="Chiudi" style={{ width: 28, height: 28, borderRadius: '50%', border: `1px solid ${OLIVE}`, background: INK, color: STEEL, display: 'grid', placeItems: 'center', cursor: 'pointer', flexShrink: 0, position: 'relative' }}><X size={14} /></button>
             </div>
             <ul style={{ position: 'relative', margin: 0, paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 3, listStyle: 'disc' }}>
-              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Framing</b>: caviglie non bloccano più — squat/affondo/wallsit/pushup +6 a terra visibili anche a mezzo busto</li>
-              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Side-view</b>: angolo bilaterale visibility-aware (EMA+isteresi) — 16 esercizi stabili anche di lato</li>
-              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Idle → READY</b>: badge POSE% corretto + bug root STANDING/TOP risolto (0→7 rep su tuoi landmarks)</li>
-              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Squat</b>: hipY calibrato a inizio sessione + badge CONF diagnostico + fix DEBUG INK_2</li>
+              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Backup</b>: export/import JSON + schema v2 — non perdi più i dati cambiando device</li>
+              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Dedup</b>: DogTag/ProgressRing/styles centralizzati — Home 65 righe → shared</li>
+              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>i18n</b>: 15+ hardcoded IT → t() — OGGI/PROGRESSI/MISSIONI + backup</li>
+              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Lazy+PWA</b>: 9 screen lazy (749k→444k) + SW stale-while-revalidate + 51 test</li>
             </ul>
             <div style={{ position: 'relative', display: 'flex', gap: 8, marginTop: 2 }}>
               <button onClick={() => setShowChangelog(true)} style={{ flex: 1, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 10, padding: '9px 12px', fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: '0.06em', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}><Zap size={14} /> DETTAGLI <ChevronRight size={14} /></button>
-              <button onClick={() => { try { localStorage.setItem('o40_release_2.8.4', 'dismissed'); } catch {}; setShowReleaseBanner(false); }} style={{ background: INK, border: `1px solid ${OLIVE}`, color: KHAKI, borderRadius: 10, padding: '9px 14px', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Chiudi</button>
+              <button onClick={() => { try { localStorage.setItem('o40_release_2.9.0', 'dismissed'); } catch {}; setShowReleaseBanner(false); }} style={{ background: INK, border: `1px solid ${OLIVE}`, color: KHAKI, borderRadius: 10, padding: '9px 14px', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Chiudi</button>
             </div>
           </div>
         )}
@@ -1142,7 +1142,7 @@ export default function App() {
           <BottomNav active={screen} onNavigate={setScreen} />
         )}
 
-        {/* VersionBadge sempre visibile - tap riapre changelog v2.8.4 */}
+        {/* VersionBadge sempre visibile - tap riapre changelog v2.9.0 */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: screen === 'loading' ? '12px 0' : '6px 0 10px', opacity: 0.85 }}>
           <VersionBadge onClick={() => setShowChangelog(true)} />
           {updateAvailable && (
