@@ -41,6 +41,7 @@ import TopBar from './components/layout/TopBar.jsx';
 import BottomNav from './components/layout/BottomNav.jsx';
 import VersionBadge from './components/layout/VersionBadge.jsx';
 import { getBellyLevelForTest, shouldProgressBellyLevel } from './utils/bellyTest.js';
+import { exportBackup, downloadBackup, importBackup } from './utils/backup.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
 import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.js';
@@ -62,19 +63,29 @@ import { getBellyProgress, getBellyStreak, getBellyInsight } from './utils/belly
 
 
 
-function exportData(profile, sessions) {
+async function exportData() {
   try {
-    const payload = JSON.stringify({ profile, sessions }, null, 2);
-    const blob = new Blob([payload], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `operator40-backup-${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    const data = await exportBackup();
+    downloadBackup(data);
   } catch (e) { /* best effort, ignore */ }
+}
+async function handleImportBackup(file, { setProfile, setSessions, setWaistHistory, setWeightHistory, setCustomPrograms, showToast, setScreen }) {
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    await importBackup(data);
+    // reload from storage to update UI
+    const p = await window.storage.get('o40_profile', false).then(r => r ? JSON.parse(r.value) : null).catch(()=>null);
+    const s = await window.storage.get('o40_sessions', false).then(r => r ? JSON.parse(r.value) : []).catch(()=>[]);
+    const wh = await window.storage.get('o40_waist', false).then(r => r ? JSON.parse(r.value) : []).catch(()=>[]);
+    const wt = await window.storage.get('o40_weight', false).then(r => r ? JSON.parse(r.value) : []).catch(()=>[]);
+    const cp = await window.storage.get('o40_custom_programs', false).then(r => r ? JSON.parse(r.value) : []).catch(()=>[]);
+    setProfile(p); setSessions(s || []); setWaistHistory(wh || []); setWeightHistory(wt || []); setCustomPrograms(cp || []);
+    showToast('Backup ripristinato — ricarico...');
+    setTimeout(() => window.location.reload(), 800);
+  } catch (e) {
+    showToast('Backup non valido: ' + (e.message || 'errore'));
+  }
 }
 
 /* ---- Apple Health export.xml import (parsed 100% locally, regex-based to stay safe on huge files) ---- */
@@ -1003,6 +1014,8 @@ export default function App() {
             healthWeightSuggestion={healthWeightSuggestion} onApplyHealthWeight={applyHealthWeight}
             showToast={showToast} largeText={largeText} setLargeText={setLargeText}
             pushEnabled={pushEnabled} pushSupported={pushSupported} pushBusy={pushBusy} onTogglePush={togglePush} onTestPush={handleTestPush}
+            onExportBackup={exportData}
+            onImportBackup={(file) => handleImportBackup(file, { setProfile, setSessions, setWaistHistory, setWeightHistory, setCustomPrograms, showToast, setScreen })}
           />
         )}
 
