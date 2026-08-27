@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useT } from '../context/LangContext.jsx';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
-import { EXERCISES } from '../data/exercises.js';
+import { EXERCISES, EXERCISE_GROUPS } from '../data/exercises.js';
+import { HOLD_EXERCISES, getReps, levelPreset } from '../data/programs.js';
 import { tr } from '../i18n.js';
 import { buildSequence, totalSeqSeconds, estimateProgramKcal } from '../utils/workout.js';
-import { levelPreset } from '../data/programs.js';
-import { Play, ChevronRight } from 'lucide-react';
+import { hasClip } from '../clips.js';
+import { speak } from '../utils/audio.js';
+import { Play, ChevronRight, RefreshCw, Wind } from 'lucide-react';
 import { ExerciseFigure } from '../components/ExerciseFigure.jsx';
+import TopBar from '../components/layout/TopBar.jsx';
+const primaryBtn = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 14, padding: '12px 16px', fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%' };
+const btnIcon = { background: 'transparent', border: 'none', padding: 6, cursor: 'pointer', display: 'flex', borderRadius: 10 };
+let _mediaPromise = null;
+function getMediaMap() { if (!_mediaPromise) _mediaPromise = import('../media.js').then(m => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES })); return _mediaPromise; }
+function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = '100%', rounded = 10 }) {
+  const [src, setSrc] = useState(null); const [videoSrc, setVideoSrc] = useState(null); const [failed, setFailed] = useState(false);
+  useEffect(() => { let c=false; setSrc(null); setVideoSrc(null); setFailed(false); getMediaMap().then(({b64,files})=>{ if(c) return; const clip=files[exerciseId]||files[pose]||null; setVideoSrc(clip); if(!clip) setSrc(b64[exerciseId]||b64[pose]||null); }).catch(()=>{if(!c) setFailed(true)}); return()=>{c=true}},[exerciseId]);
+  if (videoSrc && !failed) return (<video src={videoSrc} autoPlay muted loop playsInline preload="metadata" onError={()=>setFailed(true)} style={{width:size,height:size,objectFit:'cover',borderRadius:rounded,display:'block',background:INK}}/>);
+  if (src && !failed) return (<img src={src} alt="" onError={()=>setFailed(true)} style={{width:size,height:size,objectFit:'cover',borderRadius:rounded,display:'block',background:INK}}/>);
+  return <ExerciseFigure pose={pose} color={color} size={size} />;
+}
+function DogTag({ label, value, sub }) { const numeric = typeof value === 'number'; return (<div className="o40-card" style={{ background: `linear-gradient(160deg, ${INK_2}, ${INK})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: '12px 13px', position: 'relative', flex: 1, minWidth: 0, boxShadow: '0 4px 14px rgba(0,0,0,0.35)' }}><div style={{ position: 'absolute', top: 9, left: -5, width: 10, height: 10, borderRadius: '50%', background: INK, border: `2px solid ${KHAKI}` }} /><div className="o40-mono" style={{ color: KHAKI, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</div><div className="o40-display" style={{ color: PAPER, fontSize: 26, lineHeight: 1.1 }}>{numeric ? value : value}</div>{sub && <div style={{ color: STEEL, fontSize: 11 }}>{sub}</div>}</div>); }
 
 /* ================= PREVIEW SCREEN ================= */
 function groupOf(id) {
