@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.9.0';
+export const CHANGELOG_VERSION = '2.9.1';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,9 +22,9 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.9.0',
-    title: 'Audit completo — 5 aree + backup + PWA',
-    subtitle: 'v2.9.0 · 27 Agosto 2026 · Codice, dati, UX, performance — 100% offline',
+    badge: 'NUOVO v2.9.1',
+    title: 'Audit completo — 5 aree + lint + fixtures (2.9.1)',
+    subtitle: 'v2.9.1 · 28 Agosto 2026 · Codice, dati, UX, performance — 100% offline',
     intro: 'Audit completo come da tua richiesta (Fase 1 struttura/dati/performance/qualità/UX/privacy). 5 PR incrementali su branch separati, merge su main e deploy live. Nessuna logica kcal/streak toccata.',
     groups: [
       {
@@ -89,9 +89,9 @@ const COPY: Record<Lang, any> = {
     footer: 'Tutto on-device (IndexedDB, MediaPipe mai su server). Per replay: ◯ REC durante sessione → ↓ JSON → test analyzer. Docs in docs/FIX-tracking-2026-08-26.md',
   },
   en: {
-    badge: 'NEW v2.9.0',
-    title: 'Full audit — 5 areas + backup + PWA',
-    subtitle: 'v2.9.0 · Aug 27 2026 · Code, data, UX, performance — 100% offline',
+    badge: 'NEW v2.9.1',
+    title: 'Full audit — 5 areas + lint + fixtures (2.9.1)',
+    subtitle: 'v2.9.1 · Aug 28 2026 · Code, data, UX, performance — 100% offline',
     intro: 'Full audit as requested (Phase 1 structure/data/performance/quality/UX/privacy). 5 incremental PRs on separate branches, merged to main and deployed live. No kcal/streak logic touched.',
     groups: [
       {
@@ -143,9 +143,9 @@ const COPY: Record<Lang, any> = {
     footer: 'Everything on-device. For replay: ◯ REC → ↓ JSON → analyzer test.',
   },
   de: {
-    badge: 'NEU v2.9.0',
-    title: 'Vollständiges Audit — 5 Bereiche + Backup + PWA',
-    subtitle: 'v2.9.0 · 27. Aug 2026 · Code, Daten, UX, Performance — 100% offline',
+    badge: 'NEU v2.9.1',
+    title: 'Vollständiges Audit — 5 Bereiche + Lint + Fixtures (2.9.1)',
+    subtitle: 'v2.9.1 · 28. Aug 2026 · Code, Daten, UX, Performance — 100% offline',
     intro: 'Vollständiges Audit wie angefordert. 5 inkrementelle PRs auf separaten Branches, gemerged und live deployed. Keine kcal/streak-Logik geändert.',
     groups: [
       {
