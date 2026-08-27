@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-C5EZ6aph.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-pM6rhmXf.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-CpeB-wvF.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-DWvEtYIz.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -1191,7 +1191,7 @@ function dayKey(d) {
 function sessionDayKey(s) {
   return dayKey(new Date(s.date));
 }
-function hrZone$1(bpm, age, lang) {
+function hrZone(bpm, age, lang) {
   const max = 220 - age;
   const pct = bpm / max * 100;
   if (pct < 60) return { label: tr$1({ it: "Recupero", en: "Recovery", de: "Erholung" }, lang), color: STEEL };
@@ -8832,7 +8832,7 @@ function toggleFavorite(list, id) {
 }
 let _mediaPromise$2 = null;
 function getMediaMap$2() {
-  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-C5EZ6aph.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-CpeB-wvF.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$2;
 }
 function ExerciseMedia$2({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9119,7 +9119,7 @@ const primaryBtn$3 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise$1 = null;
 function getMediaMap$1() {
-  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-C5EZ6aph.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-CpeB-wvF.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$1;
 }
 function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9317,7 +9317,7 @@ const primaryBtn$2 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-C5EZ6aph.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-CpeB-wvF.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9595,7 +9595,7 @@ function DogTag$1({ label, value, sub }) {
 }
 function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInput, setWaistInput, weightInput, setWeightInput, rpe, setRpe, notes, setNotes, onSave }) {
   const { lang, t } = useT();
-  const zone = hrInput ? hrZone$1(parseInt(hrInput, 10), profile.age, lang) : null;
+  const zone = hrInput ? hrZone(parseInt(hrInput, 10), profile.age, lang) : null;
   const [shareState, setShareState] = reactExports.useState("idle");
   async function handleShare() {
     const text = t("sum.share", { name: tr$1(stats.program.name, lang), min: Math.round(stats.durationSec / 60), kcal: stats.kcal });
@@ -10756,7 +10756,7 @@ function BottomNav({ active, onNavigate }) {
     ] }, tab.key);
   }) });
 }
-const BUILD_VERSION = "2.8.4 · 6a972e0";
+const BUILD_VERSION = "2.8.4 · 871638f";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -12718,7 +12718,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-pM6rhmXf.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-DWvEtYIz.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
