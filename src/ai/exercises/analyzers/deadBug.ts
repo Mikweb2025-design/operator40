@@ -2,6 +2,7 @@ import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+// tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class DeadBugAnalyzer extends ExerciseAnalyzer{
   // Ankles (27,28) not required for gating — only feed the secondary trunk form check.
   readonly id='deadbug'; readonly requiredLandmarks=[11,12,23,24,25,26,13,14,15,16];

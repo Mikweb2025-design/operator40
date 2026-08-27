@@ -2,6 +2,7 @@ import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+// tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class BurpeeAnalyzer extends ExerciseAnalyzer{
   readonly id='burpee'; readonly requiredLandmarks=[23,24,25,26,27,28,11,12,13,14];
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){

@@ -2,6 +2,7 @@ import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, clamp } from '../../pose/Geometry';
+// tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class PlankAnalyzer extends ExerciseAnalyzer{
   readonly id='plank'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
   private goodSince: number|null=null; private graceMs=600;

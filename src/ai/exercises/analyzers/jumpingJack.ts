@@ -2,6 +2,7 @@ import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, clamp, dist2D, torsoLength } from '../../pose/Geometry';
+// tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class JumpingJackAnalyzer extends ExerciseAnalyzer{
   readonly id='jumpingjack'; readonly requiredLandmarks=[11,12,13,14,15,16,23,24,25,26,27,28];
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){

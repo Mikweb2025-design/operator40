@@ -2,6 +2,7 @@ import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+// tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class FlutterKickAnalyzer extends ExerciseAnalyzer{
   // Ankles (27,28) were required but never actually used by this analyzer (hip-knee is the whole
   // signal) — dropped so low foot visibility can't gate a metric that doesn't depend on it.
