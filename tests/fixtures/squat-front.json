@@ -1,7 +1,7 @@
 {
   "version": 1,
   "created": "2026-08-26T00:00:00.000Z",
-  "exercise": "squat-front",
+  "exercise": "squat",
   "description": "Synthetic front-view 2 good reps + 1 shallow bounce prefix, 80ms dt",
   "frames": [
     {

@@ -25,9 +25,21 @@ export function estimateTDEE(weightKg, heightCm, age, activity = 1.35) {
 export function simpleMealHint(goal) {
   // goal: 'cut' | 'maintain' | 'tone'
   const hints = {
-    cut: { it: 'Deficit leggero ~300 kcal, proteine 1.8g/kg, verdure + camminata.', en: 'Small deficit ~300 kcal, protein 1.8g/kg, veg + walk.', de: 'Leichtes Defizit ~300 kcal, Protein 1,8g/kg, Gemüse + Gehen.' },
-    maintain: { it: 'Mantieni TDEE, proteine 1.6g/kg, 3 pasti regolari.', en: 'Maintain TDEE, protein 1.6g/kg, 3 regular meals.', de: 'TDEE halten, Protein 1,6g/kg, 3 regelmäßige Mahlzeiten.' },
-    tone: { it: 'Leggero surplus + forza, proteine 1.8g/kg.', en: 'Small surplus + strength, protein 1.8g/kg.', de: 'Leichter Überschuss + Kraft, Protein 1,8g/kg.' },
+    cut: {
+      it: 'Deficit leggero ~300 kcal, proteine 1.8g/kg, verdure + camminata.',
+      en: 'Small deficit ~300 kcal, protein 1.8g/kg, veg + walk.',
+      de: 'Leichtes Defizit ~300 kcal, Protein 1,8g/kg, Gemüse + Gehen.',
+    },
+    maintain: {
+      it: 'Mantieni TDEE, proteine 1.6g/kg, 3 pasti regolari.',
+      en: 'Maintain TDEE, protein 1.6g/kg, 3 regular meals.',
+      de: 'TDEE halten, Protein 1,6g/kg, 3 regelmäßige Mahlzeiten.',
+    },
+    tone: {
+      it: 'Leggero surplus + forza, proteine 1.8g/kg.',
+      en: 'Small surplus + strength, protein 1.8g/kg.',
+      de: 'Leichter Überschuss + Kraft, Protein 1,8g/kg.',
+    },
   };
   return hints[goal] || hints.cut;
 }

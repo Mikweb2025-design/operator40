@@ -33,7 +33,10 @@ export default function DogTag({ label, value, sub }) {
           border: `2px solid ${KHAKI}`,
         }}
       />
-      <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+      <div
+        className="o40-mono"
+        style={{ color: KHAKI, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}
+      >
         {label}
       </div>
       <div className="o40-display" style={{ color: PAPER, fontSize: 26, lineHeight: 1.1 }}>

@@ -1,7 +1,21 @@
-import { WARM_SEC, COOL_SEC, WORK_SEC, REST_SEC, HOLD_EXERCISES, getReps } from '../data/programs.js';
+import {
+  WARM_SEC,
+  COOL_SEC,
+  WORK_SEC,
+  REST_SEC,
+  HOLD_EXERCISES,
+  getReps,
+} from '../data/programs.js';
 import { EXERCISES } from '../data/exercises.js';
 
-export function buildSequence(program, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = 'time', levelKey = 'combattente') {
+export function buildSequence(
+  program,
+  skipWarmup,
+  workSec = WORK_SEC,
+  restSec = REST_SEC,
+  mode = 'time',
+  levelKey = 'combattente'
+) {
   const isReps = mode === 'reps';
   const seq = skipWarmup ? [] : [{ type: 'warmup', duration: WARM_SEC }];
   for (let r = 1; r <= program.rounds; r++) {
@@ -21,13 +35,23 @@ export function buildSequence(program, skipWarmup, workSec = WORK_SEC, restSec =
 }
 
 export function kcalForSeconds(met, weightKg, seconds) {
-  return (met * 3.5 * weightKg / 200) * (seconds / 60);
+  return ((met * 3.5 * weightKg) / 200) * (seconds / 60);
 }
 
-export function estimateProgramKcal(program, weightKg, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = 'time', levelKey = 'combattente') {
-  let kcal = skipWarmup ? 0 : kcalForSeconds(3.0, weightKg, WARM_SEC) + kcalForSeconds(3.0, weightKg, COOL_SEC);
+export function estimateProgramKcal(
+  program,
+  weightKg,
+  skipWarmup,
+  workSec = WORK_SEC,
+  restSec = REST_SEC,
+  mode = 'time',
+  levelKey = 'combattente'
+) {
+  let kcal = skipWarmup
+    ? 0
+    : kcalForSeconds(3.0, weightKg, WARM_SEC) + kcalForSeconds(3.0, weightKg, COOL_SEC);
   const isReps = mode === 'reps';
-  program.exercises.forEach(id => {
+  program.exercises.forEach((id) => {
     const ex = EXERCISES[id];
     for (let r = 0; r < program.rounds; r++) {
       if (isReps) {
@@ -43,6 +67,16 @@ export function estimateProgramKcal(program, weightKg, skipWarmup, workSec = WOR
   return kcal;
 }
 
-export function totalSeqSeconds(program, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = 'time', levelKey = 'combattente') {
-  return buildSequence(program, skipWarmup, workSec, restSec, mode, levelKey).reduce((a, p) => a + (p.duration || (p.reps ? p.reps * 3 : 0)), 0);
+export function totalSeqSeconds(
+  program,
+  skipWarmup,
+  workSec = WORK_SEC,
+  restSec = REST_SEC,
+  mode = 'time',
+  levelKey = 'combattente'
+) {
+  return buildSequence(program, skipWarmup, workSec, restSec, mode, levelKey).reduce(
+    (a, p) => a + (p.duration || (p.reps ? p.reps * 3 : 0)),
+    0
+  );
 }

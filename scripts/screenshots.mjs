@@ -60,9 +60,17 @@ async function seed(page) {
     localStorage.setItem('o40_weight', JSON.stringify(weightHistory));
     localStorage.setItem('o40_largeText', '0');
     localStorage.setItem('o40_seenTour', '1');
+    localStorage.setItem('o40_changelog_2.9.0', 'dismissed');
+    localStorage.setItem('o40_changelog_2.8.4', 'dismissed');
+    localStorage.setItem('o40_release_2.9.0', 'dismissed');
+    localStorage.setItem('o40_release_2.8.4', 'dismissed');
+    localStorage.setItem('o40_lastSw', 'o40-vtest');
   }, { profile, sessions: genSessions(), waistHistory, weightHistory });
   await page.reload({ waitUntil: 'networkidle' });
   await page.waitForTimeout(1200);
+  // dismiss any remaining modal (changelog) by pressing Escape
+  await page.keyboard.press('Escape').catch(() => {});
+  await page.waitForTimeout(400);
 }
 
 async function run() {

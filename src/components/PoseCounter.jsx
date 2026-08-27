@@ -15,7 +15,9 @@ import FitnessEngineView from './FitnessEngineView.tsx';
 export default function PoseCounter({ exercise = 'squat', onCount, onClose }) {
   if (typeof window !== 'undefined' && !window.__o40_pose_deprecated_warned) {
     window.__o40_pose_deprecated_warned = true;
-    console.warn('[Operator40] PoseCounter.jsx is deprecated — use FitnessEngineView. Delegating to FitnessEngine.');
+    console.warn(
+      '[Operator40] PoseCounter.jsx is deprecated — use FitnessEngineView. Delegating to FitnessEngine.'
+    );
   }
   return (
     <FitnessEngineView

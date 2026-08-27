@@ -1,25 +1,160 @@
 import React, { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { LangContext, useT } from './context/LangContext.jsx';
 import {
-  Play, Pause, SkipForward, Flame, HeartPulse, Trophy, ChevronRight,
-  ChevronLeft, RotateCcw, Settings, X, Check, Volume2, VolumeX, Vibrate, History as HistoryIcon, Info, Dog, Plus, Trash2,
-  Home as HomeIcon, BookOpen, Zap, RefreshCw, TrendingUp, TrendingDown, Ruler, Target, Medal, Crown,
-  Music, Music2, HeadphoneOff, Lightbulb, Scale, Wind, Globe, Search, Star, Sun, Moon, Sparkles, Eye, Watch, Share2, Bell, BellOff, Send
+  Play,
+  Pause,
+  SkipForward,
+  Flame,
+  HeartPulse,
+  Trophy,
+  ChevronRight,
+  ChevronLeft,
+  RotateCcw,
+  Settings,
+  X,
+  Check,
+  Volume2,
+  VolumeX,
+  Vibrate,
+  History as HistoryIcon,
+  Info,
+  Dog,
+  Plus,
+  Trash2,
+  Home as HomeIcon,
+  BookOpen,
+  Zap,
+  RefreshCw,
+  TrendingUp,
+  TrendingDown,
+  Ruler,
+  Target,
+  Medal,
+  Crown,
+  Music,
+  Music2,
+  HeadphoneOff,
+  Lightbulb,
+  Scale,
+  Wind,
+  Globe,
+  Search,
+  Star,
+  Sun,
+  Moon,
+  Sparkles,
+  Eye,
+  Watch,
+  Share2,
+  Bell,
+  BellOff,
+  Send,
 } from 'lucide-react';
-import { TRACKS, DEFAULT_TRACK, musicPlay, musicPause, musicLoad, musicSetVolume, musicSetShouldPlay, musicSetAutoPlay, musicGetAutoPlay, musicSetShuffle, musicGetShuffle, musicNext, musicPrev, musicSetOnTrackChange, musicGetCurrentId, musicGetQueue } from './music';
+import {
+  TRACKS,
+  DEFAULT_TRACK,
+  musicPlay,
+  musicPause,
+  musicLoad,
+  musicSetVolume,
+  musicSetShouldPlay,
+  musicSetAutoPlay,
+  musicGetAutoPlay,
+  musicSetShuffle,
+  musicGetShuffle,
+  musicNext,
+  musicPrev,
+  musicSetOnTrackChange,
+  musicGetCurrentId,
+  musicGetQueue,
+} from './music';
 import { LANGS, LOCALES, detectLang, tr, translate } from './i18n';
 import { hasClip } from './clips.js';
-import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from './constants/theme.js';
+import {
+  INK,
+  INK_2,
+  PAPER,
+  OLIVE,
+  OLIVE_DARK,
+  KHAKI,
+  BLAZE,
+  BLAZE_DEEP,
+  STEEL,
+} from './constants/theme.js';
 import { EXERCISES, EXERCISE_GROUPS } from './data/exercises.js';
-import { PROGRAMS, QUICK_PROGRAM, WORK_SEC, REST_SEC, WARM_SEC, COOL_SEC, INTERVAL_PRESETS, LEVELS, CAMP_DAYS, DAY_CYCLE, getIntervalPreset, getLevel, levelPreset, campDayIndex, campDayDisplay, programById, pickNextProgram, HOLD_EXERCISES, getReps } from './data/programs.js';
-import { buildSequence, kcalForSeconds, estimateProgramKcal, totalSeqSeconds } from './utils/workout.js';
+import {
+  PROGRAMS,
+  QUICK_PROGRAM,
+  WORK_SEC,
+  REST_SEC,
+  WARM_SEC,
+  COOL_SEC,
+  INTERVAL_PRESETS,
+  LEVELS,
+  CAMP_DAYS,
+  DAY_CYCLE,
+  getIntervalPreset,
+  getLevel,
+  levelPreset,
+  campDayIndex,
+  campDayDisplay,
+  programById,
+  pickNextProgram,
+  HOLD_EXERCISES,
+  getReps,
+} from './data/programs.js';
+import {
+  buildSequence,
+  kcalForSeconds,
+  estimateProgramKcal,
+  totalSeqSeconds,
+} from './utils/workout.js';
 import { formatTime, dayKey, sessionDayKey } from './utils/date.js';
-import { hrZone, computeBestStreak, computeStreak, computeStreakWithFreeze, WEEKLY_GOAL, STREAK_BADGES, SESSION_BADGES, KCAL_BADGES, CONSISTENCY_BADGES, PERFECT_WEEK_BADGES, MEDAL_DEFS, RPE_LABELS, RPE_COLORS, RANKS, getRank, nextBadge, getMedalProgress, getNextMedals, greeting, buildHeatmap, buildYearHeatmap, getPersonalRecords, getMonthlyTrend } from './utils/stats.js';
+import {
+  hrZone,
+  computeBestStreak,
+  computeStreak,
+  computeStreakWithFreeze,
+  WEEKLY_GOAL,
+  STREAK_BADGES,
+  SESSION_BADGES,
+  KCAL_BADGES,
+  CONSISTENCY_BADGES,
+  PERFECT_WEEK_BADGES,
+  MEDAL_DEFS,
+  RPE_LABELS,
+  RPE_COLORS,
+  RANKS,
+  getRank,
+  nextBadge,
+  getMedalProgress,
+  getNextMedals,
+  greeting,
+  buildHeatmap,
+  buildYearHeatmap,
+  getPersonalRecords,
+  getMonthlyTrend,
+} from './utils/stats.js';
 import { getAudioCtx, unlockAudio, playBeep, playClick, vibrate, speak } from './utils/audio.js';
 import { STYLES } from './styles/appStyles.js';
 import { ExerciseFigure } from './components/ExerciseFigure.jsx';
-import { requestNotificationPermission, scheduleDailyReminder, disableReminder, getReminder, checkAndFireReminder, fireTestNotification } from './utils/notifications.js';
-import { isPushSupported, isStandalonePWA, getExistingSubscription, subscribePush, unsubscribePush, testPushViaSW, updatePushStats } from './utils/push.js';
+import {
+  requestNotificationPermission,
+  scheduleDailyReminder,
+  disableReminder,
+  getReminder,
+  checkAndFireReminder,
+  fireTestNotification,
+} from './utils/notifications.js';
+import {
+  isPushSupported,
+  isStandalonePWA,
+  getExistingSubscription,
+  subscribePush,
+  unsubscribePush,
+  testPushViaSW,
+  updatePushStats,
+} from './utils/push.js';
 import { getMotivationalMessage } from './utils/motivation.js';
 import BellyTest from './components/BellyTest.jsx';
 import BeforeAfterSlider from './components/BeforeAfterSlider.jsx';
@@ -43,8 +178,18 @@ const HistoryScreen = lazy(() => import('./screens/HistoryScreen.jsx'));
 
 function ScreenFallback() {
   return (
-    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
-      <div className="o40-mono" style={{ color: '#EDE8D8', fontSize: 12, letterSpacing: '0.08em' }}>CARICAMENTO…</div>
+    <div
+      style={{
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 40,
+      }}
+    >
+      <div className="o40-mono" style={{ color: '#EDE8D8', fontSize: 12, letterSpacing: '0.08em' }}>
+        CARICAMENTO…
+      </div>
     </div>
   );
 }
@@ -60,8 +205,21 @@ import { loadPhotos, savePhotos, fileToDataUrl, loadPhotosAsync } from './utils/
 import { requestWakeLock, releaseWakeLock } from './utils/wakeLock.js';
 import { shareStatsImage } from './utils/shareImage.js';
 import { estimateBodyFat, whtCategory } from './utils/body.js';
-import { getWeeklyProgress, getConsistencyScore, getAveragePace, formatDuration, getStreakRisk } from './utils/progress.js';
-import { getGoalProgress, getGoalHistory, suggestNextGoal, formatGoal, estimateWeeklyCalories, getStreakWeeks } from './utils/goals.js';
+import {
+  getWeeklyProgress,
+  getConsistencyScore,
+  getAveragePace,
+  formatDuration,
+  getStreakRisk,
+} from './utils/progress.js';
+import {
+  getGoalProgress,
+  getGoalHistory,
+  suggestNextGoal,
+  formatGoal,
+  estimateWeeklyCalories,
+  getStreakWeeks,
+} from './utils/goals.js';
 import { GoalRing, MiniGoalBar } from './components/GoalRing.jsx';
 import { getSmartInsight, getSmartRecommendation } from './utils/smart.js';
 import { getPersonalChallenge, getRecoveryTip } from './utils/personalChallenge.js';
@@ -70,26 +228,56 @@ import { getDailyInsight, getWeeklyInsight } from './utils/insights.js';
 import { getRecommendedMissions, getDailyChallenge, getBellyMissions } from './utils/missions.js';
 import { getBellyProgress, getBellyStreak, getBellyInsight } from './utils/belly.js';
 
-
-
 async function exportData() {
   try {
     const data = await exportBackup();
     downloadBackup(data);
-  } catch (e) { /* best effort, ignore */ }
+  } catch (e) {
+    /* best effort, ignore */
+  }
 }
-async function handleImportBackup(file, { setProfile, setSessions, setWaistHistory, setWeightHistory, setCustomPrograms, showToast, setScreen }) {
+async function handleImportBackup(
+  file,
+  {
+    setProfile,
+    setSessions,
+    setWaistHistory,
+    setWeightHistory,
+    setCustomPrograms,
+    showToast,
+    setScreen,
+  }
+) {
   try {
     const text = await file.text();
     const data = JSON.parse(text);
     await importBackup(data);
     // reload from storage to update UI
-    const p = await window.storage.get('o40_profile', false).then(r => r ? JSON.parse(r.value) : null).catch(()=>null);
-    const s = await window.storage.get('o40_sessions', false).then(r => r ? JSON.parse(r.value) : []).catch(()=>[]);
-    const wh = await window.storage.get('o40_waist', false).then(r => r ? JSON.parse(r.value) : []).catch(()=>[]);
-    const wt = await window.storage.get('o40_weight', false).then(r => r ? JSON.parse(r.value) : []).catch(()=>[]);
-    const cp = await window.storage.get('o40_custom_programs', false).then(r => r ? JSON.parse(r.value) : []).catch(()=>[]);
-    setProfile(p); setSessions(s || []); setWaistHistory(wh || []); setWeightHistory(wt || []); setCustomPrograms(cp || []);
+    const p = await window.storage
+      .get('o40_profile', false)
+      .then((r) => (r ? JSON.parse(r.value) : null))
+      .catch(() => null);
+    const s = await window.storage
+      .get('o40_sessions', false)
+      .then((r) => (r ? JSON.parse(r.value) : []))
+      .catch(() => []);
+    const wh = await window.storage
+      .get('o40_waist', false)
+      .then((r) => (r ? JSON.parse(r.value) : []))
+      .catch(() => []);
+    const wt = await window.storage
+      .get('o40_weight', false)
+      .then((r) => (r ? JSON.parse(r.value) : []))
+      .catch(() => []);
+    const cp = await window.storage
+      .get('o40_custom_programs', false)
+      .then((r) => (r ? JSON.parse(r.value) : []))
+      .catch(() => []);
+    setProfile(p);
+    setSessions(s || []);
+    setWaistHistory(wh || []);
+    setWeightHistory(wt || []);
+    setCustomPrograms(cp || []);
     showToast('Backup ripristinato — ricarico...');
     setTimeout(() => window.location.reload(), 800);
   } catch (e) {
@@ -99,15 +287,47 @@ async function handleImportBackup(file, { setProfile, setSessions, setWaistHisto
 
 /* ---- Apple Health export.xml import (parsed 100% locally, regex-based to stay safe on huge files) ---- */
 const HK_ACTIVITY_MAP = {
-  HKWorkoutActivityTypeFunctionalStrengthTraining: { it: 'Forza funzionale (Apple Health)', en: 'Functional strength (Apple Health)', de: 'Funktionelles Krafttraining (Apple Health)' },
-  HKWorkoutActivityTypeTraditionalStrengthTraining: { it: 'Allenamento forza (Apple Health)', en: 'Strength training (Apple Health)', de: 'Krafttraining (Apple Health)' },
-  HKWorkoutActivityTypeCoreTraining: { it: 'Core training (Apple Health)', en: 'Core training (Apple Health)', de: 'Core-Training (Apple Health)' },
-  HKWorkoutActivityTypeHighIntensityIntervalTraining: { it: 'HIIT (Apple Health)', en: 'HIIT (Apple Health)', de: 'HIIT (Apple Health)' },
-  HKWorkoutActivityTypeCrossTraining: { it: 'Cross training (Apple Health)', en: 'Cross training (Apple Health)', de: 'Cross-Training (Apple Health)' },
-  HKWorkoutActivityTypeFlexibility: { it: 'Mobilità (Apple Health)', en: 'Flexibility (Apple Health)', de: 'Mobilität (Apple Health)' },
-  HKWorkoutActivityTypeCooldown: { it: 'Defaticamento (Apple Health)', en: 'Cooldown (Apple Health)', de: 'Abkühlen (Apple Health)' },
+  HKWorkoutActivityTypeFunctionalStrengthTraining: {
+    it: 'Forza funzionale (Apple Health)',
+    en: 'Functional strength (Apple Health)',
+    de: 'Funktionelles Krafttraining (Apple Health)',
+  },
+  HKWorkoutActivityTypeTraditionalStrengthTraining: {
+    it: 'Allenamento forza (Apple Health)',
+    en: 'Strength training (Apple Health)',
+    de: 'Krafttraining (Apple Health)',
+  },
+  HKWorkoutActivityTypeCoreTraining: {
+    it: 'Core training (Apple Health)',
+    en: 'Core training (Apple Health)',
+    de: 'Core-Training (Apple Health)',
+  },
+  HKWorkoutActivityTypeHighIntensityIntervalTraining: {
+    it: 'HIIT (Apple Health)',
+    en: 'HIIT (Apple Health)',
+    de: 'HIIT (Apple Health)',
+  },
+  HKWorkoutActivityTypeCrossTraining: {
+    it: 'Cross training (Apple Health)',
+    en: 'Cross training (Apple Health)',
+    de: 'Cross-Training (Apple Health)',
+  },
+  HKWorkoutActivityTypeFlexibility: {
+    it: 'Mobilità (Apple Health)',
+    en: 'Flexibility (Apple Health)',
+    de: 'Mobilität (Apple Health)',
+  },
+  HKWorkoutActivityTypeCooldown: {
+    it: 'Defaticamento (Apple Health)',
+    en: 'Cooldown (Apple Health)',
+    de: 'Abkühlen (Apple Health)',
+  },
 };
-const HK_FALLBACK = { it: 'Allenamento (Apple Health)', en: 'Workout (Apple Health)', de: 'Training (Apple Health)' };
+const HK_FALLBACK = {
+  it: 'Allenamento (Apple Health)',
+  en: 'Workout (Apple Health)',
+  de: 'Training (Apple Health)',
+};
 const HK_RELEVANT_TYPES = Object.keys(HK_ACTIVITY_MAP);
 function getXmlAttr(tag, name) {
   const m = tag.match(new RegExp(name + '="([^"]*)"'));
@@ -123,18 +343,27 @@ function parseAppleHealthExport(xmlText) {
   const result = { weightKg: null, weightDate: null, workouts: [] };
 
   const massRegex = /<Record[^>]*type="HKQuantityTypeIdentifierBodyMass"[^>]*\/?>/g;
-  let m, count = 0, latestDate = null, latestVal = null, latestUnit = null;
+  let m,
+    count = 0,
+    latestDate = null,
+    latestVal = null,
+    latestUnit = null;
   while ((m = massRegex.exec(xmlText)) && count < 30000) {
     count++;
     const date = getXmlAttr(m[0], 'startDate');
     const val = getXmlAttr(m[0], 'value');
     const unit = getXmlAttr(m[0], 'unit');
     if (date && val && (!latestDate || date > latestDate)) {
-      latestDate = date; latestVal = parseFloat(val); latestUnit = unit;
+      latestDate = date;
+      latestVal = parseFloat(val);
+      latestUnit = unit;
     }
   }
   if (latestVal != null) {
-    result.weightKg = latestUnit && latestUnit.toLowerCase().includes('lb') ? Math.round(latestVal * 0.453592 * 10) / 10 : latestVal;
+    result.weightKg =
+      latestUnit && latestUnit.toLowerCase().includes('lb')
+        ? Math.round(latestVal * 0.453592 * 10) / 10
+        : latestVal;
     result.weightDate = latestDate;
   }
 
@@ -169,7 +398,11 @@ export default function App() {
     if (profile) {
       const p = { ...profile, lang: l };
       setProfile(p);
-      try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+      try {
+        await window.storage.set('o40_profile', JSON.stringify(p), false);
+      } catch (e) {
+        /* best effort */
+      }
     }
   }
   const [sessions, setSessions] = useState([]);
@@ -183,28 +416,56 @@ export default function App() {
   const [reminderHour, setReminderHour] = useState('8');
   const [reminderMinute, setReminderMinute] = useState('0');
   const [reminderEnabled, setReminderEnabled] = useState(false);
-  const [pushEnabled, setPushEnabled] = useState(() => { try { return !!localStorage.getItem('o40_push_sub'); } catch { return false; } });
+  const [pushEnabled, setPushEnabled] = useState(() => {
+    try {
+      return !!localStorage.getItem('o40_push_sub');
+    } catch {
+      return false;
+    }
+  });
   const [pushSupported, setPushSupported] = useState(() => isPushSupported());
   const [pushBusy, setPushBusy] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showTour, setShowTour] = useState(false);
   const [photos, setPhotos] = useState(() => loadPhotos());
-  const [largeText, setLargeText] = useState(() => { try { return localStorage.getItem('o40_largeText') === '1'; } catch { return false; } });
+  const [largeText, setLargeText] = useState(() => {
+    try {
+      return localStorage.getItem('o40_largeText') === '1';
+    } catch {
+      return false;
+    }
+  });
   const [previewProgram, setPreviewProgram] = useState(null);
   const [showBellyTest, setShowBellyTest] = useState(false);
   const [showPose, setShowPose] = useState(null);
   const [showChangelog, setShowChangelog] = useState(false);
-  const [showReleaseBanner, setShowReleaseBanner] = useState(() => { try { return localStorage.getItem('o40_release_2.9.0') !== 'dismissed'; } catch { return true; } });
-  const [aiCoachEnabled, setAiCoachEnabled] = useState(() => { try { return localStorage.getItem('o40_aiCoach') !== '0'; } catch { return true; } });
+  const [showReleaseBanner, setShowReleaseBanner] = useState(() => {
+    try {
+      return localStorage.getItem('o40_release_2.9.0') !== 'dismissed';
+    } catch {
+      return true;
+    }
+  });
+  const [aiCoachEnabled, setAiCoachEnabled] = useState(() => {
+    try {
+      return localStorage.getItem('o40_aiCoach') !== '0';
+    } catch {
+      return true;
+    }
+  });
 
   // hydrate photos from IndexedDB (migration from localStorage, async)
   useEffect(() => {
     let cancelled = false;
-    loadPhotosAsync().then((asyncPhotos) => {
-      if (cancelled) return;
-      if (JSON.stringify(asyncPhotos) !== JSON.stringify(photos)) setPhotos(asyncPhotos);
-    }).catch(() => {});
-    return () => { cancelled = true; };
+    loadPhotosAsync()
+      .then((asyncPhotos) => {
+        if (cancelled) return;
+        if (JSON.stringify(asyncPhotos) !== JSON.stringify(photos)) setPhotos(asyncPhotos);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -250,29 +511,44 @@ export default function App() {
   // ---- load persisted data + migration ----
   useEffect(() => {
     (async () => {
-      try { await migrateStoredDataIfNeeded(); } catch {}
-      let p = null, s = [], cp = [], wh = [];
+      try {
+        await migrateStoredDataIfNeeded();
+      } catch {}
+      let p = null,
+        s = [],
+        cp = [],
+        wh = [];
       try {
         const r = await window.storage.get('o40_profile', false);
         if (r) p = JSON.parse(r.value);
-      } catch (e) { /* not set yet */ }
+      } catch (e) {
+        /* not set yet */
+      }
       try {
         const r = await window.storage.get('o40_sessions', false);
         if (r) s = JSON.parse(r.value);
-      } catch (e) { /* not set yet */ }
+      } catch (e) {
+        /* not set yet */
+      }
       try {
         const r = await window.storage.get('o40_custom_programs', false);
         if (r) cp = JSON.parse(r.value);
-      } catch (e) { /* not set yet */ }
+      } catch (e) {
+        /* not set yet */
+      }
       try {
         const r = await window.storage.get('o40_waist', false);
         if (r) wh = JSON.parse(r.value);
-      } catch (e) { /* not set yet */ }
+      } catch (e) {
+        /* not set yet */
+      }
       let wt = null;
       try {
         const r = await window.storage.get('o40_weight', false);
         if (r) wt = JSON.parse(r.value);
-      } catch (e) { /* not set yet */ }
+      } catch (e) {
+        /* not set yet */
+      }
       setProfile(p);
       setSessions(s || []);
       setCustomPrograms(cp || []);
@@ -280,7 +556,12 @@ export default function App() {
       setWeightHistory(wt || []);
       if (p) {
         setLang((p.lang && LANGS.includes(p.lang) && p.lang) || detectLang());
-        setFormName(p.name); setFormAge(String(p.age)); setFormWeight(String(p.weight)); setFormHeight(p.heightCm ? String(p.heightCm) : ''); setFormCustomWork(p.customWork || '40'); setFormCustomRest(p.customRest || '20');
+        setFormName(p.name);
+        setFormAge(String(p.age));
+        setFormWeight(String(p.weight));
+        setFormHeight(p.heightCm ? String(p.heightCm) : '');
+        setFormCustomWork(p.customWork || '40');
+        setFormCustomRest(p.customRest || '20');
         setSoundOn(p.soundOn !== false);
         setVibrationOn(p.vibrationOn !== false);
         setMusicOn(p.musicOn === true);
@@ -337,31 +618,54 @@ export default function App() {
       // se push attivo, il server manda già il push giornaliero — evita doppio locale
       if (pushEnabled) return;
       if (now.getHours() !== 9 || now.getMinutes() !== 0) return;
-      const key = `o40_motiv_fired_${now.toISOString().slice(0,10)}`;
+      const key = `o40_motiv_fired_${now.toISOString().slice(0, 10)}`;
       if (localStorage.getItem(key)) return;
       localStorage.setItem(key, '1');
       try {
         const msg = getMotivationalMessage({ sessions, profile, lang });
         // usa SW se disponibile per coerenza PWA, altrimenti Notification diretta
-        navigator.serviceWorker?.ready?.then(reg => {
-          if (reg && 'showNotification' in reg) {
-            reg.showNotification(msg.title, { body: msg.body, icon: './icons/icon-192.png', badge: './icons/icon-192.png', tag: msg.tag, data: { url: './' } });
-          } else if (typeof Notification !== 'undefined') {
-            new Notification(msg.title, { body: msg.body, icon: './icons/icon-192.png', tag: msg.tag });
-          }
-        }).catch(() => {
-          if (typeof Notification !== 'undefined') {
-            try { new Notification(msg.title, { body: msg.body, icon: './icons/icon-192.png', tag: msg.tag }); } catch {}
-          }
-        });
+        navigator.serviceWorker?.ready
+          ?.then((reg) => {
+            if (reg && 'showNotification' in reg) {
+              reg.showNotification(msg.title, {
+                body: msg.body,
+                icon: './icons/icon-192.png',
+                badge: './icons/icon-192.png',
+                tag: msg.tag,
+                data: { url: './' },
+              });
+            } else if (typeof Notification !== 'undefined') {
+              new Notification(msg.title, {
+                body: msg.body,
+                icon: './icons/icon-192.png',
+                tag: msg.tag,
+              });
+            }
+          })
+          .catch(() => {
+            if (typeof Notification !== 'undefined') {
+              try {
+                new Notification(msg.title, {
+                  body: msg.body,
+                  icon: './icons/icon-192.png',
+                  tag: msg.tag,
+                });
+              } catch {}
+            }
+          });
       } catch {}
     }
     const id = setInterval(checkMotivational, 60000);
     // prova subito se sono le 9 (per chi apre app a quell'ora)
     checkMotivational();
-    function onVis() { if (!document.hidden) checkMotivational(); }
+    function onVis() {
+      if (!document.hidden) checkMotivational();
+    }
     document.addEventListener('visibilitychange', onVis);
-    return () => { clearInterval(id); document.removeEventListener('visibilitychange', onVis); };
+    return () => {
+      clearInterval(id);
+      document.removeEventListener('visibilitychange', onVis);
+    };
   }, [sessions, profile, lang, pushEnabled]);
 
   // ---- sync push stats per personalizzazione server (se push attivo) ----
@@ -372,17 +676,30 @@ export default function App() {
 
   // ---- install prompt ----
   useEffect(() => {
-    function onReady() { setInstallPrompt(window.__o40DeferPrompt); }
-    function onInstalled() { setInstallPrompt(null); }
+    function onReady() {
+      setInstallPrompt(window.__o40DeferPrompt);
+    }
+    function onInstalled() {
+      setInstallPrompt(null);
+    }
     window.addEventListener('o40:installReady', onReady);
     window.addEventListener('appinstalled', onInstalled);
     if (window.__o40DeferPrompt) setInstallPrompt(window.__o40DeferPrompt);
-    return () => { window.removeEventListener('o40:installReady', onReady); window.removeEventListener('appinstalled', onInstalled); };
+    return () => {
+      window.removeEventListener('o40:installReady', onReady);
+      window.removeEventListener('appinstalled', onInstalled);
+    };
   }, []);
   // ---- onboarding tour (first visit) ----
   useEffect(() => {
     if (screen === 'home' && profile && !profile.seenTour) {
-      const seen = (() => { try { return localStorage.getItem('o40_seenTour'); } catch { return null; } })();
+      const seen = (() => {
+        try {
+          return localStorage.getItem('o40_seenTour');
+        } catch {
+          return null;
+        }
+      })();
       if (!seen) setShowTour(true);
     }
   }, [screen, profile]);
@@ -401,10 +718,16 @@ export default function App() {
   // ---- large text ----
   useEffect(() => {
     document.documentElement.style.fontSize = largeText ? '18px' : '';
-    try { localStorage.setItem('o40_largeText', largeText ? '1' : '0'); } catch {}
+    try {
+      localStorage.setItem('o40_largeText', largeText ? '1' : '0');
+    } catch {}
   }, [largeText]);
   // ---- AI Coach enabled persist ----
-  useEffect(() => { try { localStorage.setItem('o40_aiCoach', aiCoachEnabled ? '1' : '0'); } catch {} }, [aiCoachEnabled]);
+  useEffect(() => {
+    try {
+      localStorage.setItem('o40_aiCoach', aiCoachEnabled ? '1' : '0');
+    } catch {}
+  }, [aiCoachEnabled]);
   // ---- PWA update checker — fetch sw.js hash, confronta con lastSeen in localStorage ----
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [updateVersion, setUpdateVersion] = useState(null);
@@ -417,9 +740,13 @@ export default function App() {
         const remote = text.match(/o40-v[0-9a-f]{8}/)?.[0];
         if (!remote || cancelled) return;
         let lastSeen = null;
-        try { lastSeen = localStorage.getItem('o40_lastSw'); } catch {}
+        try {
+          lastSeen = localStorage.getItem('o40_lastSw');
+        } catch {}
         if (!lastSeen) {
-          try { localStorage.setItem('o40_lastSw', remote); } catch {}
+          try {
+            localStorage.setItem('o40_lastSw', remote);
+          } catch {}
           return;
         }
         if (remote !== lastSeen && !cancelled) {
@@ -435,10 +762,18 @@ export default function App() {
     }
     checkSwUpdate();
     const id = setInterval(checkSwUpdate, 30000);
-    function onFocus() { checkSwUpdate(); }
+    function onFocus() {
+      checkSwUpdate();
+    }
     window.addEventListener('focus', onFocus);
-    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkSwUpdate(); });
-    return () => { cancelled = true; clearInterval(id); window.removeEventListener('focus', onFocus); };
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') checkSwUpdate();
+    });
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+      window.removeEventListener('focus', onFocus);
+    };
   }, []);
 
   // ---- motivational music: plays while on, adapts volume to the phase + autoplay playlist ----
@@ -446,7 +781,10 @@ export default function App() {
     musicSetShouldPlay(!!musicOn);
     musicSetAutoPlay(!!musicAutoPlay);
     musicSetShuffle(!!musicShuffle);
-    if (!musicOn) { musicPause(); return; }
+    if (!musicOn) {
+      musicPause();
+      return;
+    }
     musicLoad(trackSrc(musicTrack));
     let vol = musicVolume;
     if (screen === 'session') {
@@ -462,7 +800,17 @@ export default function App() {
     musicSetVolume(vol);
     musicPlay();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [musicOn, musicAutoPlay, musicShuffle, screen, musicTrack, phaseIdx, paused, musicVolume, seq]);
+  }, [
+    musicOn,
+    musicAutoPlay,
+    musicShuffle,
+    screen,
+    musicTrack,
+    phaseIdx,
+    paused,
+    musicVolume,
+    seq,
+  ]);
 
   // auto-advance: quando music.js passa alla traccia successiva, aggiorna UI + profilo
   useEffect(() => {
@@ -471,7 +819,7 @@ export default function App() {
       if (profile) {
         const p = { ...profile, musicTrack: nextId };
         setProfile(p);
-        window.storage.set('o40_profile', JSON.stringify(p), false).catch(()=>{});
+        window.storage.set('o40_profile', JSON.stringify(p), false).catch(() => {});
       }
     });
     return () => musicSetOnTrackChange(null);
@@ -489,7 +837,7 @@ export default function App() {
       advancePhase();
       return;
     }
-    const t = setTimeout(() => setSecondsLeft(s => s - 1), 1000);
+    const t = setTimeout(() => setSecondsLeft((s) => s - 1), 1000);
     return () => clearTimeout(t);
     // eslint-disable-next-line
   }, [screen, paused, secondsLeft, phaseIdx, seq, aiCoachEnabled]);
@@ -535,7 +883,10 @@ export default function App() {
     setSecondsLeft(s[0].duration ?? 0);
     setPaused(false);
     setRpe(null);
-    if (soundRef.current) { playBeep(660); announcePhase(s[0]); }
+    if (soundRef.current) {
+      playBeep(660);
+      announcePhase(s[0]);
+    }
     setScreen('session');
   }
 
@@ -544,39 +895,74 @@ export default function App() {
     const preset = levelPreset(profile);
     const mode = (profile && profile.executionMode) || 'time';
     const levelKey = (profile && profile.level) || 'combattente';
-    const kcal = Math.round(estimateProgramKcal(activeProgram, profile.weight, skip, preset.work, preset.rest, mode, levelKey));
+    const kcal = Math.round(
+      estimateProgramKcal(
+        activeProgram,
+        profile.weight,
+        skip,
+        preset.work,
+        preset.rest,
+        mode,
+        levelKey
+      )
+    );
     if (soundRef.current) playBeep(1000, 0.25);
     if (vibrationRef.current) vibrate([80, 60, 80, 60, 150]);
-    setLastStats({ program: activeProgram, kcal, durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey) });
+    setLastStats({
+      program: activeProgram,
+      kcal,
+      durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey),
+    });
     setScreen('summary');
   }
 
   async function saveProfile() {
-    const prevLevel = profile && (profile.level || (profile.intervalPreset === 'breve' ? 'recluta' : profile.intervalPreset === 'lungo' ? 'elite' : 'combattente'));
+    const prevLevel =
+      profile &&
+      (profile.level ||
+        (profile.intervalPreset === 'breve'
+          ? 'recluta'
+          : profile.intervalPreset === 'lungo'
+            ? 'elite'
+            : 'combattente'));
     const p = {
       name: formName.trim() || 'Operatore',
       age: Math.max(18, Math.min(90, parseInt(formAge, 10) || 40)),
       weight: Math.max(40, Math.min(180, parseInt(formWeight, 10) || 80)),
-      heightCm: formHeight ? Math.max(120, Math.min(220, parseInt(formHeight, 10) || 0)) : (profile && profile.heightCm) || null,
-      customWork: formCustomWork ? String(Math.max(10, Math.min(90, parseInt(formCustomWork, 10) || 40))) : (profile && profile.customWork) || '40',
-      customRest: formCustomRest ? String(Math.max(5, Math.min(60, parseInt(formCustomRest, 10) || 20))) : (profile && profile.customRest) || '20',
+      heightCm: formHeight
+        ? Math.max(120, Math.min(220, parseInt(formHeight, 10) || 0))
+        : (profile && profile.heightCm) || null,
+      customWork: formCustomWork
+        ? String(Math.max(10, Math.min(90, parseInt(formCustomWork, 10) || 40)))
+        : (profile && profile.customWork) || '40',
+      customRest: formCustomRest
+        ? String(Math.max(5, Math.min(60, parseInt(formCustomRest, 10) || 20)))
+        : (profile && profile.customRest) || '20',
       weeklyGoal: (profile && profile.weeklyGoal) || WEEKLY_GOAL,
       soundOn: profile ? profile.soundOn !== false : true,
       vibrationOn: profile ? profile.vibrationOn !== false : true,
       musicOn: profile ? profile.musicOn === true : false,
       musicTrack: (profile && profile.musicTrack) || DEFAULT_TRACK,
-      musicVolume: typeof (profile && profile.musicVolume) === 'number' ? profile.musicVolume : 0.55,
+      musicVolume:
+        typeof (profile && profile.musicVolume) === 'number' ? profile.musicVolume : 0.55,
       skipWarmup: profile ? !!profile.skipWarmup : false,
       voiceCountdown: profile ? !!profile.voiceCountdown : false,
       seenIntro: profile ? !!profile.seenIntro : false,
-      intervalPreset: (formCustomWork !== '40' || formCustomRest !== '20') ? 'custom' : ((profile && profile.intervalPreset) || 'standard'),
+      intervalPreset:
+        formCustomWork !== '40' || formCustomRest !== '20'
+          ? 'custom'
+          : (profile && profile.intervalPreset) || 'standard',
       level: prevLevel || 'combattente',
       executionMode: (profile && profile.executionMode) || 'time',
       lang: lang,
       campStart: profile && profile.campStart ? profile.campStart : new Date().toISOString(),
     };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
     if (formWaist) {
       const cm = Math.max(40, Math.min(200, parseInt(formWaist, 10)));
       if (!isNaN(cm)) await recordWaist(cm);
@@ -589,7 +975,11 @@ export default function App() {
     if (latest && latest.cm === cm && dayKey(new Date(latest.date)) === dayKey(new Date())) return;
     const updated = [...waistHistory, { date: new Date().toISOString(), cm }];
     setWaistHistory(updated);
-    try { await window.storage.set('o40_waist', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_waist', JSON.stringify(updated), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function recordWeight(kg) {
@@ -597,14 +987,22 @@ export default function App() {
     if (latest && latest.kg === kg && dayKey(new Date(latest.date)) === dayKey(new Date())) return;
     const updated = [...weightHistory, { date: new Date().toISOString(), kg }];
     setWeightHistory(updated);
-    try { await window.storage.set('o40_weight', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_weight', JSON.stringify(updated), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function applyLevel(key) {
     const next = getLevel(key);
     const p = { ...profile, level: next.key, intervalPreset: next.preset };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function promoteLevel() {
@@ -619,37 +1017,59 @@ export default function App() {
   async function toggleVoiceCountdown() {
     const p = { ...profile, voiceCountdown: !profile.voiceCountdown };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch {}
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch {}
   }
   async function toggleSkipWarmup() {
     const p = { ...profile, skipWarmup: !profile.skipWarmup };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function setIntervalPreset(key) {
     const p = { ...profile, intervalPreset: key };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function setExecutionMode(mode) {
     const m = mode === 'reps' ? 'reps' : 'time';
     const p = { ...profile, executionMode: m };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function dismissIntro() {
     const p = { ...profile, seenIntro: true };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function updateWeeklyGoal(n) {
     const p = { ...profile, weeklyGoal: Math.max(1, Math.min(7, n)) };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function toggleSound() {
@@ -657,7 +1077,11 @@ export default function App() {
     setSoundOn(next);
     const p = { ...profile, soundOn: next };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function toggleVibration() {
@@ -666,7 +1090,11 @@ export default function App() {
     if (next) vibrate([40]);
     const p = { ...profile, vibrationOn: next };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function togglePush() {
@@ -682,17 +1110,30 @@ export default function App() {
         setPushEnabled(true);
         // sync stats subito per personalizzazione push giornaliero
         updatePushStats(sessions, profile, lang).catch(() => {});
-        showToast(lang === 'it' ? 'Push attivato — anche con PWA chiusa' : 'Push enabled — works with PWA closed');
+        showToast(
+          lang === 'it'
+            ? 'Push attivato — anche con PWA chiusa'
+            : 'Push enabled — works with PWA closed'
+        );
       }
     } catch (e) {
       showToast(e.message || 'Push non disponibile');
-    } finally { setPushBusy(false); }
+    } finally {
+      setPushBusy(false);
+    }
   }
 
   async function saveBellyTest({ plankSec, crunchReps, level, date }) {
-    const p = { ...profile, bellyTest: { plankSec, crunchReps, level, date }, bellyLevel: level, bellyLevelUpdated: date };
+    const p = {
+      ...profile,
+      bellyTest: { plankSec, crunchReps, level, date },
+      bellyLevel: level,
+      bellyLevelUpdated: date,
+    };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch {}
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch {}
     setShowBellyTest(false);
     showToast(`Livello pancia: ${level.toUpperCase()} ✓`);
     updatePushStats(sessions, p, lang).catch(() => {});
@@ -705,32 +1146,53 @@ export default function App() {
       // se push non attivo, fallback a notifica locale
       if (pushEnabled && isPushSupported()) {
         await testPushViaSW(lang);
-        showToast(lang === 'it' ? 'Test push inviato' : lang === 'de' ? 'Test-Push gesendet' : 'Test push sent');
+        showToast(
+          lang === 'it'
+            ? 'Test push inviato'
+            : lang === 'de'
+              ? 'Test-Push gesendet'
+              : 'Test push sent'
+        );
       } else {
         const ok = fireTestNotification(t);
-        showToast(ok ? (lang === 'it' ? 'Notifica di test inviata' : lang === 'de' ? 'Testbenachrichtigung gesendet' : 'Test notification sent') : 'Permesso negato');
+        showToast(
+          ok
+            ? lang === 'it'
+              ? 'Notifica di test inviata'
+              : lang === 'de'
+                ? 'Testbenachrichtigung gesendet'
+                : 'Test notification sent'
+            : 'Permesso negato'
+        );
       }
     } catch (e) {
       showToast(e.message || 'Test fallito');
-    } finally { setPushBusy(false); }
+    } finally {
+      setPushBusy(false);
+    }
   }
 
   // sync push state at startup (verifica subscription reale)
   useEffect(() => {
-    if (!isPushSupported()) { setPushSupported(false); return; }
-    getExistingSubscription().then(sub => {
-      const has = !!sub;
-      setPushEnabled(has);
-      setPushSupported(true);
-      try {
-        if (has) localStorage.setItem('o40_push_sub', JSON.stringify({ endpoint: sub.endpoint }));
-        else localStorage.removeItem('o40_push_sub');
-      } catch {}
-    }).catch(() => {});
+    if (!isPushSupported()) {
+      setPushSupported(false);
+      return;
+    }
+    getExistingSubscription()
+      .then((sub) => {
+        const has = !!sub;
+        setPushEnabled(has);
+        setPushSupported(true);
+        try {
+          if (has) localStorage.setItem('o40_push_sub', JSON.stringify({ endpoint: sub.endpoint }));
+          else localStorage.removeItem('o40_push_sub');
+        } catch {}
+      })
+      .catch(() => {});
   }, []);
 
   function trackSrc(id) {
-    const t = TRACKS.find(x => x.id === id);
+    const t = TRACKS.find((x) => x.id === id);
     return (t || TRACKS[0]).src;
   }
 
@@ -739,7 +1201,11 @@ export default function App() {
     setMusicOn(next);
     const p = { ...profile, musicOn: next };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
     musicSetShouldPlay(next);
     if (next) {
       musicLoad(trackSrc(musicTrack));
@@ -754,7 +1220,11 @@ export default function App() {
     setMusicTrack(id);
     const p = { ...profile, musicTrack: id };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
     if (musicOn) {
       musicLoad(trackSrc(id));
       musicSetVolume(musicVolume);
@@ -767,7 +1237,11 @@ export default function App() {
     musicSetVolume(v);
     const p = { ...profile, musicVolume: v };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function toggleMusicAutoPlay() {
@@ -776,7 +1250,11 @@ export default function App() {
     musicSetAutoPlay(next);
     const p = { ...profile, musicAutoPlay: next };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function toggleMusicShuffle() {
@@ -785,7 +1263,11 @@ export default function App() {
     musicSetShuffle(next);
     const p = { ...profile, musicShuffle: next };
     setProfile(p);
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function nextMusicTrack() {
@@ -794,7 +1276,11 @@ export default function App() {
       setMusicTrack(nextId);
       const p = { ...profile, musicTrack: nextId };
       setProfile(p);
-      try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+      try {
+        await window.storage.set('o40_profile', JSON.stringify(p), false);
+      } catch (e) {
+        /* best effort */
+      }
     }
   }
 
@@ -804,7 +1290,11 @@ export default function App() {
       setMusicTrack(prevId);
       const p = { ...profile, musicTrack: prevId };
       setProfile(p);
-      try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+      try {
+        await window.storage.set('o40_profile', JSON.stringify(p), false);
+      } catch (e) {
+        /* best effort */
+      }
     }
   }
 
@@ -812,7 +1302,7 @@ export default function App() {
     const prevBest = computeBestStreak(sessions);
     const prevCount = sessions.length;
     const weekAgo = Date.now() - 7 * 86400000;
-    const prevWeekCount = sessions.filter(s => new Date(s.date).getTime() > weekAgo).length;
+    const prevWeekCount = sessions.filter((s) => new Date(s.date).getTime() > weekAgo).length;
     const goal = profile.weeklyGoal || WEEKLY_GOAL;
 
     const record = {
@@ -827,7 +1317,11 @@ export default function App() {
     };
     const updated = [...sessions, record];
     setSessions(updated);
-    try { await window.storage.set('o40_sessions', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_sessions', JSON.stringify(updated), false);
+    } catch (e) {
+      /* best effort */
+    }
     if (waistInput) {
       const cm = Math.max(40, Math.min(200, parseInt(waistInput, 10)));
       if (!isNaN(cm)) await recordWaist(cm);
@@ -845,9 +1339,9 @@ export default function App() {
 
     const newBest = computeBestStreak(updated);
     const newCount = updated.length;
-    const newWeekCount = updated.filter(s => new Date(s.date).getTime() > weekAgo).length;
-    const newStreakBadge = STREAK_BADGES.find(n => newBest >= n && prevBest < n);
-    const newSessionBadge = SESSION_BADGES.find(n => newCount >= n && prevCount < n);
+    const newWeekCount = updated.filter((s) => new Date(s.date).getTime() > weekAgo).length;
+    const newStreakBadge = STREAK_BADGES.find((n) => newBest >= n && prevBest < n);
+    const newSessionBadge = SESSION_BADGES.find((n) => newCount >= n && prevCount < n);
     const rank = getRank(newCount);
     const prevRank = getRank(prevCount);
     if (rank.current.name !== prevRank.current.name) {
@@ -865,48 +1359,73 @@ export default function App() {
 
   async function clearHistory() {
     setSessions([]);
-    try { await window.storage.set('o40_sessions', JSON.stringify([]), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_sessions', JSON.stringify([]), false);
+    } catch (e) {
+      /* best effort */
+    }
     showToast(t('toast.history'));
   }
   async function handleAddPhoto(file) {
     if (!file) return;
     try {
       const url = await fileToDataUrl(file);
-      const next = [...photos, { id: Date.now().toString(36), date: new Date().toISOString(), url }].slice(-12);
+      const next = [
+        ...photos,
+        { id: Date.now().toString(36), date: new Date().toISOString(), url },
+      ].slice(-12);
       setPhotos(next);
       savePhotos(next);
       showToast('Foto aggiunta');
-    } catch { showToast('File troppo grande (max 4MB)'); }
+    } catch {
+      showToast('File troppo grande (max 4MB)');
+    }
   }
 
   async function deleteSession(date) {
-    const updated = sessions.filter(s => s.date !== date);
+    const updated = sessions.filter((s) => s.date !== date);
     setSessions(updated);
-    try { await window.storage.set('o40_sessions', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_sessions', JSON.stringify(updated), false);
+    } catch (e) {
+      /* best effort */
+    }
     showToast(t('toast.removed'));
   }
 
   async function createCustomProgram(program) {
     const updated = [...customPrograms, program];
     setCustomPrograms(updated);
-    try { await window.storage.set('o40_custom_programs', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_custom_programs', JSON.stringify(updated), false);
+    } catch (e) {
+      /* best effort */
+    }
     setPreviewProgram(program);
     setScreen('preview');
     showToast(t('toast.created'));
   }
   async function updateCustomProgram(program) {
-    const updated = customPrograms.map(p => p.id === program.id ? program : p);
+    const updated = customPrograms.map((p) => (p.id === program.id ? program : p));
     setCustomPrograms(updated);
-    try { await window.storage.set('o40_custom_programs', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_custom_programs', JSON.stringify(updated), false);
+    } catch (e) {
+      /* best effort */
+    }
     setEditingCustom(null);
     setPreviewProgram(program);
     setScreen('preview');
     showToast('Missione aggiornata');
   }
   async function deleteCustomProgram(id) {
-    const updated = customPrograms.filter(p => p.id !== id);
+    const updated = customPrograms.filter((p) => p.id !== id);
     setCustomPrograms(updated);
-    try { await window.storage.set('o40_custom_programs', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_custom_programs', JSON.stringify(updated), false);
+    } catch (e) {
+      /* best effort */
+    }
   }
 
   async function importAppleHealth(file) {
@@ -916,7 +1435,7 @@ export default function App() {
       setHealthImportStatus('parsing');
       const parsed = parseAppleHealthExport(text);
 
-      const existingImportDates = new Set(sessions.filter(s => s.imported).map(s => s.date));
+      const existingImportDates = new Set(sessions.filter((s) => s.imported).map((s) => s.date));
       const newRecords = [];
       for (const w of parsed.workouts) {
         const d = parseAppleDate(w.startDate);
@@ -937,17 +1456,28 @@ export default function App() {
       }
 
       if (newRecords.length) {
-        const updated = [...sessions, ...newRecords].sort((a, b) => new Date(a.date) - new Date(b.date));
+        const updated = [...sessions, ...newRecords].sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        );
         setSessions(updated);
-        try { await window.storage.set('o40_sessions', JSON.stringify(updated), false); } catch (e) { /* best effort */ }
+        try {
+          await window.storage.set('o40_sessions', JSON.stringify(updated), false);
+        } catch (e) {
+          /* best effort */
+        }
       }
 
       if (parsed.weightKg) {
-        setHealthWeightSuggestion({ kg: Math.round(parsed.weightKg * 10) / 10, date: parsed.weightDate });
+        setHealthWeightSuggestion({
+          kg: Math.round(parsed.weightKg * 10) / 10,
+          date: parsed.weightDate,
+        });
       }
 
       setHealthImportStatus('done');
-      showToast(newRecords.length ? t('toast.imported', { n: newRecords.length }) : t('toast.imported.none'));
+      showToast(
+        newRecords.length ? t('toast.imported', { n: newRecords.length }) : t('toast.imported.none')
+      );
     } catch (e) {
       setHealthImportStatus('error');
       showToast(t('toast.import.fail'));
@@ -959,15 +1489,25 @@ export default function App() {
     const p = { ...profile, weight: Math.round(healthWeightSuggestion.kg) };
     setProfile(p);
     setFormWeight(String(p.weight));
-    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch (e) { /* best effort */ }
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
     setHealthWeightSuggestion(null);
     showToast(t('toast.weight'));
   }
 
-
   /* ---------------- RENDER ---------------- */
   const shell = { minHeight: '100dvh', background: INK, display: 'flex', justifyContent: 'center' };
-  const phone = { width: '100%', maxWidth: 460, minHeight: '100dvh', display: 'flex', flexDirection: 'column', position: 'relative' };
+  const phone = {
+    width: '100%',
+    maxWidth: 460,
+    minHeight: '100dvh',
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+  };
 
   if (screen === 'loading') {
     return (
@@ -975,8 +1515,16 @@ export default function App() {
         <div className="o40" style={{ ...shell, alignItems: 'center', justifyContent: 'center' }}>
           <style>{STYLES}</style>
           <div style={{ textAlign: 'center', width: 'min(320px, 82vw)' }}>
-            <div className="o40-display" style={{ color: KHAKI, fontSize: 26 }}>{t('app.loading')} <span className="o40-blink" style={{ color: BLAZE }}>{t('app.loading.operativo')}</span>…</div>
-            <div className="o40-loadbar" style={{ height: 6, marginTop: 16 }}><span /></div>
+            <div className="o40-display" style={{ color: KHAKI, fontSize: 26 }}>
+              {t('app.loading')}{' '}
+              <span className="o40-blink" style={{ color: BLAZE }}>
+                {t('app.loading.operativo')}
+              </span>
+              …
+            </div>
+            <div className="o40-loadbar" style={{ height: 6, marginTop: 16 }}>
+              <span />
+            </div>
           </div>
         </div>
       </LangContext.Provider>
@@ -986,256 +1534,677 @@ export default function App() {
   return (
     <LangContext.Provider value={{ lang, t, setLang: handleSetLang }}>
       <div className="o40" style={{ ...shell, position: 'relative' }}>
-      <style>{STYLES}</style>
-      <div className="o40-aura" />
-      <div className="o40-phone" style={phone}>
-        <div className="o40-gridbg" />
-        <div className="o40-camo" style={{ height: 6 }} />
-        <Suspense fallback={<ScreenFallback />}>
+        <style>{STYLES}</style>
+        <div className="o40-aura" />
+        <div className="o40-phone" style={phone}>
+          <div className="o40-gridbg" />
+          <div className="o40-camo" style={{ height: 6 }} />
+          <Suspense fallback={<ScreenFallback />}>
+            {screen === 'setup' && (
+              <SetupScreen
+                formName={formName}
+                setFormName={setFormName}
+                formAge={formAge}
+                setFormAge={setFormAge}
+                formWeight={formWeight}
+                setFormWeight={setFormWeight}
+                formWaist={formWaist}
+                setFormWaist={setFormWaist}
+                formHeight={formHeight}
+                setFormHeight={setFormHeight}
+                formCustomWork={formCustomWork}
+                setFormCustomWork={setFormCustomWork}
+                formCustomRest={formCustomRest}
+                setFormCustomRest={setFormCustomRest}
+                reminderHour={reminderHour}
+                setReminderHour={setReminderHour}
+                reminderMinute={reminderMinute}
+                setReminderMinute={setReminderMinute}
+                onSave={saveProfile}
+                canCancel={!!profile}
+                onCancel={() => setScreen('home')}
+                soundOn={soundOn}
+                onToggleSound={toggleSound}
+                vibrationOn={vibrationOn}
+                onToggleVibration={toggleVibration}
+                musicOn={musicOn}
+                onToggleMusic={toggleMusic}
+                musicTrack={musicTrack}
+                onSelectTrack={selectMusicTrack}
+                musicVolume={musicVolume}
+                onChangeMusicVolume={changeMusicVolume}
+                musicAutoPlay={musicAutoPlay}
+                onToggleAutoPlay={toggleMusicAutoPlay}
+                musicShuffle={musicShuffle}
+                onToggleShuffle={toggleMusicShuffle}
+                onNextTrack={nextMusicTrack}
+                onPrevTrack={prevMusicTrack}
+                skipWarmup={!!(profile && profile.skipWarmup)}
+                onToggleSkipWarmup={toggleSkipWarmup}
+                voiceCountdown={!!(profile && profile.voiceCountdown)}
+                onToggleVoiceCountdown={toggleVoiceCountdown}
+                level={
+                  (profile &&
+                    (profile.level ||
+                      (profile.intervalPreset === 'breve'
+                        ? 'recluta'
+                        : profile.intervalPreset === 'lungo'
+                          ? 'elite'
+                          : 'combattente'))) ||
+                  'combattente'
+                }
+                onSetLevel={applyLevel}
+                intervalPreset={(profile && profile.intervalPreset) || 'standard'}
+                onSetIntervalPreset={setIntervalPreset}
+                executionMode={(profile && profile.executionMode) || 'time'}
+                onSetExecutionMode={setExecutionMode}
+                onImportHealth={importAppleHealth}
+                healthImportStatus={healthImportStatus}
+                healthWeightSuggestion={healthWeightSuggestion}
+                onApplyHealthWeight={applyHealthWeight}
+                showToast={showToast}
+                largeText={largeText}
+                setLargeText={setLargeText}
+                pushEnabled={pushEnabled}
+                pushSupported={pushSupported}
+                pushBusy={pushBusy}
+                onTogglePush={togglePush}
+                onTestPush={handleTestPush}
+                onExportBackup={exportData}
+                onImportBackup={(file) =>
+                  handleImportBackup(file, {
+                    setProfile,
+                    setSessions,
+                    setWaistHistory,
+                    setWeightHistory,
+                    setCustomPrograms,
+                    showToast,
+                    setScreen,
+                  })
+                }
+              />
+            )}
 
-        {screen === 'setup' && (
-          <SetupScreen
-            formName={formName} setFormName={setFormName}
-            formAge={formAge} setFormAge={setFormAge}
-            formWeight={formWeight} setFormWeight={setFormWeight}
-            formWaist={formWaist} setFormWaist={setFormWaist}
-            formHeight={formHeight} setFormHeight={setFormHeight}
-            formCustomWork={formCustomWork} setFormCustomWork={setFormCustomWork}
-            formCustomRest={formCustomRest} setFormCustomRest={setFormCustomRest}
-            reminderHour={reminderHour} setReminderHour={setReminderHour}
-            reminderMinute={reminderMinute} setReminderMinute={setReminderMinute}
-            onSave={saveProfile}
-            canCancel={!!profile}
-            onCancel={() => setScreen('home')}
-            soundOn={soundOn} onToggleSound={toggleSound}
-            vibrationOn={vibrationOn} onToggleVibration={toggleVibration}
-            musicOn={musicOn} onToggleMusic={toggleMusic}
-            musicTrack={musicTrack} onSelectTrack={selectMusicTrack}
-            musicVolume={musicVolume} onChangeMusicVolume={changeMusicVolume}
-            musicAutoPlay={musicAutoPlay} onToggleAutoPlay={toggleMusicAutoPlay}
-            musicShuffle={musicShuffle} onToggleShuffle={toggleMusicShuffle}
-            onNextTrack={nextMusicTrack} onPrevTrack={prevMusicTrack}
-            skipWarmup={!!(profile && profile.skipWarmup)} onToggleSkipWarmup={toggleSkipWarmup}
-            voiceCountdown={!!(profile && profile.voiceCountdown)} onToggleVoiceCountdown={toggleVoiceCountdown}
-            level={(profile && (profile.level || (profile.intervalPreset === 'breve' ? 'recluta' : profile.intervalPreset === 'lungo' ? 'elite' : 'combattente'))) || 'combattente'}
-            onSetLevel={applyLevel}
-            intervalPreset={(profile && profile.intervalPreset) || 'standard'} onSetIntervalPreset={setIntervalPreset}
-            executionMode={(profile && profile.executionMode) || 'time'} onSetExecutionMode={setExecutionMode}
-            onImportHealth={importAppleHealth} healthImportStatus={healthImportStatus}
-            healthWeightSuggestion={healthWeightSuggestion} onApplyHealthWeight={applyHealthWeight}
-            showToast={showToast} largeText={largeText} setLargeText={setLargeText}
-            pushEnabled={pushEnabled} pushSupported={pushSupported} pushBusy={pushBusy} onTogglePush={togglePush} onTestPush={handleTestPush}
-            onExportBackup={exportData}
-            onImportBackup={(file) => handleImportBackup(file, { setProfile, setSessions, setWaistHistory, setWeightHistory, setCustomPrograms, showToast, setScreen })}
-          />
-        )}
-
-        {screen === 'home' && profile && showReleaseBanner && (
-          <div style={{
-            margin: '10px 16px 0', padding: '12px 14px', borderRadius: 14,
-            background: `linear-gradient(135deg, ${BLAZE}18, ${INK_2})`, border: `1px solid ${BLAZE}55`,
-            boxShadow: `0 4px 16px rgba(0,0,0,0.35), 0 0 0 1px ${BLAZE}22 inset`,
-            display: 'flex', flexDirection: 'column', gap: 8, position: 'relative', overflow: 'hidden',
-          }}>
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.06, background: `repeating-linear-gradient(90deg, ${OLIVE} 0 1px, transparent 1px 14px)`, pointerEvents: 'none' }} />
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
-              <div style={{ display: 'flex', gap: 10, alignItems: 'center', flex: 1, minWidth: 0 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: 'grid', placeItems: 'center', flexShrink: 0 }}><Sparkles size={18} color={PAPER} /></div>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-                    <span className="o40-mono" style={{ background: BLAZE, color: PAPER, fontSize: 9, fontWeight: 800, letterSpacing: '0.08em', padding: '2px 6px', borderRadius: 6 }}>NUOVO v2.9.0</span>
-                    <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>27 AGO 2026 · AUDIT 5 AREE</span>
+            {screen === 'home' && profile && showReleaseBanner && (
+              <div
+                style={{
+                  margin: '10px 16px 0',
+                  padding: '12px 14px',
+                  borderRadius: 14,
+                  background: `linear-gradient(135deg, ${BLAZE}18, ${INK_2})`,
+                  border: `1px solid ${BLAZE}55`,
+                  boxShadow: `0 4px 16px rgba(0,0,0,0.35), 0 0 0 1px ${BLAZE}22 inset`,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8,
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    opacity: 0.06,
+                    background: `repeating-linear-gradient(90deg, ${OLIVE} 0 1px, transparent 1px 14px)`,
+                    pointerEvents: 'none',
+                  }}
+                />
+                <div
+                  style={{
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    gap: 10,
+                  }}
+                >
+                  <div
+                    style={{ display: 'flex', gap: 10, alignItems: 'center', flex: 1, minWidth: 0 }}
+                  >
+                    <div
+                      style={{
+                        width: 36,
+                        height: 36,
+                        borderRadius: 10,
+                        background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`,
+                        display: 'grid',
+                        placeItems: 'center',
+                        flexShrink: 0,
+                      }}
+                    >
+                      <Sparkles size={18} color={PAPER} />
+                    </div>
+                    <div style={{ minWidth: 0 }}>
+                      <div
+                        style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}
+                      >
+                        <span
+                          className="o40-mono"
+                          style={{
+                            background: BLAZE,
+                            color: PAPER,
+                            fontSize: 9,
+                            fontWeight: 800,
+                            letterSpacing: '0.08em',
+                            padding: '2px 6px',
+                            borderRadius: 6,
+                          }}
+                        >
+                          NUOVO v2.9.0
+                        </span>
+                        <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>
+                          27 AGO 2026 · AUDIT 5 AREE
+                        </span>
+                      </div>
+                      <div
+                        className="o40-display"
+                        style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}
+                      >
+                        Audit completo — backup, performance, PWA!
+                      </div>
+                    </div>
                   </div>
-                  <div className="o40-display" style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}>Audit completo — backup, performance, PWA!</div>
+                  <button
+                    onClick={() => {
+                      try {
+                        localStorage.setItem('o40_release_2.9.0', 'dismissed');
+                      } catch {}
+                      setShowReleaseBanner(false);
+                    }}
+                    aria-label="Chiudi"
+                    style={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: '50%',
+                      border: `1px solid ${OLIVE}`,
+                      background: INK,
+                      color: STEEL,
+                      display: 'grid',
+                      placeItems: 'center',
+                      cursor: 'pointer',
+                      flexShrink: 0,
+                      position: 'relative',
+                    }}
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+                <ul
+                  style={{
+                    position: 'relative',
+                    margin: 0,
+                    paddingLeft: 18,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 3,
+                    listStyle: 'disc',
+                  }}
+                >
+                  <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}>
+                    <b style={{ color: PAPER }}>Backup</b>: export/import JSON + schema v2 — non
+                    perdi più i dati cambiando device
+                  </li>
+                  <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}>
+                    <b style={{ color: PAPER }}>Dedup</b>: DogTag/ProgressRing/styles centralizzati
+                    — Home 65 righe → shared
+                  </li>
+                  <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}>
+                    <b style={{ color: PAPER }}>i18n</b>: 15+ hardcoded IT → t() —
+                    OGGI/PROGRESSI/MISSIONI + backup
+                  </li>
+                  <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}>
+                    <b style={{ color: PAPER }}>Lazy+PWA</b>: 9 screen lazy (749k→444k) + SW
+                    stale-while-revalidate + 51 test
+                  </li>
+                </ul>
+                <div style={{ position: 'relative', display: 'flex', gap: 8, marginTop: 2 }}>
+                  <button
+                    onClick={() => setShowChangelog(true)}
+                    style={{
+                      flex: 1,
+                      background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`,
+                      color: PAPER,
+                      border: 'none',
+                      borderRadius: 10,
+                      padding: '9px 12px',
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontSize: 14,
+                      letterSpacing: '0.06em',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 6,
+                    }}
+                  >
+                    <Zap size={14} /> DETTAGLI <ChevronRight size={14} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      try {
+                        localStorage.setItem('o40_release_2.9.0', 'dismissed');
+                      } catch {}
+                      setShowReleaseBanner(false);
+                    }}
+                    style={{
+                      background: INK,
+                      border: `1px solid ${OLIVE}`,
+                      color: KHAKI,
+                      borderRadius: 10,
+                      padding: '9px 14px',
+                      fontSize: 11,
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Chiudi
+                  </button>
                 </div>
               </div>
-              <button onClick={() => { try { localStorage.setItem('o40_release_2.9.0', 'dismissed'); } catch {}; setShowReleaseBanner(false); }} aria-label="Chiudi" style={{ width: 28, height: 28, borderRadius: '50%', border: `1px solid ${OLIVE}`, background: INK, color: STEEL, display: 'grid', placeItems: 'center', cursor: 'pointer', flexShrink: 0, position: 'relative' }}><X size={14} /></button>
-            </div>
-            <ul style={{ position: 'relative', margin: 0, paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 3, listStyle: 'disc' }}>
-              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Backup</b>: export/import JSON + schema v2 — non perdi più i dati cambiando device</li>
-              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Dedup</b>: DogTag/ProgressRing/styles centralizzati — Home 65 righe → shared</li>
-              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>i18n</b>: 15+ hardcoded IT → t() — OGGI/PROGRESSI/MISSIONI + backup</li>
-              <li style={{ color: KHAKI, fontSize: 11.5, lineHeight: 1.35 }}><b style={{ color: PAPER }}>Lazy+PWA</b>: 9 screen lazy (749k→444k) + SW stale-while-revalidate + 51 test</li>
-            </ul>
-            <div style={{ position: 'relative', display: 'flex', gap: 8, marginTop: 2 }}>
-              <button onClick={() => setShowChangelog(true)} style={{ flex: 1, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: 'none', borderRadius: 10, padding: '9px 12px', fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: '0.06em', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}><Zap size={14} /> DETTAGLI <ChevronRight size={14} /></button>
-              <button onClick={() => { try { localStorage.setItem('o40_release_2.9.0', 'dismissed'); } catch {}; setShowReleaseBanner(false); }} style={{ background: INK, border: `1px solid ${OLIVE}`, color: KHAKI, borderRadius: 10, padding: '9px 14px', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Chiudi</button>
-            </div>
-          </div>
-        )}
-        {screen === 'home' && profile && (
-          <HomeScreen
-            profile={profile} sessions={sessions} customPrograms={customPrograms}
-            waistHistory={waistHistory} weightHistory={weightHistory}
-            onOpenProgram={(p) => { setPreviewProgram(p); setScreen('preview'); }}
-            onBuild={() => { setEditingCustom(null); setScreen('builder'); }}
-            onEditCustom={(p) => { setEditingCustom(p); setScreen('builder'); }}
-            onDeleteCustom={deleteCustomProgram}
-            onDismissIntro={dismissIntro}
-            onPromote={promoteLevel}
-            onBellyTest={() => setShowBellyTest(true)}
-            onPose={(ex) => setShowPose(ex)}
-          />
-        )}
+            )}
+            {screen === 'home' && profile && (
+              <HomeScreen
+                profile={profile}
+                sessions={sessions}
+                customPrograms={customPrograms}
+                waistHistory={waistHistory}
+                weightHistory={weightHistory}
+                onOpenProgram={(p) => {
+                  setPreviewProgram(p);
+                  setScreen('preview');
+                }}
+                onBuild={() => {
+                  setEditingCustom(null);
+                  setScreen('builder');
+                }}
+                onEditCustom={(p) => {
+                  setEditingCustom(p);
+                  setScreen('builder');
+                }}
+                onDeleteCustom={deleteCustomProgram}
+                onDismissIntro={dismissIntro}
+                onPromote={promoteLevel}
+                onBellyTest={() => setShowBellyTest(true)}
+                onPose={(ex) => setShowPose(ex)}
+              />
+            )}
 
-        {screen === 'library' && (
-          <LibraryScreen sessions={sessions} profile={profile} />
-        )}
+            {screen === 'library' && <LibraryScreen sessions={sessions} profile={profile} />}
 
-        {screen === 'builder' && (
-          <BuilderScreen
-            profile={profile}
-            initial={editingCustom}
-            onCancel={() => { setEditingCustom(null); setScreen('home'); }}
-            onCreate={createCustomProgram}
-            onUpdate={updateCustomProgram}
-          />
-        )}
+            {screen === 'builder' && (
+              <BuilderScreen
+                profile={profile}
+                initial={editingCustom}
+                onCancel={() => {
+                  setEditingCustom(null);
+                  setScreen('home');
+                }}
+                onCreate={createCustomProgram}
+                onUpdate={updateCustomProgram}
+              />
+            )}
 
-        {screen === 'preview' && previewProgram && (
-          <PreviewScreen
-            program={previewProgram} profile={profile} soundOn={soundOn}
-            onBack={() => setScreen('home')}
-            onStart={() => setScreen('countdown')}
-          />
-        )}
+            {screen === 'preview' && previewProgram && (
+              <PreviewScreen
+                program={previewProgram}
+                profile={profile}
+                soundOn={soundOn}
+                onBack={() => setScreen('home')}
+                onStart={() => setScreen('countdown')}
+              />
+            )}
 
-        {screen === 'countdown' && previewProgram && (
-          <CountdownScreen program={previewProgram} lang={lang} t={t} onDone={() => startSession(previewProgram)} />
-        )}
-
-        {screen === 'session' && seq.length > 0 && (
-          <SessionScreen
-            program={activeProgram} profile={profile} seq={seq} phaseIdx={phaseIdx} secondsLeft={secondsLeft}
-            paused={paused} setPaused={setPaused} soundOn={soundOn} setSoundOn={setSoundOn}
-            musicOn={musicOn} onToggleMusic={toggleMusic}
-            aiEnabled={aiCoachEnabled} onToggleAi={() => setAiCoachEnabled(v => !v)}
-            lang={lang}
-            onSkip={advancePhase} onPrev={goPrev} exitConfirm={exitConfirm} setExitConfirm={setExitConfirm}
-            onExit={() => { setExitConfirm(false); setScreen('home'); }}
-          />
-        )}
-
-        {screen === 'summary' && lastStats && (
-          <SummaryScreen
-            stats={lastStats} profile={profile} sessions={sessions} hrInput={hrInput} setHrInput={setHrInput}
-            waistInput={waistInput} setWaistInput={setWaistInput}
-            weightInput={weightInput} setWeightInput={setWeightInput}
-            rpe={rpe} setRpe={setRpe} notes={notes} setNotes={setNotes}
-            onSave={saveSession}
-          />
-        )}
-
-        {screen === 'history' && (
-          <HistoryScreen
-            sessions={sessions} profile={profile} waistHistory={waistHistory} weightHistory={weightHistory}
-            photos={photos} onAddPhoto={handleAddPhoto}
-            onBack={() => setScreen('home')}
-            onClear={clearHistory}
-            onUpdateGoal={updateWeeklyGoal}
-            onDeleteSession={deleteSession}
-          />
-        )}
-        </Suspense>
-
-        {['home', 'library', 'history', 'setup'].includes(screen) && (
-          <BottomNav active={screen} onNavigate={setScreen} />
-        )}
-
-        {/* VersionBadge sempre visibile - tap riapre changelog v2.9.0 */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: screen === 'loading' ? '12px 0' : '6px 0 10px', opacity: 0.85 }}>
-          <VersionBadge onClick={() => setShowChangelog(true)} />
-          {updateAvailable && (
-            <button
-              onClick={async () => {
-                try {
-                  try { if (updateVersion) localStorage.setItem('o40_lastSw', updateVersion); } catch {}
-                  const reg = await navigator.serviceWorker.getRegistration();
-                  if (reg && reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-                  await fetch('./sw.js', { cache: 'reload' });
-                  window.location.href = window.location.pathname + '?v=' + (updateVersion || Date.now()) + window.location.hash;
-                  setTimeout(() => window.location.reload(), 400);
-                } catch { window.location.reload(); }
-              }}
-              style={{
-                background: BLAZE, color: PAPER, border: `1px solid ${BLAZE}`, borderRadius: 20, padding: '6px 14px',
-                fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,
-                boxShadow: `0 4px 12px ${BLAZE}66`, animation: 'glowPulse 1.8s ease-in-out infinite',
-              }}
-            >
-              <RefreshCw size={12} /> Aggiorna app → {updateVersion || 'nuova versione'}
-            </button>
-          )}
-        </div>
-        {showChangelog && (
-          <ChangelogModal lang={lang} onClose={() => setShowChangelog(false)} onTry={() => setShowPose('squat')} />
-        )}
-
-        {toast && (
-          <div style={{
-            position: 'absolute', left: 16, right: 16, bottom: 20, zIndex: 20,
-            display: 'flex', justifyContent: 'center', pointerEvents: 'none',
-          }}>
-            <div className="o40-toast-in" style={{
-              background: `linear-gradient(135deg, ${OLIVE}, ${OLIVE_DARK})`, border: `1px solid ${BLAZE}`,
-              borderRadius: 12, padding: '10px 18px', boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-              color: PAPER, fontSize: 13, fontWeight: 600, textAlign: 'center', maxWidth: '100%',
-            }}>
-              {toast}
-            </div>
-          </div>
-        )}
-
-        {/* install banner */}
-        {installPrompt && ['home','library','history','setup'].includes(screen) && (
-          <div className="o40-install">
-            <div style={{ width: 36, height: 36, borderRadius: 8, background: BLAZE, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Download size={18} color={PAPER} /></div>
-            <div style={{ flex: 1 }}>
-              <div style={{ color: PAPER, fontWeight: 700, fontSize: 13 }}>{lang === 'it' ? 'Installa Operator 40' : lang === 'de' ? 'Operator 40 installieren' : 'Install Operator 40'}</div>
-              <div style={{ color: KHAKI, fontSize: 11 }}>{lang === 'it' ? 'Aggiungi alla home per l’accesso offline' : 'Add to home for offline access'}</div>
-            </div>
-            <button onClick={async () => { try { installPrompt.prompt(); const c = await installPrompt.userChoice; if (c.outcome === 'accepted') setInstallPrompt(null); } catch {} }} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '8px 12px', fontWeight: 700, cursor: 'pointer', fontSize: 12 }}>OK</button>
-            <button onClick={() => setInstallPrompt(null)} style={{ background: 'transparent', border: 'none', color: STEEL, cursor: 'pointer', padding: 6 }}><X size={16} /></button>
-          </div>
-        )}
-        {/* tour */}
-        {showTour && (
-          <div className="o40-tour-mask" onClick={() => { setShowTour(false); try { localStorage.setItem('o40_seenTour','1'); } catch {} }}>
-            <div className="o40-tour-card" onClick={e => e.stopPropagation()}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}><Sparkles size={18} color={BLAZE} /><span className="o40-display" style={{ fontSize: 20 }}>Benvenuto!</span></div>
-              <div style={{ fontSize: 13, lineHeight: 1.5, color: '#333' }}>{lang === 'it' ? 'Tre tap: scegli la missione del giorno, allenati 15 minuti, traccia i progressi. Tutto offline, sulla tua privacy.' : 'Three taps: pick today\'s mission, train 15 min, track progress. Fully offline, private.'}</div>
-              <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
-                <button onClick={() => { setShowTour(false); try { localStorage.setItem('o40_seenTour','1'); } catch {} }} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 10, padding: '10px 0', fontWeight: 700, cursor: 'pointer' }}>INIZIA</button>
-                <button onClick={() => { setShowTour(false); try { localStorage.setItem('o40_seenTour','1'); } catch {} }} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 14px', cursor: 'pointer' }}><Eye size={16} color={OLIVE} /></button>
-              </div>
-            </div>
-          </div>
-        )}
-        {showBellyTest && (
-          <div className="o40-tour-mask" onClick={() => setShowBellyTest(false)} style={{ zIndex: 20 }}>
-            <div className="o40-tour-card" onClick={e => e.stopPropagation()} style={{ maxHeight: '90vh', overflowY: 'auto', maxWidth: 440, width: '92vw' }}>
-              <BellyTest lang={lang} initial={profile?.bellyTest} onSave={saveBellyTest} onClose={() => setShowBellyTest(false)} />
-            </div>
-          </div>
-        )}
-        {showPose && (
-          <div className="o40-tour-mask" onClick={() => setShowPose(null)} style={{ zIndex: 25 }}>
-            <div className="o40-tour-card" onClick={e => e.stopPropagation()} style={{ maxHeight: '90vh', overflowY: 'auto', maxWidth: 560, width: '96vw', padding: 0, overflow: 'hidden', border: `1px solid ${OLIVE}`, borderRadius: 18 }}>
-              <FitnessEngineView
-                exercise={typeof showPose === 'string' ? showPose : 'squat'}
+            {screen === 'countdown' && previewProgram && (
+              <CountdownScreen
+                program={previewProgram}
                 lang={lang}
-                onClose={() => setShowPose(null)}
-                onDone={({ reps, elapsedMs, avgQuality }) => {
-                  showToast(`${reps} rep · ${Math.round(elapsedMs/1000)}s · Q ${Math.round(avgQuality)}/100`);
+                t={t}
+                onDone={() => startSession(previewProgram)}
+              />
+            )}
+
+            {screen === 'session' && seq.length > 0 && (
+              <SessionScreen
+                program={activeProgram}
+                profile={profile}
+                seq={seq}
+                phaseIdx={phaseIdx}
+                secondsLeft={secondsLeft}
+                paused={paused}
+                setPaused={setPaused}
+                soundOn={soundOn}
+                setSoundOn={setSoundOn}
+                musicOn={musicOn}
+                onToggleMusic={toggleMusic}
+                aiEnabled={aiCoachEnabled}
+                onToggleAi={() => setAiCoachEnabled((v) => !v)}
+                lang={lang}
+                onSkip={advancePhase}
+                onPrev={goPrev}
+                exitConfirm={exitConfirm}
+                setExitConfirm={setExitConfirm}
+                onExit={() => {
+                  setExitConfirm(false);
+                  setScreen('home');
                 }}
               />
-            </div>
+            )}
+
+            {screen === 'summary' && lastStats && (
+              <SummaryScreen
+                stats={lastStats}
+                profile={profile}
+                sessions={sessions}
+                hrInput={hrInput}
+                setHrInput={setHrInput}
+                waistInput={waistInput}
+                setWaistInput={setWaistInput}
+                weightInput={weightInput}
+                setWeightInput={setWeightInput}
+                rpe={rpe}
+                setRpe={setRpe}
+                notes={notes}
+                setNotes={setNotes}
+                onSave={saveSession}
+              />
+            )}
+
+            {screen === 'history' && (
+              <HistoryScreen
+                sessions={sessions}
+                profile={profile}
+                waistHistory={waistHistory}
+                weightHistory={weightHistory}
+                photos={photos}
+                onAddPhoto={handleAddPhoto}
+                onBack={() => setScreen('home')}
+                onClear={clearHistory}
+                onUpdateGoal={updateWeeklyGoal}
+                onDeleteSession={deleteSession}
+              />
+            )}
+          </Suspense>
+
+          {['home', 'library', 'history', 'setup'].includes(screen) && (
+            <BottomNav active={screen} onNavigate={setScreen} />
+          )}
+
+          {/* VersionBadge sempre visibile - tap riapre changelog v2.9.0 */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 6,
+              padding: screen === 'loading' ? '12px 0' : '6px 0 10px',
+              opacity: 0.85,
+            }}
+          >
+            <VersionBadge onClick={() => setShowChangelog(true)} />
+            {updateAvailable && (
+              <button
+                onClick={async () => {
+                  try {
+                    try {
+                      if (updateVersion) localStorage.setItem('o40_lastSw', updateVersion);
+                    } catch {}
+                    const reg = await navigator.serviceWorker.getRegistration();
+                    if (reg && reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                    await fetch('./sw.js', { cache: 'reload' });
+                    window.location.href =
+                      window.location.pathname +
+                      '?v=' +
+                      (updateVersion || Date.now()) +
+                      window.location.hash;
+                    setTimeout(() => window.location.reload(), 400);
+                  } catch {
+                    window.location.reload();
+                  }
+                }}
+                style={{
+                  background: BLAZE,
+                  color: PAPER,
+                  border: `1px solid ${BLAZE}`,
+                  borderRadius: 20,
+                  padding: '6px 14px',
+                  fontSize: 11,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  boxShadow: `0 4px 12px ${BLAZE}66`,
+                  animation: 'glowPulse 1.8s ease-in-out infinite',
+                }}
+              >
+                <RefreshCw size={12} /> Aggiorna app → {updateVersion || 'nuova versione'}
+              </button>
+            )}
           </div>
-        )}
-      </div>
+          {showChangelog && (
+            <ChangelogModal
+              lang={lang}
+              onClose={() => setShowChangelog(false)}
+              onTry={() => setShowPose('squat')}
+            />
+          )}
+
+          {toast && (
+            <div
+              style={{
+                position: 'absolute',
+                left: 16,
+                right: 16,
+                bottom: 20,
+                zIndex: 20,
+                display: 'flex',
+                justifyContent: 'center',
+                pointerEvents: 'none',
+              }}
+            >
+              <div
+                className="o40-toast-in"
+                style={{
+                  background: `linear-gradient(135deg, ${OLIVE}, ${OLIVE_DARK})`,
+                  border: `1px solid ${BLAZE}`,
+                  borderRadius: 12,
+                  padding: '10px 18px',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                  color: PAPER,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  textAlign: 'center',
+                  maxWidth: '100%',
+                }}
+              >
+                {toast}
+              </div>
+            </div>
+          )}
+
+          {/* install banner */}
+          {installPrompt && ['home', 'library', 'history', 'setup'].includes(screen) && (
+            <div className="o40-install">
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 8,
+                  background: BLAZE,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <Download size={18} color={PAPER} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ color: PAPER, fontWeight: 700, fontSize: 13 }}>
+                  {lang === 'it'
+                    ? 'Installa Operator 40'
+                    : lang === 'de'
+                      ? 'Operator 40 installieren'
+                      : 'Install Operator 40'}
+                </div>
+                <div style={{ color: KHAKI, fontSize: 11 }}>
+                  {lang === 'it'
+                    ? 'Aggiungi alla home per l’accesso offline'
+                    : 'Add to home for offline access'}
+                </div>
+              </div>
+              <button
+                onClick={async () => {
+                  try {
+                    installPrompt.prompt();
+                    const c = await installPrompt.userChoice;
+                    if (c.outcome === 'accepted') setInstallPrompt(null);
+                  } catch {}
+                }}
+                style={{
+                  background: BLAZE,
+                  color: PAPER,
+                  border: 'none',
+                  borderRadius: 8,
+                  padding: '8px 12px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  fontSize: 12,
+                }}
+              >
+                OK
+              </button>
+              <button
+                onClick={() => setInstallPrompt(null)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: STEEL,
+                  cursor: 'pointer',
+                  padding: 6,
+                }}
+              >
+                <X size={16} />
+              </button>
+            </div>
+          )}
+          {/* tour */}
+          {showTour && (
+            <div
+              className="o40-tour-mask"
+              onClick={() => {
+                setShowTour(false);
+                try {
+                  localStorage.setItem('o40_seenTour', '1');
+                } catch {}
+              }}
+            >
+              <div className="o40-tour-card" onClick={(e) => e.stopPropagation()}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                  <Sparkles size={18} color={BLAZE} />
+                  <span className="o40-display" style={{ fontSize: 20 }}>
+                    Benvenuto!
+                  </span>
+                </div>
+                <div style={{ fontSize: 13, lineHeight: 1.5, color: '#333' }}>
+                  {lang === 'it'
+                    ? 'Tre tap: scegli la missione del giorno, allenati 15 minuti, traccia i progressi. Tutto offline, sulla tua privacy.'
+                    : "Three taps: pick today's mission, train 15 min, track progress. Fully offline, private."}
+                </div>
+                <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
+                  <button
+                    onClick={() => {
+                      setShowTour(false);
+                      try {
+                        localStorage.setItem('o40_seenTour', '1');
+                      } catch {}
+                    }}
+                    style={{
+                      flex: 1,
+                      background: BLAZE,
+                      color: PAPER,
+                      border: 'none',
+                      borderRadius: 10,
+                      padding: '10px 0',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    INIZIA
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowTour(false);
+                      try {
+                        localStorage.setItem('o40_seenTour', '1');
+                      } catch {}
+                    }}
+                    style={{
+                      background: 'transparent',
+                      border: `1px solid ${OLIVE}`,
+                      borderRadius: 10,
+                      padding: '10px 14px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <Eye size={16} color={OLIVE} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {showBellyTest && (
+            <div
+              className="o40-tour-mask"
+              onClick={() => setShowBellyTest(false)}
+              style={{ zIndex: 20 }}
+            >
+              <div
+                className="o40-tour-card"
+                onClick={(e) => e.stopPropagation()}
+                style={{ maxHeight: '90vh', overflowY: 'auto', maxWidth: 440, width: '92vw' }}
+              >
+                <BellyTest
+                  lang={lang}
+                  initial={profile?.bellyTest}
+                  onSave={saveBellyTest}
+                  onClose={() => setShowBellyTest(false)}
+                />
+              </div>
+            </div>
+          )}
+          {showPose && (
+            <div className="o40-tour-mask" onClick={() => setShowPose(null)} style={{ zIndex: 25 }}>
+              <div
+                className="o40-tour-card"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  maxHeight: '90vh',
+                  overflowY: 'auto',
+                  maxWidth: 560,
+                  width: '96vw',
+                  padding: 0,
+                  overflow: 'hidden',
+                  border: `1px solid ${OLIVE}`,
+                  borderRadius: 18,
+                }}
+              >
+                <FitnessEngineView
+                  exercise={typeof showPose === 'string' ? showPose : 'squat'}
+                  lang={lang}
+                  onClose={() => setShowPose(null)}
+                  onDone={({ reps, elapsedMs, avgQuality }) => {
+                    showToast(
+                      `${reps} rep · ${Math.round(elapsedMs / 1000)}s · Q ${Math.round(avgQuality)}/100`
+                    );
+                  }}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </LangContext.Provider>
   );
 }
-
-

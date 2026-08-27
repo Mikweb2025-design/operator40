@@ -34,9 +34,17 @@ function getDB() {
   }
 }
 function getStoredVersion() {
-  try { return parseInt(localStorage.getItem('o40_schemaVersion') || '0', 10) || 0; } catch { return 0; }
+  try {
+    return parseInt(localStorage.getItem('o40_schemaVersion') || '0', 10) || 0;
+  } catch {
+    return 0;
+  }
 }
-function setStoredVersion(v) { try { localStorage.setItem('o40_schemaVersion', String(v)); } catch {} }
+function setStoredVersion(v) {
+  try {
+    localStorage.setItem('o40_schemaVersion', String(v));
+  } catch {}
+}
 
 // Keys that are large and benefit most from IDB
 const IDB_KEYS = new Set([
@@ -93,7 +101,9 @@ async function set(key, value) {
       if (db) {
         await db.put('kv', value, key);
         // remove from localStorage to free quota (keep small backup for 1 version)
-        try { localStorage.removeItem(key); } catch {}
+        try {
+          localStorage.removeItem(key);
+        } catch {}
         return;
       }
     } catch (e) {
@@ -106,7 +116,10 @@ async function set(key, value) {
     console.warn('[storage] set failed', key, e);
     // quota exceeded? try to clear old IDB/ls and retry once
     if (e && e.name === 'QuotaExceededError') {
-      try { localStorage.removeItem(key); localStorage.setItem(key, value); } catch {}
+      try {
+        localStorage.removeItem(key);
+        localStorage.setItem(key, value);
+      } catch {}
     }
   }
 }
@@ -120,7 +133,9 @@ async function remove(key) {
     const db = await getDB();
     if (db) await db.delete('kv', key).catch(() => {});
   } catch {}
-  try { localStorage.removeItem(key); } catch {}
+  try {
+    localStorage.removeItem(key);
+  } catch {}
 }
 
 async function clear() {
@@ -132,7 +147,9 @@ async function clear() {
     const db = await getDB();
     if (db) await db.clear('kv').catch(() => {});
   } catch {}
-  try { localStorage.clear(); } catch {}
+  try {
+    localStorage.clear();
+  } catch {}
 }
 
 // Optional: expose migration helper for debugging
@@ -172,4 +189,13 @@ async function migrateStoredDataIfNeeded() {
   } catch {}
 }
 
-export { get, set, remove, clear, migrateFromLocalStorage, migrateStoredDataIfNeeded, getStoredVersion, setStoredVersion };
+export {
+  get,
+  set,
+  remove,
+  clear,
+  migrateFromLocalStorage,
+  migrateStoredDataIfNeeded,
+  getStoredVersion,
+  setStoredVersion,
+};

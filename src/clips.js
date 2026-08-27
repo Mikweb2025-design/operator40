@@ -20,7 +20,7 @@ export const CLIP_FILES = {
   plankjack: 'clips/plankjack.mp4',
   skater: 'clips/skater.mp4',
   heeltap: 'clips/heeltap.mp4',
-  squat: 'clips/squat.mp4'
+  squat: 'clips/squat.mp4',
 };
 
 export function hasClip(exerciseId, pose) {

@@ -4,7 +4,7 @@ import { sessionDayKey, dayKey } from './date.js';
 
 function daysSinceLastSession(sessions) {
   if (!sessions.length) return 999;
-  const last = sessions.reduce((a, b) => new Date(b.date) > new Date(a.date) ? b : a);
+  const last = sessions.reduce((a, b) => (new Date(b.date) > new Date(a.date) ? b : a));
   const diff = Math.floor((Date.now() - new Date(last.date).getTime()) / 86400000);
   return diff;
 }
@@ -62,12 +62,23 @@ function personalize(base, name, lang) {
   return (prefixes[lang] || prefixes.it) + base.charAt(0).toLowerCase() + base.slice(1);
 }
 
-export function getMotivationalMessage({ sessions = [], profile = null, lang = 'it', date = new Date() } = {}) {
+export function getMotivationalMessage({
+  sessions = [],
+  profile = null,
+  lang = 'it',
+  date = new Date(),
+} = {}) {
   const n = sessions.length;
   const streak = computeStreak(sessions);
   const best = computeBestStreak(sessions);
   const missed = daysSinceLastSession(sessions);
-  const cons = (() => { try { return getConsistencyScore(sessions, 8); } catch { return 0; } })();
+  const cons = (() => {
+    try {
+      return getConsistencyScore(sessions, 8);
+    } catch {
+      return 0;
+    }
+  })();
   const risk = getStreakRisk(sessions);
   const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
   const name = profile?.name?.trim() || null;
@@ -80,9 +91,10 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
       de: `Seit ${missed} Tagen weg — komm zurück! 💪`,
     };
     const bodies = {
-      it: missed >= 4
-        ? `La serie si è interrotta, ma bastano 15′ di Recupero Attivo per riprendere. Andiamo?`
-        : `La tua striscia ti aspetta. Anche 15′ oggi salvano il ritmo.`,
+      it:
+        missed >= 4
+          ? `La serie si è interrotta, ma bastano 15′ di Recupero Attivo per riprendere. Andiamo?`
+          : `La tua striscia ti aspetta. Anche 15′ oggi salvano il ritmo.`,
       en: `Your streak awaits. Even 15′ today keeps rhythm.`,
       de: `Deine Serie wartet. Schon 15′ heute halten den Rhythmus.`,
     };
@@ -96,7 +108,11 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
 
   // 2) streak celebration
   if (streak >= 7) {
-    const titles = { it: `Sei inarrestabile! 🔥 ${streak} giorni`, en: `Unstoppable! 🔥 ${streak} days`, de: `Unaufhaltsam! 🔥 ${streak} Tage` };
+    const titles = {
+      it: `Sei inarrestabile! 🔥 ${streak} giorni`,
+      en: `Unstoppable! 🔥 ${streak} days`,
+      de: `Unaufhaltsam! 🔥 ${streak} Tage`,
+    };
     const bodies = {
       it: `Costanza al ${cons}% — continua così, stai andando alla grande!`,
       en: `Consistency ${cons}% — keep going, you're doing great!`,
@@ -110,7 +126,11 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
     };
   }
   if (streak >= 3) {
-    const titles = { it: `Continua così! 🔥 ${streak} giorni di fila`, en: `Keep it up! 🔥 ${streak} days`, de: `Weiter so! 🔥 ${streak} Tage` };
+    const titles = {
+      it: `Continua così! 🔥 ${streak} giorni di fila`,
+      en: `Keep it up! 🔥 ${streak} days`,
+      de: `Weiter so! 🔥 ${streak} Tage`,
+    };
     const bodies = {
       it: `Stai andando bene — mantieni il ritmo, il risultato arriva.`,
       en: `You're doing well — keep rhythm.`,
@@ -160,7 +180,11 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
   if (dayOfYear % 3 === 0) {
     const tips = STRESS_TIPS[lang] || STRESS_TIPS.it;
     const tip = tips[dayOfYear % tips.length];
-    const titles = { it: 'Tip anti-stress 🧘', en: 'Anti-stress tip 🧘', de: 'Anti-Stress Tipp 🧘' };
+    const titles = {
+      it: 'Tip anti-stress 🧘',
+      en: 'Anti-stress tip 🧘',
+      de: 'Anti-Stress Tipp 🧘',
+    };
     return {
       title: titles[lang] || titles.it,
       body: personalize(tip, name, lang),
@@ -175,7 +199,7 @@ export function getMotivationalMessage({ sessions = [], profile = null, lang = '
   const titles = {
     it: 'Continua così — stai andando bene 💪',
     de: 'Weiter so — du machst es gut 💪',
-    en: 'Keep going — you\'re doing great 💪',
+    en: "Keep going — you're doing great 💪",
   };
   return {
     title: titles[lang] || titles.it,

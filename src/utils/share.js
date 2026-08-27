@@ -27,6 +27,12 @@ export async function shareResults({ title, text, url }) {
 export async function shareSessionResult(session, t) {
   const name = session.programName || 'Missione';
   const title = t ? t('share.session.title') : 'Missione compiuta — Operator 40';
-  const text = t ? t('share.session.text', { name, kcal: session.kcal, min: Math.round(session.durationSec / 60) }) : `${name} — ${Math.round(session.durationSec / 60)} min, ${session.kcal} kcal`;
+  const text = t
+    ? t('share.session.text', {
+        name,
+        kcal: session.kcal,
+        min: Math.round(session.durationSec / 60),
+      })
+    : `${name} — ${Math.round(session.durationSec / 60)} min, ${session.kcal} kcal`;
   return shareResults({ title, text });
 }

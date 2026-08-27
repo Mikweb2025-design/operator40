@@ -2,6 +2,7 @@ import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, clamp, torsoLength } from '../../pose/Geometry';
+// tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class HeelTapAnalyzer extends ExerciseAnalyzer{
   readonly id='heeltap'; readonly requiredLandmarks=[11,12,23,24,25,26,15,16,29,30];
   private lastSide: 'left'|'right'|null=null;

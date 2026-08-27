@@ -8,7 +8,7 @@ export function getWeeklyProgress(sessions, weeklyGoal = WEEKLY_GOAL) {
   const start = new Date(now);
   start.setDate(now.getDate() - now.getDay() + 1); // lunedì
   start.setHours(0, 0, 0, 0);
-  const done = (sessions || []).filter(s => new Date(s.date) >= start).length;
+  const done = (sessions || []).filter((s) => new Date(s.date) >= start).length;
   const pct = Math.min(1, done / weeklyGoal);
   const remain = Math.max(0, weeklyGoal - done);
   return { done, total: weeklyGoal, pct, remain, isDone: done >= weeklyGoal };

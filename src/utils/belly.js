@@ -9,42 +9,56 @@ export function isBellyProgram(id) {
 }
 
 export function getBellyPrograms() {
-  return PROGRAMS.filter(p => isBellyProgram(p.id));
+  return PROGRAMS.filter((p) => isBellyProgram(p.id));
 }
 
 export function getBellySessions(sessions) {
-  return (sessions || []).filter(s => isBellyProgram(s.programId));
+  return (sessions || []).filter((s) => isBellyProgram(s.programId));
 }
 
 // Quante missioni pancia nelle ultime N settimane
 export function getBellyCount(sessions, weeks = 4) {
   const since = Date.now() - weeks * 7 * 86400000;
-  return getBellySessions(sessions).filter(s => new Date(s.date).getTime() > since).length;
+  return getBellySessions(sessions).filter((s) => new Date(s.date).getTime() > since).length;
 }
 
 // Streak pancia: giorni consecutivi con almeno una pancia
 export function getBellyStreak(sessions) {
-  const dates = new Set(getBellySessions(sessions).map(s => s.date.slice(0, 10)));
+  const dates = new Set(getBellySessions(sessions).map((s) => s.date.slice(0, 10)));
   if (!dates.size) return 0;
   let cur = new Date();
   // se oggi non c'è pancia, parti da ieri
   if (!dates.has(cur.toISOString().slice(0, 10))) cur.setDate(cur.getDate() - 1);
   let n = 0;
-  while (dates.has(cur.toISOString().slice(0, 10))) { n++; cur.setDate(cur.getDate() - 1); if (n > 60) break; }
+  while (dates.has(cur.toISOString().slice(0, 10))) {
+    n++;
+    cur.setDate(cur.getDate() - 1);
+    if (n > 60) break;
+  }
   return n;
 }
 
 // Progresso verso obiettivo pancia settimanale (consigliato 3)
 export function getBellyProgress(sessions, goal = 3) {
   const weekAgo = Date.now() - 7 * 86400000;
-  const done = getBellySessions(sessions).filter(s => new Date(s.date).getTime() > weekAgo).length;
-  return { done, total: goal, pct: Math.min(1, done / goal), remain: Math.max(0, goal - done), isDone: done >= goal };
+  const done = getBellySessions(sessions).filter(
+    (s) => new Date(s.date).getTime() > weekAgo
+  ).length;
+  return {
+    done,
+    total: goal,
+    pct: Math.min(1, done / goal),
+    remain: Math.max(0, goal - done),
+    isDone: done >= goal,
+  };
 }
 
 // Suggerisce la prossima pancia meno usata / più adatta
 export function pickBellyNext(sessions) {
   const counts = {};
-  getBellySessions(sessions).forEach(s => { counts[s.programId] = (counts[s.programId] || 0) + 1; });
+  getBellySessions(sessions).forEach((s) => {
+    counts[s.programId] = (counts[s.programId] || 0) + 1;
+  });
   const cands = getBellyPrograms();
   return [...cands].sort((a, b) => (counts[a.id] || 0) - (counts[b.id] || 0))[0] || cands[0];
 }

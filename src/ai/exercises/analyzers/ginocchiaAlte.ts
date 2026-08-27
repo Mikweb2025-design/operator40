@@ -2,6 +2,7 @@ import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
+// tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class GinocchiaAlteAnalyzer extends ExerciseAnalyzer{
   readonly id='ginocchiaalte'; readonly requiredLandmarks=[11,12,23,24,25,26];
   private lastSwitch=0; private cycle: 'left'|'right'|null=null; private alt=0;

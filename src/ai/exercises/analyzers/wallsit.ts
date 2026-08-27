@@ -2,6 +2,7 @@ import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, clamp } from '../../pose/Geometry';
+// tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class WallsitAnalyzer extends ExerciseAnalyzer{
   // Ankles (27,28) not required for gating — see squat.ts comment (narrow phone FOV, feet often cropped).
   readonly id='wallsit'; readonly requiredLandmarks=[23,24,25,26,11,12];

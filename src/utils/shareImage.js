@@ -3,9 +3,11 @@ import { getConsistencyScore } from './progress.js';
 import { getSmartInsight } from './smart.js';
 
 export async function shareStatsImage({ sessions, profile, t, tr }) {
-  const W = 1080, H = 1350;
+  const W = 1080,
+    H = 1350;
   const c = document.createElement('canvas');
-  c.width = W; c.height = H;
+  c.width = W;
+  c.height = H;
   const ctx = c.getContext('2d');
 
   // --- Background ---
@@ -19,8 +21,18 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
   // subtle grid
   ctx.strokeStyle = 'rgba(184,174,140,0.06)';
   ctx.lineWidth = 1;
-  for (let x = 0; x < W; x += 42) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
-  for (let y = 0; y < H; y += 42) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  for (let x = 0; x < W; x += 42) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, H);
+    ctx.stroke();
+  }
+  for (let y = 0; y < H; y += 42) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W, y);
+    ctx.stroke();
+  }
 
   // camo accent top bar
   ctx.fillStyle = '#333823';
@@ -30,7 +42,10 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
 
   // card
   const pad = 36;
-  const cardX = pad, cardY = 48, cardW = W - pad * 2, cardH = H - pad * 2 - 20;
+  const cardX = pad,
+    cardY = 48,
+    cardW = W - pad * 2,
+    cardH = H - pad * 2 - 20;
   ctx.fillStyle = 'rgba(237,232,216,0.07)';
   ctx.strokeStyle = 'rgba(184,174,140,0.22)';
   ctx.lineWidth = 1.5;
@@ -68,24 +83,72 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
   } catch {}
   ctx.fillStyle = '#C1440E';
   ctx.font = '700 18px "IBM Plex Mono", monospace';
-  ctx.fillText(rankText + (rank.next ? `  →  ${rank.next.min - (sessions?.length || 0)} AL PROSSIMO` : '  •  VETERANO'), W / 2, cardY + 148);
+  ctx.fillText(
+    rankText +
+      (rank.next ? `  →  ${rank.next.min - (sessions?.length || 0)} AL PROSSIMO` : '  •  VETERANO'),
+    W / 2,
+    cardY + 148
+  );
 
   // --- Main stats row ---
   const totalKcal = (sessions || []).reduce((a, s) => a + (s.kcal || 0), 0);
-  const totalMin = Math.round((sessions || []).reduce((a, s) => a + (s.durationSec || 780), 0) / 60);
-  const streak = (() => { try { const s = new Set((sessions || []).map(v => v.date.slice(0, 10))); let cur = new Date(); if (!s.has(cur.toISOString().slice(0, 10))) cur.setDate(cur.getDate() - 1); let n = 0; while (s.has(cur.toISOString().slice(0, 10))) { n++; cur.setDate(cur.getDate() - 1); } return n; } catch { return 0; } })();
+  const totalMin = Math.round(
+    (sessions || []).reduce((a, s) => a + (s.durationSec || 780), 0) / 60
+  );
+  const streak = (() => {
+    try {
+      const s = new Set((sessions || []).map((v) => v.date.slice(0, 10)));
+      let cur = new Date();
+      if (!s.has(cur.toISOString().slice(0, 10))) cur.setDate(cur.getDate() - 1);
+      let n = 0;
+      while (s.has(cur.toISOString().slice(0, 10))) {
+        n++;
+        cur.setDate(cur.getDate() - 1);
+      }
+      return n;
+    } catch {
+      return 0;
+    }
+  })();
   const best = computeBestStreak(sessions || []);
-  const cons = (() => { try { return getConsistencyScore(sessions, 8); } catch { return 0; } })();
-  const { unlocked } = (() => { try { return getMedalProgress(sessions || []); } catch { return { unlocked: [] }; } })();
+  const cons = (() => {
+    try {
+      return getConsistencyScore(sessions, 8);
+    } catch {
+      return 0;
+    }
+  })();
+  const { unlocked } = (() => {
+    try {
+      return getMedalProgress(sessions || []);
+    } catch {
+      return { unlocked: [] };
+    }
+  })();
 
   // 3 big boxes
   const boxY = cardY + 190;
   const boxW = (cardW - 48) / 3;
   const boxH = 148;
   const boxes = [
-    { label: 'SESSIONI', value: String(sessions?.length || 0), sub: `${totalMin}′ totali`, color: '#EDE8D8' },
-    { label: 'KCAL', value: String(totalKcal), sub: `${Math.round(totalKcal / Math.max(1, sessions?.length || 1))} avg`, color: '#EDE8D8' },
-    { label: 'STREAK', value: `${streak}🔥`, sub: `best ${best}`, color: streak > 0 ? '#C1440E' : '#EDE8D8' },
+    {
+      label: 'SESSIONI',
+      value: String(sessions?.length || 0),
+      sub: `${totalMin}′ totali`,
+      color: '#EDE8D8',
+    },
+    {
+      label: 'KCAL',
+      value: String(totalKcal),
+      sub: `${Math.round(totalKcal / Math.max(1, sessions?.length || 1))} avg`,
+      color: '#EDE8D8',
+    },
+    {
+      label: 'STREAK',
+      value: `${streak}🔥`,
+      sub: `best ${best}`,
+      color: streak > 0 ? '#C1440E' : '#EDE8D8',
+    },
   ];
   boxes.forEach((b, i) => {
     const x = cardX + 18 + i * (boxW + 6);
@@ -93,7 +156,10 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
     ctx.fillStyle = i === 1 ? 'rgba(193,68,14,0.14)' : 'rgba(0,0,0,0.22)';
     ctx.strokeStyle = i === 1 ? 'rgba(193,68,14,0.35)' : 'rgba(184,174,140,0.14)';
     ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.roundRect(x, boxY, boxW, boxH, 16); ctx.fill(); ctx.stroke();
+    ctx.beginPath();
+    ctx.roundRect(x, boxY, boxW, boxH, 16);
+    ctx.fill();
+    ctx.stroke();
     // value
     ctx.fillStyle = b.color;
     ctx.font = '900 54px Inter, sans-serif';
@@ -110,15 +176,38 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
   // secondary row: consistenza + perfect weeks + rank
   const secY = boxY + boxH + 18;
   const secBoxes = [
-    { label: 'CONSISTENZA 8W', value: `${cons}%`, color: cons >= 70 ? '#7FB069' : cons >= 40 ? '#B8AE8C' : '#C1440E' },
-    { label: 'SETT. PERFETTE', value: String((unlocked.filter(m => m.type === 'perfect').length) || 0), sub: `su ${12}`, color: '#D9B34C' },
-    { label: 'MEDAGLIE', value: String(unlocked.length), sub: `su ${(() => { try { return getMedalProgress(sessions||[]).all.length; } catch { return 24; } })()}`, color: '#EDE8D8' },
+    {
+      label: 'CONSISTENZA 8W',
+      value: `${cons}%`,
+      color: cons >= 70 ? '#7FB069' : cons >= 40 ? '#B8AE8C' : '#C1440E',
+    },
+    {
+      label: 'SETT. PERFETTE',
+      value: String(unlocked.filter((m) => m.type === 'perfect').length || 0),
+      sub: `su ${12}`,
+      color: '#D9B34C',
+    },
+    {
+      label: 'MEDAGLIE',
+      value: String(unlocked.length),
+      sub: `su ${(() => {
+        try {
+          return getMedalProgress(sessions || []).all.length;
+        } catch {
+          return 24;
+        }
+      })()}`,
+      color: '#EDE8D8',
+    },
   ];
   secBoxes.forEach((b, i) => {
     const x = cardX + 18 + i * (boxW + 6);
     ctx.fillStyle = 'rgba(0,0,0,0.18)';
     ctx.strokeStyle = 'rgba(184,174,140,0.12)';
-    ctx.beginPath(); ctx.roundRect(x, secY, boxW, 64, 12); ctx.fill(); ctx.stroke();
+    ctx.beginPath();
+    ctx.roundRect(x, secY, boxW, 64, 12);
+    ctx.fill();
+    ctx.stroke();
     ctx.fillStyle = b.color;
     ctx.font = '800 26px Inter, sans-serif';
     ctx.textAlign = 'center';
@@ -142,7 +231,17 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
   ctx.fillStyle = 'rgba(237,232,216,0.45)';
   ctx.font = '500 11px Inter, sans-serif';
   ctx.textAlign = 'right';
-  ctx.fillText(`${unlocked.length} / ${(() => { try { return getMedalProgress(sessions||[]).all.length; } catch { return 24; } })()}`, cardX + cardW - 24, medalY);
+  ctx.fillText(
+    `${unlocked.length} / ${(() => {
+      try {
+        return getMedalProgress(sessions || []).all.length;
+      } catch {
+        return 24;
+      }
+    })()}`,
+    cardX + cardW - 24,
+    medalY
+  );
 
   // medal pills
   const pillY = medalY + 14;
@@ -156,7 +255,7 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
     ctx.textAlign = 'center';
     ctx.fillText('— nessuna medaglia ancora —', W / 2, pillY + 18);
   } else {
-    toShow.forEach(m => {
+    toShow.forEach((m) => {
       const label = `${m.icon} ${m.n}${m.type === 'streak' ? 'gg' : m.type === 'kcal' ? 'k' : ''}`;
       ctx.font = '700 12px Inter, sans-serif';
       const w = ctx.measureText(label).width + 18;
@@ -164,7 +263,10 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
       // bg
       ctx.fillStyle = m.unlocked ? 'rgba(193,68,14,0.22)' : 'rgba(0,0,0,0.18)';
       ctx.strokeStyle = m.unlocked ? 'rgba(193,68,14,0.35)' : 'rgba(184,174,140,0.12)';
-      ctx.beginPath(); ctx.roundRect(pillX, pillY, w, pillH, pillH / 2); ctx.fill(); ctx.stroke();
+      ctx.beginPath();
+      ctx.roundRect(pillX, pillY, w, pillH, pillH / 2);
+      ctx.fill();
+      ctx.stroke();
       ctx.fillStyle = m.unlocked ? '#EDE8D8' : '#8A8578';
       ctx.textAlign = 'center';
       ctx.fillText(label, pillX + w / 2, pillY + 18);
@@ -180,16 +282,28 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
 
   // --- Quote / rank progress ---
   const quoteY = pillY + 52;
-  const nextBadge = (() => { try { const { locked } = getMedalProgress(sessions||[]); locked.sort((a,b)=>b.progress-a.progress); return locked[0]; } catch { return null; } })();
+  const nextBadge = (() => {
+    try {
+      const { locked } = getMedalProgress(sessions || []);
+      locked.sort((a, b) => b.progress - a.progress);
+      return locked[0];
+    } catch {
+      return null;
+    }
+  })();
   if (nextBadge) {
     // progress bar to next medal
     const barW = cardW - 48;
     const barX = cardX + 24;
     const barH = 8;
     ctx.fillStyle = 'rgba(0,0,0,0.35)';
-    ctx.beginPath(); ctx.roundRect(barX, quoteY, barW, barH, 4); ctx.fill();
+    ctx.beginPath();
+    ctx.roundRect(barX, quoteY, barW, barH, 4);
+    ctx.fill();
     ctx.fillStyle = nextBadge.color;
-    ctx.beginPath(); ctx.roundRect(barX, quoteY, barW * nextBadge.progress, barH, 4); ctx.fill();
+    ctx.beginPath();
+    ctx.roundRect(barX, quoteY, barW * nextBadge.progress, barH, 4);
+    ctx.fill();
     ctx.fillStyle = 'rgba(237,232,216,0.9)';
     ctx.font = '600 11px Inter, sans-serif';
     ctx.textAlign = 'left';
@@ -205,7 +319,10 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
     ctx.fillStyle = 'rgba(0,0,0,0.18)';
     ctx.strokeStyle = `${smart.color}33`;
     ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.roundRect(cardX + 24, sY, cardW - 48, 64, 12); ctx.fill(); ctx.stroke();
+    ctx.beginPath();
+    ctx.roundRect(cardX + 24, sY, cardW - 48, 64, 12);
+    ctx.fill();
+    ctx.stroke();
     ctx.fillStyle = smart.color;
     ctx.font = '800 22px Inter, sans-serif';
     ctx.textAlign = 'left';
@@ -219,12 +336,14 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
     ctx.fillText(body, cardX + 64, sY + 44);
   } catch {}
 
-
   // --- Footer ---
   const footY = H - 92;
   // line
   ctx.strokeStyle = 'rgba(184,174,140,0.18)';
-  ctx.beginPath(); ctx.moveTo(cardX + 24, footY - 18); ctx.lineTo(cardX + cardW - 24, footY - 18); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(cardX + 24, footY - 18);
+  ctx.lineTo(cardX + cardW - 24, footY - 18);
+  ctx.stroke();
 
   ctx.fillStyle = 'rgba(237,232,216,0.85)';
   ctx.font = '700 13px "IBM Plex Mono", monospace';
@@ -233,22 +352,41 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
 
   ctx.fillStyle = 'rgba(237,232,216,0.45)';
   ctx.font = '500 11px Inter, sans-serif';
-  const dateStr = new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' });
-  ctx.fillText(`${dateStr}  •  Operator 40  •  v${profile?.level || 'combattente'}`, W / 2, footY + 18);
+  const dateStr = new Date().toLocaleDateString('it-IT', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+  ctx.fillText(
+    `${dateStr}  •  Operator 40  •  v${profile?.level || 'combattente'}`,
+    W / 2,
+    footY + 18
+  );
 
   // watermark blaze dot
   ctx.fillStyle = '#C1440E';
-  ctx.beginPath(); ctx.arc(W - 48, footY - 28, 3, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath();
+  ctx.arc(W - 48, footY - 28, 3, 0, Math.PI * 2);
+  ctx.fill();
 
   // to blob
-  const blob = await new Promise(res => c.toBlob(res, 'image/png', 0.96));
+  const blob = await new Promise((res) => c.toBlob(res, 'image/png', 0.96));
   const file = new File([blob], 'operator40-stats.png', { type: 'image/png' });
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    try { await navigator.share({ title: 'Operator 40', text: `Operator 40 — ${sessions?.length || 0} sessioni, ${totalKcal} kcal, ${cons}% costanza`, files: [file] }); return 'share'; } catch {}
+    try {
+      await navigator.share({
+        title: 'Operator 40',
+        text: `Operator 40 — ${sessions?.length || 0} sessioni, ${totalKcal} kcal, ${cons}% costanza`,
+        files: [file],
+      });
+      return 'share';
+    } catch {}
   }
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = `operator40-${new Date().toISOString().slice(0,10)}.png`; a.click();
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `operator40-${new Date().toISOString().slice(0, 10)}.png`;
+  a.click();
   URL.revokeObjectURL(url);
   return 'download';
 }
-

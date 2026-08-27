@@ -9,13 +9,19 @@ export const BACKUP_VERSION = STORAGE_SCHEMA_VERSION;
 
 function validateBackup(data) {
   if (!data || typeof data !== 'object') throw new Error('Backup non valido: root non è oggetto');
-  if (data.version != null && typeof data.version !== 'number') throw new Error('Backup non valido: version deve essere numero');
+  if (data.version != null && typeof data.version !== 'number')
+    throw new Error('Backup non valido: version deve essere numero');
   // profile è opzionale ma se presente deve essere oggetto
-  if (data.profile != null && typeof data.profile !== 'object') throw new Error('Backup non valido: profile non è oggetto');
-  if (data.sessions != null && !Array.isArray(data.sessions)) throw new Error('Backup non valido: sessions non è array');
-  if (data.waistHistory != null && !Array.isArray(data.waistHistory)) throw new Error('Backup non valido: waistHistory non è array');
-  if (data.weightHistory != null && !Array.isArray(data.weightHistory)) throw new Error('Backup non valido: weightHistory non è array');
-  if (data.customPrograms != null && !Array.isArray(data.customPrograms)) throw new Error('Backup non valido: customPrograms non è array');
+  if (data.profile != null && typeof data.profile !== 'object')
+    throw new Error('Backup non valido: profile non è oggetto');
+  if (data.sessions != null && !Array.isArray(data.sessions))
+    throw new Error('Backup non valido: sessions non è array');
+  if (data.waistHistory != null && !Array.isArray(data.waistHistory))
+    throw new Error('Backup non valido: waistHistory non è array');
+  if (data.weightHistory != null && !Array.isArray(data.weightHistory))
+    throw new Error('Backup non valido: weightHistory non è array');
+  if (data.customPrograms != null && !Array.isArray(data.customPrograms))
+    throw new Error('Backup non valido: customPrograms non è array');
   return true;
 }
 
@@ -32,7 +38,7 @@ function migrate(data) {
     }
     // sessions: assicurati che ogni session abbia date ISO e kcal number
     if (Array.isArray(data.sessions)) {
-      data.sessions = data.sessions.map(s => ({
+      data.sessions = data.sessions.map((s) => ({
         ...s,
         date: s.date || new Date().toISOString(),
         kcal: typeof s.kcal === 'number' ? s.kcal : 0,
@@ -44,7 +50,14 @@ function migrate(data) {
 }
 
 export async function exportBackup() {
-  const keys = ['o40_profile', 'o40_sessions', 'o40_waist', 'o40_weight', 'o40_custom_programs', 'o40_photos'];
+  const keys = [
+    'o40_profile',
+    'o40_sessions',
+    'o40_waist',
+    'o40_weight',
+    'o40_custom_programs',
+    'o40_photos',
+  ];
   const out = { version: BACKUP_VERSION, exportedAt: new Date().toISOString() };
   for (const k of keys) {
     try {
@@ -96,17 +109,29 @@ export async function importBackup(data) {
   ];
   for (const [k, v] of toWrite) {
     if (v !== undefined) {
-      try { await window.storage.set(k, JSON.stringify(v), false); } catch (e) { throw new Error(`Scrittura ${k} fallita: ${e.message}`); }
+      try {
+        await window.storage.set(k, JSON.stringify(v), false);
+      } catch (e) {
+        throw new Error(`Scrittura ${k} fallita: ${e.message}`);
+      }
     }
   }
   if (migrated.favs !== undefined) {
-    try { localStorage.setItem('o40_favs', JSON.stringify(migrated.favs)); } catch {}
+    try {
+      localStorage.setItem('o40_favs', JSON.stringify(migrated.favs));
+    } catch {}
   }
   // aggiorna version marker
-  try { localStorage.setItem('o40_schemaVersion', String(migrated.version)); } catch {}
+  try {
+    localStorage.setItem('o40_schemaVersion', String(migrated.version));
+  } catch {}
   return migrated;
 }
 
 export function getStoredSchemaVersion() {
-  try { return parseInt(localStorage.getItem('o40_schemaVersion') || '0', 10) || 0; } catch { return 0; }
+  try {
+    return parseInt(localStorage.getItem('o40_schemaVersion') || '0', 10) || 0;
+  } catch {
+    return 0;
+  }
 }

@@ -9,7 +9,7 @@ Military dark UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N
 
 ---
 
-## Screenshots (v2.8 — 22 AI analyzers + poseQuality)
+## Screenshots (v2.9 — 22 AI analyzers + poseQuality + audit 5 aree)
 
 | Home — mission + belly + adherence | Library — 18 clips + AI tips |
 |:---:|:---:|
@@ -23,11 +23,11 @@ Military dark UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N
 |:---:|:---:|
 | ![Statistics](docs/screenshots/05-statistiche.png) | [`05-statistiche-full.png`](docs/screenshots/05-statistiche-full.png) |
 
-> **New in v2.8:** `src/ai/` 22 dedicated analyzers. Debug HUD (`◇ DEBUG`) shows `EXERCISE / PHASE / REPS / REP CONF / POSE / FORM / FPS / ANGLE / VEL` and `landmarks.json` recorder. Generate fresh shots: `npm run build && npm run preview` then `node scripts/screenshots.mjs` (Playwright 390×844 @2x).
+> **New in v2.9:** `src/ai/` 22 analyzers + `src/components/ui/` dedup + i18n + lazy + PWA robust. Debug HUD (`◇ DEBUG`) shows `EXERCISE / PHASE / REPS / REP CONF / POSE / FORM / FPS / ANGLE / VEL` and `landmarks.json` recorder. Generate fresh shots: `npm run build && npm run preview` then `node scripts/screenshots.mjs` (Playwright 390×844 @2x).
 
 ---
 
-## Features (v2.8)
+## Features (v2.9 — audit 5 aree)
 
 - **Onboarding** — age, weight, waist, height, weekly goal → TDEE / BMI / kcal zones. Stays on device.
 - **18 programs + 22 exercises** — `A–M` + `N,O,P` belly + `Q` Quick Burst, 30-day Camp (`DAY_CYCLE` 20, belly every 2 days), adaptive via RPE, levels `Recruit / Fighter / Elite`.
@@ -47,10 +47,13 @@ Military dark UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N
 - **Statistics** — streak/best, heatmap 35d + year, kcal 7d/monthly, BMI/WhtR/BF + TDEE, photos Before/After, calendar, `exportCSV` + `shareStatsImage` 1080×1350.
 - **Push 1/day personalized** — `getMotivationalMessage` 6 types + `VAPID BHwro8…`, `public/api/push-*.php` + `push-cron 09:00 Europe/Rome` + local 09:00 fallback. Works with PWA closed (`sw.js push/notificationclick`).
 - **Music** — 12 NEFFEX CC BY 3.0 local, adaptive volume per phase.
-- **Storage** — `idb 8.0.3` (`operator40/kv`) web + `Capacitor Preferences` native, migration from `localStorage`. No 5 MB limit.
-- **Offline** — `sw.js o40-v<hash>` cache-first assets, `Range` bypass for audio, precache 6 clips + `wasm/models` if bundled (`npm run fetch:mediapipe`). `PoseLandmarkerManager` tries CDN then `./wasm`/`./models` with `lite/heavy/auto` + `GPU→CPU` fallback.
+- **Storage** — `idb 8.0.3` (`operator40/kv`) web + `Capacitor Preferences` native, migration `v2` + `exportBackup`/`importBackup` JSON versionato. No 5 MB limit.
+- **Backup & Restore** — `src/utils/backup.js` JSON `BACKUP_VERSION=2` (profile/sessions/waist/weight/customPrograms/photos+favs) — Setup → Backup & Ripristino.
+- **Dedup UI** — `src/components/ui/DogTag/ProgressRing/SegmentedProgress` + `styles.js` (inputStyle/primaryBtn) — Home 65 righe → shared.
+- **i18n** — 15+ hardcoded IT → `I18N` (`home.section.*`, `setup.backup.*`) — Setup/Home ora via `t()`.
+- **Offline** — `sw.js o40-v<hash>` stale-while-revalidate + `SKIP_WAITING`, `PRECACHE_SHELL`, `Range` bypass, precache 6 clips + `wasm/models` if bundled. `PoseLandmarkerManager` CDN → `./wasm`/`./models` `lite/heavy/auto` + `GPU→CPU`.
 - **Privacy** — 100% on-device (`IndexedDB` / `Preferences`). Health `export.xml` parsed locally. MediaPipe never uploads video. Minimal push stats `{n,missed,lang,name}`.
-- **PWA** — standalone, offline, deterministic `o40-v<hash>` via `git rev-parse --short HEAD`.
+- **PWA** — standalone, offline, deterministic `o40-v<hash>` via `git rev-parse --short HEAD`, 9 screens `React.lazy` (index 749k→444k).
 - **Native** — iOS + Android Capacitor 6, same `dist`, `npx cap sync`.
 
 ---
@@ -63,7 +66,7 @@ npm run dev          # http://localhost:5173
 npm run build        # dist/ + sw.js o40-v<hash>
 npm run preview      # http://localhost:4173 (for phone on same Wi-Fi)
 npm run verify       # ReferenceError check
-npm run test         # vitest 24 tests (stateMachine + definitions + MissionManager + 22 analyzers)
+npm run test         # vitest 51 tests (stateMachine + definitions + MissionManager + 22 analyzers + audit 21)
 npm run fetch:mediapipe # optional: copy wasm + download pose_landmarker_{lite,heavy}.task → public/wasm,models
 ```
 
@@ -104,9 +107,9 @@ npx cap open android # Android Studio → Run (emulator TestAVD API 37.1 ps16k o
 
 ---
 
-## Project structure (v2.8)
+## Project structure (v2.9 — audit 5 aree)
 
-- `src/App.jsx` ~3300 lines — screens + `isAiWork` gated `SessionAIOverlay`, `aiEnabled` toggle
+- `src/App.jsx` ~1240 lines — router + 9 screens `React.lazy` + `Suspense`, `isAiWork` gated `SessionAIOverlay`
 - `src/data/programs.js` 18 programs + `DAY_CYCLE 20` + `BELLY_IDS` + `CAMP_DAYS 30`
 - `src/data/exercises.js` 22 exercises + `EXERCISE_GROUPS`
 - `src/clips.js` + `src/media.js` 18 MP4 + WebP fallback
@@ -116,8 +119,8 @@ npx cap open android # Android Studio → Run (emulator TestAVD API 37.1 ps16k o
   - `exercises/ExerciseAnalyzer.ts` base + `ExerciseRegistry.ts` 22 + `analyzers/{22}.ts` per exercise
   - `coaching/` (FormScore via analyzers), `debug/LandmarkRecorder.ts` (landmarks.json), `session/ExerciseSession.ts` placeholder
 - `src/engine/` — legacy engine kept for compat: `FitnessEngine.ts` now delegates to `src/ai` when analyzer exists, fallback blocked if `trackingSupported=false`; `PoseLandmarkerManager.ts` lite/heavy/auto + `./wasm` fallback; `stateMachine.ts` hysteresis; `types.ts` 27 `ExerciseId` + `repConfidence`
-- `src/utils/` — `stats.js / progress.js / belly.js / bellyTest.js / motivation.js / push.js / workout.js / bmi.js / body.js / ...`
-- `src/components/` — `FitnessEngineView.tsx` (22 switcher + poseQuality bar + debug HUD + recorder), `SessionAIOverlay.tsx`, `PoseCounter.jsx` (deprecated → delegate), `PositioningMask.tsx`, `BellyTest.jsx`, `BeforeAfterSlider.jsx`
+- `src/utils/` — `stats.js / progress.js / belly.js / bellyTest.js / motivation.js / push.js / workout.js / bmi.js / body.js / audit.test.js (21) / backup.js / ...`
+- `src/components/` — `FitnessEngineView.tsx` (22 switcher), `SessionAIOverlay.tsx`, `ui/DogTag/ProgressRing/SegmentedProgress` + `ui/styles.js` (dedup), `ChangelogModal.tsx` v2.9.0
 - `public/{clips,icons,tracks,wasm,models,api,sw.js,manifest.webmanifest}` — `wasm/models` gitignored `*.task/*.wasm`
 - `ios/ + android/` — Capacitor shells (public ← dist, gitignored)
 - `scripts/{version-sw.mjs,fetch-mediapipe.mjs,verify.mjs,deploy.mjs,screenshots.mjs}` + `vite.config.js` `__APP_VERSION__` deterministic + `vitest`
@@ -129,7 +132,7 @@ npx cap open android # Android Studio → Run (emulator TestAVD API 37.1 ps16k o
 
 ```bash
 npm run verify && npm run build    # o40-v<8hex> in sw.js
-npm run test                       # 24 tests
+npm run test                       # 51 tests
 npm run deploy:local               # info only
 npm run deploy -- --remote --ios   # push deploy-tmp + curl raw to mikweb.eu + cap sync
 node scripts/screenshots.mjs       # Playwright 390×844 @2x → docs/screenshots/ (needs preview on :4173)
@@ -152,7 +155,7 @@ React 18 · Vite 5 · Capacitor 6 · `idb 8` · `@mediapipe/tasks-vision 0.10` �
 - [ ] Benchmark `lite vs heavy` FPS on iPhone 14/15, document `auto` heuristic
 - [ ] Wire `MotionFusion` to Capacitor `Motion` plugin for `jumpingJack`/`highKnees`/`burpee` (opt-in)
 - [ ] Regenerate `06-ai-debug.png` + `07-burpee.png` via `screenshots.mjs` with `?debug=1`
-- [ ] Bump `package.json` to `2.9.0` and update `STRUCTURE.md` with new screenshots
+- [x] Bump `package.json` to `2.9.0` and update `STRUCTURE.md` — DONE v2.9.0 audit 5 aree + changelog
 
 Local: `git checkout main && git pull && npm run dev` — continue on `src/ai/exercises/analyzers/*`.
 GitHub: `main` (source) + `deploy-tmp` (dist for hosting) — see `STRUCTURE.md §7` for branch strategy.

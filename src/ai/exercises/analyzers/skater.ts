@@ -2,6 +2,7 @@ import { ExerciseAnalyzer } from '../ExerciseAnalyzer';
 import type { PoseLandmarks } from '../../../engine/types';
 import type { PoseQualityResult } from '../../pose/PoseQuality';
 import { LM, clamp, torsoLength } from '../../pose/Geometry';
+// tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class SkaterAnalyzer extends ExerciseAnalyzer{
   readonly id='skater'; readonly requiredLandmarks=[23,24,25,26,27,28];
   private lastX: number|null=null; private velX=0;

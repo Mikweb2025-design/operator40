@@ -1,7 +1,7 @@
 {
   "version": 1,
   "created": "2026-08-26T00:00:00.000Z",
-  "exercise": "squat-side",
+  "exercise": "squat",
   "description": "Side-view right side occluded vis 0.18 \u2014 tests bilateralJointAngle hold",
   "frames": [
     {

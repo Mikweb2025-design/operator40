@@ -35,6 +35,7 @@
     "@capacitor-community/electron": "^5.0.1",
     "@capacitor/android": "^6.2.1",
     "@capacitor/core": "^6.1.2",
+    "@capacitor/motion": "^6.0.1",
     "@capacitor/preferences": "^6.0.2",
     "@mediapipe/tasks-vision": "^1.0.1",
     "idb": "^8.0.3",
@@ -47,7 +48,9 @@
     "@capacitor/cli": "^6.1.2",
     "@capacitor/ios": "^6.1.2",
     "@vitejs/plugin-react": "^4.3.3",
+    "eslint": "^8.57.1",
     "playwright": "^1.62.1",
+    "prettier": "^3.9.6",
     "vite": "^5.4.10",
     "vitest": "^1.6.1"
   }
