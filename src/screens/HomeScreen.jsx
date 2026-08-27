@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useT } from '../context/LangContext.jsx';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
-import { PROGRAMS, QUICK_PROGRAM, LEVELS, CAMP_DAYS, getLevel } from '../data/programs.js';
+import { PROGRAMS, QUICK_PROGRAM, LEVELS, CAMP_DAYS, getLevel, pickNextProgram, campDayDisplay } from '../data/programs.js';
 import { EXERCISES } from '../data/exercises.js';
 import { tr } from '../i18n.js';
 import { computeStreakWithFreeze, WEEKLY_GOAL, getRank, nextBadge } from '../utils/stats.js';
@@ -15,7 +15,6 @@ import { getPersonalChallenge, getRecoveryTip } from '../utils/personalChallenge
 import { getAchievementsProgress, getNextAchievements } from '../utils/achievements.js';
 import { getDailyInsight, getWeeklyInsight } from '../utils/insights.js';
 import { shouldProgressBellyLevel } from '../utils/bellyTest.js';
-import { campDayDisplay } from '../data/programs.js';
 import { getNextMedals, getMedalProgress } from '../utils/stats.js';
 import { greeting } from '../utils/stats.js';
 import { ExerciseFigure } from '../components/ExerciseFigure.jsx';
