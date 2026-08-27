@@ -1,4 +1,4 @@
-import { r as reactExports, c as commonjsGlobal, g as getDefaultExportFromCjs, R as React } from "./icons-BTnYTKZ-.js";
+import { r as reactExports, c as commonjsGlobal, g as getDefaultExportFromCjs, R as React } from "./icons-D3QZqbji.js";
 var reactDom = { exports: {} };
 var reactDom_production_min = {};
 var scheduler = { exports: {} };

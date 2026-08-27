@@ -914,17 +914,17 @@ const Zap = createLucideIcon("Zap", [
   ]
 ]);
 export {
-  House as A,
+  Play as A,
   Bell as B,
   Check as C,
-  History as D,
+  Pause as D,
   Eye as E,
   Flame as F,
   ShieldCheck as G,
   HeadphoneOff as H,
   Info as I,
-  Play as J,
-  Pause as K,
+  House as J,
+  History as K,
   Lightbulb as L,
   Music as M,
   Plus as P,

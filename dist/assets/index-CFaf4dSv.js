@@ -1,9 +1,9 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-CRpRTyjO.js","./icons-BTnYTKZ-.js","./charts-Cl7SZsJl.js","./web-DiTR6f7W.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-zW6vb5nI.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, d as ChevronLeft, V as Volume2, e as VolumeX, f as Vibrate, h as SkipForward, M as Music, i as Music2, H as HeadphoneOff, j as RefreshCw, k as Crown, l as Medal, B as Bell, m as BellOff, n as Send, o as HeartPulse, F as Flame, I as Info, p as Star, q as RotateCcw, s as Target, E as Eye, t as BookOpen, u as TrendingUp, L as Lightbulb, v as Ruler, w as TrendingDown, x as Scale, y as Settings, z as Trash2, P as Plus, A as House, D as History, G as ShieldCheck, W as Wind, J as Play, K as Pause } from "./icons-BTnYTKZ-.js";
-import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-Cl7SZsJl.js";
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles$1, X, Z as Zap, d as ChevronLeft$1, V as Volume2, e as VolumeX, f as Vibrate, h as SkipForward, M as Music, i as Music2, H as HeadphoneOff, j as RefreshCw$1, k as Crown, l as Medal, B as Bell, m as BellOff, n as Send, o as HeartPulse, F as Flame, I as Info, p as Star, q as RotateCcw, s as Target, E as Eye, t as BookOpen, u as TrendingUp, L as Lightbulb, v as Ruler, w as TrendingDown, x as Scale, y as Settings, z as Trash2, P as Plus, A as Play, W as Wind$1, D as Pause, G as ShieldCheck, J as House, K as History } from "./icons-D3QZqbji.js";
+import { r as reactDomExports, R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-Bi7lEBzN.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -661,33 +661,6 @@ if (typeof window !== "undefined") {
     }, { passive: true })
   );
 }
-const CLIP_FILES = {
-  bicyclecrunch: "clips/bicyclecrunch.mp4",
-  russiantwist: "clips/russiantwist.mp4",
-  wallsit: "clips/wallsit.mp4",
-  superman: "clips/superman.mp4",
-  ponte: "clips/ponte.mp4",
-  bridge: "clips/ponte.mp4",
-  ginocchiaalte: "clips/ginocchiaalte.mp4",
-  highknees: "clips/ginocchiaalte.mp4",
-  crunch: "clips/crunch.mp4",
-  burpeetattico: "clips/burpeetattico.mp4",
-  burpee: "clips/burpeetattico.mp4",
-  sideplank: "clips/sideplank.mp4",
-  legraise: "clips/legraise.mp4",
-  flutterkick: "clips/flutterkick.mp4",
-  deadbug: "clips/deadbug.mp4",
-  flessioni: "clips/flessioni.mp4",
-  pushup: "clips/flessioni.mp4",
-  vup: "clips/vup.mp4",
-  plankjack: "clips/plankjack.mp4",
-  skater: "clips/skater.mp4",
-  heeltap: "clips/heeltap.mp4",
-  squat: "clips/squat.mp4"
-};
-function hasClip(exerciseId, pose) {
-  return !!(CLIP_FILES[exerciseId] || CLIP_FILES[pose]);
-}
 const INK = "#1B1D16";
 const INK_2 = "#242820";
 const PAPER = "#EDE8D8";
@@ -919,7 +892,7 @@ const EXERCISES = {
     breath: { it: "Espira toccando il tallone.", en: "Exhale as you tap your heel.", de: "Ausatmen beim Berühren der Ferse." }
   }
 };
-const EXERCISE_GROUPS = {
+const EXERCISE_GROUPS$1 = {
   standing: ["squat", "affondo", "jumpingjack", "ginocchiaalte", "burpeetattico", "skater"],
   ground: [
     "flessioni",
@@ -968,7 +941,7 @@ const LEVELS = [
   { key: "combattente", label: { it: "COMBATTENTE", en: "FIGHTER", de: "KÄMPFER" }, preset: "standard", work: 40, rest: 20, desc: { it: "Ritmo standard 40″/20″", en: "Standard pace 40s/20s", de: "Standardtempo 40s/20s" } },
   { key: "elite", label: { it: "ELITE", en: "ELITE", de: "ELITE" }, preset: "lungo", work: 45, rest: 15, desc: { it: "Ritmo sostenuto 45″/15″", en: "Brisk pace 45s/15s", de: "Zügiges Tempo 45s/15s" } }
 ];
-const HOLD_EXERCISES = /* @__PURE__ */ new Set(["plank", "wallsit", "sideplank"]);
+const HOLD_EXERCISES$1 = /* @__PURE__ */ new Set(["plank", "wallsit", "sideplank"]);
 const REPS_BASE = {
   squat: 12,
   affondo: 10,
@@ -990,8 +963,8 @@ const REPS_BASE = {
   skater: 10,
   heeltap: 14
 };
-function getReps(exId, levelKey) {
-  if (HOLD_EXERCISES.has(exId)) return null;
+function getReps$1(exId, levelKey) {
+  if (HOLD_EXERCISES$1.has(exId)) return null;
   const base = REPS_BASE[exId] || 10;
   const factor = levelKey === "recluta" ? 0.75 : levelKey === "elite" ? 1.35 : 1;
   const v = Math.round(base * factor);
@@ -1001,7 +974,7 @@ function getReps(exId, levelKey) {
 function getLevel(key) {
   return LEVELS.find((l2) => l2.key === key) || LEVELS[1];
 }
-function levelPreset(profile) {
+function levelPreset$1(profile) {
   if (profile && profile.intervalPreset === "custom") {
     const c = getCustomPreset(profile);
     if (c) return c;
@@ -1009,7 +982,7 @@ function levelPreset(profile) {
   const lvl = profile && profile.level ? getLevel(profile.level) : null;
   return lvl ? getIntervalPreset(lvl.preset) : getIntervalPreset(profile && profile.intervalPreset || "standard");
 }
-const PROGRAMS = [
+const PROGRAMS$1 = [
   {
     id: "A",
     difficulty: 2,
@@ -1168,7 +1141,7 @@ const QUICK_PROGRAM = {
 };
 const CAMP_DAYS = 30;
 const BELLY_IDS = ["N", "O", "P"];
-PROGRAMS.filter((p2) => p2.belly);
+PROGRAMS$1.filter((p2) => p2.belly);
 function campDayIndex(profile) {
   const start = profile && profile.campStart ? new Date(profile.campStart) : null;
   if (!start) return 1;
@@ -1188,7 +1161,7 @@ function buildSequence(program, skipWarmup, workSec = WORK_SEC, restSec = REST_S
   const seq = skipWarmup ? [] : [{ type: "warmup", duration: WARM_SEC }];
   for (let r = 1; r <= program.rounds; r++) {
     program.exercises.forEach((exId, i) => {
-      const reps = isReps ? getReps(exId, levelKey) : null;
+      const reps = isReps ? getReps$1(exId, levelKey) : null;
       if (isReps && reps) {
         seq.push({ type: "work", exerciseId: exId, reps, duration: null, round: r, mode: "reps" });
       } else {
@@ -1204,14 +1177,14 @@ function buildSequence(program, skipWarmup, workSec = WORK_SEC, restSec = REST_S
 function kcalForSeconds(met, weightKg, seconds) {
   return met * 3.5 * weightKg / 200 * (seconds / 60);
 }
-function estimateProgramKcal(program, weightKg, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
+function estimateProgramKcal$1(program, weightKg, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
   let kcal = skipWarmup ? 0 : kcalForSeconds(3, weightKg, WARM_SEC) + kcalForSeconds(3, weightKg, COOL_SEC);
   const isReps = mode === "reps";
   program.exercises.forEach((id) => {
     const ex = EXERCISES[id];
     for (let r = 0; r < program.rounds; r++) {
       if (isReps) {
-        const reps = getReps(id, levelKey);
+        const reps = getReps$1(id, levelKey);
         const sec = reps ? reps * 3 : workSec;
         kcal += kcalForSeconds(ex.met, weightKg, sec);
       } else {
@@ -1222,23 +1195,23 @@ function estimateProgramKcal(program, weightKg, skipWarmup, workSec = WORK_SEC, 
   });
   return kcal;
 }
-function totalSeqSeconds(program, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
+function totalSeqSeconds$1(program, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
   return buildSequence(program, skipWarmup, workSec, restSec, mode, levelKey).reduce((a, p2) => a + (p2.duration || (p2.reps ? p2.reps * 3 : 0)), 0);
 }
 function formatTime(s) {
   const m2 = Math.floor(s / 60), sec = s % 60;
   return `${m2}:${sec.toString().padStart(2, "0")}`;
 }
-function dayKey(d) {
+function dayKey$1(d) {
   const y = d.getFullYear();
   const m2 = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m2}-${day}`;
 }
-function sessionDayKey(s) {
-  return dayKey(new Date(s.date));
+function sessionDayKey$1(s) {
+  return dayKey$1(new Date(s.date));
 }
-function hrZone(bpm, age, lang) {
+function hrZone$1(bpm, age, lang) {
   const max = 220 - age;
   const pct = bpm / max * 100;
   if (pct < 60) return { label: tr$1({ it: "Recupero", en: "Recovery", de: "Erholung" }, lang), color: STEEL };
@@ -1247,7 +1220,7 @@ function hrZone(bpm, age, lang) {
   return { label: tr$1({ it: "Massimale", en: "Max", de: "Maximal" }, lang), color: BLAZE_DEEP };
 }
 function computeBestStreak(sessions) {
-  const dates = [...new Set(sessions.map(sessionDayKey))].sort();
+  const dates = [...new Set(sessions.map(sessionDayKey$1))].sort();
   if (!dates.length) return 0;
   let best = 1, cur = 1;
   for (let i = 1; i < dates.length; i++) {
@@ -1262,24 +1235,24 @@ function computeBestStreak(sessions) {
   return best;
 }
 function computeStreak(sessions) {
-  const dateSet = new Set(sessions.map(sessionDayKey));
+  const dateSet = new Set(sessions.map(sessionDayKey$1));
   let cursor = /* @__PURE__ */ new Date();
-  if (!dateSet.has(dayKey(cursor))) cursor.setDate(cursor.getDate() - 1);
+  if (!dateSet.has(dayKey$1(cursor))) cursor.setDate(cursor.getDate() - 1);
   let streak = 0;
-  while (dateSet.has(dayKey(cursor))) {
+  while (dateSet.has(dayKey$1(cursor))) {
     streak++;
     cursor.setDate(cursor.getDate() - 1);
   }
   return streak;
 }
 function computeStreakWithFreeze(sessions) {
-  const dateSet = new Set(sessions.map(sessionDayKey));
+  const dateSet = new Set(sessions.map(sessionDayKey$1));
   let cursor = /* @__PURE__ */ new Date();
-  if (!dateSet.has(dayKey(cursor))) cursor.setDate(cursor.getDate() - 1);
+  if (!dateSet.has(dayKey$1(cursor))) cursor.setDate(cursor.getDate() - 1);
   let streak = 0;
   let freezes = 1;
   while (true) {
-    const k2 = dayKey(cursor);
+    const k2 = dayKey$1(cursor);
     if (dateSet.has(k2)) {
       streak++;
       cursor.setDate(cursor.getDate() - 1);
@@ -1343,13 +1316,13 @@ function getMedalProgress(sessions) {
   const bestStreak = computeBestStreak(sessions);
   const totalKcal = Math.round((sessions || []).reduce((a, s) => a + (s.kcal || 0), 0));
   const totalSessions = (sessions == null ? void 0 : sessions.length) || 0;
-  const byDay = new Set((sessions || []).map(sessionDayKey));
+  const byDay = new Set((sessions || []).map(sessionDayKey$1));
   const now = /* @__PURE__ */ new Date();
   let activeDays = 0;
   for (let i = 0; i < 56; i++) {
     const d = new Date(now);
     d.setDate(now.getDate() - i);
-    if (byDay.has(dayKey(d))) activeDays++;
+    if (byDay.has(dayKey$1(d))) activeDays++;
   }
   const cons = Math.round(Math.min(100, activeDays / (8 * WEEKLY_GOAL) * 100));
   let perfectWeeks = 0;
@@ -1386,26 +1359,26 @@ function greeting(lang) {
   return tr$1({ it: "Buonasera,", en: "Good evening,", de: "Guten Abend," }, lang);
 }
 function buildHeatmap(sessions, days = 35) {
-  const dateSet = new Set(sessions.map(sessionDayKey));
+  const dateSet = new Set(sessions.map(sessionDayKey$1));
   const cells = [];
   for (let i = days - 1; i >= 0; i--) {
     const d = /* @__PURE__ */ new Date();
     d.setDate(d.getDate() - i);
-    cells.push({ key: dayKey(d), active: dateSet.has(dayKey(d)) });
+    cells.push({ key: dayKey$1(d), active: dateSet.has(dayKey$1(d)) });
   }
   return cells;
 }
 function buildYearHeatmap(sessions) {
   const byDay = /* @__PURE__ */ new Map();
   sessions.forEach((s) => {
-    const k2 = sessionDayKey(s);
+    const k2 = sessionDayKey$1(s);
     byDay.set(k2, (byDay.get(k2) || 0) + 1);
   });
   const now = /* @__PURE__ */ new Date();
   const start = new Date(now.getFullYear(), 0, 1);
   const days = [];
   for (let d = new Date(start); d <= now; d.setDate(d.getDate() + 1)) {
-    const k2 = dayKey(d);
+    const k2 = dayKey$1(d);
     const c = byDay.get(k2) || 0;
     days.push({ key: k2, date: new Date(d), count: c, active: c > 0 });
   }
@@ -1488,7 +1461,7 @@ function vibrate(pattern) {
   } catch {
   }
 }
-function speak(text, lang, locales) {
+function speak$1(text, lang, locales) {
   try {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
@@ -1795,7 +1768,7 @@ const floorLine = (x1, y, x2) => /* @__PURE__ */ jsxRuntimeExports.jsx("line", {
 const dot = (cx, cy, r = 4) => /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx, cy, r, fill: "currentColor" });
 const head = (cx, cy, r = 11) => /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx, cy, r, fill: "currentColor", fillOpacity: "0.3", stroke: "currentColor", strokeWidth: "5" });
 const groundShadow = (cx, y) => /* @__PURE__ */ jsxRuntimeExports.jsx("ellipse", { cx, cy: y, rx: "24", ry: "4", fill: KHAKI, opacity: "0.22" });
-function ExerciseFigure({ pose, color = BLAZE, size = "100%" }) {
+function ExerciseFigure$1({ pose, color = BLAZE, size = "100%" }) {
   const wrap2 = (viewBox, children) => /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { viewBox, width: size, height: size, className: `o40-figure pose-${pose}`, style: { color, overflow: "visible" }, children });
   switch (pose) {
     case "squat":
@@ -2407,15 +2380,15 @@ function getWeeklyProgress(sessions, weeklyGoal = WEEKLY_GOAL) {
   const remain = Math.max(0, weeklyGoal - done);
   return { done, total: weeklyGoal, pct, remain, isDone: done >= weeklyGoal };
 }
-function getConsistencyScore(sessions, weeks = 8) {
+function getConsistencyScore$1(sessions, weeks = 8) {
   if (!(sessions == null ? void 0 : sessions.length)) return 0;
   const now = /* @__PURE__ */ new Date();
-  const byDay = new Set(sessions.map(sessionDayKey));
+  const byDay = new Set(sessions.map(sessionDayKey$1));
   let activeDays = 0;
   for (let i = 0; i < weeks * 7; i++) {
     const d = new Date(now);
     d.setDate(now.getDate() - i);
-    if (byDay.has(dayKey(d))) activeDays++;
+    if (byDay.has(dayKey$1(d))) activeDays++;
   }
   const ideal = weeks * WEEKLY_GOAL;
   return Math.round(Math.min(100, activeDays / ideal * 100));
@@ -2428,7 +2401,7 @@ function getAveragePace(sessions) {
   const avgKcal = Math.round(totalKcal / sessions.length);
   return { avgMin, avgKcal, count: sessions.length };
 }
-function getStreakRisk(sessions) {
+function getStreakRisk$1(sessions) {
   if (!(sessions == null ? void 0 : sessions.length)) return "break";
   const last = new Date(sessions[sessions.length - 1].date);
   const diffDays = Math.round((Date.now() - last.getTime()) / 864e5);
@@ -2500,12 +2473,12 @@ function getMotivationalMessage({ sessions = [], profile = null, lang = "it", da
   const missed = daysSinceLastSession(sessions);
   const cons = (() => {
     try {
-      return getConsistencyScore(sessions, 8);
+      return getConsistencyScore$1(sessions, 8);
     } catch {
       return 0;
     }
   })();
-  const risk = getStreakRisk(sessions);
+  const risk = getStreakRisk$1(sessions);
   const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 864e5);
   const name = ((_a = profile == null ? void 0 : profile.name) == null ? void 0 : _a.trim()) || null;
   if (n2 > 0 && missed >= 2) {
@@ -6729,7 +6702,7 @@ function ChangelogModal({ lang = "it", onClose, onTry }) {
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, opacity: 0.08, background: `repeating-linear-gradient(90deg, ${OLIVE} 0 1px, transparent 1px 14px)` } }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }, children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12, alignItems: "center" }, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, borderRadius: 12, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", boxShadow: `0 6px 18px ${BLAZE}66`, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 22, color: PAPER }) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, borderRadius: 12, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", boxShadow: `0 6px 18px ${BLAZE}66`, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 22, color: PAPER }) }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { background: BLAZE, color: PAPER, fontSize: 9, fontWeight: 800, letterSpacing: "0.08em", padding: "2px 6px", borderRadius: 6 }, children: c.badge }),
@@ -6996,8 +6969,8 @@ function exerciseFromPhase(phase, lang = "it", levelKey = "combattente") {
   const nid = normalizeExerciseId(rawId);
   const def = getDefinition(nid) ?? null;
   const trackingSupported = !!def && def.trackingSupported !== false;
-  const hold = HOLD_EXERCISES.has(rawId) || !!(def == null ? void 0 : def.isHold);
-  const reps = phase.reps ?? (!hold ? getReps(rawId, levelKey) : null);
+  const hold = HOLD_EXERCISES$1.has(rawId) || !!(def == null ? void 0 : def.isHold);
+  const reps = phase.reps ?? (!hold ? getReps$1(rawId, levelKey) : null);
   return {
     exerciseId: nid,
     originalId: rawId,
@@ -7278,8 +7251,8 @@ function CountdownScreen({ program, onDone, lang, t }) {
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13 }, children: t("countdown.getReady") })
   ] });
 }
-const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
-function TopBar({ title, onBack, right }) {
+const btnIcon$4 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
+function TopBar$1({ title, onBack, right }) {
   const { t } = useT();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-topbar-glass", style: {
     display: "flex",
@@ -7290,12 +7263,12 @@ function TopBar({ title, onBack, right }) {
     top: 0,
     zIndex: 5
   }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "center", gap: 8, minWidth: 32 }, children: onBack && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onBack, "aria-label": t("app.back"), style: btnIcon$2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 20, color: PAPER }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "center", gap: 8, minWidth: 32 }, children: onBack && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onBack, "aria-label": t("app.back"), style: btnIcon$4, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft$1, { size: 20, color: PAPER }) }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22 }, children: title }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { minWidth: 32, display: "flex", justifyContent: "flex-end" }, children: right })
   ] });
 }
-const inputStyle$1 = {
+const inputStyle$2 = {
   width: "100%",
   background: INK_2,
   border: `1px solid ${OLIVE}`,
@@ -7306,7 +7279,7 @@ const inputStyle$1 = {
   fontFamily: "Inter, sans-serif",
   outline: "none"
 };
-const primaryBtn$1 = {
+const primaryBtn$5 = {
   background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`,
   color: PAPER,
   border: "none",
@@ -7323,7 +7296,7 @@ const primaryBtn$1 = {
   width: "100%",
   boxShadow: `0 6px 20px ${BLAZE}4d`
 };
-const secondaryBtn$1 = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
+const secondaryBtn$2 = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
 function ToggleRow({ label, icon: Icon, on, onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick, style: {
     width: "100%",
@@ -7361,7 +7334,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || "combattente");
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("setup.title"), onBack: canCancel ? onCancel : null }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar$1, { title: t("setup.title"), onBack: canCancel ? onCancel : null }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 20, display: "flex", flexDirection: "column", gap: 18 }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8 }, children: LANGS.map((l2) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setLang(l2), style: {
         flex: 1,
@@ -7388,7 +7361,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           onChange: (e) => setFormName(e.target.value),
           placeholder: t("setup.name.ph"),
           className: "o40-input",
-          style: inputStyle$1
+          style: inputStyle$2
         }
       ) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Field$1, { label: t("setup.age"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -7399,7 +7372,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           inputMode: "numeric",
           placeholder: "40",
           className: "o40-input",
-          style: inputStyle$1
+          style: inputStyle$2
         }
       ) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Field$1, { label: t("setup.weight"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -7410,7 +7383,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           inputMode: "numeric",
           placeholder: "82",
           className: "o40-input",
-          style: inputStyle$1
+          style: inputStyle$2
         }
       ) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Field$1, { label: t("setup.waist"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -7421,7 +7394,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           inputMode: "numeric",
           placeholder: t("setup.waist.ph"),
           className: "o40-input",
-          style: inputStyle$1
+          style: inputStyle$2
         }
       ) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Field$1, { label: t("setup.height"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -7432,7 +7405,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           inputMode: "numeric",
           placeholder: t("setup.height.ph"),
           className: "o40-input",
-          style: inputStyle$1
+          style: inputStyle$2
         }
       ) }),
       canCancel && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 4 }, children: [
@@ -7448,7 +7421,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleRow, { label: t("setup.music"), icon: musicOn ? Music2 : HeadphoneOff, on: musicOn, onClick: onToggleMusic }),
         musicOn && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "8px 10px 12px" }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onPrevTrack, style: { width: 32, height: 32, borderRadius: "50%", background: OLIVE_DARK, border: `1px solid ${OLIVE}`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }, "aria-label": "Prev", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 16, color: KHAKI }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onPrevTrack, style: { width: 32, height: 32, borderRadius: "50%", background: OLIVE_DARK, border: `1px solid ${OLIVE}`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }, "aria-label": "Prev", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft$1, { size: 16, color: KHAKI }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0, textAlign: "center" }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: BLAZE, fontSize: 9, letterSpacing: "0.08em" }, children: musicAutoPlay ? musicShuffle ? "SHUFFLE • AUTOPLAY" : "AUTOPLAY • TUTTE" : "SINGOLA" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 12, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: (TRACKS.find((t2) => t2.id === musicTrack) || TRACKS[0]).name }),
@@ -7458,12 +7431,12 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, marginBottom: 10 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onToggleAutoPlay, style: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "7px 8px", borderRadius: 8, border: `1px solid ${musicAutoPlay ? BLAZE : OLIVE}`, background: musicAutoPlay ? `${BLAZE}22` : "transparent", color: musicAutoPlay ? BLAZE : STEEL, fontSize: 11, fontWeight: 600, cursor: "pointer" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 12 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw$1, { size: 12 }),
               " ",
               musicAutoPlay ? "Auto • Tutte" : "Singola"
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onToggleShuffle, style: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "7px 8px", borderRadius: 8, border: `1px solid ${musicShuffle ? BLAZE : OLIVE}`, background: musicShuffle ? `${BLAZE}22` : "transparent", color: musicShuffle ? BLAZE : STEEL, fontSize: 11, fontWeight: 600, cursor: "pointer" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 12, style: { transform: musicShuffle ? "rotate(180deg)" : "none" } }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw$1, { size: 12, style: { transform: musicShuffle ? "rotate(180deg)" : "none" } }),
               " ",
               musicShuffle ? "Shuffle ON" : "Shuffle OFF"
             ] })
@@ -7538,8 +7511,8 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
           }
         }, style: { padding: "6px 10px", borderRadius: 8, border: `1px solid ${intervalPreset === pr.key ? BLAZE : OLIVE}`, background: intervalPreset === pr.key ? `${BLAZE}22` : "transparent", color: intervalPreset === pr.key ? BLAZE : STEEL, fontSize: 11, fontWeight: 600, cursor: "pointer" }, children: pr.label }, pr.key)) }),
         intervalPreset === "custom" || formCustomWork !== "40" || formCustomRest !== "20" ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 12 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Field$1, { label: t("setup.custom.work"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("input", { value: formCustomWork, onChange: (e) => setFormCustomWork(e.target.value), type: "number", inputMode: "numeric", className: "o40-input", style: inputStyle$1 }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Field$1, { label: t("setup.custom.rest"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("input", { value: formCustomRest, onChange: (e) => setFormCustomRest(e.target.value), type: "number", inputMode: "numeric", className: "o40-input", style: inputStyle$1 }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Field$1, { label: t("setup.custom.work"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("input", { value: formCustomWork, onChange: (e) => setFormCustomWork(e.target.value), type: "number", inputMode: "numeric", className: "o40-input", style: inputStyle$2 }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Field$1, { label: t("setup.custom.rest"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("input", { value: formCustomRest, onChange: (e) => setFormCustomRest(e.target.value), type: "number", inputMode: "numeric", className: "o40-input", style: inputStyle$2 }) })
         ] }) : null,
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: 10, marginBottom: 12 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.07em", marginBottom: 6 }, children: t("setup.executionMode") }),
@@ -7583,7 +7556,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("setup.health") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }, dangerouslySetInnerHTML: { __html: t("setup.health.body") } }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { style: {
-          ...secondaryBtn$1,
+          ...secondaryBtn$2,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -7616,7 +7589,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
               " kg"
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onApplyHealthWeight, style: { ...primaryBtn$1, width: "auto", padding: "8px 14px", fontSize: 13 }, children: t("setup.health.apply") })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onApplyHealthWeight, style: { ...primaryBtn$5, width: "auto", padding: "8px 14px", fontSize: 13 }, children: t("setup.health.apply") })
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${pushEnabled ? BLAZE : OLIVE}`, borderRadius: 14, padding: 14 }, children: [
@@ -7650,7 +7623,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
               fontWeight: 700,
               opacity: pushBusy ? 0.6 : 1
             }, children: [
-              pushBusy ? /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 14, className: "o40-spin" }) : pushEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(BellOff, { size: 14 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Bell, { size: 14 }),
+              pushBusy ? /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw$1, { size: 14, className: "o40-spin" }) : pushEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(BellOff, { size: 14 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Bell, { size: 14 }),
               pushBusy ? "..." : pushEnabled ? lang === "it" ? "Disattiva push" : "Disable push" : lang === "it" ? "Attiva push" : "Enable push"
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onTestPush, disabled: pushBusy, style: {
@@ -7679,7 +7652,7 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 12.5, lineHeight: 1.5 }, children: t("setup.tech.note") })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onSave, disabled: !formAge || !formWeight, style: {
-        ...primaryBtn$1,
+        ...primaryBtn$5,
         opacity: !formAge || !formWeight ? 0.5 : 1,
         marginTop: 4
       }, children: [
@@ -7743,7 +7716,7 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
 function getRecommendedMissions({ sessions, profile, others }) {
   const cons = (() => {
     try {
-      return getConsistencyScore(sessions, 4);
+      return getConsistencyScore$1(sessions, 4);
     } catch {
       return 50;
     }
@@ -7766,11 +7739,11 @@ function getRecommendedMissions({ sessions, profile, others }) {
   });
 }
 function getDailyChallenge({ sessions, profile }) {
-  const day = (/* @__PURE__ */ new Date()).getDate() % PROGRAMS.length;
-  const base = PROGRAMS[day];
+  const day = (/* @__PURE__ */ new Date()).getDate() % PROGRAMS$1.length;
+  const base = PROGRAMS$1[day];
   const cons = (() => {
     try {
-      return getConsistencyScore(sessions, 4);
+      return getConsistencyScore$1(sessions, 4);
     } catch {
       return 50;
     }
@@ -7793,7 +7766,7 @@ function getDailyChallenge({ sessions, profile }) {
   return { program: base, bonus, cons, streak };
 }
 function getBellyMissions({ sessions, profile, waistHistory }) {
-  const belly = PROGRAMS.filter((p2) => BELLY_IDS.includes(p2.id));
+  const belly = PROGRAMS$1.filter((p2) => BELLY_IDS.includes(p2.id));
   const counts = {};
   (sessions || []).forEach((s) => {
     counts[s.programId] = (counts[s.programId] || 0) + 1;
@@ -7838,7 +7811,7 @@ function getGoalHistory(sessions, weeklyGoal = WEEKLY_GOAL, weeks = 8) {
   return byWeek;
 }
 function suggestNextGoal(sessions, currentGoal = WEEKLY_GOAL) {
-  const cons = getConsistencyScore(sessions, 4);
+  const cons = getConsistencyScore$1(sessions, 4);
   const recent = getGoalHistory(sessions, currentGoal, 4);
   const avgDone = recent.reduce((a, w) => a + w.done, 0) / 4;
   if (cons >= 80 && avgDone >= currentGoal) return Math.min(7, currentGoal + 1);
@@ -7928,8 +7901,8 @@ function getSmartInsight({ sessions, profile, waistHistory, weightHistory, lang 
     }
     return n3;
   })();
-  const cons = getConsistencyScore(sessions, 8);
-  const risk = getStreakRisk(sessions);
+  const cons = getConsistencyScore$1(sessions, 8);
+  const risk = getStreakRisk$1(sessions);
   const waist = (waistHistory == null ? void 0 : waistHistory.length) ? waistHistory[waistHistory.length - 1] : null;
   const waistPrev = (waistHistory == null ? void 0 : waistHistory.length) > 1 ? waistHistory[0] : null;
   const wDelta = waist && waistPrev ? waist.cm - waistPrev.cm : null;
@@ -7957,9 +7930,9 @@ function getSmartRecommendation({ sessions, profile, lang = "it" }) {
   const last = n2 ? sessions[n2 - 1] : null;
   if (!last) return { programId: "A", reason: lang === "it" ? "Parti con Assalto Pancia, tecnico ma dolce." : "Start with Belly Assault." };
   if (last.rpe >= 4) return { programId: "D", reason: lang === "it" ? "Ultima dura — oggi Recupero Attivo." : "Last was hard — Active Recovery today." };
-  const risk = getStreakRisk(sessions);
+  const risk = getStreakRisk$1(sessions);
   if (risk === "at-risk") return { programId: "I", reason: lang === "it" ? "Streak a rischio — Cardio Leggero per non rompere." : "Streak at risk — Light Cardio to keep it." };
-  const cons = getConsistencyScore(sessions, 4);
+  const cons = getConsistencyScore$1(sessions, 4);
   if (cons > 75) return { programId: "L", reason: lang === "it" ? "Costanza top — prova Potenza Esplosiva." : "Top consistency — try Explosive Power." };
   if (cons < 40) return { programId: "H", reason: lang === "it" ? "Riparti con Schiena di Ferro, dolce." : "Restart with Iron Back." };
   const counts = {};
@@ -7973,7 +7946,7 @@ function getPersonalChallenge(sessions, profile) {
   const bestStreak = computeBestStreak(sessions || []);
   const cons = (() => {
     try {
-      return getConsistencyScore(sessions, 8);
+      return getConsistencyScore$1(sessions, 8);
     } catch {
       return 0;
     }
@@ -8006,13 +7979,13 @@ const ACHIEVEMENTS = [
   { id: "k5000", title: { it: "Fornace", en: "Furnace", de: "Ofen" }, desc: { it: "5.000 kcal bruciate", en: "5k kcal burned", de: "5k kcal" }, icon: "🔥", color: "#E84B2A", check: (s) => s.reduce((a, v) => a + (v.kcal || 0), 0) >= 5e3, progress: (s) => Math.min(1, s.reduce((a, v) => a + (v.kcal || 0), 0) / 5e3) },
   { id: "cons70", title: { it: "Metronomo", en: "Metronome", de: "Metronom" }, desc: { it: "70% costanza 8 sett.", en: "70% consistency 8w", de: "70% Konstanz 8W" }, icon: "◎", color: "#7FB069", check: (s) => {
     try {
-      return getConsistencyScore(s, 8) >= 70;
+      return getConsistencyScore$1(s, 8) >= 70;
     } catch {
       return false;
     }
   }, progress: (s) => {
     try {
-      return Math.min(1, getConsistencyScore(s, 8) / 70);
+      return Math.min(1, getConsistencyScore$1(s, 8) / 70);
     } catch {
       return 0;
     }
@@ -8056,12 +8029,12 @@ function getDailyInsight({ sessions, profile, waistHistory, weightHistory, lang 
   const n2 = (sessions == null ? void 0 : sessions.length) || 0;
   const cons = (() => {
     try {
-      return getConsistencyScore(sessions, 8);
+      return getConsistencyScore$1(sessions, 8);
     } catch {
       return 0;
     }
   })();
-  const risk = getStreakRisk(sessions);
+  const risk = getStreakRisk$1(sessions);
   const hist = getGoalHistory(sessions, (profile == null ? void 0 : profile.weeklyGoal) || 3, 4);
   const avgDone = hist.reduce((a, w) => a + w.done, 0) / 4;
   if (n2 === 0) return { icon: "🌱", title: "Inizia", body: lang === "it" ? "Fai la prima sessione oggi — 15′ bastano." : "Do first session today — 15′ is enough.", color: "#7FB069", tip: lang === "it" ? "Scegli Assalto Pancia, ritmo dolce." : "Pick Belly Assault, easy pace." };
@@ -8083,8 +8056,8 @@ function getWeeklyInsight({ sessions, profile, lang = "it" }) {
   if (pct >= 50) return { icon: "📈", title: "Buon ritmo", body: `${perfect}/${total} perfette — tieni così`, color: "#B8AE8C" };
   return { icon: "🎯", title: "Obiettivo", body: `${perfect}/${total} perfette — punta a ${Math.ceil(total * 0.6)}`, color: "#D9B34C" };
 }
-const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
-function DogTag$1({ label, value, sub }) {
+const btnIcon$3 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
+function DogTag$3({ label, value, sub }) {
   const numeric = typeof value === "number";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card", style: {
     background: `linear-gradient(160deg, ${INK_2}, ${INK})`,
@@ -8162,13 +8135,13 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
   const sessionsThisWeek = sessions.filter((s) => new Date(s.date).getTime() > weekAgo).length;
   const weeklyGoal = profile.weeklyGoal || WEEKLY_GOAL;
   const { program: todayProgram, adaptive } = pickNextProgram(sessions, profile);
-  const othersRaw = PROGRAMS.filter((p2) => p2.id !== todayProgram.id);
+  const othersRaw = PROGRAMS$1.filter((p2) => p2.id !== todayProgram.id);
   const others = getRecommendedMissions({ sessions, profile, others: othersRaw });
   const dailyChallenge = getDailyChallenge({ sessions, profile });
   const { current: rank, next: nextRank } = getRank(sessions.length);
   const upcoming = nextBadge(sessions);
   const lastSession = sessions.length ? sessions[sessions.length - 1] : null;
-  const lastProgram = lastSession && lastSession.programId !== "health-import" ? [...PROGRAMS, ...customPrograms].find((p2) => p2.id === lastSession.programId) : null;
+  const lastProgram = lastSession && lastSession.programId !== "health-import" ? [...PROGRAMS$1, ...customPrograms].find((p2) => p2.id === lastSession.programId) : null;
   const campDay = campDayDisplay(profile);
   const lvl = getLevel(profile.level || "combattente");
   const levelIdx = LEVELS.indexOf(lvl);
@@ -8225,9 +8198,9 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onDismissIntro, style: { background: "transparent", border: "none", cursor: "pointer", padding: 2, flexShrink: 0 }, "aria-label": t("home.intro.close"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 16, color: STEEL }) })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, padding: "14px 16px" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.streak"), value: usedFreeze ? `${streak} ❄️` : streak, sub: streak === 1 ? t("dt.day") : t("dt.days") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.sessions"), value: sessions.length, sub: t("dt.total") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.kcal"), value: kcalWeek, sub: t("dt.7d") })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$3, { label: t("dt.streak"), value: usedFreeze ? `${streak} ❄️` : streak, sub: streak === 1 ? t("dt.day") : t("dt.days") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$3, { label: t("dt.sessions"), value: sessions.length, sub: t("dt.total") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$3, { label: t("dt.kcal"), value: kcalWeek, sub: t("dt.7d") })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "4px 16px 16px" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, margin: "12px 0 8px" }, children: [
@@ -8487,7 +8460,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       }, children: [
         idx === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { position: "absolute", top: 6, left: 6, background: KHAKI, color: INK, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: "1px 4px" }, children: "★ Consigliata" }),
         ["H", "I", "J", "K", "L", "M", "N", "O", "P"].includes(p2.id) && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { position: "absolute", top: 6, right: 6, background: BLAZE, color: PAPER, fontSize: 8, fontWeight: 700, borderRadius: 4, padding: "1px 4px" }, children: "NEW" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 40, height: 40, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: EXERCISES[p2.exercises[0]].pose, color: KHAKI }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 40, height: 40, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose: EXERCISES[p2.exercises[0]].pose, color: KHAKI }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 14.5, fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }, children: [
             tr$1(p2.name, lang),
@@ -8500,8 +8473,8 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", margin: "20px 0 8px" }, children: [
         (() => {
           const wp = getWeeklyProgress(sessions, weeklyGoal);
-          const cons = getConsistencyScore(sessions);
-          const risk = getStreakRisk(sessions);
+          const cons = getConsistencyScore$1(sessions);
+          const risk = getStreakRisk$1(sessions);
           const pace = getAveragePace(sessions);
           return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: "0 16px 4px", background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`, border: `1px solid ${risk === "at-risk" ? KHAKI : risk === "break" ? BLAZE : OLIVE}`, borderRadius: 12, padding: "11px 13px", display: "flex", alignItems: "center", gap: 11 }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 34, height: 34, borderRadius: "50%", background: `${BLAZE}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { size: 16, color: risk === "break" ? BLAZE : KHAKI }) }),
@@ -8731,7 +8704,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
           padding: 12
         }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onOpenProgram(p2), style: { display: "flex", alignItems: "center", gap: 12, background: "transparent", border: "none", cursor: "pointer", textAlign: "left", flex: 1, padding: 0 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 40, height: 40, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: EXERCISES[p2.exercises[0]].pose, color: KHAKI }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 40, height: 40, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose: EXERCISES[p2.exercises[0]].pose, color: KHAKI }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 14.5, fontWeight: 600 }, children: tr$1(p2.name, lang) }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, fontSize: 12 }, children: [
@@ -8741,7 +8714,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onEditCustom(p2), style: { ...btnIcon$1, background: "transparent" }, "aria-label": "Modifica", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Settings, { size: 14, color: KHAKI }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onEditCustom(p2), style: { ...btnIcon$3, background: "transparent" }, "aria-label": "Modifica", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Settings, { size: 14, color: KHAKI }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
             if (confirmDeleteId === p2.id) {
               onDeleteCustom(p2.id);
@@ -8750,7 +8723,7 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
               setConfirmDeleteId(p2.id);
               setTimeout(() => setConfirmDeleteId((c) => c === p2.id ? null : c), 3e3);
             }
-          }, style: { ...btnIcon$1, background: confirmDeleteId === p2.id ? `${BLAZE}33` : "transparent" }, "aria-label": t("home.custom.delete"), children: confirmDeleteId === p2.id ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 16, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { size: 16, color: STEEL }) })
+          }, style: { ...btnIcon$3, background: confirmDeleteId === p2.id ? `${BLAZE}33` : "transparent" }, "aria-label": t("home.custom.delete"), children: confirmDeleteId === p2.id ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 16, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { size: 16, color: STEEL }) })
         ] }, p2.id)),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onBuild, style: {
           display: "flex",
@@ -8770,47 +8743,873 @@ function HomeScreen({ profile, sessions, customPrograms, waistHistory, weightHis
     ] })
   ] });
 }
-function BottomNav({ active, onNavigate }) {
-  const { t } = useT();
-  const tabs = [
-    { key: "home", label: t("nav.home"), icon: House },
-    { key: "library", label: t("nav.library"), icon: BookOpen },
-    { key: "history", label: t("nav.history"), icon: History },
-    { key: "setup", label: t("nav.setup"), icon: Settings }
-  ];
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-bottomnav-glass", style: {
-    display: "flex",
-    paddingBottom: "env(safe-area-inset-bottom, 0px)"
-  }, children: tabs.map((tab) => {
-    const on = active === tab.key;
-    const Icon = tab.icon;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onNavigate(tab.key), style: {
-      flex: 1,
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-      padding: "8px 4px 6px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 3,
-      position: "relative"
-    }, children: [
-      on && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 0, left: "26%", right: "26%", height: 2, borderRadius: 2, background: BLAZE, boxShadow: `0 0 8px ${BLAZE}` } }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
-        width: 40,
-        height: 26,
-        borderRadius: 13,
+function loadFavorites() {
+  try {
+    const v = localStorage.getItem("o40_favs");
+    return v ? JSON.parse(v) : [];
+  } catch {
+    return [];
+  }
+}
+async function saveFavoritesAsync(list) {
+  try {
+    await window.storage.set("o40_favs", JSON.stringify(list));
+  } catch {
+  }
+}
+function saveFavorites(list) {
+  try {
+    localStorage.setItem("o40_favs", JSON.stringify(list));
+  } catch {
+  }
+  saveFavoritesAsync(list).catch(() => {
+  });
+}
+function toggleFavorite(list, id) {
+  const next = list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
+  saveFavorites(next);
+  return next;
+}
+function LibraryScreen({ sessions, profile }) {
+  const { lang, t } = useT();
+  const [filter, setFilter] = reactExports.useState("all");
+  const [selectedId, setSelectedId] = reactExports.useState(null);
+  const [query, setQuery] = reactExports.useState("");
+  const [showFavs, setShowFavs] = reactExports.useState(false);
+  const [favs, setFavs] = reactExports.useState(() => loadFavorites());
+  const visibleIds = Object.keys(EXERCISES).filter((id) => {
+    const ex = EXERCISES[id];
+    const byGroup = filter === "all" ? true : EXERCISE_GROUPS$1[filter].includes(id);
+    const byFav = showFavs ? favs.includes(id) : true;
+    const q2 = query.trim().toLowerCase();
+    const byQuery = !q2 || tr$1(ex.name, lang).toLowerCase().includes(q2) || id.toLowerCase().includes(q2) || tr$1(ex.cue, lang).toLowerCase().includes(q2);
+    return byGroup && byFav && byQuery;
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "16px 16px 4px" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26 }, children: t("lib.title") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 13 }, children: t("lib.sub") })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "10px 16px 0" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-search-wrap", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("input", { value: query, onChange: (e) => setQuery(e.target.value), placeholder: lang === "it" ? "Cerca esercizio…" : lang === "de" ? "Übung suchen…" : "Search exercise…", className: "o40-search" }),
+      query && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setQuery(""), style: { position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", background: "transparent", border: "none", color: STEEL, cursor: "pointer" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14 }) })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, padding: "12px 16px 4px", flexWrap: "wrap" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setShowFavs((v) => !v), style: { padding: "6px 12px", borderRadius: 20, cursor: "pointer", background: showFavs ? BLAZE : "transparent", border: `1px solid ${showFavs ? BLAZE : OLIVE}`, display: "flex", alignItems: "center", gap: 4 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { size: 12, color: showFavs ? PAPER : KHAKI, fill: showFavs ? PAPER : "none" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: showFavs ? PAPER : STEEL, fontSize: 11 }, children: [
+          showFavs ? "★" : "☆",
+          " ",
+          favs.length || ""
+        ] })
+      ] }),
+      [["all", t("lib.all")], ["standing", t("lib.standing")], ["ground", t("lib.ground")], ["core", t("lib.core")]].map(([key, label]) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setFilter(key), style: {
+        padding: "6px 12px",
+        borderRadius: 20,
+        cursor: "pointer",
+        background: filter === key ? BLAZE : "transparent",
+        border: `1px solid ${filter === key ? BLAZE : OLIVE}`
+      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: filter === key ? PAPER : STEEL, fontSize: 11 }, children: label }) }, key))
+    ] }),
+    (() => {
+      const lastProg = sessions && sessions.length ? sessions[sessions.length - 1].programId : null;
+      const recIds = lastProg && EXERCISES[lastProg] ? [] : profile ? PROGRAMS.find((pr) => pr.id === "A").exercises.slice(0, 3) : [];
+      let rec = recIds.length ? recIds : ["plank", "squat", "jumpingjack"].filter((id) => !favs.includes(id)).slice(0, 3);
+      const cons = getConsistencyScore(sessions);
+      const risk = getStreakRisk(sessions);
+      if (risk === "at-risk" && !query && !showFavs) {
+        rec = ["wallsit", "ponte", "superman"].filter((id) => !favs.includes(id)).slice(0, 3);
+      } else if (cons < 30 && !query && !showFavs) {
+        rec = ["jumpingjack", "squat", "crunch"].filter((id) => !favs.includes(id)).slice(0, 3);
+      }
+      const label = risk === "at-risk" ? lang === "it" ? "Recupero consigliato" : "Recovery pick" : cons < 30 ? lang === "it" ? "Partenza facile" : "Easy start" : lang === "it" ? "Consigliati per te" : "Recommended for you";
+      if (!query && !showFavs && rec.length) return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "8px 16px 0" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em", marginBottom: 6, display: "flex", alignItems: "center", gap: 4 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 10 }),
+          " ",
+          label,
+          " ",
+          cons ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, marginLeft: 6 }, children: [
+            "· ",
+            cons,
+            "% aderenza"
+          ] }) : null
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }, children: rec.map((rid) => {
+          const ex = EXERCISES[rid];
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setSelectedId(rid), style: { minWidth: 110, background: `linear-gradient(135deg, ${INK_2}, ${INK})`, border: `1px solid ${favs.includes(rid) ? BLAZE : OLIVE}`, borderRadius: 12, padding: 10, cursor: "pointer", textAlign: "center", boxShadow: favs.includes(rid) ? `0 0 0 1px ${BLAZE}22` : "none" }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, margin: "0 auto 6px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose: ex.pose, color: favs.includes(rid) ? BLAZE : KHAKI }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 11, fontWeight: 700 }, children: tr$1(ex.name, lang) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: favs.includes(rid) ? BLAZE : STEEL, fontSize: 9 }, children: favs.includes(rid) ? "★ preferito" : "tap per aprire" })
+          ] }, `rec-${rid}`);
+        }) })
+      ] });
+      return null;
+    })(),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 10 }, children: visibleIds.map((id) => {
+      const ex = EXERCISES[id];
+      const isOpen = selectedId === id;
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: "o40-card", onClick: () => {
+        const opening = !isOpen;
+        setSelectedId(opening ? id : null);
+        if (opening) speak(tr$1(ex.name, lang));
+      }, style: {
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: on ? `${BLAZE}22` : "transparent",
-        transition: "background 0.2s ease",
-        animation: on ? "tabPop 0.28s cubic-bezier(0.16,1,0.3,1)" : "none"
-      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { size: 20, color: on ? BLAZE : STEEL, style: { transition: "color 0.2s ease" } }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: on ? BLAZE : STEEL, fontSize: 9.5, letterSpacing: "0.03em" }, children: tab.label })
-    ] }, tab.key);
+        flexDirection: "column",
+        gap: 12,
+        background: INK_2,
+        border: `1px solid ${isOpen ? BLAZE : OLIVE}`,
+        borderRadius: 14,
+        padding: 12,
+        cursor: "pointer",
+        textAlign: "left",
+        width: "100%"
+      }, children: [
+        isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-expand", style: { width: "100%", aspectRatio: hasClip(id, ex.pose) ? "9 / 16" : "1 / 1", maxHeight: hasClip(id, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: id, pose: ex.pose, color: BLAZE, rounded: 10 }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12 }, children: [
+          !isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, flexShrink: 0, background: INK, borderRadius: 8, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: id, pose: ex.pose, color: BLAZE, rounded: 8 }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 14.5, flex: 1 }, children: tr$1(ex.name, lang) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: (e) => {
+                e.stopPropagation();
+                const next = toggleFavorite(favs, id);
+                setFavs(next);
+              }, className: "o40-fav", style: { background: "transparent", border: "none", cursor: "pointer", padding: 4 }, "aria-label": "favorite", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { size: 16, color: favs.includes(id) ? BLAZE : STEEL, fill: favs.includes(id) ? BLAZE : "none" }) })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 12 }, children: tr$1(ex.repGuide, lang) }),
+            isOpen ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 3, marginTop: 5, textAlign: "left" }, children: ex.steps.map((s, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, alignItems: "flex-start" }, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, minWidth: 13 }, children: [
+                  i + 1,
+                  "."
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11.5, lineHeight: 1.4 }, children: tr$1(s, lang) })
+              ] }, i)) }),
+              ex.breath && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, alignItems: "center", marginTop: 6, color: OLIVE }, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 12, style: { flexShrink: 0 } }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 11, fontStyle: "italic", lineHeight: 1.4 }, children: tr$1(ex.breath, lang) })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 6, lineHeight: 1.4, fontStyle: "italic" }, children: tr$1(ex.tip40, lang) })
+            ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4 }, children: tr$1(ex.cue, lang) })
+          ] })
+        ] })
+      ] }, id);
+    }) }) })
+  ] });
+}
+const inputStyle$1 = { width: "100%", background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "12px 14px", color: PAPER, fontSize: 16, fontFamily: "Inter, sans-serif", outline: "none" };
+const primaryBtn$4 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, width: "100%" };
+function Field({ label, children }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }, children: label }),
+    children
+  ] });
+}
+function BuilderScreen({ profile, initial, onCancel, onCreate, onUpdate }) {
+  const { lang, t } = useT();
+  const [selected, setSelected] = reactExports.useState(initial ? initial.exercises : []);
+  const [rounds, setRounds] = reactExports.useState(initial ? initial.rounds : 2);
+  const [name, setName] = reactExports.useState(initial ? initial.name : "");
+  const [filter, setFilter] = reactExports.useState("all");
+  function toggleEx(id) {
+    setSelected((s) => s.includes(id) ? s.filter((x) => x !== id) : s.length < 10 ? [...s, id] : s);
+  }
+  const isEdit = !!initial;
+  const canCreate = selected.length >= 3;
+  const draft = { id: initial ? initial.id : `custom-${Date.now()}`, name: name.trim() || t("bld.draft.name"), tagline: t("bld.draft.tagline"), rounds, exercises: selected };
+  const preset = levelPreset(profile);
+  const kcal = canCreate ? Math.round(estimateProgramKcal(draft, profile.weight, !!profile.skipWarmup, preset.work, preset.rest)) : 0;
+  const mins = canCreate ? Math.round(totalSeqSeconds(draft, !!profile.skipWarmup, preset.work, preset.rest) / 60) : 0;
+  const visibleIds = Object.keys(EXERCISES).filter(
+    (id) => filter === "all" ? true : EXERCISE_GROUPS[filter].includes(id)
+  );
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("bld.title"), onBack: onCancel }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Field, { label: t("bld.name"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          value: name,
+          onChange: (e) => setName(e.target.value),
+          placeholder: t("bld.name.ph"),
+          className: "o40-input",
+          style: inputStyle$1
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginTop: 16 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }, children: t("bld.rounds") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8 }, children: [1, 2, 3].map((r) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setRounds(r), style: {
+          flex: 1,
+          padding: "10px 0",
+          borderRadius: 10,
+          cursor: "pointer",
+          textAlign: "center",
+          background: rounds === r ? BLAZE : INK_2,
+          border: `1px solid ${rounds === r ? BLAZE : OLIVE}`
+        }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { color: PAPER, fontSize: 18 }, children: r }) }, r)) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", margin: "18px 0 8px" }, children: t("bld.exercises", { sel: selected.length }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8, marginBottom: 10 }, children: [["all", t("lib.all")], ["standing", t("lib.standing")], ["ground", t("lib.ground")], ["core", t("lib.core")]].map(([key, label]) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setFilter(key), style: {
+        padding: "6px 12px",
+        borderRadius: 20,
+        cursor: "pointer",
+        background: filter === key ? BLAZE : "transparent",
+        border: `1px solid ${filter === key ? BLAZE : OLIVE}`
+      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: filter === key ? PAPER : STEEL, fontSize: 11 }, children: label }) }, key)) }),
+      selected.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 12, background: INK_2, border: `1px solid ${BLAZE}`, borderRadius: 10, padding: 10 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em", marginBottom: 6 }, children: "Ordine selezionati · trascina su/giù" }),
+        selected.map((sid, idx) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: idx < selected.length - 1 ? `1px solid ${OLIVE_DARK}` : "none" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: STEEL, fontSize: 10 }, children: [
+            idx + 1,
+            "."
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { flex: 1, color: PAPER, fontSize: 12 }, children: EXERCISES[sid] ? EXERCISES[sid].name.it : sid }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { disabled: idx === 0, onClick: () => setSelected((s) => {
+            const a = [...s];
+            [a[idx - 1], a[idx]] = [a[idx], a[idx - 1]];
+            return a;
+          }), style: { background: "transparent", border: `1px solid ${OLIVE}`, borderRadius: 6, padding: "2px 6px", color: PAPER, opacity: idx === 0 ? 0.3 : 1, cursor: idx === 0 ? "default" : "pointer" }, children: "↑" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { disabled: idx === selected.length - 1, onClick: () => setSelected((s) => {
+            const a = [...s];
+            [a[idx], a[idx + 1]] = [a[idx + 1], a[idx]];
+            return a;
+          }), style: { background: "transparent", border: `1px solid ${OLIVE}`, borderRadius: 6, padding: "2px 6px", color: PAPER, opacity: idx === selected.length - 1 ? 0.3 : 1, cursor: idx === selected.length - 1 ? "default" : "pointer" }, children: "↓" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSelected((s) => s.filter((x) => x !== sid)), style: { background: "transparent", border: "none", color: STEEL, cursor: "pointer", padding: 4 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 12 }) })
+        ] }, sid))
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: visibleIds.map((id) => {
+        const ex = EXERCISES[id];
+        const on = selected.includes(id);
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => toggleEx(id), style: {
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          background: on ? OLIVE_DARK : INK_2,
+          border: `1px solid ${on ? BLAZE : OLIVE}`,
+          borderRadius: 10,
+          padding: 10,
+          cursor: "pointer",
+          textAlign: "left"
+        }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: ex.pose, color: on ? BLAZE : STEEL }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13.5, fontWeight: 600 }, children: tr$1(ex.name, lang) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: tr$1(ex.repGuide, lang) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+            width: 20,
+            height: 20,
+            borderRadius: 5,
+            border: `1px solid ${on ? BLAZE : OLIVE}`,
+            background: on ? BLAZE : "transparent",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0
+          }, children: on && /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 13, color: PAPER }) })
+        ] }, id);
+      }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: 16, borderTop: `1px solid ${OLIVE_DARK}` }, children: canCreate ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 14, marginBottom: 10, color: STEEL, fontSize: 12.5, justifyContent: "center" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t("bld.min", { m: mins }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t("bld.kcal", { k: kcal }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => isEdit ? onUpdate(draft) : onCreate(draft), style: primaryBtn$4, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 18 }),
+        " ",
+        isEdit ? "AGGIORNA" : t("bld.create.go")
+      ] })
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, textAlign: "center" }, children: t("bld.hint") }) })
+  ] });
+}
+function groupOf(id) {
+  return EXERCISE_GROUPS.standing.includes(id) ? "standing" : "ground";
+}
+function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
+  const { lang, t } = useT();
+  const [selectedId, setSelectedId] = useState(null);
+  const [subs, setSubs] = useState({});
+  const [swapOpenId, setSwapOpenId] = useState(null);
+  const effectiveExercises = program.exercises.map((id) => subs[id] || id);
+  const effectiveProgram = { ...program, exercises: effectiveExercises };
+  const preset = levelPreset$1(profile);
+  const mode = profile && profile.executionMode || "time";
+  const levelKey = profile && profile.level || "combattente";
+  const kcal = Math.round(estimateProgramKcal$1(effectiveProgram, profile.weight, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey));
+  const mins = Math.round(totalSeqSeconds$1(effectiveProgram, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey) / 60);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("prev.title", { id: program.id }), onBack }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26 }, children: tr$1(program.name, lang) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 14, marginBottom: 14 }, children: tr$1(program.tagline, lang) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.duration"), value: `${mins}′` }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.estkcal"), value: kcal }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.rounds"), value: program.rounds })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", margin: "4px 0 10px" }, children: t("prev.sub", { n: program.exercises.length, r: program.rounds, p: mode === "reps" ? lang === "it" ? "Ripetizioni" : lang === "de" ? "Wiederholungen" : "Reps" : tr$1(preset.label, lang) }) }),
+      mode === "reps" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: BLAZE, fontSize: 11, marginBottom: 8, background: `${BLAZE}14`, border: `1px solid ${BLAZE}44`, borderRadius: 8, padding: "6px 10px", textAlign: "center" }, children: lang === "it" ? "Modalità ripetizioni: tocca FATTO quando hai finito ogni esercizio. Hold resta a tempo." : "Reps mode: tap DONE when finished each exercise. Holds stay timed." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 10 }, children: program.exercises.map((originalId, i) => {
+        const currentId = subs[originalId] || originalId;
+        const ex = EXERCISES[currentId];
+        const isOpen = selectedId === originalId;
+        const isSwapping = swapOpenId === originalId;
+        const isSubbed = !!subs[originalId];
+        const usedElsewhere = effectiveExercises.filter((_, idx) => program.exercises[idx] !== originalId);
+        const alternatives = EXERCISE_GROUPS[groupOf(originalId)].filter((aid) => aid !== currentId && !usedElsewhere.includes(aid));
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+          background: INK_2,
+          border: `1px solid ${isOpen ? BLAZE : OLIVE}`,
+          borderRadius: 10,
+          padding: 12
+        }, children: [
+          isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-expand", style: { width: "100%", aspectRatio: hasClip(currentId, ex.pose) ? "9 / 16" : "1 / 1", maxHeight: hasClip(currentId, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: currentId, pose: ex.pose, color: BLAZE, rounded: 10 }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => {
+              const opening = !isOpen;
+              setSelectedId(opening ? originalId : null);
+              if (opening && soundOn) speak(tr$1(ex.name, lang));
+            }, style: {
+              display: "flex",
+              gap: 12,
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              textAlign: "left",
+              padding: 0,
+              flex: 1,
+              minWidth: 0
+            }, children: [
+              !isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, flexShrink: 0, background: INK, borderRadius: 8, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: currentId, pose: ex.pose, color: BLAZE, rounded: 8 }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: STEEL, fontSize: 11 }, children: [
+                    i + 1,
+                    "."
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontWeight: 700, fontSize: 14.5 }, children: tr$1(ex.name, lang) }),
+                  isSubbed && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 9, border: `1px solid ${OLIVE}`, borderRadius: 4, padding: "1px 4px" }, children: t("prev.swapped") })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: KHAKI, fontSize: 12, display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }, children: [
+                  (() => {
+                    const reps = mode === "reps" ? getReps(currentId, levelKey) : null;
+                    return reps ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { background: `${BLAZE}22`, border: `1px solid ${BLAZE}55`, color: BLAZE, padding: "1px 6px", borderRadius: 6, fontWeight: 700 }, children: [
+                      "×",
+                      reps
+                    ] }) : null;
+                  })(),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tr$1(ex.repGuide, lang) }),
+                  mode === "reps" && !HOLD_EXERCISES.has(currentId) && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, fontSize: 10 }, children: [
+                    "· ",
+                    lang === "it" ? "tocca FATTO" : "tap DONE"
+                  ] })
+                ] }),
+                isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 3, marginTop: 5, textAlign: "left" }, children: ex.steps.map((s, k2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, alignItems: "flex-start" }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, minWidth: 13 }, children: [
+                    k2 + 1,
+                    "."
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11.5, lineHeight: 1.4 }, children: tr$1(s, lang) })
+                ] }, k2)) }),
+                isOpen && ex.breath && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, alignItems: "center", marginTop: 6, color: OLIVE }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 12, style: { flexShrink: 0 } }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 11, fontStyle: "italic", lineHeight: 1.4 }, children: tr$1(ex.breath, lang) })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4, fontStyle: "italic" }, children: tr$1(ex.tip40, lang) })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSwapOpenId(isSwapping ? null : originalId), style: { ...btnIcon, flexShrink: 0, alignSelf: "flex-start" }, "aria-label": t("prev.swap"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 16, color: isSwapping ? BLAZE : STEEL }) })
+          ] }),
+          isSwapping && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexWrap: "wrap", gap: 6, paddingTop: 4, borderTop: `1px solid ${OLIVE_DARK}` }, children: [
+            isSubbed && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+              setSubs((s) => {
+                const n2 = { ...s };
+                delete n2[originalId];
+                return n2;
+              });
+              setSwapOpenId(null);
+            }, style: {
+              padding: "6px 10px",
+              borderRadius: 20,
+              background: "transparent",
+              border: `1px solid ${KHAKI}`,
+              cursor: "pointer"
+            }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10.5 }, children: t("prev.restore", { name: tr$1(EXERCISES[originalId].name, lang) }) }) }),
+            alternatives.map((aid) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+              setSubs((s) => ({ ...s, [originalId]: aid }));
+              setSwapOpenId(null);
+            }, style: {
+              padding: "6px 10px",
+              borderRadius: 20,
+              background: INK,
+              border: `1px solid ${OLIVE}`,
+              cursor: "pointer"
+            }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: PAPER, fontSize: 10.5 }, children: tr$1(EXERCISES[aid].name, lang) }) }, aid))
+          ] })
+        ] }, originalId);
+      }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: 16, borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onStart(effectiveProgram), className: "o40-pulsebtn", style: { ...primaryBtn, borderRadius: 14 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 18 }),
+      " ",
+      t("prev.go")
+    ] }) })
+  ] });
+}
+let lock = null;
+async function requestWakeLock() {
+  if (!("wakeLock" in navigator)) return null;
+  try {
+    lock = await navigator.wakeLock.request("screen");
+    lock.addEventListener("release", () => {
+      lock = null;
+    });
+    return lock;
+  } catch {
+    return null;
+  }
+}
+async function releaseWakeLock() {
+  try {
+    if (lock) await lock.release();
+    lock = null;
+  } catch {
+  }
+}
+const primaryBtn$3 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
+const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
+let _mediaPromise = null;
+function getMediaMap() {
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-_rtSdoti.js"), true ? [] : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  return _mediaPromise;
+}
+function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
+  const [src, setSrc] = reactExports.useState(null);
+  const [videoSrc, setVideoSrc] = reactExports.useState(null);
+  const [failed, setFailed] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    let cancelled = false;
+    setSrc(null);
+    setVideoSrc(null);
+    setFailed(false);
+    getMediaMap().then(({ b64, files }) => {
+      if (cancelled) return;
+      const clip = files[exerciseId] || files[pose] || null;
+      setVideoSrc(clip);
+      if (!clip) setSrc(b64[exerciseId] || b64[pose] || null);
+    }).catch(() => {
+      if (!cancelled) setFailed(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [exerciseId]);
+  if (videoSrc && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("video", { src: videoSrc, autoPlay: true, muted: true, loop: true, playsInline: true, preload: "metadata", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
+  if (src && !failed) return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src, alt: "", onError: () => setFailed(true), style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK } });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose, color, size });
+}
+function ProgressRing({ progress, size = 240, stroke = 12, color, comet = true }) {
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference * (1 - Math.max(0, Math.min(1, progress)));
+  const gradId = `ring-grad-${color.replace("#", "")}`;
+  const angle = Math.max(1e-3, Math.min(0.999, progress)) * 2 * Math.PI;
+  const dotX = size / 2 + radius * Math.sin(angle);
+  const dotY = size / 2 - radius * Math.cos(angle);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: size, height: size, style: { transform: "rotate(-90deg)", filter: `drop-shadow(0 0 10px ${color}55)` }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("defs", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("linearGradient", { id: gradId, x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "0%", stopColor: color, stopOpacity: "0.65" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "100%", stopColor: color, stopOpacity: "1" })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: size / 2, cy: size / 2, r: radius, stroke: OLIVE_DARK, strokeWidth: stroke, fill: "none" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: size / 2, cy: size / 2, r: radius, stroke: `url(#${gradId})`, strokeWidth: stroke, fill: "none", strokeDasharray: circumference, strokeDashoffset: offset, strokeLinecap: "round", style: { transition: "stroke-dashoffset 1s linear" } }),
+    comet && progress > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: dotX, cy: dotY, r: stroke * 2, fill: color, opacity: "0.15" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { className: "o40-comet", cx: dotX, cy: dotY, r: stroke * 0.8, fill: PAPER })
+    ] })
+  ] });
+}
+function EqBars({ tone = BLAZE, bars = 5, speed = 1, style }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "flex-end", gap: 3, height: 14, ...style }, "aria-hidden": "true", children: Array.from({ length: bars }).map((_, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-eqbar", style: { width: 3, background: tone, height: 8, animation: `eqPulse ${(0.55 + i % 3 * 0.18) / speed}s ease-in-out ${i * 0.08}s infinite` } }, i)) });
+}
+function SegmentedProgress({ total, current, currentProgress, color }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 4, width: "100%" }, children: Array.from({ length: total }).map((_, i) => {
+    const isDone = i < current;
+    const isActive = i === current;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flex: 1, height: 6, borderRadius: 3, background: isDone || isActive ? color : OLIVE_DARK, opacity: isActive ? 0.5 + 0.5 * currentProgress : 1, transition: "opacity 0.3s linear, background 0.3s ease", boxShadow: isDone || isActive ? `0 0 8px ${color}66` : "none" } }, i);
   }) });
+}
+function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, setPaused, soundOn, setSoundOn, musicOn, onToggleMusic, aiEnabled, onToggleAi, lang: langProp, onSkip, onPrev, exitConfirm, setExitConfirm, onExit }) {
+  const { lang: ctxLang, t } = useT();
+  const lang = langProp ?? ctxLang;
+  const phase = seq[phaseIdx];
+  const next = seq[phaseIdx + 1];
+  const ex = phase.exerciseId ? EXERCISES[phase.exerciseId] : null;
+  const nextEx = next && next.exerciseId ? EXERCISES[next.exerciseId] : null;
+  const isRepsWork = phase.type === "work" && phase.mode === "reps";
+  const isAiWork = aiEnabled && phase.type === "work" && !!phase.exerciseId;
+  const progress = isRepsWork ? 1 : phase.duration ? 1 - secondsLeft / phase.duration : 0;
+  reactExports.useEffect(() => {
+    if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === "work" && !isRepsWork) speak$1(String(secondsLeft), lang, LOCALES);
+  }, [secondsLeft, phase.type, soundOn, profile, isRepsWork]);
+  reactExports.useEffect(() => {
+    requestWakeLock();
+    function onVis() {
+      if (!document.hidden) requestWakeLock();
+    }
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      document.removeEventListener("visibilitychange", onVis);
+      releaseWakeLock();
+    };
+  }, []);
+  const phaseLabel = phase.type === "warmup" ? t("ses.warmup") : phase.type === "cooldown" ? t("ses.cooldown") : phase.type === "rest" ? t("ses.rest") : t("ses.round", { r: phase.round, name: tr$1(ex.name, lang).toUpperCase() });
+  const ringColor = phase.type === "rest" ? OLIVE : phase.type === "work" ? BLAZE : KHAKI;
+  const doneWork = seq.slice(0, phaseIdx).filter((p2) => p2.type === "work").length;
+  const totalWork = seq.filter((p2) => p2.type === "work").length;
+  const elapsedSec = seq.slice(0, phaseIdx).reduce((a, p2) => a + (p2.duration || (p2.reps ? p2.reps * 3 : 0)), 0) + (phase.duration ? phase.duration - secondsLeft : 0);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TopBar$1,
+      {
+        title: tr$1(program.name, lang),
+        onBack: () => setExitConfirm(true),
+        right: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 2 }, children: [
+          musicOn && /* @__PURE__ */ jsxRuntimeExports.jsx(EqBars, { tone: ringColor, bars: 4, speed: phase.type === "work" ? 1.4 : phase.type === "rest" ? 0.5 : 0.8, style: { marginRight: 6, height: 12 } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleAi, title: aiEnabled ? "AI Coach ON" : "AI Coach OFF", style: { ...btnIcon$2, border: `1px solid ${aiEnabled ? BLAZE : "transparent"}`, borderRadius: 8, background: aiEnabled ? `${BLAZE}22` : "transparent" }, children: aiEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: STEEL }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleMusic, style: btnIcon$2, "aria-label": t("ses.music"), children: musicOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Music2, { size: 18, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(HeadphoneOff, { size: 18, color: STEEL }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSoundOn(!soundOn), style: btnIcon$2, children: soundOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Volume2, { size: 18, color: PAPER }) : /* @__PURE__ */ jsxRuntimeExports.jsx(VolumeX, { size: 18, color: STEEL }) })
+        ] })
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "10px 16px 0" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(SegmentedProgress, { total: seq.length, current: phaseIdx, currentProgress: progress, color: ringColor }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 8 }, className: "o40-mono", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: t("ses.elapsed", { t: formatTime(elapsedSec) }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: t("ses.ex", { a: doneWork, b: totalWork }) })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10, padding: 16 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `o40-mono o40-expand ${phase.type === "work" ? "o40-gradtext" : ""}`, style: { color: ringColor, fontSize: 13, letterSpacing: "0.1em" }, children: phaseLabel }, phaseIdx),
+      isAiWork ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%", maxWidth: 420 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          SessionAIOverlay,
+          {
+            phase,
+            lang,
+            levelKey: (profile == null ? void 0 : profile.level) ?? "combattente",
+            aiEnabled,
+            onCompletePhase: () => {
+              if (soundOn) playBeep(880);
+              if (vibrate) vibrate([30]);
+              onSkip();
+            },
+            onRep: () => {
+            }
+          },
+          `${phase.exerciseId}-${phaseIdx}`
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, textAlign: "center", marginTop: 6 }, children: aiEnabled ? lang === "it" ? "AI Coach attivo — conta automatico, voce nella tua lingua" : "AI Coach on — auto-count, voice in your language" : "" })
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: 240, height: 240 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+            position: "absolute",
+            inset: -18,
+            borderRadius: "50%",
+            background: `radial-gradient(circle, ${ringColor}30 0%, transparent 70%)`,
+            transition: "background 0.3s ease",
+            animation: phase.type === "rest" ? "restBreath 2.4s ease-in-out infinite" : "none"
+          } }),
+          phase.type === "work" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: -10, borderRadius: "50%", border: `2px solid ${ringColor}44`, animation: "ringPulse 1.5s ease-out infinite" } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressRing, { progress, color: ringColor }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }, children: ex ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 150, height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia$1, { exerciseId: phase.exerciseId, pose: ex.pose, color: PAPER, rounded: 14 }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 44 }, children: formatTime(secondsLeft) }) })
+        ] }),
+        ex && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { textAlign: "center" }, children: isRepsWork ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: PAPER, fontSize: 48, lineHeight: 1 }, children: [
+            "×",
+            phase.reps
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.08em" }, children: lang === "it" ? "RIPETIZIONI" : "REPS" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }, children: lang === "it" ? "Tocca FATTO quando hai finito" : "Tap DONE when finished" })
+        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 40 }, children: formatTime(secondsLeft) }) })
+      ] }),
+      ex && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", maxWidth: 330 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 13 }, children: isRepsWork ? `${phase.reps}× ${tr$1(ex.name, lang)} — ${tr$1(ex.repGuide, lang)}` : tr$1(ex.repGuide, lang) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 4, marginTop: 8, textAlign: "left" }, children: ex.steps.map((s, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 7, alignItems: "flex-start" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10.5, minWidth: 15 }, children: [
+            i + 1,
+            "."
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 12, lineHeight: 1.4 }, children: tr$1(s, lang) })
+        ] }, i)) }),
+        ex.breath && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 7, alignItems: "center", justifyContent: "center", marginTop: 9, color: OLIVE }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Wind$1, { size: 13, style: { flexShrink: 0 } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 11.5, fontStyle: "italic", lineHeight: 1.4 }, children: tr$1(ex.breath, lang) })
+        ] }),
+        ex.tip40 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, alignItems: "flex-start", marginTop: 10, textAlign: "left", background: `${KHAKI}10`, border: `1px solid ${KHAKI}44`, borderRadius: 10, padding: "8px 10px" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Lightbulb, { size: 14, color: KHAKI, style: { flexShrink: 0, marginTop: 1 } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.45 }, children: tr$1(ex.tip40, lang) })
+        ] })
+      ] }),
+      phase.type === "rest" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, marginTop: 4 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, borderRadius: "50%", background: OLIVE, opacity: 0.9, animation: "restBreath 3.2s ease-in-out infinite", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Wind$1, { size: 16, color: PAPER }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.08em" }, children: lang === "it" ? "Respira — 4 sec in, 4 sec out" : lang === "de" ? "Atmen — 4s ein, 4s aus" : "Breathe — 4s in, 4s out" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-card-glass", style: { color: STEEL, fontSize: 12, marginTop: 6, display: "flex", alignItems: "center", gap: 8, borderRadius: 10, padding: "7px 12px" }, children: next ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        next.exerciseId && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 26, height: 26, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure$1, { pose: EXERCISES[next.exerciseId].pose, color: KHAKI, size: "100%" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t("ses.next", { name: next.type === "work" ? tr$1(nextEx.name, lang) : next.type === "rest" ? t("ses.next.rest") : t("ses.next.cooldown") }) })
+      ] }) : t("ses.last") })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 12, padding: "10px 20px 8px", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setPaused(!paused), style: { ...iconCircle$1, width: 74, height: 74, background: BLAZE, animation: paused ? "glowPulse 1.6s ease-in-out infinite" : "none" }, "aria-label": paused ? t("ses.resume") : t("ses.pause"), children: paused ? /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 30, color: PAPER }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Pause, { size: 30, color: PAPER }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, padding: "0 20px 20px" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onPrev, disabled: phaseIdx === 0, style: { ...pillBtn, opacity: phaseIdx === 0 ? 0.4 : 1 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 15 }),
+        " PREV"
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
+        {
+          onClick: onSkip,
+          style: {
+            ...pillBtn,
+            background: isAiWork ? `${OLIVE}88` : isRepsWork ? BLAZE : pillBtn.background,
+            color: isAiWork ? KHAKI : isRepsWork ? PAPER : void 0,
+            fontWeight: isRepsWork || isAiWork ? 700 : void 0,
+            flex: isRepsWork || isAiWork ? 1.6 : 1,
+            opacity: isAiWork ? 0.9 : 1
+          },
+          title: isAiWork ? lang === "it" ? "AI conta auto — puoi saltare manualmente" : "AI auto-count — you can skip manually" : void 0,
+          children: [
+            isAiWork ? lang === "it" ? "SALTA →" : "SKIP →" : isRepsWork ? lang === "it" ? "FATTO ✓" : "DONE ✓" : "NEXT",
+            " ",
+            isAiWork ? /* @__PURE__ */ jsxRuntimeExports.jsx(SkipForward, { size: 15 }) : isRepsWork ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 16 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(SkipForward, { size: 15 })
+          ]
+        }
+      )
+    ] }),
+    isAiWork && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, textAlign: "center", paddingBottom: 8 }, children: lang === "it" ? "AI avanzerà da solo al target · disattiva con 👁️" : "AI will auto-advance at target · disable with 👁️" }),
+    exitConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, background: "rgba(27,29,22,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 22, maxWidth: 320, textAlign: "center" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22, marginBottom: 8 }, children: t("ses.quit.title") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, marginBottom: 18 }, children: t("ses.quit.body") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setExitConfirm(false), style: { ...secondaryBtn$1, flex: 1 }, children: t("ses.quit.continue") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onExit, style: { ...primaryBtn$3, flex: 1 }, children: t("ses.quit.exit") })
+      ] })
+    ] }) })
+  ] });
+}
+const iconCircle$1 = { borderRadius: "50%", border: `1px solid ${OLIVE}`, background: `linear-gradient(160deg, ${INK_2}, ${INK})`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 4px 12px rgba(0,0,0,0.35)" };
+const secondaryBtn$1 = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
+const pillBtn = {
+  flex: 1,
+  background: INK_2,
+  border: `1px solid ${OLIVE}`,
+  color: PAPER,
+  borderRadius: 10,
+  padding: "10px 0",
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: 12,
+  letterSpacing: "0.08em",
+  cursor: "pointer",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 4
+};
+function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
+  const now = /* @__PURE__ */ new Date();
+  const start = new Date(now);
+  start.setDate(now.getDate() - now.getDay() + 1);
+  start.setHours(0, 0, 0, 0);
+  const weekSessions = (sessions || []).filter((s) => new Date(s.date) >= start);
+  const done = weekSessions.length;
+  const pct = Math.min(1, done / weeklyGoal);
+  const remain = Math.max(0, weeklyGoal - done);
+  const isDone = done >= weeklyGoal;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card-glass", style: { borderRadius: 14, padding: 14, display: "flex", gap: 12, alignItems: "center" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 56, height: 56, borderRadius: "50%", background: `conic-gradient(${BLAZE} ${pct * 360}deg, ${OLIVE} 0deg)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, borderRadius: "50%", background: INK_2, display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid ${OLIVE}` }, children: isDone ? /* @__PURE__ */ jsxRuntimeExports.jsx(ShieldCheck, { size: 20, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 20, color: KHAKI }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.07em" }, children: "SFIDA SETTIMANALE" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 800, fontSize: 14 }, children: isDone ? "Completata!" : `${done}/${weeklyGoal} missioni` }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12 }, children: isDone ? "Obiettivo raggiunto, mantieni il fuoco" : `Mancano ${remain} per chiudere la settimana` })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "right" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: BLAZE, fontSize: 22 }, children: [
+        Math.round(pct * 100),
+        "%"
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, fontSize: 10, display: "flex", alignItems: "center", gap: 4, justifyContent: "flex-end" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 10 }),
+        " Lun-Dom"
+      ] })
+    ] })
+  ] });
+}
+const inputStyle = { width: "100%", background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "12px 14px", color: PAPER, fontSize: 16, fontFamily: "Inter, sans-serif", outline: "none" };
+const primaryBtn$2 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, width: "100%" };
+function DogTag$2({ label, value, sub }) {
+  const numeric = typeof value === "number";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card", style: { background: `linear-gradient(160deg, ${INK_2}, ${INK})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 13px", position: "relative", flex: 1, minWidth: 0, boxShadow: "0 4px 14px rgba(0,0,0,0.35)" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 9, left: -5, width: 10, height: 10, borderRadius: "50%", background: INK, border: `2px solid ${KHAKI}` } }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" }, children: label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26, lineHeight: 1.1 }, children: numeric ? value : value }),
+    sub && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: sub })
+  ] });
+}
+function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInput, setWaistInput, weightInput, setWeightInput, rpe, setRpe, notes, setNotes, onSave }) {
+  const { lang, t } = useT();
+  const zone = hrInput ? hrZone$1(parseInt(hrInput, 10), profile.age, lang) : null;
+  const [shareState, setShareState] = reactExports.useState("idle");
+  async function handleShare() {
+    const text = t("sum.share", { name: tr$1(stats.program.name, lang), min: Math.round(stats.durationSec / 60), kcal: stats.kcal });
+    try {
+      if (navigator.share) {
+        await navigator.share({ text });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+        setShareState("copied");
+        setTimeout(() => setShareState("idle"), 2e3);
+      }
+    } catch (e) {
+    }
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column", position: "relative" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }, children: ["#C1440E", "#B8AE8C", "#7FB069", "#EDE8D8", "#D9B34C"].map((c, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-confetti", style: {
+      background: c,
+      left: `${8 + i * 18}%`,
+      animationDuration: `${2.6 + i % 3 * 0.7}s`,
+      animationDelay: `${i * 0.35}s`,
+      opacity: 0.85
+    } }, i)) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 20 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", marginTop: 10 }, className: "o40-pop", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 40, color: BLAZE }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 30, marginTop: 8 }, children: t("sum.title") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 14 }, children: tr$1(stats.program.name, lang) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleShare, style: {
+          marginTop: 10,
+          background: "transparent",
+          border: `1px solid ${KHAKI}`,
+          borderRadius: 20,
+          padding: "6px 14px",
+          cursor: "pointer",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6
+        }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11 }, children: shareState === "copied" ? t("sum.copied") : t("sum.sharebtn") }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, margin: "20px 0" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$2, { label: t("dt.duration"), value: `${Math.round(stats.durationSec / 60)}′` }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$2, { label: t("dt.kcal"), value: stats.kcal })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(WeeklyChallenge, { sessions, weeklyGoal: profile.weeklyGoal || WEEKLY_GOAL }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.rpe.title") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 6, marginTop: 10 }, children: RPE_LABELS.map((lbl, i) => {
+          const val = i + 1;
+          const on = rpe === val;
+          const c = RPE_COLORS[i];
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setRpe(on ? null : val), style: {
+            flex: 1,
+            padding: "10px 2px",
+            borderRadius: 8,
+            cursor: "pointer",
+            textAlign: "center",
+            background: on ? c : INK,
+            border: `1px solid ${on ? c : OLIVE}`,
+            transition: "background 0.15s ease, border-color 0.15s ease, transform 0.1s ease"
+          }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 18 }, children: val }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: on ? PAPER : STEEL, fontSize: 8.5 }, children: tr$1(lbl, lang) })
+          ] }, val);
+        }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.notes.title") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "textarea",
+          {
+            value: notes,
+            onChange: (e) => setNotes(e.target.value.slice(0, 200)),
+            placeholder: t("sum.notes.ph"),
+            rows: 2,
+            className: "o40-input",
+            style: { ...inputStyle, marginTop: 10, resize: "none", fontFamily: "Inter, sans-serif" }
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Ruler, { size: 18, color: BLAZE }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.waist.title") })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }, children: t("sum.waist.body") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            value: waistInput,
+            onChange: (e) => setWaistInput(e.target.value.replace(/\D/g, "")),
+            inputMode: "numeric",
+            placeholder: t("sum.waist.ph"),
+            className: "o40-input",
+            style: inputStyle
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Scale, { size: 18, color: BLAZE }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.weight.title") })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }, children: t("sum.weight.body") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            value: weightInput,
+            onChange: (e) => setWeightInput(e.target.value.replace(/[^\d.,]/g, "")),
+            inputMode: "decimal",
+            placeholder: profile && profile.weight ? t("sum.weight.ph.dynamic", { v: profile.weight }) : t("sum.weight.ph"),
+            className: "o40-input",
+            style: inputStyle
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 18, color: BLAZE }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.hr.title") }),
+          !hrInput && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-blink", style: { marginLeft: "auto", background: `${BLAZE}22`, border: `1px solid ${BLAZE}`, color: BLAZE, fontSize: 10, letterSpacing: "0.06em", borderRadius: 6, padding: "2px 7px" }, children: t("sum.hr.remind") })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }, children: t("sum.hr.body") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            value: hrInput,
+            onChange: (e) => setHrInput(e.target.value.replace(/\D/g, "")),
+            inputMode: "numeric",
+            placeholder: t("sum.hr.ph"),
+            className: "o40-input",
+            style: inputStyle
+          }
+        ),
+        zone && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginTop: 10, display: "flex", alignItems: "center", gap: 8 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 10, height: 10, borderRadius: "50%", background: zone.color } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontSize: 13 }, children: t("sum.zone", { label: zone.label }) })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "12px 20px 20px", borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onSave, style: primaryBtn$2, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 18 }),
+      " ",
+      t("sum.save")
+    ] }) })
+  ] });
 }
 function csvEscape(v) {
   const s = String(v ?? "");
@@ -8897,122 +9696,19 @@ function simpleMealHint(goal) {
   };
   return hints[goal] || hints.cut;
 }
-function loadFavorites() {
-  try {
-    const v = localStorage.getItem("o40_favs");
-    return v ? JSON.parse(v) : [];
-  } catch {
-    return [];
-  }
+function estimateBodyFat({ waistCm, weightKg, heightCm, age, sex = "male" }) {
+  if (!waistCm || !weightKg || !heightCm || !age) return null;
+  const bmi = weightKg / (heightCm / 100) ** 2;
+  const bf = 1.2 * bmi + 0.23 * age - 10.8 * (sex === "male" ? 1 : 0) - 5.4;
+  const wht = waistCm / heightCm;
+  const whtAdj = (wht - 0.5) * 30;
+  const est = Math.max(6, Math.min(42, Math.round((bf * 0.7 + (bf + whtAdj) * 0.3) * 10) / 10));
+  return est;
 }
-async function saveFavoritesAsync(list) {
-  try {
-    await window.storage.set("o40_favs", JSON.stringify(list));
-  } catch {
-  }
-}
-function saveFavorites(list) {
-  try {
-    localStorage.setItem("o40_favs", JSON.stringify(list));
-  } catch {
-  }
-  saveFavoritesAsync(list).catch(() => {
-  });
-}
-function toggleFavorite(list, id) {
-  const next = list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
-  saveFavorites(next);
-  return next;
-}
-function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
-  const now = /* @__PURE__ */ new Date();
-  const start = new Date(now);
-  start.setDate(now.getDate() - now.getDay() + 1);
-  start.setHours(0, 0, 0, 0);
-  const weekSessions = (sessions || []).filter((s) => new Date(s.date) >= start);
-  const done = weekSessions.length;
-  const pct = Math.min(1, done / weeklyGoal);
-  const remain = Math.max(0, weeklyGoal - done);
-  const isDone = done >= weeklyGoal;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card-glass", style: { borderRadius: 14, padding: 14, display: "flex", gap: 12, alignItems: "center" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 56, height: 56, borderRadius: "50%", background: `conic-gradient(${BLAZE} ${pct * 360}deg, ${OLIVE} 0deg)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, borderRadius: "50%", background: INK_2, display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid ${OLIVE}` }, children: isDone ? /* @__PURE__ */ jsxRuntimeExports.jsx(ShieldCheck, { size: 20, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 20, color: KHAKI }) }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.07em" }, children: "SFIDA SETTIMANALE" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 800, fontSize: 14 }, children: isDone ? "Completata!" : `${done}/${weeklyGoal} missioni` }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12 }, children: isDone ? "Obiettivo raggiunto, mantieni il fuoco" : `Mancano ${remain} per chiudere la settimana` })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "right" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: BLAZE, fontSize: 22 }, children: [
-        Math.round(pct * 100),
-        "%"
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, fontSize: 10, display: "flex", alignItems: "center", gap: 4, justifyContent: "flex-end" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 10 }),
-        " Lun-Dom"
-      ] })
-    ] })
-  ] });
-}
-async function loadPhotosAsync() {
-  try {
-    const r = await window.storage.get("o40_photos");
-    if (!(r == null ? void 0 : r.value)) return [];
-    return JSON.parse(r.value);
-  } catch {
-    return [];
-  }
-}
-function loadPhotos() {
-  try {
-    const v = localStorage.getItem("o40_photos");
-    return v ? JSON.parse(v) : [];
-  } catch {
-    return [];
-  }
-}
-async function savePhotosAsync(list) {
-  try {
-    await window.storage.set("o40_photos", JSON.stringify(list.slice(-12)));
-  } catch {
-  }
-}
-function savePhotos(list) {
-  try {
-    localStorage.setItem("o40_photos", JSON.stringify(list.slice(-12)));
-  } catch {
-  }
-  savePhotosAsync(list).catch(() => {
-  });
-}
-async function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    if (!file) return reject(new Error("no file"));
-    if (file.size > 4 * 1024 * 1024) return reject(new Error("too big"));
-    const r = new FileReader();
-    r.onload = () => resolve(r.result);
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
-}
-let lock = null;
-async function requestWakeLock() {
-  if (!("wakeLock" in navigator)) return null;
-  try {
-    lock = await navigator.wakeLock.request("screen");
-    lock.addEventListener("release", () => {
-      lock = null;
-    });
-    return lock;
-  } catch {
-    return null;
-  }
-}
-async function releaseWakeLock() {
-  try {
-    if (lock) await lock.release();
-    lock = null;
-  } catch {
-  }
+function whtCategory(wht) {
+  if (wht < 0.5) return { key: "ok", color: "#7FB069" };
+  if (wht < 0.6) return { key: "at", color: "#D9B34C" };
+  return { key: "high", color: "#C1440E" };
 }
 async function shareStatsImage({ sessions, profile, t, tr: tr2 }) {
   var _a, _b, _c, _d;
@@ -9099,7 +9795,7 @@ async function shareStatsImage({ sessions, profile, t, tr: tr2 }) {
   const best = computeBestStreak(sessions || []);
   const cons = (() => {
     try {
-      return getConsistencyScore(sessions, 8);
+      return getConsistencyScore$1(sessions, 8);
     } catch {
       return 0;
     }
@@ -9308,21 +10004,668 @@ async function shareStatsImage({ sessions, profile, t, tr: tr2 }) {
   URL.revokeObjectURL(url);
   return "download";
 }
-function estimateBodyFat({ waistCm, weightKg, heightCm, age, sex = "male" }) {
-  if (!waistCm || !weightKg || !heightCm || !age) return null;
-  const bmi = weightKg / (heightCm / 100) ** 2;
-  const bf = 1.2 * bmi + 0.23 * age - 10.8 * (sex === "male" ? 1 : 0) - 5.4;
-  const wht = waistCm / heightCm;
-  const whtAdj = (wht - 0.5) * 30;
-  const est = Math.max(6, Math.min(42, Math.round((bf * 0.7 + (bf + whtAdj) * 0.3) * 10) / 10));
-  return est;
+const secondaryBtn = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
+const primaryBtn$1 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: "none", borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
+const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
+function DogTag$1({ label, value, sub }) {
+  const numeric = typeof value === "number";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card", style: { background: `linear-gradient(160deg, ${INK_2}, ${INK})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 13px", position: "relative", flex: 1, minWidth: 0, boxShadow: "0 4px 14px rgba(0,0,0,0.35)" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 9, left: -5, width: 10, height: 10, borderRadius: "50%", background: INK, border: `2px solid ${KHAKI}` } }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" }, children: label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26, lineHeight: 1.1 }, children: numeric ? value : value }),
+    sub && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: sub })
+  ] });
 }
-function whtCategory(wht) {
-  if (wht < 0.5) return { key: "ok", color: "#7FB069" };
-  if (wht < 0.6) return { key: "at", color: "#D9B34C" };
-  return { key: "high", color: "#C1440E" };
+function last7DaysKcal(sessions, locale) {
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = /* @__PURE__ */ new Date();
+    d.setDate(d.getDate() - i);
+    const key = dayKey(d);
+    const label = d.toLocaleDateString(locale || "it-IT", { weekday: "short" }).slice(0, 3);
+    const kcal = Math.round(sessions.filter((s) => sessionDayKey(s) === key).reduce((a, s) => a + s.kcal, 0));
+    days.push({ label, kcal });
+  }
+  return days;
 }
-const BUILD_VERSION = "2.8.4 · d9ce2d0";
+function missionCounts(sessions) {
+  const counts = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
+  sessions.forEach((s) => {
+    if (counts[s.programId] !== void 0) counts[s.programId]++;
+  });
+  return counts;
+}
+function Badge({ label, unlocked, value, color = BLAZE, icon = "trophy", progress = 1 }) {
+  const Icon = icon === "fire" ? Flame : icon === "zap" ? Zap : icon === "star" ? Star : icon === "target" ? Target : Trophy;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 4,
+    flex: 1,
+    minWidth: 52,
+    opacity: unlocked ? 1 : 0.55,
+    transform: unlocked ? "scale(1)" : "scale(0.96)",
+    transition: "all 0.2s ease"
+  }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+      width: 44,
+      height: 44,
+      borderRadius: "50%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: unlocked ? `radial-gradient(circle at 30% 30%, ${color}, ${INK})` : INK_2,
+      border: `1px solid ${unlocked ? color : OLIVE}`,
+      boxShadow: unlocked ? `0 0 12px ${color}66, inset 0 1px 1px rgba(255,255,255,0.15)` : "none",
+      position: "relative",
+      overflow: "hidden"
+    }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { size: 18, color: unlocked ? PAPER : STEEL, style: { filter: unlocked ? `drop-shadow(0 1px 2px rgba(0,0,0,0.4))` : "none" } }),
+      !unlocked && progress > 0 && progress < 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: OLIVE_DARK }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: `${Math.round(progress * 100)}%`, height: "100%", background: color, transition: "width 0.4s ease" } }) }),
+      unlocked && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: -2, borderRadius: "50%", border: `1px solid ${color}44`, animation: "badgePulse 1.6s ease-in-out infinite" } })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: unlocked ? PAPER : STEEL, fontSize: 10, fontWeight: unlocked ? 700 : 400 }, children: value }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: unlocked ? KHAKI : STEEL, fontSize: 8.5, textAlign: "center", lineHeight: 1.2, minHeight: 20 }, children: label })
+  ] });
+}
+function MedalGrid({ sessions }) {
+  const { all, unlocked } = getMedalProgress(sessions);
+  const byType = {
+    streak: all.filter((m2) => m2.type === "streak"),
+    sessions: all.filter((m2) => m2.type === "sessions"),
+    kcal: all.filter((m2) => m2.type === "kcal"),
+    consistency: all.filter((m2) => m2.type === "consistency"),
+    perfect: all.filter((m2) => m2.type === "perfect")
+  };
+  const next = getNextMedals(sessions, 3);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
+    [
+      { key: "streak", title: "SERIE", icon: "fire" },
+      { key: "sessions", title: "SESSIONI", icon: "zap" },
+      { key: "kcal", title: "KCAL", icon: "target" },
+      { key: "consistency", title: "COSTANZA", icon: "star" },
+      { key: "perfect", title: "SETT. PERFETTE", icon: "star" }
+    ].map((cat) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, letterSpacing: "0.08em", marginBottom: 6, display: "flex", alignItems: "center", gap: 6 }, children: [
+        cat.title,
+        " ",
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: unlocked.filter((m2) => m2.type === cat.key).length ? "#7FB069" : STEEL, fontSize: 9 }, children: [
+          unlocked.filter((m2) => m2.type === cat.key).length,
+          "/",
+          byType[cat.key].length
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 6, overflowX: "auto", paddingBottom: 4 }, children: byType[cat.key].map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { label: m2.label, value: m2.n, unlocked: m2.unlocked, color: m2.color, icon: m2.type === "streak" ? "fire" : m2.type === "kcal" ? "target" : m2.type === "perfect" ? "star" : "trophy", progress: m2.progress }, `${m2.type}-${m2.n}`)) })
+    ] }, cat.key)),
+    next.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK})`, border: `1px solid ${KHAKI}33`, borderRadius: 10, padding: "10px 12px", display: "flex", alignItems: "center", gap: 8 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 14, color: KHAKI }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: KHAKI, fontSize: 11, flex: 1 }, children: [
+        "Prossime: ",
+        next.map((m2) => `${m2.icon} ${m2.n}${m2.type === "kcal" ? "" : m2.type === "streak" ? "gg" : ""} (${Math.round(m2.progress * 100)}%)`).join(" • ")
+      ] })
+    ] })
+  ] });
+}
+function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos, onAddPhoto, onBack, onClear, onUpdateGoal, onDeleteSession }) {
+  const { lang, t } = useT();
+  const [confirmClear, setConfirmClear] = reactExports.useState(false);
+  const [confirmDeleteDate, setConfirmDeleteDate] = reactExports.useState(null);
+  const ordered = [...sessions].reverse();
+  const hrData = sessions.filter((s) => s.peakHR).map((s, i) => ({
+    idx: i + 1,
+    hr: s.peakHR,
+    label: new Date(s.date).toLocaleDateString(LOCALES[lang], { day: "2-digit", month: "2-digit" })
+  }));
+  const waistData = [...waistHistory].sort((a, b) => new Date(a.date) - new Date(b.date)).map((w, i) => ({
+    idx: i + 1,
+    cm: w.cm,
+    label: new Date(w.date).toLocaleDateString(LOCALES[lang], { day: "2-digit", month: "2-digit" })
+  }));
+  const weightData = [...weightHistory].sort((a, b) => new Date(a.date) - new Date(b.date)).map((w, i) => ({
+    idx: i + 1,
+    kg: w.kg,
+    label: new Date(w.date).toLocaleDateString(LOCALES[lang], { day: "2-digit", month: "2-digit" })
+  }));
+  const streak = computeStreak(sessions);
+  const bestStreak = computeBestStreak(sessions);
+  const weekData = last7DaysKcal(sessions, LOCALES[lang]);
+  const counts = missionCounts(sessions);
+  const maxCount = Math.max(1, counts.A, counts.B, counts.C, counts.D, counts.E, counts.F, counts.G);
+  const totalKcal = Math.round(sessions.reduce((a, s) => a + s.kcal, 0));
+  const weeklyGoal = profile.weeklyGoal || WEEKLY_GOAL;
+  const heatmap = buildHeatmap(sessions, 35);
+  const now = Date.now();
+  const thisWeekKcal = sessions.filter((s) => new Date(s.date).getTime() > now - 7 * 864e5).reduce((a, s) => a + s.kcal, 0);
+  const lastWeekKcal = sessions.filter((s) => {
+    const t2 = new Date(s.date).getTime();
+    return t2 <= now - 7 * 864e5 && t2 > now - 14 * 864e5;
+  }).reduce((a, s) => a + s.kcal, 0);
+  const trendPct = lastWeekKcal > 0 ? Math.round((thisWeekKcal - lastWeekKcal) / lastWeekKcal * 100) : null;
+  const totalSec = sessions.reduce((a, s) => a + (s.durationSec || 780), 0);
+  const totalMin = Math.round(totalSec / 60);
+  const avgKcal = sessions.length ? Math.round(totalKcal / sessions.length) : 0;
+  const pr = getPersonalRecords(sessions);
+  const yearHeat = buildYearHeatmap(sessions);
+  const rpeSeries = sessions.filter((s) => s.rpe != null).map((s, i) => ({
+    idx: i + 1,
+    rpe: s.rpe,
+    label: new Date(s.date).toLocaleDateString(LOCALES[lang], { day: "2-digit", month: "2-digit" })
+  }));
+  const avgRpe = rpeSeries.length ? rpeSeries.reduce((a, b) => a + b.rpe, 0) / rpeSeries.length : null;
+  const bestWeekKcal = (() => {
+    let best = 0;
+    sessions.forEach((s) => {
+      const t2 = new Date(s.date).getTime();
+      const wk = sessions.filter((x) => {
+        const d = new Date(x.date).getTime();
+        return d >= t2 - 7 * 864e5 && d < t2;
+      }).reduce((a, x) => a + x.kcal, 0);
+      best = Math.max(best, wk);
+    });
+    return Math.round(best);
+  })();
+  const sessionsPerWeek = sessions.length >= 2 ? sessions.length / Math.max(1, Math.round((new Date(sessions[sessions.length - 1].date) - new Date(sessions[0].date)) / (7 * 864e5))) : sessions.length;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar$1, { title: t("hist.title"), onBack }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.streak"), value: streak, sub: streak === 1 ? t("dt.day") : t("dt.days") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.record"), value: bestStreak, sub: t("dt.beststreak") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.kcal"), value: totalKcal, sub: t("dt.total") })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.minutes"), value: totalMin, sub: t("dt.trained") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.avgkcal"), value: avgKcal, sub: t("dt.permission") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag$1, { label: t("dt.weeks"), value: sessionsPerWeek.toFixed(1), sub: t("dt.perweek") })
+      ] }),
+      pr && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card-glass", style: { display: "flex", gap: 10, marginBottom: 18, padding: 12, borderRadius: 12 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "MAX KCAL" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: BLAZE, fontSize: 20 }, children: pr.maxKcal })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 1, background: OLIVE_DARK } }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "MAX STREAK" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: PAPER, fontSize: 20 }, children: [
+            pr.maxStreak,
+            "🔥"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 1, background: OLIVE_DARK } }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "TOTALE" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: KHAKI, fontSize: 20 }, children: [
+            pr.totalMin,
+            "′"
+          ] })
+        ] })
+      ] }),
+      avgRpe !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 17, color: BLAZE }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.avgint") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginLeft: "auto", display: "flex", alignItems: "baseline", gap: 4 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { color: RPE_COLORS[Math.round(avgRpe) - 1] || BLAZE, fontSize: 24 }, children: avgRpe.toFixed(1) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: "/ 6" })
+        ] })
+      ] }),
+      bestWeekKcal > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 18, background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 16, color: KHAKI, style: { flexShrink: 0 } }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13, fontWeight: 600 }, children: t("hist.bestweek.title") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5 }, children: t("hist.bestweek.sub") })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { color: BLAZE, fontSize: 22 }, children: bestWeekKcal }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 10.5 }, children: t("hist.kcal.unit") })
+      ] }),
+      (() => {
+        const wp = getWeeklyProgress(sessions, weeklyGoal);
+        const cons = getConsistencyScore$1(sessions);
+        const pace = getAveragePace(sessions);
+        const risk = getStreakRisk$1(sessions);
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 12, color: BLAZE }),
+            " ADERENZA 8 SETTIMANE"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 12 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", textAlign: "center" }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: cons >= 70 ? "#7FB069" : cons >= 40 ? KHAKI : BLAZE, fontSize: 22 }, children: [
+                cons,
+                "%"
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "CONSISTENZA" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: 4, borderRadius: 2, background: OLIVE_DARK, marginTop: 6, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: `${cons}%`, height: "100%", background: cons >= 70 ? "#7FB069" : cons >= 40 ? KHAKI : BLAZE } }) })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", textAlign: "center" }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: wp.isDone ? "#7FB069" : BLAZE, fontSize: 22 }, children: [
+                wp.done,
+                "/",
+                wp.total
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "SETTIMANA" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: risk === "ok" ? "#7FB069" : risk === "at-risk" ? KHAKI : BLAZE, fontSize: 10, marginTop: 4 }, children: risk === "ok" ? "● ok" : risk === "at-risk" ? "◐ a rischio" : "○ break" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", textAlign: "center" }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 18 }, children: pace ? `${pace.avgMin}′` : "—" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "MEDIA" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 10, marginTop: 4 }, children: pace ? `${pace.avgKcal} kcal` : "n/d" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", color: STEEL, fontSize: 11 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+              "Goal ",
+              weeklyGoal,
+              "/sett."
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: wp.isDone ? "#7FB069" : KHAKI }, children: wp.isDone ? "Completata!" : `${wp.remain} mancanti` })
+          ] })
+        ] });
+      })(),
+      (() => {
+        var _a;
+        const daily = getDailyInsight({ sessions, profile, waistHistory, weightHistory, lang });
+        const weekly = getWeeklyInsight({ sessions, profile, lang });
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 18, display: "flex", flexDirection: "column", gap: 8 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${daily.color}18, ${INK_2})`, border: `1px solid ${daily.color}55`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center" }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 22 }, children: daily.icon }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 13, fontWeight: 600 }, children: [
+                daily.title,
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, fontSize: 11, fontWeight: 400 }, children: [
+                  "· ",
+                  daily.tip
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }, children: daily.body })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 16, color: daily.color, style: { flexShrink: 0 } })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center" }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 18 }, children: weekly.icon }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13, fontWeight: 600 }, children: weekly.title }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 2 }, children: weekly.body })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: weekly.color, fontSize: 18, fontWeight: 700 }, children: (_a = weekly.body.split("/")[0]) == null ? void 0 : _a.trim() })
+          ] })
+        ] });
+      })(),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.goal.title") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontSize: 13 }, children: t("hist.goal.label") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 14 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onUpdateGoal(weeklyGoal - 1), disabled: weeklyGoal <= 1, style: { ...iconCircle, width: 30, height: 30, opacity: weeklyGoal <= 1 ? 0.4 : 1 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontSize: 16, lineHeight: 1 }, children: "–" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { color: PAPER, fontSize: 22, minWidth: 20, textAlign: "center" }, children: weeklyGoal }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onUpdateGoal(weeklyGoal + 1), disabled: weeklyGoal >= 7, style: { ...iconCircle, width: 30, height: 30, opacity: weeklyGoal >= 7 ? 0.4 : 1 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontSize: 16, lineHeight: 1 }, children: "+" }) })
+            ] })
+          ] }),
+          (() => {
+            const hist = getGoalHistory(sessions, weeklyGoal, 8);
+            const sugg = suggestNextGoal(sessions, weeklyGoal);
+            const streakW = getStreakWeeks(sessions);
+            return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MiniGoalBar, { history: hist }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 8, color: STEEL, fontSize: 11 }, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                  "8 sett. · ",
+                  streakW,
+                  " ",
+                  streakW === 1 ? "settimana" : "settimane",
+                  " streak"
+                ] }),
+                sugg !== weeklyGoal && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: KHAKI }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Lightbulb, { size: 10, style: { verticalAlign: "middle", marginRight: 4 } }),
+                  "Suggerito: ",
+                  formatGoal(sugg)
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, fontSize: 10.5, marginTop: 4 }, children: [
+                "~",
+                estimateWeeklyCalories(sessions, weeklyGoal),
+                " kcal/sett. a goal ",
+                weeklyGoal
+              ] })
+            ] });
+          })()
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.35d") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 5 }, children: heatmap.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: c.key, style: {
+          aspectRatio: "1 / 1",
+          borderRadius: 3,
+          background: c.active ? BLAZE : OLIVE_DARK,
+          opacity: c.active ? 1 : 0.6
+        } }, c.key)) }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: [
+          "Anno · ",
+          (/* @__PURE__ */ new Date()).getFullYear()
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(26, 1fr)", gap: 2 }, children: yearHeat.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: `${c.key} · ${c.count || 0}`, style: { aspectRatio: "1/1", borderRadius: 2, background: c.count ? c.count > 1 ? BLAZE : OLIVE : OLIVE_DARK, opacity: c.count ? 1 : 0.5 } }, c.key)) }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Medal, { size: 12, color: KHAKI }),
+          " ",
+          t("hist.milestones"),
+          " ",
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, fontSize: 10, marginLeft: 6 }, children: [
+            getMedalProgress(sessions).unlocked.length,
+            "/",
+            getMedalProgress(sessions).all.length,
+            " sbloccate"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MedalGrid, { sessions }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.kcal7") }),
+          trendPct !== null && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 11 }, children: t("hist.vsweek", { p: (trendPct > 0 ? "+" : "") + trendPct }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 140 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(BarChart, { data: weekData, margin: { top: 8, right: 8, left: -22, bottom: 0 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3", vertical: false }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: BLAZE }, cursor: { fill: OLIVE_DARK } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Bar, { dataKey: "kcal", fill: BLAZE, radius: [3, 3, 0, 0] })
+        ] }) }) })
+      ] }),
+      (() => {
+        const months = getMonthlyTrend(sessions);
+        const maxK = Math.max(1, ...months.map((m2) => m2.kcal));
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: "Trend mensile · kcal" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 10px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "flex-end", gap: 6, height: 80 }, children: months.map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%", height: `${Math.round(m2.kcal / maxK * 60) + 4}px`, background: m2.kcal ? BLAZE : OLIVE_DARK, borderRadius: 3, opacity: m2.kcal ? 1 : 0.5 } }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: m2.label })
+          ] }, m2.key)) }) })
+        ] });
+      })(),
+      sessions.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.fav") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, display: "flex", flexDirection: "column", gap: 10 }, children: PROGRAMS$1.map((p2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 3 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER }, children: tr$1(p2.name, lang) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL }, children: counts[p2.id] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: 6, borderRadius: 3, background: OLIVE_DARK, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: "100%", width: `${counts[p2.id] / maxCount * 100}%`, background: BLAZE, borderRadius: 3, transition: "width 0.4s ease" } }) })
+        ] }, p2.id)) })
+      ] }),
+      hrData.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.hr") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: hrData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: BLAZE } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Line, { type: "monotone", dataKey: "hr", stroke: BLAZE, strokeWidth: 2, dot: { r: 3, fill: BLAZE } })
+        ] }) }) })
+      ] }),
+      waistData.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.waist") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: waistData[0].cm <= waistData[waistData.length - 1].cm ? BLAZE : "#7FB069", fontSize: 11 }, children: t("hist.waist.total", { v: (waistData[waistData.length - 1].cm - waistData[0].cm > 0 ? "+" : "") + (waistData[waistData.length - 1].cm - waistData[0].cm) }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: waistData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { domain: ["dataMin - 2", "dataMax + 2"], tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: BLAZE } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Line, { type: "monotone", dataKey: "cm", stroke: BLAZE, strokeWidth: 2, dot: { r: 3, fill: BLAZE } })
+        ] }) }) })
+      ] }),
+      weightData.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.weight") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: weightData[weightData.length - 1].kg <= weightData[0].kg ? "#7FB069" : BLAZE, fontSize: 11 }, children: t("hist.weight.total", { v: (weightData[weightData.length - 1].kg - weightData[0].kg > 0 ? "+" : "") + (weightData[weightData.length - 1].kg - weightData[0].kg).toFixed(1) }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: weightData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { domain: ["dataMin - 1.5", "dataMax + 1.5"], tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: "#7FB069" } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Line, { type: "monotone", dataKey: "kg", stroke: "#7FB069", strokeWidth: 2, dot: { r: 3, fill: "#7FB069" } })
+        ] }) }) })
+      ] }),
+      rpeSeries.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.rpe") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: rpeSeries, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { domain: [1, 6], ticks: [1, 2, 3, 4, 5, 6], tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: BLAZE } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Line, { type: "monotone", dataKey: "rpe", stroke: BLAZE, strokeWidth: 2, dot: { r: 3, fill: BLAZE } })
+        ] }) }) })
+      ] }),
+      profile && profile.heightCm && weightHistory.length > 0 && (() => {
+        const latestKg = weightHistory[weightHistory.length - 1].kg;
+        const bmi = calcBMI(latestKg, profile.heightCm);
+        const cat = bmiCategory(bmi);
+        const tdee = estimateTDEE(latestKg, profile.heightCm, profile.age);
+        const waistLatest = waistHistory.length ? waistHistory[waistHistory.length - 1].cm : null;
+        const bf = estimateBodyFat({ waistCm: waistLatest, weightKg: latestKg, heightCm: profile.heightCm, age: profile.age });
+        const wht = waistLatest ? waistLatest / profile.heightCm : null;
+        const wcat = wht != null ? whtCategory(wht) : null;
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 6 }, children: [
+            t("bmi.title"),
+            " · ",
+            bmi,
+            " ",
+            cat && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: cat.color }, children: [
+              "· ",
+              t("bmi." + cat.key)
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 6 }, children: [
+            tdee && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 12 }, children: t("bmi.tdee", { v: tdee }) }),
+            bf != null && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: KHAKI, fontSize: 12 }, children: [
+              "· BF ",
+              bf,
+              "%"
+            ] }),
+            wht != null && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: wcat.color, fontSize: 12 }, children: [
+              "· WHtR ",
+              wht.toFixed(2)
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 4, opacity: 0.8 }, children: tr$1(simpleMealHint(bmi > 27 ? "cut" : "maintain"), lang) })
+        ] });
+      })(),
+      (() => {
+        const now2 = /* @__PURE__ */ new Date();
+        const { pad, days } = buildCalendarGrid(sessions, now2.getFullYear(), now2.getMonth());
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 8 }, children: [
+            t("export.calendar"),
+            " · ",
+            now2.toLocaleDateString(lang === "it" ? "it-IT" : lang === "de" ? "de-DE" : "en-US", { month: "long", year: "numeric" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 4, textAlign: "center" }, children: [
+            ["L", "M", "M", "G", "V", "S", "D"].map((d) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 10 }, children: d }, d)),
+            Array.from({ length: pad }).map((_, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", {}, `p${i}`)),
+            days.map((d) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: d.sessions.length ? `${d.sessions.length} sessioni` : "", style: { width: 28, height: 28, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, background: d.sessions.length ? BLAZE : "transparent", color: d.sessions.length ? PAPER : STEEL, border: d.isToday ? `1px solid ${KHAKI}` : "1px solid transparent", fontWeight: d.sessions.length ? 700 : 400 }, children: d.day }, d.key))
+          ] })
+        ] });
+      })(),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em" }, children: "Foto progressi" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { style: { background: BLAZE, color: PAPER, borderRadius: 8, padding: "6px 10px", fontSize: 11, fontWeight: 700, cursor: "pointer" }, children: [
+            "+ Foto",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "file", accept: "image/*", capture: "environment", style: { display: "none" }, onChange: (e) => {
+              const f2 = e.target.files && e.target.files[0];
+              if (f2) onAddPhoto(f2);
+              e.target.value = "";
+            } })
+          ] })
+        ] }),
+        photos.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12 }, children: "Nessuna foto — aggiungi la prima per vedere il prima/dopo" }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6 }, children: photos.slice(-6).map((ph) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { aspectRatio: "3/4", borderRadius: 8, overflow: "hidden", border: `1px solid ${OLIVE}`, background: INK }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ph.url, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) }, ph.id)) }),
+          photos.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 12 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(BeforeAfterSlider, { before: photos[0], after: photos[photos.length - 1] }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.sessions.title") }),
+      ordered.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13 }, children: t("hist.empty") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: ordered.map((s, i) => {
+        const zone = s.peakHR ? hrZone(s.peakHR, profile.age, lang) : null;
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 6, background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 14, fontWeight: 600 }, children: s.programName }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5 }, children: new Date(s.date).toLocaleDateString(LOCALES[lang], { weekday: "short", day: "2-digit", month: "short" }) })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 4, color: KHAKI, fontSize: 12.5 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 13, color: BLAZE }),
+              " ",
+              s.kcal
+            ] }),
+            zone && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 4, color: zone.color, fontSize: 12.5 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 13 }),
+              " ",
+              s.peakHR
+            ] }),
+            s.rpe && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 10.5, border: `1px solid ${OLIVE}`, borderRadius: 4, padding: "2px 5px" }, children: tr$1(RPE_LABELS[s.rpe - 1], lang) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+              if (confirmDeleteDate === s.date) {
+                onDeleteSession(s.date);
+                setConfirmDeleteDate(null);
+              } else {
+                setConfirmDeleteDate(s.date);
+                setTimeout(() => setConfirmDeleteDate((c) => c === s.date ? null : c), 3e3);
+              }
+            }, style: { ...btnIcon$1, padding: 4, background: confirmDeleteDate === s.date ? `${BLAZE}33` : "transparent" }, "aria-label": t("hist.delete"), children: confirmDeleteDate === s.date ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 14, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14, color: STEEL }) })
+          ] }),
+          s.notes && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, fontSize: 11.5, fontStyle: "italic", lineHeight: 1.4 }, children: [
+            '"',
+            s.notes,
+            '"'
+          ] })
+        ] }, i);
+      }) }),
+      sessions.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, marginTop: 20, flexWrap: "wrap" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => exportData(profile, sessions), style: { ...secondaryBtn, flex: 1, minWidth: 120, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: t("hist.export") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => exportCSV(sessions, waistHistory, weightHistory), style: { ...secondaryBtn, flex: 1, minWidth: 120, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: t("export.csv") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: async () => {
+          const r = await shareStatsImage({ sessions, profile, t, tr: tr$1 });
+          showToast(r === "share" ? "Condiviso" : "Immagine scaricata");
+        }, style: { ...secondaryBtn, flex: 1, minWidth: 120, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 14 }),
+          " ",
+          lang === "it" ? "Condividi PNG" : "Share PNG"
+        ] }),
+        "            ",
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setConfirmClear(true), style: { ...secondaryBtn, flex: 1, minWidth: 120, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(RotateCcw, { size: 15 }),
+          " ",
+          t("hist.clear")
+        ] })
+      ] })
+    ] }),
+    confirmClear && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, background: "rgba(27,29,22,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 22, maxWidth: 320, textAlign: "center" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22, marginBottom: 8 }, children: t("hist.clear.title") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, marginBottom: 18 }, children: t("hist.clear.body") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setConfirmClear(false), style: { ...secondaryBtn, flex: 1 }, children: t("hist.clear.cancel") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+          setConfirmClear(false);
+          onClear();
+        }, style: { ...primaryBtn$1, flex: 1 }, children: t("hist.clear.confirm") })
+      ] })
+    ] }) })
+  ] });
+}
+function BottomNav({ active, onNavigate }) {
+  const { t } = useT();
+  const tabs = [
+    { key: "home", label: t("nav.home"), icon: House },
+    { key: "library", label: t("nav.library"), icon: BookOpen },
+    { key: "history", label: t("nav.history"), icon: History },
+    { key: "setup", label: t("nav.setup"), icon: Settings }
+  ];
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-bottomnav-glass", style: {
+    display: "flex",
+    paddingBottom: "env(safe-area-inset-bottom, 0px)"
+  }, children: tabs.map((tab) => {
+    const on = active === tab.key;
+    const Icon = tab.icon;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onNavigate(tab.key), style: {
+      flex: 1,
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+      padding: "8px 4px 6px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 3,
+      position: "relative"
+    }, children: [
+      on && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 0, left: "26%", right: "26%", height: 2, borderRadius: 2, background: BLAZE, boxShadow: `0 0 8px ${BLAZE}` } }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+        width: 40,
+        height: 26,
+        borderRadius: 13,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: on ? `${BLAZE}22` : "transparent",
+        transition: "background 0.2s ease",
+        animation: on ? "tabPop 0.28s cubic-bezier(0.16,1,0.3,1)" : "none"
+      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { size: 20, color: on ? BLAZE : STEEL, style: { transition: "color 0.2s ease" } }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: on ? BLAZE : STEEL, fontSize: 9.5, letterSpacing: "0.03em" }, children: tab.label })
+    ] }, tab.key);
+  }) });
+}
+async function loadPhotosAsync() {
+  try {
+    const r = await window.storage.get("o40_photos");
+    if (!(r == null ? void 0 : r.value)) return [];
+    return JSON.parse(r.value);
+  } catch {
+    return [];
+  }
+}
+function loadPhotos() {
+  try {
+    const v = localStorage.getItem("o40_photos");
+    return v ? JSON.parse(v) : [];
+  } catch {
+    return [];
+  }
+}
+async function savePhotosAsync(list) {
+  try {
+    await window.storage.set("o40_photos", JSON.stringify(list.slice(-12)));
+  } catch {
+  }
+}
+function savePhotos(list) {
+  try {
+    localStorage.setItem("o40_photos", JSON.stringify(list.slice(-12)));
+  } catch {
+  }
+  savePhotosAsync(list).catch(() => {
+  });
+}
+async function fileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) return reject(new Error("no file"));
+    if (file.size > 4 * 1024 * 1024) return reject(new Error("too big"));
+    const r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+const BUILD_VERSION = "2.8.4 · 2ef9c2a";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -9358,21 +10701,6 @@ function VersionBadge({ onClick }) {
       ]
     }
   );
-}
-function exportData(profile, sessions) {
-  try {
-    const payload = JSON.stringify({ profile, sessions }, null, 2);
-    const blob = new Blob([payload], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `operator40-backup-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  } catch (e) {
-  }
 }
 const HK_ACTIVITY_MAP = {
   HKWorkoutActivityTypeFunctionalStrengthTraining: { it: "Forza funzionale (Apple Health)", en: "Functional strength (Apple Health)", de: "Funktionelles Krafttraining (Apple Health)" },
@@ -9432,158 +10760,6 @@ function parseAppleHealthExport(xmlText) {
   }
   return result;
 }
-let _mediaPromise = null;
-function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-CRpRTyjO.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
-  return _mediaPromise;
-}
-function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
-  const [src, setSrc] = reactExports.useState(null);
-  const [videoSrc, setVideoSrc] = reactExports.useState(null);
-  const [failed, setFailed] = reactExports.useState(false);
-  reactExports.useEffect(() => {
-    let cancelled = false;
-    setSrc(null);
-    setVideoSrc(null);
-    setFailed(false);
-    getMediaMap().then(({ b64, files }) => {
-      if (cancelled) return;
-      const clip = files[exerciseId] || files[pose] || null;
-      setVideoSrc(clip);
-      if (!clip) setSrc(b64[exerciseId] || b64[pose] || null);
-    }).catch(() => {
-      if (!cancelled) setFailed(true);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [exerciseId]);
-  if (videoSrc && !failed) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "video",
-      {
-        src: videoSrc,
-        autoPlay: true,
-        muted: true,
-        loop: true,
-        playsInline: true,
-        preload: "metadata",
-        onError: () => setFailed(true),
-        style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK }
-      }
-    );
-  }
-  if (src && !failed) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "img",
-      {
-        src,
-        alt: "",
-        onError: () => setFailed(true),
-        style: { width: size, height: size, objectFit: "cover", borderRadius: rounded, display: "block", background: INK }
-      }
-    );
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose, color, size });
-}
-function ProgressRing({ progress, size = 240, stroke = 12, color, comet = true }) {
-  const radius = (size - stroke) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference * (1 - Math.max(0, Math.min(1, progress)));
-  const gradId = `ring-grad-${color.replace("#", "")}`;
-  const angle = Math.max(1e-3, Math.min(0.999, progress)) * 2 * Math.PI;
-  const dotX = size / 2 + radius * Math.sin(angle);
-  const dotY = size / 2 - radius * Math.cos(angle);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: size, height: size, style: { transform: "rotate(-90deg)", filter: `drop-shadow(0 0 10px ${color}55)` }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("defs", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("linearGradient", { id: gradId, x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "0%", stopColor: color, stopOpacity: "0.65" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "100%", stopColor: color, stopOpacity: "1" })
-    ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: size / 2, cy: size / 2, r: radius, stroke: OLIVE_DARK, strokeWidth: stroke, fill: "none" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "circle",
-      {
-        cx: size / 2,
-        cy: size / 2,
-        r: radius,
-        stroke: `url(#${gradId})`,
-        strokeWidth: stroke,
-        fill: "none",
-        strokeDasharray: circumference,
-        strokeDashoffset: offset,
-        strokeLinecap: "round",
-        style: { transition: "stroke-dashoffset 1s linear" }
-      }
-    ),
-    comet && progress > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: dotX, cy: dotY, r: stroke * 2, fill: color, opacity: "0.15" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { className: "o40-comet", cx: dotX, cy: dotY, r: stroke * 0.8, fill: PAPER })
-    ] })
-  ] });
-}
-function EqBars({ tone = BLAZE, bars = 5, speed = 1, style }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "flex-end", gap: 3, height: 14, ...style }, "aria-hidden": "true", children: Array.from({ length: bars }).map((_, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-eqbar", style: {
-    width: 3,
-    background: tone,
-    height: 8,
-    animation: `eqPulse ${(0.55 + i % 3 * 0.18) / speed}s ease-in-out ${i * 0.08}s infinite`
-  } }, i)) });
-}
-function CountUp({ value, duration = 600 }) {
-  const [display, setDisplay] = reactExports.useState(value);
-  const prevRef = reactExports.useRef(value);
-  reactExports.useEffect(() => {
-    const from = prevRef.current;
-    const to = value;
-    if (from === to) return;
-    prevRef.current = to;
-    const start = performance.now();
-    let raf;
-    const tick = (t) => {
-      const p2 = Math.min(1, (t - start) / duration);
-      const eased = 1 - Math.pow(1 - p2, 3);
-      setDisplay(Math.round(from + (to - from) * eased));
-      if (p2 < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [value, duration]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: display });
-}
-function SegmentedProgress({ total, current, currentProgress, color }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 4, width: "100%" }, children: Array.from({ length: total }).map((_, i) => {
-    const isDone = i < current;
-    const isActive = i === current;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
-      flex: 1,
-      height: 6,
-      borderRadius: 3,
-      background: isDone || isActive ? color : OLIVE_DARK,
-      opacity: isActive ? 0.5 + 0.5 * currentProgress : 1,
-      transition: "opacity 0.3s linear, background 0.3s ease",
-      boxShadow: isDone || isActive ? `0 0 8px ${color}66` : "none"
-    } }, i);
-  }) });
-}
-function DogTag({ label, value, sub }) {
-  const numeric = typeof value === "number";
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card", style: {
-    background: `linear-gradient(160deg, ${INK_2}, ${INK})`,
-    border: `1px solid ${OLIVE}`,
-    borderRadius: 14,
-    padding: "12px 13px",
-    position: "relative",
-    flex: 1,
-    minWidth: 0,
-    boxShadow: "0 4px 14px rgba(0,0,0,0.35)"
-  }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", top: 9, left: -5, width: 10, height: 10, borderRadius: "50%", background: INK, border: `2px solid ${KHAKI}` } }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" }, children: label }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26, lineHeight: 1.1 }, children: numeric ? /* @__PURE__ */ jsxRuntimeExports.jsx(CountUp, { value }) : value }),
-    sub && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: sub })
-  ] });
-}
-const btnIcon = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 function App() {
   const [screen, setScreen] = reactExports.useState("loading");
   const [profile, setProfile] = reactExports.useState(null);
@@ -9974,9 +11150,9 @@ function App() {
   }, [screen, paused, secondsLeft, phaseIdx, seq, aiCoachEnabled]);
   function announcePhase(phase) {
     if (!soundRef.current) return;
-    if (phase.type === "work") speak(tr$1(EXERCISES[phase.exerciseId].name, lang));
-    else if (phase.type === "rest") speak(t("ses.rest"));
-    else if (phase.type === "cooldown") speak(t("ses.cooldown"));
+    if (phase.type === "work") speak$1(tr$1(EXERCISES[phase.exerciseId].name, lang));
+    else if (phase.type === "rest") speak$1(t("ses.rest"));
+    else if (phase.type === "cooldown") speak$1(t("ses.cooldown"));
   }
   function advancePhase() {
     const nextIdx = phaseIdx + 1;
@@ -10000,7 +11176,7 @@ function App() {
   }
   function startSession(program) {
     const skip = !!profile.skipWarmup;
-    const preset = levelPreset(profile);
+    const preset = levelPreset$1(profile);
     const mode = profile && profile.executionMode || "time";
     const levelKey = profile && profile.level || "combattente";
     const s = buildSequence(program, skip, preset.work, preset.rest, mode, levelKey);
@@ -10018,13 +11194,13 @@ function App() {
   }
   function finishSession() {
     const skip = !!profile.skipWarmup;
-    const preset = levelPreset(profile);
+    const preset = levelPreset$1(profile);
     const mode = profile && profile.executionMode || "time";
     const levelKey = profile && profile.level || "combattente";
-    const kcal = Math.round(estimateProgramKcal(activeProgram, profile.weight, skip, preset.work, preset.rest, mode, levelKey));
+    const kcal = Math.round(estimateProgramKcal$1(activeProgram, profile.weight, skip, preset.work, preset.rest, mode, levelKey));
     if (soundRef.current) playBeep(1e3, 0.25);
     if (vibrationRef.current) vibrate([80, 60, 80, 60, 150]);
-    setLastStats({ program: activeProgram, kcal, durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey) });
+    setLastStats({ program: activeProgram, kcal, durationSec: totalSeqSeconds$1(activeProgram, skip, preset.work, preset.rest, mode, levelKey) });
     setScreen("summary");
   }
   async function saveProfile() {
@@ -10064,7 +11240,7 @@ function App() {
   }
   async function recordWaist(cm) {
     const latest = waistHistory.length ? waistHistory[waistHistory.length - 1] : null;
-    if (latest && latest.cm === cm && dayKey(new Date(latest.date)) === dayKey(/* @__PURE__ */ new Date())) return;
+    if (latest && latest.cm === cm && dayKey$1(new Date(latest.date)) === dayKey$1(/* @__PURE__ */ new Date())) return;
     const updated = [...waistHistory, { date: (/* @__PURE__ */ new Date()).toISOString(), cm }];
     setWaistHistory(updated);
     try {
@@ -10074,7 +11250,7 @@ function App() {
   }
   async function recordWeight(kg) {
     const latest = weightHistory.length ? weightHistory[weightHistory.length - 1] : null;
-    if (latest && latest.kg === kg && dayKey(new Date(latest.date)) === dayKey(/* @__PURE__ */ new Date())) return;
+    if (latest && latest.kg === kg && dayKey$1(new Date(latest.date)) === dayKey$1(/* @__PURE__ */ new Date())) return;
     const updated = [...weightHistory, { date: (/* @__PURE__ */ new Date()).toISOString(), kg }];
     setWeightHistory(updated);
     try {
@@ -10600,7 +11776,7 @@ function App() {
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, opacity: 0.06, background: `repeating-linear-gradient(90deg, ${OLIVE} 0 1px, transparent 1px 14px)`, pointerEvents: "none" } }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, alignItems: "center", flex: 1, minWidth: 0 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 18, color: PAPER }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, display: "grid", placeItems: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 18, color: PAPER }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { minWidth: 0 }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { background: BLAZE, color: PAPER, fontSize: 9, fontWeight: 800, letterSpacing: "0.08em", padding: "2px 6px", borderRadius: 6 }, children: "NUOVO v2.8.4" }),
@@ -10800,7 +11976,7 @@ function App() {
               animation: "glowPulse 1.8s ease-in-out infinite"
             },
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 12 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw$1, { size: 12 }),
               " Aggiorna app → ",
               updateVersion || "nuova versione"
             ]
@@ -10853,7 +12029,7 @@ function App() {
         }
       }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-tour-card", onClick: (e) => e.stopPropagation(), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 18, color: BLAZE }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { size: 18, color: BLAZE }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { fontSize: 20 }, children: "Benvenuto!" })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 13, lineHeight: 1.5, color: "#333" }, children: lang === "it" ? "Tre tap: scegli la missione del giorno, allenati 15 minuti, traccia i progressi. Tutto offline, sulla tua privacy." : "Three taps: pick today's mission, train 15 min, track progress. Fully offline, private." }),
@@ -10888,1316 +12064,6 @@ function App() {
       ) }) })
     ] })
   ] }) });
-}
-function Field({ label, children }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }, children: label }),
-    children
-  ] });
-}
-const inputStyle = {
-  width: "100%",
-  background: INK_2,
-  border: `1px solid ${OLIVE}`,
-  borderRadius: 12,
-  padding: "12px 14px",
-  color: PAPER,
-  fontSize: 16,
-  fontFamily: "Inter, sans-serif",
-  outline: "none"
-};
-const primaryBtn = {
-  background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`,
-  color: PAPER,
-  border: "none",
-  borderRadius: 14,
-  padding: "15px 18px",
-  fontFamily: "'Bebas Neue', sans-serif",
-  fontSize: 18,
-  letterSpacing: "0.06em",
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: 6,
-  width: "100%",
-  boxShadow: `0 6px 20px ${BLAZE}4d`
-};
-function LibraryScreen({ sessions, profile }) {
-  const { lang, t } = useT();
-  const [filter, setFilter] = reactExports.useState("all");
-  const [selectedId, setSelectedId] = reactExports.useState(null);
-  const [query, setQuery] = reactExports.useState("");
-  const [showFavs, setShowFavs] = reactExports.useState(false);
-  const [favs, setFavs] = reactExports.useState(() => loadFavorites());
-  const visibleIds = Object.keys(EXERCISES).filter((id) => {
-    const ex = EXERCISES[id];
-    const byGroup = filter === "all" ? true : EXERCISE_GROUPS[filter].includes(id);
-    const byFav = showFavs ? favs.includes(id) : true;
-    const q2 = query.trim().toLowerCase();
-    const byQuery = !q2 || tr$1(ex.name, lang).toLowerCase().includes(q2) || id.toLowerCase().includes(q2) || tr$1(ex.cue, lang).toLowerCase().includes(q2);
-    return byGroup && byFav && byQuery;
-  });
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "16px 16px 4px" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26 }, children: t("lib.title") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 13 }, children: t("lib.sub") })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "10px 16px 0" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-search-wrap", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("input", { value: query, onChange: (e) => setQuery(e.target.value), placeholder: lang === "it" ? "Cerca esercizio…" : lang === "de" ? "Übung suchen…" : "Search exercise…", className: "o40-search" }),
-      query && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setQuery(""), style: { position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", background: "transparent", border: "none", color: STEEL, cursor: "pointer" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14 }) })
-    ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, padding: "12px 16px 4px", flexWrap: "wrap" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setShowFavs((v) => !v), style: { padding: "6px 12px", borderRadius: 20, cursor: "pointer", background: showFavs ? BLAZE : "transparent", border: `1px solid ${showFavs ? BLAZE : OLIVE}`, display: "flex", alignItems: "center", gap: 4 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { size: 12, color: showFavs ? PAPER : KHAKI, fill: showFavs ? PAPER : "none" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: showFavs ? PAPER : STEEL, fontSize: 11 }, children: [
-          showFavs ? "★" : "☆",
-          " ",
-          favs.length || ""
-        ] })
-      ] }),
-      [["all", t("lib.all")], ["standing", t("lib.standing")], ["ground", t("lib.ground")], ["core", t("lib.core")]].map(([key, label]) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setFilter(key), style: {
-        padding: "6px 12px",
-        borderRadius: 20,
-        cursor: "pointer",
-        background: filter === key ? BLAZE : "transparent",
-        border: `1px solid ${filter === key ? BLAZE : OLIVE}`
-      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: filter === key ? PAPER : STEEL, fontSize: 11 }, children: label }) }, key))
-    ] }),
-    (() => {
-      const lastProg = sessions && sessions.length ? sessions[sessions.length - 1].programId : null;
-      const recIds = lastProg && EXERCISES[lastProg] ? [] : profile ? PROGRAMS.find((pr) => pr.id === "A").exercises.slice(0, 3) : [];
-      let rec = recIds.length ? recIds : ["plank", "squat", "jumpingjack"].filter((id) => !favs.includes(id)).slice(0, 3);
-      const cons = getConsistencyScore(sessions);
-      const risk = getStreakRisk(sessions);
-      if (risk === "at-risk" && !query && !showFavs) {
-        rec = ["wallsit", "ponte", "superman"].filter((id) => !favs.includes(id)).slice(0, 3);
-      } else if (cons < 30 && !query && !showFavs) {
-        rec = ["jumpingjack", "squat", "crunch"].filter((id) => !favs.includes(id)).slice(0, 3);
-      }
-      const label = risk === "at-risk" ? lang === "it" ? "Recupero consigliato" : "Recovery pick" : cons < 30 ? lang === "it" ? "Partenza facile" : "Easy start" : lang === "it" ? "Consigliati per te" : "Recommended for you";
-      if (!query && !showFavs && rec.length) return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "8px 16px 0" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em", marginBottom: 6, display: "flex", alignItems: "center", gap: 4 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 10 }),
-          " ",
-          label,
-          " ",
-          cons ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, marginLeft: 6 }, children: [
-            "· ",
-            cons,
-            "% aderenza"
-          ] }) : null
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }, children: rec.map((rid) => {
-          const ex = EXERCISES[rid];
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setSelectedId(rid), style: { minWidth: 110, background: `linear-gradient(135deg, ${INK_2}, ${INK})`, border: `1px solid ${favs.includes(rid) ? BLAZE : OLIVE}`, borderRadius: 12, padding: 10, cursor: "pointer", textAlign: "center", boxShadow: favs.includes(rid) ? `0 0 0 1px ${BLAZE}22` : "none" }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 44, height: 44, margin: "0 auto 6px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: ex.pose, color: favs.includes(rid) ? BLAZE : KHAKI }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 11, fontWeight: 700 }, children: tr$1(ex.name, lang) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: favs.includes(rid) ? BLAZE : STEEL, fontSize: 9 }, children: favs.includes(rid) ? "★ preferito" : "tap per aprire" })
-          ] }, `rec-${rid}`);
-        }) })
-      ] });
-      return null;
-    })(),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 10 }, children: visibleIds.map((id) => {
-      const ex = EXERCISES[id];
-      const isOpen = selectedId === id;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: "o40-card", onClick: () => {
-        const opening = !isOpen;
-        setSelectedId(opening ? id : null);
-        if (opening) speak(tr$1(ex.name, lang));
-      }, style: {
-        display: "flex",
-        flexDirection: "column",
-        gap: 12,
-        background: INK_2,
-        border: `1px solid ${isOpen ? BLAZE : OLIVE}`,
-        borderRadius: 14,
-        padding: 12,
-        cursor: "pointer",
-        textAlign: "left",
-        width: "100%"
-      }, children: [
-        isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-expand", style: { width: "100%", aspectRatio: hasClip(id, ex.pose) ? "9 / 16" : "1 / 1", maxHeight: hasClip(id, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: id, pose: ex.pose, color: BLAZE, rounded: 10 }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12 }, children: [
-          !isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, flexShrink: 0, background: INK, borderRadius: 8, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: id, pose: ex.pose, color: BLAZE, rounded: 8 }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 14.5, flex: 1 }, children: tr$1(ex.name, lang) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: (e) => {
-                e.stopPropagation();
-                const next = toggleFavorite(favs, id);
-                setFavs(next);
-              }, className: "o40-fav", style: { background: "transparent", border: "none", cursor: "pointer", padding: 4 }, "aria-label": "favorite", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { size: 16, color: favs.includes(id) ? BLAZE : STEEL, fill: favs.includes(id) ? BLAZE : "none" }) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 12 }, children: tr$1(ex.repGuide, lang) }),
-            isOpen ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 3, marginTop: 5, textAlign: "left" }, children: ex.steps.map((s, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, alignItems: "flex-start" }, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, minWidth: 13 }, children: [
-                  i + 1,
-                  "."
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11.5, lineHeight: 1.4 }, children: tr$1(s, lang) })
-              ] }, i)) }),
-              ex.breath && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, alignItems: "center", marginTop: 6, color: OLIVE }, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 12, style: { flexShrink: 0 } }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 11, fontStyle: "italic", lineHeight: 1.4 }, children: tr$1(ex.breath, lang) })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 6, lineHeight: 1.4, fontStyle: "italic" }, children: tr$1(ex.tip40, lang) })
-            ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4 }, children: tr$1(ex.cue, lang) })
-          ] })
-        ] })
-      ] }, id);
-    }) }) })
-  ] });
-}
-function BuilderScreen({ profile, initial, onCancel, onCreate, onUpdate }) {
-  const { lang, t } = useT();
-  const [selected, setSelected] = reactExports.useState(initial ? initial.exercises : []);
-  const [rounds, setRounds] = reactExports.useState(initial ? initial.rounds : 2);
-  const [name, setName] = reactExports.useState(initial ? initial.name : "");
-  const [filter, setFilter] = reactExports.useState("all");
-  function toggleEx(id) {
-    setSelected((s) => s.includes(id) ? s.filter((x) => x !== id) : s.length < 10 ? [...s, id] : s);
-  }
-  const isEdit = !!initial;
-  const canCreate = selected.length >= 3;
-  const draft = { id: initial ? initial.id : `custom-${Date.now()}`, name: name.trim() || t("bld.draft.name"), tagline: t("bld.draft.tagline"), rounds, exercises: selected };
-  const preset = levelPreset(profile);
-  const kcal = canCreate ? Math.round(estimateProgramKcal(draft, profile.weight, !!profile.skipWarmup, preset.work, preset.rest)) : 0;
-  const mins = canCreate ? Math.round(totalSeqSeconds(draft, !!profile.skipWarmup, preset.work, preset.rest) / 60) : 0;
-  const visibleIds = Object.keys(EXERCISES).filter(
-    (id) => filter === "all" ? true : EXERCISE_GROUPS[filter].includes(id)
-  );
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("bld.title"), onBack: onCancel }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Field, { label: t("bld.name"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "input",
-        {
-          value: name,
-          onChange: (e) => setName(e.target.value),
-          placeholder: t("bld.name.ph"),
-          className: "o40-input",
-          style: inputStyle
-        }
-      ) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginTop: 16 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }, children: t("bld.rounds") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8 }, children: [1, 2, 3].map((r) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setRounds(r), style: {
-          flex: 1,
-          padding: "10px 0",
-          borderRadius: 10,
-          cursor: "pointer",
-          textAlign: "center",
-          background: rounds === r ? BLAZE : INK_2,
-          border: `1px solid ${rounds === r ? BLAZE : OLIVE}`
-        }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { color: PAPER, fontSize: 18 }, children: r }) }, r)) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", margin: "18px 0 8px" }, children: t("bld.exercises", { sel: selected.length }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8, marginBottom: 10 }, children: [["all", t("lib.all")], ["standing", t("lib.standing")], ["ground", t("lib.ground")], ["core", t("lib.core")]].map(([key, label]) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setFilter(key), style: {
-        padding: "6px 12px",
-        borderRadius: 20,
-        cursor: "pointer",
-        background: filter === key ? BLAZE : "transparent",
-        border: `1px solid ${filter === key ? BLAZE : OLIVE}`
-      }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: filter === key ? PAPER : STEEL, fontSize: 11 }, children: label }) }, key)) }),
-      selected.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 12, background: INK_2, border: `1px solid ${BLAZE}`, borderRadius: 10, padding: 10 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em", marginBottom: 6 }, children: "Ordine selezionati · trascina su/giù" }),
-        selected.map((sid, idx) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: idx < selected.length - 1 ? `1px solid ${OLIVE_DARK}` : "none" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: STEEL, fontSize: 10 }, children: [
-            idx + 1,
-            "."
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { flex: 1, color: PAPER, fontSize: 12 }, children: EXERCISES[sid] ? EXERCISES[sid].name.it : sid }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { disabled: idx === 0, onClick: () => setSelected((s) => {
-            const a = [...s];
-            [a[idx - 1], a[idx]] = [a[idx], a[idx - 1]];
-            return a;
-          }), style: { background: "transparent", border: `1px solid ${OLIVE}`, borderRadius: 6, padding: "2px 6px", color: PAPER, opacity: idx === 0 ? 0.3 : 1, cursor: idx === 0 ? "default" : "pointer" }, children: "↑" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { disabled: idx === selected.length - 1, onClick: () => setSelected((s) => {
-            const a = [...s];
-            [a[idx], a[idx + 1]] = [a[idx + 1], a[idx]];
-            return a;
-          }), style: { background: "transparent", border: `1px solid ${OLIVE}`, borderRadius: 6, padding: "2px 6px", color: PAPER, opacity: idx === selected.length - 1 ? 0.3 : 1, cursor: idx === selected.length - 1 ? "default" : "pointer" }, children: "↓" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSelected((s) => s.filter((x) => x !== sid)), style: { background: "transparent", border: "none", color: STEEL, cursor: "pointer", padding: 4 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 12 }) })
-        ] }, sid))
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: visibleIds.map((id) => {
-        const ex = EXERCISES[id];
-        const on = selected.includes(id);
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => toggleEx(id), style: {
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          background: on ? OLIVE_DARK : INK_2,
-          border: `1px solid ${on ? BLAZE : OLIVE}`,
-          borderRadius: 10,
-          padding: 10,
-          cursor: "pointer",
-          textAlign: "left"
-        }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 36, height: 36, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: ex.pose, color: on ? BLAZE : STEEL }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13.5, fontWeight: 600 }, children: tr$1(ex.name, lang) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: tr$1(ex.repGuide, lang) })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
-            width: 20,
-            height: 20,
-            borderRadius: 5,
-            border: `1px solid ${on ? BLAZE : OLIVE}`,
-            background: on ? BLAZE : "transparent",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0
-          }, children: on && /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 13, color: PAPER }) })
-        ] }, id);
-      }) })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: 16, borderTop: `1px solid ${OLIVE_DARK}` }, children: canCreate ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 14, marginBottom: 10, color: STEEL, fontSize: 12.5, justifyContent: "center" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t("bld.min", { m: mins }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t("bld.kcal", { k: kcal }) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => isEdit ? onUpdate(draft) : onCreate(draft), style: primaryBtn, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 18 }),
-        " ",
-        isEdit ? "AGGIORNA" : t("bld.create.go")
-      ] })
-    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, textAlign: "center" }, children: t("bld.hint") }) })
-  ] });
-}
-function groupOf(id) {
-  return EXERCISE_GROUPS.standing.includes(id) ? "standing" : "ground";
-}
-function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
-  const { lang, t } = useT();
-  const [selectedId, setSelectedId] = reactExports.useState(null);
-  const [subs, setSubs] = reactExports.useState({});
-  const [swapOpenId, setSwapOpenId] = reactExports.useState(null);
-  const effectiveExercises = program.exercises.map((id) => subs[id] || id);
-  const effectiveProgram = { ...program, exercises: effectiveExercises };
-  const preset = levelPreset(profile);
-  const mode = profile && profile.executionMode || "time";
-  const levelKey = profile && profile.level || "combattente";
-  const kcal = Math.round(estimateProgramKcal(effectiveProgram, profile.weight, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey));
-  const mins = Math.round(totalSeqSeconds(effectiveProgram, !!profile.skipWarmup, preset.work, preset.rest, mode, levelKey) / 60);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("prev.title", { id: program.id }), onBack }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 26 }, children: tr$1(program.name, lang) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 14, marginBottom: 14 }, children: tr$1(program.tagline, lang) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.duration"), value: `${mins}′` }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.estkcal"), value: kcal }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.rounds"), value: program.rounds })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", margin: "4px 0 10px" }, children: t("prev.sub", { n: program.exercises.length, r: program.rounds, p: mode === "reps" ? lang === "it" ? "Ripetizioni" : lang === "de" ? "Wiederholungen" : "Reps" : tr$1(preset.label, lang) }) }),
-      mode === "reps" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: BLAZE, fontSize: 11, marginBottom: 8, background: `${BLAZE}14`, border: `1px solid ${BLAZE}44`, borderRadius: 8, padding: "6px 10px", textAlign: "center" }, children: lang === "it" ? "Modalità ripetizioni: tocca FATTO quando hai finito ogni esercizio. Hold resta a tempo." : "Reps mode: tap DONE when finished each exercise. Holds stay timed." }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 10 }, children: program.exercises.map((originalId, i) => {
-        const currentId = subs[originalId] || originalId;
-        const ex = EXERCISES[currentId];
-        const isOpen = selectedId === originalId;
-        const isSwapping = swapOpenId === originalId;
-        const isSubbed = !!subs[originalId];
-        const usedElsewhere = effectiveExercises.filter((_, idx) => program.exercises[idx] !== originalId);
-        const alternatives = EXERCISE_GROUPS[groupOf(originalId)].filter((aid) => aid !== currentId && !usedElsewhere.includes(aid));
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
-          display: "flex",
-          flexDirection: "column",
-          gap: 12,
-          background: INK_2,
-          border: `1px solid ${isOpen ? BLAZE : OLIVE}`,
-          borderRadius: 10,
-          padding: 12
-        }, children: [
-          isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-expand", style: { width: "100%", aspectRatio: hasClip(currentId, ex.pose) ? "9 / 16" : "1 / 1", maxHeight: hasClip(currentId, ex.pose) ? 320 : 260, background: INK, borderRadius: 10, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: currentId, pose: ex.pose, color: BLAZE, rounded: 10 }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => {
-              const opening = !isOpen;
-              setSelectedId(opening ? originalId : null);
-              if (opening && soundOn) speak(tr$1(ex.name, lang));
-            }, style: {
-              display: "flex",
-              gap: 12,
-              background: "transparent",
-              border: "none",
-              cursor: "pointer",
-              textAlign: "left",
-              padding: 0,
-              flex: 1,
-              minWidth: 0
-            }, children: [
-              !isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, flexShrink: 0, background: INK, borderRadius: 8, border: `1px solid ${OLIVE}`, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: currentId, pose: ex.pose, color: BLAZE, rounded: 8 }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: STEEL, fontSize: 11 }, children: [
-                    i + 1,
-                    "."
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontWeight: 700, fontSize: 14.5 }, children: tr$1(ex.name, lang) }),
-                  isSubbed && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 9, border: `1px solid ${OLIVE}`, borderRadius: 4, padding: "1px 4px" }, children: t("prev.swapped") })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: KHAKI, fontSize: 12, display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }, children: [
-                  (() => {
-                    const reps = mode === "reps" ? getReps(currentId, levelKey) : null;
-                    return reps ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { background: `${BLAZE}22`, border: `1px solid ${BLAZE}55`, color: BLAZE, padding: "1px 6px", borderRadius: 6, fontWeight: 700 }, children: [
-                      "×",
-                      reps
-                    ] }) : null;
-                  })(),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tr$1(ex.repGuide, lang) }),
-                  mode === "reps" && !HOLD_EXERCISES.has(currentId) && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, fontSize: 10 }, children: [
-                    "· ",
-                    lang === "it" ? "tocca FATTO" : "tap DONE"
-                  ] })
-                ] }),
-                isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 3, marginTop: 5, textAlign: "left" }, children: ex.steps.map((s, k2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, alignItems: "flex-start" }, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, minWidth: 13 }, children: [
-                    k2 + 1,
-                    "."
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11.5, lineHeight: 1.4 }, children: tr$1(s, lang) })
-                ] }, k2)) }),
-                isOpen && ex.breath && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 6, alignItems: "center", marginTop: 6, color: OLIVE }, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 12, style: { flexShrink: 0 } }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 11, fontStyle: "italic", lineHeight: 1.4 }, children: tr$1(ex.breath, lang) })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4, fontStyle: "italic" }, children: tr$1(ex.tip40, lang) })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSwapOpenId(isSwapping ? null : originalId), style: { ...btnIcon, flexShrink: 0, alignSelf: "flex-start" }, "aria-label": t("prev.swap"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 16, color: isSwapping ? BLAZE : STEEL }) })
-          ] }),
-          isSwapping && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexWrap: "wrap", gap: 6, paddingTop: 4, borderTop: `1px solid ${OLIVE_DARK}` }, children: [
-            isSubbed && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
-              setSubs((s) => {
-                const n2 = { ...s };
-                delete n2[originalId];
-                return n2;
-              });
-              setSwapOpenId(null);
-            }, style: {
-              padding: "6px 10px",
-              borderRadius: 20,
-              background: "transparent",
-              border: `1px solid ${KHAKI}`,
-              cursor: "pointer"
-            }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10.5 }, children: t("prev.restore", { name: tr$1(EXERCISES[originalId].name, lang) }) }) }),
-            alternatives.map((aid) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
-              setSubs((s) => ({ ...s, [originalId]: aid }));
-              setSwapOpenId(null);
-            }, style: {
-              padding: "6px 10px",
-              borderRadius: 20,
-              background: INK,
-              border: `1px solid ${OLIVE}`,
-              cursor: "pointer"
-            }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: PAPER, fontSize: 10.5 }, children: tr$1(EXERCISES[aid].name, lang) }) }, aid))
-          ] })
-        ] }, originalId);
-      }) })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: 16, borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => onStart(effectiveProgram), className: "o40-pulsebtn", style: { ...primaryBtn, borderRadius: 14 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 18 }),
-      " ",
-      t("prev.go")
-    ] }) })
-  ] });
-}
-function SessionScreen({ program, profile, seq, phaseIdx, secondsLeft, paused, setPaused, soundOn, setSoundOn, musicOn, onToggleMusic, aiEnabled, onToggleAi, lang: langProp, onSkip, onPrev, exitConfirm, setExitConfirm, onExit }) {
-  const { lang: ctxLang, t } = useT();
-  const lang = langProp ?? ctxLang;
-  const phase = seq[phaseIdx];
-  const next = seq[phaseIdx + 1];
-  const ex = phase.exerciseId ? EXERCISES[phase.exerciseId] : null;
-  const nextEx = next && next.exerciseId ? EXERCISES[next.exerciseId] : null;
-  const isRepsWork = phase.type === "work" && phase.mode === "reps";
-  const isAiWork = aiEnabled && phase.type === "work" && !!phase.exerciseId;
-  const progress = isRepsWork ? 1 : phase.duration ? 1 - secondsLeft / phase.duration : 0;
-  reactExports.useEffect(() => {
-    if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === "work" && !isRepsWork) speak(String(secondsLeft), lang, LOCALES);
-  }, [secondsLeft, phase.type, soundOn, profile, isRepsWork]);
-  reactExports.useEffect(() => {
-    requestWakeLock();
-    function onVis() {
-      if (!document.hidden) requestWakeLock();
-    }
-    document.addEventListener("visibilitychange", onVis);
-    return () => {
-      document.removeEventListener("visibilitychange", onVis);
-      releaseWakeLock();
-    };
-  }, []);
-  const phaseLabel = phase.type === "warmup" ? t("ses.warmup") : phase.type === "cooldown" ? t("ses.cooldown") : phase.type === "rest" ? t("ses.rest") : t("ses.round", { r: phase.round, name: tr$1(ex.name, lang).toUpperCase() });
-  const ringColor = phase.type === "rest" ? OLIVE : phase.type === "work" ? BLAZE : KHAKI;
-  const doneWork = seq.slice(0, phaseIdx).filter((p2) => p2.type === "work").length;
-  const totalWork = seq.filter((p2) => p2.type === "work").length;
-  const elapsedSec = seq.slice(0, phaseIdx).reduce((a, p2) => a + (p2.duration || (p2.reps ? p2.reps * 3 : 0)), 0) + (phase.duration ? phase.duration - secondsLeft : 0);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TopBar,
-      {
-        title: tr$1(program.name, lang),
-        onBack: () => setExitConfirm(true),
-        right: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 2 }, children: [
-          musicOn && /* @__PURE__ */ jsxRuntimeExports.jsx(EqBars, { tone: ringColor, bars: 4, speed: phase.type === "work" ? 1.4 : phase.type === "rest" ? 0.5 : 0.8, style: { marginRight: 6, height: 12 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleAi, title: aiEnabled ? "AI Coach ON" : "AI Coach OFF", style: { ...btnIcon, border: `1px solid ${aiEnabled ? BLAZE : "transparent"}`, borderRadius: 8, background: aiEnabled ? `${BLAZE}22` : "transparent" }, children: aiEnabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 16, color: STEEL }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onToggleMusic, style: btnIcon, "aria-label": t("ses.music"), children: musicOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Music2, { size: 18, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(HeadphoneOff, { size: 18, color: STEEL }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSoundOn(!soundOn), style: btnIcon, children: soundOn ? /* @__PURE__ */ jsxRuntimeExports.jsx(Volume2, { size: 18, color: PAPER }) : /* @__PURE__ */ jsxRuntimeExports.jsx(VolumeX, { size: 18, color: STEEL }) })
-        ] })
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "10px 16px 0" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(SegmentedProgress, { total: seq.length, current: phaseIdx, currentProgress: progress, color: ringColor }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 8 }, className: "o40-mono", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: t("ses.elapsed", { t: formatTime(elapsedSec) }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: t("ses.ex", { a: doneWork, b: totalWork }) })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10, padding: 16 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `o40-mono o40-expand ${phase.type === "work" ? "o40-gradtext" : ""}`, style: { color: ringColor, fontSize: 13, letterSpacing: "0.1em" }, children: phaseLabel }, phaseIdx),
-      isAiWork ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%", maxWidth: 420 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          SessionAIOverlay,
-          {
-            phase,
-            lang,
-            levelKey: (profile == null ? void 0 : profile.level) ?? "combattente",
-            aiEnabled,
-            onCompletePhase: () => {
-              if (soundOn) playBeep(880);
-              if (vibrate) vibrate([30]);
-              onSkip();
-            },
-            onRep: () => {
-            }
-          },
-          `${phase.exerciseId}-${phaseIdx}`
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, textAlign: "center", marginTop: 6 }, children: aiEnabled ? lang === "it" ? "AI Coach attivo — conta automatico, voce nella tua lingua" : "AI Coach on — auto-count, voice in your language" : "" })
-      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: 240, height: 240 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
-            position: "absolute",
-            inset: -18,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, ${ringColor}30 0%, transparent 70%)`,
-            transition: "background 0.3s ease",
-            animation: phase.type === "rest" ? "restBreath 2.4s ease-in-out infinite" : "none"
-          } }),
-          phase.type === "work" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: -10, borderRadius: "50%", border: `2px solid ${ringColor}44`, animation: "ringPulse 1.5s ease-out infinite" } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressRing, { progress, color: ringColor }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }, children: ex ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 150, height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: phase.exerciseId, pose: ex.pose, color: PAPER, rounded: 14 }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 44 }, children: formatTime(secondsLeft) }) })
-        ] }),
-        ex && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { textAlign: "center" }, children: isRepsWork ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: PAPER, fontSize: 48, lineHeight: 1 }, children: [
-            "×",
-            phase.reps
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.08em" }, children: lang === "it" ? "RIPETIZIONI" : "REPS" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }, children: lang === "it" ? "Tocca FATTO quando hai finito" : "Tap DONE when finished" })
-        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 40 }, children: formatTime(secondsLeft) }) })
-      ] }),
-      ex && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", maxWidth: 330 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 13 }, children: isRepsWork ? `${phase.reps}× ${tr$1(ex.name, lang)} — ${tr$1(ex.repGuide, lang)}` : tr$1(ex.repGuide, lang) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 4, marginTop: 8, textAlign: "left" }, children: ex.steps.map((s, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 7, alignItems: "flex-start" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10.5, minWidth: 15 }, children: [
-            i + 1,
-            "."
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 12, lineHeight: 1.4 }, children: tr$1(s, lang) })
-        ] }, i)) }),
-        ex.breath && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 7, alignItems: "center", justifyContent: "center", marginTop: 9, color: OLIVE }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 13, style: { flexShrink: 0 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 11.5, fontStyle: "italic", lineHeight: 1.4 }, children: tr$1(ex.breath, lang) })
-        ] }),
-        ex.tip40 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, alignItems: "flex-start", marginTop: 10, textAlign: "left", background: `${KHAKI}10`, border: `1px solid ${KHAKI}44`, borderRadius: 10, padding: "8px 10px" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Lightbulb, { size: 14, color: KHAKI, style: { flexShrink: 0, marginTop: 1 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 11.5, lineHeight: 1.45 }, children: tr$1(ex.tip40, lang) })
-        ] })
-      ] }),
-      phase.type === "rest" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, marginTop: 4 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 52, height: 52, borderRadius: "50%", background: OLIVE, opacity: 0.9, animation: "restBreath 3.2s ease-in-out infinite", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Wind, { size: 16, color: PAPER }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10, letterSpacing: "0.08em" }, children: lang === "it" ? "Respira — 4 sec in, 4 sec out" : lang === "de" ? "Atmen — 4s ein, 4s aus" : "Breathe — 4s in, 4s out" })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-card-glass", style: { color: STEEL, fontSize: 12, marginTop: 6, display: "flex", alignItems: "center", gap: 8, borderRadius: 10, padding: "7px 12px" }, children: next ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        next.exerciseId && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 26, height: 26, flexShrink: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseFigure, { pose: EXERCISES[next.exerciseId].pose, color: KHAKI, size: "100%" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t("ses.next", { name: next.type === "work" ? tr$1(nextEx.name, lang) : next.type === "rest" ? t("ses.next.rest") : t("ses.next.cooldown") }) })
-      ] }) : t("ses.last") })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 12, padding: "10px 20px 8px", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setPaused(!paused), style: { ...iconCircle, width: 74, height: 74, background: BLAZE, animation: paused ? "glowPulse 1.6s ease-in-out infinite" : "none" }, "aria-label": paused ? t("ses.resume") : t("ses.pause"), children: paused ? /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 30, color: PAPER }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Pause, { size: 30, color: PAPER }) }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, padding: "0 20px 20px" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onPrev, disabled: phaseIdx === 0, style: { ...pillBtn, opacity: phaseIdx === 0 ? 0.4 : 1 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 15 }),
-        " PREV"
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "button",
-        {
-          onClick: onSkip,
-          style: {
-            ...pillBtn,
-            background: isAiWork ? `${OLIVE}88` : isRepsWork ? BLAZE : pillBtn.background,
-            color: isAiWork ? KHAKI : isRepsWork ? PAPER : void 0,
-            fontWeight: isRepsWork || isAiWork ? 700 : void 0,
-            flex: isRepsWork || isAiWork ? 1.6 : 1,
-            opacity: isAiWork ? 0.9 : 1
-          },
-          title: isAiWork ? lang === "it" ? "AI conta auto — puoi saltare manualmente" : "AI auto-count — you can skip manually" : void 0,
-          children: [
-            isAiWork ? lang === "it" ? "SALTA →" : "SKIP →" : isRepsWork ? lang === "it" ? "FATTO ✓" : "DONE ✓" : "NEXT",
-            " ",
-            isAiWork ? /* @__PURE__ */ jsxRuntimeExports.jsx(SkipForward, { size: 15 }) : isRepsWork ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 16 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(SkipForward, { size: 15 })
-          ]
-        }
-      )
-    ] }),
-    isAiWork && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, textAlign: "center", paddingBottom: 8 }, children: lang === "it" ? "AI avanzerà da solo al target · disattiva con 👁️" : "AI will auto-advance at target · disable with 👁️" }),
-    exitConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, background: "rgba(27,29,22,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 22, maxWidth: 320, textAlign: "center" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22, marginBottom: 8 }, children: t("ses.quit.title") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, marginBottom: 18 }, children: t("ses.quit.body") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setExitConfirm(false), style: { ...secondaryBtn, flex: 1 }, children: t("ses.quit.continue") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onExit, style: { ...primaryBtn, flex: 1 }, children: t("ses.quit.exit") })
-      ] })
-    ] }) })
-  ] });
-}
-const iconCircle = { borderRadius: "50%", border: `1px solid ${OLIVE}`, background: `linear-gradient(160deg, ${INK_2}, ${INK})`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 4px 12px rgba(0,0,0,0.35)" };
-const secondaryBtn = { background: INK_2, border: `1px solid ${KHAKI}`, color: PAPER, borderRadius: 14, padding: "12px 16px", fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, letterSpacing: "0.05em", cursor: "pointer" };
-const pillBtn = {
-  flex: 1,
-  background: INK_2,
-  border: `1px solid ${OLIVE}`,
-  color: PAPER,
-  borderRadius: 10,
-  padding: "10px 0",
-  fontFamily: "'IBM Plex Mono', monospace",
-  fontSize: 12,
-  letterSpacing: "0.08em",
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: 4
-};
-function SummaryScreen({ stats, profile, sessions, hrInput, setHrInput, waistInput, setWaistInput, weightInput, setWeightInput, rpe, setRpe, notes, setNotes, onSave }) {
-  const { lang, t } = useT();
-  const zone = hrInput ? hrZone(parseInt(hrInput, 10), profile.age, lang) : null;
-  const [shareState, setShareState] = reactExports.useState("idle");
-  async function handleShare() {
-    const text = t("sum.share", { name: tr$1(stats.program.name, lang), min: Math.round(stats.durationSec / 60), kcal: stats.kcal });
-    try {
-      if (navigator.share) {
-        await navigator.share({ text });
-      } else if (navigator.clipboard) {
-        await navigator.clipboard.writeText(text);
-        setShareState("copied");
-        setTimeout(() => setShareState("idle"), 2e3);
-      }
-    } catch (e) {
-    }
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column", position: "relative" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }, children: ["#C1440E", "#B8AE8C", "#7FB069", "#EDE8D8", "#D9B34C"].map((c, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-confetti", style: {
-      background: c,
-      left: `${8 + i * 18}%`,
-      animationDuration: `${2.6 + i % 3 * 0.7}s`,
-      animationDelay: `${i * 0.35}s`,
-      opacity: 0.85
-    } }, i)) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 20 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", marginTop: 10 }, className: "o40-pop", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 40, color: BLAZE }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 30, marginTop: 8 }, children: t("sum.title") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 14 }, children: tr$1(stats.program.name, lang) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleShare, style: {
-          marginTop: 10,
-          background: "transparent",
-          border: `1px solid ${KHAKI}`,
-          borderRadius: 20,
-          padding: "6px 14px",
-          cursor: "pointer",
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 6
-        }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11 }, children: shareState === "copied" ? t("sum.copied") : t("sum.sharebtn") }) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, margin: "20px 0" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.duration"), value: `${Math.round(stats.durationSec / 60)}′` }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.kcal"), value: stats.kcal })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(WeeklyChallenge, { sessions, weeklyGoal: profile.weeklyGoal || WEEKLY_GOAL }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.rpe.title") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 6, marginTop: 10 }, children: RPE_LABELS.map((lbl, i) => {
-          const val = i + 1;
-          const on = rpe === val;
-          const c = RPE_COLORS[i];
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setRpe(on ? null : val), style: {
-            flex: 1,
-            padding: "10px 2px",
-            borderRadius: 8,
-            cursor: "pointer",
-            textAlign: "center",
-            background: on ? c : INK,
-            border: `1px solid ${on ? c : OLIVE}`,
-            transition: "background 0.15s ease, border-color 0.15s ease, transform 0.1s ease"
-          }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 18 }, children: val }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: on ? PAPER : STEEL, fontSize: 8.5 }, children: tr$1(lbl, lang) })
-          ] }, val);
-        }) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.notes.title") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "textarea",
-          {
-            value: notes,
-            onChange: (e) => setNotes(e.target.value.slice(0, 200)),
-            placeholder: t("sum.notes.ph"),
-            rows: 2,
-            className: "o40-input",
-            style: { ...inputStyle, marginTop: 10, resize: "none", fontFamily: "Inter, sans-serif" }
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Ruler, { size: 18, color: BLAZE }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.waist.title") })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }, children: t("sum.waist.body") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
-          {
-            value: waistInput,
-            onChange: (e) => setWaistInput(e.target.value.replace(/\D/g, "")),
-            inputMode: "numeric",
-            placeholder: t("sum.waist.ph"),
-            className: "o40-input",
-            style: inputStyle
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Scale, { size: 18, color: BLAZE }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.weight.title") })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }, children: t("sum.weight.body") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
-          {
-            value: weightInput,
-            onChange: (e) => setWeightInput(e.target.value.replace(/[^\d.,]/g, "")),
-            inputMode: "decimal",
-            placeholder: profile && profile.weight ? t("sum.weight.ph.dynamic", { v: profile.weight }) : t("sum.weight.ph"),
-            className: "o40-input",
-            style: inputStyle
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 16, marginBottom: 12 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 18, color: BLAZE }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("sum.hr.title") }),
-          !hrInput && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-blink", style: { marginLeft: "auto", background: `${BLAZE}22`, border: `1px solid ${BLAZE}`, color: BLAZE, fontSize: 10, letterSpacing: "0.06em", borderRadius: 6, padding: "2px 7px" }, children: t("sum.hr.remind") })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }, children: t("sum.hr.body") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
-          {
-            value: hrInput,
-            onChange: (e) => setHrInput(e.target.value.replace(/\D/g, "")),
-            inputMode: "numeric",
-            placeholder: t("sum.hr.ph"),
-            className: "o40-input",
-            style: inputStyle
-          }
-        ),
-        zone && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginTop: 10, display: "flex", alignItems: "center", gap: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 10, height: 10, borderRadius: "50%", background: zone.color } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontSize: 13 }, children: t("sum.zone", { label: zone.label }) })
-        ] })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "12px 20px 20px", borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onSave, style: primaryBtn, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 18 }),
-      " ",
-      t("sum.save")
-    ] }) })
-  ] });
-}
-function last7DaysKcal(sessions, locale) {
-  const days = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = /* @__PURE__ */ new Date();
-    d.setDate(d.getDate() - i);
-    const key = dayKey(d);
-    const label = d.toLocaleDateString(locale || "it-IT", { weekday: "short" }).slice(0, 3);
-    const kcal = Math.round(sessions.filter((s) => sessionDayKey(s) === key).reduce((a, s) => a + s.kcal, 0));
-    days.push({ label, kcal });
-  }
-  return days;
-}
-function missionCounts(sessions) {
-  const counts = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
-  sessions.forEach((s) => {
-    if (counts[s.programId] !== void 0) counts[s.programId]++;
-  });
-  return counts;
-}
-function Badge({ label, unlocked, value, color = BLAZE, icon = "trophy", progress = 1 }) {
-  const Icon = icon === "fire" ? Flame : icon === "zap" ? Zap : icon === "star" ? Star : icon === "target" ? Target : Trophy;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 4,
-    flex: 1,
-    minWidth: 52,
-    opacity: unlocked ? 1 : 0.55,
-    transform: unlocked ? "scale(1)" : "scale(0.96)",
-    transition: "all 0.2s ease"
-  }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
-      width: 44,
-      height: 44,
-      borderRadius: "50%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      background: unlocked ? `radial-gradient(circle at 30% 30%, ${color}, ${INK})` : INK_2,
-      border: `1px solid ${unlocked ? color : OLIVE}`,
-      boxShadow: unlocked ? `0 0 12px ${color}66, inset 0 1px 1px rgba(255,255,255,0.15)` : "none",
-      position: "relative",
-      overflow: "hidden"
-    }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { size: 18, color: unlocked ? PAPER : STEEL, style: { filter: unlocked ? `drop-shadow(0 1px 2px rgba(0,0,0,0.4))` : "none" } }),
-      !unlocked && progress > 0 && progress < 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: OLIVE_DARK }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: `${Math.round(progress * 100)}%`, height: "100%", background: color, transition: "width 0.4s ease" } }) }),
-      unlocked && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: -2, borderRadius: "50%", border: `1px solid ${color}44`, animation: "badgePulse 1.6s ease-in-out infinite" } })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: unlocked ? PAPER : STEEL, fontSize: 10, fontWeight: unlocked ? 700 : 400 }, children: value }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: unlocked ? KHAKI : STEEL, fontSize: 8.5, textAlign: "center", lineHeight: 1.2, minHeight: 20 }, children: label })
-  ] });
-}
-function MedalGrid({ sessions }) {
-  const { all, unlocked } = getMedalProgress(sessions);
-  const byType = {
-    streak: all.filter((m2) => m2.type === "streak"),
-    sessions: all.filter((m2) => m2.type === "sessions"),
-    kcal: all.filter((m2) => m2.type === "kcal"),
-    consistency: all.filter((m2) => m2.type === "consistency"),
-    perfect: all.filter((m2) => m2.type === "perfect")
-  };
-  const next = getNextMedals(sessions, 3);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    [
-      { key: "streak", title: "SERIE", icon: "fire" },
-      { key: "sessions", title: "SESSIONI", icon: "zap" },
-      { key: "kcal", title: "KCAL", icon: "target" },
-      { key: "consistency", title: "COSTANZA", icon: "star" },
-      { key: "perfect", title: "SETT. PERFETTE", icon: "star" }
-    ].map((cat) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, letterSpacing: "0.08em", marginBottom: 6, display: "flex", alignItems: "center", gap: 6 }, children: [
-        cat.title,
-        " ",
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: unlocked.filter((m2) => m2.type === cat.key).length ? "#7FB069" : STEEL, fontSize: 9 }, children: [
-          unlocked.filter((m2) => m2.type === cat.key).length,
-          "/",
-          byType[cat.key].length
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 6, overflowX: "auto", paddingBottom: 4 }, children: byType[cat.key].map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { label: m2.label, value: m2.n, unlocked: m2.unlocked, color: m2.color, icon: m2.type === "streak" ? "fire" : m2.type === "kcal" ? "target" : m2.type === "perfect" ? "star" : "trophy", progress: m2.progress }, `${m2.type}-${m2.n}`)) })
-    ] }, cat.key)),
-    next.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK})`, border: `1px solid ${KHAKI}33`, borderRadius: 10, padding: "10px 12px", display: "flex", alignItems: "center", gap: 8 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 14, color: KHAKI }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: KHAKI, fontSize: 11, flex: 1 }, children: [
-        "Prossime: ",
-        next.map((m2) => `${m2.icon} ${m2.n}${m2.type === "kcal" ? "" : m2.type === "streak" ? "gg" : ""} (${Math.round(m2.progress * 100)}%)`).join(" • ")
-      ] })
-    ] })
-  ] });
-}
-function HistoryScreen({ sessions, profile, waistHistory, weightHistory, photos, onAddPhoto, onBack, onClear, onUpdateGoal, onDeleteSession }) {
-  const { lang, t } = useT();
-  const [confirmClear, setConfirmClear] = reactExports.useState(false);
-  const [confirmDeleteDate, setConfirmDeleteDate] = reactExports.useState(null);
-  const ordered = [...sessions].reverse();
-  const hrData = sessions.filter((s) => s.peakHR).map((s, i) => ({
-    idx: i + 1,
-    hr: s.peakHR,
-    label: new Date(s.date).toLocaleDateString(LOCALES[lang], { day: "2-digit", month: "2-digit" })
-  }));
-  const waistData = [...waistHistory].sort((a, b) => new Date(a.date) - new Date(b.date)).map((w, i) => ({
-    idx: i + 1,
-    cm: w.cm,
-    label: new Date(w.date).toLocaleDateString(LOCALES[lang], { day: "2-digit", month: "2-digit" })
-  }));
-  const weightData = [...weightHistory].sort((a, b) => new Date(a.date) - new Date(b.date)).map((w, i) => ({
-    idx: i + 1,
-    kg: w.kg,
-    label: new Date(w.date).toLocaleDateString(LOCALES[lang], { day: "2-digit", month: "2-digit" })
-  }));
-  const streak = computeStreak(sessions);
-  const bestStreak = computeBestStreak(sessions);
-  const weekData = last7DaysKcal(sessions, LOCALES[lang]);
-  const counts = missionCounts(sessions);
-  const maxCount = Math.max(1, counts.A, counts.B, counts.C, counts.D, counts.E, counts.F, counts.G);
-  const totalKcal = Math.round(sessions.reduce((a, s) => a + s.kcal, 0));
-  const weeklyGoal = profile.weeklyGoal || WEEKLY_GOAL;
-  const heatmap = buildHeatmap(sessions, 35);
-  const now = Date.now();
-  const thisWeekKcal = sessions.filter((s) => new Date(s.date).getTime() > now - 7 * 864e5).reduce((a, s) => a + s.kcal, 0);
-  const lastWeekKcal = sessions.filter((s) => {
-    const t2 = new Date(s.date).getTime();
-    return t2 <= now - 7 * 864e5 && t2 > now - 14 * 864e5;
-  }).reduce((a, s) => a + s.kcal, 0);
-  const trendPct = lastWeekKcal > 0 ? Math.round((thisWeekKcal - lastWeekKcal) / lastWeekKcal * 100) : null;
-  const totalSec = sessions.reduce((a, s) => a + (s.durationSec || 780), 0);
-  const totalMin = Math.round(totalSec / 60);
-  const avgKcal = sessions.length ? Math.round(totalKcal / sessions.length) : 0;
-  const pr = getPersonalRecords(sessions);
-  const yearHeat = buildYearHeatmap(sessions);
-  const rpeSeries = sessions.filter((s) => s.rpe != null).map((s, i) => ({
-    idx: i + 1,
-    rpe: s.rpe,
-    label: new Date(s.date).toLocaleDateString(LOCALES[lang], { day: "2-digit", month: "2-digit" })
-  }));
-  const avgRpe = rpeSeries.length ? rpeSeries.reduce((a, b) => a + b.rpe, 0) / rpeSeries.length : null;
-  const bestWeekKcal = (() => {
-    let best = 0;
-    sessions.forEach((s) => {
-      const t2 = new Date(s.date).getTime();
-      const wk = sessions.filter((x) => {
-        const d = new Date(x.date).getTime();
-        return d >= t2 - 7 * 864e5 && d < t2;
-      }).reduce((a, x) => a + x.kcal, 0);
-      best = Math.max(best, wk);
-    });
-    return Math.round(best);
-  })();
-  const sessionsPerWeek = sessions.length >= 2 ? sessions.length / Math.max(1, Math.round((new Date(sessions[sessions.length - 1].date) - new Date(sessions[0].date)) / (7 * 864e5))) : sessions.length;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TopBar, { title: t("hist.title"), onBack }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.streak"), value: streak, sub: streak === 1 ? t("dt.day") : t("dt.days") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.record"), value: bestStreak, sub: t("dt.beststreak") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.kcal"), value: totalKcal, sub: t("dt.total") })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.minutes"), value: totalMin, sub: t("dt.trained") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.avgkcal"), value: avgKcal, sub: t("dt.permission") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.weeks"), value: sessionsPerWeek.toFixed(1), sub: t("dt.perweek") })
-      ] }),
-      pr && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-card-glass", style: { display: "flex", gap: 10, marginBottom: 18, padding: 12, borderRadius: 12 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "MAX KCAL" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: BLAZE, fontSize: 20 }, children: pr.maxKcal })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 1, background: OLIVE_DARK } }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "MAX STREAK" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: PAPER, fontSize: 20 }, children: [
-            pr.maxStreak,
-            "🔥"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 1, background: OLIVE_DARK } }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "TOTALE" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: KHAKI, fontSize: 20 }, children: [
-            pr.totalMin,
-            "′"
-          ] })
-        ] })
-      ] }),
-      avgRpe !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 17, color: BLAZE }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.avgint") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginLeft: "auto", display: "flex", alignItems: "baseline", gap: 4 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { color: RPE_COLORS[Math.round(avgRpe) - 1] || BLAZE, fontSize: 24 }, children: avgRpe.toFixed(1) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: "/ 6" })
-        ] })
-      ] }),
-      bestWeekKcal > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 18, background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 16, color: KHAKI, style: { flexShrink: 0 } }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13, fontWeight: 600 }, children: t("hist.bestweek.title") }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5 }, children: t("hist.bestweek.sub") })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { color: BLAZE, fontSize: 22 }, children: bestWeekKcal }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 10.5 }, children: t("hist.kcal.unit") })
-      ] }),
-      (() => {
-        const wp = getWeeklyProgress(sessions, weeklyGoal);
-        const cons = getConsistencyScore(sessions);
-        const pace = getAveragePace(sessions);
-        const risk = getStreakRisk(sessions);
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 18, background: `linear-gradient(135deg, ${OLIVE_DARK}, ${INK_2})`, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 12, color: BLAZE }),
-            " ADERENZA 8 SETTIMANE"
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 12 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", textAlign: "center" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: cons >= 70 ? "#7FB069" : cons >= 40 ? KHAKI : BLAZE, fontSize: 22 }, children: [
-                cons,
-                "%"
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "CONSISTENZA" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: 4, borderRadius: 2, background: OLIVE_DARK, marginTop: 6, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: `${cons}%`, height: "100%", background: cons >= 70 ? "#7FB069" : cons >= 40 ? KHAKI : BLAZE } }) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", textAlign: "center" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: wp.isDone ? "#7FB069" : BLAZE, fontSize: 22 }, children: [
-                wp.done,
-                "/",
-                wp.total
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "SETTIMANA" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: risk === "ok" ? "#7FB069" : risk === "at-risk" ? KHAKI : BLAZE, fontSize: 10, marginTop: 4 }, children: risk === "ok" ? "● ok" : risk === "at-risk" ? "◐ a rischio" : "○ break" })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", textAlign: "center" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 18 }, children: pace ? `${pace.avgMin}′` : "—" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "MEDIA" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 10, marginTop: 4 }, children: pace ? `${pace.avgKcal} kcal` : "n/d" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", color: STEEL, fontSize: 11 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-              "Goal ",
-              weeklyGoal,
-              "/sett."
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: wp.isDone ? "#7FB069" : KHAKI }, children: wp.isDone ? "Completata!" : `${wp.remain} mancanti` })
-          ] })
-        ] });
-      })(),
-      (() => {
-        var _a;
-        const daily = getDailyInsight({ sessions, profile, waistHistory, weightHistory, lang });
-        const weekly = getWeeklyInsight({ sessions, profile, lang });
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 18, display: "flex", flexDirection: "column", gap: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${daily.color}18, ${INK_2})`, border: `1px solid ${daily.color}55`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center" }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 22 }, children: daily.icon }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: PAPER, fontSize: 13, fontWeight: 600 }, children: [
-                daily.title,
-                " ",
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, fontSize: 11, fontWeight: 400 }, children: [
-                  "· ",
-                  daily.tip
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }, children: daily.body })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 16, color: daily.color, style: { flexShrink: 0 } })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12, display: "flex", gap: 10, alignItems: "center" }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 18 }, children: weekly.icon }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13, fontWeight: 600 }, children: weekly.title }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 2 }, children: weekly.body })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: weekly.color, fontSize: 18, fontWeight: 700 }, children: (_a = weekly.body.split("/")[0]) == null ? void 0 : _a.trim() })
-          ] })
-        ] });
-      })(),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.goal.title") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontSize: 13 }, children: t("hist.goal.label") }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 14 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onUpdateGoal(weeklyGoal - 1), disabled: weeklyGoal <= 1, style: { ...iconCircle, width: 30, height: 30, opacity: weeklyGoal <= 1 ? 0.4 : 1 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontSize: 16, lineHeight: 1 }, children: "–" }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-display", style: { color: PAPER, fontSize: 22, minWidth: 20, textAlign: "center" }, children: weeklyGoal }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onUpdateGoal(weeklyGoal + 1), disabled: weeklyGoal >= 7, style: { ...iconCircle, width: 30, height: 30, opacity: weeklyGoal >= 7 ? 0.4 : 1 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER, fontSize: 16, lineHeight: 1 }, children: "+" }) })
-            ] })
-          ] }),
-          (() => {
-            const hist = getGoalHistory(sessions, weeklyGoal, 8);
-            const sugg = suggestNextGoal(sessions, weeklyGoal);
-            const streakW = getStreakWeeks(sessions);
-            return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(MiniGoalBar, { history: hist }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 8, color: STEEL, fontSize: 11 }, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                  "8 sett. · ",
-                  streakW,
-                  " ",
-                  streakW === 1 ? "settimana" : "settimane",
-                  " streak"
-                ] }),
-                sugg !== weeklyGoal && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: KHAKI }, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Lightbulb, { size: 10, style: { verticalAlign: "middle", marginRight: 4 } }),
-                  "Suggerito: ",
-                  formatGoal(sugg)
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, fontSize: 10.5, marginTop: 4 }, children: [
-                "~",
-                estimateWeeklyCalories(sessions, weeklyGoal),
-                " kcal/sett. a goal ",
-                weeklyGoal
-              ] })
-            ] });
-          })()
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.35d") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 5 }, children: heatmap.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: c.key, style: {
-          aspectRatio: "1 / 1",
-          borderRadius: 3,
-          background: c.active ? BLAZE : OLIVE_DARK,
-          opacity: c.active ? 1 : 0.6
-        } }, c.key)) }) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: [
-          "Anno · ",
-          (/* @__PURE__ */ new Date()).getFullYear()
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(26, 1fr)", gap: 2 }, children: yearHeat.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: `${c.key} · ${c.count || 0}`, style: { aspectRatio: "1/1", borderRadius: 2, background: c.count ? c.count > 1 ? BLAZE : OLIVE : OLIVE_DARK, opacity: c.count ? 1 : 0.5 } }, c.key)) }) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Medal, { size: 12, color: KHAKI }),
-          " ",
-          t("hist.milestones"),
-          " ",
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, fontSize: 10, marginLeft: 6 }, children: [
-            getMedalProgress(sessions).unlocked.length,
-            "/",
-            getMedalProgress(sessions).all.length,
-            " sbloccate"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MedalGrid, { sessions }) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.kcal7") }),
-          trendPct !== null && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 11 }, children: t("hist.vsweek", { p: (trendPct > 0 ? "+" : "") + trendPct }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 140 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(BarChart, { data: weekData, margin: { top: 8, right: 8, left: -22, bottom: 0 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3", vertical: false }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: BLAZE }, cursor: { fill: OLIVE_DARK } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Bar, { dataKey: "kcal", fill: BLAZE, radius: [3, 3, 0, 0] })
-        ] }) }) })
-      ] }),
-      (() => {
-        const months = getMonthlyTrend(sessions);
-        const maxK = Math.max(1, ...months.map((m2) => m2.kcal));
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: "Trend mensile · kcal" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "12px 10px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "flex-end", gap: 6, height: 80 }, children: months.map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%", height: `${Math.round(m2.kcal / maxK * 60) + 4}px`, background: m2.kcal ? BLAZE : OLIVE_DARK, borderRadius: 3, opacity: m2.kcal ? 1 : 0.5 } }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: m2.label })
-          ] }, m2.key)) }) })
-        ] });
-      })(),
-      sessions.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.fav") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, display: "flex", flexDirection: "column", gap: 10 }, children: PROGRAMS.map((p2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 3 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: PAPER }, children: tr$1(p2.name, lang) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL }, children: counts[p2.id] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: 6, borderRadius: 3, background: OLIVE_DARK, overflow: "hidden" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: "100%", width: `${counts[p2.id] / maxCount * 100}%`, background: BLAZE, borderRadius: 3, transition: "width 0.4s ease" } }) })
-        ] }, p2.id)) })
-      ] }),
-      hrData.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.hr") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: hrData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: BLAZE } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Line, { type: "monotone", dataKey: "hr", stroke: BLAZE, strokeWidth: 2, dot: { r: 3, fill: BLAZE } })
-        ] }) }) })
-      ] }),
-      waistData.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.waist") }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: waistData[0].cm <= waistData[waistData.length - 1].cm ? BLAZE : "#7FB069", fontSize: 11 }, children: t("hist.waist.total", { v: (waistData[waistData.length - 1].cm - waistData[0].cm > 0 ? "+" : "") + (waistData[waistData.length - 1].cm - waistData[0].cm) }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: waistData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { domain: ["dataMin - 2", "dataMax + 2"], tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: BLAZE } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Line, { type: "monotone", dataKey: "cm", stroke: BLAZE, strokeWidth: 2, dot: { r: 3, fill: BLAZE } })
-        ] }) }) })
-      ] }),
-      weightData.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }, children: t("hist.weight") }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: weightData[weightData.length - 1].kg <= weightData[0].kg ? "#7FB069" : BLAZE, fontSize: 11 }, children: t("hist.weight.total", { v: (weightData[weightData.length - 1].kg - weightData[0].kg > 0 ? "+" : "") + (weightData[weightData.length - 1].kg - weightData[0].kg).toFixed(1) }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 160 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: weightData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { domain: ["dataMin - 1.5", "dataMax + 1.5"], tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: "#7FB069" } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Line, { type: "monotone", dataKey: "kg", stroke: "#7FB069", strokeWidth: 2, dot: { r: 3, fill: "#7FB069" } })
-        ] }) }) })
-      ] }),
-      rpeSeries.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.rpe") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: "10px 6px", height: 150 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: rpeSeries, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(XAxis, { dataKey: "label", tick: { fill: STEEL, fontSize: 10 }, axisLine: { stroke: OLIVE }, tickLine: false }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(YAxis, { domain: [1, 6], ticks: [1, 2, 3, 4, 5, 6], tick: { fill: STEEL, fontSize: 10 }, axisLine: false, tickLine: false, width: 30 }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { contentStyle: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, fontSize: 12 }, labelStyle: { color: KHAKI }, itemStyle: { color: BLAZE } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Line, { type: "monotone", dataKey: "rpe", stroke: BLAZE, strokeWidth: 2, dot: { r: 3, fill: BLAZE } })
-        ] }) }) })
-      ] }),
-      profile && profile.heightCm && weightHistory.length > 0 && (() => {
-        const latestKg = weightHistory[weightHistory.length - 1].kg;
-        const bmi = calcBMI(latestKg, profile.heightCm);
-        const cat = bmiCategory(bmi);
-        const tdee = estimateTDEE(latestKg, profile.heightCm, profile.age);
-        const waistLatest = waistHistory.length ? waistHistory[waistHistory.length - 1].cm : null;
-        const bf = estimateBodyFat({ waistCm: waistLatest, weightKg: latestKg, heightCm: profile.heightCm, age: profile.age });
-        const wht = waistLatest ? waistLatest / profile.heightCm : null;
-        const wcat = wht != null ? whtCategory(wht) : null;
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 6 }, children: [
-            t("bmi.title"),
-            " · ",
-            bmi,
-            " ",
-            cat && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: cat.color }, children: [
-              "· ",
-              t("bmi." + cat.key)
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 6 }, children: [
-            tdee && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 12 }, children: t("bmi.tdee", { v: tdee }) }),
-            bf != null && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: KHAKI, fontSize: 12 }, children: [
-              "· BF ",
-              bf,
-              "%"
-            ] }),
-            wht != null && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: wcat.color, fontSize: 12 }, children: [
-              "· WHtR ",
-              wht.toFixed(2)
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 4, opacity: 0.8 }, children: tr$1(simpleMealHint(bmi > 27 ? "cut" : "maintain"), lang) })
-        ] });
-      })(),
-      (() => {
-        const now2 = /* @__PURE__ */ new Date();
-        const { pad, days } = buildCalendarGrid(sessions, now2.getFullYear(), now2.getMonth());
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 8 }, children: [
-            t("export.calendar"),
-            " · ",
-            now2.toLocaleDateString(lang === "it" ? "it-IT" : lang === "de" ? "de-DE" : "en-US", { month: "long", year: "numeric" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 4, textAlign: "center" }, children: [
-            ["L", "M", "M", "G", "V", "S", "D"].map((d) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 10 }, children: d }, d)),
-            Array.from({ length: pad }).map((_, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", {}, `p${i}`)),
-            days.map((d) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { title: d.sessions.length ? `${d.sessions.length} sessioni` : "", style: { width: 28, height: 28, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, background: d.sessions.length ? BLAZE : "transparent", color: d.sessions.length ? PAPER : STEEL, border: d.isToday ? `1px solid ${KHAKI}` : "1px solid transparent", fontWeight: d.sessions.length ? 700 : 400 }, children: d.day }, d.key))
-          ] })
-        ] });
-      })(),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: 14, marginBottom: 16 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em" }, children: "Foto progressi" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { style: { background: BLAZE, color: PAPER, borderRadius: 8, padding: "6px 10px", fontSize: 11, fontWeight: 700, cursor: "pointer" }, children: [
-            "+ Foto",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "file", accept: "image/*", capture: "environment", style: { display: "none" }, onChange: (e) => {
-              const f2 = e.target.files && e.target.files[0];
-              if (f2) onAddPhoto(f2);
-              e.target.value = "";
-            } })
-          ] })
-        ] }),
-        photos.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12 }, children: "Nessuna foto — aggiungi la prima per vedere il prima/dopo" }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6 }, children: photos.slice(-6).map((ph) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { aspectRatio: "3/4", borderRadius: 8, overflow: "hidden", border: `1px solid ${OLIVE}`, background: INK }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ph.url, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) }, ph.id)) }),
-          photos.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 12 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(BeforeAfterSlider, { before: photos[0], after: photos[photos.length - 1] }) })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }, children: t("hist.sessions.title") }),
-      ordered.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13 }, children: t("hist.empty") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: ordered.map((s, i) => {
-        const zone = s.peakHR ? hrZone(s.peakHR, profile.age, lang) : null;
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 6, background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 12 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 14, fontWeight: 600 }, children: s.programName }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5 }, children: new Date(s.date).toLocaleDateString(LOCALES[lang], { weekday: "short", day: "2-digit", month: "short" }) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 4, color: KHAKI, fontSize: 12.5 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 13, color: BLAZE }),
-              " ",
-              s.kcal
-            ] }),
-            zone && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 4, color: zone.color, fontSize: 12.5 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 13 }),
-              " ",
-              s.peakHR
-            ] }),
-            s.rpe && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 10.5, border: `1px solid ${OLIVE}`, borderRadius: 4, padding: "2px 5px" }, children: tr$1(RPE_LABELS[s.rpe - 1], lang) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
-              if (confirmDeleteDate === s.date) {
-                onDeleteSession(s.date);
-                setConfirmDeleteDate(null);
-              } else {
-                setConfirmDeleteDate(s.date);
-                setTimeout(() => setConfirmDeleteDate((c) => c === s.date ? null : c), 3e3);
-              }
-            }, style: { ...btnIcon, padding: 4, background: confirmDeleteDate === s.date ? `${BLAZE}33` : "transparent" }, "aria-label": t("hist.delete"), children: confirmDeleteDate === s.date ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 14, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14, color: STEEL }) })
-          ] }),
-          s.notes && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: STEEL, fontSize: 11.5, fontStyle: "italic", lineHeight: 1.4 }, children: [
-            '"',
-            s.notes,
-            '"'
-          ] })
-        ] }, i);
-      }) }),
-      sessions.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, marginTop: 20, flexWrap: "wrap" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => exportData(profile, sessions), style: { ...secondaryBtn, flex: 1, minWidth: 120, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: t("hist.export") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => exportCSV(sessions, waistHistory, weightHistory), style: { ...secondaryBtn, flex: 1, minWidth: 120, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: t("export.csv") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: async () => {
-          const r = await shareStatsImage({ sessions, profile, t, tr: tr$1 });
-          showToast(r === "share" ? "Condiviso" : "Immagine scaricata");
-        }, style: { ...secondaryBtn, flex: 1, minWidth: 120, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 14 }),
-          " ",
-          lang === "it" ? "Condividi PNG" : "Share PNG"
-        ] }),
-        "            ",
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setConfirmClear(true), style: { ...secondaryBtn, flex: 1, minWidth: 120, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(RotateCcw, { size: 15 }),
-          " ",
-          t("hist.clear")
-        ] })
-      ] })
-    ] }),
-    confirmClear && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, background: "rgba(27,29,22,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 22, maxWidth: 320, textAlign: "center" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22, marginBottom: 8 }, children: t("hist.clear.title") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 13, marginBottom: 18 }, children: t("hist.clear.body") }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setConfirmClear(false), style: { ...secondaryBtn, flex: 1 }, children: t("hist.clear.cancel") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
-          setConfirmClear(false);
-          onClear();
-        }, style: { ...primaryBtn, flex: 1 }, children: t("hist.clear.confirm") })
-      ] })
-    ] }) })
-  ] });
 }
 /*! Capacitor: https://capacitorjs.com/ - MIT License */
 const createCapacitorPlatforms = (win) => {
@@ -12720,7 +12586,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-DiTR6f7W.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-zW6vb5nI.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -13183,6 +13049,5 @@ root.render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
 );
 export {
-  CLIP_FILES as C,
   WebPlugin as W
 };
