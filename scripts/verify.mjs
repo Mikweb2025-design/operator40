@@ -7,7 +7,16 @@ const checks = [
   {
     name: 'SummaryScreen riceve sessions',
     file: 'src/App.jsx',
-    test: (c) => c.includes('function SummaryScreen({ stats, profile, sessions,') && c.includes('<SummaryScreen') && c.includes('sessions={sessions}'),
+    test: (c) => {
+      // Dopo refactor SummaryScreen è in src/screens/SummaryScreen.jsx — controlla entrambi
+      try {
+        const s = readFileSync('src/screens/SummaryScreen.jsx', 'utf8');
+        const hasFn = s.includes('function SummaryScreen({ stats, profile, sessions,');
+        const hasCall = c.includes('<SummaryScreen') && c.includes('sessions={sessions}');
+        if (hasFn && hasCall) return true;
+      } catch {}
+      return c.includes('function SummaryScreen({ stats, profile, sessions,') && c.includes('<SummaryScreen') && c.includes('sessions={sessions}');
+    },
     fix: 'SummaryScreen deve avere sessions in props e App deve passare sessions={sessions}',
   },
   {
@@ -47,8 +56,9 @@ for (const chk of checks) {
 }
 
 // Check rapido: cerca "sessions" usato fuori da function param/state in SummaryScreen
-const app = readFileSync('src/App.jsx', 'utf8');
-const summaryMatch = app.match(/function SummaryScreen\([^)]*\)/s);
+let summarySrc = '';
+try { summarySrc = readFileSync('src/screens/SummaryScreen.jsx', 'utf8'); } catch { summarySrc = readFileSync('src/App.jsx', 'utf8'); }
+const summaryMatch = summarySrc.match(/function SummaryScreen\([^)]*\)/s);
 if (summaryMatch && !summaryMatch[0].includes('sessions')) {
   console.log('✗ SummaryScreen manca sessions in signature');
   ok = false;
