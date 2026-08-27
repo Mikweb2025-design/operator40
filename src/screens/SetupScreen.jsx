@@ -7,7 +7,7 @@ import { LANGS, tr } from '../i18n.js';
 import TopBar from '../components/layout/TopBar.jsx';
 import {
   Volume2, VolumeX, Vibrate, SkipForward, Music, Music2, HeadphoneOff,
-  RefreshCw, ChevronLeft, ChevronRight, Bell, BellOff, Send, HeartPulse, Crown, Medal, ChevronRight as ChevronRightIcon
+  RefreshCw, ChevronLeft, ChevronRight, Bell, BellOff, Send, HeartPulse, Crown, Medal, ChevronRight as ChevronRightIcon, Download, Upload
 } from 'lucide-react';
 import { isStandalonePWA } from '../utils/push.js';
 
@@ -55,7 +55,7 @@ function Field({ label, children }) {
  * SetupScreen — estratto da App.jsx:1371 (~305 righe)
  * Props: tutti i form + toggles + push/music/level (controlled via App.jsx)
  */
-export default function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, executionMode, onSetExecutionMode, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText, pushEnabled, pushSupported, pushBusy, onTogglePush, onTestPush }) {
+export default function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, setFormWeight, formWaist, setFormWaist, formHeight, setFormHeight, formCustomWork, setFormCustomWork, formCustomRest, setFormCustomRest, reminderHour, setReminderHour, reminderMinute, setReminderMinute, onSave, canCancel, onCancel, soundOn, onToggleSound, vibrationOn, onToggleVibration, musicOn, onToggleMusic, musicTrack, onSelectTrack, musicVolume, onChangeMusicVolume, musicAutoPlay, onToggleAutoPlay, musicShuffle, onToggleShuffle, onNextTrack, onPrevTrack, skipWarmup, onToggleSkipWarmup, voiceCountdown, onToggleVoiceCountdown, level, onSetLevel, intervalPreset, onSetIntervalPreset, executionMode, onSetExecutionMode, onImportHealth, healthImportStatus, healthWeightSuggestion, onApplyHealthWeight, showToast, largeText, setLargeText, pushEnabled, pushSupported, pushBusy, onTogglePush, onTestPush, onExportBackup, onImportBackup }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || 'combattente');
   return (
@@ -256,6 +256,31 @@ export default function SetupScreen({ formName, setFormName, formAge, setFormAge
             )}
           </div>
         )}
+
+        <div style={{ background: INK_2, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+            <Download size={16} color={KHAKI} />
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', flex: 1 }}>
+              {lang === 'it' ? 'Backup & Ripristino' : lang === 'de' ? 'Backup & Wiederherstellung' : 'Backup & Restore'}
+            </div>
+            <span className="o40-mono" style={{ fontSize: 9, color: STEEL, border: `1px solid ${OLIVE}`, borderRadius: 6, padding: '2px 6px' }}>v1</span>
+          </div>
+          <div style={{ color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }}>
+            {lang === 'it' ? 'Esporta tutti i dati (profilo, sessioni, misure, foto) in un file JSON. Ripristina su altro device o dopo reset.' : 'Export all data (profile, sessions, measures, photos) to JSON. Restore on another device.'}
+          </div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button onClick={onExportBackup} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '10px 12px', borderRadius: 10, cursor: 'pointer', background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`, color: PAPER, border: `1px solid ${BLAZE}`, fontSize: 12, fontWeight: 700 }}>
+              <Download size={14} /> {lang === 'it' ? 'Esporta backup' : 'Export backup'}
+            </button>
+            <label style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '10px 12px', borderRadius: 10, cursor: 'pointer', background: INK, border: `1px solid ${OLIVE}`, color: KHAKI, fontSize: 12, fontWeight: 600 }}>
+              <Upload size={14} /> {lang === 'it' ? 'Ripristina' : 'Restore'}
+              <input type="file" accept=".json" style={{ display: 'none' }} onChange={e => { const f = e.target.files && e.target.files[0]; if (f) onImportBackup(f); e.target.value = ''; }} />
+            </label>
+          </div>
+          <div style={{ color: STEEL, fontSize: 10, marginTop: 8, lineHeight: 1.4, opacity: 0.8 }}>
+            {lang === 'it' ? 'Sovrascrive i dati locali — esporta prima se non sei sicuro.' : 'Overwrites local data — export first if unsure.'}
+          </div>
+        </div>
 
         <div style={{ background: INK_2, border: `1px solid ${pushEnabled ? BLAZE : OLIVE}`, borderRadius: 14, padding: 14 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
