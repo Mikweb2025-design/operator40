@@ -1,4 +1,14 @@
-import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
+import {
+  INK,
+  INK_2,
+  PAPER,
+  OLIVE,
+  OLIVE_DARK,
+  KHAKI,
+  BLAZE,
+  BLAZE_DEEP,
+  STEEL,
+} from '../constants/theme.js';
 
 export const STYLES = `
 

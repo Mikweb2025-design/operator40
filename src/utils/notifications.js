@@ -16,14 +16,18 @@ export function scheduleDailyReminder(hour = 8, minute = 0) {
 }
 
 export function disableReminder() {
-  try { localStorage.removeItem('o40_reminder'); } catch {}
+  try {
+    localStorage.removeItem('o40_reminder');
+  } catch {}
 }
 
 export function getReminder() {
   try {
     const v = localStorage.getItem('o40_reminder');
     return v ? JSON.parse(v) : null;
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
 export function checkAndFireReminder(t) {
@@ -55,5 +59,7 @@ export function fireTestNotification(t) {
       icon: './icons/icon-192.png',
     });
     return true;
-  } catch { return false; }
+  } catch {
+    return false;
+  }
 }

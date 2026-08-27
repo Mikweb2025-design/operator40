@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { isBellyProgram, getBellyStreak, getBellyProgress, getBellyCount } from './belly.js';
-import { getWeeklyProgress, getConsistencyScore, getAveragePace, getStreakRisk } from './progress.js';
+import {
+  getWeeklyProgress,
+  getConsistencyScore,
+  getAveragePace,
+  getStreakRisk,
+} from './progress.js';
 import { calcBMI, bmiCategory, estimateTDEE } from './bmi.js';
 import { estimateBodyFat, whtCategory } from './body.js';
 import { importBackup, BACKUP_VERSION } from './backup.js';

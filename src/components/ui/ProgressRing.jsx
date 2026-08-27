@@ -14,14 +14,25 @@ export default function ProgressRing({ progress, size = 240, stroke = 12, color,
   const dotX = size / 2 + radius * Math.sin(angle);
   const dotY = size / 2 - radius * Math.cos(angle);
   return (
-    <svg width={size} height={size} style={{ transform: 'rotate(-90deg)', filter: `drop-shadow(0 0 10px ${color}55)` }}>
+    <svg
+      width={size}
+      height={size}
+      style={{ transform: 'rotate(-90deg)', filter: `drop-shadow(0 0 10px ${color}55)` }}
+    >
       <defs>
         <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor={color} stopOpacity="0.65" />
           <stop offset="100%" stopColor={color} stopOpacity="1" />
         </linearGradient>
       </defs>
-      <circle cx={size / 2} cy={size / 2} r={radius} stroke={OLIVE_DARK} strokeWidth={stroke} fill="none" />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        stroke={OLIVE_DARK}
+        strokeWidth={stroke}
+        fill="none"
+      />
       <circle
         cx={size / 2}
         cy={size / 2}

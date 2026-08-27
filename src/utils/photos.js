@@ -3,7 +3,9 @@ export async function loadPhotosAsync() {
     const r = await window.storage.get('o40_photos');
     if (!r?.value) return [];
     return JSON.parse(r.value);
-  } catch { return []; }
+  } catch {
+    return [];
+  }
 }
 
 // sync fallback for initial render (reads from IDB cache if available, else LS)
@@ -13,7 +15,9 @@ export function loadPhotos() {
     // the async version will correct it on mount
     const v = localStorage.getItem('o40_photos');
     return v ? JSON.parse(v) : [];
-  } catch { return []; }
+  } catch {
+    return [];
+  }
 }
 
 export async function savePhotosAsync(list) {
@@ -24,7 +28,9 @@ export async function savePhotosAsync(list) {
 
 // keep sync for backward compat, but also persist via IDB
 export function savePhotos(list) {
-  try { localStorage.setItem('o40_photos', JSON.stringify(list.slice(-12))); } catch {}
+  try {
+    localStorage.setItem('o40_photos', JSON.stringify(list.slice(-12)));
+  } catch {}
   // fire-and-forget IDB
   savePhotosAsync(list).catch(() => {});
 }

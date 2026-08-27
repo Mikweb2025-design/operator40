@@ -5,9 +5,33 @@
  */
 
 export const BELLY_LEVELS = [
-  { key: 'recluta', label: { it: 'RECLUTA', en: 'RECRUIT', de: 'REKRUT' }, minPlank: 0, minCrunch: 0, work: 30, rest: 20, desc: { it: 'Base — core sicuro', en: 'Base — safe core', de: 'Basis — sicher' } },
-  { key: 'combattente', label: { it: 'COMBATTENTE', en: 'FIGHTER', de: 'KÄMPFER' }, minPlank: 30, minCrunch: 10, work: 40, rest: 20, desc: { it: 'Standard — 40″/20″', en: 'Standard — 40s/20s', de: 'Standard — 40s/20s' } },
-  { key: 'elite', label: { it: 'ELITE', en: 'ELITE', de: 'ELITE' }, minPlank: 60, minCrunch: 20, work: 45, rest: 15, desc: { it: 'Avanzato — 45″/15″', en: 'Advanced — 45s/15s', de: 'Fortgeschritten — 45s/15s' } },
+  {
+    key: 'recluta',
+    label: { it: 'RECLUTA', en: 'RECRUIT', de: 'REKRUT' },
+    minPlank: 0,
+    minCrunch: 0,
+    work: 30,
+    rest: 20,
+    desc: { it: 'Base — core sicuro', en: 'Base — safe core', de: 'Basis — sicher' },
+  },
+  {
+    key: 'combattente',
+    label: { it: 'COMBATTENTE', en: 'FIGHTER', de: 'KÄMPFER' },
+    minPlank: 30,
+    minCrunch: 10,
+    work: 40,
+    rest: 20,
+    desc: { it: 'Standard — 40″/20″', en: 'Standard — 40s/20s', de: 'Standard — 40s/20s' },
+  },
+  {
+    key: 'elite',
+    label: { it: 'ELITE', en: 'ELITE', de: 'ELITE' },
+    minPlank: 60,
+    minCrunch: 20,
+    work: 45,
+    rest: 15,
+    desc: { it: 'Avanzato — 45″/15″', en: 'Advanced — 45s/15s', de: 'Fortgeschritten — 45s/15s' },
+  },
 ];
 
 export function getBellyLevelForTest({ plankSec = 0, crunchReps = 0 } = {}) {
@@ -18,7 +42,7 @@ export function getBellyLevelForTest({ plankSec = 0, crunchReps = 0 } = {}) {
   const levelByCrunch = c >= 20 ? 'elite' : c >= 10 ? 'combattente' : 'recluta';
   const order = { recluta: 0, combattente: 1, elite: 2 };
   const chosen = order[levelByPlank] < order[levelByCrunch] ? levelByPlank : levelByCrunch;
-  return BELLY_LEVELS.find(l => l.key === chosen) || BELLY_LEVELS[0];
+  return BELLY_LEVELS.find((l) => l.key === chosen) || BELLY_LEVELS[0];
 }
 
 export function getBellyTestSuggestion(sessions, waistHistory) {
@@ -26,7 +50,12 @@ export function getBellyTestSuggestion(sessions, waistHistory) {
   return null;
 }
 
-export function shouldProgressBellyLevel({ sessions, currentLevelKey = 'recluta', waistHistory, profile }) {
+export function shouldProgressBellyLevel({
+  sessions,
+  currentLevelKey = 'recluta',
+  waistHistory,
+  profile,
+}) {
   // ogni 7gg dall'ultimo cambio livello, se 3/3 pancia nella settimana → suggerisci +1
   const levelOrder = ['recluta', 'combattente', 'elite'];
   const idx = levelOrder.indexOf(currentLevelKey);
@@ -38,7 +67,11 @@ export function shouldProgressBellyLevel({ sessions, currentLevelKey = 'recluta'
   }
   // check 3/3 nell'ultima settimana
   const weekAgo = Date.now() - 7 * 86400000;
-  const bellySessions = (sessions || []).filter(s => ['N','O','P','A','E','F','M'].includes(s.programId) && new Date(s.date).getTime() > weekAgo);
+  const bellySessions = (sessions || []).filter(
+    (s) =>
+      ['N', 'O', 'P', 'A', 'E', 'F', 'M'].includes(s.programId) &&
+      new Date(s.date).getTime() > weekAgo
+  );
   if (bellySessions.length < 3) return null;
   // se girovita sta scendendo o stabile, ok progredire
   return levelOrder[idx + 1];
@@ -46,7 +79,11 @@ export function shouldProgressBellyLevel({ sessions, currentLevelKey = 'recluta'
 
 export function formatBellyTestResult({ plankSec, crunchReps, lang = 'it' }) {
   const lvl = getBellyLevelForTest({ plankSec, crunchReps });
-  const labels = { recluta: { it: 'RECLUTA', en: 'RECRUIT', de: 'REKRUT' }, combattente: { it: 'COMBATTENTE', en: 'FIGHTER', de: 'KÄMPFER' }, elite: { it: 'ELITE', en: 'ELITE', de: 'ELITE' } };
+  const labels = {
+    recluta: { it: 'RECLUTA', en: 'RECRUIT', de: 'REKRUT' },
+    combattente: { it: 'COMBATTENTE', en: 'FIGHTER', de: 'KÄMPFER' },
+    elite: { it: 'ELITE', en: 'ELITE', de: 'ELITE' },
+  };
   return {
     level: lvl,
     label: labels[lvl.key][lang] || labels[lvl.key].it,

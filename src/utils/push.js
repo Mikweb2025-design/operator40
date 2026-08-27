@@ -1,6 +1,7 @@
 /* Push notifications via Web Push (VAPID) — works in PWA when app is closed */
 
-const VAPID_PUBLIC_KEY = 'BHwro8IiKhELhqxV6edpJ6iUPDAnMh7yzEmMyOi9XLL8CnkuIT3esLAgeKjz-sfjkxCb8izjLrwQUsORtdmAb5Q';
+const VAPID_PUBLIC_KEY =
+  'BHwro8IiKhELhqxV6edpJ6iUPDAnMh7yzEmMyOi9XLL8CnkuIT3esLAgeKjz-sfjkxCb8izjLrwQUsORtdmAb5Q';
 const API_BASE = './api';
 
 function urlBase64ToUint8Array(base64String) {
@@ -14,14 +15,29 @@ function urlBase64ToUint8Array(base64String) {
 
 export function isPushSupported() {
   try {
-    return typeof navigator !== 'undefined' && 'serviceWorker' in navigator && typeof window !== 'undefined' && 'PushManager' in window && 'Notification' in window;
-  } catch { return false; }
+    return (
+      typeof navigator !== 'undefined' &&
+      'serviceWorker' in navigator &&
+      typeof window !== 'undefined' &&
+      'PushManager' in window &&
+      'Notification' in window
+    );
+  } catch {
+    return false;
+  }
 }
 
 export function isStandalonePWA() {
   try {
-    return (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || (typeof window !== 'undefined' && window.navigator && window.navigator.standalone === true);
-  } catch { return false; }
+    return (
+      (typeof window !== 'undefined' &&
+        window.matchMedia &&
+        window.matchMedia('(display-mode: standalone)').matches) ||
+      (typeof window !== 'undefined' && window.navigator && window.navigator.standalone === true)
+    );
+  } catch {
+    return false;
+  }
 }
 
 export async function getExistingSubscription() {
@@ -29,20 +45,25 @@ export async function getExistingSubscription() {
   try {
     const reg = await navigator.serviceWorker.ready;
     return await reg.pushManager.getSubscription();
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
 export async function subscribePush() {
   if (!isPushSupported()) throw new Error('Push non supportato su questo browser');
   if (typeof Notification === 'undefined') throw new Error('Notification non disponibile');
-  const perm = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
+  const perm =
+    Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
   if (perm !== 'granted') throw new Error('Permesso notifiche negato');
 
   const reg = await navigator.serviceWorker.ready;
   // rimuovi vecchia subscription se esiste (cambio chiave)
   let sub = await reg.pushManager.getSubscription();
   if (sub) {
-    try { await sub.unsubscribe(); } catch {}
+    try {
+      await sub.unsubscribe();
+    } catch {}
   }
   const appServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
   sub = await reg.pushManager.subscribe({
@@ -52,7 +73,9 @@ export async function subscribePush() {
 
   // invia al backend
   await sendSubscriptionToServer(sub, 'subscribe');
-  try { localStorage.setItem('o40_push_sub', JSON.stringify({ endpoint: sub.endpoint })); } catch {}
+  try {
+    localStorage.setItem('o40_push_sub', JSON.stringify({ endpoint: sub.endpoint }));
+  } catch {}
   return sub;
 }
 
@@ -62,11 +85,16 @@ export async function unsubscribePush() {
     await sendSubscriptionToServer(sub, 'unsubscribe').catch(() => {});
     await sub.unsubscribe();
   }
-  try { localStorage.removeItem('o40_push_sub'); } catch {}
+  try {
+    localStorage.removeItem('o40_push_sub');
+  } catch {}
 }
 
 async function sendSubscriptionToServer(subscription, action = 'subscribe') {
-  const url = action === 'unsubscribe' ? `${API_BASE}/push-unsubscribe.php` : `${API_BASE}/push-subscribe.php`;
+  const url =
+    action === 'unsubscribe'
+      ? `${API_BASE}/push-unsubscribe.php`
+      : `${API_BASE}/push-subscribe.php`;
   // fall back to local only if backend non raggiungibile (es. file:// o dev senza PHP)
   try {
     const res = await fetch(url, {
@@ -89,7 +117,9 @@ export async function updatePushStats(sessions, profile, lang) {
   try {
     // derived stats per personalizzazione (non inviamo full sessions per privacy/banda)
     const now = Date.now();
-    const last = sessions.length ? sessions.reduce((a, b) => new Date(b.date) > new Date(a.date) ? b : a) : null;
+    const last = sessions.length
+      ? sessions.reduce((a, b) => (new Date(b.date) > new Date(a.date) ? b : a))
+      : null;
     const missed = last ? Math.floor((now - new Date(last.date).getTime()) / 86400000) : 999;
     // compute streak/cons locally if stats available, altrimenti lascia calcolare al server
     const payload = {
@@ -118,7 +148,12 @@ export async function testPushViaSW(lang = 'it') {
     const res = await fetch(`${API_BASE}/push-send.php`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ test: true, filterSelf: true, lang, subscription: sub ? { endpoint: sub.endpoint } : null }),
+      body: JSON.stringify({
+        test: true,
+        filterSelf: true,
+        lang,
+        subscription: sub ? { endpoint: sub.endpoint } : null,
+      }),
     });
     if (res.ok) {
       const j = await res.json();
@@ -129,7 +164,11 @@ export async function testPushViaSW(lang = 'it') {
 
   // fallback: mostra notifica locale via SW (per-lingua)
   const l = lang || 'it';
-  const titles = { it: 'Operator 40 — Test push', en: 'Operator 40 — Push test', de: 'Operator 40 — Push-Test' };
+  const titles = {
+    it: 'Operator 40 — Test push',
+    en: 'Operator 40 — Push test',
+    de: 'Operator 40 — Push-Test',
+  };
   const bodies = {
     it: 'Se vedi questo, il push PWA funziona (via SW).',
     en: 'If you see this, PWA push works (via SW).',
@@ -151,4 +190,6 @@ export async function testPushViaSW(lang = 'it') {
   return { localOnly: true };
 }
 
-export function getVAPIDPublicKey() { return VAPID_PUBLIC_KEY; }
+export function getVAPIDPublicKey() {
+  return VAPID_PUBLIC_KEY;
+}

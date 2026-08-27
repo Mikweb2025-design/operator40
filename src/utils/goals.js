@@ -8,7 +8,7 @@ export function getGoalProgress(sessions, weeklyGoal = WEEKLY_GOAL) {
   const start = new Date(now);
   start.setDate(now.getDate() - now.getDay() + 1);
   start.setHours(0, 0, 0, 0);
-  const done = (sessions || []).filter(s => new Date(s.date) >= start).length;
+  const done = (sessions || []).filter((s) => new Date(s.date) >= start).length;
   const pct = Math.min(1, done / weeklyGoal);
   const remain = Math.max(0, weeklyGoal - done);
   const isDone = done >= weeklyGoal;
@@ -25,12 +25,18 @@ export function getGoalHistory(sessions, weeklyGoal = WEEKLY_GOAL, weeks = 8) {
     weekStart.setHours(0, 0, 0, 0);
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 7);
-    const done = (sessions || []).filter(s => {
+    const done = (sessions || []).filter((s) => {
       const d = new Date(s.date);
       return d >= weekStart && d < weekEnd;
     }).length;
     const label = weekStart.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' });
-    byWeek.push({ label, done, goal: weeklyGoal, pct: Math.min(1, done / weeklyGoal), isDone: done >= weeklyGoal });
+    byWeek.push({
+      label,
+      done,
+      goal: weeklyGoal,
+      pct: Math.min(1, done / weeklyGoal),
+      isDone: done >= weeklyGoal,
+    });
   }
   return byWeek;
 }

@@ -27,12 +27,14 @@ if ('serviceWorker' in navigator) {
     let refreshing = false;
 
     const checkUpdate = () => {
-      navigator.serviceWorker.getRegistration()
+      navigator.serviceWorker
+        .getRegistration()
         .then((reg) => reg && reg.update())
         .catch(() => {});
     };
 
-    navigator.serviceWorker.register('./sw.js')
+    navigator.serviceWorker
+      .register('./sw.js')
       .then(() => {
         checkUpdate();
         window.addEventListener('focus', checkUpdate);
@@ -44,7 +46,8 @@ if ('serviceWorker' in navigator) {
 
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (refreshing) return;
-      if (window.__o40Busy) {          // never reload mid-workout
+      if (window.__o40Busy) {
+        // never reload mid-workout
         window.__o40ReloadAfter = true;
         return;
       }

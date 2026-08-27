@@ -9,18 +9,22 @@ export function getAudioCtx() {
     }
     if (_audioCtx.state === 'suspended') _audioCtx.resume();
     return _audioCtx;
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
 export function unlockAudio() {
   try {
     const ctx = getAudioCtx();
     if (ctx && ctx.state === 'suspended') ctx.resume();
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
 }
 
 if (typeof window !== 'undefined') {
-  ['pointerdown', 'touchend', 'keydown'].forEach(evt =>
+  ['pointerdown', 'touchend', 'keydown'].forEach((evt) =>
     window.addEventListener(evt, unlockAudio, { once: true, passive: true })
   );
 }
@@ -39,13 +43,21 @@ export function playBeep(freq = 660, duration = 0.12) {
     osc.connect(gain).connect(ctx.destination);
     osc.start();
     osc.stop(ctx.currentTime + duration + 0.02);
-  } catch { /* audio not available */ }
+  } catch {
+    /* audio not available */
+  }
 }
 
-export function playClick() { playBeep(1500, 0.025); }
+export function playClick() {
+  playBeep(1500, 0.025);
+}
 
 export function vibrate(pattern) {
-  try { if (navigator.vibrate) navigator.vibrate(pattern); } catch { /* not available */ }
+  try {
+    if (navigator.vibrate) navigator.vibrate(pattern);
+  } catch {
+    /* not available */
+  }
 }
 
 export function speak(text, lang, locales) {
@@ -56,5 +68,7 @@ export function speak(text, lang, locales) {
     u.lang = (lang && locales[lang]) || 'it-IT';
     u.rate = 1.03;
     window.speechSynthesis.speak(u);
-  } catch { /* not available */ }
+  } catch {
+    /* not available */
+  }
 }

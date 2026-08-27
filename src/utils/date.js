@@ -1,5 +1,6 @@
 export function formatTime(s) {
-  const m = Math.floor(s / 60), sec = s % 60;
+  const m = Math.floor(s / 60),
+    sec = s % 60;
   return `${m}:${sec.toString().padStart(2, '0')}`;
 }
 
