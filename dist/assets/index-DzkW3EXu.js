@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-DeONlY3i.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-BZ_Y-Nzb.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-UV0HSyq9.js","./icons-D3QZqbji.js","./charts-Bi7lEBzN.js","./web-nD6yIDle.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -2220,10 +2220,18 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 function isPushSupported() {
-  return "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+  try {
+    return typeof navigator !== "undefined" && "serviceWorker" in navigator && typeof window !== "undefined" && "PushManager" in window && "Notification" in window;
+  } catch {
+    return false;
+  }
 }
 function isStandalonePWA() {
-  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  try {
+    return typeof window !== "undefined" && window.matchMedia && window.matchMedia("(display-mode: standalone)").matches || typeof window !== "undefined" && window.navigator && window.navigator.standalone === true;
+  } catch {
+    return false;
+  }
 }
 async function getExistingSubscription() {
   if (!isPushSupported()) return null;
@@ -7593,8 +7601,8 @@ function SetupScreen({ formName, setFormName, formAge, setFormAge, formWeight, s
         }, children: [
           curLevel.key === l2.key ? /* @__PURE__ */ jsxRuntimeExports.jsx(Crown, { size: 15, color: BLAZE }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Medal, { size: 15, color: STEEL }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: PAPER, fontSize: 12.5 }, children: l2.label }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: l2.desc })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: PAPER, fontSize: 12.5 }, children: tr$1(l2.label, lang) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: tr$1(l2.desc, lang) })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: curLevel.key === l2.key ? BLAZE : KHAKI, fontSize: 11 }, children: [
             l2.work,
@@ -8824,7 +8832,7 @@ function toggleFavorite(list, id) {
 }
 let _mediaPromise$2 = null;
 function getMediaMap$2() {
-  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-DeONlY3i.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$2) _mediaPromise$2 = __vitePreload(() => import("./media-UV0HSyq9.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$2;
 }
 function ExerciseMedia$2({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9111,7 +9119,7 @@ const primaryBtn$3 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$2 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise$1 = null;
 function getMediaMap$1() {
-  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-DeONlY3i.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise$1) _mediaPromise$1 = __vitePreload(() => import("./media-UV0HSyq9.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise$1;
 }
 function ExerciseMedia$1({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -9309,7 +9317,7 @@ const primaryBtn$2 = { background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DE
 const btnIcon$1 = { background: "transparent", border: "none", padding: 6, cursor: "pointer", display: "flex", borderRadius: 10 };
 let _mediaPromise = null;
 function getMediaMap() {
-  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-DeONlY3i.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
+  if (!_mediaPromise) _mediaPromise = __vitePreload(() => import("./media-UV0HSyq9.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => ({ b64: m2.VIDEO_B64, files: m2.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -10747,7 +10755,7 @@ function BottomNav({ active, onNavigate }) {
     ] }, tab.key);
   }) });
 }
-const BUILD_VERSION = "2.8.4 · ce74442";
+const BUILD_VERSION = "2.8.4 · 2677249";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -12709,7 +12717,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-BZ_Y-Nzb.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-nD6yIDle.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
