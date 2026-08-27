@@ -1,6 +1,6 @@
 # Operator40 — Complete Structure & Functions
 
-> **Read this to continue tomorrow without re-discovering the repo.** Updated **2026-08-25** — `main @ 170c558` (`index-BtRuuVLP.js / o40-v76178e8f`) + `deploy-tmp @ 7b420a9` (live). Build `2.8.3 · <git-short>` + **22 AI analyzers** (all trackingSupported).
+> **Read this to continue tomorrow without re-discovering the repo.** Updated **2026-08-27** — `main @ 5f40511` (`index-BgW1cw35.js / o40-va068d42f`) + `deploy-tmp @ 8c20bdd` (live `o40-va068d42f`). Build `2.9.0 · <git-short>` + **22 AI analyzers + audit 5 aree**.
 
 ---
 
@@ -16,7 +16,7 @@ Dark military UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N
   - `operator40-Watch` — with Huawei (separate branch)
 - **Stack:** React 18, Vite 5, Capacitor 6 (`idb 8`, `@mediapipe/tasks-vision 0.10` lite/heavy/auto + GPU→CPU + WASM offline `fetch-mediapipe.mjs`), `lucide-react`, `recharts`, Vitest 1, Playwright, PHP 8.3 `web-push` 9.0
 
-**v2.8 what changed:** `src/ai/` modular engine (Geometry + PoseQuality + 22 analyzers + MotionFusion + LandmarkRecorder), `trackingSupported 22/22`, `repConfidence` gating, debug HUD with `landmarks.json` replay, `wallsit/sideplank` hold etc.
+**v2.9 what changed:** audit 5 aree — `src/components/ui/*` dedup, `i18n` 15+ chiavi, `audit.test.js` 21 test (30→51), `App.jsx` 9 screens `React.lazy` 749k→444k, `sw.js` SWR + `SKIP_WAITING`, `backup.js` + `STORAGE_SCHEMA_VERSION=2` (già in 2.8.3), changelog 2.9.0.
 
 ---
 
@@ -34,13 +34,13 @@ operator40/
 │   ├── manifest.webmanifest
 │   └── sw.js               # offline cache-first + push + precache 6 clips + wasm/models if present, CACHE o40-v<hash>
 ├── src/
-│   ├── App.jsx             # ★ ENTIRE APP ~3300 lines — screens + isAiWork gated SessionAIOverlay, aiEnabled toggle
+│   ├── App.jsx             # ★ ROUTER ~1240 lines — 9 screens React.lazy + Suspense + isAiWork gated SessionAIOverlay
 │   ├── main.jsx            # bootstrap React + window.storage (IDB/Preferences) + PWA install defer
-│   ├── storage.js          # IndexedDB (idb) web + Preferences native, migration from localStorage
-│   ├── media.js            # VIDEO_B64 WebP lazy 1.7M
+│   ├── storage.js          # IndexedDB (idb) v2 + Preferences native, STORAGE_SCHEMA_VERSION=2 + migrateStoredDataIfNeeded + backup.js
+│   ├── media.js            # VIDEO_B64 WebP lazy 1.7M (già lazy via dynamic import in Session/Preview)
 │   ├── clips.js            # CLIP_FILES 18 MP4 + hasClip()
 │   ├── music.js            # playlist autoplay
-│   ├── i18n.js             # LANGS [it,en,de], detectLang, tr/translate
+│   ├── i18n.js             # LANGS [it,en,de] + 15+ nuove chiavi home.section.* / setup.backup.* (audit/7)
 │   ├── data/
 │   │   ├── exercises.js    # EXERCISES 22 + EXERCISE_GROUPS (standing/ground/core)
 │   │   └── programs.js     # PROGRAMS 18, QUICK_PROGRAM, LEVELS, INTERVAL_PRESETS, DAY_CYCLE 20, BELLY_IDS, CAMP_DAYS 30, pickNextProgram
@@ -76,14 +76,16 @@ operator40/
 │   │   ├── overlay/poseConnections.ts
 │   │   └── hooks/useFitnessEngine.ts
 │   ├── utils/
-│   │   ├── stats.js, progress.js, goals.js, missions.js, motivation.js, push.js, belly.js, bellyTest.js, workout.js, audio.js, export.js, share*.js, bmi.js, body.js, favorites.js, photos.js, wakeLock.js, notifications.js
+│   │   ├── stats.js, progress.js, goals.js, missions.js, motivation.js, push.js, belly.js, bellyTest.js, workout.js, audio.js, export.js, share*.js, bmi.js, body.js, audit.test.js (21), backup.js (BACKUP_VERSION=2), favorites.js, photos.js, wakeLock.js, notifications.js
 │   │   └── ...
 │   ├── components/
-│   │   ├── FitnessEngineView.tsx    # AI view 22 switcher + poseQuality bar + DEBUG HUD (PHASE/REP CONF/POSE/FORM/FPS/ANGLE/VEL/REQ/DET) + recorder
+│   │   ├── ui/ DogTag.jsx, ProgressRing.jsx, SegmentedProgress.jsx, styles.js (dedup audit/3)
+│   │   ├── FitnessEngineView.tsx    # AI view 22 switcher + poseQuality bar + DEBUG HUD
 │   │   ├── SessionAIOverlay.tsx     # mission→exercise auto, trackingSupported gate, voice it/en/de/fr
 │   │   ├── PoseCounter.jsx          # DEPRECATED → FitnessEngineView
 │   │   ├── PositioningMask.tsx      # alignmentScore
 │   │   ├── BellyTest.jsx, BeforeAfterSlider.jsx, ExerciseFigure.jsx, etc.
+│   │   ├── ChangelogModal.tsx   # v2.9.0 — 6 gruppi audit
 │   │   └── ErrorBoundary.jsx
 │   ├── constants/theme.js
 │   └── styles/appStyles.js
@@ -131,12 +133,12 @@ operator40/
 
 ## 6. Git Strategy (for tomorrow)
 
-- `git checkout main && git pull` — work here, `npm run verify && npm run build && npm run test` (24 tests)
+- `git checkout main && git pull` — work here, `npm run verify && npm run build && npm run test` (51 tests)
 - `git add src/ai/... && git commit -m "feat(ai): ..."` + `git push origin main`
 - For live: `git checkout deploy-tmp && git merge main && npm run build && git add -f dist && git commit -m "deploy: <hash>" && git push origin deploy-tmp -f` then `curl raw` to `/var/www/vhosts/mikweb.eu/httpdocs/operator40/` (or `node scripts/deploy.mjs --remote`)
 - Screenshots: `npm run preview` on `:4173` + `node scripts/screenshots.mjs` → `docs/screenshots/06-ai-debug.png` (commit with `git add docs/screenshots`)
-- Continue tomorrow: tune thresholds in `src/ai/exercises/analyzers/*.ts` using `landmarks.json` replay, add fixtures to `tests/fixtures/`, bump `2.9.0` when ready
+- Continue tomorrow: tune thresholds in `src/ai/exercises/analyzers/*.ts` using `landmarks.json` replay, add fixtures to `tests/fixtures/` — 2.9.0 già bumpato, prossimo 2.9.1
 
-**Current:** `main 170c558` (`index-BtRuuVLP.js / o40-v76178e8f`) + `deploy-tmp 7b420a9` live verified.
+**Current:** `main 5f40511` (`index-BgW1cw35.js / o40-va068d42f`) + `deploy-tmp 8c20bdd` live `o40-va068d42f` — audit 5 aree + changelog 2.9.0.
 
 All set — continue tomorrow from `src/ai/exercises/analyzers/` with device testing.
