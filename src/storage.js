@@ -15,15 +15,17 @@ import { openDB } from 'idb';
 const isNative = () =>
   typeof window !== 'undefined' && window.Capacitor && window.Capacitor.isNativePlatform();
 
-// --- IndexedDB for web ---
+// --- IndexedDB for web — versionato ---
+export const STORAGE_SCHEMA_VERSION = 2;
 let dbPromise = null;
 function getDB() {
   if (dbPromise) return dbPromise;
   if (typeof indexedDB === 'undefined') return null;
   try {
-    dbPromise = openDB('operator40', 1, {
-      upgrade(db) {
+    dbPromise = openDB('operator40', STORAGE_SCHEMA_VERSION, {
+      upgrade(db, oldVersion) {
         if (!db.objectStoreNames.contains('kv')) db.createObjectStore('kv');
+        // future migrations: if (oldVersion < 2) { /* migrate kv shapes */ }
       },
     });
     return dbPromise;
@@ -31,6 +33,10 @@ function getDB() {
     return null;
   }
 }
+function getStoredVersion() {
+  try { return parseInt(localStorage.getItem('o40_schemaVersion') || '0', 10) || 0; } catch { return 0; }
+}
+function setStoredVersion(v) { try { localStorage.setItem('o40_schemaVersion', String(v)); } catch {} }
 
 // Keys that are large and benefit most from IDB
 const IDB_KEYS = new Set([
@@ -145,4 +151,25 @@ async function migrateFromLocalStorage() {
   } catch {}
 }
 
-export { get, set, remove, clear, migrateFromLocalStorage };
+async function migrateStoredDataIfNeeded() {
+  const cur = getStoredVersion();
+  if (cur >= STORAGE_SCHEMA_VERSION) return;
+  // v0 -> v1: normalizza profile/sessions come in backup.js
+  // v1 -> v2: assicurati che o40_profile abbia schemaVersion e campi base
+  try {
+    const r = await get('o40_profile');
+    if (r && r.value) {
+      const p = JSON.parse(r.value);
+      if (!p.schemaVersion || p.schemaVersion < STORAGE_SCHEMA_VERSION) {
+        p.schemaVersion = STORAGE_SCHEMA_VERSION;
+        if (!p.lang) p.lang = 'it';
+        if (!p.weeklyGoal) p.weeklyGoal = 3;
+        if (!p.level) p.level = 'combattente';
+        await set('o40_profile', JSON.stringify(p));
+      }
+    }
+    setStoredVersion(STORAGE_SCHEMA_VERSION);
+  } catch {}
+}
+
+export { get, set, remove, clear, migrateFromLocalStorage, migrateStoredDataIfNeeded, getStoredVersion, setStoredVersion };

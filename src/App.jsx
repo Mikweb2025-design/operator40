@@ -42,6 +42,7 @@ import BottomNav from './components/layout/BottomNav.jsx';
 import VersionBadge from './components/layout/VersionBadge.jsx';
 import { getBellyLevelForTest, shouldProgressBellyLevel } from './utils/bellyTest.js';
 import { exportBackup, downloadBackup, importBackup } from './utils/backup.js';
+import { migrateStoredDataIfNeeded } from './storage.js';
 import { shareResults } from './utils/share.js';
 import { exportCSV, buildCalendarGrid } from './utils/export.js';
 import { calcBMI, bmiCategory, estimateTDEE, simpleMealHint } from './utils/bmi.js';
@@ -238,9 +239,10 @@ export default function App() {
     toastTimerRef.current = setTimeout(() => setToast(null), 2600);
   }
 
-  // ---- load persisted data ----
+  // ---- load persisted data + migration ----
   useEffect(() => {
     (async () => {
+      try { await migrateStoredDataIfNeeded(); } catch {}
       let p = null, s = [], cp = [], wh = [];
       try {
         const r = await window.storage.get('o40_profile', false);
