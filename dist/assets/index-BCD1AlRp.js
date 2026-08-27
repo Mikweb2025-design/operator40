@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-CMqTcRfx.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./CountdownScreen-C6eZd0_v.js","./SetupScreen-B2lTHG4L.js","./TopBar-BOXGqO-U.js","./HomeScreen-0j10autO.js","./GoalRing-7qPFC-i-.js","./ExerciseFigure-BeBh4dFF.js","./DogTag-DmiNOloH.js","./ProgressRing-DOQmFydA.js","./LibraryScreen-BiAwQ8QA.js","./clips-CZetA5iC.js","./BuilderScreen-DurFdl9v.js","./PreviewScreen-DzPnVTgb.js","./SessionScreen-DP75EeY6.js","./SummaryScreen-Cc-JHAiP.js","./HistoryScreen-C4tcLGyf.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-DRmiyh4L.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./CountdownScreen-e7p0UJSN.js","./SetupScreen-nSdQTMDH.js","./TopBar-M8L1cg1Q.js","./HomeScreen-DJc6OaMr.js","./GoalRing-CnxBasFi.js","./ExerciseFigure-CAP42g2b.js","./DogTag-CZWC7Eoo.js","./ProgressRing-3MWbTsiO.js","./LibraryScreen-BX99hEOL.js","./clips-CZetA5iC.js","./BuilderScreen-DTP1z-dG.js","./PreviewScreen-BVNuicQK.js","./SessionScreen-DEpFXWB6.js","./SummaryScreen-BYGfTTsv.js","./HistoryScreen-Bfpv-46_.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -7923,7 +7923,7 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.9.1 · cbc42ba";
+const BUILD_VERSION = "2.9.1 · fb2bb5a";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -8517,7 +8517,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-CMqTcRfx.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-DRmiyh4L.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -9116,15 +9116,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-C6eZd0_v.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-B2lTHG4L.js"), true ? __vite__mapDeps([4,1,5,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-0j10autO.js"), true ? __vite__mapDeps([6,1,7,8,9,10,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BiAwQ8QA.js"), true ? __vite__mapDeps([11,1,8,12,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-DurFdl9v.js"), true ? __vite__mapDeps([13,1,5,8,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-DzPnVTgb.js"), true ? __vite__mapDeps([14,1,12,8,5,9,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-DP75EeY6.js"), true ? __vite__mapDeps([15,1,8,5,10,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-Cc-JHAiP.js"), true ? __vite__mapDeps([16,1,9,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-C4tcLGyf.js"), true ? __vite__mapDeps([17,1,7,5,9,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-e7p0UJSN.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-nSdQTMDH.js"), true ? __vite__mapDeps([4,1,5,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-DJc6OaMr.js"), true ? __vite__mapDeps([6,1,7,8,9,10,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BX99hEOL.js"), true ? __vite__mapDeps([11,1,8,12,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-DTP1z-dG.js"), true ? __vite__mapDeps([13,1,5,8,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-BVNuicQK.js"), true ? __vite__mapDeps([14,1,12,8,5,9,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-DEpFXWB6.js"), true ? __vite__mapDeps([15,1,8,5,10,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BYGfTTsv.js"), true ? __vite__mapDeps([16,1,9,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-Bfpv-46_.js"), true ? __vite__mapDeps([17,1,7,5,9,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",

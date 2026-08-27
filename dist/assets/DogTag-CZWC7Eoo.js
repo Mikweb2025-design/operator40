@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, K as KHAKI, P as PAPER, S as STEEL } from "./index-DJZc3Rfg.js";
+import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, K as KHAKI, P as PAPER, S as STEEL } from "./index-BCD1AlRp.js";
 import "./icons-BHJLJdva.js";
 function DogTag({ label, value, sub }) {
   const numeric = typeof value === "number";

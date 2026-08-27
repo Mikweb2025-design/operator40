@@ -1,4 +1,4 @@
-import { p as playBeep, j as jsxRuntimeExports, K as KHAKI, t as tr, B as BLAZE, S as STEEL } from "./index-CwDWP71R.js";
+import { p as playBeep, j as jsxRuntimeExports, K as KHAKI, t as tr, B as BLAZE, S as STEEL } from "./index-BCD1AlRp.js";
 import { r as reactExports } from "./icons-BHJLJdva.js";
 import "./charts-DKCmdoT_.js";
 function CountdownScreen({ program, onDone, lang, t }) {
