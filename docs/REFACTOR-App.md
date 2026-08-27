@@ -54,10 +54,10 @@ src/
    - Creati hook vuoti `src/hooks/*` con TODO e signature
    - Questo doc come handoff
 
-2. **Domani — Setup + Home (i più grossi)**
-   - Spostare `SetupScreen` (usa `useT`, `LANGS`, `LEVELS`, `TRACKS` — passa tutto via props già fatto)
-   - Spostare `HomeScreen` (usa `profile/sessions/customPrograms` — già props)
-   - Verificare `npm run verify && npm run test && npm run build` dopo ogni spostamento (deterministico)
+2. **2026-08-27 — Setup + Home (DONE)**
+   - ✅ `SetupScreen` 322 righe estratto → `src/screens/SetupScreen.jsx` (ToggleRow/Field/inputStyle locali)
+   - ✅ `HomeScreen` 626 righe estratto → `src/screens/HomeScreen.jsx` (DogTag/ProgressRing/SegmentedProgress locali)
+   - ✅ `npm run verify && npm run test && npm run build` `o40-vbcf3eb8d` — OK
 
 3. **Giorno 3 — Session/Summary/History**
    - Estrarre `SessionScreen` (dipende da `aiCoachEnabled`, `seq`, `FitnessEngineView` — già props)
@@ -74,10 +74,13 @@ src/
 - Mai cambiare props: gli screen restano controlled (ricevono state/setter dal router)
 - Dopo ogni file: `npm run verify && npm run test && npm run build` — se OK commit
 
-## Verifica odierna
-- `npm run test` 30/30 (25 originali + 5 fixture) — OK
-- `npm run build` o40-vfe8ad764 — OK
-- `CountdownScreen` già estratto come POC — prossimo passo `SetupScreen`
+## Verifica odierna (2026-08-27 — continuazione)
+- `src/App.jsx` 3563 → **3202** (Countdown 27 + Setup 322 + Home 626 estratti) — TopBar/BottomNav già fuori
+- `npm run verify` ✅ — nessun ReferenceError
+- `npm run test` 30/30 ✅
+- `npm run build` `o40-vbcf3eb8d` (`index-dZA_-HUy.js`) ✅ — deterministico
+- `SetupScreen` + `HomeScreen` estratti con props identici, `DogTag/ProgressRing/SegmentedProgress` duplicati locali per Home (deduplica prevista a fine refactor)
+- Prossimo: `Library/Builder/Preview/Session/Summary/History` + hook `useAppBootstrap/useProfile/useSession` → target `App.jsx` <400
 
 ## Rischi evitati
 - Non toccare `dist/` (deterministico), non rinominare `o40_storage` keys, non introdurre context nuovi — i screen restano props-driven finché tutti non sono estratti.
