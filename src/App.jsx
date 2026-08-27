@@ -466,7 +466,7 @@ export default function App() {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 
   const [activeProgram, setActiveProgram] = useState(null);
@@ -799,7 +799,7 @@ export default function App() {
     }
     musicSetVolume(vol);
     musicPlay();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [
     musicOn,
     musicAutoPlay,
