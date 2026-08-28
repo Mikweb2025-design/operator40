@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-BGGeYkv7.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-D8jtd7e-.js","./CountdownScreen-BJE44aQp.js","./SetupScreen-BMlfcijQ.js","./TopBar-cJV5r-o6.js","./HomeScreen-Dam8I31L.js","./GoalRing-C6rHMOOh.js","./ExerciseFigure-DUvhlwUl.js","./DogTag-gCVW1aTX.js","./ProgressRing-GhwdSLKT.js","./LibraryScreen-QQv93QcM.js","./clips-CZetA5iC.js","./BuilderScreen-Bd0atuou.js","./PreviewScreen-C-N9vVAg.js","./SessionScreen-DhVyZO1V.js","./SummaryScreen-CEBtlQIr.js","./HistoryScreen-D2TCYkPT.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DKfTMchY.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-CISTsPQZ.js","./CountdownScreen-xklEpVC9.js","./SetupScreen-BRfB1Pkg.js","./TopBar-C3eZi3oZ.js","./HomeScreen-BdbjtDxL.js","./GoalRing-Dmy3d6SL.js","./ExerciseFigure-DMtrI2un.js","./DogTag-DdWIxQQb.js","./ProgressRing-QnQUAjfU.js","./LibraryScreen-BSKfH2Al.js","./clips-CZetA5iC.js","./BuilderScreen-SG8P-XEx.js","./PreviewScreen-lDwPwNzg.js","./SessionScreen-Bz_PcOHh.js","./SummaryScreen-CvUdlfVs.js","./HistoryScreen-B2vjGYPu.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -3026,6 +3026,26 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-phone::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); }
 .o40-topbar-glass { backdrop-filter: blur(12px) saturate(1.15); background: color-mix(in srgb, ${INK} 88%, transparent); border-bottom: 1px solid rgba(184,174,140,0.12); }
 .o40-bottomnav-glass { backdrop-filter: blur(12px) saturate(1.15); background: color-mix(in srgb, ${INK} 90%, transparent); border-top: 1px solid rgba(184,174,140,0.12); }
+
+/* ---- AI tracking stage: scanline + edge glow overlay ---- */
+.o40-ai-stage::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(120% 70% at 50% 0%, ${BLAZE}22 0%, transparent 55%),
+    repeating-linear-gradient(180deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 3px);
+  mix-blend-mode: screen; opacity: 0.55;
+}
+.o40-ai-stage::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 60px 0 rgba(0,0,0,0.55), inset 0 0 2px rgba(193,68,14,0.4);
+}
+@media (prefers-reduced-motion: reduce) {
+  .o40-ai-stage::after { background: radial-gradient(120% 70% at 50% 0%, ${BLAZE}22 0%, transparent 55%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .o40-eqbar, .o40-comet, .o40-ember, .o40-ecg, .o40-ticker-inner, .o40-loadbar > span,
+  .o40-pop, .o40-blink, .o40-expand { animation: none !important; }
+}
 `;
 function getReminder() {
   try {
@@ -6690,7 +6710,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-BGGeYkv7.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-DKfTMchY.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -6774,6 +6794,8 @@ class FitnessEngine {
     this.avgQuality = 0;
     this.lastRepQuality = null;
     this.lastRepConfidence = null;
+    this.repQualityHistory = [];
+    this.repDurationsMs = [];
     this.currentPhase = "idle";
     this.currentForm = null;
     this.troughInRep = 180;
@@ -6894,6 +6916,12 @@ class FitnessEngine {
           this.lastRepConfidence = aRes.repConfidence;
           this.qualityWindow.push(aRes.formScore);
           if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
+          this.repQualityHistory.push(aRes.formScore);
+          this.repDurationsMs.push(repDuration);
+          if (this.repQualityHistory.length > 30) {
+            this.repQualityHistory.shift();
+            this.repDurationsMs.shift();
+          }
           this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
           const evt = { repIndex: this.reps, timestampMs: now, durationMs: repDuration, peakAngle: this.peakInRep, troughAngle: this.troughInRep, quality: aRes.formScore, cues: aRes.cues, velocity: aRes.velocity, confidence: aRes.repConfidence };
           (_f = this.onRep) == null ? void 0 : _f.call(this, evt);
@@ -7019,6 +7047,12 @@ class FitnessEngine {
         this.lastRepConfidence = evt.confidence ?? repQuality;
         this.qualityWindow.push(repQuality);
         if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
+        this.repQualityHistory.push(repQuality);
+        this.repDurationsMs.push(repDuration);
+        if (this.repQualityHistory.length > 30) {
+          this.repQualityHistory.shift();
+          this.repDurationsMs.shift();
+        }
         this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
         const evt = {
           repIndex: this.reps,
@@ -7085,6 +7119,8 @@ class FitnessEngine {
       lastRepQuality: this.lastRepQuality,
       lastRepConfidence: this.lastRepConfidence,
       liveRepConfidence: Math.round(this.liveRepConfidence),
+      repQualityHistory: this.repQualityHistory.slice(),
+      repDurationsMs: this.repDurationsMs.slice(),
       currentPhase: this.currentPhase,
       currentForm: this.currentForm,
       fps: Math.round(this.fpsEma),
@@ -7170,6 +7206,8 @@ class FitnessEngine {
     this.avgQuality = 0;
     this.lastRepQuality = null;
     this.lastRepConfidence = null;
+    this.repQualityHistory = [];
+    this.repDurationsMs = [];
     this.currentPhase = "idle";
     this.currentForm = null;
     this.troughInRep = 180;
@@ -8516,7 +8554,7 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.10.0 · 0836f14";
+const BUILD_VERSION = "2.10.0 · 6c2b672";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -9110,7 +9148,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-D8jtd7e-.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-CISTsPQZ.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -9709,15 +9747,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-BJE44aQp.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-BMlfcijQ.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-Dam8I31L.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-QQv93QcM.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-Bd0atuou.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-C-N9vVAg.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-DhVyZO1V.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-CEBtlQIr.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-D2TCYkPT.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-xklEpVC9.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-BRfB1Pkg.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-BdbjtDxL.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BSKfH2Al.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-SG8P-XEx.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-lDwPwNzg.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-Bz_PcOHh.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-CvUdlfVs.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-B2vjGYPu.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
