@@ -1,10 +1,10 @@
-import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, I as INK, B as BLAZE, K as KHAKI, P as PAPER, S as STEEL, q as getMedalProgress, b as INK_2, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, f as BLAZE_DEEP, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-C3oc4Xr9.js";
-import { r as reactExports, b as ChevronRight, o as Medal, X, S as Sparkles, F as Flame, I as Info, u as TrendingUp, n as Crown, Z as Zap, v as Star, w as RotateCcw, L as Lightbulb, E as Eye, x as Target, T as Trophy, B as BookOpen, e as Settings, C as Check, y as Trash2, P as Plus, z as Ruler, G as TrendingDown, J as Scale } from "./icons-CiBW7QCm.js";
-import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-CyFj4Mmv.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-MBxQGA8I.js";
-import { D as DogTag } from "./DogTag-5o5uXFGe.js";
-import { P as ProgressRing } from "./ProgressRing-rllvLr4n.js";
-import "./charts-Dc_aK1Sx.js";
+import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, I as INK, B as BLAZE, K as KHAKI, P as PAPER, S as STEEL, q as getMedalProgress, b as INK_2, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, f as BLAZE_DEEP, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-DbOkD-eS.js";
+import { r as reactExports, b as ChevronRight, p as Medal, X, S as Sparkles, F as Flame, I as Info, v as TrendingUp, o as Crown, Z as Zap, w as Star, x as RotateCcw, L as Lightbulb, E as Eye, h as Target, T as Trophy, B as BookOpen, e as Settings, C as Check, y as Trash2, P as Plus, z as Ruler, G as TrendingDown, J as Scale } from "./icons-CYijDH-L.js";
+import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-BxZtKsSi.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-UrmiwVn0.js";
+import { D as DogTag } from "./DogTag-Z0Qpfa3w.js";
+import { P as ProgressRing } from "./ProgressRing-lVK8s_By.js";
+import "./charts-CgofXTP-.js";
 function getPersonalChallenge(sessions, profile) {
   const n = (sessions == null ? void 0 : sessions.length) || 0;
   const bestStreak = computeBestStreak(sessions || []);

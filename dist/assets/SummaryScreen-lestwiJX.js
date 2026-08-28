@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports, B as BLAZE, O as OLIVE, b as INK_2, K as KHAKI, P as PAPER, S as STEEL, u as useT, af as hrZone, I as INK, t as tr, W as WEEKLY_GOAL, ag as RPE_LABELS, ah as RPE_COLORS, i as inputStyle, a as OLIVE_DARK, $ as primaryBtn } from "./index-C3oc4Xr9.js";
-import { O as ShieldCheck, F as Flame, Z as Zap, r as reactExports, T as Trophy, Q as Gauge, z as Ruler, J as Scale, t as HeartPulse, C as Check } from "./icons-CiBW7QCm.js";
-import { D as DogTag } from "./DogTag-5o5uXFGe.js";
-import "./charts-Dc_aK1Sx.js";
+import { j as jsxRuntimeExports, B as BLAZE, O as OLIVE, b as INK_2, K as KHAKI, P as PAPER, S as STEEL, u as useT, af as hrZone, I as INK, t as tr, W as WEEKLY_GOAL, ag as RPE_LABELS, ah as RPE_COLORS, i as inputStyle, a as OLIVE_DARK, $ as primaryBtn } from "./index-DbOkD-eS.js";
+import { O as ShieldCheck, F as Flame, Z as Zap, r as reactExports, T as Trophy, Q as Gauge, z as Ruler, J as Scale, u as HeartPulse, C as Check } from "./icons-CYijDH-L.js";
+import { D as DogTag } from "./DogTag-Z0Qpfa3w.js";
+import "./charts-CgofXTP-.js";
 function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
   const now = /* @__PURE__ */ new Date();
   const start = new Date(now);
