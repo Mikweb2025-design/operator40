@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-CK3FUxSm.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-BzpZQebr.js","./CountdownScreen-3NZykT-Q.js","./SetupScreen-AV8SFpHg.js","./TopBar-B2pfwH_C.js","./HomeScreen-CQaGcO8m.js","./GoalRing-BnOAbcVs.js","./ExerciseFigure-q4b2YPTj.js","./DogTag-CkmQDOmS.js","./ProgressRing-B03RDunm.js","./LibraryScreen-Db-eWNz4.js","./clips-CZetA5iC.js","./BuilderScreen-Dt-CYrFK.js","./PreviewScreen-p7xne3Vc.js","./SessionScreen-BvF_ZW0H.js","./SummaryScreen-y2230EvL.js","./HistoryScreen-6xPFSMNb.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-Bh1WcM2m.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-34C_VkH2.js","./CountdownScreen-tbZOjvsh.js","./SetupScreen-At93crvM.js","./TopBar-BYltBE-N.js","./HomeScreen-jYF2SOYR.js","./GoalRing-DiW2jqqh.js","./ExerciseFigure-DAW2EuJU.js","./DogTag-DTNc6Pkp.js","./ProgressRing-BMgmM-Ly.js","./LibraryScreen-DCnMQPka.js","./clips-CZetA5iC.js","./BuilderScreen-DXnsNZcZ.js","./PreviewScreen-Bq4D762i.js","./SessionScreen-yUJzKBdY.js","./SummaryScreen-BKtS-HXC.js","./HistoryScreen-DN5hbf37.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -3254,6 +3254,74 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-ticker-inner { gap: 48px; padding-left: 48px; }
 .o40-topbar-glass, .o40-bottomnav-glass { backdrop-filter: blur(15px) saturate(1.2); }
 .o40-card { will-change: transform; }
+
+/* =============================================================
+   v2.12 — 10 LOOP EXTRA (14-23) full-app polish
+   14 Color — OLED ink depth + olive tint lifted
+   15 Card v2 — radius 16 + selected glow
+   16 Typography — display scale + mono tabular
+   17 Iconography — circle halo + badge
+   18 Navigation — pill glow + safe-area
+   19 Hero/Empty — overlay legibility + empty tint
+   20 Session HUD — timer glow + AI stage ring
+   21 Data viz — recharts dark tooltip + heatmap radius
+   22 Forms — focus ring 3px + pill active
+   23 Cohesion — easing + shadow unified
+   ============================================================= */
+
+/* Loop 14 — Color */
+:root { --ink: ${INK}; --ink2: ${INK_2}; --ink3: #0E100D; --olive: ${OLIVE}; --kaki: ${KHAKI}; --blaze: ${BLAZE}; --paper: ${PAPER}; }
+.o40-phone {
+  background:
+    radial-gradient(135% 62% at 50% -12%, #2D3423 0%, transparent 60%),
+    radial-gradient(105% 48% at 90% 110%, ${BLAZE_DEEP}20 0%, transparent 65%),
+    linear-gradient(180deg, #0B0D0A 0%, ${INK} 22%, ${INK} 100%);
+}
+
+/* Loop 15 — Card v2 */
+.o40-card, .o40-card-glass, .o40-card-face { border-radius: 16px; }
+.o40-card { border: 1px solid rgba(184,174,140,0.13); box-shadow: 0 7px 24px rgba(0,0,0,0.40), 0 1px 0 rgba(255,255,255,0.05) inset; }
+.o40-card-glass[aria-selected="true"], .o40-card[aria-selected="true"] { border-color: ${BLAZE}66; box-shadow: 0 10px 28px rgba(0,0,0,0.48), 0 0 0 1px ${BLAZE}22 inset; }
+@media (hover:hover){ .o40-card:hover{ transform: translateY(-3px); box-shadow: 0 18px 40px rgba(0,0,0,0.55); }}
+
+/* Loop 16 — Typography */
+.o40-display { font-size-adjust: 0.52; letter-spacing: 0.06em; line-height: 0.95; }
+.o40-mono { font-feature-settings: "tnum" 1, "ss01" 1; letter-spacing: 0.045em; }
+.o40 { line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+/* Loop 17 — Iconography */
+.o40-fav { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
+.o40-fav[aria-pressed="true"] { color: ${BLAZE}; filter: drop-shadow(0 0 6px ${BLAZE}66); }
+
+/* Loop 18 — Navigation */
+.o40-topbar-glass { min-height: 52px; border-bottom: 1px solid rgba(184,174,140,0.11); }
+.o40-bottomnav-glass { padding-bottom: max(4px, env(safe-area-inset-bottom)); }
+.o40-bottomnav-glass button[aria-current="page"] span:last-child { opacity: 1; }
+
+/* Loop 19 — Hero/Empty */
+.o40-card.o40-ring-border > div > div[style*="music-bg"], .o40-card img { filter: saturate(0.95) contrast(1.03); }
+.o40-skeleton { border-radius: 12px; }
+
+/* Loop 20 — Session HUD */
+.o40-display.o40-num-glow { text-shadow: 0 1px 0 rgba(0,0,0,0.45); }
+.o40-ai-stage { border-radius: 16px; overflow: hidden; }
+.o40-ai-stage::before { border-radius: 16px; }
+
+/* Loop 21 — Data viz */
+.recharts-tooltip-wrapper { filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45)); }
+.recharts-cartesian-grid line { stroke: rgba(184,174,140,0.08); }
+
+/* Loop 22 — Forms */
+.o40-input:focus, .o40-search:focus { border-color: ${BLAZE}; box-shadow: 0 0 0 3px ${BLAZE}22, 0 1px 0 rgba(255,255,255,0.06) inset; }
+.o40-search { border-radius: 14px; }
+.pillBtn[aria-pressed="true"], .o40-card[aria-pressed="true"] { background: ${BLAZE}14; border-color: ${BLAZE}55; }
+
+/* Loop 23 — Cohesion */
+* { scrollbar-color: ${KHAKI} ${INK_2}; }
+.o40 * { scrollbar-width: thin; }
+@media (prefers-reduced-motion: reduce){
+  .o40-card, .o40-screen-in, .o40-pop, .o40-expand, .o40-aura, .o40-gridbg, .o40-embers, .o40-ticker-inner { animation: none !important; transition: none !important; }
+}
 `;
 function getReminder() {
   try {
@@ -6954,7 +7022,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-CK3FUxSm.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-Bh1WcM2m.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8317,14 +8385,14 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     ] })
   ] });
 }
-const CHANGELOG_VERSION = "2.11.1";
+const CHANGELOG_VERSION = "2.12.0";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.11.1",
-    title: "Grafica OLED — 13 Loop (v2.11.1)",
-    subtitle: "v2.11.1 · 28 Agosto 2026 · 13 giri grafici — +3 loop hero/card/micro",
-    intro: "10 loop + 3 extra: hero depth, card progress halo, ticker respiro. Fix white-screen BLAZE_LIGHT incluso. Zero debito funzionale.",
+    badge: "NUOVO v2.12.0",
+    title: "Grafica Full-App — 23 Loop (v2.12)",
+    subtitle: "v2.12 · 28 Agosto 2026 · 23 giri — full-app OLED + hero + data viz",
+    intro: "13 loop + 10 extra full-app: color, card v2, typo, icon, nav, hero, HUD, data viz, forms, cohesion. White-screen fix + 3 loop già inclusi.",
     groups: [
       {
         icon: "🌑",
@@ -8379,51 +8447,62 @@ const COPY = {
           "Card-face shadow 5/18 + accent glow 45%, ticker 48px gap + glass blur 15px",
           "Fix white-screen BLAZE_LIGHT import — #root ora renderizza"
         ]
+      },
+      {
+        icon: "🚀",
+        title: "14-23. Full-App 10 Loop (v2.12)",
+        items: [
+          "Color OLED #0B0D0A 135% + card radius 16 + selected BLAZE glow",
+          "Typo display 0.06em + mono tnum, icon halo, nav pill safe-area",
+          "Hero overlay, HUD timer glow, recharts dark tooltip, input focus 3px + cohesion easing"
+        ]
       }
     ],
     cta: "PROVA ORA",
     ctaHint: "Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS",
     dismiss: "Non mostrare più",
     close: "Chiudi",
-    footer: "Tutto on-device. 13 loop grafici. Prossimo: v2.12 motion + a11y."
+    footer: "Tutto on-device. 23 loop grafici. Prossimo: v2.13 motion + watch."
   },
   en: {
-    badge: "NEW v2.11.1",
-    title: "OLED Graphics — 13 Loops (v2.11.1)",
-    subtitle: "v2.11.1 · Aug 28 2026 · 13 graphic loops — +3 hero/card/micro",
-    intro: "10 loops + 3 extra: hero depth, card halo, ticker breathing. White-screen fix included.",
+    badge: "NEW v2.12.0",
+    title: "OLED Graphics — 23 Loops (v2.12)",
+    subtitle: "v2.12 · Aug 28 2026 · 23 loops — full-app OLED + hero + data viz",
+    intro: "13 loops + 10 extra full-app: color, card v2, typo, nav, hero, HUD, viz, forms, cohesion.",
     groups: [
       { icon: "🌑", title: "1-2. OLED Depth + Card", items: ["INK #0E100D vignette + 130% radial — deeper phone, 5px camo", "Unified card 165° + hairline + gloss", "Card-face hairline + accent + tabular glow"] },
       { icon: "🔥", title: "3-4. Typography + CTA", items: ["Bebas/Inter sharpened, num-glow halo", "CTA BLAZE_LIGHT→DEEP + inset highlight", "Large btn shadow 10/28"] },
       { icon: "🧭", title: "5-6. Nav + HUD", items: ["Top/bottom glass blur 14px, OLED #0E100D", "Pill 46×28 + BLAZE glow lines", "HUD 4 corners + AI scanline 0.62"] },
       { icon: "✨", title: "7-8. Micro + Skeleton", items: ["screenIn 0.5s, card stagger, ticker 28s", "Skeleton 1.4s, loadbar 5px", "Hover -3px lift"] },
       { icon: "🎨", title: "9-10. Aura & Cohesion", items: ["Aura 28s + vignette, grid 0.42", "New tokens INK_3, PAPER_SOFT, etc.", "Tracking 103 tests intact"] },
-      { icon: "💎", title: "11-13. Extra 3 Loops", items: ["Hero shadow 12/36 + embers 1.08", "Card-face 5/18 + accent glow", "White-screen fix — root now renders"] }
+      { icon: "💎", title: "11-13. Extra 3 Loops", items: ["Hero shadow 12/36 + embers 1.08", "Card-face 5/18 + accent glow", "White-screen fix — root now renders"] },
+      { icon: "🚀", title: "14-23. Full-App 10 Loops", items: ["Color OLED #0B0D0A + card 16 + selected glow", "Typo + icon halo + nav pill", "HUD timer + viz tooltip + focus + cohesion"] }
     ],
     cta: "TRY IT",
     ctaHint: "Home → Mission → Start · https://mikweb.eu/operator40/",
     dismiss: "Don't show again",
     close: "Close",
-    footer: "On-device. 13 loops. Next: v2.12 motion + a11y."
+    footer: "On-device. 23 loops. Next: v2.13 watch + motion."
   },
   de: {
-    badge: "NEU v2.11.1",
-    title: "OLED Grafik — 13 Loops (v2.11.1)",
-    subtitle: "v2.11.1 · 28. Aug 2026 · 13 Grafik-Loops — +3 hero/card/micro",
-    intro: "10 Loops + 3 extra: hero depth, card halo, ticker breathing. White-screen fix.",
+    badge: "NEU v2.12.0",
+    title: "OLED Grafik — 23 Loops (v2.12)",
+    subtitle: "v2.12 · 28. Aug 2026 · 23 Loops — full-app OLED",
+    intro: "13 Loops + 10 extra: color, card v2, typo, icon, nav, hero, HUD, viz, forms, cohesion.",
     groups: [
       { icon: "🌑", title: "1-2. OLED + Card", items: ["INK #0E100D Vignette", "Unified Card + Hairline + Gloss", "Tabular Glow"] },
       { icon: "🔥", title: "3-4. Typo + CTA", items: ["Bebas/Inter sharpened", "CTA Blaze Light + Inset", "Large shadow"] },
       { icon: "🧭", title: "5-6. Nav + HUD", items: ["Glass blur 14px", "Pill 46×28", "HUD 4 Ecken + Scanline"] },
       { icon: "✨", title: "7-8. Micro + Skeleton", items: ["Stagger 20/60/100ms", "Skeleton 1.4s", "Hover -3px"] },
       { icon: "🎨", title: "9-10. Aura", items: ["Aura 28s + Vignette", "Neue Tokens", "103 Tests grün"] },
-      { icon: "💎", title: "11-13. Extra", items: ["Hero 12/36 + embers", "Card 5/18 + glow", "White-screen fix"] }
+      { icon: "💎", title: "11-13. Extra", items: ["Hero 12/36 + embers", "Card 5/18 + glow", "White-screen fix"] },
+      { icon: "🚀", title: "14-23. Full-App", items: ["Color #0B0D0A + card 16", "Typo + icon + nav", "HUD + viz + forms + cohesion"] }
     ],
     cta: "TESTEN",
     ctaHint: "Home → Mission → Start",
     dismiss: "Nicht mehr anzeigen",
     close: "Schließen",
-    footer: "On-device. 13 Loops. Next: v2.12."
+    footer: "On-device. 23 Loops. Next: v2.13."
   }
 };
 function ChangelogModal({ lang = "it", onClose, onTry }) {
@@ -8561,14 +8640,15 @@ function ChangelogModal({ lang = "it", onClose, onTry }) {
 }
 const inputStyle = {
   width: "100%",
-  background: INK_2,
+  background: `linear-gradient(180deg, ${INK_2} 0%, #1E221B 100%)`,
   border: `1px solid ${OLIVE}`,
-  borderRadius: 12,
+  borderRadius: 14,
   padding: "12px 14px",
   color: PAPER,
   fontSize: 16,
   fontFamily: "Inter, sans-serif",
-  outline: "none"
+  outline: "none",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.22) inset"
 };
 const primaryBtn = {
   background: `linear-gradient(135deg, ${BLAZE_LIGHT} 0%, ${BLAZE} 55%, ${BLAZE_DEEP} 100%)`,
@@ -8595,15 +8675,16 @@ const primaryBtnLarge = {
   boxShadow: `0 10px 28px ${BLAZE}44, 0 1px 0 rgba(255,255,255,0.16) inset, 0 -1px 0 rgba(0,0,0,0.25) inset`
 };
 const secondaryBtn = {
-  background: INK_2,
-  border: `1px solid ${KHAKI}`,
+  background: `linear-gradient(180deg, ${INK_2} 0%, #1C1F18 100%)`,
+  border: `1px solid ${KHAKI}88`,
   color: PAPER,
   borderRadius: 14,
   padding: "12px 16px",
   fontFamily: "'Bebas Neue',sans-serif",
   fontSize: 16,
   letterSpacing: "0.05em",
-  cursor: "pointer"
+  cursor: "pointer",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.06) inset"
 };
 const btnIcon = {
   background: "transparent",
@@ -8759,14 +8840,14 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.11.1 · 783fcce";
+const BUILD_VERSION = "2.12.0 · 783fcce";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       onClick,
       role: onClick ? "button" : void 0,
-      title: onClick ? "Novità v2.11.1 — clic per riaprire changelog" : void 0,
+      title: onClick ? "Novità v2.12.0 — clic per riaprire changelog" : void 0,
       className: "o40-mono",
       style: {
         color: STEEL,
@@ -9353,7 +9434,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-BzpZQebr.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-34C_VkH2.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -9952,15 +10033,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-3NZykT-Q.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-AV8SFpHg.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-CQaGcO8m.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-Db-eWNz4.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-Dt-CYrFK.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-p7xne3Vc.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-BvF_ZW0H.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-y2230EvL.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-6xPFSMNb.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-tbZOjvsh.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-At93crvM.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-jYF2SOYR.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-DCnMQPka.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-DXnsNZcZ.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-Bq4D762i.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-yUJzKBdY.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BKtS-HXC.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-DN5hbf37.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -10155,7 +10236,7 @@ function App() {
   const [showChangelog, setShowChangelog] = reactExports.useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = reactExports.useState(() => {
     try {
-      return localStorage.getItem("o40_release_2.11.1") !== "dismissed";
+      return localStorage.getItem("o40_release_2.12.0") !== "dismissed";
     } catch {
       return true;
     }
@@ -11312,10 +11393,10 @@ function App() {
                                         padding: "2px 6px",
                                         borderRadius: 6
                                       },
-                                      children: "NUOVO v2.11.1"
+                                      children: "NUOVO v2.12.0"
                                     }
                                   ),
-                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 13 LOOP GRAFICA" })
+                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 23 LOOP GRAFICA" })
                                 ]
                               }
                             ),
@@ -11324,7 +11405,7 @@ function App() {
                               {
                                 className: "o40-display",
                                 style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 },
-                                children: "Grafica OLED — 13 loop + fix white-screen!"
+                                children: "Grafica OLED — 23 loop full-app!"
                               }
                             )
                           ] })
@@ -11336,7 +11417,7 @@ function App() {
                       {
                         onClick: () => {
                           try {
-                            localStorage.setItem("o40_release_2.11.1", "dismissed");
+                            localStorage.setItem("o40_release_2.12.0", "dismissed");
                           } catch {
                           }
                           setShowReleaseBanner(false);
@@ -11426,7 +11507,7 @@ function App() {
                   {
                     onClick: () => {
                       try {
-                        localStorage.setItem("o40_release_2.11.1", "dismissed");
+                        localStorage.setItem("o40_release_2.12.0", "dismissed");
                       } catch {
                       }
                       setShowReleaseBanner(false);
