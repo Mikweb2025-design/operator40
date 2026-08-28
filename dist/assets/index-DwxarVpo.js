@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-l7LEwYuO.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-BTO7y_IB.js","./CountdownScreen-DvbQwv6s.js","./SetupScreen-D49QW3jd.js","./TopBar-CBGqWWq5.js","./HomeScreen-BgC6ZEWz.js","./GoalRing-BK1AxAYT.js","./ExerciseFigure-B6bsFobb.js","./DogTag-BVC0uMoB.js","./ProgressRing-DQTWrrhY.js","./LibraryScreen-CO9UaGXO.js","./clips-CZetA5iC.js","./BuilderScreen-DrcSUrBc.js","./PreviewScreen-BNegjX9-.js","./SessionScreen-Dwcw-MjL.js","./SummaryScreen-D37n85bx.js","./HistoryScreen-DIiLcavn.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-CZX_lJcB.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-HKkdL0pL.js","./CountdownScreen-CyVCYtHR.js","./SetupScreen-Dn9tWR29.js","./TopBar-sVeRwda0.js","./HomeScreen-DgmDsShN.js","./GoalRing-BZ6O1V5S.js","./ExerciseFigure-BPr-yLec.js","./DogTag-D2oVl605.js","./ProgressRing-fV8c6UN5.js","./LibraryScreen-MoMMn42t.js","./clips-CZetA5iC.js","./BuilderScreen-DQzCWQer.js","./PreviewScreen-CSnytGR_.js","./SessionScreen-DoBgoYH2.js","./SummaryScreen-KcRxRZMt.js","./HistoryScreen-BXcckiex.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -3321,6 +3321,18 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40 * { scrollbar-width: thin; }
 @media (prefers-reduced-motion: reduce){
   .o40-card, .o40-screen-in, .o40-pop, .o40-expand, .o40-aura, .o40-gridbg, .o40-embers, .o40-ticker-inner { animation: none !important; transition: none !important; }
+}
+
+/* === ROADMAP A11y batch (v2.12.1) === */
+.o40 button:focus-visible, .o40 a:focus-visible, .o40 [role="button"]:focus-visible {
+  outline: 2px solid ${BLAZE}; outline-offset: 2px; box-shadow: 0 0 0 4px ${BLAZE}22;
+}
+.o40 input:focus-visible, .o40 textarea:focus-visible, .o40 select:focus-visible { outline: 2px solid ${BLAZE}; outline-offset: 1px; }
+@media print {
+  .o40-phone { background: white !important; color: black !important; }
+  .o40-topbar-glass, .o40-bottomnav-glass, .o40-aura, .o40-gridbg, .o40-camo { display: none !important; }
+  .o40-card, .o40-card-glass { break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  body { background: white !important; }
 }
 `;
 function getReminder() {
@@ -7022,7 +7034,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-l7LEwYuO.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-CZX_lJcB.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8225,9 +8237,9 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     ] }),
     metrics != null && ((metrics == null ? void 0 : metrics.poseQuality) ?? 100) < 42 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { margin: "6px 12px 0", padding: "6px 8px", borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: "center" }, children: lang === "it" ? "Allontanati così vedo tutto il corpo." : lang === "de" ? "Geh zurück, damit ich deinen ganzen Körper sehe." : "Move back so I can see your whole body." }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, padding: "10px 12px", background: INK }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", textAlign: "center" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", textAlign: "center" }, "aria-live": "polite", "aria-atomic": "true", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "REPS" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: BLAZE, fontSize: 28, lineHeight: 1 }, children: reps }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", role: "status", "aria-live": "polite", style: { color: BLAZE, fontSize: 28, lineHeight: 1 }, children: reps }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 9 }, children: (metrics == null ? void 0 : metrics.currentPhase) ?? "—" })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", textAlign: "center" }, children: [
@@ -8385,14 +8397,14 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     ] })
   ] });
 }
-const CHANGELOG_VERSION = "2.12.0";
+const CHANGELOG_VERSION = "2.12.1";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.12.0",
-    title: "Grafica Full-App — 23 Loop (v2.12)",
-    subtitle: "v2.12 · 28 Agosto 2026 · 23 giri — full-app OLED + hero + data viz",
-    intro: "13 loop + 10 extra full-app: color, card v2, typo, icon, nav, hero, HUD, data viz, forms, cohesion. White-screen fix + 3 loop già inclusi.",
+    badge: "NUOVO v2.12.1",
+    title: "Roadmap Batch — A11y + Library + Export (v2.12.1)",
+    subtitle: "v2.12.1 · 28 Agosto 2026 · focus ring + debounce + CSV + QR",
+    intro: "Batch roadmap Giorno 3-6: focus-visible 2px BLAZE, aria-live reps, Library debounce 180ms + highlight + empty, LargeText fix, CSV aiQuality, print A4, QR share.",
     groups: [
       {
         icon: "🌑",
@@ -8456,19 +8468,28 @@ const COPY = {
           "Typo display 0.06em + mono tnum, icon halo, nav pill safe-area",
           "Hero overlay, HUD timer glow, recharts dark tooltip, input focus 3px + cohesion easing"
         ]
+      },
+      {
+        icon: "♿",
+        title: "24-27. Roadmap Batch (v2.12.1)",
+        items: [
+          "A11y focus-visible + aria-live reps + prefers-reduced-motion + print",
+          "Library debounce 180ms + highlight BLAZE33 + empty 🔍 + LargeText fix",
+          "CSV ai_quality/ai_reps + QR 72px share + ROADMAP docs"
+        ]
       }
     ],
     cta: "PROVA ORA",
     ctaHint: "Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS",
     dismiss: "Non mostrare più",
     close: "Chiudi",
-    footer: "Tutto on-device. 23 loop grafici. Prossimo: v2.13 motion + watch."
+    footer: "Tutto on-device. 27 iterazioni. Prossimo: v2.13 motion + watch."
   },
   en: {
-    badge: "NEW v2.12.0",
-    title: "OLED Graphics — 23 Loops (v2.12)",
-    subtitle: "v2.12 · Aug 28 2026 · 23 loops — full-app OLED + hero + data viz",
-    intro: "13 loops + 10 extra full-app: color, card v2, typo, nav, hero, HUD, viz, forms, cohesion.",
+    badge: "NEW v2.12.1",
+    title: "Roadmap Batch — A11y + Library + Export (v2.12.1)",
+    subtitle: "v2.12.1 · Aug 28 2026 · focus + debounce + CSV + QR",
+    intro: "Roadmap batch: focus-visible, aria-live reps, Library debounce + highlight + empty, CSV aiQuality, print, QR.",
     groups: [
       { icon: "🌑", title: "1-2. OLED Depth + Card", items: ["INK #0E100D vignette + 130% radial — deeper phone, 5px camo", "Unified card 165° + hairline + gloss", "Card-face hairline + accent + tabular glow"] },
       { icon: "🔥", title: "3-4. Typography + CTA", items: ["Bebas/Inter sharpened, num-glow halo", "CTA BLAZE_LIGHT→DEEP + inset highlight", "Large btn shadow 10/28"] },
@@ -8476,19 +8497,20 @@ const COPY = {
       { icon: "✨", title: "7-8. Micro + Skeleton", items: ["screenIn 0.5s, card stagger, ticker 28s", "Skeleton 1.4s, loadbar 5px", "Hover -3px lift"] },
       { icon: "🎨", title: "9-10. Aura & Cohesion", items: ["Aura 28s + vignette, grid 0.42", "New tokens INK_3, PAPER_SOFT, etc.", "Tracking 103 tests intact"] },
       { icon: "💎", title: "11-13. Extra 3 Loops", items: ["Hero shadow 12/36 + embers 1.08", "Card-face 5/18 + accent glow", "White-screen fix — root now renders"] },
-      { icon: "🚀", title: "14-23. Full-App 10 Loops", items: ["Color OLED #0B0D0A + card 16 + selected glow", "Typo + icon halo + nav pill", "HUD timer + viz tooltip + focus + cohesion"] }
+      { icon: "🚀", title: "14-23. Full-App 10 Loops", items: ["Color OLED #0B0D0A + card 16 + selected glow", "Typo + icon halo + nav pill", "HUD timer + viz tooltip + focus + cohesion"] },
+      { icon: "♿", title: "24-27. Roadmap Batch", items: ["Focus-visible + aria-live reps + prefers-motion + print", "Library debounce 180ms + highlight + empty + LargeText", "CSV ai_quality/ai_reps + QR 72px share"] }
     ],
     cta: "TRY IT",
     ctaHint: "Home → Mission → Start · https://mikweb.eu/operator40/",
     dismiss: "Don't show again",
     close: "Close",
-    footer: "On-device. 23 loops. Next: v2.13 watch + motion."
+    footer: "On-device. 27 iterations. Next: v2.13 watch + motion."
   },
   de: {
-    badge: "NEU v2.12.0",
-    title: "OLED Grafik — 23 Loops (v2.12)",
-    subtitle: "v2.12 · 28. Aug 2026 · 23 Loops — full-app OLED",
-    intro: "13 Loops + 10 extra: color, card v2, typo, icon, nav, hero, HUD, viz, forms, cohesion.",
+    badge: "NEU v2.12.1",
+    title: "Roadmap Batch — A11y + Library + Export (v2.12.1)",
+    subtitle: "v2.12.1 · 28. Aug 2026 · Focus + debounce + CSV + QR",
+    intro: "Roadmap: focus-visible, aria-live reps, Library debounce 180ms + highlight + empty, CSV aiQuality, print, QR.",
     groups: [
       { icon: "🌑", title: "1-2. OLED + Card", items: ["INK #0E100D Vignette", "Unified Card + Hairline + Gloss", "Tabular Glow"] },
       { icon: "🔥", title: "3-4. Typo + CTA", items: ["Bebas/Inter sharpened", "CTA Blaze Light + Inset", "Large shadow"] },
@@ -8496,13 +8518,14 @@ const COPY = {
       { icon: "✨", title: "7-8. Micro + Skeleton", items: ["Stagger 20/60/100ms", "Skeleton 1.4s", "Hover -3px"] },
       { icon: "🎨", title: "9-10. Aura", items: ["Aura 28s + Vignette", "Neue Tokens", "103 Tests grün"] },
       { icon: "💎", title: "11-13. Extra", items: ["Hero 12/36 + embers", "Card 5/18 + glow", "White-screen fix"] },
-      { icon: "🚀", title: "14-23. Full-App", items: ["Color #0B0D0A + card 16", "Typo + icon + nav", "HUD + viz + forms + cohesion"] }
+      { icon: "🚀", title: "14-23. Full-App", items: ["Color #0B0D0A + card 16", "Typo + icon + nav", "HUD + viz + forms + cohesion"] },
+      { icon: "♿", title: "24-27. Roadmap", items: ["Focus + aria-live + reduced-motion + print", "Debounce + highlight + empty + LargeText", "CSV aiQuality + QR"] }
     ],
     cta: "TESTEN",
     ctaHint: "Home → Mission → Start",
     dismiss: "Nicht mehr anzeigen",
     close: "Schließen",
-    footer: "On-device. 23 Loops. Next: v2.13."
+    footer: "On-device. 27 Iterationen. Next: v2.13."
   }
 };
 function ChangelogModal({ lang = "it", onClose, onTry }) {
@@ -8840,14 +8863,14 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.12.0 · e7f56c1";
+const BUILD_VERSION = "2.12.1 · e7f56c1";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       onClick,
       role: onClick ? "button" : void 0,
-      title: onClick ? "Novità v2.12.0 — clic per riaprire changelog" : void 0,
+      title: onClick ? "Novità v2.12.1 — clic per riaprire changelog" : void 0,
       className: "o40-mono",
       style: {
         color: STEEL,
@@ -9434,7 +9457,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-BTO7y_IB.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-HKkdL0pL.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -10033,15 +10056,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-DvbQwv6s.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-D49QW3jd.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-BgC6ZEWz.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-CO9UaGXO.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-DrcSUrBc.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-BNegjX9-.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-Dwcw-MjL.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-D37n85bx.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-DIiLcavn.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-CyVCYtHR.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-Dn9tWR29.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-DgmDsShN.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-MoMMn42t.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-DQzCWQer.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-CSnytGR_.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-DoBgoYH2.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-KcRxRZMt.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BXcckiex.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -10236,7 +10259,7 @@ function App() {
   const [showChangelog, setShowChangelog] = reactExports.useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = reactExports.useState(() => {
     try {
-      return localStorage.getItem("o40_release_2.12.0") !== "dismissed";
+      return localStorage.getItem("o40_release_2.12.1") !== "dismissed";
     } catch {
       return true;
     }
@@ -11393,10 +11416,10 @@ function App() {
                                         padding: "2px 6px",
                                         borderRadius: 6
                                       },
-                                      children: "NUOVO v2.12.0"
+                                      children: "NUOVO v2.12.1"
                                     }
                                   ),
-                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 23 LOOP GRAFICA" })
+                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 27 ITERAZIONI" })
                                 ]
                               }
                             ),
@@ -11405,7 +11428,7 @@ function App() {
                               {
                                 className: "o40-display",
                                 style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 },
-                                children: "Grafica OLED — 23 loop full-app!"
+                                children: "Grafica OLED — 27 iterazioni — a11y + viz!"
                               }
                             )
                           ] })
@@ -11417,7 +11440,7 @@ function App() {
                       {
                         onClick: () => {
                           try {
-                            localStorage.setItem("o40_release_2.12.0", "dismissed");
+                            localStorage.setItem("o40_release_2.12.1", "dismissed");
                           } catch {
                           }
                           setShowReleaseBanner(false);
@@ -11507,7 +11530,7 @@ function App() {
                   {
                     onClick: () => {
                       try {
-                        localStorage.setItem("o40_release_2.12.0", "dismissed");
+                        localStorage.setItem("o40_release_2.12.1", "dismissed");
                       } catch {
                       }
                       setShowReleaseBanner(false);

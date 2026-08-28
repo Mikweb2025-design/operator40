@@ -1,7 +1,7 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-Cx-PcBXv.js","./clips-CZetA5iC.js"])))=>i.map(i=>d[i]);
-import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-DoCc26pn.js";
+import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-DwxarVpo.js";
 import { r as reactExports, X, v as Star, S as Sparkles, W as Wind } from "./icons-DnFQGhVC.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-B6bsFobb.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-BPr-yLec.js";
 import { h as hasClip } from "./clips-CZetA5iC.js";
 import "./charts-BWCYe6zh.js";
 function loadFavorites() {
@@ -103,13 +103,28 @@ function LibraryScreen({ sessions, profile }) {
   const [filter, setFilter] = reactExports.useState("all");
   const [selectedId, setSelectedId] = reactExports.useState(null);
   const [query, setQuery] = reactExports.useState("");
+  const [debouncedQuery, setDebouncedQuery] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const id = setTimeout(() => setDebouncedQuery(query), 180);
+    return () => clearTimeout(id);
+  }, [query]);
   const [showFavs, setShowFavs] = reactExports.useState(false);
   const [favs, setFavs] = reactExports.useState(() => loadFavorites());
+  function highlight(text, q) {
+    if (!q) return text;
+    const idx = text.toLowerCase().indexOf(q.toLowerCase());
+    if (idx === -1) return text;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      text.slice(0, idx),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("mark", { style: { background: `${BLAZE}33`, color: PAPER, padding: "0 2px", borderRadius: 3 }, children: text.slice(idx, idx + q.length) }),
+      text.slice(idx + q.length)
+    ] });
+  }
   const visibleIds = Object.keys(EXERCISES).filter((id) => {
     const ex = EXERCISES[id];
     const byGroup = filter === "all" ? true : EXERCISE_GROUPS[filter].includes(id);
     const byFav = showFavs ? favs.includes(id) : true;
-    const q = query.trim().toLowerCase();
+    const q = debouncedQuery.trim().toLowerCase();
     const byQuery = !q || tr(ex.name, lang).toLowerCase().includes(q) || id.toLowerCase().includes(q) || tr(ex.cue, lang).toLowerCase().includes(q);
     return byGroup && byFav && byQuery;
   });
@@ -267,7 +282,16 @@ function LibraryScreen({ sessions, profile }) {
         ] });
       return null;
     })(),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 10 }, children: visibleIds.map((id) => {
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 10 }, children: visibleIds.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", padding: "36px 16px", color: STEEL }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 36, marginBottom: 8 }, children: "🔍" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 14 }, children: "Nessun esercizio trovato" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginTop: 4 }, children: lang === "it" ? "Prova un altro termine o resetta i filtri." : lang === "de" ? "Versuche einen anderen Begriff." : "Try another term or reset filters." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+        setQuery("");
+        setFilter("all");
+        setShowFavs(false);
+      }, style: { marginTop: 12, padding: "8px 14px", borderRadius: 20, border: `1px solid ${BLAZE}`, background: BLAZE, color: PAPER, cursor: "pointer", fontSize: 12 }, children: "Reset filtri" })
+    ] }) : visibleIds.map((id) => {
       const ex = EXERCISES[id];
       const isOpen = selectedId === id;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -327,7 +351,7 @@ function LibraryScreen({ sessions, profile }) {
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 14.5, flex: 1 }, children: tr(ex.name, lang) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 14.5, flex: 1 }, children: highlight(tr(ex.name, lang), debouncedQuery) }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "button",
                     {

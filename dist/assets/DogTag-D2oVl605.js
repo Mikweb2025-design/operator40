@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL } from "./index-DoCc26pn.js";
+import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL } from "./index-DwxarVpo.js";
 import "./icons-DnFQGhVC.js";
 function DogTag({ label, value, sub, accent = false }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -13,6 +13,7 @@ function DogTag({ label, value, sub, accent = false }) {
         position: "relative",
         flex: 1,
         minWidth: 0,
+        minHeight: 84,
         boxShadow: "0 4px 14px rgba(0,0,0,0.35)"
       },
       children: [
@@ -50,11 +51,11 @@ function DogTag({ label, value, sub, accent = false }) {
           "div",
           {
             className: `o40-display ${accent ? "o40-num-glow on" : "o40-num-glow"}`,
-            style: { fontSize: 26, lineHeight: 1.1 },
+            style: { fontSize: 26, lineHeight: 1.1, wordBreak: "break-word", overflowWrap: "anywhere" },
             children: value
           }
         ),
-        sub && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: sub })
+        sub && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11, wordBreak: "break-word" }, children: sub })
       ]
     }
   );

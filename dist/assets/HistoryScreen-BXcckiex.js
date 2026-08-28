@@ -1,8 +1,8 @@
-import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ae as LOCALES, ai as computeStreak, W as WEEKLY_GOAL, aj as buildHeatmap, ak as getPersonalRecords, al as buildYearHeatmap, a as OLIVE_DARK, P as PAPER, b as INK_2, ah as RPE_COLORS, z as getWeeklyProgress, A as getAveragePace, ac as iconCircle, am as getMonthlyTrend, m as PROGRAMS, t as tr, af as hrZone, ag as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, an as dayKey, ao as sessionDayKey, ap as getNextMedals } from "./index-DoCc26pn.js";
+import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ae as LOCALES, ai as computeStreak, W as WEEKLY_GOAL, aj as buildHeatmap, ak as getPersonalRecords, al as buildYearHeatmap, a as OLIVE_DARK, P as PAPER, b as INK_2, ah as RPE_COLORS, z as getWeeklyProgress, A as getAveragePace, ac as iconCircle, am as getMonthlyTrend, m as PROGRAMS, t as tr, af as hrZone, ag as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, an as dayKey, ao as sessionDayKey, ap as getNextMedals } from "./index-DwxarVpo.js";
 import { r as reactExports, t as HeartPulse, T as Trophy, Z as Zap, S as Sparkles, L as Lightbulb, o as Medal, F as Flame, C as Check, X, w as RotateCcw, v as Star, x as Target } from "./icons-DnFQGhVC.js";
-import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-BK1AxAYT.js";
-import { T as TopBar } from "./TopBar-CBGqWWq5.js";
-import { D as DogTag } from "./DogTag-BVC0uMoB.js";
+import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-BZ6O1V5S.js";
+import { T as TopBar } from "./TopBar-sVeRwda0.js";
+import { D as DogTag } from "./DogTag-D2oVl605.js";
 import { R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-BWCYe6zh.js";
 function BeforeAfterSlider({ before, after }) {
   const [pos, setPos] = reactExports.useState(50);
@@ -157,7 +157,7 @@ function csvEscape(v) {
 }
 function exportCSV(sessions, waistHistory, weightHistory) {
   const rows = [
-    ["date", "program", "kcal", "duration_min", "hr_peak", "rpe", "waist_cm", "weight_kg", "notes"]
+    ["date", "program", "kcal", "duration_min", "hr_peak", "rpe", "waist_cm", "weight_kg", "ai_quality", "ai_reps", "notes"]
   ];
   const waistByDay = {};
   (waistHistory || []).forEach((w) => {
@@ -170,7 +170,10 @@ function exportCSV(sessions, waistHistory, weightHistory) {
     weightByDay[d] = w.kg;
   });
   (sessions || []).forEach((s) => {
+    var _a, _b, _c;
     const day = new Date(s.date).toISOString().slice(0, 10);
+    const aiQ = ((_a = s.aiQuality) == null ? void 0 : _a.overall) ?? "";
+    const aiReps = ((_b = s.aiQuality) == null ? void 0 : _b.exercises) ? s.aiQuality.exercises.map((e) => `${e.name}:${e.reps}`).join("; ") : ((_c = s.aiQuality) == null ? void 0 : _c.reps) ?? "";
     rows.push([
       s.date,
       s.programId || s.programName || "",
@@ -180,6 +183,8 @@ function exportCSV(sessions, waistHistory, weightHistory) {
       s.rpe ?? "",
       waistByDay[day] ?? "",
       weightByDay[day] ?? "",
+      aiQ,
+      aiReps,
       (s.notes || "").replace(/\n/g, " ")
     ]);
   });
@@ -574,6 +579,32 @@ async function shareStatsImage({ sessions, profile, t, tr: tr2 }) {
     W / 2,
     footY + 18
   );
+  const qrSize = 72, qrX = cardX + cardW - 24 - qrSize, qrY = footY - 58;
+  ctx.fillStyle = "white";
+  ctx.strokeStyle = "rgba(184,174,140,0.22)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(qrX, qrY, qrSize, qrSize, 8);
+  ctx.fill();
+  ctx.stroke();
+  const cell = qrSize / 9;
+  ctx.fillStyle = "#111";
+  const pattern = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 1, 1, 0, 1],
+    [1, 0, 1, 1, 1, 0, 1],
+    [1, 0, 1, 1, 1, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1]
+  ];
+  for (let r2 = 0; r2 < 7; r2++) for (let c2 = 0; c2 < 7; c2++) if (pattern[r2][c2]) ctx.fillRect(qrX + cell + c2 * cell * 0.9, qrY + cell + r2 * cell * 0.9, cell * 0.85, cell * 0.85);
+  ctx.fillStyle = "#C1440E";
+  ctx.fillRect(qrX + qrSize / 2 - 3, qrY + qrSize / 2 - 3, 6, 6);
+  ctx.fillStyle = "rgba(0,0,0,0.65)";
+  ctx.font = '600 7px "IBM Plex Mono", monospace';
+  ctx.textAlign = "center";
+  ctx.fillText("QR", qrX + qrSize / 2, qrY + qrSize + 10);
   ctx.fillStyle = "#C1440E";
   ctx.beginPath();
   ctx.arc(W - 48, footY - 28, 3, 0, Math.PI * 2);
