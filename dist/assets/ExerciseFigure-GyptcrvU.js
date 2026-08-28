@@ -1,5 +1,5 @@
-import { B as BLAZE, j as jsxRuntimeExports, K as KHAKI } from "./index-CmuzqvQJ.js";
-import "./icons-BHJLJdva.js";
+import { B as BLAZE, j as jsxRuntimeExports, K as KHAKI } from "./index-6mXI_710.js";
+import "./icons-DnFQGhVC.js";
 const limb = { stroke: "currentColor", strokeWidth: 7, strokeLinecap: "round" };
 const body = { stroke: "currentColor", strokeWidth: 16, strokeLinecap: "round" };
 const floorLine = (x1, y, x2) => /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1, y1: y, x2, y2: y, stroke: KHAKI, strokeWidth: "2", opacity: "0.4" });

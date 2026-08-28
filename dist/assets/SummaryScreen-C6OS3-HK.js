@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports, B as BLAZE, O as OLIVE, b as INK_2, K as KHAKI, P as PAPER, S as STEEL, u as useT, ae as hrZone, t as tr, W as WEEKLY_GOAL, af as RPE_LABELS, ag as RPE_COLORS, I as INK, i as inputStyle, a as OLIVE_DARK, $ as primaryBtn } from "./index-CmuzqvQJ.js";
-import { N as ShieldCheck, F as Flame, Z as Zap, r as reactExports, T as Trophy, z as Ruler, G as Scale, t as HeartPulse, C as Check } from "./icons-BHJLJdva.js";
-import { D as DogTag } from "./DogTag-uN33KKry.js";
-import "./charts-DKCmdoT_.js";
+import { j as jsxRuntimeExports, B as BLAZE, O as OLIVE, b as INK_2, K as KHAKI, P as PAPER, S as STEEL, u as useT, ae as hrZone, I as INK, t as tr, W as WEEKLY_GOAL, af as RPE_LABELS, ag as RPE_COLORS, i as inputStyle, a as OLIVE_DARK, $ as primaryBtn } from "./index-6mXI_710.js";
+import { N as ShieldCheck, F as Flame, Z as Zap, r as reactExports, T as Trophy, O as Gauge, z as Ruler, G as Scale, t as HeartPulse, C as Check } from "./icons-DnFQGhVC.js";
+import { D as DogTag } from "./DogTag-BcgxpBya.js";
+import "./charts-BWCYe6zh.js";
 function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
   const now = /* @__PURE__ */ new Date();
   const start = new Date(now);
@@ -83,6 +83,7 @@ function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
 }
 function SummaryScreen({
   stats,
+  aiQuality,
   profile,
   sessions,
   hrInput,
@@ -97,6 +98,7 @@ function SummaryScreen({
   setNotes,
   onSave
 }) {
+  var _a;
   const { lang, t } = useT();
   const zone = hrInput ? hrZone(parseInt(hrInput, 10), profile.age, lang) : null;
   const [shareState, setShareState] = reactExports.useState("idle");
@@ -138,34 +140,166 @@ function SummaryScreen({
           i
         )) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 20 }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", marginTop: 10 }, className: "o40-pop", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 40, color: BLAZE }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 30, marginTop: 8 }, children: t("sum.title") }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 14 }, children: tr(stats.program.name, lang) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                onClick: handleShare,
-                style: {
-                  marginTop: 10,
-                  background: "transparent",
-                  border: `1px solid ${KHAKI}`,
-                  borderRadius: 20,
-                  padding: "6px 14px",
-                  cursor: "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6
-                },
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11 }, children: shareState === "copied" ? t("sum.copied") : t("sum.sharebtn") })
-              }
-            )
-          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "o40-pop o40-spin-border",
+              style: { textAlign: "center", marginTop: 10, borderRadius: 20, padding: "22px 16px 18px" },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", display: "inline-block" }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      style: {
+                        position: "absolute",
+                        inset: -12,
+                        borderRadius: "50%",
+                        background: `radial-gradient(circle, ${BLAZE}3d 0%, transparent 70%)`,
+                        animation: "ringPulse 1.8s ease-out infinite"
+                      }
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      style: {
+                        position: "relative",
+                        display: "inline-flex",
+                        width: 72,
+                        height: 72,
+                        borderRadius: "50%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: `linear-gradient(160deg, ${INK_2}, ${INK})`,
+                        border: `1px solid ${BLAZE}66`,
+                        boxShadow: `0 0 24px ${BLAZE}44, inset 0 0 16px ${BLAZE}22`
+                      },
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        Trophy,
+                        {
+                          size: 40,
+                          color: BLAZE,
+                          style: { filter: `drop-shadow(0 0 8px ${BLAZE})`, marginTop: -3 }
+                        }
+                      )
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: "o40-display o40-num-glow",
+                    style: { fontSize: 32, marginTop: 12, lineHeight: 1 },
+                    children: t("sum.title")
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 14, marginTop: 2 }, children: tr(stats.program.name, lang) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    onClick: handleShare,
+                    style: {
+                      marginTop: 12,
+                      background: "transparent",
+                      border: `1px solid ${KHAKI}`,
+                      borderRadius: 20,
+                      padding: "6px 14px",
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6
+                    },
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11 }, children: shareState === "copied" ? t("sum.copied") : t("sum.sharebtn") })
+                  }
+                )
+              ]
+            }
+          ),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, margin: "20px 0" }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.duration"), value: `${Math.round(stats.durationSec / 60)}′` }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.kcal"), value: stats.kcal })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(WeeklyChallenge, { sessions, weeklyGoal: profile.weeklyGoal || WEEKLY_GOAL }),
+          aiQuality && aiQuality.overall != null && ((_a = aiQuality.exercises) == null ? void 0 : _a.length) > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "o40-pop",
+              style: {
+                background: INK_2,
+                border: `1px solid ${OLIVE}`,
+                borderRadius: 12,
+                padding: 16,
+                marginBottom: 12
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    Gauge,
+                    {
+                      size: 18,
+                      color: aiQuality.overall > 70 ? "#7FB069" : aiQuality.overall > 50 ? "#D4A017" : BLAZE
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: "o40-mono",
+                      style: {
+                        color: KHAKI,
+                        fontSize: 11,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em"
+                      },
+                      children: t("sum.quality.title")
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "div",
+                    {
+                      style: {
+                        marginLeft: "auto",
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: 2
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "span",
+                          {
+                            className: "o40-display",
+                            style: {
+                              color: aiQuality.overall > 70 ? "#7FB069" : aiQuality.overall > 50 ? "#D4A017" : BLAZE,
+                              fontSize: 26,
+                              lineHeight: 1
+                            },
+                            children: aiQuality.overall
+                          }
+                        ),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "/100" })
+                      ]
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }, children: t("sum.quality.body") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: 6 }, children: aiQuality.exercises.map((e) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "span",
+                  {
+                    className: "o40-mono",
+                    style: {
+                      color: PAPER,
+                      fontSize: 10,
+                      background: INK,
+                      border: `1px solid ${e.quality > 70 ? "#7FB069" : e.quality > 50 ? "#D4A017" : OLIVE}`,
+                      borderRadius: 6,
+                      padding: "3px 8px"
+                    },
+                    children: t("sum.quality.per", { name: e.name, q: e.quality })
+                  },
+                  e.name
+                )) })
+              ]
+            }
+          ),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
@@ -410,7 +544,7 @@ function SummaryScreen({
             }
           )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "12px 20px 20px", borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onSave, style: primaryBtn, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "12px 20px 20px", borderTop: `1px solid ${OLIVE_DARK}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onSave, className: "o40-cta", style: primaryBtn, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 18 }),
           " ",
           t("sum.save")

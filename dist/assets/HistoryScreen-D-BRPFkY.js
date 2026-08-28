@@ -1,9 +1,9 @@
-import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ad as LOCALES, ah as computeStreak, W as WEEKLY_GOAL, ai as buildHeatmap, aj as getPersonalRecords, ak as buildYearHeatmap, a as OLIVE_DARK, P as PAPER, b as INK_2, ag as RPE_COLORS, z as getWeeklyProgress, A as getAveragePace, ab as iconCircle, al as getMonthlyTrend, m as PROGRAMS, t as tr, ae as hrZone, af as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, am as dayKey, an as sessionDayKey, ao as getNextMedals } from "./index-CmuzqvQJ.js";
-import { r as reactExports, t as HeartPulse, T as Trophy, Z as Zap, S as Sparkles, L as Lightbulb, o as Medal, F as Flame, C as Check, X, w as RotateCcw, v as Star, x as Target } from "./icons-BHJLJdva.js";
-import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-BEM1NwH7.js";
-import { T as TopBar } from "./TopBar-CrV7IU_g.js";
-import { D as DogTag } from "./DogTag-uN33KKry.js";
-import { R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-DKCmdoT_.js";
+import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ad as LOCALES, ah as computeStreak, W as WEEKLY_GOAL, ai as buildHeatmap, aj as getPersonalRecords, ak as buildYearHeatmap, a as OLIVE_DARK, P as PAPER, b as INK_2, ag as RPE_COLORS, z as getWeeklyProgress, A as getAveragePace, ab as iconCircle, al as getMonthlyTrend, m as PROGRAMS, t as tr, ae as hrZone, af as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, am as dayKey, an as sessionDayKey, ao as getNextMedals } from "./index-6mXI_710.js";
+import { r as reactExports, t as HeartPulse, T as Trophy, Z as Zap, S as Sparkles, L as Lightbulb, o as Medal, F as Flame, C as Check, X, w as RotateCcw, v as Star, x as Target } from "./icons-DnFQGhVC.js";
+import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-MJKZyfqn.js";
+import { T as TopBar } from "./TopBar-CbL_GQc3.js";
+import { D as DogTag } from "./DogTag-BcgxpBya.js";
+import { R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-BWCYe6zh.js";
 function BeforeAfterSlider({ before, after }) {
   const [pos, setPos] = reactExports.useState(50);
   if (!before || !after) return null;
@@ -1038,8 +1038,8 @@ function HistoryScreen({
       pr && /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
-          className: "o40-card-glass",
-          style: { display: "flex", gap: 10, marginBottom: 18, padding: 12, borderRadius: 12 },
+          className: "o40-card-glass o40-card-face",
+          style: { display: "flex", gap: 10, marginBottom: 18, padding: 12, borderRadius: 12, position: "relative" },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "MAX KCAL" }),
@@ -2456,6 +2456,24 @@ function HistoryScreen({
                       padding: "2px 5px"
                     },
                     children: tr(RPE_LABELS[s.rpe - 1], lang)
+                  }
+                ),
+                s.aiQuality && s.aiQuality.overall != null && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "div",
+                  {
+                    className: "o40-mono",
+                    title: t("hist.quality"),
+                    style: {
+                      color: s.aiQuality.overall > 70 ? "#7FB069" : s.aiQuality.overall > 50 ? "#D4A017" : BLAZE,
+                      fontSize: 10.5,
+                      border: `1px solid ${s.aiQuality.overall > 70 ? "#7FB069" : s.aiQuality.overall > 50 ? "#D4A017" : OLIVE}`,
+                      borderRadius: 4,
+                      padding: "2px 5px"
+                    },
+                    children: [
+                      "Q",
+                      s.aiQuality.overall
+                    ]
                   }
                 ),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(

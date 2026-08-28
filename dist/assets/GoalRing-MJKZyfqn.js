@@ -1,5 +1,5 @@
-import { W as WEEKLY_GOAL, l as getConsistencyScore, C as getStreakRisk, w as getRank, j as jsxRuntimeExports, K as KHAKI, a as OLIVE_DARK, B as BLAZE, S as STEEL } from "./index-CmuzqvQJ.js";
-import "./icons-BHJLJdva.js";
+import { W as WEEKLY_GOAL, l as getConsistencyScore, C as getStreakRisk, w as getRank, j as jsxRuntimeExports, K as KHAKI, a as OLIVE_DARK, B as BLAZE, S as STEEL } from "./index-6mXI_710.js";
+import "./icons-DnFQGhVC.js";
 function getGoalHistory(sessions, weeklyGoal = WEEKLY_GOAL, weeks = 8) {
   const now = /* @__PURE__ */ new Date();
   const byWeek = [];

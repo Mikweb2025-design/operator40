@@ -1,11 +1,11 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-Cx-PcBXv.js","./clips-CZetA5iC.js"])))=>i.map(i=>d[i]);
-import { u as useT, X as levelPreset, Y as estimateProgramKcal, Z as totalSeqSeconds, j as jsxRuntimeExports, P as PAPER, t as tr, K as KHAKI, B as BLAZE, U as EXERCISE_GROUPS, O as OLIVE, b as INK_2, I as INK, J as EXERCISES, S as STEEL, a0 as getReps, a1 as HOLD_EXERCISES, V as speak, R as btnIcon, a as OLIVE_DARK, $ as primaryBtn, _ as __vitePreload } from "./index-CmuzqvQJ.js";
-import { r as reactExports, W as Wind, f as RefreshCw, J as Play } from "./icons-BHJLJdva.js";
+import { u as useT, X as levelPreset, Y as estimateProgramKcal, Z as totalSeqSeconds, j as jsxRuntimeExports, P as PAPER, t as tr, K as KHAKI, B as BLAZE, U as EXERCISE_GROUPS, O as OLIVE, b as INK_2, I as INK, J as EXERCISES, S as STEEL, a0 as getReps, a1 as HOLD_EXERCISES, V as speak, R as btnIcon, a as OLIVE_DARK, $ as primaryBtn, _ as __vitePreload } from "./index-6mXI_710.js";
+import { r as reactExports, W as Wind, f as RefreshCw, J as Play } from "./icons-DnFQGhVC.js";
 import { h as hasClip } from "./clips-CZetA5iC.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-o7Jo0liB.js";
-import { T as TopBar } from "./TopBar-CrV7IU_g.js";
-import { D as DogTag } from "./DogTag-uN33KKry.js";
-import "./charts-DKCmdoT_.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-GyptcrvU.js";
+import { T as TopBar } from "./TopBar-CbL_GQc3.js";
+import { D as DogTag } from "./DogTag-BcgxpBya.js";
+import "./charts-BWCYe6zh.js";
 let _mediaPromise = null;
 function getMediaMap() {
   if (!_mediaPromise)
@@ -456,7 +456,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
       "button",
       {
         onClick: () => onStart(effectiveProgram),
-        className: "o40-pulsebtn",
+        className: "o40-pulsebtn o40-cta",
         style: { ...primaryBtn, borderRadius: 14 },
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 18 }),

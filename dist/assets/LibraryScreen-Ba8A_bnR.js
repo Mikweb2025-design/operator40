@@ -1,9 +1,9 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-Cx-PcBXv.js","./clips-CZetA5iC.js"])))=>i.map(i=>d[i]);
-import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-CmuzqvQJ.js";
-import { r as reactExports, X, v as Star, S as Sparkles, W as Wind } from "./icons-BHJLJdva.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-o7Jo0liB.js";
+import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-6mXI_710.js";
+import { r as reactExports, X, v as Star, S as Sparkles, W as Wind } from "./icons-DnFQGhVC.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-GyptcrvU.js";
 import { h as hasClip } from "./clips-CZetA5iC.js";
-import "./charts-DKCmdoT_.js";
+import "./charts-BWCYe6zh.js";
 function loadFavorites() {
   try {
     const v = localStorage.getItem("o40_favs");
@@ -273,7 +273,7 @@ function LibraryScreen({ sessions, profile }) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "button",
         {
-          className: "o40-card",
+          className: "o40-card o40-card-face",
           onClick: () => {
             const opening = !isOpen;
             setSelectedId(opening ? id : null);
@@ -283,6 +283,7 @@ function LibraryScreen({ sessions, profile }) {
             display: "flex",
             flexDirection: "column",
             gap: 12,
+            position: "relative",
             background: INK_2,
             border: `1px solid ${isOpen ? BLAZE : OLIVE}`,
             borderRadius: 14,
