@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-CM_MC8wO.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./web-BBSv_VRO.js","./CountdownScreen-BoQKkMJK.js","./SetupScreen-Dl0lp6Hb.js","./TopBar-UE9Jf2VR.js","./HomeScreen-DuTjURai.js","./GoalRing-smtSKG5Q.js","./ExerciseFigure-Bq-xqf0c.js","./DogTag-BTeCgrKT.js","./ProgressRing-BSqXGxTV.js","./LibraryScreen-Dq602x24.js","./clips-CZetA5iC.js","./BuilderScreen-BKm8LZOT.js","./PreviewScreen-BAkVzFAZ.js","./SessionScreen-DDwUnDbl.js","./SummaryScreen-Bfu9b_Ql.js","./HistoryScreen-0XKfpDdx.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-P6RD9e1D.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./web-BJ6A6LD5.js","./CountdownScreen-C30eWP9M.js","./SetupScreen-CYEZtx8-.js","./TopBar-7UA9eXSt.js","./HomeScreen-OFe60RDA.js","./GoalRing-B0VPtapi.js","./ExerciseFigure-BuS_FxT4.js","./DogTag-BhIYteH-.js","./ProgressRing-DcGpG21C.js","./LibraryScreen-BkoBBJ7G.js","./clips-CZetA5iC.js","./BuilderScreen-D2Aef7Zp.js","./PreviewScreen-Cp85LOrO.js","./SessionScreen-D6nBbppT.js","./SummaryScreen-tpj_YI6e.js","./HistoryScreen-DsyJsNay.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -5107,7 +5107,9 @@ function extractFeatures(lm, worldLm, prevFeatures, dtMs) {
     velocity,
     symmetry,
     kneeRaw: knee,
-    hipFlexRaw: hipFlex
+    hipFlexRaw: hipFlex,
+    elbowRaw: elbow,
+    trunkRaw: trunk
   };
 }
 function featuresToVector(f2) {
@@ -5158,9 +5160,16 @@ class TemporalBuffer {
     const vals = this.frames.map((f2) => f2.features[key]);
     return Math.max(...vals) - Math.min(...vals);
   }
-  getVelocityProfile() {
+  getVelocityProfile(key = "kneeRaw") {
     if (this.frames.length < 4) return { mean: 0, max: 0, smoothness: 100 };
-    const vels = this.frames.map((f2) => Math.abs(f2.features.velocity));
+    const vels = [];
+    for (let i = 1; i < this.frames.length; i++) {
+      const dtMs = this.frames[i].timestamp - this.frames[i - 1].timestamp;
+      if (dtMs <= 0) continue;
+      const delta = this.frames[i].features[key] - this.frames[i - 1].features[key];
+      vels.push(Math.abs(delta) / (dtMs / 1e3));
+    }
+    if (!vels.length) return { mean: 0, max: 0, smoothness: 100 };
     const mean = vels.reduce((a, b) => a + b, 0) / vels.length;
     const max = Math.max(...vels);
     const variance = vels.reduce((s, v) => s + (v - mean) ** 2, 0) / vels.length;
@@ -5171,10 +5180,10 @@ class TemporalBuffer {
     if (!this.frames.length) return 100;
     return this.frames.reduce((s, f2) => s + f2.features.symmetry, 0) / this.frames.length;
   }
-  // Pattern detection: down-up sinusoidale vs rumore
-  detectDownUpPattern() {
+  // Pattern detection: down-up sinusoidale vs rumore (dalla definizione "decreasing then increasing")
+  detectDownUpPattern(key = "kneeRaw") {
     if (this.frames.length < 10) return { hasPattern: false, confidence: 0, rom: 0 };
-    const vals = this.frames.map((f2) => f2.features.kneeRaw);
+    const vals = this.frames.map((f2) => f2.features[key]);
     const rom = Math.max(...vals) - Math.min(...vals);
     if (rom < 14) return { hasPattern: false, confidence: 0, rom };
     let directionChanges = 0;
@@ -5190,7 +5199,8 @@ class TemporalBuffer {
     const confidence = hasPattern ? Math.min(100, 55 + rom * 1.2 - directionChanges * 8) : 0;
     return { hasPattern, confidence, rom };
   }
-  // Per crunch/bicycle: usa hipFlex invece di knee
+  // Per crunch/bicycle/ponte o esercizi che usano hipFlex/trunk come primario:
+  // stessa logica down-up ma sul segnale flessione (angolo diminuisce in contrazione).
   detectFlexExtendPattern(key = "kneeRaw") {
     if (this.frames.length < 10) return { hasPattern: false, confidence: 0, rom: 0 };
     const vals = this.frames.map((f2) => f2.features[key]);
@@ -5214,23 +5224,29 @@ class TemporalBuffer {
   }
 }
 const DEFAULTS = {
-  squat: { minROM: 18, minConfidence: 58, primaryKey: "kneeRaw" },
-  pushup: { minROM: 22, minConfidence: 60, primaryKey: "kneeRaw" },
-  // pushup usa elbow ma mappato su kneeRaw via bilateral
-  crunch: { minROM: 14, minConfidence: 58, primaryKey: "hipFlexRaw" },
-  affondo: { minROM: 20, minConfidence: 60, primaryKey: "kneeRaw" },
-  ponte: { minROM: 15, minConfidence: 58, primaryKey: "hipFlexRaw" }
+  squat: { minROM: 18, minConfidence: 58, primaryKey: "kneeRaw", idealVel: 120, minInterval: 360 },
+  pushup: { minROM: 20, minConfidence: 60, primaryKey: "elbowRaw", idealVel: 150, minInterval: 340 },
+  // primario è il gomito, non il ginocchio
+  crunch: { minROM: 14, minConfidence: 58, primaryKey: "hipFlexRaw", idealVel: 110, minInterval: 340 },
+  affondo: { minROM: 20, minConfidence: 60, primaryKey: "kneeRaw", idealVel: 120, minInterval: 360 },
+  ponte: { minROM: 15, minConfidence: 58, primaryKey: "hipFlexRaw", idealVel: 110, minInterval: 340 },
+  jumpingJack: { minROM: 16, minConfidence: 60, primaryKey: "kneeRaw", idealVel: 200, minInterval: 300 },
+  // più rapido
+  burpee: { minROM: 18, minConfidence: 62, primaryKey: "kneeRaw", idealVel: 160, minInterval: 380 }
+  // movimento lungo + pausa piombo
 };
+const GENERIC = { minROM: 16, minConfidence: 60, primaryKey: "kneeRaw", idealVel: 120, minInterval: 340 };
 class TemporalClassifier {
   constructor(exercise, overrides) {
     this.lastCountAt = 0;
-    const def = DEFAULTS[exercise] ?? { minROM: 16, minConfidence: 60, primaryKey: "kneeRaw" };
+    const def = DEFAULTS[exercise] ?? GENERIC;
     this.cfg = {
       exercise,
       minROM: (overrides == null ? void 0 : overrides.minROM) ?? def.minROM ?? 16,
       minConfidence: (overrides == null ? void 0 : overrides.minConfidence) ?? def.minConfidence ?? 60,
-      primaryKey: (overrides == null ? void 0 : overrides.primaryKey) ?? def.primaryKey ?? "kneeRaw",
-      ...overrides
+      primaryKey: (overrides == null ? void 0 : overrides.primaryKey) ?? (def.primaryKey ?? "kneeRaw"),
+      idealVel: (overrides == null ? void 0 : overrides.idealVel) ?? def.idealVel ?? 120,
+      minInterval: (overrides == null ? void 0 : overrides.minInterval) ?? def.minInterval ?? 340
     };
   }
   evaluate(buffer, currentFeatures, dwellMs, now) {
@@ -5238,9 +5254,10 @@ class TemporalClassifier {
       return { confidence: 0, shouldCount: false, rom: 0, patternConfidence: 0, velocityScore: 0, symmetryScore: 0, reason: "buffer warming" };
     }
     const { hasPattern, confidence: patternConf, rom } = this.detectPattern(buffer);
-    const vel = buffer.getVelocityProfile();
+    const vel = buffer.getVelocityProfile(this.cfg.primaryKey);
     const sym = buffer.getSymmetryAvg();
-    const velocityScore = clamp(100 - Math.abs(vel.mean - 120) * 0.28 - Math.max(0, vel.max - 520) * 0.12, 0, 100);
+    const ideal = this.cfg.idealVel;
+    const velocityScore = clamp(100 - Math.abs(vel.mean - ideal) * 0.28 - Math.max(0, vel.max - 520) * 0.12, 0, 100);
     const symmetryScore = clamp(sym, 0, 100);
     const dwellBonus = dwellMs > 55 ? 6 : dwellMs > 30 ? 3 : 0;
     const romScore = rom > this.cfg.minROM + 12 ? 30 : rom > this.cfg.minROM + 5 ? 22 : rom > this.cfg.minROM ? 14 : 0;
@@ -5254,17 +5271,13 @@ class TemporalClassifier {
         100
       );
     }
-    const minInterval = 340;
-    const timeOk = now - this.lastCountAt > minInterval;
+    const timeOk = now - this.lastCountAt > this.cfg.minInterval;
     const shouldCount = confidence >= this.cfg.minConfidence && hasPattern && rom >= this.cfg.minROM && timeOk;
     const reason = !hasPattern ? "no pattern" : rom < this.cfg.minROM ? `rom ${Math.round(rom)}<${this.cfg.minROM}` : !timeOk ? "debounce" : confidence < this.cfg.minConfidence ? `conf ${Math.round(confidence)}<${this.cfg.minConfidence}` : "ok";
     return { confidence: Math.round(confidence), shouldCount, rom: Math.round(rom), patternConfidence: Math.round(patternConf), velocityScore: Math.round(velocityScore), symmetryScore: Math.round(symmetryScore), reason };
   }
   detectPattern(buffer) {
-    if (this.cfg.primaryKey === "hipFlexRaw") {
-      return buffer.detectFlexExtendPattern("hipFlexRaw");
-    }
-    return buffer.detectDownUpPattern();
+    return buffer.detectDownUpPattern(this.cfg.primaryKey);
   }
   markCounted(now) {
     this.lastCountAt = now;
@@ -6664,7 +6677,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-CM_MC8wO.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-P6RD9e1D.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8467,7 +8480,7 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.10.0 · b85abcc";
+const BUILD_VERSION = "2.10.0 · 0fa7038";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -9061,7 +9074,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-BBSv_VRO.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-BJ6A6LD5.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -9660,15 +9673,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-BoQKkMJK.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-Dl0lp6Hb.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-DuTjURai.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-Dq602x24.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-BKm8LZOT.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-BAkVzFAZ.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-DDwUnDbl.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-Bfu9b_Ql.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-0XKfpDdx.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-C30eWP9M.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-CYEZtx8-.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-OFe60RDA.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BkoBBJ7G.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-D2Aef7Zp.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-Cp85LOrO.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-D6nBbppT.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-tpj_YI6e.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-DsyJsNay.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
