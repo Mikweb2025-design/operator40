@@ -290,7 +290,7 @@ function LibraryScreen({ sessions, profile }) {
             return (
               <button
                 key={id}
-                className="o40-card"
+                className="o40-card o40-card-face"
                 onClick={() => {
                   const opening = !isOpen;
                   setSelectedId(opening ? id : null);
@@ -300,6 +300,7 @@ function LibraryScreen({ sessions, profile }) {
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 12,
+                  position: 'relative',
                   background: INK_2,
                   border: `1px solid ${isOpen ? BLAZE : OLIVE}`,
                   borderRadius: 14,

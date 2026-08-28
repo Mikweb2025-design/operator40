@@ -81,16 +81,52 @@ function SummaryScreen({
         ))}
       </div>
       <div className="o40-scroll" style={{ flex: 1, overflowY: 'auto', padding: 20 }}>
-        <div style={{ textAlign: 'center', marginTop: 10 }} className="o40-pop">
-          <Trophy size={40} color={BLAZE} />
-          <div className="o40-display" style={{ color: PAPER, fontSize: 30, marginTop: 8 }}>
+        <div
+          className="o40-pop o40-spin-border"
+          style={{ textAlign: 'center', marginTop: 10, borderRadius: 20, padding: '22px 16px 18px' }}
+        >
+          <div style={{ position: 'relative', display: 'inline-block' }}>
+            <span
+              style={{
+                position: 'absolute',
+                inset: -12,
+                borderRadius: '50%',
+                background: `radial-gradient(circle, ${BLAZE}3d 0%, transparent 70%)`,
+                animation: 'ringPulse 1.8s ease-out infinite',
+              }}
+            />
+            <span
+              style={{
+                position: 'relative',
+                display: 'inline-flex',
+                width: 72,
+                height: 72,
+                borderRadius: '50%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: `linear-gradient(160deg, ${INK_2}, ${INK})`,
+                border: `1px solid ${BLAZE}66`,
+                boxShadow: `0 0 24px ${BLAZE}44, inset 0 0 16px ${BLAZE}22`,
+              }}
+            >
+              <Trophy
+                size={40}
+                color={BLAZE}
+                style={{ filter: `drop-shadow(0 0 8px ${BLAZE})`, marginTop: -3 }}
+              />
+            </span>
+          </div>
+          <div
+            className="o40-display o40-num-glow"
+            style={{ fontSize: 32, marginTop: 12, lineHeight: 1 }}
+          >
             {t('sum.title')}
           </div>
-          <div style={{ color: KHAKI, fontSize: 14 }}>{tr(stats.program.name, lang)}</div>
+          <div style={{ color: KHAKI, fontSize: 14, marginTop: 2 }}>{tr(stats.program.name, lang)}</div>
           <button
             onClick={handleShare}
             style={{
-              marginTop: 10,
+              marginTop: 12,
               background: 'transparent',
               border: `1px solid ${KHAKI}`,
               borderRadius: 20,
@@ -416,7 +452,7 @@ function SummaryScreen({
         </div>
       </div>
       <div style={{ padding: '12px 20px 20px', borderTop: `1px solid ${OLIVE_DARK}` }}>
-        <button onClick={onSave} style={primaryBtn}>
+        <button onClick={onSave} className="o40-cta" style={primaryBtn}>
           <Check size={18} /> {t('sum.save')}
         </button>
       </div>

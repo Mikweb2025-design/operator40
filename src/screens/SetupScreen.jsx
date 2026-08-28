@@ -1106,6 +1106,7 @@ export default function SetupScreen({
         <button
           onClick={onSave}
           disabled={!formAge || !formWeight}
+          className="o40-cta"
           style={{
             ...primaryBtn,
             opacity: !formAge || !formWeight ? 0.5 : 1,

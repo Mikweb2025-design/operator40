@@ -451,8 +451,8 @@ function HistoryScreen({
 
         {pr && (
           <div
-            className="o40-card-glass"
-            style={{ display: 'flex', gap: 10, marginBottom: 18, padding: 12, borderRadius: 12 }}
+            className="o40-card-glass o40-card-face"
+            style={{ display: 'flex', gap: 10, marginBottom: 18, padding: 12, borderRadius: 12, position: 'relative' }}
           >
             <div style={{ flex: 1, textAlign: 'center' }}>
               <div className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>

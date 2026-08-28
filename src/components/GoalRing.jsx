@@ -21,6 +21,17 @@ export function GoalRing({ done, total, size = 72, stroke = 7 }) {
         <circle
           cx={size / 2}
           cy={size / 2}
+          r={radius - stroke / 2 - 1.5}
+          stroke={isDone ? '#7FB069' : BLAZE}
+          strokeWidth={1.5}
+          fill="none"
+          strokeDasharray="1 5"
+          strokeLinecap="round"
+          opacity={0.5}
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
           r={radius}
           stroke={isDone ? '#7FB069' : BLAZE}
           strokeWidth={stroke}
@@ -30,7 +41,7 @@ export function GoalRing({ done, total, size = 72, stroke = 7 }) {
           strokeLinecap="round"
           style={{
             transition: 'stroke-dashoffset 0.6s ease, stroke 0.3s ease',
-            filter: isDone ? 'drop-shadow(0 0 6px #7FB06988)' : `drop-shadow(0 0 6px ${BLAZE}66)`,
+            filter: isDone ? 'drop-shadow(0 0 7px #7FB06999)' : `drop-shadow(0 0 7px ${BLAZE}77)`,
           }}
         />
       </svg>
@@ -45,8 +56,8 @@ export function GoalRing({ done, total, size = 72, stroke = 7 }) {
         }}
       >
         <span
+          className={isDone ? 'o40-num-glow on' : 'o40-num-glow'}
           style={{
-            color: isDone ? '#7FB069' : PAPER,
             fontFamily: 'Bebas Neue, sans-serif',
             fontSize: size * 0.32,
             lineHeight: 1,

@@ -310,7 +310,9 @@ function SessionScreen({
           </div>
         ) : (
           <>
-            <div style={{ position: 'relative', width: 240, height: 240 }}>
+            <div className="o40-hud" style={{ position: 'relative', width: 240, height: 240 }}>
+              <span className="o40-hud-corner" />
+              <span className="o40-hud-corner bl" />
               <div
                 style={{
                   position: 'absolute',
@@ -639,7 +641,7 @@ function SessionScreen({
               <button onClick={() => setExitConfirm(false)} style={{ ...secondaryBtn, flex: 1 }}>
                 {t('ses.quit.continue')}
               </button>
-              <button onClick={onExit} style={{ ...primaryBtn, flex: 1 }}>
+              <button onClick={onExit} className="o40-cta" style={{ ...primaryBtn, flex: 1 }}>
                 {t('ses.quit.exit')}
               </button>
             </div>

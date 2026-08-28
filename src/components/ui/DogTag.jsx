@@ -1,15 +1,14 @@
 import React from 'react';
-import { INK, INK_2, PAPER, OLIVE, KHAKI, STEEL } from '../../constants/theme.js';
+import { INK, INK_2, OLIVE, KHAKI, STEEL, BLAZE } from '../../constants/theme.js';
 
 /**
  * DogTag — pill-card per metriche (duration/kcal/rounds/streak)
  * Usato in Home, Preview, Summary, History — deduplicato in audit/3-dedup-ui
  */
-export default function DogTag({ label, value, sub }) {
-  const numeric = typeof value === 'number';
+export default function DogTag({ label, value, sub, accent = false }) {
   return (
     <div
-      className="o40-card"
+      className="o40-card o40-card-face"
       style={{
         background: `linear-gradient(160deg, ${INK_2}, ${INK})`,
         border: `1px solid ${OLIVE}`,
@@ -21,11 +20,15 @@ export default function DogTag({ label, value, sub }) {
         boxShadow: '0 4px 14px rgba(0,0,0,0.35)',
       }}
     >
+      <span
+        className="o40-card-accent"
+        style={{ background: accent ? BLAZE : KHAKI, opacity: accent ? 1 : 0.55 }}
+      />
       <div
         style={{
           position: 'absolute',
           top: 9,
-          left: -5,
+          left: 8,
           width: 10,
           height: 10,
           borderRadius: '50%',
@@ -35,12 +38,15 @@ export default function DogTag({ label, value, sub }) {
       />
       <div
         className="o40-mono"
-        style={{ color: KHAKI, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}
+        style={{ color: accent ? BLAZE : KHAKI, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}
       >
         {label}
       </div>
-      <div className="o40-display" style={{ color: PAPER, fontSize: 26, lineHeight: 1.1 }}>
-        {numeric ? value : value}
+      <div
+        className={`o40-display ${accent ? 'o40-num-glow on' : 'o40-num-glow'}`}
+        style={{ fontSize: 26, lineHeight: 1.1 }}
+      >
+        {value}
       </div>
       {sub && <div style={{ color: STEEL, fontSize: 11 }}>{sub}</div>}
     </div>

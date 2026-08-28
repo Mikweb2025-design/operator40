@@ -26,6 +26,7 @@ export default function BottomNav({ active, onNavigate }) {
           <button
             key={tab.key}
             onClick={() => onNavigate(tab.key)}
+            aria-current={on ? 'page' : undefined}
             style={{
               flex: 1,
               background: 'transparent',
@@ -39,45 +40,70 @@ export default function BottomNav({ active, onNavigate }) {
               position: 'relative',
             }}
           >
-            {on && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: '26%',
-                  right: '26%',
-                  height: 2,
-                  borderRadius: 2,
-                  background: BLAZE,
-                  boxShadow: `0 0 8px ${BLAZE}`,
-                }}
-              />
-            )}
             <div
               style={{
-                width: 40,
-                height: 26,
-                borderRadius: 13,
+                position: 'relative',
+                width: 46,
+                height: 28,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: on ? `${BLAZE}22` : 'transparent',
-                transition: 'background 0.2s ease',
-                animation: on ? 'tabPop 0.28s cubic-bezier(0.16,1,0.3,1)' : 'none',
+                borderRadius: 14,
+                background: on ? `linear-gradient(180deg, ${BLAZE}33, ${BLAZE}14)` : 'transparent',
+                border: on ? `1px solid ${BLAZE}55` : '1px solid transparent',
+                boxShadow: on ? `0 0 14px ${BLAZE}33, inset 0 0 8px ${BLAZE}22` : 'none',
+                transition: 'background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                animation: on ? 'tabPop 0.3s cubic-bezier(0.16,1,0.3,1)' : 'none',
               }}
             >
               <Icon
                 size={20}
                 color={on ? BLAZE : STEEL}
-                style={{ transition: 'color 0.2s ease' }}
+                style={{ transition: 'color 0.2s ease', filter: on ? `drop-shadow(0 0 5px ${BLAZE}aa)` : 'none' }}
               />
+              {on && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: -1,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: 16,
+                    height: 2,
+                    borderRadius: 2,
+                    background: BLAZE,
+                    boxShadow: `0 0 8px ${BLAZE}`,
+                  }}
+                />
+              )}
             </div>
             <span
               className="o40-mono"
-              style={{ color: on ? BLAZE : STEEL, fontSize: 9.5, letterSpacing: '0.03em' }}
+              style={{
+                color: on ? BLAZE : STEEL,
+                fontSize: 9.5,
+                letterSpacing: '0.03em',
+                textShadow: on ? `0 0 6px ${BLAZE}66` : 'none',
+                transition: 'color 0.2s ease',
+              }}
             >
               {tab.label}
             </span>
+            {on && (
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: 2,
+                  left: '38%',
+                  right: '38%',
+                  height: 2,
+                  borderRadius: 2,
+                  background: BLAZE,
+                  opacity: 0.85,
+                  boxShadow: `0 0 8px ${BLAZE}`,
+                }}
+              />
+            )}
           </button>
         );
       })}

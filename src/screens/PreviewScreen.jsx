@@ -463,7 +463,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
       <div style={{ padding: 16, borderTop: `1px solid ${OLIVE_DARK}` }}>
         <button
           onClick={() => onStart(effectiveProgram)}
-          className="o40-pulsebtn"
+          className="o40-pulsebtn o40-cta"
           style={{ ...primaryBtn, borderRadius: 14 }}
         >
           <Play size={18} /> {t('prev.go')}

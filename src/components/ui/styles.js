@@ -39,7 +39,7 @@ export const primaryBtnLarge = {
   padding: '15px 18px',
   fontSize: 18,
   letterSpacing: '0.06em',
-  boxShadow: `0 6px 20px ${BLAZE}4d`,
+  boxShadow: `0 8px 24px ${BLAZE}4d, 0 1px 0 rgba(255,255,255,0.14) inset`,
 };
 
 export const secondaryBtn = {

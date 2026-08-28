@@ -268,6 +268,9 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
   animation: gridDrift 18s linear infinite;
 }
 @keyframes gridDrift { from { background-position: 0 0, 0 0; } to { background-position: 0 26px, 26px 0; } }
+/* v2.11: tactical aura + figure live glow */
+@keyframes figAura { 0%,100% { filter: drop-shadow(0 0 3px currentColor) drop-shadow(0 0 8px color-mix(in srgb, currentColor 40%, transparent)); } 50% { filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 16px color-mix(in srgb, currentColor 60%, transparent)); } }
+.o40-figure { transition: filter 0.25s ease; animation: figAura 2.4s ease-in-out infinite; }
 .o40-sheen::after {
   content: ''; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%;
   background: linear-gradient(100deg, transparent, rgba(255,255,255,0.10), transparent);
@@ -279,6 +282,67 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 @media (prefers-reduced-motion: reduce) {
   .o40-eqbar, .o40-comet, .o40-ember, .o40-ecg, .o40-ticker-inner, .o40-loadbar > span { animation: none !important; }
 }
+
+/* ---- v2.11 graphics polish: shared card face gloss ---- */
+.o40-card-face { position: relative; overflow: hidden; }
+.o40-card-face::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 42%, rgba(0,0,0,0.22) 100%);
+}
+.o40-card-face::after {
+  content: ''; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(184,174,140,0.45), transparent);
+}
+.o40-card-accent { position: absolute; left: 0; top: 12%; bottom: 12%; width: 3px; border-radius: 0 2px 2px 0; }
+.o40-num-glow { background: linear-gradient(180deg, ${PAPER} 0%, ${KHAKI} 130%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.o40-num-glow.on { background: linear-gradient(180deg, ${BLAZE} 0%, ${BLAZE_DEEP} 140%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px ${BLAZE}55); }
+@keyframes borderSpin { to { transform: rotate(360deg); } }
+@keyframes sheenSweep { 0% { transform: translateX(-150%) skewX(-18deg); } 100% { transform: translateX(220%) skewX(-18deg); } }
+.o40-spin-border { position: relative; border-radius: inherit; overflow: hidden; }
+.o40-spin-border::before {
+  content: ''; position: absolute; inset: -60%; padding: 2px; border-radius: inherit;
+  background: conic-gradient(from 0deg, transparent 0deg, ${BLAZE}66 120deg, transparent 200deg, ${BLAZE}33 300deg, transparent 360deg);
+  animation: borderSpin 6s linear infinite; pointer-events: none;
+}
+.o40-spin-border > * { position: relative; z-index: 1; border-radius: inherit; }
+@media (prefers-reduced-motion: reduce) {
+  .o40-figure, .o40-spin-border, .o40-card-face { animation: none !important; }
+}
+
+/* ---- v2.11: shared primary CTA treatment ---- */
+.o40-cta { position: relative; overflow: hidden; }
+.o40-cta::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  transform: translateX(-150%) skewX(-18deg); pointer-events: none;
+}
+.o40-cta:hover::after { transform: translateX(340%) skewX(-18deg); transition: transform 0.7s ease; }
+.o40-cta::before {
+  content: ''; position: absolute; top: 0; left: 8%; right: 8%; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+}
+
+/* ---- v2.11: HUD corner-bracket tactical frame ---- */
+.o40-hud { position: relative; }
+.o40-hud::before, .o40-hud::after {
+  content: ''; position: absolute; width: 14px; height: 14px; pointer-events: none; opacity: 0.9;
+}
+.o40-hud::before {
+  top: -6px; left: -6px;
+  border-top: 2px solid ${BLAZE}; border-left: 2px solid ${BLAZE};
+  border-top-left-radius: 6px; filter: drop-shadow(0 0 4px ${BLAZE}66);
+}
+.o40-hud::after {
+  bottom: -6px; right: -6px;
+  border-bottom: 2px solid ${BLAZE}; border-right: 2px solid ${BLAZE};
+  border-bottom-right-radius: 6px; filter: drop-shadow(0 0 4px ${BLAZE}66);
+}
+.o40-hud-corner { position: absolute; top: -6px; right: -6px; width: 14px; height: 14px; pointer-events: none;
+  border-top: 2px solid ${BLAZE}; border-right: 2px solid ${BLAZE}; border-top-right-radius: 6px;
+  filter: drop-shadow(0 0 4px ${BLAZE}66); }
+.o40-hud-corner.bl { top: auto; right: auto; bottom: -6px; left: -6px;
+  border-top: none; border-right: none; border-bottom: 2px solid ${BLAZE}; border-left: 2px solid ${BLAZE};
+  border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 6px; border-top-left-radius: 6px; }
 
 /* ---- UI upgrade: glass + light mode + search + favorites ---- */
 :root { --bg: ${INK}; --bg2: ${INK_2}; --surface: ${OLIVE_DARK}; --text: ${PAPER}; --muted: ${STEEL}; --accent: ${BLAZE}; --accent2: ${KHAKI}; }
@@ -319,4 +383,20 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
   .o40-eqbar, .o40-comet, .o40-ember, .o40-ecg, .o40-ticker-inner, .o40-loadbar > span,
   .o40-pop, .o40-blink, .o40-expand { animation: none !important; }
 }
+
+/* ---- v2.11 graphics polish: shared card face gloss ---- */
+.o40-card-face { position: relative; overflow: hidden; }
+.o40-card-face::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 42%, rgba(0,0,0,0.22) 100%);
+}
+.o40-card-face::after {
+  content: ''; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(184,174,140,0.45), transparent);
+}
+.o40-card-accent { position: absolute; left: 0; top: 12%; bottom: 12%; width: 3px; border-radius: 0 2px 2px 0; }
+.o40-num-glow { background: linear-gradient(180deg, ${PAPER} 0%, ${KHAKI} 130%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.o40-num-glow.on { background: linear-gradient(180deg, ${BLAZE} 0%, ${BLAZE_DEEP} 140%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px ${BLAZE}55); }
+@keyframes borderSpin { to { transform: rotate(360deg); } }
+@keyframes sheenSweep { 0% { transform: translateX(-150%) skewX(-18deg); } 100% { transform: translateX(220%) skewX(-18deg); } }
 `;
