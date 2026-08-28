@@ -6,6 +6,8 @@ import { LM, clamp } from '../../pose/Geometry';
 export class SupermanAnalyzer extends ExerciseAnalyzer{
   readonly id='superman'; readonly requiredLandmarks=[11,12,23,24,25,26];
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('superman');
     const hip=this.bilateralJointAngle('hip', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
     const down=hip>168; const up=hip<162;
     // grace: if prone y spread small, still allow: use also shoulder-hip y diff as fallback
@@ -20,6 +22,7 @@ export class SupermanAnalyzer extends ExerciseAnalyzer{
       if(repConf>60 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; this.phase='READY'; }
       else this.phase='READY';
     }
-    return { phase:this.phase, enginePhase: this.phase==='UP'?'bottom':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore:88, poseQuality:q, cues:[], primaryAngle:hip, secondaryAngles:{ hip }, velocity:0, direction:'hold' as any };
+    return { phase:this.phase, enginePhase: this.phase==='UP'?'bottom':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore:88, poseQuality:q, cues:[], primaryAngle:hip, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  hip }, velocity:0, direction:'hold' as any };
   }
+  reset(){ super.reset(); }
 }

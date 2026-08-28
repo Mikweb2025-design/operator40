@@ -5,6 +5,8 @@ import { LM, clamp } from '../../pose/Geometry';
 export class PlankJackAnalyzer extends ExerciseAnalyzer{
   readonly id='plankjack'; readonly requiredLandmarks=[11,12,23,24,25,26,27,28];
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('plankjack');
     const spread=(()=>{ const a=lm[LM.left_ankle], b=lm[LM.right_ankle]; if(!a||!b) return 0; return Math.hypot(a.x-b.x, a.y-b.y); })();
     const line=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     const plankOk=line>153;
@@ -23,6 +25,7 @@ export class PlankJackAnalyzer extends ExerciseAnalyzer{
       if (this.phase==='READY' && closed) this.phase='FEET_TOGETHER';
     }
     const form = plankOk?88:55;
-    return { phase:this.phase, enginePhase: this.phase==='FEET_APART'?'bottom':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues: plankOk?[]:['coreTight'], primaryAngle: spread*100, secondaryAngles:{ line, spread }, velocity:0, direction:'hold' as any };
+    return { phase:this.phase, enginePhase: this.phase==='FEET_APART'?'bottom':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues: plankOk?[]:['coreTight'], primaryAngle: spread*100, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  line, spread }, velocity:0, direction:'hold' as any };
   }
+  reset(){ super.reset(); }
 }

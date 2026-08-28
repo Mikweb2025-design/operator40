@@ -7,6 +7,8 @@ export class PonteAnalyzer extends ExerciseAnalyzer{
   readonly id='ponte'; readonly requiredLandmarks=[11,12,23,24,25,26];
   private velFilt=0; private lastA=100;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('ponte');
     const hip=this.bilateralJointAngle('hip', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
     const dt=dtMs||16; const rawV=(hip-this.lastA)/(dt/1000); this.velFilt=this.velFilt*0.75+rawV*0.25;
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt>0?'up':'down';
@@ -35,6 +37,7 @@ export class PonteAnalyzer extends ExerciseAnalyzer{
     if(this.phase==='RISING' && hip>125 && hip<145 && dir==='up') cues.push('spingiAnche');
     if(this.phase==='LOWERING' && hip>115 && hip<135 && dir==='down') cues.push('controllaDiscesa');
     const eng = this.phase==='TOP'?'bottom': this.phase==='RISING'?'down': this.phase==='LOWERING'?'up':'ready';
-    return { phase:this.phase, enginePhase: eng as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle:hip, secondaryAngles:{ trunk }, velocity:this.velFilt, direction: dir as any };
+    return { phase:this.phase, enginePhase: eng as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle:hip, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  trunk }, velocity:this.velFilt, direction: dir as any };
   }
+  reset(){ super.reset(); }
 }

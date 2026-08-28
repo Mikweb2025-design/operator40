@@ -8,6 +8,8 @@ export class VUpAnalyzer extends ExerciseAnalyzer{
   readonly id='vup'; readonly requiredLandmarks=[11,12,23,24,25,26,15,16];
   private velFilt=0; private lastA=160;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('vup');
     const pike=this.bilateralJointAngle('pike', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
     const dt=dtMs||16; const rawV=(pike - this.lastA)/(dt/1000); this.velFilt=this.velFilt*0.75+rawV*0.25;
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt<0?'down':'up';
@@ -39,6 +41,7 @@ export class VUpAnalyzer extends ExerciseAnalyzer{
     if (this.phase==='FOLDING' && pike>80 && pike<120 && dir==='down') cues.push('chiudiPiu');
     if (this.phase==='EXTENDING' && pike>110 && pike<145 && dir==='up') cues.push('distendiPiu');
     const eng = this.phase==='V_POSITION'?'bottom': this.phase==='FOLDING'?'down': this.phase==='EXTENDING'?'up':'ready';
-    return { phase:this.phase, enginePhase: eng as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: pike, secondaryAngles:{ kneeExt: lk }, velocity:this.velFilt, direction: dir as any };
+    return { phase:this.phase, enginePhase: eng as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: pike, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  kneeExt: lk }, velocity:this.velFilt, direction: dir as any };
   }
+  reset(){ super.reset(); }
 }

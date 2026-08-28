@@ -7,6 +7,8 @@ export class GinocchiaAlteAnalyzer extends ExerciseAnalyzer{
   readonly id='ginocchiaalte'; readonly requiredLandmarks=[11,12,23,24,25,26];
   private lastSwitch=0; private cycle: 'left'|'right'|null=null; private alt=0;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('ginocchiaalte');
     const l=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
     const r=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
     const driving=Math.min(l,r);
@@ -28,6 +30,7 @@ export class GinocchiaAlteAnalyzer extends ExerciseAnalyzer{
       this.phase='READY';
     }
     let form=87; if(trunk<152) form-=10;
-    return { phase:this.phase, enginePhase: kneeUp?'down':'ready' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues: form<72?['kneesToChest']:[], primaryAngle: driving, secondaryAngles:{ l, r, trunk }, velocity:0, direction:'hold' as any };
+    return { phase:this.phase, enginePhase: kneeUp?'down':'ready' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues: form<72?['kneesToChest']:[], primaryAngle: driving, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  l, r, trunk }, velocity:0, direction:'hold' as any };
   }
+  reset(){ super.reset(); }
 }

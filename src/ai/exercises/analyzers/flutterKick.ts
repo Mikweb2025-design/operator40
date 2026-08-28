@@ -9,6 +9,8 @@ export class FlutterKickAnalyzer extends ExerciseAnalyzer{
   readonly id='flutterkick'; readonly requiredLandmarks=[11,12,23,24,25,26];
   private cycle: 'leftUp'|'rightUp'|'center'='center'; private lastSwitch=0;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('flutterkick');
     const lHip=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
     const rHip=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
     const asym=Math.abs(lHip - rHip); const mean=(lHip+rHip)/2;
@@ -37,6 +39,7 @@ export class FlutterKickAnalyzer extends ExerciseAnalyzer{
     // form: hip stability
     let form=88; const cues:string[]=[];
     if ((lHip+rHip)/2 > 185){ form-=10; cues.push('coreTight'); }
-    return { phase:this.phase, enginePhase: this.phase==='LEFT_UP'?'down':'ready' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: mean, secondaryAngles:{ lHip, rHip, asym }, velocity:0, direction:'hold' as any };
+    return { phase:this.phase, enginePhase: this.phase==='LEFT_UP'?'down':'ready' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: mean, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  lHip, rHip, asym }, velocity:0, direction:'hold' as any };
   }
+  reset(){ super.reset(); }
 }

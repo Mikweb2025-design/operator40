@@ -8,6 +8,8 @@ export class LegRaiseAnalyzer extends ExerciseAnalyzer{
   readonly id='legraise'; readonly requiredLandmarks=[11,12,23,24,25,26];
   private velFilt=0; private lastA=170;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('legraise');
     const hipFlex = this.bilateralJointAngle('hipFlex', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
     const lk = this.bilateralJointAngle('kneeExt', lm, [LM.left_hip,LM.left_knee,LM.left_ankle], [LM.right_hip,LM.right_knee,LM.right_ankle]);
     const dt=dtMs||16; const rawV=(hipFlex-this.lastA)/(dt/1000); this.velFilt=this.velFilt*0.75+rawV*0.25;
@@ -40,6 +42,7 @@ export class LegRaiseAnalyzer extends ExerciseAnalyzer{
     if (this.phase==='LOWERING' && hipFlex>120 && hipFlex<150 && dir==='up') cues.push('abbassaControllo');
     this.lastA=hipFlex;
     const eng = this.phase==='TOP'?'bottom': this.phase==='RAISING'?'down': this.phase==='LOWERING'?'up':'ready';
-    return { phase:this.phase, enginePhase: eng as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: hipFlex, secondaryAngles:{ kneeExt: lk }, velocity:this.velFilt, direction: dir as any };
+    return { phase:this.phase, enginePhase: eng as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: hipFlex, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  kneeExt: lk }, velocity:this.velFilt, direction: dir as any };
   }
+  reset(){ super.reset(); }
 }
