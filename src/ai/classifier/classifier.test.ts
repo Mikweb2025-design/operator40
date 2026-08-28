@@ -49,6 +49,15 @@ describe('TemporalBuffer — segnale-aware', () => {
     expect(res.hasPattern).toBe(true);
     expect(res.rom).toBeGreaterThan(40);
   });
+
+  it('getVelocityProfile è segnale-aware: velocità alta sul gomito, ~0 sul ginocchio statico', () => {
+    const b = new TemporalBuffer();
+    pushRep(b, 'elbowRaw', 150, 0);
+    const elbowVel = b.getVelocityProfile('elbowRaw');
+    const kneeVel = b.getVelocityProfile('kneeRaw'); // ginocchio resta a 160 → nessun delta
+    expect(elbowVel.mean).toBeGreaterThan(50); // gomito in moto veloce
+    expect(kneeVel.max).toBeLessThan(5);      // ginocchio fermo
+  });
 });
 
 describe('TemporalClassifier — per-esercizio', () => {
@@ -60,6 +69,18 @@ describe('TemporalClassifier — per-esercizio', () => {
     const res = clf.evaluate(b, feature('elbowRaw', 168), 40, 400);
     expect(res.patternConfidence).toBeGreaterThan(0);
     expect(res.rom).toBeGreaterThan(40);
+  });
+
+  it('pushup velocityScore deriva dal gomito in moto, non dal knee statico', () => {
+    const clf = new TemporalClassifier('pushup');
+    const b = new TemporalBuffer();
+    // Eseguo la rep sul gomito: knee resta a 160. Prima del fix, velocity (knee-based) ≈ 0
+    // → velocityScore ~0. Ora usa elbowRaw → velocity reale ragionata.
+    // Uso dt=33ms (fps da camera) per velocità realistiche; a dt=16ms il delta-frame è
+    // inflazionato oltre la soglia ideale tanto da saturare a 0, indipendentemente dal segnale.
+    pushRep(b, 'elbowRaw', 150, 0, 33);
+    const res = clf.evaluate(b, feature('elbowRaw', 168), 40, 400);
+    expect(res.velocityScore).toBeGreaterThan(10);
   });
 
   it('pushup primaryKey è elbowRaw (non il fallback kneeRaw di prima)', () => {

@@ -79,3 +79,16 @@ temporale misurava un giunto irrilevante e poteva contare/rifiutare rep fantasma
   pushup, e regressione che un pattern solo sul ginocchio NON conta per pushup.
 - Tot suite: 99/99.
 
+
+## Fix velocità segnale-aware (2.10.x)
+Seconda metà dello stesso bug: `TemporalClassifier.evaluate()` calcolava `getVelocityProfile()`
+sul knee (via `features.velocity`, hardcoded a `kneeRaw` in `FeatureExtractor`), quindi per il
+**pushup** la velocity score derivava dal ginocchio fermo → ~0 → spegneva la confidenza anche
+quando il gomito si muoveva correttamente. Fix:
+
+- `TemporalBuffer.getVelocityProfile(key: RomSignal)`: ora deriva la velocità (deg/s) dal delta
+  per-frame del segnale passato, non dalla feature `velocity` knee-based.
+- `TemporalClassifier.evaluate()`: chiama `getVelocityProfile(this.cfg.primaryKey)`.
+- Test aggiunti: `getVelocityProfile` segnale-aware (gomito in moto vs knee statico) e regressione
+  che la velocityScore del pushup non collassi a 0 col gomito che si muove.
+- Tot suite: 101/101.

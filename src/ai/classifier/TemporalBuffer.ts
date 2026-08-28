@@ -48,9 +48,16 @@ export class TemporalBuffer {
     return Math.max(...vals) - Math.min(...vals);
   }
 
-  getVelocityProfile(): { mean: number; max: number; smoothness: number } {
+  getVelocityProfile(key: RomSignal = 'kneeRaw'): { mean: number; max: number; smoothness: number } {
     if (this.frames.length < 4) return { mean: 0, max: 0, smoothness: 100 };
-    const vels = this.frames.map(f => Math.abs(f.features.velocity));
+    const vels: number[] = [];
+    for (let i = 1; i < this.frames.length; i++) {
+      const dtMs = this.frames[i].timestamp - this.frames[i - 1].timestamp;
+      if (dtMs <= 0) continue;
+      const delta = (this.frames[i].features[key] as number) - (this.frames[i - 1].features[key] as number);
+      vels.push(Math.abs(delta) / (dtMs / 1000)); // deg/s sul segnale primario
+    }
+    if (!vels.length) return { mean: 0, max: 0, smoothness: 100 };
     const mean = vels.reduce((a, b) => a + b, 0) / vels.length;
     const max = Math.max(...vels);
     // smoothness = quanto è uniforme la velocità (bassa varianza = movimento controllato)

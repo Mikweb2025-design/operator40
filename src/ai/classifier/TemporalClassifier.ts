@@ -62,7 +62,9 @@ export class TemporalClassifier {
     }
 
     const { hasPattern, confidence: patternConf, rom } = this.detectPattern(buffer);
-    const vel = buffer.getVelocityProfile();
+    // Profilo di velocità sul segnale PRIMARIO (non il knee statico): un pushup ha gomito in moto,
+    // il knee è fermo → senza signal-aware la velocity score sarebbe ~0 e spegnerebbe la confidenza.
+    const vel = buffer.getVelocityProfile(this.cfg.primaryKey);
     const sym = buffer.getSymmetryAvg();
 
     // Velocity score: penalizza troppo veloce (>500 deg/s) o troppo lento rispetto all'ideale per-esercizio
