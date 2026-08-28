@@ -1,9 +1,9 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-Cx-PcBXv.js","./clips-CZetA5iC.js"])))=>i.map(i=>d[i]);
-import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-CKUBnORF.js";
-import { r as reactExports, X, v as Star, S as Sparkles, W as Wind } from "./icons-BHJLJdva.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-DlM0UnGI.js";
+import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-Dk3L8kk3.js";
+import { r as reactExports, X, v as Star, S as Sparkles, W as Wind } from "./icons-DnFQGhVC.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-DUvhlwUl.js";
 import { h as hasClip } from "./clips-CZetA5iC.js";
-import "./charts-DKCmdoT_.js";
+import "./charts-BWCYe6zh.js";
 function loadFavorites() {
   try {
     const v = localStorage.getItem("o40_favs");

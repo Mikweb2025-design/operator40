@@ -1,9 +1,9 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-BL21JCkD.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./web-B_jdOBoq.js","./CountdownScreen-DBV-8lHo.js","./SetupScreen-BFz0kO23.js","./TopBar-DkY-ooS6.js","./HomeScreen-DVN0lKMB.js","./GoalRing-BtNae0CR.js","./ExerciseFigure-DlM0UnGI.js","./DogTag-CoYuAsBR.js","./ProgressRing-DVsrw3sR.js","./LibraryScreen-DmrkkhNr.js","./clips-CZetA5iC.js","./BuilderScreen-BE4Elh9V.js","./PreviewScreen-DVeFkkzs.js","./SessionScreen-BU1n1xsv.js","./SummaryScreen-8e8CPjzz.js","./HistoryScreen-CFObZsi4.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-BGGeYkv7.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-D8jtd7e-.js","./CountdownScreen-BJE44aQp.js","./SetupScreen-BMlfcijQ.js","./TopBar-cJV5r-o6.js","./HomeScreen-Dam8I31L.js","./GoalRing-C6rHMOOh.js","./ExerciseFigure-DUvhlwUl.js","./DogTag-gCVW1aTX.js","./ProgressRing-GhwdSLKT.js","./LibraryScreen-QQv93QcM.js","./clips-CZetA5iC.js","./BuilderScreen-Bd0atuou.js","./PreviewScreen-C-N9vVAg.js","./SessionScreen-DhVyZO1V.js","./SummaryScreen-CEBtlQIr.js","./HistoryScreen-D2TCYkPT.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, E as Eye } from "./icons-BHJLJdva.js";
-import { r as reactDomExports } from "./charts-DKCmdoT_.js";
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, E as Eye } from "./icons-DnFQGhVC.js";
+import { r as reactDomExports } from "./charts-BWCYe6zh.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -568,6 +568,18 @@ const I18N = {
   },
   "sum.hr.ph": { it: "es. 142", en: "e.g. 142", de: "z. B. 142" },
   "sum.zone": { it: "Zona: {label}", en: "Zone: {label}", de: "Zone: {label}" },
+  "sum.quality.title": { it: "Qualità esecuzione (AI)", en: "Form quality (AI)", de: "Ausführungsqualität (KI)" },
+  "sum.quality.body": {
+    it: "Media della qualità del movimento rilevata dall’AI Coach durante le fasi lavoro.",
+    en: "Average movement quality tracked by the AI Coach during work phases.",
+    de: "Durchschnittliche Bewegungsqualität, die der AI Coach während der Arbeitsphasen erfasst hat."
+  },
+  "sum.quality.none": {
+    it: "AI Coach non attivo durante la sessione.",
+    en: "AI Coach was not active during this session.",
+    de: "AI Coach war während dieser Sitzung nicht aktiv."
+  },
+  "sum.quality.per": { it: "{name} · Q {q}", en: "{name} · Q {q}", de: "{name} · Q {q}" },
   "sum.save": {
     it: "SALVA E TORNA ALLA BASE",
     en: "SAVE & RETURN TO BASE",
@@ -575,6 +587,7 @@ const I18N = {
   },
   /* ---- history ---- */
   "hist.title": { it: "STATISTICHE", en: "STATISTICS", de: "STATISTIK" },
+  "hist.quality": { it: "Qualità AI", en: "AI quality", de: "KI-Qualität" },
   "hist.avgint": {
     it: "Intensità media (RPE)",
     en: "Average intensity (RPE)",
@@ -6677,7 +6690,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-BL21JCkD.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-BGGeYkv7.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8503,7 +8516,7 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.10.0 · d17c430";
+const BUILD_VERSION = "2.10.0 · 0836f14";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -9097,7 +9110,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-B_jdOBoq.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-D8jtd7e-.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -9696,15 +9709,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-DBV-8lHo.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-BFz0kO23.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-DVN0lKMB.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-DmrkkhNr.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-BE4Elh9V.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-DVeFkkzs.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-BU1n1xsv.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-8e8CPjzz.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-CFObZsi4.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-BJE44aQp.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-BMlfcijQ.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-Dam8I31L.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-QQv93QcM.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-Bd0atuou.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-C-N9vVAg.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-DhVyZO1V.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-CEBtlQIr.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-D2TCYkPT.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -9942,6 +9955,8 @@ function App() {
   const [healthWeightSuggestion, setHealthWeightSuggestion] = reactExports.useState(null);
   const [healthImportStatus, setHealthImportStatus] = reactExports.useState("idle");
   const [lastStats, setLastStats] = reactExports.useState(null);
+  const [aiPhaseQuality, setAiPhaseQuality] = reactExports.useState([]);
+  const aiPhaseQualityRef = reactExports.useRef([]);
   const [hrInput, setHrInput] = reactExports.useState("");
   const [waistInput, setWaistInput] = reactExports.useState("");
   const [rpe, setRpe] = reactExports.useState(null);
@@ -10300,11 +10315,23 @@ function App() {
     setSecondsLeft(s[0].duration ?? 0);
     setPaused(false);
     setRpe(null);
+    setAiPhaseQuality([]);
+    aiPhaseQualityRef.current = [];
     if (soundRef.current) {
       playBeep(660);
       announcePhase(s[0]);
     }
     setScreen("session");
+  }
+  function collectAiPhaseQuality(data) {
+    if (!data || !data.exerciseId || typeof data.avgQuality !== "number") return;
+    const entry = {
+      exerciseId: data.exerciseId,
+      reps: data.reps ?? 0,
+      quality: Math.round(data.avgQuality)
+    };
+    aiPhaseQualityRef.current = [...aiPhaseQualityRef.current, entry];
+    setAiPhaseQuality(aiPhaseQualityRef.current);
   }
   function finishSession() {
     const skip = !!profile.skipWarmup;
@@ -10324,10 +10351,34 @@ function App() {
     );
     if (soundRef.current) playBeep(1e3, 0.25);
     if (vibrationRef.current) vibrate([80, 60, 80, 60, 150]);
+    const qualityEntries = aiPhaseQualityRef.current;
+    let aiQuality = null;
+    if (qualityEntries.length) {
+      const byExercise = {};
+      qualityEntries.forEach((e) => {
+        if (!byExercise[e.exerciseId]) {
+          byExercise[e.exerciseId] = { name: tr$1(EXERCISES[e.exerciseId].name, lang), reps: 0, sum: 0, n: 0 };
+        }
+        const g = byExercise[e.exerciseId];
+        g.reps = Math.max(g.reps, e.reps ?? 0);
+        g.sum += e.quality;
+        g.n += 1;
+      });
+      const exercises = Object.values(byExercise).map((g) => ({
+        name: g.name,
+        reps: g.reps,
+        quality: Math.round(g.sum / g.n)
+      }));
+      aiQuality = {
+        overall: Math.round(exercises.reduce((a, e) => a + e.quality, 0) / exercises.length),
+        exercises
+      };
+    }
     setLastStats({
       program: activeProgram,
       kcal,
-      durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey)
+      durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey),
+      aiQuality
     });
     setScreen("summary");
   }
@@ -10655,6 +10706,7 @@ function App() {
       programName: tr$1(activeProgram.name, lang),
       kcal: lastStats.kcal,
       durationSec: lastStats.durationSec,
+      aiQuality: lastStats.aiQuality || null,
       peakHR: hrInput ? parseInt(hrInput, 10) : null,
       rpe,
       notes: notes.trim() || null
@@ -11223,6 +11275,7 @@ function App() {
             onPrev: goPrev,
             exitConfirm,
             setExitConfirm,
+            onAiPhaseComplete: collectAiPhaseQuality,
             onExit: () => {
               setExitConfirm(false);
               setScreen("home");
@@ -11233,6 +11286,7 @@ function App() {
           SummaryScreen,
           {
             stats: lastStats,
+            aiQuality: lastStats.aiQuality,
             profile,
             sessions,
             hrInput,

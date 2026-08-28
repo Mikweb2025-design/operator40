@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports, B as BLAZE, O as OLIVE, b as INK_2, K as KHAKI, P as PAPER, S as STEEL, u as useT, ae as hrZone, t as tr, W as WEEKLY_GOAL, af as RPE_LABELS, ag as RPE_COLORS, I as INK, i as inputStyle, a as OLIVE_DARK, $ as primaryBtn } from "./index-CKUBnORF.js";
-import { N as ShieldCheck, F as Flame, Z as Zap, r as reactExports, T as Trophy, z as Ruler, G as Scale, t as HeartPulse, C as Check } from "./icons-BHJLJdva.js";
-import { D as DogTag } from "./DogTag-CoYuAsBR.js";
-import "./charts-DKCmdoT_.js";
+import { j as jsxRuntimeExports, B as BLAZE, O as OLIVE, b as INK_2, K as KHAKI, P as PAPER, S as STEEL, u as useT, ae as hrZone, t as tr, W as WEEKLY_GOAL, I as INK, af as RPE_LABELS, ag as RPE_COLORS, i as inputStyle, a as OLIVE_DARK, $ as primaryBtn } from "./index-Dk3L8kk3.js";
+import { N as ShieldCheck, F as Flame, Z as Zap, r as reactExports, T as Trophy, O as Gauge, z as Ruler, G as Scale, t as HeartPulse, C as Check } from "./icons-DnFQGhVC.js";
+import { D as DogTag } from "./DogTag-gCVW1aTX.js";
+import "./charts-BWCYe6zh.js";
 function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
   const now = /* @__PURE__ */ new Date();
   const start = new Date(now);
@@ -83,6 +83,7 @@ function WeeklyChallenge({ sessions = [], weeklyGoal = 3 }) {
 }
 function SummaryScreen({
   stats,
+  aiQuality,
   profile,
   sessions,
   hrInput,
@@ -97,6 +98,7 @@ function SummaryScreen({
   setNotes,
   onSave
 }) {
+  var _a;
   const { lang, t } = useT();
   const zone = hrInput ? hrZone(parseInt(hrInput, 10), profile.age, lang) : null;
   const [shareState, setShareState] = reactExports.useState("idle");
@@ -166,6 +168,86 @@ function SummaryScreen({
             /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.kcal"), value: stats.kcal })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(WeeklyChallenge, { sessions, weeklyGoal: profile.weeklyGoal || WEEKLY_GOAL }),
+          aiQuality && aiQuality.overall != null && ((_a = aiQuality.exercises) == null ? void 0 : _a.length) > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "o40-pop",
+              style: {
+                background: INK_2,
+                border: `1px solid ${OLIVE}`,
+                borderRadius: 12,
+                padding: 16,
+                marginBottom: 12
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    Gauge,
+                    {
+                      size: 18,
+                      color: aiQuality.overall > 70 ? "#7FB069" : aiQuality.overall > 50 ? "#D4A017" : BLAZE
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: "o40-mono",
+                      style: {
+                        color: KHAKI,
+                        fontSize: 11,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em"
+                      },
+                      children: t("sum.quality.title")
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "div",
+                    {
+                      style: {
+                        marginLeft: "auto",
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: 2
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "span",
+                          {
+                            className: "o40-display",
+                            style: {
+                              color: aiQuality.overall > 70 ? "#7FB069" : aiQuality.overall > 50 ? "#D4A017" : BLAZE,
+                              fontSize: 26,
+                              lineHeight: 1
+                            },
+                            children: aiQuality.overall
+                          }
+                        ),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "/100" })
+                      ]
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }, children: t("sum.quality.body") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: 6 }, children: aiQuality.exercises.map((e) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "span",
+                  {
+                    className: "o40-mono",
+                    style: {
+                      color: PAPER,
+                      fontSize: 10,
+                      background: INK,
+                      border: `1px solid ${e.quality > 70 ? "#7FB069" : e.quality > 50 ? "#D4A017" : OLIVE}`,
+                      borderRadius: 6,
+                      padding: "3px 8px"
+                    },
+                    children: t("sum.quality.per", { name: e.name, q: e.quality })
+                  },
+                  e.name
+                )) })
+              ]
+            }
+          ),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {

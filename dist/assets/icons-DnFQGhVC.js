@@ -474,6 +474,16 @@ const Flame = createLucideIcon("Flame", [
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
+const Gauge = createLucideIcon("Gauge", [
+  ["path", { d: "m12 14 4-4", key: "9kzdfg" }],
+  ["path", { d: "M3.34 19a10 10 0 1 1 17.32 0", key: "19p75a" }]
+]);
+/**
+ * @license lucide-react v0.462.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
 const HeadphoneOff = createLucideIcon("HeadphoneOff", [
   ["path", { d: "M21 14h-1.343", key: "1jdnxi" }],
   ["path", { d: "M9.128 3.47A9 9 0 0 1 21 12v3.343", key: "6kipu2" }],
@@ -950,6 +960,7 @@ export {
   Lightbulb as L,
   Music as M,
   ShieldCheck as N,
+  Gauge as O,
   Plus as P,
   React as R,
   Sparkles as S,
