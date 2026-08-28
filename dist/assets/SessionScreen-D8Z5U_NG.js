@@ -1,9 +1,9 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-DoPMocCZ.js","./clips-DJ4gBJJK.js"])))=>i.map(i=>d[i]);
-import { a2 as detectLang, L as LANGS, a3 as localizedCue, a4 as getDefinition, a1 as HOLD_EXERCISES, a0 as getReps, J as EXERCISES, a5 as normalizeExerciseId, j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, P as PAPER, S as STEEL, b as INK_2, B as BLAZE, a6 as PositioningMask, a7 as FitnessEngine, a8 as drawSkeleton, a9 as alignmentScore, a as OLIVE_DARK, u as useT, V as speak, aa as getVocalMotivation, t as tr, R as btnIcon, ab as formatTime, p as playBeep, G as vibrate, ac as iconCircle, ad as pillBtn, s as secondaryBtn, $ as primaryBtn, ae as LOCALES, _ as __vitePreload } from "./index-DbOkD-eS.js";
+import { a2 as detectLang, L as LANGS, a3 as localizedCue, a4 as getDefinition, a1 as HOLD_EXERCISES, a0 as getReps, J as EXERCISES, a5 as normalizeExerciseId, j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, P as PAPER, S as STEEL, b as INK_2, B as BLAZE, a6 as PositioningMask, a7 as FitnessEngine, a8 as drawSkeleton, a9 as alignmentScore, a as OLIVE_DARK, u as useT, V as speak, aa as getVocalMotivation, p as playBeep, G as vibrate, t as tr, R as btnIcon, ab as formatTime, ac as iconCircle, ad as pillBtn, s as secondaryBtn, $ as primaryBtn, ae as LOCALES, _ as __vitePreload } from "./index-Iii_N5O8.js";
 import { r as reactExports, E as Eye, m as Music2, n as HeadphoneOff, V as Volume2, j as VolumeX, W as Wind, L as Lightbulb, K as Play, N as Pause, i as ChevronLeft, l as SkipForward, C as Check } from "./icons-CYijDH-L.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-UrmiwVn0.js";
-import { T as TopBar } from "./TopBar-DpBvoiHI.js";
-import { P as ProgressRing } from "./ProgressRing-lVK8s_By.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-VTWj4QDA.js";
+import { T as TopBar } from "./TopBar-9NScnIwx.js";
+import { P as ProgressRing } from "./ProgressRing-zn9BbEZA.js";
 import "./charts-CgofXTP-.js";
 const FALLBACK = "en";
 function normalizeLang(input) {
@@ -692,6 +692,23 @@ function SessionScreen({
     }, Math.round(duration / 2) * 1e3);
     return () => clearInterval(interval);
   }, [soundOn, vocalMotivation, paused, phase.type, phase.duration, isAiWork, isRepsWork, lang]);
+  reactExports.useEffect(() => {
+    if (!(profile == null ? void 0 : profile.tempoEnabled) || paused || phase.type !== "work") return;
+    const bpm = Math.max(40, Math.min(60, profile.tempoBpm || 50));
+    const ms = Math.round(6e4 / bpm);
+    const id = setInterval(() => {
+      if (document.hidden) return;
+      try {
+        playBeep(900, 0.06);
+      } catch {
+      }
+      if ((profile == null ? void 0 : profile.vibrationOn) !== false) try {
+        vibrate(12);
+      } catch {
+      }
+    }, ms);
+    return () => clearInterval(id);
+  }, [profile == null ? void 0 : profile.tempoEnabled, profile == null ? void 0 : profile.tempoBpm, profile == null ? void 0 : profile.vibrationOn, paused, phase.type, phaseIdx]);
   reactExports.useEffect(() => {
     requestWakeLock();
     function onVis() {

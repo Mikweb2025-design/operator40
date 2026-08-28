@@ -1,6 +1,6 @@
-import { u as useT, g as getLevel, j as jsxRuntimeExports, L as LANGS, B as BLAZE, K as KHAKI, O as OLIVE, a as OLIVE_DARK, I as INK, b as INK_2, S as STEEL, i as inputStyle, T as TRACKS, P as PAPER, c as INTERVAL_PRESETS, d as LEVELS, t as tr, s as secondaryBtn, e as primaryBtnLarge, f as BLAZE_DEEP, h as isStandalonePWA } from "./index-DbOkD-eS.js";
-import { V as Volume2, j as VolumeX, k as Vibrate, l as SkipForward, M as Music, S as Sparkles, A as Activity, m as Music2, n as HeadphoneOff, i as ChevronLeft, f as RefreshCw, o as Crown, p as Medal, D as Download, U as Upload, q as Bell, s as BellOff, t as Send, u as HeartPulse, b as ChevronRight } from "./icons-CYijDH-L.js";
-import { T as TopBar } from "./TopBar-DpBvoiHI.js";
+import { u as useT, g as getLevel, j as jsxRuntimeExports, L as LANGS, B as BLAZE, K as KHAKI, O as OLIVE, a as OLIVE_DARK, I as INK, b as INK_2, S as STEEL, i as inputStyle, T as TRACKS, P as PAPER, c as INTERVAL_PRESETS, d as LEVELS, t as tr, s as secondaryBtn, e as primaryBtnLarge, f as BLAZE_DEEP, h as isStandalonePWA } from "./index-Iii_N5O8.js";
+import { V as Volume2, j as VolumeX, k as Vibrate, l as SkipForward, M as Music, S as Sparkles, A as Activity, a as Timer, m as Music2, n as HeadphoneOff, i as ChevronLeft, f as RefreshCw, o as Crown, p as Medal, D as Download, U as Upload, q as Bell, s as BellOff, t as Send, u as HeartPulse, b as ChevronRight } from "./icons-CYijDH-L.js";
+import { T as TopBar } from "./TopBar-9NScnIwx.js";
 import "./charts-CgofXTP-.js";
 function ToggleRow({ label, icon: Icon, on, onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -121,6 +121,10 @@ function SetupScreen({
   onToggleVocalMotivation,
   motionFusion,
   onToggleMotionFusion,
+  tempoEnabled,
+  onToggleTempo,
+  tempoBpm,
+  onSetTempoBpm,
   level,
   onSetLevel,
   intervalPreset,
@@ -351,7 +355,25 @@ function SetupScreen({
                     on: motionFusion,
                     onClick: onToggleMotionFusion
                   }
-                )
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: 1, background: OLIVE_DARK, margin: "0 12px" } }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  ToggleRow,
+                  {
+                    label: lang === "it" ? `TEMPO metronomo ${tempoBpm} BPM` : `TEMPO metronome ${tempoBpm} BPM`,
+                    icon: Timer,
+                    on: tempoEnabled,
+                    onClick: onToggleTempo
+                  }
+                ),
+                tempoEnabled && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "6px 12px 10px", display: "flex", alignItems: "center", gap: 10 }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: STEEL, fontSize: 11 }, children: "40" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "range", min: 40, max: 60, value: tempoBpm, onChange: (e) => onSetTempoBpm(e.target.value), style: { flex: 1, accentColor: BLAZE } }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { color: BLAZE, fontSize: 11 }, children: [
+                    tempoBpm,
+                    " BPM"
+                  ] })
+                ] })
               ]
             }
           ),

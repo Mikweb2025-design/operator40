@@ -1,9 +1,9 @@
-import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, I as INK, B as BLAZE, K as KHAKI, P as PAPER, S as STEEL, q as getMedalProgress, b as INK_2, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, f as BLAZE_DEEP, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-DbOkD-eS.js";
+import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, I as INK, B as BLAZE, K as KHAKI, P as PAPER, S as STEEL, q as getMedalProgress, b as INK_2, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, f as BLAZE_DEEP, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-Iii_N5O8.js";
 import { r as reactExports, b as ChevronRight, p as Medal, X, S as Sparkles, F as Flame, I as Info, v as TrendingUp, o as Crown, Z as Zap, w as Star, x as RotateCcw, L as Lightbulb, E as Eye, h as Target, T as Trophy, B as BookOpen, e as Settings, C as Check, y as Trash2, P as Plus, z as Ruler, G as TrendingDown, J as Scale } from "./icons-CYijDH-L.js";
-import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-BxZtKsSi.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-UrmiwVn0.js";
-import { D as DogTag } from "./DogTag-Z0Qpfa3w.js";
-import { P as ProgressRing } from "./ProgressRing-lVK8s_By.js";
+import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-DC6eaF_7.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-VTWj4QDA.js";
+import { D as DogTag } from "./DogTag-vwLSt5hd.js";
+import { P as ProgressRing } from "./ProgressRing-zn9BbEZA.js";
 import "./charts-CgofXTP-.js";
 function getPersonalChallenge(sessions, profile) {
   const n = (sessions == null ? void 0 : sessions.length) || 0;
@@ -709,7 +709,7 @@ function HomeScreen({
   );
   const sessionsThisWeek = sessions.filter((s) => new Date(s.date).getTime() > weekAgo).length;
   const weeklyGoal = profile.weeklyGoal || WEEKLY_GOAL;
-  const { program: todayProgram, adaptive } = pickNextProgram(sessions, profile);
+  const { program: todayProgram, adaptive, isRecovery, isDeload } = pickNextProgram(sessions, profile);
   const othersRaw = PROGRAMS.filter((p) => p.id !== todayProgram.id);
   const others = getRecommendedMissions({ sessions, profile, others: othersRaw });
   const dailyChallenge = getDailyChallenge({ sessions, profile });
@@ -1132,7 +1132,9 @@ function HomeScreen({
                       },
                       children: "NEW"
                     }
-                  )
+                  ),
+                  isRecovery && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: "#7FB069", background: "#7FB06922", border: "1px solid #7FB06955", borderRadius: 6, padding: "2px 7px", fontSize: 9 }, children: "RECUPERO" }),
+                  isDeload && !isRecovery && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, background: `${KHAKI}22`, border: `1px solid ${KHAKI}55`, borderRadius: 6, padding: "2px 7px", fontSize: 9 }, children: "DELOAD" })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 30, marginTop: 2 }, children: tr(todayProgram.name, lang) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 13.5, marginTop: 2 }, children: tr(todayProgram.tagline, lang) }),

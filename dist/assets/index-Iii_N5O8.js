@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DJ_30jvX.js","./icons-CYijDH-L.js","./charts-CgofXTP-.js","./web-CUKoxLVi.js","./CountdownScreen-DxfhhG6b.js","./SetupScreen-DauVqLYs.js","./TopBar-DpBvoiHI.js","./HomeScreen-CgFUu1nT.js","./GoalRing-BxZtKsSi.js","./ExerciseFigure-UrmiwVn0.js","./DogTag-Z0Qpfa3w.js","./ProgressRing-lVK8s_By.js","./LibraryScreen-BRGM8dbe.js","./clips-DJ4gBJJK.js","./BuilderScreen-DsmdKRl_.js","./PreviewScreen-CvP7tpEy.js","./SessionScreen-aElWCpeb.js","./SummaryScreen-lestwiJX.js","./HistoryScreen-Dt0wzbxE.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DLhjDaos.js","./icons-CYijDH-L.js","./charts-CgofXTP-.js","./web-BPrERHyW.js","./CountdownScreen--PtGw1ts.js","./SetupScreen-D-xbIwBw.js","./TopBar-9NScnIwx.js","./HomeScreen-P50xAsFy.js","./GoalRing-DC6eaF_7.js","./ExerciseFigure-VTWj4QDA.js","./DogTag-vwLSt5hd.js","./ProgressRing-zn9BbEZA.js","./LibraryScreen-Dl7kq6ZA.js","./clips-DJ4gBJJK.js","./BuilderScreen-C6Jlz3K6.js","./PreviewScreen-BDlQBMAa.js","./SessionScreen-D8Z5U_NG.js","./SummaryScreen-BdgX_hN5.js","./HistoryScreen-BtX2Av1g.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -2375,26 +2375,41 @@ function campDayDisplay(profile) {
 function programById(id) {
   return PROGRAMS.find((p2) => p2.id === id) || PROGRAMS[0];
 }
+function isRecoveryDay(dayIdx) {
+  return dayIdx % 7 === 0;
+}
+function isDeloadWeek(dayIdx) {
+  return dayIdx >= 22 && dayIdx <= 28;
+}
 function pickNextProgram(sessions, profile) {
   if (!profile || !profile.campStart || !sessions.length) {
-    if (!sessions.length) return { program: PROGRAMS[0], adaptive: false };
+    if (!sessions.length) return { program: PROGRAMS[0], adaptive: false, isRecovery: false, isDeload: false };
     const order = ["A", "B", "C"];
     const last2 = sessions[sessions.length - 1];
     const rotationNextId = order[(order.indexOf(last2.programId) + 1) % order.length];
     const hoursSince2 = (Date.now() - new Date(last2.date).getTime()) / 36e5;
     if (last2.rpe >= 4 && hoursSince2 < 20) {
-      return { program: programById("D"), adaptive: true };
+      return { program: programById("D"), adaptive: true, isRecovery: true, isDeload: false };
     }
-    return { program: programById(rotationNextId), adaptive: false };
+    return { program: programById(rotationNextId), adaptive: false, isRecovery: false, isDeload: false };
   }
   const idx = campDayIndex(profile);
-  let program = programById(DAY_CYCLE[(idx - 1) % DAY_CYCLE.length]);
+  if (isRecoveryDay(idx)) {
+    return { program: programById("D"), adaptive: false, isRecovery: true, isDeload: isDeloadWeek(idx) };
+  }
+  let program;
+  if (isDeloadWeek(idx)) {
+    const deloadPool = ["D", "K", "H", "I"];
+    program = programById(deloadPool[(idx - 22) % deloadPool.length]);
+  } else {
+    program = programById(DAY_CYCLE[(idx - 1) % DAY_CYCLE.length]);
+  }
   const last = sessions[sessions.length - 1];
   const hoursSince = (Date.now() - new Date(last.date).getTime()) / 36e5;
   if (last && last.rpe >= 4 && hoursSince < 20 && program.id !== "D") {
-    return { program: programById("D"), adaptive: true };
+    return { program: programById("D"), adaptive: true, isRecovery: true, isDeload: isDeloadWeek(idx) };
   }
-  return { program, adaptive: false };
+  return { program, adaptive: false, isRecovery: false, isDeload: isDeloadWeek(idx) };
 }
 function buildSequence(program, skipWarmup, workSec = WORK_SEC, restSec = REST_SEC, mode = "time", levelKey = "combattente") {
   const isReps = mode === "reps";
@@ -7110,7 +7125,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-DJ_30jvX.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-DLhjDaos.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8079,6 +8094,16 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     var _a2;
     (_a2 = speechRef.current) == null ? void 0 : _a2.setEnabled(speechOn);
   }, [speechOn]);
+  const lastCoachAt = reactExports.useRef(0);
+  reactExports.useEffect(() => {
+    if (!lastForm || lastForm.quality >= 60 || !lastForm.cues[0]) return;
+    const now = Date.now();
+    if (now - lastCoachAt.current < 4e3) return;
+    lastCoachAt.current = now;
+    const cue = localizedCue(lastForm.cues[0], lang);
+    setCoachingText(cue);
+    if (speechRef.current) speechRef.current.speakCue(lastForm.cues[0]);
+  }, [lastForm, lang]);
   reactExports.useEffect(() => {
     let raf = 0;
     let lastDrawAt = 0;
@@ -8475,14 +8500,14 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     ] })
   ] });
 }
-const CHANGELOG_VERSION = "2.13.0";
+const CHANGELOG_VERSION = "2.14.0";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.13.0",
-    title: "Onboarding + Clip — 3 Step + Alias (v2.13)",
-    subtitle: "v2.13.0 · 28 Agosto 2026 · tour 3 step + clip alias + offline",
-    intro: "Batch roadmap 4: onboarding 3 step con dots/skip, clip alias per 4 esercizi mancanti, offline models check.",
+    badge: "NUOVO v2.14.0",
+    title: "Camp 2.0 + TEMPO + Coach 2.0 (v2.14)",
+    subtitle: "v2.14.0 · 28 Agosto 2026 · recovery ogni 7 + deload + tempo 50 BPM",
+    intro: "Batch backlog: Camp 2.0 recovery/deload, TEMPO metronomo 40-60 BPM, Coach vocale 2.0 TTS cue form<60.",
     groups: [
       {
         icon: "🌑",
@@ -8582,19 +8607,28 @@ const COPY = {
           "Clip alias: plank→wallsit, jumpingjack→burpee, mountain→skater, affondo→squat",
           "Offline models check + hasClip fallback polish"
         ]
+      },
+      {
+        icon: "🏕️",
+        title: "35-37. Camp 2.0 + TEMPO + Coach (v2.14)",
+        items: [
+          "Camp 2.0: recovery ogni 7 (D) + deload week 22-28 (D/K/H/I)",
+          "TEMPO metronomo 40-60 BPM con toggle + slider in Impostazioni",
+          "Coach 2.0: TTS cue form<60 via SpeechCoach ogni 4s"
+        ]
       }
     ],
     cta: "PROVA ORA",
     ctaHint: "Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS",
     dismiss: "Non mostrare più",
     close: "Chiudi",
-    footer: "Tutto on-device. 34 iterazioni. Prossimo: v2.14 Camp 2.0."
+    footer: "Tutto on-device. 37 iterazioni. Prossimo: v2.15 Social + Watch."
   },
   en: {
-    badge: "NEW v2.13.0",
-    title: "Onboarding + Clip — 3 Step + Alias (v2.13)",
-    subtitle: "v2.13.0 · Aug 28 2026 · tour 3 step + clip alias + offline",
-    intro: "Roadmap batch 4: onboarding 3 step with dots/skip, clip alias for 4 missing, offline check.",
+    badge: "NEW v2.14.0",
+    title: "Camp 2.0 + TEMPO + Coach 2.0 (v2.14)",
+    subtitle: "v2.14.0 · Aug 28 2026 · recovery + tempo 50 BPM + coach",
+    intro: "Backlog batch: Camp 2.0 recovery/deload, TEMPO 40-60 BPM, Coach 2.0 TTS cue.",
     groups: [
       { icon: "🌑", title: "1-2. OLED Depth + Card", items: ["INK #0E100D vignette + 130% radial — deeper phone, 5px camo", "Unified card 165° + hairline + gloss", "Card-face hairline + accent + tabular glow"] },
       { icon: "🔥", title: "3-4. Typography + CTA", items: ["Bebas/Inter sharpened, num-glow halo", "CTA BLAZE_LIGHT→DEEP + inset highlight", "Large btn shadow 10/28"] },
@@ -8606,19 +8640,20 @@ const COPY = {
       { icon: "♿", title: "24-27. Roadmap Batch", items: ["Focus-visible + aria-live reps + prefers-motion + print", "Library debounce 180ms + highlight + empty + LargeText", "CSV ai_quality/ai_reps + QR 72px share"] },
       { icon: "📳", title: "28-29. IMU + BeforeAfter", items: ["MotionFusion opt-in for jumpingJack/burpee", "BeforeAfter pinch-zoom 1-3x + haptics", "Engine enableMotionFusion wiring"] },
       { icon: "❤️", title: "30-32. HR + NEFFEX + PWA", items: ["Health HR avg last 20 + toast", "NEFFEX crossfade 1.2s + daily seed", "PWA banner after 2 sessions"] },
-      { icon: "🎓", title: "33-34. Onboarding + Clip", items: ["Onboarding 3 step with dots, Skip/Next", "Clip alias for 4 missing (plank/jack/mountain/affondo)", "Offline models check"] }
+      { icon: "🎓", title: "33-34. Onboarding + Clip", items: ["Onboarding 3 step with dots, Skip/Next", "Clip alias for 4 missing (plank/jack/mountain/affondo)", "Offline models check"] },
+      { icon: "🏕️", title: "35-37. Camp + TEMPO + Coach", items: ["Camp 2.0 recovery every 7 + deload week", "TEMPO metronome 40-60 BPM + toggle", "Coach 2.0 TTS cue form<60"] }
     ],
     cta: "TRY IT",
     ctaHint: "Home → Mission → Start · https://mikweb.eu/operator40/",
     dismiss: "Don't show again",
     close: "Close",
-    footer: "On-device. 34 iterations. Next: v2.14 Camp 2.0."
+    footer: "On-device. 37 iterations. Next: v2.15 Social + Watch."
   },
   de: {
-    badge: "NEU v2.13.0",
-    title: "Onboarding + Clip — 3 Step + Alias (v2.13)",
-    subtitle: "v2.13.0 · 28. Aug 2026 · Tour 3 Step + Clip Alias",
-    intro: "Roadmap Batch 4: Onboarding 3 Step mit Dots, Clip Alias für 4 fehlende, Offline Check.",
+    badge: "NEU v2.14.0",
+    title: "Camp 2.0 + TEMPO + Coach 2.0 (v2.14)",
+    subtitle: "v2.14.0 · 28. Aug 2026 · Recovery + Tempo + Coach",
+    intro: "Backlog: Camp 2.0 Recovery/Deload, TEMPO 40-60 BPM, Coach 2.0 TTS.",
     groups: [
       { icon: "🌑", title: "1-2. OLED + Card", items: ["INK #0E100D Vignette", "Unified Card + Hairline + Gloss", "Tabular Glow"] },
       { icon: "🔥", title: "3-4. Typo + CTA", items: ["Bebas/Inter sharpened", "CTA Blaze Light + Inset", "Large shadow"] },
@@ -8630,13 +8665,14 @@ const COPY = {
       { icon: "♿", title: "24-27. Roadmap", items: ["Focus + aria-live + reduced-motion + print", "Debounce + highlight + empty + LargeText", "CSV aiQuality + QR"] },
       { icon: "📳", title: "28-29. IMU + BeforeAfter", items: ["MotionFusion opt-in", "BeforeAfter pinch-zoom + haptics", "Engine wiring"] },
       { icon: "❤️", title: "30-32. HR + NEFFEX + PWA", items: ["Health HR avg + toast", "NEFFEX crossfade 1.2s + seed", "PWA nach 2 Sessions"] },
-      { icon: "🎓", title: "33-34. Onboarding + Clip", items: ["Onboarding 3 Step mit Dots", "Clip Alias für 4 fehlende", "Offline Check"] }
+      { icon: "🎓", title: "33-34. Onboarding + Clip", items: ["Onboarding 3 Step mit Dots", "Clip Alias für 4 fehlende", "Offline Check"] },
+      { icon: "🏕️", title: "35-37. Camp + TEMPO + Coach", items: ["Camp 2.0 Recovery alle 7 + Deload Woche", "TEMPO Metronom 40-60 BPM", "Coach 2.0 TTS bei form<60"] }
     ],
     cta: "TESTEN",
     ctaHint: "Home → Mission → Start",
     dismiss: "Nicht mehr anzeigen",
     close: "Schließen",
-    footer: "On-device. 34 Iterationen. Next: v2.14."
+    footer: "On-device. 37 Iterationen. Next: v2.15."
   }
 };
 function ChangelogModal({ lang = "it", onClose, onTry }) {
@@ -8974,14 +9010,14 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.13.0 · bcb2725";
+const BUILD_VERSION = "2.14.0 · 067bd85";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       onClick,
       role: onClick ? "button" : void 0,
-      title: onClick ? "Novità v2.13.0 — clic per riaprire changelog" : void 0,
+      title: onClick ? "Novità v2.14.0 — clic per riaprire changelog" : void 0,
       className: "o40-mono",
       style: {
         color: STEEL,
@@ -9568,7 +9604,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-CUKoxLVi.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-BPrERHyW.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -10167,15 +10203,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-DxfhhG6b.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-DauVqLYs.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-CgFUu1nT.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BRGM8dbe.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-DsmdKRl_.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-CvP7tpEy.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-aElWCpeb.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-lestwiJX.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-Dt0wzbxE.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen--PtGw1ts.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-D-xbIwBw.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-P50xAsFy.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-Dl7kq6ZA.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-C6Jlz3K6.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-BDlQBMAa.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-D8Z5U_NG.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BdgX_hN5.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BtX2Av1g.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -10383,7 +10419,7 @@ function App() {
   const [showChangelog, setShowChangelog] = reactExports.useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = reactExports.useState(() => {
     try {
-      return localStorage.getItem("o40_release_2.13.0") !== "dismissed";
+      return localStorage.getItem("o40_release_2.14.0") !== "dismissed";
     } catch {
       return true;
     }
@@ -10878,6 +10914,8 @@ function App() {
       intervalPreset: formCustomWork !== "40" || formCustomRest !== "20" ? "custom" : profile && profile.intervalPreset || "standard",
       level: prevLevel || "combattente",
       executionMode: profile && profile.executionMode || "time",
+      tempoEnabled: profile ? !!profile.tempoEnabled : false,
+      tempoBpm: profile && profile.tempoBpm ? Math.max(40, Math.min(60, parseInt(profile.tempoBpm, 10) || 50)) : 50,
       lang,
       campStart: profile && profile.campStart ? profile.campStart : (/* @__PURE__ */ new Date()).toISOString()
     };
@@ -10963,6 +11001,24 @@ function App() {
     }
     if (p2.motionFusion) showToast(lang === "it" ? "IMU attivato — jumpingJack/burpee/skater" : "IMU enabled");
     else showToast(lang === "it" ? "IMU disattivato" : "IMU disabled");
+  }
+  async function toggleTempo() {
+    const p2 = { ...profile, tempoEnabled: !profile.tempoEnabled };
+    setProfile(p2);
+    try {
+      await window.storage.set("o40_profile", JSON.stringify(p2), false);
+    } catch {
+    }
+    showToast(p2.tempoEnabled ? `TEMPO ${p2.tempoBpm || 50} BPM ON` : "TEMPO OFF");
+  }
+  async function setTempoBpm(v) {
+    const bpm = Math.max(40, Math.min(60, parseInt(v, 10) || 50));
+    const p2 = { ...profile, tempoBpm: bpm };
+    setProfile(p2);
+    try {
+      await window.storage.set("o40_profile", JSON.stringify(p2), false);
+    } catch {
+    }
   }
   async function setIntervalPreset(key) {
     const p2 = { ...profile, intervalPreset: key };
@@ -11468,6 +11524,10 @@ function App() {
             onTestPush: handleTestPush,
             motionFusion: !!(profile && profile.motionFusion),
             onToggleMotionFusion: toggleMotionFusion,
+            tempoEnabled: !!(profile && profile.tempoEnabled),
+            onToggleTempo: toggleTempo,
+            tempoBpm: profile && profile.tempoBpm || 50,
+            onSetTempoBpm: setTempoBpm,
             onExportBackup: exportData,
             onImportBackup: (file) => handleImportBackup(file, {
               setProfile,
@@ -11559,10 +11619,10 @@ function App() {
                                         padding: "2px 6px",
                                         borderRadius: 6
                                       },
-                                      children: "NUOVO v2.13.0"
+                                      children: "NUOVO v2.14.0"
                                     }
                                   ),
-                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 34 ITERAZIONI" })
+                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 37 ITERAZIONI" })
                                 ]
                               }
                             ),
@@ -11571,7 +11631,7 @@ function App() {
                               {
                                 className: "o40-display",
                                 style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 },
-                                children: "Onboarding + Clip — 3 Step + Alias!"
+                                children: "Camp 2.0 + TEMPO + Coach 2.0!"
                               }
                             )
                           ] })
@@ -11583,7 +11643,7 @@ function App() {
                       {
                         onClick: () => {
                           try {
-                            localStorage.setItem("o40_release_2.13.0", "dismissed");
+                            localStorage.setItem("o40_release_2.14.0", "dismissed");
                           } catch {
                           }
                           setShowReleaseBanner(false);
@@ -11673,7 +11733,7 @@ function App() {
                   {
                     onClick: () => {
                       try {
-                        localStorage.setItem("o40_release_2.13.0", "dismissed");
+                        localStorage.setItem("o40_release_2.14.0", "dismissed");
                       } catch {
                       }
                       setShowReleaseBanner(false);
