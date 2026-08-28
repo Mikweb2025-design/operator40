@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.14.0';
+export const CHANGELOG_VERSION = '2.14.1';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,10 +22,10 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.14.0',
-    title: 'Camp 2.0 + TEMPO + Coach 2.0 (v2.14)',
-    subtitle: 'v2.14.0 · 28 Agosto 2026 · recovery ogni 7 + deload + tempo 50 BPM',
-    intro: 'Batch backlog: Camp 2.0 recovery/deload, TEMPO metronomo 40-60 BPM, Coach vocale 2.0 TTS cue form<60.',
+    badge: 'NUOVO v2.14.1',
+    title: 'Statistiche — Grafica Premium (v2.14.1)',
+    subtitle: 'v2.14.1 · 28 Agosto 2026 · DogTag accent + chart gradient + heatmap',
+    intro: 'Batch statistiche: DogTag accent, PR glass, Bar gradient + tooltip blur, heatmap 6px glow, calendar 8px.',
     groups: [
       {
         icon: '🌑',
@@ -135,18 +135,27 @@ const COPY: Record<Lang, any> = {
           'Coach 2.0: TTS cue form<60 via SpeechCoach ogni 4s',
         ],
       },
+      {
+        icon: '📊',
+        title: '38-40. Statistiche Premium (v2.14.1)',
+        items: [
+          'Hero DogTag accent + PR glass 16px con icone Flame/Crown/Ruler',
+          'Bar kcal gradient + tooltip blur + monthly trend 6px glow',
+          'Heatmap 6px + year 4px + calendar 8px con border/shadow',
+        ],
+      },
     ],
     cta: 'PROVA ORA',
     ctaHint: 'Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS',
     dismiss: 'Non mostrare più',
     close: 'Chiudi',
-    footer: 'Tutto on-device. 37 iterazioni. Prossimo: v2.15 Social + Watch.',
+    footer: 'Tutto on-device. 40 iterazioni. Prossimo: v2.15 Social + Watch.',
   },
   en: {
-    badge: 'NEW v2.14.0',
-    title: 'Camp 2.0 + TEMPO + Coach 2.0 (v2.14)',
-    subtitle: 'v2.14.0 · Aug 28 2026 · recovery + tempo 50 BPM + coach',
-    intro: 'Backlog batch: Camp 2.0 recovery/deload, TEMPO 40-60 BPM, Coach 2.0 TTS cue.',
+    badge: 'NEW v2.14.1',
+    title: 'Statistics — Premium Graphics (v2.14.1)',
+    subtitle: 'v2.14.1 · Aug 28 2026 · DogTag accent + chart gradient + heatmap',
+    intro: 'Statistics batch: DogTag accent, PR glass, Bar gradient + tooltip blur, heatmap 6px glow, calendar 8px.',
     groups: [
       { icon: '🌑', title: '1-2. OLED Depth + Card', items: ['INK #0E100D vignette + 130% radial — deeper phone, 5px camo', 'Unified card 165° + hairline + gloss', 'Card-face hairline + accent + tabular glow'] },
       { icon: '🔥', title: '3-4. Typography + CTA', items: ['Bebas/Inter sharpened, num-glow halo', 'CTA BLAZE_LIGHT→DEEP + inset highlight', 'Large btn shadow 10/28'] },
@@ -160,18 +169,19 @@ const COPY: Record<Lang, any> = {
       { icon: '❤️', title: '30-32. HR + NEFFEX + PWA', items: ['Health HR avg last 20 + toast', 'NEFFEX crossfade 1.2s + daily seed', 'PWA banner after 2 sessions'] },
       { icon: '🎓', title: '33-34. Onboarding + Clip', items: ['Onboarding 3 step with dots, Skip/Next', 'Clip alias for 4 missing (plank/jack/mountain/affondo)', 'Offline models check'] },
       { icon: '🏕️', title: '35-37. Camp + TEMPO + Coach', items: ['Camp 2.0 recovery every 7 + deload week', 'TEMPO metronome 40-60 BPM + toggle', 'Coach 2.0 TTS cue form<60'] },
+      { icon: '📊', title: '38-40. Statistics Premium', items: ['Hero DogTag accent + PR glass 16px', 'Bar gradient + tooltip blur + monthly 6px', 'Heatmap 6px + year 4px + calendar 8px'] },
     ],
     cta: 'TRY IT',
     ctaHint: 'Home → Mission → Start · https://mikweb.eu/operator40/',
     dismiss: "Don't show again",
     close: 'Close',
-    footer: 'On-device. 37 iterations. Next: v2.15 Social + Watch.',
+    footer: 'On-device. 40 iterations. Next: v2.15 Social + Watch.',
   },
   de: {
-    badge: 'NEU v2.14.0',
-    title: 'Camp 2.0 + TEMPO + Coach 2.0 (v2.14)',
-    subtitle: 'v2.14.0 · 28. Aug 2026 · Recovery + Tempo + Coach',
-    intro: 'Backlog: Camp 2.0 Recovery/Deload, TEMPO 40-60 BPM, Coach 2.0 TTS.',
+    badge: 'NEU v2.14.1',
+    title: 'Statistiken — Premium Grafik (v2.14.1)',
+    subtitle: 'v2.14.1 · 28. Aug 2026 · DogTag Akzent + Chart Verlauf + Heatmap',
+    intro: 'Statistiken Batch: DogTag Akzent, PR Glas, Bar Verlauf + Tooltip Blur, Heatmap 6px Glow.',
     groups: [
       { icon: '🌑', title: '1-2. OLED + Card', items: ['INK #0E100D Vignette', 'Unified Card + Hairline + Gloss', 'Tabular Glow'] },
       { icon: '🔥', title: '3-4. Typo + CTA', items: ['Bebas/Inter sharpened', 'CTA Blaze Light + Inset', 'Large shadow'] },
