@@ -7,7 +7,7 @@ export default function VersionBadge({ onClick }) {
     <div
       onClick={onClick}
       role={onClick ? 'button' : undefined}
-      title={onClick ? 'Novità v2.11 — clic per riaprire changelog' : undefined}
+      title={onClick ? 'Novità v2.11.1 — clic per riaprire changelog' : undefined}
       className="o40-mono"
       style={{
         color: STEEL,

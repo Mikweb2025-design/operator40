@@ -504,4 +504,28 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-phone::before { opacity: 0.035; }
 .o40-gridbg { opacity: 0.42; }
 .o40-embers { opacity: 0.9; }
+
+/* =============================================================
+   v2.11.1 — 3 LOOP AGGIUNTIVI (nuova)
+   Loop 11: Hero mission — depth + leggibilità + CTA pulse
+   Loop 12: Card progress — DogTag lift + Ring halo + Segmented glow
+   Loop 13: Micro — ticker respiro + glass + hover + aura
+   ============================================================= */
+
+/* Loop 11 — Hero */
+.o40-card.o40-ring-border {
+  box-shadow: 0 12px 36px rgba(0,0,0,0.52), 0 0 0 1px ${BLAZE}18 inset, 0 1px 0 rgba(255,255,255,0.07) inset;
+}
+.o40-card.o40-ring-border::before { opacity: 0.85; }
+.o40-card .o40-embers { filter: brightness(1.08); }
+
+/* Loop 12 — Card progress refs */
+.o40-card-face { box-shadow: 0 5px 18px rgba(0,0,0,0.32), 0 1px 0 rgba(255,255,255,0.04) inset; }
+.o40-card-accent { box-shadow: 0 0 8px color-mix(in srgb, var(--accent, ${BLAZE}) 45%, transparent); }
+
+/* Loop 13 — Micro extra */
+.o40-ticker { letter-spacing: 0.11em; }
+.o40-ticker-inner { gap: 48px; padding-left: 48px; }
+.o40-topbar-glass, .o40-bottomnav-glass { backdrop-filter: blur(15px) saturate(1.2); }
+.o40-card { will-change: transform; }
 `;

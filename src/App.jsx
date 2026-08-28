@@ -441,7 +441,7 @@ export default function App() {
   const [showChangelog, setShowChangelog] = useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = useState(() => {
     try {
-      return localStorage.getItem('o40_release_2.11.0') !== 'dismissed';
+      return localStorage.getItem('o40_release_2.11.1') !== 'dismissed';
     } catch {
       return true;
     }
@@ -1743,24 +1743,24 @@ export default function App() {
                             borderRadius: 6,
                           }}
                         >
-                          NUOVO v2.11.0
+                          NUOVO v2.11.1
                         </span>
                         <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>
-                          28 AGO 2026 · 10 LOOP GRAFICA
+                          28 AGO 2026 · 13 LOOP GRAFICA
                         </span>
                       </div>
                       <div
                         className="o40-display"
                         style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}
                       >
-                        Grafica OLED — 10 loop: depth, card gloss, CTA blaze, HUD tactical!
+                        Grafica OLED — 13 loop + fix white-screen!
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.11.0', 'dismissed');
+                        localStorage.setItem('o40_release_2.11.1', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
@@ -1835,7 +1835,7 @@ export default function App() {
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.11.0', 'dismissed');
+                        localStorage.setItem('o40_release_2.11.1', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
