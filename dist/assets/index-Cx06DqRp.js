@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-Dx3P0Tax.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-fvtDt46I.js","./CountdownScreen-CnkbqyI3.js","./SetupScreen-h6ipru_K.js","./TopBar-CbL_GQc3.js","./HomeScreen-CjmNYeOD.js","./GoalRing-MJKZyfqn.js","./ExerciseFigure-GyptcrvU.js","./DogTag-BcgxpBya.js","./ProgressRing-BK0uC3iN.js","./LibraryScreen-Ba8A_bnR.js","./clips-CZetA5iC.js","./BuilderScreen-mKxtfpL1.js","./PreviewScreen-Bf8BipEb.js","./SessionScreen-DsONxWm3.js","./SummaryScreen-C6OS3-HK.js","./HistoryScreen-D-BRPFkY.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-Bbid1zI0.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-sTYAnG4x.js","./CountdownScreen-Q--SZa_D.js","./SetupScreen-C3QVSDj6.js","./TopBar-CucADl5g.js","./HomeScreen-s1x-gPUD.js","./GoalRing-DiX5N9-g.js","./ExerciseFigure-Cy1UCUtq.js","./DogTag-D8m3MEvH.js","./ProgressRing-DciObPHR.js","./LibraryScreen-DCbToQVV.js","./clips-CZetA5iC.js","./BuilderScreen-BXrZa9Nv.js","./PreviewScreen-ln6F7TGL.js","./SessionScreen-a5tr7BD-.js","./SummaryScreen-D5rxfBiH.js","./HistoryScreen-dEbEwLTN.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -3552,6 +3552,42 @@ function getMotivationalMessage({
     type: "motivation"
   };
 }
+const VOCAL_MOTIVATION = {
+  it: [
+    "Dai, un altro sforzo.",
+    "Continua così, stai andando alla grande.",
+    "Resta concentrato, ogni secondo conta.",
+    "Respira e spingi ancora.",
+    "La fatica è il progresso che arriva.",
+    "Ancora un po', ce la puoi fare.",
+    "Ritmo perfetto, non fermarti adesso.",
+    "Un passo alla volta, con costanza."
+  ],
+  en: [
+    "Come on, one more push.",
+    "Keep going, you are doing great.",
+    "Stay focused, every second counts.",
+    "Breathe and push again.",
+    "The effort is where progress comes from.",
+    "A little more, you can do it.",
+    "Perfect rhythm, do not stop now.",
+    "One step at a time, with consistency."
+  ],
+  de: [
+    "Komm, noch eine Anstrengung.",
+    "Mach weiter, du machst das großartig.",
+    "Bleib konzentriert, jede Sekunde zählt.",
+    "Atme und drück noch einmal.",
+    "Die Anstrengung ist der Fortschritt.",
+    "Noch ein bisschen, du schaffst es.",
+    "Perfekter Rhythmus, bleib dran.",
+    "Schritt für Schritt, mit Beständigkeit."
+  ]
+};
+function getVocalMotivation(lang) {
+  const list = VOCAL_MOTIVATION[lang] || VOCAL_MOTIVATION.it;
+  return list[Math.floor(Math.random() * list.length)];
+}
 const BELLY_LEVELS = [
   {
     key: "recluta",
@@ -6790,7 +6826,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-Dx3P0Tax.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-Bbid1zI0.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8663,7 +8699,7 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.10.0 · 1481cba";
+const BUILD_VERSION = "2.10.0 · 29b8fa9";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -9257,7 +9293,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-fvtDt46I.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-sTYAnG4x.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -9856,15 +9892,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-CnkbqyI3.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-h6ipru_K.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-CjmNYeOD.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-Ba8A_bnR.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-mKxtfpL1.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-Bf8BipEb.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-DsONxWm3.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-C6OS3-HK.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-D-BRPFkY.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-Q--SZa_D.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-C3QVSDj6.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-s1x-gPUD.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-DCbToQVV.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-BXrZa9Nv.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-ln6F7TGL.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-a5tr7BD-.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-D5rxfBiH.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-dEbEwLTN.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -10609,6 +10645,15 @@ function App() {
     } catch {
     }
   }
+  async function toggleVocalMotivation() {
+    const p2 = { ...profile, vocalMotivation: !profile.vocalMotivation };
+    setProfile(p2);
+    if (p2.vocalMotivation) speak(getVocalMotivation(lang), lang, LOCALES);
+    try {
+      await window.storage.set("o40_profile", JSON.stringify(p2), false);
+    } catch (e) {
+    }
+  }
   async function toggleSkipWarmup() {
     const p2 = { ...profile, skipWarmup: !profile.skipWarmup };
     setProfile(p2);
@@ -11096,6 +11141,8 @@ function App() {
             onToggleSkipWarmup: toggleSkipWarmup,
             voiceCountdown: !!(profile && profile.voiceCountdown),
             onToggleVoiceCountdown: toggleVoiceCountdown,
+            vocalMotivation: profile ? profile.vocalMotivation !== false : true,
+            onToggleVocalMotivation: toggleVocalMotivation,
             level: profile && (profile.level || (profile.intervalPreset === "breve" ? "recluta" : profile.intervalPreset === "lungo" ? "elite" : "combattente")) || "combattente",
             onSetLevel: applyLevel,
             intervalPreset: profile && profile.intervalPreset || "standard",
@@ -11417,6 +11464,7 @@ function App() {
             onToggleMusic: toggleMusic,
             aiEnabled: aiCoachEnabled,
             onToggleAi: () => setAiCoachEnabled((v) => !v),
+            vocalMotivation: profile ? profile.vocalMotivation !== false : true,
             lang,
             onSkip: advancePhase,
             onPrev: goPrev,
@@ -11958,23 +12006,24 @@ export {
   FitnessEngine as a7,
   drawSkeleton as a8,
   alignmentScore as a9,
-  formatTime as aa,
-  iconCircle as ab,
-  pillBtn as ac,
-  LOCALES as ad,
-  hrZone as ae,
-  RPE_LABELS as af,
-  RPE_COLORS as ag,
-  computeStreak as ah,
-  buildHeatmap as ai,
-  getPersonalRecords as aj,
-  buildYearHeatmap as ak,
-  getMonthlyTrend as al,
-  dayKey as am,
-  sessionDayKey as an,
-  getNextMedals as ao,
-  WebPlugin as ap,
-  registerPlugin as aq,
+  getVocalMotivation as aa,
+  formatTime as ab,
+  iconCircle as ac,
+  pillBtn as ad,
+  LOCALES as ae,
+  hrZone as af,
+  RPE_LABELS as ag,
+  RPE_COLORS as ah,
+  computeStreak as ai,
+  buildHeatmap as aj,
+  getPersonalRecords as ak,
+  buildYearHeatmap as al,
+  getMonthlyTrend as am,
+  dayKey as an,
+  sessionDayKey as ao,
+  getNextMedals as ap,
+  WebPlugin as aq,
+  registerPlugin as ar,
   INK_2 as b,
   INTERVAL_PRESETS as c,
   LEVELS as d,

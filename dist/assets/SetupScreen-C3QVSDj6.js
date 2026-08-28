@@ -1,6 +1,6 @@
-import { u as useT, g as getLevel, j as jsxRuntimeExports, L as LANGS, B as BLAZE, K as KHAKI, O as OLIVE, a as OLIVE_DARK, I as INK, b as INK_2, S as STEEL, i as inputStyle, T as TRACKS, P as PAPER, c as INTERVAL_PRESETS, d as LEVELS, t as tr, s as secondaryBtn, e as primaryBtnLarge, f as BLAZE_DEEP, h as isStandalonePWA } from "./index-6mXI_710.js";
-import { V as Volume2, h as VolumeX, i as Vibrate, j as SkipForward, M as Music, k as Music2, l as HeadphoneOff, m as ChevronLeft, f as RefreshCw, n as Crown, o as Medal, D as Download, U as Upload, p as Bell, q as BellOff, s as Send, t as HeartPulse, b as ChevronRight } from "./icons-DnFQGhVC.js";
-import { T as TopBar } from "./TopBar-CbL_GQc3.js";
+import { u as useT, g as getLevel, j as jsxRuntimeExports, L as LANGS, B as BLAZE, K as KHAKI, O as OLIVE, a as OLIVE_DARK, I as INK, b as INK_2, S as STEEL, i as inputStyle, T as TRACKS, P as PAPER, c as INTERVAL_PRESETS, d as LEVELS, t as tr, s as secondaryBtn, e as primaryBtnLarge, f as BLAZE_DEEP, h as isStandalonePWA } from "./index-Cx06DqRp.js";
+import { V as Volume2, h as VolumeX, i as Vibrate, j as SkipForward, M as Music, S as Sparkles, k as Music2, l as HeadphoneOff, m as ChevronLeft, f as RefreshCw, n as Crown, o as Medal, D as Download, U as Upload, p as Bell, q as BellOff, s as Send, t as HeartPulse, b as ChevronRight } from "./icons-DnFQGhVC.js";
+import { T as TopBar } from "./TopBar-CucADl5g.js";
 import "./charts-BWCYe6zh.js";
 function ToggleRow({ label, icon: Icon, on, onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -117,6 +117,8 @@ function SetupScreen({
   onToggleSkipWarmup,
   voiceCountdown,
   onToggleVoiceCountdown,
+  vocalMotivation,
+  onToggleVocalMotivation,
   level,
   onSetLevel,
   intervalPreset,
@@ -326,6 +328,16 @@ function SetupScreen({
                     icon: Music,
                     on: voiceCountdown,
                     onClick: onToggleVoiceCountdown
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: 1, background: OLIVE_DARK, margin: "0 12px" } }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  ToggleRow,
+                  {
+                    label: lang === "it" ? "Motivazioni vocali" : lang === "de" ? "Sprach-Motivation" : "Voice motivation",
+                    icon: Sparkles,
+                    on: vocalMotivation,
+                    onClick: onToggleVocalMotivation
                   }
                 )
               ]
