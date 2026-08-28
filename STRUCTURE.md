@@ -1,6 +1,6 @@
 # Operator40 — Complete Structure & Functions
 
-> **Read this to continue tomorrow without re-discovering the repo.** Updated **2026-08-27** — `main @ 5f40511` (`index-BgW1cw35.js / o40-va068d42f`) + `deploy-tmp @ 8c20bdd` (live `o40-va068d42f`). Build `2.9.0 · <git-short>` + **22 AI analyzers + audit 5 aree**.
+> **Read this to continue tomorrow without re-discovering the repo.** Updated **2026-08-28** — `main @ c827436` (`index-D3Kh0jMn.js / o40-v1d399171`) + `deploy-tmp @ 32a59f7` (live `o40-v1d399171`). Build `2.14.1 · c827436` + **40 iterazioni + Statistiche premium**.
 
 ---
 
@@ -16,7 +16,7 @@ Dark military UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N
   - `operator40-Watch` — with Huawei (separate branch)
 - **Stack:** React 18, Vite 5, Capacitor 6 (`idb 8`, `@mediapipe/tasks-vision 0.10` lite/heavy/auto + GPU→CPU + WASM offline `fetch-mediapipe.mjs`), `lucide-react`, `recharts`, Vitest 1, Playwright, PHP 8.3 `web-push` 9.0
 
-**v2.9 what changed:** audit 5 aree — `src/components/ui/*` dedup, `i18n` 15+ chiavi, `audit.test.js` 21 test (30→51), `App.jsx` 9 screens `React.lazy` 749k→444k, `sw.js` SWR + `SKIP_WAITING`, `backup.js` + `STORAGE_SCHEMA_VERSION=2` (già in 2.8.3), changelog 2.9.0.
+**v2.14.1 what changed (40 iterazioni):** `Statistiche premium` (DogTag accent + PR glass + Bar gradient + heatmap 6px) + `Camp 2.0` (recovery/deload) + `TEMPO 50 BPM` + `Coach 2.0` + `Onboarding 3-step` + `Clip alias 22/22` + `HR crossfade + PWA gate` + `IMU opt-in + BeforeAfter pinch` + `A11y/Library/CSV/QR` + 23 loop OLED. Build `2.14.1` + `HistoryScreen 110k`.
 
 ---
 
@@ -34,16 +34,16 @@ operator40/
 │   ├── manifest.webmanifest
 │   └── sw.js               # offline cache-first + push + precache 6 clips + wasm/models if present, CACHE o40-v<hash>
 ├── src/
-│   ├── App.jsx             # ★ ROUTER ~1240 lines — 9 screens React.lazy + Suspense + isAiWork gated SessionAIOverlay
+│   ├── App.jsx             # ★ ROUTER ~2330 lines — 9 screens React.lazy + tourStep 3-step + motionFusion/tempo + isAiWork gated SessionAIOverlay
 │   ├── main.jsx            # bootstrap React + window.storage (IDB/Preferences) + PWA install defer
 │   ├── storage.js          # IndexedDB (idb) v2 + Preferences native, STORAGE_SCHEMA_VERSION=2 + migrateStoredDataIfNeeded + backup.js
 │   ├── media.js            # VIDEO_B64 WebP lazy 1.7M (già lazy via dynamic import in Session/Preview)
-│   ├── clips.js            # CLIP_FILES 18 MP4 + hasClip()
+│   ├── clips.js            # CLIP_FILES 18 MP4 + 5 alias (plank/jack/mountain/affondo → 22/22) + hasClip()
 │   ├── music.js            # playlist autoplay
 │   ├── i18n.js             # LANGS [it,en,de] + 15+ nuove chiavi home.section.* / setup.backup.* (audit/7)
 │   ├── data/
 │   │   ├── exercises.js    # EXERCISES 22 + EXERCISE_GROUPS (standing/ground/core)
-│   │   └── programs.js     # PROGRAMS 18, QUICK_PROGRAM, LEVELS, INTERVAL_PRESETS, DAY_CYCLE 20, BELLY_IDS, CAMP_DAYS 30, pickNextProgram
+│   │   └── programs.js     # PROGRAMS 18, QUICK_PROGRAM, LEVELS, INTERVAL_PRESETS, DAY_CYCLE + isRecoveryDay/isDeloadWeek + pickNextProgram Camp 2.0, BELLY_IDS, CAMP_DAYS 30
 │   ├── ai/                 # ★ NEW modular AI (spec §3) — continue here tomorrow
 │   │   ├── pose/
 │   │   │   ├── Geometry.ts          # 11 utils: Angle/Distance/Midpoint/Velocity/Acceleration/BodyLine/Torso/Leg/Arm/ROM/Symmetry (torso-normalized)
@@ -79,13 +79,13 @@ operator40/
 │   │   ├── stats.js, progress.js, goals.js, missions.js, motivation.js, push.js, belly.js, bellyTest.js, workout.js, audio.js, export.js, share*.js, bmi.js, body.js, audit.test.js (21), backup.js (BACKUP_VERSION=2), favorites.js, photos.js, wakeLock.js, notifications.js
 │   │   └── ...
 │   ├── components/
-│   │   ├── ui/ DogTag.jsx, ProgressRing.jsx, SegmentedProgress.jsx, styles.js (dedup audit/3)
-│   │   ├── FitnessEngineView.tsx    # AI view 22 switcher + poseQuality bar + DEBUG HUD
-│   │   ├── SessionAIOverlay.tsx     # mission→exercise auto, trackingSupported gate, voice it/en/de/fr
+│   │   ├── ui/ DogTag.jsx, ProgressRing.jsx, SegmentedProgress.jsx, styles.js (dedup + accent)
+│   │   ├── FitnessEngineView.tsx    # AI view 22 switcher + Coach 2.0 TTS + poseQuality + DEBUG HUD
+│   │   ├── SessionAIOverlay.tsx     # mission→exercise auto + IMU enableMotionFusion + voice
 │   │   ├── PoseCounter.jsx          # DEPRECATED → FitnessEngineView
 │   │   ├── PositioningMask.tsx      # alignmentScore
-│   │   ├── BellyTest.jsx, BeforeAfterSlider.jsx, ExerciseFigure.jsx, etc.
-│   │   ├── ChangelogModal.tsx   # v2.9.0 — 6 gruppi audit
+│   │   ├── BellyTest.jsx, BeforeAfterSlider.jsx (pinch-zoom + haptics), ExerciseFigure.jsx, etc.
+│   │   ├── ChangelogModal.tsx   # v2.14.1 — 10 gruppi 38-40 Statistiche premium
 │   │   └── ErrorBoundary.jsx
 │   ├── constants/theme.js
 │   └── styles/appStyles.js
@@ -105,7 +105,7 @@ operator40/
 
 ## 3. App.jsx Core
 
-**State:** `profile, sessions, customPrograms, waistHistory, weightHistory, photos, screen (loading/setup/home/library/builder/preview/countdown/session/summary/history), seq, phaseIdx, secondsLeft, paused, activeProgram, lastStats, form*, reminderHour/Minute, installPrompt, showTour, largeText, previewProgram, editingCustom, toast, exitConfirm, showBellyTest, showPose, healthImport, hrInput/waistInput/rpe/notes, sound/vibration/music*, push*, aiCoachEnabled`
+**State:** `profile, sessions, customPrograms, waistHistory, weightHistory, photos, screen (...history), seq, phaseIdx, secondsLeft, paused, activeProgram, lastStats, form*, reminderHour/Minute, installPrompt, showTour/tourStep, largeText, previewProgram, editingCustom, toast, exitConfirm, showBellyTest, showPose, healthImport, hrInput/waistInput/rpe/notes, sound/vibration/music*, push*, aiCoachEnabled, motionFusion/tempo`
 
 **Key functions:** `load persisted data (IDB/Preferences) → saveProfile → saveBellyTest → togglePush → startSession(buildSequence) → finishSession/saveSession (kcal) → checkMotivational (09:00) → sync push stats`. `SessionScreen` uses `isAiWork = aiEnabled && phase.type==='work'` → `SessionAIOverlay` else `ProgressRing`.
 
@@ -139,6 +139,6 @@ operator40/
 - Screenshots: `npm run preview` on `:4173` + `node scripts/screenshots.mjs` → `docs/screenshots/06-ai-debug.png` (commit with `git add docs/screenshots`)
 - Continue tomorrow: tune thresholds in `src/ai/exercises/analyzers/*.ts` using `landmarks.json` replay, add fixtures to `tests/fixtures/` — 2.9.0 già bumpato, prossimo 2.9.1
 
-**Current:** `main 5f40511` (`index-BgW1cw35.js / o40-va068d42f`) + `deploy-tmp 8c20bdd` live `o40-va068d42f` — audit 5 aree + changelog 2.9.0.
+**Current:** `main c827436` (`index-D3Kh0jMn.js / o40-v1d399171`) + `deploy-tmp 32a59f7` live `o40-v1d399171` — 40 iterazioni + Statistiche premium (v2.14.1).
 
-All set — continue tomorrow from `src/ai/exercises/analyzers/` with device testing.
+All set — next: `Camp 2.0` già fatto, ora `Social sfida` + `Watch` + `Offline lite.task`.

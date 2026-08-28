@@ -1,18 +1,20 @@
 # Operator40 — Roadmap prossimi giorni
 
-> v2.13.0 · 28 Agosto 2026 · 34 iterazioni + onboarding 3-step + clip alias
+> v2.14.1 · 28 Agosto 2026 · 40 iterazioni + Statistiche premium + Camp 2.0 + TEMPO + Coach 2.0
 > Live: https://mikweb.eu/operator40/ · Repo: Mikweb2025-design/operator40
 
 ---
 
-## ✅ Appena fatto (v2.13.0 — 34 ITERAZIONI)
+## ✅ Appena fatto (v2.14.1 — 40 ITERAZIONI)
 
-**Grafica 23 loop** — zero logica toccata, 101 test verdi:
+**Grafica 40 iterazioni** — 101 test verdi, 23 loop OLED + 17 roadmap:
 - 1-10 OLED (ink #0E100D, card 165°, typo, CTA blaze, nav, HUD, micro, skeleton, aura, tokens)
 - 11-13 extra hero/card/micro + white-screen fix BLAZE_LIGHT (v2.11.1)
 - 14-23 full-app: color #0B0D0A, card radius16 selected, typo, icon halo, nav safe-area, hero filter, HUD timer, viz tooltip, forms focus 3px, cohesion
+- 24-34 onboarding 3-step + clip alias 22/22 + HR + NEFFEX + PWA + IMU + BeforeAfter (v2.12.1-v2.13.0)
+- 35-40 Camp 2.0 (recovery/deload) + TEMPO + Coach 2.0 + Statistiche premium (DogTag accent + PR glass + Bar gradient + heatmap/calendar) (v2.14.0-v2.14.1)
 
-+ bump 2.10.0→2.12.0, Changelog 7 gruppi, banner 23 loop, deploy o40-vba6f093a, white-screen fix
++ bump 2.10.0→2.14.1, Changelog 10 gruppi, banner 40 iterazioni, deploy o40-v1d399171, HistoryScreen 110k
 
 ---
 
@@ -73,4 +75,4 @@
 
 ---
 
-*Aggiornato 28 Ago 2026 — v2.13.0 · 34 iterazioni — prossimo: v2.14 Camp 2.0 + Coach vocale 2.0 + Watch*
+*Aggiornato 28 Ago 2026 — v2.14.1 · 40 iterazioni — prossimo: v2.15 Social sfida + Watch HR + Offline lite.task*
