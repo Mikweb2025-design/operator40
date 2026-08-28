@@ -44,6 +44,7 @@ export class PoseLandmarkerManager {
   private landmarker: any | null = null;
   private fileset: any | null = null;
   private smoother: LandmarkSmoother | null = null;
+  private worldSmoother: LandmarkSmoother | null = null;
   private ready = false;
   private delegate: 'GPU' | 'CPU' = 'GPU';
 
@@ -52,31 +53,46 @@ export class PoseLandmarkerManager {
     private enableSmoothing = true
   ) {
     this.delegate = opts.delegate ?? 'GPU';
-    // For over-40 partial ROM at 25-30 FPS, a slightly higher cutoff (1.15) keeps motion responsive
-    // while beta 0.008 compensates derivative drift on shaky iPhone handheld camera.
-    if (enableSmoothing) this.smoother = new LandmarkSmoother(33, 1.15, 0.008);
+    // Fase 1 Tuning: OneEuro slightly higher cutoff for heavy model stability
+    // lite 1.15/0.008, heavy needs tighter beta to avoid jitter with more precise landmarks
+    const isHeavy = (opts.modelVariant === 'heavy' || opts.modelVariant === 'auto');
+    const cutoff = isHeavy ? 1.05 : 1.15;
+    const beta = isHeavy ? 0.006 : 0.008;
+    if (enableSmoothing) {
+      this.smoother = new LandmarkSmoother(33, cutoff, beta);
+      this.worldSmoother = new LandmarkSmoother(33, cutoff, beta);
+    }
   }
   setSmoothingTuning(minCutoff: number, beta: number): void {
     this.smoother?.setTuning(minCutoff, beta);
+    this.worldSmoother?.setTuning(minCutoff, beta);
   }
 
   isReady(): boolean { return this.ready && !!this.landmarker; }
 
-  private modelVariant: string = 'lite';
+  private modelVariant: string = 'auto';
 
   async init(onProgress?: (msg: string) => void): Promise<void> {
     if (this.ready) return;
     const vision: MPVision = await import('@mediapipe/tasks-vision');
     const { PoseLandmarker, FilesetResolver } = vision as any;
 
-    // Resolve variant: explicit > auto-heuristic (heavy if deviceMemory>=4 && not low-end iPhone)
-    const requested = (this.opts as any).modelVariant ?? 'lite';
+    // Fase 1: auto-heuristic improved — heavy if deviceMemory>=4 && not low-end iPhone && not low battery
+    // Defaults to 'auto' for best accuracy/performance tradeoff
+    const requested = (this.opts as any).modelVariant ?? 'auto';
     if (requested === 'auto') {
       try {
         const mem = (navigator as any).deviceMemory ?? 4;
         const ua = navigator.userAgent ?? '';
         const isOldIOS = /iPhone OS 1[0-4]_/.test(ua);
-        this.modelVariant = (mem >= 4 && !isOldIOS) ? 'heavy' : 'lite';
+        const cores = navigator.hardwareConcurrency ?? 4;
+        // heavy only on modern devices (4GB+ RAM, 4+ cores, not old iOS)
+        this.modelVariant = (mem >= 4 && cores >= 4 && !isOldIOS) ? 'heavy' : 'lite';
+        // Override via localStorage for testing: o40_modelVariant
+        try {
+          const override = localStorage.getItem('o40_modelVariant');
+          if (override === 'lite' || override === 'heavy' || override === 'full') this.modelVariant = override;
+        } catch {}
       } catch { this.modelVariant = 'lite'; }
     } else {
       this.modelVariant = requested;
@@ -121,7 +137,7 @@ export class PoseLandmarkerManager {
     throw new Error(`PoseLandmarker init failed: ${String(lastErr)}`);
   }
 
-  /** Detect for video element at given timestamp (performance.now). Returns smoothed landmarks. */
+  /** Detect for video element at given timestamp (performance.now). Returns smoothed landmarks + worldLandmarks. */
   detect(video: HTMLVideoElement, timestampMs: number): PoseResult {
     if (!this.landmarker || !this.ready) {
       return { landmarks: null, timestampMs, visibilityScore: 0 };
@@ -129,14 +145,18 @@ export class PoseLandmarkerManager {
     try {
       const result = this.landmarker.detectForVideo(video, timestampMs);
       const raw: PoseLandmarks | null = result?.landmarks?.[0] ?? null;
-      const world: PoseLandmarks | null = result?.worldLandmarks?.[0] ?? null;
-      if (!raw) return { landmarks: null, worldLandmarks: world, timestampMs, visibilityScore: 0 };
+      const worldRaw: PoseLandmarks | null = result?.worldLandmarks?.[0] ?? null;
+      if (!raw) return { landmarks: null, worldLandmarks: worldRaw, timestampMs, visibilityScore: 0 };
 
       let lm: PoseLandmarks = raw;
+      let world: PoseLandmarks | null = worldRaw;
       if (this.enableSmoothing && this.smoother) {
         lm = this.smoother.smooth(raw, timestampMs);
+        if (worldRaw && this.worldSmoother) {
+          world = this.worldSmoother.smooth(worldRaw, timestampMs);
+        }
       }
-      // visibility of key joints
+      // visibility of key joints — Fase 1: include world depth confidence
       const vis = visibilityScore(lm, [11, 12, 23, 24, 25, 26, 13, 14, 15, 16]);
       return { landmarks: lm, worldLandmarks: world, timestampMs, visibilityScore: vis };
     } catch {
@@ -144,7 +164,10 @@ export class PoseLandmarkerManager {
     }
   }
 
-  resetSmoother(): void { this.smoother?.reset(); }
+  getModelVariant(): string { return this.modelVariant; }
+  getDelegate(): string { return this.delegate; }
+
+  resetSmoother(): void { this.smoother?.reset(); this.worldSmoother?.reset(); }
 
   close(): void {
     try { this.landmarker?.close?.(); } catch {}

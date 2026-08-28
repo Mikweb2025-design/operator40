@@ -7,8 +7,10 @@ export class HeelTapAnalyzer extends ExerciseAnalyzer{
   readonly id='heeltap'; readonly requiredLandmarks=[11,12,23,24,25,26,15,16,29,30];
   private lastSide: 'left'|'right'|null=null;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('heeltap');
     const lw=lm[LM.left_wrist], lh=lm[LM.left_heel], rw=lm[LM.right_wrist], rh=lm[LM.right_heel];
-    if (!lw||!lh||!rw||!rh) return { phase:this.phase, enginePhase:'ready' as any, repIncrement:false, repConfidence:0, formScore:70, poseQuality:q, cues:[], primaryAngle:0, secondaryAngles:{}, velocity:0, direction:'hold' as any };
+    if (!lw||!lh||!rw||!rh) return { phase:this.phase, enginePhase:'ready' as any, repIncrement:false, repConfidence:0, formScore:70, poseQuality:q, cues:[], primaryAngle:0, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')), }, velocity:0, direction:'hold' as any };
     const tl=torsoLength(lm); const n = tl>1e-6 ? 1/tl : 1;
     const dL=Math.hypot(lw.x-lh.x, lw.y-lh.y)*n;
     const dR=Math.hypot(rw.x-rh.x, rw.y-rh.y)*n;
@@ -28,6 +30,7 @@ export class HeelTapAnalyzer extends ExerciseAnalyzer{
       this.phase='CENTER';
     }
     if (repInc){ this.phase='CENTER'; this.lastTransitionAt=ts; }
-    return { phase:this.phase, enginePhase: (this.phase==='LEFT'||this.phase==='RIGHT')?'bottom':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore:88, poseQuality:q, cues:[], primaryAngle:best, secondaryAngles:{ dL,dR }, velocity:0, direction:'hold' as any };
+    return { phase:this.phase, enginePhase: (this.phase==='LEFT'||this.phase==='RIGHT')?'bottom':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore:88, poseQuality:q, cues:[], primaryAngle:best, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  dL,dR }, velocity:0, direction:'hold' as any };
   }
+  reset(){ super.reset(); }
 }

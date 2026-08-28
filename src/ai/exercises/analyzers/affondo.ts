@@ -9,6 +9,8 @@ export class AffondoAnalyzer extends ExerciseAnalyzer{
   protected minPhaseMs = 70;
   private velFilt=0; private lastA=160;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, dtMs);
+    const temporal = this.getTemporalClassifier('affondo');
     const al=angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle);
     const ar=angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle);
     // pick most flexed leg as active
@@ -33,7 +35,10 @@ export class AffondoAnalyzer extends ExerciseAnalyzer{
       if (depthOk&&extOk){
         repConf=clamp(62 + symScore + romScore + (q.exerciseConfidence>60?6:0),0,100);
       } else { repConf=clamp(18,0,100); }
-      if(depthOk&&extOk&&repConf>60 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; }
+      const tRes = temporal.evaluate(this.temporalBuffer, feats, this.dwellAtBottom, ts);
+      if (this.temporalBuffer.length >= 10) repConf = clamp(repConf * 0.60 + tRes.confidence * 0.40, 0, 100);
+      const temporalGate = this.temporalBuffer.length < 10 || tRes.shouldCount || tRes.confidence > 52;
+      if(depthOk&&extOk&&repConf>58 && q.exerciseConfidence>38 && temporalGate && this.shouldCountRep(ts,repConf,58)){ repInc=true; this.lastRepAt=ts; temporal.markCounted(ts); }
       // Always cycle back to READY — STANDING has no other exit transition, so a single
       // low-confidence attempt would otherwise lock tracking forever.
       this.trough=knee; this.peak=knee; next='READY';
@@ -46,4 +51,5 @@ export class AffondoAnalyzer extends ExerciseAnalyzer{
     if(this.phase==='DESCENDING' && knee>108 && knee<138 && dir==='down') cues.push('scendiAncora');
     return { phase:this.phase, enginePhase: this.phase==='BOTTOM'?'bottom': this.phase==='DESCENDING'?'down': this.phase==='ASCENDING'?'up':'ready' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle:knee, secondaryAngles:{ al, ar, trunk }, velocity:this.velFilt, direction: dir as any };
   }
+  reset(){ super.reset(); this.velFilt=0; this.lastA=160; }
 }

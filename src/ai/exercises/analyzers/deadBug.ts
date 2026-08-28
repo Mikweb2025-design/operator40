@@ -7,6 +7,8 @@ export class DeadBugAnalyzer extends ExerciseAnalyzer{
   // Ankles (27,28) not required for gating — only feed the secondary trunk form check.
   readonly id='deadbug'; readonly requiredLandmarks=[11,12,23,24,25,26,13,14,15,16];
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('deadbug');
     const lHip=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
     const rHip=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
     const lSh=angleFromLandmarks(lm, LM.left_hip, LM.left_shoulder, LM.left_elbow);
@@ -24,6 +26,7 @@ export class DeadBugAnalyzer extends ExerciseAnalyzer{
     }
     let form=90; const cues:string[]=[]; const trunk=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     if (trunk<160){ form-=10; cues.push('coreTight'); }
-    return { phase:this.phase, enginePhase: this.phase==='EXTENDED'?'bottom': this.phase==='TUCKED'?'down':'ready' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: (lHip+rHip)/2, secondaryAngles:{ lHip, rHip, lSh, rSh }, velocity:0, direction:'hold' as any };
+    return { phase:this.phase, enginePhase: this.phase==='EXTENDED'?'bottom': this.phase==='TUCKED'?'down':'ready' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: (lHip+rHip)/2, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  lHip, rHip, lSh, rSh }, velocity:0, direction:'hold' as any };
   }
+  reset(){ super.reset(); }
 }

@@ -7,8 +7,10 @@ export class BicycleCrunchAnalyzer extends ExerciseAnalyzer{
   readonly id='bicyclecrunch'; readonly requiredLandmarks=[11,12,23,24,25,26,13,14];
   private lastAlt: 'left'|'right'|null=null;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('bicyclecrunch');
     const le=lm[LM.left_elbow], rk=lm[LM.right_knee], re=lm[LM.right_elbow], lk=lm[LM.left_knee];
-    if (!le||!rk||!re||!lk) return { phase:this.phase, enginePhase:'ready' as any, repIncrement:false, repConfidence:0, formScore:70, poseQuality:q, cues:[], primaryAngle:0, secondaryAngles:{}, velocity:0, direction:'hold' as any };
+    if (!le||!rk||!re||!lk) return { phase:this.phase, enginePhase:'ready' as any, repIncrement:false, repConfidence:0, formScore:70, poseQuality:q, cues:[], primaryAngle:0, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')), }, velocity:0, direction:'hold' as any };
     const d1=Math.hypot(le.x-rk.x, le.y-rk.y);
     const d2=Math.hypot(re.x-lk.x, re.y-lk.y);
     const best=Math.min(d1,d2);
@@ -27,6 +29,7 @@ export class BicycleCrunchAnalyzer extends ExerciseAnalyzer{
       this.phase='EXTENDED';
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; }
-    return { phase:this.phase, enginePhase: this.phase==='CONTRACTED'?'bottom':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(87,0,100), poseQuality:q, cues:[], primaryAngle: best, secondaryAngles:{ d1, d2 }, velocity:0, direction:'hold' as any };
+    return { phase:this.phase, enginePhase: this.phase==='CONTRACTED'?'bottom':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(87,0,100), poseQuality:q, cues:[], primaryAngle: best, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  d1, d2 }, velocity:0, direction:'hold' as any };
   }
+  reset(){ super.reset(); }
 }

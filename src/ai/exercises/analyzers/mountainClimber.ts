@@ -8,6 +8,8 @@ export class MountainClimberAnalyzer extends ExerciseAnalyzer{
   readonly id='mountainclimber'; readonly requiredLandmarks=[11,12,23,24,25,26];
   private lastSwitch=0; private cycle: 'left'|'right'|null=null; private alt=0;
   analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
+    const _temporal = this.getTemporalClassifier('mountainclimber');
     const lHip=angleFromLandmarks(lm, LM.left_shoulder, LM.left_hip, LM.left_knee);
     const rHip=angleFromLandmarks(lm, LM.right_shoulder, LM.right_hip, LM.right_knee);
     const driving=Math.min(lHip,rHip); // flexed knee-to-chest
@@ -29,6 +31,7 @@ export class MountainClimberAnalyzer extends ExerciseAnalyzer{
     if (!nowCycle) this.phase='HOLD_PLANK';
     let form=88; const cues:string[]=[];
     if (trunk<152){ form-=13; cues.push('coreTight'); }
-    return { phase:this.phase, enginePhase: repInc?'up':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: driving, secondaryAngles:{ lHip, rHip, trunk }, velocity:0, direction:'hold' as any };
+    return { phase:this.phase, enginePhase: repInc?'up':'down' as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: driving, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  lHip, rHip, trunk }, velocity:0, direction:'hold' as any };
   }
+  reset(){ super.reset(); }
 }

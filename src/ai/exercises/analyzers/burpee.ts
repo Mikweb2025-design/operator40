@@ -5,7 +5,9 @@ import { LM, angleFromLandmarks, clamp } from '../../pose/Geometry';
 // tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class BurpeeAnalyzer extends ExerciseAnalyzer{
   readonly id='burpee'; readonly requiredLandmarks=[23,24,25,26,27,28,11,12,13,14];
-  analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+  analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, dtMs || 16);
+    const _temporal = this.getTemporalClassifier('burpee');
     const knee=(angleFromLandmarks(lm, LM.left_hip, LM.left_knee, LM.left_ankle)+angleFromLandmarks(lm, LM.right_hip, LM.right_knee, LM.right_ankle))/2;
     const elbow=(angleFromLandmarks(lm, LM.left_shoulder, LM.left_elbow, LM.left_wrist)+angleFromLandmarks(lm, LM.right_shoulder, LM.right_elbow, LM.right_wrist))/2;
     const hipY=((lm[LM.left_hip]?.y??0.5)+(lm[LM.right_hip]?.y??0.5))/2;

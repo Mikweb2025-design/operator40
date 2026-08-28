@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.9.1';
+export const CHANGELOG_VERSION = '2.10.0';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,63 +22,45 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.9.1',
-    title: 'Audit completo — 5 aree + lint + fixtures (2.9.1)',
-    subtitle: 'v2.9.1 · 28 Agosto 2026 · Codice, dati, UX, performance — 100% offline',
-    intro: 'Audit completo come da tua richiesta (Fase 1 struttura/dati/performance/qualità/UX/privacy). 5 PR incrementali su branch separati, merge su main e deploy live. Nessuna logica kcal/streak toccata.',
+    badge: 'NUOVO v2.10.0',
+    title: 'Tracking 2.0 — Fase 1 + 2 (2.10.0)',
+    subtitle: 'v2.10.0 · 28 Agosto 2026 · Conteggio rep + pose — 100% offline',
+    intro: 'Fase 1 (heavy auto + worldLandmarks + MotionFusion) + Fase 2 (buffer 30 frame + classificatore temporale). Fix ai falsi conteggi su squat/pushup/crunch e jitter laterale.',
     groups: [
       {
+        icon: '🎯',
+        title: '1. Fase 1 — Heavy auto + worldLandmarks',
+        items: [
+          'PoseLandmarker auto: heavy su device ≥4GB/4core, lite fallback — override localStorage o40_modelVariant',
+          'Smoother ricalibrato per heavy (1.05/0.006) + worldLandmarks smoothed per profondità',
+          'FitnessEngine usa worldLandmarks per correggere angoli compressi da prospettiva',
+        ],
+      },
+      {
+        icon: '📳',
+        title: '2. Fase 1 — MotionFusion riabilitato',
+        items: [
+          'Capacitor Motion per jumpingJack/burpee/ginocchiaAlte/mountainClimber/skater',
+          'Boost repConfidence +12 se ritmo IMU 0.8-2.5Hz — secondario, PWA funziona senza',
+          'PWA fallback DeviceMotionEvent già coperto',
+        ],
+      },
+      {
+        icon: '🧠',
+        title: '3. Fase 2 — Classificatore temporale (30 frame)',
+        items: [
+          'Nuovo src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier',
+          'Blend classic*0.55 + temporal*0.45, gate ROM + pattern down-up — evita rep fantasma',
+          'Integrato in squat/pushup/crunch/jumpingJack/burpee/affondo',
+        ],
+      },
+      {
         icon: '📐',
-        title: '1. Struttura — dedup UI (audit/3)',
+        title: '4. Tuning — debounce + soglie',
         items: [
-          'DogTag ×4, ProgressRing ×2, SegmentedProgress ×2, inputStyle/primaryBtn ×6 → src/components/ui/*',
-          'TopBar + App dead code rimossi — Home 65 righe → shared, Session 19 righe → import',
-          'Build 749k→444k base, chunk separati verificati',
-        ],
-      },
-      {
-        icon: '🌍',
-        title: '2. i18n — 15+ hardcoded IT → I18N (audit/7)',
-        items: [
-          'Home: OGGI/PROGRESSI/MISSIONI/ACHIEVEMENTS/MISURAZIONI + streak break/risk + SETTIMANA/CONSISTENZA/MEDIA/PANCIA/SFIDA → t()',
-          'Setup: Backup & Ripristino 5 ternari → t(setup.backup.*)',
-          'Nuove chiavi: home.section.*, home.streak.*, home.week, setup.backup.*',
-        ],
-      },
-      {
-        icon: '🧪',
-        title: '3. Qualità — test 30→51 (audit/5)',
-        items: [
-          'Nuovo src/utils/audit.test.js: belly (4), progress (5), bmi (4), body (3), backup (5) — 21 test',
-          '30 → 51 test, coverage kcal/streak/belly prima non coperta',
-          'CI verify/test/build già presenti, ora con più guard',
-        ],
-      },
-      {
-        icon: '⚡',
-        title: '4. Performance — lazy 9 screens (audit/4)',
-        items: [
-          'App.jsx: 9 screen → React.lazy + Suspense + ScreenFallback',
-          'Rimosso import recharts da App (History lazy) — index 749k→444k',
-          'Chunk: History 73k, Home 71k, Session 48k, vite manualChunks invariato',
-        ],
-      },
-      {
-        icon: '📡',
-        title: '5. PWA robust — SWR + SKIP_WAITING (audit/9)',
-        items: [
-          'sw.js: PRECACHE_SHELL (index+manifest+icons), message SKIP_WAITING, stale-while-revalidate',
-          'Navigations network-first con fallback shell, asset cache-first con update background',
-          'Push/notificationclick invariati, ownership 501:psaserv',
-        ],
-      },
-      {
-        icon: '📦',
-        title: '6. Dati — backup & schema v2 (audit/1+2, già live)',
-        items: [
-          'exportBackup 6 chiavi + BACKUP_VERSION=STORAGE_SCHEMA_VERSION, downloadBackup, importBackup con migrate',
-          'storage.js STORAGE_SCHEMA_VERSION=2, migrateStoredDataIfNeeded() su App start',
-          'Già live da v2.8.4 → v2.9.0 eredita',
+          'squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — meno jitter laterale',
+          'Gate 62→58 con validazione temporale — preferisce contare incerto con bassa confidenza',
+          'Form cues invariati, solo repConfidence più stabile',
         ],
       },
     ],
@@ -86,13 +68,13 @@ const COPY: Record<Lang, any> = {
     ctaHint: 'Home → Missione → Avvia · verifica su https://mikweb.eu/operator40/ con iPhone frontale',
     dismiss: 'Non mostrare più',
     close: 'Chiudi',
-    footer: 'Tutto on-device (IndexedDB, MediaPipe mai su server). Per replay: ◯ REC durante sessione → ↓ JSON → test analyzer. Docs in docs/FIX-tracking-2026-08-26.md',
+    footer: 'Tutto on-device (IndexedDB, MediaPipe mai su server). Per replay: ◯ REC durante sessione → ↓ JSON → test analyzer. Docs in src/ai/classifier/',
   },
   en: {
-    badge: 'NEW v2.9.1',
-    title: 'Full audit — 5 areas + lint + fixtures (2.9.1)',
-    subtitle: 'v2.9.1 · Aug 28 2026 · Code, data, UX, performance — 100% offline',
-    intro: 'Full audit as requested (Phase 1 structure/data/performance/quality/UX/privacy). 5 incremental PRs on separate branches, merged to main and deployed live. No kcal/streak logic touched.',
+    badge: 'NEW v2.10.0',
+    title: 'Tracking 2.0 — Phase 1 + 2 (2.10.0)',
+    subtitle: 'v2.10.0 · Aug 28 2026 · Rep counting + pose — 100% offline',
+    intro: 'Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-frame temporal classifier). Fixes false counts on squat/pushup/crunch and side-view jitter.',
     groups: [
       {
         icon: '📐',
@@ -143,10 +125,10 @@ const COPY: Record<Lang, any> = {
     footer: 'Everything on-device. For replay: ◯ REC → ↓ JSON → analyzer test.',
   },
   de: {
-    badge: 'NEU v2.9.1',
-    title: 'Vollständiges Audit — 5 Bereiche + Lint + Fixtures (2.9.1)',
-    subtitle: 'v2.9.1 · 28. Aug 2026 · Code, Daten, UX, Performance — 100% offline',
-    intro: 'Vollständiges Audit wie angefordert. 5 inkrementelle PRs auf separaten Branches, gemerged und live deployed. Keine kcal/streak-Logik geändert.',
+    badge: 'NEU v2.10.0',
+    title: 'Tracking 2.0 — Phase 1 + 2 (2.10.0)',
+    subtitle: 'v2.10.0 · 28. Aug 2026 · Rep-Zählung + Pose — 100% offline',
+    intro: 'Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-Frame Temporal Classifier). Behebt Fehlzählungen bei squat/pushup/crunch und Seitansicht-Jitter.',
     groups: [
       {
         icon: '📐',
