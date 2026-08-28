@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.12.2';
+export const CHANGELOG_VERSION = '2.12.3';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,10 +22,10 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.12.2',
-    title: 'Roadmap — IMU + BeforeAfter + A11y (v2.12.2)',
-    subtitle: 'v2.12.2 · 28 Agosto 2026 · IMU opt-in + pinch-zoom + a11y',
-    intro: 'Batch roadmap 2: MotionFusion opt-in per jumpingJack/burpee, BeforeAfter pinch-zoom + haptics, A11y/print/CSV/Qr già in 2.12.1.',
+    badge: 'NUOVO v2.12.3',
+    title: 'Roadmap — HR + NEFFEX + PWA (v2.12.3)',
+    subtitle: 'v2.12.3 · 28 Agosto 2026 · HR import + crossfade + install gate',
+    intro: 'Batch roadmap 3: Apple Health HR avg, NEFFEX crossfade 1.2s + shuffle seed, PWA banner dopo 2 sessioni.',
     groups: [
       {
         icon: '🌑',
@@ -108,18 +108,27 @@ const COPY: Record<Lang, any> = {
           'Engine enableMotionFusion flag + wiring SessionAIOverlay/FitnessEngineView',
         ],
       },
+      {
+        icon: '❤️',
+        title: '30-32. HR + NEFFEX + PWA (v2.12.3)',
+        items: [
+          'Apple Health HR avg last 20 records + toast HR bpm',
+          'NEFFEX crossfade 1.2s + shuffle seed giornaliero deterministico',
+          'PWA install banner solo dopo 2 sessioni + dismissed flag',
+        ],
+      },
     ],
     cta: 'PROVA ORA',
     ctaHint: 'Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS',
     dismiss: 'Non mostrare più',
     close: 'Chiudi',
-    footer: 'Tutto on-device. 29 iterazioni. Prossimo: v2.13 Apple Health + clip.',
+    footer: 'Tutto on-device. 32 iterazioni. Prossimo: v2.13 clip + onboarding.',
   },
   en: {
-    badge: 'NEW v2.12.2',
-    title: 'Roadmap — IMU + BeforeAfter + A11y (v2.12.2)',
-    subtitle: 'v2.12.2 · Aug 28 2026 · IMU opt-in + pinch-zoom + a11y',
-    intro: 'Roadmap batch 2: MotionFusion opt-in, BeforeAfter pinch-zoom + haptics, A11y already in 2.12.1.',
+    badge: 'NEW v2.12.3',
+    title: 'Roadmap — HR + NEFFEX + PWA (v2.12.3)',
+    subtitle: 'v2.12.3 · Aug 28 2026 · HR import + crossfade + install gate',
+    intro: 'Roadmap batch 3: Apple Health HR avg, NEFFEX crossfade 1.2s + seed, PWA after 2 sessions.',
     groups: [
       { icon: '🌑', title: '1-2. OLED Depth + Card', items: ['INK #0E100D vignette + 130% radial — deeper phone, 5px camo', 'Unified card 165° + hairline + gloss', 'Card-face hairline + accent + tabular glow'] },
       { icon: '🔥', title: '3-4. Typography + CTA', items: ['Bebas/Inter sharpened, num-glow halo', 'CTA BLAZE_LIGHT→DEEP + inset highlight', 'Large btn shadow 10/28'] },
@@ -129,18 +138,20 @@ const COPY: Record<Lang, any> = {
       { icon: '💎', title: '11-13. Extra 3 Loops', items: ['Hero shadow 12/36 + embers 1.08', 'Card-face 5/18 + accent glow', 'White-screen fix — root now renders'] },
       { icon: '🚀', title: '14-23. Full-App 10 Loops', items: ['Color OLED #0B0D0A + card 16 + selected glow', 'Typo + icon halo + nav pill', 'HUD timer + viz tooltip + focus + cohesion'] },
       { icon: '♿', title: '24-27. Roadmap Batch', items: ['Focus-visible + aria-live reps + prefers-motion + print', 'Library debounce 180ms + highlight + empty + LargeText', 'CSV ai_quality/ai_reps + QR 72px share'] },
+      { icon: '📳', title: '28-29. IMU + BeforeAfter', items: ['MotionFusion opt-in for jumpingJack/burpee', 'BeforeAfter pinch-zoom 1-3x + haptics', 'Engine enableMotionFusion wiring'] },
+      { icon: '❤️', title: '30-32. HR + NEFFEX + PWA', items: ['Health HR avg last 20 + toast', 'NEFFEX crossfade 1.2s + daily seed', 'PWA banner after 2 sessions'] },
     ],
     cta: 'TRY IT',
     ctaHint: 'Home → Mission → Start · https://mikweb.eu/operator40/',
     dismiss: "Don't show again",
     close: 'Close',
-    footer: 'On-device. 27 iterations. Next: v2.13 watch + motion.',
+    footer: 'On-device. 32 iterations. Next: v2.13 clip + onboarding.',
   },
   de: {
-    badge: 'NEU v2.12.1',
-    title: 'Roadmap Batch — A11y + Library + Export (v2.12.1)',
-    subtitle: 'v2.12.1 · 28. Aug 2026 · Focus + debounce + CSV + QR',
-    intro: 'Roadmap: focus-visible, aria-live reps, Library debounce 180ms + highlight + empty, CSV aiQuality, print, QR.',
+    badge: 'NEU v2.12.3',
+    title: 'Roadmap — HR + NEFFEX + PWA (v2.12.3)',
+    subtitle: 'v2.12.3 · 28. Aug 2026 · HR + crossfade + PWA',
+    intro: 'Roadmap Batch 3: HR avg, NEFFEX crossfade 1.2s, PWA nach 2 Sessions.',
     groups: [
       { icon: '🌑', title: '1-2. OLED + Card', items: ['INK #0E100D Vignette', 'Unified Card + Hairline + Gloss', 'Tabular Glow'] },
       { icon: '🔥', title: '3-4. Typo + CTA', items: ['Bebas/Inter sharpened', 'CTA Blaze Light + Inset', 'Large shadow'] },
@@ -150,12 +161,14 @@ const COPY: Record<Lang, any> = {
       { icon: '💎', title: '11-13. Extra', items: ['Hero 12/36 + embers', 'Card 5/18 + glow', 'White-screen fix'] },
       { icon: '🚀', title: '14-23. Full-App', items: ['Color #0B0D0A + card 16', 'Typo + icon + nav', 'HUD + viz + forms + cohesion'] },
       { icon: '♿', title: '24-27. Roadmap', items: ['Focus + aria-live + reduced-motion + print', 'Debounce + highlight + empty + LargeText', 'CSV aiQuality + QR'] },
+      { icon: '📳', title: '28-29. IMU + BeforeAfter', items: ['MotionFusion opt-in', 'BeforeAfter pinch-zoom + haptics', 'Engine wiring'] },
+      { icon: '❤️', title: '30-32. HR + NEFFEX + PWA', items: ['Health HR avg + toast', 'NEFFEX crossfade 1.2s + seed', 'PWA nach 2 Sessions'] },
     ],
     cta: 'TESTEN',
     ctaHint: 'Home → Mission → Start',
     dismiss: 'Nicht mehr anzeigen',
     close: 'Schließen',
-    footer: 'On-device. 27 Iterationen. Next: v2.13.',
+    footer: 'On-device. 32 Iterationen. Next: v2.13.',
   },
 };
 

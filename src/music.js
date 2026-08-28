@@ -105,11 +105,16 @@ export const TRACKS = [
 export const DEFAULT_TRACK = TRACKS[0].id;
 
 let audio = null;
+let audio2 = null;
 let shouldPlay = false;
 let currentTrackId = DEFAULT_TRACK;
 let autoPlayNext = true;
 let shuffleMode = false;
 let onTrackChange = null;
+let shuffleOrder = null;
+let shuffleSeedDay = null;
+let shuffleIdx = 0;
+const CROSSFADE_MS = 1200;
 
 function ensureAudio() {
   if (!audio) {
@@ -120,16 +125,13 @@ function ensureAudio() {
       if (!shouldPlay || !autoPlayNext) return;
       const nextId = shuffleMode ? getRandomTrackId() : getNextTrackId(currentTrackId);
       if (nextId) {
-        currentTrackId = nextId;
         const nxt = TRACKS.find((t) => t.id === nextId);
         if (nxt) {
-          musicLoad(nxt.src);
-          // notifica UI
-          if (onTrackChange)
-            try {
-              onTrackChange(nextId);
-            } catch {}
-          musicPlay();
+          if (shouldPlay) crossfadeTo(nxt.src);
+          else musicLoad(nxt.src);
+          currentTrackId = nextId;
+          if (onTrackChange) try{ onTrackChange(nextId);}catch{}
+          if (!shouldPlay) {} else if (!audio2) musicPlay();
         }
       }
     });
@@ -147,13 +149,42 @@ function getPrevTrackId(id) {
   if (idx === -1) return TRACKS[0]?.id || null;
   return TRACKS[(idx - 1 + TRACKS.length) % TRACKS.length].id;
 }
+function hashDay(s) { let h=0; for(let i=0;i<s.length;i++) h=Math.imul(31,h)+s.charCodeAt(i)|0; return h >>>0; }
+function mulberry32(a){ return function(){ let t=a+=0x6D2B79F5; t=Math.imul(t ^ t>>>15, t|1); t^=t+ Math.imul(t ^ t>>>7, t|61); return ((t ^ t>>>14)>>>0)/4294967296; }; }
+function ensureShuffledOrder(){
+  const day = new Date().toISOString().slice(0,10);
+  if (shuffleOrder && shuffleSeedDay === day) return shuffleOrder;
+  const seed = hashDay(day);
+  const rand = mulberry32(seed);
+  const arr = [...TRACKS].map(t=>t.id);
+  for(let i=arr.length-1;i>0;i--){ const j=Math.floor(rand()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  shuffleOrder = arr; shuffleSeedDay = day; shuffleIdx = arr.indexOf(currentTrackId); if(shuffleIdx===-1) shuffleIdx=0;
+  return shuffleOrder;
+}
 function getRandomTrackId() {
-  if (TRACKS.length <= 1) return TRACKS[0]?.id || null;
-  let pick;
-  do {
-    pick = TRACKS[Math.floor(Math.random() * TRACKS.length)].id;
-  } while (pick === currentTrackId);
+  const order = ensureShuffledOrder();
+  if (order.length <=1) return order[0]||null;
+  shuffleIdx = (shuffleIdx+1) % order.length;
+  let pick = order[shuffleIdx];
+  if (pick === currentTrackId) { shuffleIdx=(shuffleIdx+1)%order.length; pick=order[shuffleIdx]; }
   return pick;
+}
+function crossfadeTo(src){
+  const a = ensureAudio();
+  if (!audio2) { audio2 = new Audio(); audio2.preload='auto'; }
+  const next = audio2;
+  const prev = a;
+  next.src = src; next.volume=0; next.play().catch(()=>{});
+  const steps = 24; let s=0;
+  const iv = setInterval(()=>{
+    s++; const t=s/steps;
+    try{ prev.volume=Math.max(0,1-t); next.volume=Math.min(1,t); }catch{}
+    if(s>=steps){ clearInterval(iv); try{ prev.pause(); prev.volume=1; }catch{} // swap
+      const tmp = audio; audio = audio2; audio2 = tmp; audio2.pause(); audio2.currentTime=0;
+      const bySrc = TRACKS.find(tt=> new URL(tt.src, location.href).href===new URL(src, location.href).href);
+      if(bySrc) currentTrackId=bySrc.id;
+    }
+  }, CROSSFADE_MS/steps);
 }
 
 export function musicSetShouldPlay(v) {
@@ -234,15 +265,12 @@ export function musicSetVolume(v) {
 export function musicNext() {
   const nextId = shuffleMode ? getRandomTrackId() : getNextTrackId(currentTrackId);
   if (!nextId) return null;
-  currentTrackId = nextId;
   const nxt = TRACKS.find((t) => t.id === nextId);
   if (nxt) {
-    musicLoad(nxt.src);
-    if (shouldPlay) musicPlay();
-    if (onTrackChange)
-      try {
-        onTrackChange(nextId);
-      } catch {}
+    if (shouldPlay) crossfadeTo(nxt.src); else musicLoad(nxt.src);
+    currentTrackId = nextId;
+    if (shouldPlay && !audio2) musicPlay();
+    if (onTrackChange) try{ onTrackChange(nextId);}catch{}
   }
   return nextId;
 }
@@ -250,15 +278,12 @@ export function musicNext() {
 export function musicPrev() {
   const prevId = getPrevTrackId(currentTrackId);
   if (!prevId) return null;
-  currentTrackId = prevId;
   const prv = TRACKS.find((t) => t.id === prevId);
   if (prv) {
-    musicLoad(prv.src);
-    if (shouldPlay) musicPlay();
-    if (onTrackChange)
-      try {
-        onTrackChange(prevId);
-      } catch {}
+    if (shouldPlay) crossfadeTo(prv.src); else musicLoad(prv.src);
+    currentTrackId = prevId;
+    if (shouldPlay && !audio2) musicPlay();
+    if (onTrackChange) try{ onTrackChange(prevId);}catch{}
   }
   return prevId;
 }

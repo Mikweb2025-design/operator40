@@ -340,7 +340,7 @@ function parseAppleDate(s) {
   return isNaN(d.getTime()) ? null : d;
 }
 function parseAppleHealthExport(xmlText) {
-  const result = { weightKg: null, weightDate: null, workouts: [] };
+  const result = { weightKg: null, weightDate: null, heartRateAvg: null, heartRateDate: null, workouts: [] };
 
   const massRegex = /<Record[^>]*type="HKQuantityTypeIdentifierBodyMass"[^>]*\/?>/g;
   let m,
@@ -365,6 +365,19 @@ function parseAppleHealthExport(xmlText) {
         ? Math.round(latestVal * 0.453592 * 10) / 10
         : latestVal;
     result.weightDate = latestDate;
+  }
+  // HeartRate — avg of last 20 records
+  const hrRegex = /<Record[^>]*type="HKQuantityTypeIdentifierHeartRate"[^>]*\/?>/g;
+  let hrVals = [];
+  while ((m = hrRegex.exec(xmlText)) && hrVals.length < 20) {
+    const v = parseFloat(getXmlAttr(m[0], 'value') || '');
+    const d = getXmlAttr(m[0], 'startDate');
+    if (!isNaN(v)) hrVals.push({ v, d });
+  }
+  if (hrVals.length) {
+    const avg = Math.round(hrVals.reduce((a, b) => a + b.v, 0) / hrVals.length);
+    result.heartRateAvg = avg;
+    result.heartRateDate = hrVals[hrVals.length - 1].d || hrVals[0].d;
   }
 
   const workoutRegex = /<Workout[^>]*>/g;
@@ -441,7 +454,7 @@ export default function App() {
   const [showChangelog, setShowChangelog] = useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = useState(() => {
     try {
-      return localStorage.getItem('o40_release_2.12.2') !== 'dismissed';
+      return localStorage.getItem('o40_release_2.12.3') !== 'dismissed';
     } catch {
       return true;
     }
@@ -1533,6 +1546,10 @@ export default function App() {
           date: parsed.weightDate,
         });
       }
+      if (parsed.heartRateAvg) {
+        // surface HR as toast suffix (roadmap: HR import)
+        setTimeout(() => showToast(`HR ${parsed.heartRateAvg} bpm`), 900);
+      }
 
       setHealthImportStatus('done');
       showToast(
@@ -1755,24 +1772,24 @@ export default function App() {
                             borderRadius: 6,
                           }}
                         >
-                          NUOVO v2.12.2
+                          NUOVO v2.12.3
                         </span>
                         <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>
-                          28 AGO 2026 · 29 ITERAZIONI
+                          28 AGO 2026 · 32 ITERAZIONI
                         </span>
                       </div>
                       <div
                         className="o40-display"
                         style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}
                       >
-                        Grafica OLED — 29 iterazioni — IMU + BeforeAfter!
+                        Roadmap — HR + NEFFEX + PWA install gate!
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.12.2', 'dismissed');
+                        localStorage.setItem('o40_release_2.12.3', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
@@ -1847,7 +1864,7 @@ export default function App() {
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.12.2', 'dismissed');
+                        localStorage.setItem('o40_release_2.12.3', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
@@ -2090,8 +2107,8 @@ export default function App() {
             </div>
           )}
 
-          {/* install banner */}
-          {installPrompt && ['home', 'library', 'history', 'setup'].includes(screen) && (
+          {/* install banner — after 2 sessions, not on first visit */}
+          {installPrompt && ['home', 'library', 'history', 'setup'].includes(screen) && sessions.length >= 2 && (()=>{ try{ return localStorage.getItem('o40_install_dismissed')!=='1'; }catch{ return true; }})() && (
             <div className="o40-install">
               <div
                 style={{
@@ -2143,7 +2160,7 @@ export default function App() {
                 OK
               </button>
               <button
-                onClick={() => setInstallPrompt(null)}
+                onClick={() => { try{ localStorage.setItem('o40_install_dismissed','1'); }catch{} setInstallPrompt(null); }}
                 style={{
                   background: 'transparent',
                   border: 'none',
