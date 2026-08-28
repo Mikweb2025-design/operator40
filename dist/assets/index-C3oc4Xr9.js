@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DemWSZam.js","./icons-CiBW7QCm.js","./charts-Dc_aK1Sx.js","./web-D6lVjMvE.js","./CountdownScreen-C8LjWNKP.js","./SetupScreen-BFTaFkpy.js","./TopBar-Cl7rsqKD.js","./HomeScreen-ofdH2HtC.js","./GoalRing-DXXJXE_t.js","./ExerciseFigure-BqU0_axJ.js","./DogTag-Ct4lg1jc.js","./ProgressRing-DiTleWsX.js","./LibraryScreen-Se96XWyP.js","./clips-CZetA5iC.js","./BuilderScreen-BLcvM4Dt.js","./PreviewScreen-DLfrjUIM.js","./SessionScreen-asUMcqkp.js","./SummaryScreen-Dr7p3ZWH.js","./HistoryScreen-DUB9BEZA.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DufvVsX3.js","./icons-CiBW7QCm.js","./charts-Dc_aK1Sx.js","./web-CBGhgP9E.js","./CountdownScreen-Cah-3cbt.js","./SetupScreen-DpcDUTxQ.js","./TopBar-DKVAAhjr.js","./HomeScreen-CuOs2vIX.js","./GoalRing-CyFj4Mmv.js","./ExerciseFigure-MBxQGA8I.js","./DogTag-5o5uXFGe.js","./ProgressRing-rllvLr4n.js","./LibraryScreen-0KO1oFgJ.js","./clips-CZetA5iC.js","./BuilderScreen-YSo6j_H4.js","./PreviewScreen-D_yjlv6E.js","./SessionScreen-JajIgqH5.js","./SummaryScreen-BETJPkAK.js","./HistoryScreen-BeCrdmk3.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -885,11 +885,16 @@ const TRACKS = [
 ];
 const DEFAULT_TRACK = TRACKS[0].id;
 let audio = null;
+let audio2 = null;
 let shouldPlay = false;
 let currentTrackId = DEFAULT_TRACK;
 let autoPlayNext = true;
 let shuffleMode = false;
 let onTrackChange = null;
+let shuffleOrder = null;
+let shuffleSeedDay = null;
+let shuffleIdx = 0;
+const CROSSFADE_MS = 1200;
 function ensureAudio() {
   if (!audio) {
     audio = new Audio();
@@ -899,16 +904,17 @@ function ensureAudio() {
       if (!shouldPlay || !autoPlayNext) return;
       const nextId = shuffleMode ? getRandomTrackId() : getNextTrackId(currentTrackId);
       if (nextId) {
-        currentTrackId = nextId;
         const nxt = TRACKS.find((t) => t.id === nextId);
         if (nxt) {
-          musicLoad(nxt.src);
-          if (onTrackChange)
-            try {
-              onTrackChange(nextId);
-            } catch {
-            }
-          musicPlay();
+          if (shouldPlay) crossfadeTo(nxt.src);
+          else musicLoad(nxt.src);
+          currentTrackId = nextId;
+          if (onTrackChange) try {
+            onTrackChange(nextId);
+          } catch {
+          }
+          if (!shouldPlay) ;
+          else if (!audio2) musicPlay();
         }
       }
     });
@@ -927,14 +933,84 @@ function getPrevTrackId(id) {
   if (idx === -1) return ((_a = TRACKS[0]) == null ? void 0 : _a.id) || null;
   return TRACKS[(idx - 1 + TRACKS.length) % TRACKS.length].id;
 }
+function hashDay(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+  return h >>> 0;
+}
+function mulberry32(a) {
+  return function() {
+    let t = a += 1831565813;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function ensureShuffledOrder() {
+  const day = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+  if (shuffleOrder && shuffleSeedDay === day) return shuffleOrder;
+  const seed = hashDay(day);
+  const rand = mulberry32(seed);
+  const arr = [...TRACKS].map((t) => t.id);
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  shuffleOrder = arr;
+  shuffleSeedDay = day;
+  shuffleIdx = arr.indexOf(currentTrackId);
+  if (shuffleIdx === -1) shuffleIdx = 0;
+  return shuffleOrder;
+}
 function getRandomTrackId() {
-  var _a;
-  if (TRACKS.length <= 1) return ((_a = TRACKS[0]) == null ? void 0 : _a.id) || null;
-  let pick;
-  do {
-    pick = TRACKS[Math.floor(Math.random() * TRACKS.length)].id;
-  } while (pick === currentTrackId);
+  const order = ensureShuffledOrder();
+  if (order.length <= 1) return order[0] || null;
+  shuffleIdx = (shuffleIdx + 1) % order.length;
+  let pick = order[shuffleIdx];
+  if (pick === currentTrackId) {
+    shuffleIdx = (shuffleIdx + 1) % order.length;
+    pick = order[shuffleIdx];
+  }
   return pick;
+}
+function crossfadeTo(src) {
+  const a = ensureAudio();
+  if (!audio2) {
+    audio2 = new Audio();
+    audio2.preload = "auto";
+  }
+  const next = audio2;
+  const prev = a;
+  next.src = src;
+  next.volume = 0;
+  next.play().catch(() => {
+  });
+  const steps = 24;
+  let s = 0;
+  const iv = setInterval(() => {
+    s++;
+    const t = s / steps;
+    try {
+      prev.volume = Math.max(0, 1 - t);
+      next.volume = Math.min(1, t);
+    } catch {
+    }
+    if (s >= steps) {
+      clearInterval(iv);
+      try {
+        prev.pause();
+        prev.volume = 1;
+      } catch {
+      }
+      const tmp = audio;
+      audio = audio2;
+      audio2 = tmp;
+      audio2.pause();
+      audio2.currentTime = 0;
+      const bySrc = TRACKS.find((tt) => new URL(tt.src, location.href).href === new URL(src, location.href).href);
+      if (bySrc) currentTrackId = bySrc.id;
+    }
+  }, CROSSFADE_MS / steps);
 }
 function musicSetShouldPlay(v) {
   shouldPlay = !!v;
@@ -987,32 +1063,32 @@ function musicSetVolume(v) {
 function musicNext() {
   const nextId = shuffleMode ? getRandomTrackId() : getNextTrackId(currentTrackId);
   if (!nextId) return null;
-  currentTrackId = nextId;
   const nxt = TRACKS.find((t) => t.id === nextId);
   if (nxt) {
-    musicLoad(nxt.src);
-    if (shouldPlay) musicPlay();
-    if (onTrackChange)
-      try {
-        onTrackChange(nextId);
-      } catch {
-      }
+    if (shouldPlay) crossfadeTo(nxt.src);
+    else musicLoad(nxt.src);
+    currentTrackId = nextId;
+    if (shouldPlay && !audio2) musicPlay();
+    if (onTrackChange) try {
+      onTrackChange(nextId);
+    } catch {
+    }
   }
   return nextId;
 }
 function musicPrev() {
   const prevId = getPrevTrackId(currentTrackId);
   if (!prevId) return null;
-  currentTrackId = prevId;
   const prv = TRACKS.find((t) => t.id === prevId);
   if (prv) {
-    musicLoad(prv.src);
-    if (shouldPlay) musicPlay();
-    if (onTrackChange)
-      try {
-        onTrackChange(prevId);
-      } catch {
-      }
+    if (shouldPlay) crossfadeTo(prv.src);
+    else musicLoad(prv.src);
+    currentTrackId = prevId;
+    if (shouldPlay && !audio2) musicPlay();
+    if (onTrackChange) try {
+      onTrackChange(prevId);
+    } catch {
+    }
   }
   return prevId;
 }
@@ -7034,7 +7110,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-DemWSZam.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-DufvVsX3.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8399,14 +8475,14 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     ] })
   ] });
 }
-const CHANGELOG_VERSION = "2.12.2";
+const CHANGELOG_VERSION = "2.12.3";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.12.2",
-    title: "Roadmap — IMU + BeforeAfter + A11y (v2.12.2)",
-    subtitle: "v2.12.2 · 28 Agosto 2026 · IMU opt-in + pinch-zoom + a11y",
-    intro: "Batch roadmap 2: MotionFusion opt-in per jumpingJack/burpee, BeforeAfter pinch-zoom + haptics, A11y/print/CSV/Qr già in 2.12.1.",
+    badge: "NUOVO v2.12.3",
+    title: "Roadmap — HR + NEFFEX + PWA (v2.12.3)",
+    subtitle: "v2.12.3 · 28 Agosto 2026 · HR import + crossfade + install gate",
+    intro: "Batch roadmap 3: Apple Health HR avg, NEFFEX crossfade 1.2s + shuffle seed, PWA banner dopo 2 sessioni.",
     groups: [
       {
         icon: "🌑",
@@ -8488,19 +8564,28 @@ const COPY = {
           "BeforeAfter pinch-zoom 1-3× + wheel + double-tap + haptics sul confronto",
           "Engine enableMotionFusion flag + wiring SessionAIOverlay/FitnessEngineView"
         ]
+      },
+      {
+        icon: "❤️",
+        title: "30-32. HR + NEFFEX + PWA (v2.12.3)",
+        items: [
+          "Apple Health HR avg last 20 records + toast HR bpm",
+          "NEFFEX crossfade 1.2s + shuffle seed giornaliero deterministico",
+          "PWA install banner solo dopo 2 sessioni + dismissed flag"
+        ]
       }
     ],
     cta: "PROVA ORA",
     ctaHint: "Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS",
     dismiss: "Non mostrare più",
     close: "Chiudi",
-    footer: "Tutto on-device. 29 iterazioni. Prossimo: v2.13 Apple Health + clip."
+    footer: "Tutto on-device. 32 iterazioni. Prossimo: v2.13 clip + onboarding."
   },
   en: {
-    badge: "NEW v2.12.2",
-    title: "Roadmap — IMU + BeforeAfter + A11y (v2.12.2)",
-    subtitle: "v2.12.2 · Aug 28 2026 · IMU opt-in + pinch-zoom + a11y",
-    intro: "Roadmap batch 2: MotionFusion opt-in, BeforeAfter pinch-zoom + haptics, A11y already in 2.12.1.",
+    badge: "NEW v2.12.3",
+    title: "Roadmap — HR + NEFFEX + PWA (v2.12.3)",
+    subtitle: "v2.12.3 · Aug 28 2026 · HR import + crossfade + install gate",
+    intro: "Roadmap batch 3: Apple Health HR avg, NEFFEX crossfade 1.2s + seed, PWA after 2 sessions.",
     groups: [
       { icon: "🌑", title: "1-2. OLED Depth + Card", items: ["INK #0E100D vignette + 130% radial — deeper phone, 5px camo", "Unified card 165° + hairline + gloss", "Card-face hairline + accent + tabular glow"] },
       { icon: "🔥", title: "3-4. Typography + CTA", items: ["Bebas/Inter sharpened, num-glow halo", "CTA BLAZE_LIGHT→DEEP + inset highlight", "Large btn shadow 10/28"] },
@@ -8509,19 +8594,21 @@ const COPY = {
       { icon: "🎨", title: "9-10. Aura & Cohesion", items: ["Aura 28s + vignette, grid 0.42", "New tokens INK_3, PAPER_SOFT, etc.", "Tracking 103 tests intact"] },
       { icon: "💎", title: "11-13. Extra 3 Loops", items: ["Hero shadow 12/36 + embers 1.08", "Card-face 5/18 + accent glow", "White-screen fix — root now renders"] },
       { icon: "🚀", title: "14-23. Full-App 10 Loops", items: ["Color OLED #0B0D0A + card 16 + selected glow", "Typo + icon halo + nav pill", "HUD timer + viz tooltip + focus + cohesion"] },
-      { icon: "♿", title: "24-27. Roadmap Batch", items: ["Focus-visible + aria-live reps + prefers-motion + print", "Library debounce 180ms + highlight + empty + LargeText", "CSV ai_quality/ai_reps + QR 72px share"] }
+      { icon: "♿", title: "24-27. Roadmap Batch", items: ["Focus-visible + aria-live reps + prefers-motion + print", "Library debounce 180ms + highlight + empty + LargeText", "CSV ai_quality/ai_reps + QR 72px share"] },
+      { icon: "📳", title: "28-29. IMU + BeforeAfter", items: ["MotionFusion opt-in for jumpingJack/burpee", "BeforeAfter pinch-zoom 1-3x + haptics", "Engine enableMotionFusion wiring"] },
+      { icon: "❤️", title: "30-32. HR + NEFFEX + PWA", items: ["Health HR avg last 20 + toast", "NEFFEX crossfade 1.2s + daily seed", "PWA banner after 2 sessions"] }
     ],
     cta: "TRY IT",
     ctaHint: "Home → Mission → Start · https://mikweb.eu/operator40/",
     dismiss: "Don't show again",
     close: "Close",
-    footer: "On-device. 27 iterations. Next: v2.13 watch + motion."
+    footer: "On-device. 32 iterations. Next: v2.13 clip + onboarding."
   },
   de: {
-    badge: "NEU v2.12.1",
-    title: "Roadmap Batch — A11y + Library + Export (v2.12.1)",
-    subtitle: "v2.12.1 · 28. Aug 2026 · Focus + debounce + CSV + QR",
-    intro: "Roadmap: focus-visible, aria-live reps, Library debounce 180ms + highlight + empty, CSV aiQuality, print, QR.",
+    badge: "NEU v2.12.3",
+    title: "Roadmap — HR + NEFFEX + PWA (v2.12.3)",
+    subtitle: "v2.12.3 · 28. Aug 2026 · HR + crossfade + PWA",
+    intro: "Roadmap Batch 3: HR avg, NEFFEX crossfade 1.2s, PWA nach 2 Sessions.",
     groups: [
       { icon: "🌑", title: "1-2. OLED + Card", items: ["INK #0E100D Vignette", "Unified Card + Hairline + Gloss", "Tabular Glow"] },
       { icon: "🔥", title: "3-4. Typo + CTA", items: ["Bebas/Inter sharpened", "CTA Blaze Light + Inset", "Large shadow"] },
@@ -8530,13 +8617,15 @@ const COPY = {
       { icon: "🎨", title: "9-10. Aura", items: ["Aura 28s + Vignette", "Neue Tokens", "103 Tests grün"] },
       { icon: "💎", title: "11-13. Extra", items: ["Hero 12/36 + embers", "Card 5/18 + glow", "White-screen fix"] },
       { icon: "🚀", title: "14-23. Full-App", items: ["Color #0B0D0A + card 16", "Typo + icon + nav", "HUD + viz + forms + cohesion"] },
-      { icon: "♿", title: "24-27. Roadmap", items: ["Focus + aria-live + reduced-motion + print", "Debounce + highlight + empty + LargeText", "CSV aiQuality + QR"] }
+      { icon: "♿", title: "24-27. Roadmap", items: ["Focus + aria-live + reduced-motion + print", "Debounce + highlight + empty + LargeText", "CSV aiQuality + QR"] },
+      { icon: "📳", title: "28-29. IMU + BeforeAfter", items: ["MotionFusion opt-in", "BeforeAfter pinch-zoom + haptics", "Engine wiring"] },
+      { icon: "❤️", title: "30-32. HR + NEFFEX + PWA", items: ["Health HR avg + toast", "NEFFEX crossfade 1.2s + seed", "PWA nach 2 Sessions"] }
     ],
     cta: "TESTEN",
     ctaHint: "Home → Mission → Start",
     dismiss: "Nicht mehr anzeigen",
     close: "Schließen",
-    footer: "On-device. 27 Iterationen. Next: v2.13."
+    footer: "On-device. 32 Iterationen. Next: v2.13."
   }
 };
 function ChangelogModal({ lang = "it", onClose, onTry }) {
@@ -8874,14 +8963,14 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.12.2 · f672bb6";
+const BUILD_VERSION = "2.12.3 · 7775643";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       onClick,
       role: onClick ? "button" : void 0,
-      title: onClick ? "Novità v2.12.2 — clic per riaprire changelog" : void 0,
+      title: onClick ? "Novità v2.12.3 — clic per riaprire changelog" : void 0,
       className: "o40-mono",
       style: {
         color: STEEL,
@@ -9468,7 +9557,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-D6lVjMvE.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-CBGhgP9E.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -10067,15 +10156,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-C8LjWNKP.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-BFTaFkpy.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-ofdH2HtC.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-Se96XWyP.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-BLcvM4Dt.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-DLfrjUIM.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-asUMcqkp.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-Dr7p3ZWH.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-DUB9BEZA.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-Cah-3cbt.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-DpcDUTxQ.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-CuOs2vIX.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-0KO1oFgJ.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-YSo6j_H4.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-D_yjlv6E.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-JajIgqH5.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BETJPkAK.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BeCrdmk3.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -10181,7 +10270,7 @@ function parseAppleDate(s) {
   return isNaN(d.getTime()) ? null : d;
 }
 function parseAppleHealthExport(xmlText) {
-  const result = { weightKg: null, weightDate: null, workouts: [] };
+  const result = { weightKg: null, weightDate: null, heartRateAvg: null, heartRateDate: null, workouts: [] };
   const massRegex = /<Record[^>]*type="HKQuantityTypeIdentifierBodyMass"[^>]*\/?>/g;
   let m2, count = 0, latestDate = null, latestVal = null, latestUnit = null;
   while ((m2 = massRegex.exec(xmlText)) && count < 3e4) {
@@ -10198,6 +10287,18 @@ function parseAppleHealthExport(xmlText) {
   if (latestVal != null) {
     result.weightKg = latestUnit && latestUnit.toLowerCase().includes("lb") ? Math.round(latestVal * 0.453592 * 10) / 10 : latestVal;
     result.weightDate = latestDate;
+  }
+  const hrRegex = /<Record[^>]*type="HKQuantityTypeIdentifierHeartRate"[^>]*\/?>/g;
+  let hrVals = [];
+  while ((m2 = hrRegex.exec(xmlText)) && hrVals.length < 20) {
+    const v = parseFloat(getXmlAttr(m2[0], "value") || "");
+    const d = getXmlAttr(m2[0], "startDate");
+    if (!isNaN(v)) hrVals.push({ v, d });
+  }
+  if (hrVals.length) {
+    const avg = Math.round(hrVals.reduce((a, b) => a + b.v, 0) / hrVals.length);
+    result.heartRateAvg = avg;
+    result.heartRateDate = hrVals[hrVals.length - 1].d || hrVals[0].d;
   }
   const workoutRegex = /<Workout[^>]*>/g;
   let wcount = 0;
@@ -10270,7 +10371,7 @@ function App() {
   const [showChangelog, setShowChangelog] = reactExports.useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = reactExports.useState(() => {
     try {
-      return localStorage.getItem("o40_release_2.12.2") !== "dismissed";
+      return localStorage.getItem("o40_release_2.12.3") !== "dismissed";
     } catch {
       return true;
     }
@@ -11232,6 +11333,9 @@ function App() {
           date: parsed.weightDate
         });
       }
+      if (parsed.heartRateAvg) {
+        setTimeout(() => showToast(`HR ${parsed.heartRateAvg} bpm`), 900);
+      }
       setHealthImportStatus("done");
       showToast(
         newRecords.length ? t("toast.imported", { n: newRecords.length }) : t("toast.imported.none")
@@ -11440,10 +11544,10 @@ function App() {
                                         padding: "2px 6px",
                                         borderRadius: 6
                                       },
-                                      children: "NUOVO v2.12.2"
+                                      children: "NUOVO v2.12.3"
                                     }
                                   ),
-                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 29 ITERAZIONI" })
+                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 32 ITERAZIONI" })
                                 ]
                               }
                             ),
@@ -11452,7 +11556,7 @@ function App() {
                               {
                                 className: "o40-display",
                                 style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 },
-                                children: "Grafica OLED — 29 iterazioni — IMU + BeforeAfter!"
+                                children: "Roadmap — HR + NEFFEX + PWA install gate!"
                               }
                             )
                           ] })
@@ -11464,7 +11568,7 @@ function App() {
                       {
                         onClick: () => {
                           try {
-                            localStorage.setItem("o40_release_2.12.2", "dismissed");
+                            localStorage.setItem("o40_release_2.12.3", "dismissed");
                           } catch {
                           }
                           setShowReleaseBanner(false);
@@ -11554,7 +11658,7 @@ function App() {
                   {
                     onClick: () => {
                       try {
-                        localStorage.setItem("o40_release_2.12.2", "dismissed");
+                        localStorage.setItem("o40_release_2.12.3", "dismissed");
                       } catch {
                       }
                       setShowReleaseBanner(false);
@@ -11800,7 +11904,13 @@ function App() {
           )
         }
       ),
-      installPrompt && ["home", "library", "history", "setup"].includes(screen) && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-install", children: [
+      installPrompt && ["home", "library", "history", "setup"].includes(screen) && sessions.length >= 2 && (() => {
+        try {
+          return localStorage.getItem("o40_install_dismissed") !== "1";
+        } catch {
+          return true;
+        }
+      })() && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-install", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
@@ -11848,7 +11958,13 @@ function App() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
           {
-            onClick: () => setInstallPrompt(null),
+            onClick: () => {
+              try {
+                localStorage.setItem("o40_install_dismissed", "1");
+              } catch {
+              }
+              setInstallPrompt(null);
+            },
             style: {
               background: "transparent",
               border: "none",

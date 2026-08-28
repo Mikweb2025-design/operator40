@@ -1,4 +1,4 @@
-import { B as BLAZE, j as jsxRuntimeExports, K as KHAKI } from "./index-8atOh5Yh.js";
+import { B as BLAZE, j as jsxRuntimeExports, K as KHAKI } from "./index-C3oc4Xr9.js";
 import "./icons-CiBW7QCm.js";
 const limb = { stroke: "currentColor", strokeWidth: 7, strokeLinecap: "round" };
 const body = { stroke: "currentColor", strokeWidth: 16, strokeLinecap: "round" };
