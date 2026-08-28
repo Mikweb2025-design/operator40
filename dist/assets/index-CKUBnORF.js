@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-P6RD9e1D.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./web-BJ6A6LD5.js","./CountdownScreen-C30eWP9M.js","./SetupScreen-CYEZtx8-.js","./TopBar-7UA9eXSt.js","./HomeScreen-OFe60RDA.js","./GoalRing-B0VPtapi.js","./ExerciseFigure-BuS_FxT4.js","./DogTag-BhIYteH-.js","./ProgressRing-DcGpG21C.js","./LibraryScreen-BkoBBJ7G.js","./clips-CZetA5iC.js","./BuilderScreen-D2Aef7Zp.js","./PreviewScreen-Cp85LOrO.js","./SessionScreen-D6nBbppT.js","./SummaryScreen-tpj_YI6e.js","./HistoryScreen-DsyJsNay.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-BL21JCkD.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./web-B_jdOBoq.js","./CountdownScreen-DBV-8lHo.js","./SetupScreen-BFz0kO23.js","./TopBar-DkY-ooS6.js","./HomeScreen-DVN0lKMB.js","./GoalRing-BtNae0CR.js","./ExerciseFigure-DlM0UnGI.js","./DogTag-CoYuAsBR.js","./ProgressRing-DVsrw3sR.js","./LibraryScreen-DmrkkhNr.js","./clips-CZetA5iC.js","./BuilderScreen-BE4Elh9V.js","./PreviewScreen-DVeFkkzs.js","./SessionScreen-BU1n1xsv.js","./SummaryScreen-8e8CPjzz.js","./HistoryScreen-CFObZsi4.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -6677,7 +6677,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-P6RD9e1D.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-BL21JCkD.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8026,9 +8026,9 @@ const CHANGELOG_VERSION = "2.10.0";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.10.0",
-    title: "Tracking 2.0 — Fase 1 + 2 (2.10.0)",
-    subtitle: "v2.10.0 · 28 Agosto 2026 · Conteggio rep + pose — 100% offline",
+    badge: "NUOVO v2.10.x",
+    title: "Tracking 2.0 — Fase 1 + 2 (2.10)",
+    subtitle: "v2.10 · 28 Agosto 2026 · Conteggio rep + pose — 100% offline",
     intro: "Fase 1 (heavy auto + worldLandmarks + MotionFusion) + Fase 2 (buffer 30 frame + classificatore temporale). Fix ai falsi conteggi su squat/pushup/crunch e jitter laterale.",
     groups: [
       {
@@ -8066,6 +8066,15 @@ const COPY = {
           "Gate 62→58 con validazione temporale — preferisce contare incerto con bassa confidenza",
           "Form cues invariati, solo repConfidence più stabile"
         ]
+      },
+      {
+        icon: "⚡",
+        title: "5. Velocità segnale-aware (2.10.x)",
+        items: [
+          "La velocità ROM (deg/s) ora segue il segnale primario di ogni esercizio (elbowRaw per pushup, ecc.), non più il ginocchio statico",
+          "Pushup/crunch: il voto di velocità e il gate temporale usano il ROM giusto → conteggi più sincronizzati col movimento reale",
+          "Nuovi test di regressione: buffer 101 → 103 test verdi"
+        ]
       }
     ],
     cta: "PROVA ORA",
@@ -8075,50 +8084,54 @@ const COPY = {
     footer: "Tutto on-device (IndexedDB, MediaPipe mai su server). Per replay: ◯ REC durante sessione → ↓ JSON → test analyzer. Docs in src/ai/classifier/"
   },
   en: {
-    badge: "NEW v2.10.0",
-    title: "Tracking 2.0 — Phase 1 + 2 (2.10.0)",
-    subtitle: "v2.10.0 · Aug 28 2026 · Rep counting + pose — 100% offline",
+    badge: "NEW v2.10.x",
+    title: "Tracking 2.0 — Phase 1 + 2 (2.10)",
+    subtitle: "v2.10 · Aug 28 2026 · Rep counting + pose — 100% offline",
     intro: "Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-frame temporal classifier). Fixes false counts on squat/pushup/crunch and side-view jitter.",
     groups: [
       {
+        icon: "🎯",
+        title: "1. Phase 1 — Heavy auto + worldLandmarks",
+        items: [
+          "Auto PoseLandmarker: heavy on device ≥4GB/4core, lite fallback — override via localStorage o40_modelVariant",
+          "Smoother recalibrated for heavy (1.05/0.006) + smoothed worldLandmarks for depth",
+          "FitnessEngine uses worldLandmarks to correct perspective-compressed angles"
+        ]
+      },
+      {
+        icon: "📳",
+        title: "2. Phase 1 — MotionFusion re-enabled",
+        items: [
+          "Capacitor Motion for jumpingJack/burpee/highKnees/mountainClimber/skater",
+          "+12 repConfidence boost if IMU rhythm 0.8-2.5Hz — secondary, PWA works without it",
+          "PWA DeviceMotionEvent fallback already covered"
+        ]
+      },
+      {
+        icon: "🧠",
+        title: "3. Phase 2 — Temporal classifier (30 frames)",
+        items: [
+          "New src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier",
+          "Blend classic*0.55 + temporal*0.45, ROM gate + down-up pattern — avoids phantom reps",
+          "Wired into squat/pushup/crunch/jumpingJack/burpee/affondo"
+        ]
+      },
+      {
         icon: "📐",
-        title: "1. Structure — dedup UI (audit/3)",
+        title: "4. Tuning — debounce + thresholds",
         items: [
-          "DogTag ×4, ProgressRing ×2, SegmentedProgress ×2, shared styles → src/components/ui/*",
-          "TopBar + App dead code removed",
-          "Build 749k→444k"
-        ]
-      },
-      {
-        icon: "🌍",
-        title: "2. i18n — 15+ hardcoded → I18N (audit/7)",
-        items: [
-          "Home sections + streak + backup ternaries → t()",
-          "New keys: home.section.*, setup.backup.*"
-        ]
-      },
-      {
-        icon: "🧪",
-        title: "3. Quality — tests 30→51 (audit/5)",
-        items: [
-          "New src/utils/audit.test.js: 21 tests (belly, progress, bmi, body, backup)",
-          "Coverage for kcal/streak/belly"
+          "squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — less side jitter",
+          "Gate 62→58 with temporal validation — prefers counting with low confidence over missing",
+          "Form cues unchanged, only more stable repConfidence"
         ]
       },
       {
         icon: "⚡",
-        title: "4. Performance — lazy 9 screens (audit/4)",
+        title: "5. Signal-aware velocity (2.10.x)",
         items: [
-          "App.jsx: 9 screens → React.lazy + Suspense",
-          "Removed recharts from App — index 749k→444k"
-        ]
-      },
-      {
-        icon: "📡",
-        title: "5. PWA robust — SWR + SKIP_WAITING (audit/9)",
-        items: [
-          "sw.js: stale-while-revalidate, PRECACHE_SHELL, message handler",
-          "Network-first navigations, cache-first assets"
+          "ROM velocity (deg/s) now follows each exercise primary signal (elbowRaw for pushup, etc.), no longer the static knee",
+          "Pushup/crunch: velocity score + temporal gate use the right ROM → counts stay in sync with the real movement",
+          "New regression tests: buffer suite 101 → 103 green"
         ]
       }
     ],
@@ -8129,44 +8142,54 @@ const COPY = {
     footer: "Everything on-device. For replay: ◯ REC → ↓ JSON → analyzer test."
   },
   de: {
-    badge: "NEU v2.10.0",
-    title: "Tracking 2.0 — Phase 1 + 2 (2.10.0)",
-    subtitle: "v2.10.0 · 28. Aug 2026 · Rep-Zählung + Pose — 100% offline",
+    badge: "NEU v2.10.x",
+    title: "Tracking 2.0 — Phase 1 + 2 (2.10)",
+    subtitle: "v2.10 · 28. Aug 2026 · Rep-Zählung + Pose — 100% offline",
     intro: "Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-Frame Temporal Classifier). Behebt Fehlzählungen bei squat/pushup/crunch und Seitansicht-Jitter.",
     groups: [
       {
+        icon: "🎯",
+        title: "1. Phase 1 — Heavy auto + worldLandmarks",
+        items: [
+          "Auto PoseLandmarker: heavy auf Gerät ≥4GB/4core, lite Fallback — Override via localStorage o40_modelVariant",
+          "Smoother neu kalibriert für heavy (1.05/0.006) + geglättete worldLandmarks für Tiefe",
+          "FitnessEngine nutzt worldLandmarks zur Korrektur perspektivisch komprimierter Winkel"
+        ]
+      },
+      {
+        icon: "📳",
+        title: "2. Phase 1 — MotionFusion reaktiviert",
+        items: [
+          "Capacitor Motion für jumpingJack/burpee/highKnees/mountainClimber/skater",
+          "+12 repConfidence-Boost bei IMU-Rhythmus 0.8-2.5Hz — sekundär, PWA funktioniert auch ohne",
+          "PWA DeviceMotionEvent-Fallback vorhanden"
+        ]
+      },
+      {
+        icon: "🧠",
+        title: "3. Phase 2 — Temporal Classifier (30 Frames)",
+        items: [
+          "Neu src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier",
+          "Blend classic*0.55 + temporal*0.45, ROM-Gate + down-up-Muster — verhindert Phantom-Reps",
+          "Eingebunden in squat/pushup/crunch/jumpingJack/burpee/affondo"
+        ]
+      },
+      {
         icon: "📐",
-        title: "1. Struktur — dedup UI (audit/3)",
+        title: "4. Tuning — Debounce + Schwellen",
         items: [
-          "DogTag ×4, ProgressRing ×2, gemeinsame Styles → src/components/ui/*"
-        ]
-      },
-      {
-        icon: "🌍",
-        title: "2. i18n — 15+ hardcoded → I18N (audit/7)",
-        items: [
-          "Home/Setup hardcodiert → t()"
-        ]
-      },
-      {
-        icon: "🧪",
-        title: "3. Qualität — Tests 30→51 (audit/5)",
-        items: [
-          "Neue Tests: belly, progress, bmi, body, backup"
+          "squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — weniger seitliche Jitter",
+          "Gate 62→58 mit temporaler Validierung — zählt lieber unsicher als verpasst",
+          "Form-Cues unverändert, nur stabilere repConfidence"
         ]
       },
       {
         icon: "⚡",
-        title: "4. Performance — lazy 9 Screens (audit/4)",
+        title: "5. Signal-abhängige Geschwindigkeit (2.10.x)",
         items: [
-          "App.jsx: 9 Screens → React.lazy + Suspense"
-        ]
-      },
-      {
-        icon: "📡",
-        title: "5. PWA robust — SWR + SKIP_WAITING (audit/9)",
-        items: [
-          "sw.js: stale-while-revalidate, PRECACHE_SHELL"
+          "ROM-Geschwindigkeit (deg/s) folgt nun dem primären Signal jeder Übung (elbowRaw für pushup etc.), nicht mehr dem statischen Knie",
+          "Pushup/crunch: Geschwindigkeits-Score + temporal Gate nutzen das richtige ROM → Zählungen im Einklang mit der echten Bewegung",
+          "Neue Regressionstests: Buffer-Suite 101 → 103 grün"
         ]
       }
     ],
@@ -8174,7 +8197,7 @@ const COPY = {
     ctaHint: "Home → Mission → Start",
     dismiss: "Nicht mehr anzeigen",
     close: "Schließen",
-    footer: "Alles on-device."
+    footer: "Alles on-device. Für Replay: ◯ REC → ↓ JSON → analyzer test."
   }
 };
 function ChangelogModal({ lang = "it", onClose, onTry }) {
@@ -8480,14 +8503,14 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.10.0 · 0fa7038";
+const BUILD_VERSION = "2.10.0 · d17c430";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       onClick,
       role: onClick ? "button" : void 0,
-      title: onClick ? "Novità v2.8.4 — clic per riaprire changelog" : void 0,
+      title: onClick ? "Novità v2.10 — clic per riaprire changelog" : void 0,
       className: "o40-mono",
       style: {
         color: STEEL,
@@ -9074,7 +9097,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-BJ6A6LD5.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-B_jdOBoq.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -9673,15 +9696,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-C30eWP9M.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-CYEZtx8-.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-OFe60RDA.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BkoBBJ7G.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-D2Aef7Zp.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-Cp85LOrO.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-D6nBbppT.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-tpj_YI6e.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-DsyJsNay.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-DBV-8lHo.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-BFz0kO23.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-DVN0lKMB.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-DmrkkhNr.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-BE4Elh9V.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-DVeFkkzs.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-BU1n1xsv.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-8e8CPjzz.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-CFObZsi4.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
