@@ -22,9 +22,9 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.10.0',
-    title: 'Tracking 2.0 — Fase 1 + 2 (2.10.0)',
-    subtitle: 'v2.10.0 · 28 Agosto 2026 · Conteggio rep + pose — 100% offline',
+    badge: 'NUOVO v2.10.x',
+    title: 'Tracking 2.0 — Fase 1 + 2 (2.10)',
+    subtitle: 'v2.10 · 28 Agosto 2026 · Conteggio rep + pose — 100% offline',
     intro: 'Fase 1 (heavy auto + worldLandmarks + MotionFusion) + Fase 2 (buffer 30 frame + classificatore temporale). Fix ai falsi conteggi su squat/pushup/crunch e jitter laterale.',
     groups: [
       {
@@ -63,6 +63,15 @@ const COPY: Record<Lang, any> = {
           'Form cues invariati, solo repConfidence più stabile',
         ],
       },
+      {
+        icon: '⚡',
+        title: '5. Velocità segnale-aware (2.10.x)',
+        items: [
+          'La velocità ROM (deg/s) ora segue il segnale primario di ogni esercizio (elbowRaw per pushup, ecc.), non più il ginocchio statico',
+          'Pushup/crunch: il voto di velocità e il gate temporale usano il ROM giusto → conteggi più sincronizzati col movimento reale',
+          'Nuovi test di regressione: buffer 101 → 103 test verdi',
+        ],
+      },
     ],
     cta: 'PROVA ORA',
     ctaHint: 'Home → Missione → Avvia · verifica su https://mikweb.eu/operator40/ con iPhone frontale',
@@ -71,50 +80,54 @@ const COPY: Record<Lang, any> = {
     footer: 'Tutto on-device (IndexedDB, MediaPipe mai su server). Per replay: ◯ REC durante sessione → ↓ JSON → test analyzer. Docs in src/ai/classifier/',
   },
   en: {
-    badge: 'NEW v2.10.0',
-    title: 'Tracking 2.0 — Phase 1 + 2 (2.10.0)',
-    subtitle: 'v2.10.0 · Aug 28 2026 · Rep counting + pose — 100% offline',
+    badge: 'NEW v2.10.x',
+    title: 'Tracking 2.0 — Phase 1 + 2 (2.10)',
+    subtitle: 'v2.10 · Aug 28 2026 · Rep counting + pose — 100% offline',
     intro: 'Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-frame temporal classifier). Fixes false counts on squat/pushup/crunch and side-view jitter.',
     groups: [
       {
+        icon: '🎯',
+        title: '1. Phase 1 — Heavy auto + worldLandmarks',
+        items: [
+          'Auto PoseLandmarker: heavy on device ≥4GB/4core, lite fallback — override via localStorage o40_modelVariant',
+          'Smoother recalibrated for heavy (1.05/0.006) + smoothed worldLandmarks for depth',
+          'FitnessEngine uses worldLandmarks to correct perspective-compressed angles',
+        ],
+      },
+      {
+        icon: '📳',
+        title: '2. Phase 1 — MotionFusion re-enabled',
+        items: [
+          'Capacitor Motion for jumpingJack/burpee/highKnees/mountainClimber/skater',
+          '+12 repConfidence boost if IMU rhythm 0.8-2.5Hz — secondary, PWA works without it',
+          'PWA DeviceMotionEvent fallback already covered',
+        ],
+      },
+      {
+        icon: '🧠',
+        title: '3. Phase 2 — Temporal classifier (30 frames)',
+        items: [
+          'New src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier',
+          'Blend classic*0.55 + temporal*0.45, ROM gate + down-up pattern — avoids phantom reps',
+          'Wired into squat/pushup/crunch/jumpingJack/burpee/affondo',
+        ],
+      },
+      {
         icon: '📐',
-        title: '1. Structure — dedup UI (audit/3)',
+        title: '4. Tuning — debounce + thresholds',
         items: [
-          'DogTag ×4, ProgressRing ×2, SegmentedProgress ×2, shared styles → src/components/ui/*',
-          'TopBar + App dead code removed',
-          'Build 749k→444k',
-        ],
-      },
-      {
-        icon: '🌍',
-        title: '2. i18n — 15+ hardcoded → I18N (audit/7)',
-        items: [
-          'Home sections + streak + backup ternaries → t()',
-          'New keys: home.section.*, setup.backup.*',
-        ],
-      },
-      {
-        icon: '🧪',
-        title: '3. Quality — tests 30→51 (audit/5)',
-        items: [
-          'New src/utils/audit.test.js: 21 tests (belly, progress, bmi, body, backup)',
-          'Coverage for kcal/streak/belly',
+          'squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — less side jitter',
+          'Gate 62→58 with temporal validation — prefers counting with low confidence over missing',
+          'Form cues unchanged, only more stable repConfidence',
         ],
       },
       {
         icon: '⚡',
-        title: '4. Performance — lazy 9 screens (audit/4)',
+        title: '5. Signal-aware velocity (2.10.x)',
         items: [
-          'App.jsx: 9 screens → React.lazy + Suspense',
-          'Removed recharts from App — index 749k→444k',
-        ],
-      },
-      {
-        icon: '📡',
-        title: '5. PWA robust — SWR + SKIP_WAITING (audit/9)',
-        items: [
-          'sw.js: stale-while-revalidate, PRECACHE_SHELL, message handler',
-          'Network-first navigations, cache-first assets',
+          'ROM velocity (deg/s) now follows each exercise primary signal (elbowRaw for pushup, etc.), no longer the static knee',
+          'Pushup/crunch: velocity score + temporal gate use the right ROM → counts stay in sync with the real movement',
+          'New regression tests: buffer suite 101 → 103 green',
         ],
       },
     ],
@@ -125,44 +138,54 @@ const COPY: Record<Lang, any> = {
     footer: 'Everything on-device. For replay: ◯ REC → ↓ JSON → analyzer test.',
   },
   de: {
-    badge: 'NEU v2.10.0',
-    title: 'Tracking 2.0 — Phase 1 + 2 (2.10.0)',
-    subtitle: 'v2.10.0 · 28. Aug 2026 · Rep-Zählung + Pose — 100% offline',
+    badge: 'NEU v2.10.x',
+    title: 'Tracking 2.0 — Phase 1 + 2 (2.10)',
+    subtitle: 'v2.10 · 28. Aug 2026 · Rep-Zählung + Pose — 100% offline',
     intro: 'Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-Frame Temporal Classifier). Behebt Fehlzählungen bei squat/pushup/crunch und Seitansicht-Jitter.',
     groups: [
       {
+        icon: '🎯',
+        title: '1. Phase 1 — Heavy auto + worldLandmarks',
+        items: [
+          'Auto PoseLandmarker: heavy auf Gerät ≥4GB/4core, lite Fallback — Override via localStorage o40_modelVariant',
+          'Smoother neu kalibriert für heavy (1.05/0.006) + geglättete worldLandmarks für Tiefe',
+          'FitnessEngine nutzt worldLandmarks zur Korrektur perspektivisch komprimierter Winkel',
+        ],
+      },
+      {
+        icon: '📳',
+        title: '2. Phase 1 — MotionFusion reaktiviert',
+        items: [
+          'Capacitor Motion für jumpingJack/burpee/highKnees/mountainClimber/skater',
+          '+12 repConfidence-Boost bei IMU-Rhythmus 0.8-2.5Hz — sekundär, PWA funktioniert auch ohne',
+          'PWA DeviceMotionEvent-Fallback vorhanden',
+        ],
+      },
+      {
+        icon: '🧠',
+        title: '3. Phase 2 — Temporal Classifier (30 Frames)',
+        items: [
+          'Neu src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier',
+          'Blend classic*0.55 + temporal*0.45, ROM-Gate + down-up-Muster — verhindert Phantom-Reps',
+          'Eingebunden in squat/pushup/crunch/jumpingJack/burpee/affondo',
+        ],
+      },
+      {
         icon: '📐',
-        title: '1. Struktur — dedup UI (audit/3)',
+        title: '4. Tuning — Debounce + Schwellen',
         items: [
-          'DogTag ×4, ProgressRing ×2, gemeinsame Styles → src/components/ui/*',
-        ],
-      },
-      {
-        icon: '🌍',
-        title: '2. i18n — 15+ hardcoded → I18N (audit/7)',
-        items: [
-          'Home/Setup hardcodiert → t()',
-        ],
-      },
-      {
-        icon: '🧪',
-        title: '3. Qualität — Tests 30→51 (audit/5)',
-        items: [
-          'Neue Tests: belly, progress, bmi, body, backup',
+          'squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — weniger seitliche Jitter',
+          'Gate 62→58 mit temporaler Validierung — zählt lieber unsicher als verpasst',
+          'Form-Cues unverändert, nur stabilere repConfidence',
         ],
       },
       {
         icon: '⚡',
-        title: '4. Performance — lazy 9 Screens (audit/4)',
+        title: '5. Signal-abhängige Geschwindigkeit (2.10.x)',
         items: [
-          'App.jsx: 9 Screens → React.lazy + Suspense',
-        ],
-      },
-      {
-        icon: '📡',
-        title: '5. PWA robust — SWR + SKIP_WAITING (audit/9)',
-        items: [
-          'sw.js: stale-while-revalidate, PRECACHE_SHELL',
+          'ROM-Geschwindigkeit (deg/s) folgt nun dem primären Signal jeder Übung (elbowRaw für pushup etc.), nicht mehr dem statischen Knie',
+          'Pushup/crunch: Geschwindigkeits-Score + temporal Gate nutzen das richtige ROM → Zählungen im Einklang mit der echten Bewegung',
+          'Neue Regressionstests: Buffer-Suite 101 → 103 grün',
         ],
       },
     ],
@@ -170,7 +193,7 @@ const COPY: Record<Lang, any> = {
     ctaHint: 'Home → Mission → Start',
     dismiss: 'Nicht mehr anzeigen',
     close: 'Schließen',
-    footer: 'Alles on-device.',
+    footer: 'Alles on-device. Für Replay: ◯ REC → ↓ JSON → analyzer test.',
   },
 };
 
