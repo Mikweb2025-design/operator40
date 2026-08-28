@@ -8,11 +8,13 @@ export class PushupAnalyzer extends ExerciseAnalyzer {
   // Ankles (27,28) not required for gating — the rep signal is the elbow angle (shoulder-elbow-wrist);
   // ankle/hip only feed the body-line form check, still used when visible. See squat.ts comment.
   readonly requiredLandmarks = [11,12,13,14,15,16,23,24];
-  protected minRepIntervalMs = 320;
-  protected minPhaseMs = 65;
+  protected minRepIntervalMs = 360;
+  protected minPhaseMs = 85;
   private velFilt=0; private lastAngle=180; private lastT=0;
   analyze(lm: PoseLandmarks, ts: number, dtMs: number, q: PoseQualityResult): AnalyzerResult {
     const ang = this.bilateralJointAngle('elbow', lm, [LM.left_shoulder,LM.left_elbow,LM.left_wrist], [LM.right_shoulder,LM.right_elbow,LM.right_wrist]);
+    const feats = this.pushTemporalFrame(lm, ts, dtMs);
+    const temporal = this.getTemporalClassifier('pushup');
     const dt = dtMs || 16;
     const rawV = (ang - this.lastAngle)/(dt/1000);
     this.velFilt = this.velFilt*0.70 + rawV*0.30;
@@ -22,7 +24,6 @@ export class PushupAnalyzer extends ExerciseAnalyzer {
     this.peak = Math.max(this.peak, ang);
 
     let next = this.phase;
-    // Phases: READY -> DESCENDING -> BOTTOM -> ASCENDING -> TOP -> rep (over-40 permissivo)
     if (this.phase==='READY' && ang < 120) next='DESCENDING';
     else if (this.phase==='DESCENDING' && ang < 110) next='BOTTOM';
     else if (this.phase==='BOTTOM' && ang > 125) next='ASCENDING';
@@ -40,17 +41,22 @@ export class PushupAnalyzer extends ExerciseAnalyzer {
       if (depthOk && extOk){
         repConf = clamp(velScore*0.32 + alignScore*0.35 + romScore + depthBonus,0,100);
       } else { repConf = clamp(velScore*0.18+8,0,100); }
-      if (depthOk && extOk && repConf>62 && q.exerciseConfidence>38){
-        if (this.shouldCountRep(ts, repConf, 62)){ repInc=true; this.lastRepAt=ts; }
+      // Fase 2: blend con temporal buffer — evita rep fantasma da jitter elbow
+      const tRes = temporal.evaluate(this.temporalBuffer, feats, this.dwellAtBottom, ts);
+      const bufferReady = this.temporalBuffer.length >= 10;
+      if (bufferReady) {
+        if (!tRes.shouldCount && tRes.rom < 18) repConf = Math.min(repConf, tRes.confidence + 10);
+        else repConf = clamp(repConf * 0.60 + tRes.confidence * 0.40, 0, 100);
       }
-      // Always cycle back to READY — TOP has no other exit transition, so a single
-      // low-confidence attempt would otherwise lock tracking forever.
+      const temporalGate = !bufferReady || tRes.shouldCount || tRes.confidence > 50;
+      if (depthOk && extOk && repConf>58 && q.exerciseConfidence>38 && temporalGate){
+        if (this.shouldCountRep(ts, repConf, 58)){ repInc=true; this.lastRepAt=ts; temporal.markCounted(ts); }
+      }
       this.trough=ang; this.peak=ang; next='READY';
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; }
     else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
 
-    // form 0-100
     let form=90, cues:string[]=[];
     if (line < 148){ form-=18; cues.push('coreTight'); }
     else if (line < 158){ form-=7; cues.push('coreTight'); }
@@ -62,4 +68,5 @@ export class PushupAnalyzer extends ExerciseAnalyzer {
     const enginePhase = this.phase==='BOTTOM'?'bottom': this.phase==='DESCENDING'?'down': this.phase==='ASCENDING'?'up': this.phase==='TOP'?'up':'ready';
     return { phase:this.phase, enginePhase: enginePhase as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality: q, cues, primaryAngle: ang, secondaryAngles:{ line }, velocity:this.velFilt, direction: dir as any };
   }
+  reset(){ super.reset(); this.velFilt=0; this.lastAngle=180; }
 }

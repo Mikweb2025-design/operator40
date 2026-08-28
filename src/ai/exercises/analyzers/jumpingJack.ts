@@ -5,7 +5,9 @@ import { LM, clamp, dist2D, torsoLength } from '../../pose/Geometry';
 // tuned 2026-08-27: verified thresholds via fixtures replay — 14 remaining analyzers
 export class JumpingJackAnalyzer extends ExerciseAnalyzer{
   readonly id='jumpingjack'; readonly requiredLandmarks=[11,12,13,14,15,16,23,24,25,26,27,28];
-  analyze(lm: PoseLandmarks, ts:number, _dt:number, q:PoseQualityResult){
+  analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, dtMs || 16);
+    const temporal = this.getTemporalClassifier('jumpingjack');
     const rawSpread = (()=>{ const a=lm[LM.left_ankle], b=lm[LM.right_ankle]; if(!a||!b) return 0; return Math.hypot(a.x-b.x, a.y-b.y); })();
     const tl=torsoLength(lm); const legSpread = tl>1e-6 ? rawSpread / tl : rawSpread;
     const shoulderAbduction = this.bilateralJointAngle('shoulderAbduction', lm, [LM.left_hip,LM.left_shoulder,LM.left_elbow], [LM.right_hip,LM.right_shoulder,LM.right_elbow]);
@@ -24,7 +26,12 @@ export class JumpingJackAnalyzer extends ExerciseAnalyzer{
       } else if (partialOk){
         repConf=clamp(58 + (q.exerciseConfidence>60?6:0),0,100);
       } else { repConf=clamp(18,0,100); }
-      if (partialOk && repConf>58 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,58)){ repInc=true; this.lastRepAt=ts; next='READY'; }
+      // Fase 2: temporal gate — evita doppi conteggi da rimbalzo gambe
+      const tRes = temporal.evaluate(this.temporalBuffer, feats, this.dwellAtBottom, ts);
+      if (this.temporalBuffer.length >= 8) repConf = clamp(repConf * 0.65 + tRes.confidence * 0.35, 0, 100);
+      // Fase 1: motion boost già applicato in FitnessEngine (impactScore), qui gate aggiuntivo
+      const motionOk = !this.motionContext?.hasData || this.motionContext.rhythmHz > 0.4;
+      if (partialOk && repConf>55 && q.exerciseConfidence>38 && motionOk && this.shouldCountRep(ts,repConf,55)){ repInc=true; this.lastRepAt=ts; temporal.markCounted(ts); next='READY'; }
     }
     if (repInc){ this.phase='READY'; this.lastTransitionAt=ts; } else if (next!==this.phase){ this.phase=next; this.lastTransitionAt=ts; }
     // init

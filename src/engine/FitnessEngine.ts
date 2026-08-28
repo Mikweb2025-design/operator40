@@ -10,6 +10,7 @@ import { PoseLandmarkerManager } from './PoseLandmarkerManager';
 import { getAnalyzer } from '../ai/exercises/ExerciseRegistry';
 import { evaluatePoseQuality } from '../ai/pose/PoseQuality';
 import type { ExerciseAnalyzer } from '../ai/exercises/ExerciseAnalyzer';
+import { MotionFusion } from '../ai/motion/MotionFusion';
 import { LM, angleFromLandmarks, bilateralAngle, clamp } from './math';
 
 export class FitnessEngine {
@@ -18,6 +19,7 @@ export class FitnessEngine {
   private analyzer: ExerciseAnalyzer | null = null;
   private sm: HysteresisStateMachine;
   private landmarker: PoseLandmarkerManager;
+  private motionFusion: MotionFusion | null = null;
 
   // runtime
   private video: HTMLVideoElement | null = null;
@@ -57,14 +59,22 @@ export class FitnessEngine {
     this.analyzer = getAnalyzer(nid as any);
     const thresholds = { ...def.thresholds, ...(cfg.thresholdsOverride ?? {}) };
     this.sm = new HysteresisStateMachine(thresholds);
-    this.landmarker = new PoseLandmarkerManager({}, cfg.enableFiltering !== false);
-    // initial smoother tuning per exercise type
-    if (def.isHold) this.landmarker.setSmoothingTuning(0.75, 0.004);
-    else if (['mountainclimber', 'jumpingjack', 'burpee'].includes(def.id)) this.landmarker.setSmoothingTuning(1.35, 0.012);
+    // Fase 1: auto model variant — heavy on capable devices, lite fallback
+    const landmarkerOpts: any = { modelVariant: 'auto' };
+    // allow override via cfg.thresholdsOverride?.modelVariant or localStorage already handled in manager
+    this.landmarker = new PoseLandmarkerManager(landmarkerOpts, cfg.enableFiltering !== false);
+    // Fase 1: refined smoother tuning per exercise — hold stable, dynamic permissive, strength balanced
+    if (def.isHold) this.landmarker.setSmoothingTuning(0.85, 0.005);
+    else if (['mountainclimber', 'jumpingjack', 'burpee', 'ginocchiaalte', 'skater'].includes(def.id)) this.landmarker.setSmoothingTuning(1.25, 0.010);
+    else if (['pushup', 'squat', 'affondo', 'ponte'].includes(def.id)) this.landmarker.setSmoothingTuning(1.05, 0.006);
     else this.landmarker.setSmoothingTuning(1.15, 0.008);
     this.onRep = cfg.onRep;
     this.onPhaseChange = cfg.onPhaseChange;
     this.onMetrics = cfg.onMetrics;
+    // Fase 1: MotionFusion for jumpingJack/highKnees/burpee (secondary sensor)
+    if (['jumpingjack', 'burpee', 'ginocchiaalte', 'mountainclimber', 'skater'].includes(def.id)) {
+      this.motionFusion = new MotionFusion();
+    }
   }
 
   private lastPoseQuality = 0;
@@ -113,6 +123,10 @@ export class FitnessEngine {
   async init(video: HTMLVideoElement, onProgress?: (s: string) => void): Promise<void> {
     this.video = video;
     await this.landmarker.init(onProgress);
+    // Fase 1: enable motion fusion after camera permission (requires user gesture already done)
+    if (this.motionFusion) {
+      try { this.motionFusion.enable(); } catch {}
+    }
   }
 
   /** Attach a different video element (e.g. after remount) without re-init model. */
@@ -128,10 +142,19 @@ export class FitnessEngine {
     const thresholds = { ...def.thresholds, ...(this.cfg.thresholdsOverride ?? {}) };
     this.sm = new HysteresisStateMachine(thresholds);
     this.resetCounters();
-    // per-exercise smoother tuning: hold needs stable 0.75, dynamic 1.2
-    if (def.isHold) this.landmarker.setSmoothingTuning(0.75, 0.004);
-    else if (['mountainclimber', 'jumpingjack', 'burpee'].includes(def.id)) this.landmarker.setSmoothingTuning(1.35, 0.012);
+    // Fase 1: refined smoother tuning
+    if (def.isHold) this.landmarker.setSmoothingTuning(0.85, 0.005);
+    else if (['mountainclimber', 'jumpingjack', 'burpee', 'ginocchiaalte', 'skater'].includes(def.id)) this.landmarker.setSmoothingTuning(1.25, 0.010);
+    else if (['pushup', 'squat', 'affondo', 'ponte'].includes(def.id)) this.landmarker.setSmoothingTuning(1.05, 0.006);
     else this.landmarker.setSmoothingTuning(1.15, 0.008);
+    // Fase 1: update motion fusion for new exercise
+    if (['jumpingjack', 'burpee', 'ginocchiaalte', 'mountainclimber', 'skater'].includes(def.id)) {
+      if (!this.motionFusion) this.motionFusion = new MotionFusion();
+      try { this.motionFusion.enable(); } catch {}
+    } else {
+      try { this.motionFusion?.disable(); } catch {}
+      this.motionFusion = null;
+    }
   }
 
   updateConfig(patch: Partial<EngineConfig>): void {
@@ -172,7 +195,10 @@ export class FitnessEngine {
   destroy(): void {
     this.stop();
     this.landmarker.close();
+    try { this.motionFusion?.disable(); } catch {}
   }
+
+  getMotionFusion(): MotionFusion | null { return this.motionFusion; }
 
   /** Expose latest PoseResult for overlay. Called via callback in loop. */
   private lastResult: PoseResult | null = null;
@@ -316,7 +342,32 @@ export class FitnessEngine {
         this.emitMetrics();
         return;
       }
+      // Fase 1+2: pass worldLandmarks + motion context to analyzer if it supports it
+      const worldLm = result.worldLandmarks ?? null;
+      // Attach motion context to analyzer via optional property (analyzers can opt-in)
+      if (this.motionFusion && (this.analyzer as any).setMotionContext) {
+        (this.analyzer as any).setMotionContext({
+          impactScore: this.motionFusion.getImpactScore(),
+          rhythmHz: this.motionFusion.getRhythmHz(),
+          hasData: this.motionFusion.hasData(),
+          enabled: this.motionFusion.isEnabled(),
+        });
+      }
+      if (worldLm && (this.analyzer as any).setWorldLandmarks) {
+        (this.analyzer as any).setWorldLandmarks(worldLm);
+      }
       const aRes = this.analyzer.analyze(lm, now, dtAna, pqForAna);
+      // Fase 1: motion boost for dynamic exercises — if IMU shows rhythm, increase confidence slightly
+      if (this.motionFusion?.hasData() && ['jumpingjack', 'burpee', 'ginocchiaalte', 'mountainclimber', 'skater'].includes(this.def.id)) {
+        const impact = this.motionFusion.getImpactScore();
+        const rhythm = this.motionFusion.getRhythmHz();
+        // boost repConfidence by up to +12 if rhythm matches expected tempo 0.8-2.5Hz
+        if (rhythm > 0.5 && rhythm < 3.5 && impact > 45) {
+          aRes.repConfidence = Math.min(100, aRes.repConfidence + Math.round((impact - 45) * 0.15));
+        }
+        // also expose as secondary for HUD debug
+        aRes.secondaryAngles = { ...aRes.secondaryAngles, motionImpact: Math.round(impact), motionRhythm: Math.round(rhythm * 10) / 10 };
+      }
       this.liveRepConfidence = aRes.repConfidence;
       // Map analyzer result to engine metrics
       this.currentPhase = aRes.enginePhase as any;

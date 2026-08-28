@@ -6,6 +6,8 @@ export class CrunchAnalyzer extends ExerciseAnalyzer{
   readonly id='crunch'; readonly requiredLandmarks=[11,12,23,24,25,26,7,8];
   private velFilt=0; private lastA=120;
   analyze(lm: PoseLandmarks, ts:number, dtMs:number, q:PoseQualityResult){
+    const feats = this.pushTemporalFrame(lm, ts, dtMs);
+    const temporal = this.getTemporalClassifier('crunch');
     const hipFlex = this.bilateralJointAngle('hipFlex', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
     const dt=dtMs||16; const rawV=(hipFlex-this.lastA)/(dt/1000); this.velFilt=this.velFilt*0.75+rawV*0.25;
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt<0?'down':'up';
@@ -24,7 +26,10 @@ export class CrunchAnalyzer extends ExerciseAnalyzer{
       if (contractOk&&extOk){
         repConf=clamp(60 + (neckOk?16:6) + (rom>22?12: rom>14?6:3) + (Math.abs(this.velFilt)<420?6:0),0,100);
       } else { repConf=clamp(18,0,100); }
-      if (contractOk && extOk && repConf>62 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,62)){ repInc=true; this.lastRepAt=ts; } }
+      const tRes = temporal.evaluate(this.temporalBuffer, feats, this.dwellAtBottom, ts);
+      if (this.temporalBuffer.length >= 10) repConf = clamp(repConf * 0.6 + tRes.confidence * 0.4, 0, 100);
+      const temporalGate = this.temporalBuffer.length < 10 || tRes.shouldCount || tRes.confidence > 50;
+      if (contractOk && extOk && repConf>58 && q.exerciseConfidence>38 && temporalGate){ if(this.shouldCountRep(ts,repConf,58)){ repInc=true; this.lastRepAt=ts; temporal.markCounted(ts); } }
       // Always cycle back to READY — EXTENDED has no other exit transition, so a single
       // low-confidence attempt would otherwise lock tracking forever.
       this.trough=hipFlex; this.peak=hipFlex; next='READY';
@@ -39,4 +44,5 @@ export class CrunchAnalyzer extends ExerciseAnalyzer{
     const eng = this.phase==='CONTRACTED'?'bottom': this.phase==='FLEXING'?'down': this.phase==='RETURNING'?'up':'ready';
     return { phase:this.phase, enginePhase: eng as any, repIncrement: repInc, repConfidence: repConf, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: hipFlex, secondaryAngles:{ neck: neckA }, velocity:this.velFilt, direction: dir as any };
   }
+  reset(){ super.reset(); this.velFilt=0; this.lastA=120; }
 }

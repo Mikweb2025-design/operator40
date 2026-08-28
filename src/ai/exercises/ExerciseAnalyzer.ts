@@ -6,6 +6,9 @@
 import type { PoseLandmarks, EnginePhase } from '../../engine/types';
 import type { PoseQualityResult } from '../pose/PoseQuality';
 import { angleFromLandmarks } from '../pose/Geometry';
+import { extractFeatures, type ExerciseFeatures } from '../classifier/FeatureExtractor';
+import { TemporalBuffer } from '../classifier/TemporalBuffer';
+import { TemporalClassifier } from '../classifier/TemporalClassifier';
 
 export type AnalyzerPhase = string; // e.g. READY/DESCENDING/BOTTOM/ASCENDING/TOP
 
@@ -32,6 +35,14 @@ export abstract class ExerciseAnalyzer {
   protected peak = 0;
   protected lastRepAt = 0;
 
+  // Fase 2: temporal buffer + classifier per validazione sequenza (30 frame)
+  protected temporalBuffer = new TemporalBuffer(30, 1200);
+  protected temporalClassifier: TemporalClassifier | null = null;
+  protected worldLandmarks: PoseLandmarks | null = null;
+  protected motionContext: { impactScore: number; rhythmHz: number; hasData: boolean; enabled: boolean } | null = null;
+  protected lastFeatures: ExerciseFeatures | null = null;
+  protected dwellAtBottom = 0; // ms trascorso in BOTTOM per bonus confidenza
+
   abstract analyze(lm: PoseLandmarks, timestamp: number, dtMs: number, quality: PoseQualityResult): AnalyzerResult;
 
   reset(){
@@ -39,6 +50,38 @@ export abstract class ExerciseAnalyzer {
     this.lastTransitionAt=0;
     this.trough=180; this.peak=0; this.lastRepAt=0;
     this.bilateralVisEma={}; this.bilateralSide={};
+    this.temporalBuffer.clear();
+    this.temporalClassifier?.reset();
+    this.lastFeatures=null;
+    this.dwellAtBottom=0;
+    this.worldLandmarks=null;
+  }
+
+  // Fase 1 wiring: chiamata da FitnessEngine prima di analyze
+  setWorldLandmarks(w: PoseLandmarks | null){ this.worldLandmarks = w; }
+  setMotionContext(c: { impactScore: number; rhythmHz: number; hasData: boolean; enabled: boolean } | null){ this.motionContext = c; }
+
+  protected getTemporalClassifier(exercise: string): TemporalClassifier {
+    if (!this.temporalClassifier) {
+      this.temporalClassifier = new TemporalClassifier(exercise);
+    }
+    return this.temporalClassifier;
+  }
+
+  protected pushTemporalFrame(lm: PoseLandmarks, ts: number, dtMs: number){
+    const feats = extractFeatures(lm, this.worldLandmarks, this.lastFeatures, dtMs);
+    this.temporalBuffer.push(feats, ts);
+    this.lastFeatures = feats;
+    // dwell tracking: se in BOTTOM incrementa
+    if (this.phase === 'BOTTOM') this.dwellAtBottom += dtMs;
+    else this.dwellAtBottom = 0;
+    return feats;
+  }
+
+  protected evaluateTemporalConfidence(feats: ExerciseFeatures, ts: number): { confidence: number; shouldCount: boolean; debug: string } {
+    if (!this.temporalClassifier) return { confidence: 0, shouldCount: false, debug: 'no classifier' };
+    const res = this.temporalClassifier.evaluate(this.temporalBuffer, feats, this.dwellAtBottom, ts);
+    return { confidence: res.confidence, shouldCount: res.shouldCount, debug: res.reason };
   }
 
   // Visibility state for bilateralJointAngle, keyed by joint name (e.g. 'knee', 'trunk')
