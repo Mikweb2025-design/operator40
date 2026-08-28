@@ -178,6 +178,8 @@ function SessionScreen({
 
   // Motivazioni vocali periodiche durante il lavoro (anche SENZA AI Coach).
   // Non si attiva quando l'AI Coach parla già, né sulle fasi reps manuali.
+  // Intervallo = metà della durata della fase (default 40s → nudge a ~20s),
+  // così la frase arriva davvero durante un esercizio a tempo standard.
   useEffect(() => {
     if (
       !soundOn ||
@@ -188,12 +190,14 @@ function SessionScreen({
       isRepsWork
     )
       return;
+    const duration = phase.duration || 40;
+    if (duration < 12) return;
     const interval = setInterval(() => {
       if (document.hidden) return;
       speak(getVocalMotivation(lang), lang, LOCALES);
-    }, 45000);
+    }, Math.round(duration / 2) * 1000);
     return () => clearInterval(interval);
-  }, [soundOn, vocalMotivation, paused, phase.type, isAiWork, isRepsWork, lang]);
+  }, [soundOn, vocalMotivation, paused, phase.type, phase.duration, isAiWork, isRepsWork, lang]);
   useEffect(() => {
     requestWakeLock();
     function onVis() {
