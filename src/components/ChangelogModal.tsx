@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.12.1';
+export const CHANGELOG_VERSION = '2.12.2';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,10 +22,10 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.12.1',
-    title: 'Roadmap Batch — A11y + Library + Export (v2.12.1)',
-    subtitle: 'v2.12.1 · 28 Agosto 2026 · focus ring + debounce + CSV + QR',
-    intro: 'Batch roadmap Giorno 3-6: focus-visible 2px BLAZE, aria-live reps, Library debounce 180ms + highlight + empty, LargeText fix, CSV aiQuality, print A4, QR share.',
+    badge: 'NUOVO v2.12.2',
+    title: 'Roadmap — IMU + BeforeAfter + A11y (v2.12.2)',
+    subtitle: 'v2.12.2 · 28 Agosto 2026 · IMU opt-in + pinch-zoom + a11y',
+    intro: 'Batch roadmap 2: MotionFusion opt-in per jumpingJack/burpee, BeforeAfter pinch-zoom + haptics, A11y/print/CSV/Qr già in 2.12.1.',
     groups: [
       {
         icon: '🌑',
@@ -99,18 +99,27 @@ const COPY: Record<Lang, any> = {
           'CSV ai_quality/ai_reps + QR 72px share + ROADMAP docs',
         ],
       },
+      {
+        icon: '📳',
+        title: '28-29. IMU + BeforeAfter (v2.12.2)',
+        items: [
+          'MotionFusion opt-in (IMU) per jumpingJack/burpee/skater — toggle in Impostazioni',
+          'BeforeAfter pinch-zoom 1-3× + wheel + double-tap + haptics sul confronto',
+          'Engine enableMotionFusion flag + wiring SessionAIOverlay/FitnessEngineView',
+        ],
+      },
     ],
     cta: 'PROVA ORA',
     ctaHint: 'Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS',
     dismiss: 'Non mostrare più',
     close: 'Chiudi',
-    footer: 'Tutto on-device. 27 iterazioni. Prossimo: v2.13 motion + watch.',
+    footer: 'Tutto on-device. 29 iterazioni. Prossimo: v2.13 Apple Health + clip.',
   },
   en: {
-    badge: 'NEW v2.12.1',
-    title: 'Roadmap Batch — A11y + Library + Export (v2.12.1)',
-    subtitle: 'v2.12.1 · Aug 28 2026 · focus + debounce + CSV + QR',
-    intro: 'Roadmap batch: focus-visible, aria-live reps, Library debounce + highlight + empty, CSV aiQuality, print, QR.',
+    badge: 'NEW v2.12.2',
+    title: 'Roadmap — IMU + BeforeAfter + A11y (v2.12.2)',
+    subtitle: 'v2.12.2 · Aug 28 2026 · IMU opt-in + pinch-zoom + a11y',
+    intro: 'Roadmap batch 2: MotionFusion opt-in, BeforeAfter pinch-zoom + haptics, A11y already in 2.12.1.',
     groups: [
       { icon: '🌑', title: '1-2. OLED Depth + Card', items: ['INK #0E100D vignette + 130% radial — deeper phone, 5px camo', 'Unified card 165° + hairline + gloss', 'Card-face hairline + accent + tabular glow'] },
       { icon: '🔥', title: '3-4. Typography + CTA', items: ['Bebas/Inter sharpened, num-glow halo', 'CTA BLAZE_LIGHT→DEEP + inset highlight', 'Large btn shadow 10/28'] },

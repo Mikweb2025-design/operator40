@@ -73,8 +73,8 @@ export class FitnessEngine {
     this.onRep = cfg.onRep;
     this.onPhaseChange = cfg.onPhaseChange;
     this.onMetrics = cfg.onMetrics;
-    // Fase 1: MotionFusion for jumpingJack/highKnees/burpee (secondary sensor)
-    if (['jumpingjack', 'burpee', 'ginocchiaalte', 'mountainclimber', 'skater'].includes(def.id)) {
+    // Fase 1: MotionFusion for jumpingJack/highKnees/burpee (secondary sensor) — opt-in via cfg.enableMotionFusion
+    if (cfg.enableMotionFusion && ['jumpingjack', 'burpee', 'ginocchiaalte', 'mountainclimber', 'skater'].includes(def.id)) {
       this.motionFusion = new MotionFusion();
     }
   }
@@ -151,13 +151,14 @@ export class FitnessEngine {
     else if (['mountainclimber', 'jumpingjack', 'burpee', 'ginocchiaalte', 'skater'].includes(def.id)) this.landmarker.setSmoothingTuning(1.25, 0.010);
     else if (['pushup', 'squat', 'affondo', 'ponte'].includes(def.id)) this.landmarker.setSmoothingTuning(1.05, 0.006);
     else this.landmarker.setSmoothingTuning(1.15, 0.008);
-    // Fase 1: update motion fusion for new exercise
-    if (['jumpingjack', 'burpee', 'ginocchiaalte', 'mountainclimber', 'skater'].includes(def.id)) {
+    // Fase 1: update motion fusion for new exercise — respect opt-in
+    if (this.cfg.enableMotionFusion && ['jumpingjack', 'burpee', 'ginocchiaalte', 'mountainclimber', 'skater'].includes(def.id)) {
       if (!this.motionFusion) this.motionFusion = new MotionFusion();
       try { this.motionFusion.enable(); } catch {}
     } else {
       try { this.motionFusion?.disable(); } catch {}
-      this.motionFusion = null;
+      if (!this.cfg.enableMotionFusion) this.motionFusion = null;
+      else if (!['jumpingjack', 'burpee', 'ginocchiaalte', 'mountainclimber', 'skater'].includes(def.id)) this.motionFusion = null;
     }
   }
 

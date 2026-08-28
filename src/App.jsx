@@ -441,7 +441,7 @@ export default function App() {
   const [showChangelog, setShowChangelog] = useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = useState(() => {
     try {
-      return localStorage.getItem('o40_release_2.12.1') !== 'dismissed';
+      return localStorage.getItem('o40_release_2.12.2') !== 'dismissed';
     } catch {
       return true;
     }
@@ -986,6 +986,7 @@ export default function App() {
         typeof (profile && profile.musicVolume) === 'number' ? profile.musicVolume : 0.55,
       skipWarmup: profile ? !!profile.skipWarmup : false,
       voiceCountdown: profile ? !!profile.voiceCountdown : false,
+      motionFusion: profile ? !!profile.motionFusion : false,
       seenIntro: profile ? !!profile.seenIntro : false,
       intervalPreset:
         formCustomWork !== '40' || formCustomRest !== '20'
@@ -1078,6 +1079,15 @@ export default function App() {
     } catch (e) {
       /* best effort */
     }
+  }
+  async function toggleMotionFusion() {
+    const p = { ...profile, motionFusion: !profile.motionFusion };
+    setProfile(p);
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch {}
+    if (p.motionFusion) showToast(lang === 'it' ? 'IMU attivato — jumpingJack/burpee/skater' : 'IMU enabled');
+    else showToast(lang === 'it' ? 'IMU disattivato' : 'IMU disabled');
   }
 
   async function setIntervalPreset(key) {
@@ -1662,6 +1672,8 @@ export default function App() {
                 pushBusy={pushBusy}
                 onTogglePush={togglePush}
                 onTestPush={handleTestPush}
+                motionFusion={!!(profile && profile.motionFusion)}
+                onToggleMotionFusion={toggleMotionFusion}
                 onExportBackup={exportData}
                 onImportBackup={(file) =>
                   handleImportBackup(file, {
@@ -1743,24 +1755,24 @@ export default function App() {
                             borderRadius: 6,
                           }}
                         >
-                          NUOVO v2.12.1
+                          NUOVO v2.12.2
                         </span>
                         <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>
-                          28 AGO 2026 · 27 ITERAZIONI
+                          28 AGO 2026 · 29 ITERAZIONI
                         </span>
                       </div>
                       <div
                         className="o40-display"
                         style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}
                       >
-                        Grafica OLED — 27 iterazioni — a11y + viz!
+                        Grafica OLED — 29 iterazioni — IMU + BeforeAfter!
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.12.1', 'dismissed');
+                        localStorage.setItem('o40_release_2.12.2', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
@@ -1835,7 +1847,7 @@ export default function App() {
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.12.1', 'dismissed');
+                        localStorage.setItem('o40_release_2.12.2', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}

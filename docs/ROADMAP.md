@@ -1,11 +1,11 @@
 # Operator40 — Roadmap prossimi giorni
 
-> v2.12.0 · 28 Agosto 2026 · 23 loop OLED + 10 full-app completati · white-screen fix
+> v2.12.2 · 28 Agosto 2026 · 29 iterazioni + IMU + BeforeAfter + A11y
 > Live: https://mikweb.eu/operator40/ · Repo: Mikweb2025-design/operator40
 
 ---
 
-## ✅ Appena fatto (v2.12.0 — 23 LOOP + FIX)
+## ✅ Appena fatto (v2.12.2 — 29 ITERAZIONI)
 
 **Grafica 23 loop** — zero logica toccata, 101 test verdi:
 - 1-10 OLED (ink #0E100D, card 165°, typo, CTA blaze, nav, HUD, micro, skeleton, aura, tokens)
@@ -25,14 +25,14 @@
 - [ ] `verify.mjs` + `eslint --fix` su `src/ai/` (pulizia dead imports)
 - [ ] Screenshots Playwright `docs/screenshots/06-ai-debug.png` + rigenerare 01-05 a 390×844@2x
 
-### Giorno 3-4 — UX & Accessibilità (v2.12.1) — ✅ FATTO 28 Ago
+### Giorno 3-4 — UX & Accessibilità (v2.12.2) — ✅ FATTO 28 Ago
 - [x] A11y: focus ring `2px BLAZE + 4px glow` su button/input + `aria-live` rep counter + `prefers-reduced-motion` + `@media print`
 - [x] LargeText mode: fix overflow `DogTag` minHeight 84 + wordBreak + `Library` highlight
 - [x] Search Library: debounce 180ms + highlight `<mark BLAZE33>` + empty state illustrato 🔍 + reset filtri
 - [x] Export CSV: colonne `ai_quality` + `ai_reps` per exercise
 - [x] Share QR: placeholder 72px in `shareImage.js` + footer `mikweb.eu/operator40`
-- [ ] Wire `MotionFusion` a Capacitor `Motion` plugin (opt-in setting) — boost jumpingJack/highKnees/burpee (next)
-- [ ] Before/After slider: pinch-zoom + haptics su confronto (next)
+- [x] Wire `MotionFusion` opt-in (IMU) — toggle Impostazioni + `enableMotionFusion` in FitnessEngine (v2.12.2)
+- [x] Before/After slider: pinch-zoom 1-3× + wheel + double-tap + haptics (v2.12.2)
 
 ### Giorno 5-6 — Contenuti & Dati (v2.12.2) — prossimo
 - [ ] Apple Health: importa anche HR + sleep se presenti in export.xml (oggi solo weight/workout)
@@ -72,4 +72,4 @@
 
 ---
 
-*Aggiornato 28 Ago 2026 — v2.12.1 in corso — prossimo bump: v2.12.1 / v2.13.0*
+*Aggiornato 28 Ago 2026 — v2.12.2 · 29 iterazioni — prossimo: v2.13 Apple Health + clip + NEFFEX*

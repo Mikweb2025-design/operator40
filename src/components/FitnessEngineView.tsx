@@ -25,6 +25,7 @@ interface Props {
   onRep?: (e: RepEvent, total: number) => void;
   onDone?: (summary: { reps: number; elapsedMs: number; avgQuality: number }) => void;
   autoStart?: boolean;
+  enableMotionFusion?: boolean;
 }
 
 const EXERCISE_OPTIONS: Array<{ id: string; label: string }> = Object.values(EXERCISE_DEFINITIONS as any).map((d: any) => ({
@@ -39,7 +40,7 @@ function fmtMs(ms: number): string {
   return `${mm}:${ss}`;
 }
 
-export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onClose, onRep, onDone }: Props) {
+export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onClose, onRep, onDone, enableMotionFusion = false }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<FitnessEngine | null>(null);
@@ -153,6 +154,7 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
         targetFps: 28,
         enableFiltering: true,
         enableSpeech: speechOn,
+        enableMotionFusion,
         onRep: (e) => {
           setReps(e.repIndex);
           onRep?.(e, e.repIndex);
@@ -192,7 +194,7 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
       setError(friendly);
       setStatus('error');
     }
-  }, [exId, lang, speechOn, onRep]);
+  }, [exId, lang, speechOn, onRep, enableMotionFusion]);
 
   // switch exercise live
   useEffect(() => {

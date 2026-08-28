@@ -33,6 +33,7 @@ import {
   HeartPulse,
   Crown,
   Medal,
+  Activity,
   ChevronRight as ChevronRightIcon,
   Download,
   Upload,
@@ -160,6 +161,8 @@ export default function SetupScreen({
   onToggleVoiceCountdown,
   vocalMotivation,
   onToggleVocalMotivation,
+  motionFusion,
+  onToggleMotionFusion,
   level,
   onSetLevel,
   intervalPreset,
@@ -361,6 +364,19 @@ export default function SetupScreen({
               icon={Sparkles}
               on={vocalMotivation}
               onClick={onToggleVocalMotivation}
+            />
+            <div style={{ height: 1, background: OLIVE_DARK, margin: '0 12px' }} />
+            <ToggleRow
+              label={
+                lang === 'it'
+                  ? 'IMU Motion — jumpingJack/burpee'
+                  : lang === 'de'
+                    ? 'IMU Motion — jumpingJack/burpee'
+                    : 'IMU Motion — jumpingJack/burpee'
+              }
+              icon={Activity}
+              on={motionFusion}
+              onClick={onToggleMotionFusion}
             />
           </div>
         )}

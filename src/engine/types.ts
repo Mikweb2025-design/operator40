@@ -117,6 +117,7 @@ export interface EngineConfig {
   enableSpeech?: boolean;
   mirror?: boolean;
   qualitySmoothingWindow?: number; // default 5 reps moving avg
+  enableMotionFusion?: boolean; // opt-in IMU secondary (default false, roadmap 3-4)
   onRep?: (e: RepEvent) => void;
   onPhaseChange?: (phase: EnginePhase, metrics: FormMetrics | null) => void;
   onMetrics?: (m: EngineMetrics) => void;

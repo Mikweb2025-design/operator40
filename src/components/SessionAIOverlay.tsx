@@ -30,6 +30,7 @@ interface Props {
   onCompletePhase?: (summary: { reps: number; elapsedMs: number; avgQuality: number }) => void;
   onFormUpdate?: (form: number, status: string) => void;
   aiEnabled?: boolean;
+  enableMotionFusion?: boolean;
   // compact vs full
   compact?: boolean;
 }
@@ -43,7 +44,7 @@ function qColor(q: number): string {
   return q > 70 ? '#7FB069' : q > 50 ? '#D4A017' : BLAZE;
 }
 
-export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'combattente', onRep, onCompletePhase, onFormUpdate, aiEnabled = true, compact = false }: Props) {
+export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'combattente', onRep, onCompletePhase, onFormUpdate, aiEnabled = true, enableMotionFusion = false, compact = false }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<FitnessEngine | null>(null);
@@ -92,6 +93,7 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
           targetFps: 28,
           enableFiltering: true,
           enableSpeech: false, // we handle speech via CoachEngine
+          enableMotionFusion,
           onRep: (evt) => {
             setReps(evt.repIndex);
             onRep?.(evt.repIndex, evt);
@@ -160,7 +162,7 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
       if (streamRef.current) { try { streamRef.current.getTracks().forEach(t => t.stop()); } catch {} streamRef.current = null; }
       coachRef.current?.cancelSpeech();
     };
-  }, [exerciseId, phase?.exerciseId, phase?.reps, phase?.duration, aiEnabled, lang, levelKey, isHold]);
+  }, [exerciseId, phase?.exerciseId, phase?.reps, phase?.duration, aiEnabled, enableMotionFusion, lang, levelKey, isHold]);
 
   // overlay draw
   useEffect(() => {

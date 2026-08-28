@@ -1,9 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { INK, OLIVE, KHAKI, PAPER, STEEL, BLAZE } from '../constants/theme.js';
+import { vibrate } from '../utils/audio.js';
 
 export default function BeforeAfterSlider({ before, after }) {
   const [pos, setPos] = useState(50);
+  const [scale, setScale] = useState(1);
+  const lastDist = useRef(null);
+  const lastPos = useRef(50);
   if (!before || !after) return null;
+  function handleTouchStart(e) {
+    if (e.touches.length === 2) {
+      const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      lastDist.current = d;
+    }
+  }
+  function handleTouchMove(e) {
+    if (e.touches.length === 2 && lastDist.current) {
+      e.preventDefault();
+      const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      const factor = d / lastDist.current;
+      setScale((s) => Math.min(3, Math.max(1, s * factor)));
+      lastDist.current = d;
+    }
+  }
+  function handleTouchEnd() {
+    lastDist.current = null;
+    try { vibrate(10); } catch {}
+  }
+  function handleWheel(e) {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? 0.92 : 1.08;
+      setScale((s) => Math.min(3, Math.max(1, s * delta)));
+    }
+  }
+  function handlePosChange(v) {
+    if (Math.abs(v - lastPos.current) > 8) { try { vibrate(8); } catch {} }
+    lastPos.current = v;
+    setPos(v);
+  }
   return (
     <div
       style={{
@@ -30,12 +65,18 @@ export default function BeforeAfterSlider({ before, after }) {
         <span>DOPO</span>
       </div>
       <div
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onWheel={handleWheel}
+        onDoubleClick={() => setScale(1)}
         style={{
           position: 'relative',
           width: '100%',
           height: 280,
           overflow: 'hidden',
           background: '#000',
+          touchAction: 'none',
         }}
       >
         <img
@@ -47,6 +88,9 @@ export default function BeforeAfterSlider({ before, after }) {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
+            transform: `scale(${scale})`,
+            transformOrigin: 'center',
+            transition: lastDist.current ? 'none' : 'transform 0.2s ease',
           }}
         />
         <div
@@ -67,6 +111,9 @@ export default function BeforeAfterSlider({ before, after }) {
               objectFit: 'cover',
               maxWidth: 'none',
               display: 'block',
+              transform: `scale(${scale})`,
+              transformOrigin: 'center',
+              transition: lastDist.current ? 'none' : 'transform 0.2s ease',
             }}
           />
         </div>
@@ -75,7 +122,7 @@ export default function BeforeAfterSlider({ before, after }) {
           min={0}
           max={100}
           value={pos}
-          onChange={(e) => setPos(parseInt(e.target.value, 10))}
+          onChange={(e) => handlePosChange(parseInt(e.target.value, 10))}
           style={{
             position: 'absolute',
             bottom: 12,

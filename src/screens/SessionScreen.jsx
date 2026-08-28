@@ -314,6 +314,7 @@ function SessionScreen({
               lang={lang}
               levelKey={profile?.level ?? 'combattente'}
               aiEnabled={aiEnabled}
+              enableMotionFusion={!!profile?.motionFusion}
               onCompletePhase={({ reps, avgQuality }) => {
                 if (soundOn) playBeep(880);
                 if (vibrate) vibrate([30]);
