@@ -1,7 +1,7 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-DoPMocCZ.js","./clips-DJ4gBJJK.js"])))=>i.map(i=>d[i]);
-import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-Iii_N5O8.js";
+import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-D3Kh0jMn.js";
 import { r as reactExports, X, w as Star, S as Sparkles, W as Wind } from "./icons-CYijDH-L.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-VTWj4QDA.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-DNsLqk9d.js";
 import { h as hasClip } from "./clips-DJ4gBJJK.js";
 import "./charts-CgofXTP-.js";
 function loadFavorites() {

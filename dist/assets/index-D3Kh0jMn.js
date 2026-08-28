@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DLhjDaos.js","./icons-CYijDH-L.js","./charts-CgofXTP-.js","./web-BPrERHyW.js","./CountdownScreen--PtGw1ts.js","./SetupScreen-D-xbIwBw.js","./TopBar-9NScnIwx.js","./HomeScreen-P50xAsFy.js","./GoalRing-DC6eaF_7.js","./ExerciseFigure-VTWj4QDA.js","./DogTag-vwLSt5hd.js","./ProgressRing-zn9BbEZA.js","./LibraryScreen-Dl7kq6ZA.js","./clips-DJ4gBJJK.js","./BuilderScreen-C6Jlz3K6.js","./PreviewScreen-BDlQBMAa.js","./SessionScreen-D8Z5U_NG.js","./SummaryScreen-BdgX_hN5.js","./HistoryScreen-BtX2Av1g.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-Bxt6-ZNE.js","./icons-CYijDH-L.js","./charts-CgofXTP-.js","./web-CqWAXnzn.js","./CountdownScreen-BC3WZBF7.js","./SetupScreen-CTXqBoPQ.js","./TopBar-BhmTly7K.js","./HomeScreen-CK79q-Wu.js","./GoalRing-Crv4zZzb.js","./ExerciseFigure-DNsLqk9d.js","./DogTag-DCmg-Nin.js","./ProgressRing-L4pUYiIW.js","./LibraryScreen-drpdZnc7.js","./clips-DJ4gBJJK.js","./BuilderScreen-CV1T4uWv.js","./PreviewScreen-CotAp0Vk.js","./SessionScreen-5y4_MSa6.js","./SummaryScreen-DNuLZP5Z.js","./HistoryScreen-BA3WX-e9.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -7125,7 +7125,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-DLhjDaos.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-Bxt6-ZNE.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8500,14 +8500,14 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     ] })
   ] });
 }
-const CHANGELOG_VERSION = "2.14.0";
+const CHANGELOG_VERSION = "2.14.1";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.14.0",
-    title: "Camp 2.0 + TEMPO + Coach 2.0 (v2.14)",
-    subtitle: "v2.14.0 · 28 Agosto 2026 · recovery ogni 7 + deload + tempo 50 BPM",
-    intro: "Batch backlog: Camp 2.0 recovery/deload, TEMPO metronomo 40-60 BPM, Coach vocale 2.0 TTS cue form<60.",
+    badge: "NUOVO v2.14.1",
+    title: "Statistiche — Grafica Premium (v2.14.1)",
+    subtitle: "v2.14.1 · 28 Agosto 2026 · DogTag accent + chart gradient + heatmap",
+    intro: "Batch statistiche: DogTag accent, PR glass, Bar gradient + tooltip blur, heatmap 6px glow, calendar 8px.",
     groups: [
       {
         icon: "🌑",
@@ -8616,19 +8616,28 @@ const COPY = {
           "TEMPO metronomo 40-60 BPM con toggle + slider in Impostazioni",
           "Coach 2.0: TTS cue form<60 via SpeechCoach ogni 4s"
         ]
+      },
+      {
+        icon: "📊",
+        title: "38-40. Statistiche Premium (v2.14.1)",
+        items: [
+          "Hero DogTag accent + PR glass 16px con icone Flame/Crown/Ruler",
+          "Bar kcal gradient + tooltip blur + monthly trend 6px glow",
+          "Heatmap 6px + year 4px + calendar 8px con border/shadow"
+        ]
       }
     ],
     cta: "PROVA ORA",
     ctaHint: "Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS",
     dismiss: "Non mostrare più",
     close: "Chiudi",
-    footer: "Tutto on-device. 37 iterazioni. Prossimo: v2.15 Social + Watch."
+    footer: "Tutto on-device. 40 iterazioni. Prossimo: v2.15 Social + Watch."
   },
   en: {
-    badge: "NEW v2.14.0",
-    title: "Camp 2.0 + TEMPO + Coach 2.0 (v2.14)",
-    subtitle: "v2.14.0 · Aug 28 2026 · recovery + tempo 50 BPM + coach",
-    intro: "Backlog batch: Camp 2.0 recovery/deload, TEMPO 40-60 BPM, Coach 2.0 TTS cue.",
+    badge: "NEW v2.14.1",
+    title: "Statistics — Premium Graphics (v2.14.1)",
+    subtitle: "v2.14.1 · Aug 28 2026 · DogTag accent + chart gradient + heatmap",
+    intro: "Statistics batch: DogTag accent, PR glass, Bar gradient + tooltip blur, heatmap 6px glow, calendar 8px.",
     groups: [
       { icon: "🌑", title: "1-2. OLED Depth + Card", items: ["INK #0E100D vignette + 130% radial — deeper phone, 5px camo", "Unified card 165° + hairline + gloss", "Card-face hairline + accent + tabular glow"] },
       { icon: "🔥", title: "3-4. Typography + CTA", items: ["Bebas/Inter sharpened, num-glow halo", "CTA BLAZE_LIGHT→DEEP + inset highlight", "Large btn shadow 10/28"] },
@@ -8641,19 +8650,20 @@ const COPY = {
       { icon: "📳", title: "28-29. IMU + BeforeAfter", items: ["MotionFusion opt-in for jumpingJack/burpee", "BeforeAfter pinch-zoom 1-3x + haptics", "Engine enableMotionFusion wiring"] },
       { icon: "❤️", title: "30-32. HR + NEFFEX + PWA", items: ["Health HR avg last 20 + toast", "NEFFEX crossfade 1.2s + daily seed", "PWA banner after 2 sessions"] },
       { icon: "🎓", title: "33-34. Onboarding + Clip", items: ["Onboarding 3 step with dots, Skip/Next", "Clip alias for 4 missing (plank/jack/mountain/affondo)", "Offline models check"] },
-      { icon: "🏕️", title: "35-37. Camp + TEMPO + Coach", items: ["Camp 2.0 recovery every 7 + deload week", "TEMPO metronome 40-60 BPM + toggle", "Coach 2.0 TTS cue form<60"] }
+      { icon: "🏕️", title: "35-37. Camp + TEMPO + Coach", items: ["Camp 2.0 recovery every 7 + deload week", "TEMPO metronome 40-60 BPM + toggle", "Coach 2.0 TTS cue form<60"] },
+      { icon: "📊", title: "38-40. Statistics Premium", items: ["Hero DogTag accent + PR glass 16px", "Bar gradient + tooltip blur + monthly 6px", "Heatmap 6px + year 4px + calendar 8px"] }
     ],
     cta: "TRY IT",
     ctaHint: "Home → Mission → Start · https://mikweb.eu/operator40/",
     dismiss: "Don't show again",
     close: "Close",
-    footer: "On-device. 37 iterations. Next: v2.15 Social + Watch."
+    footer: "On-device. 40 iterations. Next: v2.15 Social + Watch."
   },
   de: {
-    badge: "NEU v2.14.0",
-    title: "Camp 2.0 + TEMPO + Coach 2.0 (v2.14)",
-    subtitle: "v2.14.0 · 28. Aug 2026 · Recovery + Tempo + Coach",
-    intro: "Backlog: Camp 2.0 Recovery/Deload, TEMPO 40-60 BPM, Coach 2.0 TTS.",
+    badge: "NEU v2.14.1",
+    title: "Statistiken — Premium Grafik (v2.14.1)",
+    subtitle: "v2.14.1 · 28. Aug 2026 · DogTag Akzent + Chart Verlauf + Heatmap",
+    intro: "Statistiken Batch: DogTag Akzent, PR Glas, Bar Verlauf + Tooltip Blur, Heatmap 6px Glow.",
     groups: [
       { icon: "🌑", title: "1-2. OLED + Card", items: ["INK #0E100D Vignette", "Unified Card + Hairline + Gloss", "Tabular Glow"] },
       { icon: "🔥", title: "3-4. Typo + CTA", items: ["Bebas/Inter sharpened", "CTA Blaze Light + Inset", "Large shadow"] },
@@ -9010,14 +9020,14 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.14.0 · 067bd85";
+const BUILD_VERSION = "2.14.1 · c827436";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       onClick,
       role: onClick ? "button" : void 0,
-      title: onClick ? "Novità v2.14.0 — clic per riaprire changelog" : void 0,
+      title: onClick ? "Novità v2.14.1 — clic per riaprire changelog" : void 0,
       className: "o40-mono",
       style: {
         color: STEEL,
@@ -9604,7 +9614,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-BPrERHyW.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-CqWAXnzn.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -10203,15 +10213,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen--PtGw1ts.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-D-xbIwBw.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-P50xAsFy.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-Dl7kq6ZA.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-C6Jlz3K6.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-BDlQBMAa.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-D8Z5U_NG.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BdgX_hN5.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BtX2Av1g.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-BC3WZBF7.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-CTXqBoPQ.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-CK79q-Wu.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-drpdZnc7.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-CV1T4uWv.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-CotAp0Vk.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-5y4_MSa6.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-DNuLZP5Z.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BA3WX-e9.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -10419,7 +10429,7 @@ function App() {
   const [showChangelog, setShowChangelog] = reactExports.useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = reactExports.useState(() => {
     try {
-      return localStorage.getItem("o40_release_2.14.0") !== "dismissed";
+      return localStorage.getItem("o40_release_2.14.1") !== "dismissed";
     } catch {
       return true;
     }
@@ -11619,10 +11629,10 @@ function App() {
                                         padding: "2px 6px",
                                         borderRadius: 6
                                       },
-                                      children: "NUOVO v2.14.0"
+                                      children: "NUOVO v2.14.1"
                                     }
                                   ),
-                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 37 ITERAZIONI" })
+                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 40 ITERAZIONI" })
                                 ]
                               }
                             ),
@@ -11631,7 +11641,7 @@ function App() {
                               {
                                 className: "o40-display",
                                 style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 },
-                                children: "Camp 2.0 + TEMPO + Coach 2.0!"
+                                children: "Statistiche — Grafica Premium!"
                               }
                             )
                           ] })
@@ -11643,7 +11653,7 @@ function App() {
                       {
                         onClick: () => {
                           try {
-                            localStorage.setItem("o40_release_2.14.0", "dismissed");
+                            localStorage.setItem("o40_release_2.14.1", "dismissed");
                           } catch {
                           }
                           setShowReleaseBanner(false);
@@ -11733,7 +11743,7 @@ function App() {
                   {
                     onClick: () => {
                       try {
-                        localStorage.setItem("o40_release_2.14.0", "dismissed");
+                        localStorage.setItem("o40_release_2.14.1", "dismissed");
                       } catch {
                       }
                       setShowReleaseBanner(false);

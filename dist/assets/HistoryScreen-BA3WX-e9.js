@@ -1,8 +1,8 @@
-import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, G as vibrate, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ae as LOCALES, ai as computeStreak, W as WEEKLY_GOAL, aj as buildHeatmap, ak as getPersonalRecords, al as buildYearHeatmap, a as OLIVE_DARK, P as PAPER, b as INK_2, ah as RPE_COLORS, z as getWeeklyProgress, A as getAveragePace, ac as iconCircle, am as getMonthlyTrend, m as PROGRAMS, t as tr, af as hrZone, ag as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, an as dayKey, ao as sessionDayKey, ap as getNextMedals } from "./index-Iii_N5O8.js";
-import { r as reactExports, u as HeartPulse, T as Trophy, Z as Zap, S as Sparkles, L as Lightbulb, p as Medal, F as Flame, C as Check, X, x as RotateCcw, w as Star, h as Target } from "./icons-CYijDH-L.js";
-import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-DC6eaF_7.js";
-import { T as TopBar } from "./TopBar-9NScnIwx.js";
-import { D as DogTag } from "./DogTag-vwLSt5hd.js";
+import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, G as vibrate, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ae as LOCALES, ai as computeStreak, W as WEEKLY_GOAL, aj as buildHeatmap, ak as getPersonalRecords, al as buildYearHeatmap, b as INK_2, a as OLIVE_DARK, ah as RPE_COLORS, P as PAPER, z as getWeeklyProgress, A as getAveragePace, ac as iconCircle, f as BLAZE_DEEP, am as getMonthlyTrend, m as PROGRAMS, t as tr, af as hrZone, ag as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, an as dayKey, ao as sessionDayKey, ap as getNextMedals } from "./index-D3Kh0jMn.js";
+import { r as reactExports, F as Flame, o as Crown, z as Ruler, u as HeartPulse, T as Trophy, Z as Zap, S as Sparkles, L as Lightbulb, p as Medal, C as Check, X, x as RotateCcw, w as Star, h as Target } from "./icons-CYijDH-L.js";
+import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-Crv4zZzb.js";
+import { T as TopBar } from "./TopBar-BhmTly7K.js";
+import { D as DogTag } from "./DogTag-DCmg-Nin.js";
 import { R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-CgofXTP-.js";
 function BeforeAfterSlider({ before, after }) {
   const [pos, setPos] = reactExports.useState(50);
@@ -1109,39 +1109,43 @@ function HistoryScreen({
           {
             label: t("dt.streak"),
             value: streak,
-            sub: streak === 1 ? t("dt.day") : t("dt.days")
+            sub: streak === 1 ? t("dt.day") : t("dt.days"),
+            accent: streak > 0
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.record"), value: bestStreak, sub: t("dt.beststreak") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.kcal"), value: totalKcal, sub: t("dt.total") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.record"), value: bestStreak, sub: t("dt.beststreak"), accent: bestStreak >= 7 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.kcal"), value: totalKcal, sub: t("dt.total"), accent: totalKcal > 0 })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 10, marginBottom: 18 }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.minutes"), value: totalMin, sub: t("dt.trained") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.avgkcal"), value: avgKcal, sub: t("dt.permission") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.weeks"), value: sessionsPerWeek.toFixed(1), sub: t("dt.perweek") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DogTag, { label: t("dt.weeks"), value: sessionsPerWeek.toFixed(1), sub: t("dt.perweek"), accent: sessionsPerWeek >= 2 })
       ] }),
       pr && /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
           className: "o40-card-glass o40-card-face",
-          style: { display: "flex", gap: 10, marginBottom: 18, padding: 12, borderRadius: 12, position: "relative" },
+          style: { display: "flex", gap: 10, marginBottom: 18, padding: 14, borderRadius: 16, position: "relative", background: `linear-gradient(135deg, ${INK_2} 0%, ${INK} 100%)`, boxShadow: "0 8px 24px rgba(0,0,0,0.38)" },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "MAX KCAL" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: BLAZE, fontSize: 20 }, children: pr.maxKcal })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", justifyContent: "center", marginBottom: 4 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 14, color: BLAZE }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 9, letterSpacing: "0.07em" }, children: "MAX KCAL" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display o40-num-glow on", style: { fontSize: 22, lineHeight: 1.1 }, children: pr.maxKcal })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 1, background: OLIVE_DARK } }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 1, background: `linear-gradient(180deg, transparent, ${OLIVE}55, transparent)` } }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "MAX STREAK" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: PAPER, fontSize: 20 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", justifyContent: "center", marginBottom: 4 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Crown, { size: 14, color: KHAKI }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 9, letterSpacing: "0.07em" }, children: "MAX STREAK" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display o40-num-glow", style: { fontSize: 22, lineHeight: 1.1 }, children: [
                 pr.maxStreak,
                 "🔥"
               ] })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 1, background: OLIVE_DARK } }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 1, background: `linear-gradient(180deg, transparent, ${OLIVE}55, transparent)` } }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "TOTALE" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display", style: { color: KHAKI, fontSize: 20 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", justifyContent: "center", marginBottom: 4 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Ruler, { size: 14, color: STEEL }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 9, letterSpacing: "0.07em" }, children: "TOTALE" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-display o40-num-glow", style: { fontSize: 22, lineHeight: 1.1 }, children: [
                 pr.totalMin,
                 "′"
               ] })
@@ -1582,10 +1586,11 @@ function HistoryScreen({
           "div",
           {
             style: {
-              background: INK_2,
-              border: `1px solid ${OLIVE}`,
-              borderRadius: 14,
-              padding: 14
+              background: `linear-gradient(135deg, ${INK_2} 0%, ${INK} 100%)`,
+              border: `1px solid ${OLIVE}22`,
+              borderRadius: 16,
+              padding: 16,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.04)"
             },
             children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 5 }, children: heatmap.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
@@ -1593,9 +1598,12 @@ function HistoryScreen({
                 title: c.key,
                 style: {
                   aspectRatio: "1 / 1",
-                  borderRadius: 3,
-                  background: c.active ? BLAZE : OLIVE_DARK,
-                  opacity: c.active ? 1 : 0.6
+                  borderRadius: 6,
+                  background: c.active ? `linear-gradient(135deg, ${BLAZE} 0%, ${BLAZE_DEEP} 100%)` : OLIVE_DARK,
+                  opacity: c.active ? 1 : 0.55,
+                  border: c.active ? `1px solid ${BLAZE}66` : `1px solid ${OLIVE}22`,
+                  boxShadow: c.active ? `0 2px 8px ${BLAZE}44, inset 0 1px 0 rgba(255,255,255,0.16)` : "inset 0 1px 0 rgba(255,255,255,0.04)",
+                  transition: "transform 0.15s ease, box-shadow 0.2s ease"
                 }
               },
               c.key
@@ -1625,20 +1633,23 @@ function HistoryScreen({
           "div",
           {
             style: {
-              background: INK_2,
-              border: `1px solid ${OLIVE}`,
-              borderRadius: 14,
-              padding: 14
+              background: `linear-gradient(135deg, ${INK_2} 0%, ${INK} 100%)`,
+              border: `1px solid ${OLIVE}22`,
+              borderRadius: 16,
+              padding: 16,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.04)"
             },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(26, 1fr)", gap: 2 }, children: yearHeat.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(26, 1fr)", gap: 3 }, children: yearHeat.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
                 title: `${c.key} · ${c.count || 0}`,
                 style: {
                   aspectRatio: "1/1",
-                  borderRadius: 2,
-                  background: c.count ? c.count > 1 ? BLAZE : OLIVE : OLIVE_DARK,
-                  opacity: c.count ? 1 : 0.5
+                  borderRadius: 4,
+                  background: c.count ? c.count > 1 ? `linear-gradient(135deg, ${BLAZE} 0%, ${BLAZE_DEEP} 100%)` : `linear-gradient(135deg, ${OLIVE} 0%, ${OLIVE_DARK} 100%)` : OLIVE_DARK,
+                  opacity: c.count ? 1 : 0.45,
+                  border: c.count ? `1px solid ${c.count > 1 ? BLAZE : OLIVE}44` : `1px solid ${OLIVE}18`,
+                  boxShadow: c.count ? `0 1px 4px ${c.count > 1 ? BLAZE : OLIVE}33` : "none"
                 }
               },
               c.key
@@ -1721,20 +1732,25 @@ function HistoryScreen({
           "div",
           {
             style: {
-              background: INK_2,
-              border: `1px solid ${OLIVE}`,
-              borderRadius: 14,
-              padding: "10px 6px",
-              height: 140
+              background: `linear-gradient(135deg, ${INK_2} 0%, ${INK} 100%)`,
+              border: `1px solid ${OLIVE}22`,
+              borderRadius: 16,
+              padding: "12px 8px",
+              height: 150,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04)"
             },
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(BarChart, { data: weekData, margin: { top: 8, right: 8, left: -22, bottom: 0 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3", vertical: false }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("defs", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("linearGradient", { id: "kcalGrad", x1: "0", y1: "0", x2: "0", y2: "1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "0%", stopColor: BLAZE, stopOpacity: 0.95 }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "100%", stopColor: BLAZE_DEEP, stopOpacity: 0.85 })
+              ] }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3", vertical: false, opacity: 0.35 }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 XAxis,
                 {
                   dataKey: "label",
-                  tick: { fill: STEEL, fontSize: 10 },
-                  axisLine: { stroke: OLIVE },
+                  tick: { fill: STEEL, fontSize: 10, fontWeight: 500 },
+                  axisLine: { stroke: OLIVE, opacity: 0.3 },
                   tickLine: false
                 }
               ),
@@ -1751,17 +1767,19 @@ function HistoryScreen({
                 Tooltip,
                 {
                   contentStyle: {
-                    background: INK,
-                    border: `1px solid ${OLIVE}`,
-                    borderRadius: 8,
-                    fontSize: 12
+                    background: `linear-gradient(135deg, ${INK} 0%, ${INK_2} 100%)`,
+                    border: `1px solid ${OLIVE}66`,
+                    borderRadius: 10,
+                    fontSize: 12,
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+                    backdropFilter: "blur(8px)"
                   },
-                  labelStyle: { color: KHAKI },
-                  itemStyle: { color: BLAZE },
-                  cursor: { fill: OLIVE_DARK }
+                  labelStyle: { color: KHAKI, fontWeight: 600 },
+                  itemStyle: { color: PAPER },
+                  cursor: { fill: `${OLIVE}18` }
                 }
               ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Bar, { dataKey: "kcal", fill: BLAZE, radius: [3, 3, 0, 0] })
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Bar, { dataKey: "kcal", fill: "url(#kcalGrad)", radius: [6, 6, 0, 0], stroke: BLAZE, strokeOpacity: 0.35, strokeWidth: 1 })
             ] }) })
           }
         )
@@ -1810,9 +1828,11 @@ function HistoryScreen({
                         style: {
                           width: "100%",
                           height: `${Math.round(m.kcal / maxK * 60) + 4}px`,
-                          background: m.kcal ? BLAZE : OLIVE_DARK,
-                          borderRadius: 3,
-                          opacity: m.kcal ? 1 : 0.5
+                          background: m.kcal ? `linear-gradient(180deg, ${BLAZE} 0%, ${BLAZE_DEEP} 100%)` : OLIVE_DARK,
+                          borderRadius: 6,
+                          opacity: m.kcal ? 1 : 0.5,
+                          boxShadow: m.kcal ? `0 2px 8px ${BLAZE}44, inset 0 1px 0 rgba(255,255,255,0.18)` : "none",
+                          border: m.kcal ? `1px solid ${BLAZE}55` : "none"
                         }
                       }
                     ),
@@ -1896,7 +1916,7 @@ function HistoryScreen({
         )
       ] }),
       hrData.length >= 2 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
             className: "o40-mono",
@@ -1905,29 +1925,37 @@ function HistoryScreen({
               fontSize: 11,
               textTransform: "uppercase",
               letterSpacing: "0.08em",
-              marginBottom: 8
+              marginBottom: 8,
+              display: "flex",
+              alignItems: "center",
+              gap: 6
             },
-            children: t("hist.hr")
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(HeartPulse, { size: 12, color: BLAZE }),
+              " ",
+              t("hist.hr")
+            ]
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             style: {
-              background: INK_2,
-              border: `1px solid ${OLIVE}`,
-              borderRadius: 14,
-              padding: "10px 6px",
-              height: 160
+              background: `linear-gradient(135deg, ${INK_2} 0%, ${INK} 100%)`,
+              border: `1px solid ${OLIVE}22`,
+              borderRadius: 16,
+              padding: "12px 8px",
+              height: 165,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04)"
             },
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: hrData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3", opacity: 0.3 }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 XAxis,
                 {
                   dataKey: "label",
-                  tick: { fill: STEEL, fontSize: 10 },
-                  axisLine: { stroke: OLIVE },
+                  tick: { fill: STEEL, fontSize: 10, fontWeight: 500 },
+                  axisLine: { stroke: OLIVE, opacity: 0.3 },
                   tickLine: false
                 }
               ),
@@ -1944,13 +1972,15 @@ function HistoryScreen({
                 Tooltip,
                 {
                   contentStyle: {
-                    background: INK,
-                    border: `1px solid ${OLIVE}`,
-                    borderRadius: 8,
-                    fontSize: 12
+                    background: `linear-gradient(135deg, ${INK} 0%, ${INK_2} 100%)`,
+                    border: `1px solid ${OLIVE}66`,
+                    borderRadius: 10,
+                    fontSize: 12,
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+                    backdropFilter: "blur(8px)"
                   },
-                  labelStyle: { color: KHAKI },
-                  itemStyle: { color: BLAZE }
+                  labelStyle: { color: KHAKI, fontWeight: 600 },
+                  itemStyle: { color: PAPER }
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -1959,8 +1989,9 @@ function HistoryScreen({
                   type: "monotone",
                   dataKey: "hr",
                   stroke: BLAZE,
-                  strokeWidth: 2,
-                  dot: { r: 3, fill: BLAZE }
+                  strokeWidth: 2.5,
+                  dot: { r: 4, fill: BLAZE, stroke: PAPER, strokeWidth: 1.5 },
+                  activeDot: { r: 6, fill: BLAZE, stroke: PAPER, strokeWidth: 2 }
                 }
               )
             ] }) })
@@ -1978,7 +2009,7 @@ function HistoryScreen({
               marginBottom: 8
             },
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "div",
                 {
                   className: "o40-mono",
@@ -1986,9 +2017,16 @@ function HistoryScreen({
                     color: KHAKI,
                     fontSize: 11,
                     textTransform: "uppercase",
-                    letterSpacing: "0.08em"
+                    letterSpacing: "0.08em",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6
                   },
-                  children: t("hist.waist")
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(Ruler, { size: 12, color: KHAKI }),
+                    " ",
+                    t("hist.waist")
+                  ]
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -1997,7 +2035,11 @@ function HistoryScreen({
                   className: "o40-mono",
                   style: {
                     color: waistData[0].cm <= waistData[waistData.length - 1].cm ? BLAZE : "#7FB069",
-                    fontSize: 11
+                    fontSize: 11,
+                    background: waistData[0].cm <= waistData[waistData.length - 1].cm ? `${BLAZE}18` : "#7FB06918",
+                    border: `1px solid ${waistData[0].cm <= waistData[waistData.length - 1].cm ? BLAZE : "#7FB069"}33`,
+                    borderRadius: 6,
+                    padding: "2px 6px"
                   },
                   children: t("hist.waist.total", {
                     v: (waistData[waistData.length - 1].cm - waistData[0].cm > 0 ? "+" : "") + (waistData[waistData.length - 1].cm - waistData[0].cm)
@@ -2011,20 +2053,21 @@ function HistoryScreen({
           "div",
           {
             style: {
-              background: INK_2,
-              border: `1px solid ${OLIVE}`,
-              borderRadius: 14,
-              padding: "10px 6px",
-              height: 160
+              background: `linear-gradient(135deg, ${INK_2} 0%, ${INK} 100%)`,
+              border: `1px solid ${OLIVE}22`,
+              borderRadius: 16,
+              padding: "12px 8px",
+              height: 165,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04)"
             },
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: waistData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3", opacity: 0.3 }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 XAxis,
                 {
                   dataKey: "label",
-                  tick: { fill: STEEL, fontSize: 10 },
-                  axisLine: { stroke: OLIVE },
+                  tick: { fill: STEEL, fontSize: 10, fontWeight: 500 },
+                  axisLine: { stroke: OLIVE, opacity: 0.3 },
                   tickLine: false
                 }
               ),
@@ -2042,13 +2085,15 @@ function HistoryScreen({
                 Tooltip,
                 {
                   contentStyle: {
-                    background: INK,
-                    border: `1px solid ${OLIVE}`,
-                    borderRadius: 8,
-                    fontSize: 12
+                    background: `linear-gradient(135deg, ${INK} 0%, ${INK_2} 100%)`,
+                    border: `1px solid ${OLIVE}66`,
+                    borderRadius: 10,
+                    fontSize: 12,
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+                    backdropFilter: "blur(8px)"
                   },
-                  labelStyle: { color: KHAKI },
-                  itemStyle: { color: BLAZE }
+                  labelStyle: { color: KHAKI, fontWeight: 600 },
+                  itemStyle: { color: PAPER }
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -2057,8 +2102,9 @@ function HistoryScreen({
                   type: "monotone",
                   dataKey: "cm",
                   stroke: BLAZE,
-                  strokeWidth: 2,
-                  dot: { r: 3, fill: BLAZE }
+                  strokeWidth: 2.5,
+                  dot: { r: 4, fill: BLAZE, stroke: PAPER, strokeWidth: 1.5 },
+                  activeDot: { r: 6, fill: BLAZE, stroke: PAPER, strokeWidth: 2 }
                 }
               )
             ] }) })
@@ -2109,19 +2155,20 @@ function HistoryScreen({
           "div",
           {
             style: {
-              background: INK_2,
-              border: `1px solid ${OLIVE}`,
-              borderRadius: 14,
-              padding: "10px 6px",
-              height: 160
+              background: `linear-gradient(135deg, ${INK_2} 0%, ${INK} 100%)`,
+              border: `1px solid ${OLIVE}22`,
+              borderRadius: 16,
+              padding: "12px 8px",
+              height: 165,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04)"
             },
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(LineChart, { data: weightData, margin: { top: 8, right: 12, left: -18, bottom: 0 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CartesianGrid, { stroke: OLIVE_DARK, strokeDasharray: "3 3", opacity: 0.3 }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 XAxis,
                 {
                   dataKey: "label",
-                  tick: { fill: STEEL, fontSize: 10 },
+                  tick: { fill: STEEL, fontSize: 10, fontWeight: 500 },
                   axisLine: { stroke: OLIVE },
                   tickLine: false
                 }
@@ -2140,13 +2187,15 @@ function HistoryScreen({
                 Tooltip,
                 {
                   contentStyle: {
-                    background: INK,
-                    border: `1px solid ${OLIVE}`,
-                    borderRadius: 8,
-                    fontSize: 12
+                    background: `linear-gradient(135deg, ${INK} 0%, ${INK_2} 100%)`,
+                    border: `1px solid ${OLIVE}66`,
+                    borderRadius: 10,
+                    fontSize: 12,
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+                    backdropFilter: "blur(8px)"
                   },
-                  labelStyle: { color: KHAKI },
-                  itemStyle: { color: "#7FB069" }
+                  labelStyle: { color: KHAKI, fontWeight: 600 },
+                  itemStyle: { color: PAPER }
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -2155,8 +2204,9 @@ function HistoryScreen({
                   type: "monotone",
                   dataKey: "kg",
                   stroke: "#7FB069",
-                  strokeWidth: 2,
-                  dot: { r: 3, fill: "#7FB069" }
+                  strokeWidth: 2.5,
+                  dot: { r: 4, fill: "#7FB069", stroke: PAPER, strokeWidth: 1.5 },
+                  activeDot: { r: 6, fill: "#7FB069", stroke: PAPER, strokeWidth: 2 }
                 }
               )
             ] }) })
@@ -2303,19 +2353,22 @@ function HistoryScreen({
           "div",
           {
             style: {
-              background: INK_2,
-              border: `1px solid ${OLIVE}`,
-              borderRadius: 12,
-              padding: 14,
-              marginBottom: 16
+              background: `linear-gradient(135deg, ${INK_2} 0%, ${INK} 100%)`,
+              border: `1px solid ${OLIVE}22`,
+              borderRadius: 16,
+              padding: 16,
+              marginBottom: 16,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.04)"
             },
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "div",
                 {
                   className: "o40-mono",
-                  style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 8 },
+                  style: { color: KHAKI, fontSize: 11, letterSpacing: "0.06em", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 },
                   children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { width: 6, height: 6, borderRadius: "50%", background: BLAZE, boxShadow: `0 0 6px ${BLAZE}66` } }),
+                    " ",
                     t("export.calendar"),
                     " ·",
                     " ",
@@ -2345,13 +2398,17 @@ function HistoryScreen({
                         style: {
                           width: 28,
                           height: 28,
-                          borderRadius: 6,
+                          borderRadius: 8,
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                           fontSize: 11,
-                          background: d.sessions.length ? BLAZE : "transparent",
+                          fontWeight: d.sessions.length ? 700 : 400,
+                          background: d.sessions.length ? `linear-gradient(135deg, ${BLAZE} 0%, ${BLAZE_DEEP} 100%)` : "transparent",
                           color: d.sessions.length ? PAPER : STEEL,
+                          border: d.sessions.length ? `1px solid ${BLAZE}55` : `1px solid transparent`,
+                          boxShadow: d.sessions.length ? `0 2px 8px ${BLAZE}33` : "none",
+                          opacity: d.isToday ? 1 : d.sessions.length ? 1 : 0.85,
                           border: d.isToday ? `1px solid ${KHAKI}` : "1px solid transparent",
                           fontWeight: d.sessions.length ? 700 : 400
                         },
