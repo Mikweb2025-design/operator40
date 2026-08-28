@@ -353,6 +353,21 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
+const Activity = createLucideIcon("Activity", [
+  [
+    "path",
+    {
+      d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2",
+      key: "169zse"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.462.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
 const BellOff = createLucideIcon("BellOff", [
   ["path", { d: "M8.7 3A6 6 0 0 1 18 8a21.3 21.3 0 0 0 .6 5", key: "o7mx20" }],
   ["path", { d: "M17 17H3s3-2 3-9a4.67 4.67 0 0 1 .3-1.7", key: "16f1lm" }],
@@ -946,22 +961,23 @@ const Zap = createLucideIcon("Zap", [
   ]
 ]);
 export {
-  TrendingDown as A,
+  Activity as A,
   BookOpen as B,
   Check as C,
   Download as D,
   Eye as E,
   Flame as F,
-  Scale as G,
+  TrendingDown as G,
   House as H,
   Info as I,
-  Play as J,
-  Pause as K,
+  Scale as J,
+  Play as K,
   Lightbulb as L,
   Music as M,
-  ShieldCheck as N,
-  Gauge as O,
+  Pause as N,
+  ShieldCheck as O,
   Plus as P,
+  Gauge as Q,
   React as R,
   Sparkles as S,
   Trophy as T,

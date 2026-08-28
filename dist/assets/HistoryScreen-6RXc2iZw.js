@@ -1,12 +1,54 @@
-import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ae as LOCALES, ai as computeStreak, W as WEEKLY_GOAL, aj as buildHeatmap, ak as getPersonalRecords, al as buildYearHeatmap, a as OLIVE_DARK, P as PAPER, b as INK_2, ah as RPE_COLORS, z as getWeeklyProgress, A as getAveragePace, ac as iconCircle, am as getMonthlyTrend, m as PROGRAMS, t as tr, af as hrZone, ag as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, an as dayKey, ao as sessionDayKey, ap as getNextMedals } from "./index-DeruRujQ.js";
-import { r as reactExports, t as HeartPulse, T as Trophy, Z as Zap, S as Sparkles, L as Lightbulb, o as Medal, F as Flame, C as Check, X, w as RotateCcw, v as Star, x as Target } from "./icons-DnFQGhVC.js";
-import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-DknORawk.js";
-import { T as TopBar } from "./TopBar-C-LHxDHW.js";
-import { D as DogTag } from "./DogTag-DFXq01tE.js";
-import { R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-BWCYe6zh.js";
+import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, G as vibrate, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ae as LOCALES, ai as computeStreak, W as WEEKLY_GOAL, aj as buildHeatmap, ak as getPersonalRecords, al as buildYearHeatmap, a as OLIVE_DARK, P as PAPER, b as INK_2, ah as RPE_COLORS, z as getWeeklyProgress, A as getAveragePace, ac as iconCircle, am as getMonthlyTrend, m as PROGRAMS, t as tr, af as hrZone, ag as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, an as dayKey, ao as sessionDayKey, ap as getNextMedals } from "./index-Oq15i2wE.js";
+import { r as reactExports, t as HeartPulse, T as Trophy, Z as Zap, S as Sparkles, L as Lightbulb, o as Medal, F as Flame, C as Check, X, w as RotateCcw, v as Star, x as Target } from "./icons-CiBW7QCm.js";
+import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-DESAIdDQ.js";
+import { T as TopBar } from "./TopBar-BTPNhQ67.js";
+import { D as DogTag } from "./DogTag-DhOrlvLj.js";
+import { R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-Dc_aK1Sx.js";
 function BeforeAfterSlider({ before, after }) {
   const [pos, setPos] = reactExports.useState(50);
+  const [scale, setScale] = reactExports.useState(1);
+  const lastDist = reactExports.useRef(null);
+  const lastPos = reactExports.useRef(50);
   if (!before || !after) return null;
+  function handleTouchStart(e) {
+    if (e.touches.length === 2) {
+      const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      lastDist.current = d;
+    }
+  }
+  function handleTouchMove(e) {
+    if (e.touches.length === 2 && lastDist.current) {
+      e.preventDefault();
+      const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      const factor = d / lastDist.current;
+      setScale((s) => Math.min(3, Math.max(1, s * factor)));
+      lastDist.current = d;
+    }
+  }
+  function handleTouchEnd() {
+    lastDist.current = null;
+    try {
+      vibrate(10);
+    } catch {
+    }
+  }
+  function handleWheel(e) {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? 0.92 : 1.08;
+      setScale((s) => Math.min(3, Math.max(1, s * delta)));
+    }
+  }
+  function handlePosChange(v) {
+    if (Math.abs(v - lastPos.current) > 8) {
+      try {
+        vibrate(8);
+      } catch {
+      }
+    }
+    lastPos.current = v;
+    setPos(v);
+  }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
@@ -40,12 +82,18 @@ function BeforeAfterSlider({ before, after }) {
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
+            onTouchStart: handleTouchStart,
+            onTouchMove: handleTouchMove,
+            onTouchEnd: handleTouchEnd,
+            onWheel: handleWheel,
+            onDoubleClick: () => setScale(1),
             style: {
               position: "relative",
               width: "100%",
               height: 280,
               overflow: "hidden",
-              background: "#000"
+              background: "#000",
+              touchAction: "none"
             },
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -58,7 +106,10 @@ function BeforeAfterSlider({ before, after }) {
                     inset: 0,
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover"
+                    objectFit: "cover",
+                    transform: `scale(${scale})`,
+                    transformOrigin: "center",
+                    transition: lastDist.current ? "none" : "transform 0.2s ease"
                   }
                 }
               ),
@@ -82,7 +133,10 @@ function BeforeAfterSlider({ before, after }) {
                         height: 280,
                         objectFit: "cover",
                         maxWidth: "none",
-                        display: "block"
+                        display: "block",
+                        transform: `scale(${scale})`,
+                        transformOrigin: "center",
+                        transition: lastDist.current ? "none" : "transform 0.2s ease"
                       }
                     }
                   )
@@ -95,7 +149,7 @@ function BeforeAfterSlider({ before, after }) {
                   min: 0,
                   max: 100,
                   value: pos,
-                  onChange: (e) => setPos(parseInt(e.target.value, 10)),
+                  onChange: (e) => handlePosChange(parseInt(e.target.value, 10)),
                   style: {
                     position: "absolute",
                     bottom: 12,

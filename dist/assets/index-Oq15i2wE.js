@@ -1,9 +1,9 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DiUSPk4m.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-CMPzmoQg.js","./CountdownScreen-Ck8eIBJN.js","./SetupScreen-KXExf-Yv.js","./TopBar-C-LHxDHW.js","./HomeScreen-DsDZzrhj.js","./GoalRing-DknORawk.js","./ExerciseFigure-DcJ8amED.js","./DogTag-DFXq01tE.js","./ProgressRing-Cl6a1d1w.js","./LibraryScreen-BFJxiCB9.js","./clips-CZetA5iC.js","./BuilderScreen-DhIk1M0w.js","./PreviewScreen-CsMKu4GT.js","./SessionScreen-Dp4nWVbc.js","./SummaryScreen-Di2fhRHC.js","./HistoryScreen-BSzy5BEN.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-Co5JzWX8.js","./icons-CiBW7QCm.js","./charts-Dc_aK1Sx.js","./web-B9Q3G2MF.js","./CountdownScreen-D0TuMZWx.js","./SetupScreen-DZMTWhKd.js","./TopBar-BTPNhQ67.js","./HomeScreen-CKsjLgzG.js","./GoalRing-DESAIdDQ.js","./ExerciseFigure-DuHGLnwV.js","./DogTag-DhOrlvLj.js","./ProgressRing-DcAIZsgp.js","./LibraryScreen-Dx4Lc2aq.js","./clips-CZetA5iC.js","./BuilderScreen--B6lI9xw.js","./PreviewScreen-DeRYzKaB.js","./SessionScreen-JNptnedg.js","./SummaryScreen-CPDqWqgM.js","./HistoryScreen-6RXc2iZw.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, E as Eye } from "./icons-DnFQGhVC.js";
-import { r as reactDomExports } from "./charts-BWCYe6zh.js";
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, E as Eye } from "./icons-CiBW7QCm.js";
+import { r as reactDomExports } from "./charts-Dc_aK1Sx.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -7034,7 +7034,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-DiUSPk4m.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-Co5JzWX8.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -7427,7 +7427,7 @@ class FitnessEngine {
     this.onRep = cfg.onRep;
     this.onPhaseChange = cfg.onPhaseChange;
     this.onMetrics = cfg.onMetrics;
-    if (["jumpingjack", "burpee", "ginocchiaalte", "mountainclimber", "skater"].includes(def.id)) {
+    if (cfg.enableMotionFusion && ["jumpingjack", "burpee", "ginocchiaalte", "mountainclimber", "skater"].includes(def.id)) {
       this.motionFusion = new MotionFusion();
     }
   }
@@ -7498,7 +7498,7 @@ class FitnessEngine {
     else if (["mountainclimber", "jumpingjack", "burpee", "ginocchiaalte", "skater"].includes(def.id)) this.landmarker.setSmoothingTuning(1.25, 0.01);
     else if (["pushup", "squat", "affondo", "ponte"].includes(def.id)) this.landmarker.setSmoothingTuning(1.05, 6e-3);
     else this.landmarker.setSmoothingTuning(1.15, 8e-3);
-    if (["jumpingjack", "burpee", "ginocchiaalte", "mountainclimber", "skater"].includes(def.id)) {
+    if (this.cfg.enableMotionFusion && ["jumpingjack", "burpee", "ginocchiaalte", "mountainclimber", "skater"].includes(def.id)) {
       if (!this.motionFusion) this.motionFusion = new MotionFusion();
       try {
         this.motionFusion.enable();
@@ -7509,7 +7509,8 @@ class FitnessEngine {
         (_a = this.motionFusion) == null ? void 0 : _a.disable();
       } catch {
       }
-      this.motionFusion = null;
+      if (!this.cfg.enableMotionFusion) this.motionFusion = null;
+      else if (!["jumpingjack", "burpee", "ginocchiaalte", "mountainclimber", "skater"].includes(def.id)) this.motionFusion = null;
     }
   }
   updateConfig(patch) {
@@ -7966,7 +7967,7 @@ function fmtMs(ms) {
   const ss = String(s % 60).padStart(2, "0");
   return `${mm}:${ss}`;
 }
-function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, onDone }) {
+function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, onDone, enableMotionFusion = false }) {
   var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
   const videoRef = reactExports.useRef(null);
   const canvasRef = reactExports.useRef(null);
@@ -8082,6 +8083,7 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
         targetFps: 28,
         enableFiltering: true,
         enableSpeech: speechOn,
+        enableMotionFusion,
         onRep: (e) => {
           var _a2, _b2;
           setReps(e.repIndex);
@@ -8116,7 +8118,7 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
       setError(friendly);
       setStatus("error");
     }
-  }, [exId, lang, speechOn, onRep]);
+  }, [exId, lang, speechOn, onRep, enableMotionFusion]);
   reactExports.useEffect(() => {
     if (engineRef.current && status === "running") {
       const nid = normalizeExerciseId(exId);
@@ -8397,14 +8399,14 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     ] })
   ] });
 }
-const CHANGELOG_VERSION = "2.12.1";
+const CHANGELOG_VERSION = "2.12.2";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.12.1",
-    title: "Roadmap Batch — A11y + Library + Export (v2.12.1)",
-    subtitle: "v2.12.1 · 28 Agosto 2026 · focus ring + debounce + CSV + QR",
-    intro: "Batch roadmap Giorno 3-6: focus-visible 2px BLAZE, aria-live reps, Library debounce 180ms + highlight + empty, LargeText fix, CSV aiQuality, print A4, QR share.",
+    badge: "NUOVO v2.12.2",
+    title: "Roadmap — IMU + BeforeAfter + A11y (v2.12.2)",
+    subtitle: "v2.12.2 · 28 Agosto 2026 · IMU opt-in + pinch-zoom + a11y",
+    intro: "Batch roadmap 2: MotionFusion opt-in per jumpingJack/burpee, BeforeAfter pinch-zoom + haptics, A11y/print/CSV/Qr già in 2.12.1.",
     groups: [
       {
         icon: "🌑",
@@ -8477,19 +8479,28 @@ const COPY = {
           "Library debounce 180ms + highlight BLAZE33 + empty 🔍 + LargeText fix",
           "CSV ai_quality/ai_reps + QR 72px share + ROADMAP docs"
         ]
+      },
+      {
+        icon: "📳",
+        title: "28-29. IMU + BeforeAfter (v2.12.2)",
+        items: [
+          "MotionFusion opt-in (IMU) per jumpingJack/burpee/skater — toggle in Impostazioni",
+          "BeforeAfter pinch-zoom 1-3× + wheel + double-tap + haptics sul confronto",
+          "Engine enableMotionFusion flag + wiring SessionAIOverlay/FitnessEngineView"
+        ]
       }
     ],
     cta: "PROVA ORA",
     ctaHint: "Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS",
     dismiss: "Non mostrare più",
     close: "Chiudi",
-    footer: "Tutto on-device. 27 iterazioni. Prossimo: v2.13 motion + watch."
+    footer: "Tutto on-device. 29 iterazioni. Prossimo: v2.13 Apple Health + clip."
   },
   en: {
-    badge: "NEW v2.12.1",
-    title: "Roadmap Batch — A11y + Library + Export (v2.12.1)",
-    subtitle: "v2.12.1 · Aug 28 2026 · focus + debounce + CSV + QR",
-    intro: "Roadmap batch: focus-visible, aria-live reps, Library debounce + highlight + empty, CSV aiQuality, print, QR.",
+    badge: "NEW v2.12.2",
+    title: "Roadmap — IMU + BeforeAfter + A11y (v2.12.2)",
+    subtitle: "v2.12.2 · Aug 28 2026 · IMU opt-in + pinch-zoom + a11y",
+    intro: "Roadmap batch 2: MotionFusion opt-in, BeforeAfter pinch-zoom + haptics, A11y already in 2.12.1.",
     groups: [
       { icon: "🌑", title: "1-2. OLED Depth + Card", items: ["INK #0E100D vignette + 130% radial — deeper phone, 5px camo", "Unified card 165° + hairline + gloss", "Card-face hairline + accent + tabular glow"] },
       { icon: "🔥", title: "3-4. Typography + CTA", items: ["Bebas/Inter sharpened, num-glow halo", "CTA BLAZE_LIGHT→DEEP + inset highlight", "Large btn shadow 10/28"] },
@@ -8863,14 +8874,14 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.12.1 · 0759931";
+const BUILD_VERSION = "2.12.2 · 0759931";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       onClick,
       role: onClick ? "button" : void 0,
-      title: onClick ? "Novità v2.12.1 — clic per riaprire changelog" : void 0,
+      title: onClick ? "Novità v2.12.2 — clic per riaprire changelog" : void 0,
       className: "o40-mono",
       style: {
         color: STEEL,
@@ -9457,7 +9468,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-CMPzmoQg.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-B9Q3G2MF.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -10056,15 +10067,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-Ck8eIBJN.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-KXExf-Yv.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-DsDZzrhj.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BFJxiCB9.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-DhIk1M0w.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-CsMKu4GT.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-Dp4nWVbc.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-Di2fhRHC.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BSzy5BEN.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-D0TuMZWx.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-DZMTWhKd.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-CKsjLgzG.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-Dx4Lc2aq.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen--B6lI9xw.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-DeRYzKaB.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-JNptnedg.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-CPDqWqgM.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-6RXc2iZw.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -10259,7 +10270,7 @@ function App() {
   const [showChangelog, setShowChangelog] = reactExports.useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = reactExports.useState(() => {
     try {
-      return localStorage.getItem("o40_release_2.12.1") !== "dismissed";
+      return localStorage.getItem("o40_release_2.12.2") !== "dismissed";
     } catch {
       return true;
     }
@@ -10746,6 +10757,7 @@ function App() {
       musicVolume: typeof (profile && profile.musicVolume) === "number" ? profile.musicVolume : 0.55,
       skipWarmup: profile ? !!profile.skipWarmup : false,
       voiceCountdown: profile ? !!profile.voiceCountdown : false,
+      motionFusion: profile ? !!profile.motionFusion : false,
       seenIntro: profile ? !!profile.seenIntro : false,
       intervalPreset: formCustomWork !== "40" || formCustomRest !== "20" ? "custom" : profile && profile.intervalPreset || "standard",
       level: prevLevel || "combattente",
@@ -10825,6 +10837,16 @@ function App() {
       await window.storage.set("o40_profile", JSON.stringify(p2), false);
     } catch (e) {
     }
+  }
+  async function toggleMotionFusion() {
+    const p2 = { ...profile, motionFusion: !profile.motionFusion };
+    setProfile(p2);
+    try {
+      await window.storage.set("o40_profile", JSON.stringify(p2), false);
+    } catch {
+    }
+    if (p2.motionFusion) showToast(lang === "it" ? "IMU attivato — jumpingJack/burpee/skater" : "IMU enabled");
+    else showToast(lang === "it" ? "IMU disattivato" : "IMU disabled");
   }
   async function setIntervalPreset(key) {
     const p2 = { ...profile, intervalPreset: key };
@@ -11325,6 +11347,8 @@ function App() {
             pushBusy,
             onTogglePush: togglePush,
             onTestPush: handleTestPush,
+            motionFusion: !!(profile && profile.motionFusion),
+            onToggleMotionFusion: toggleMotionFusion,
             onExportBackup: exportData,
             onImportBackup: (file) => handleImportBackup(file, {
               setProfile,
@@ -11416,10 +11440,10 @@ function App() {
                                         padding: "2px 6px",
                                         borderRadius: 6
                                       },
-                                      children: "NUOVO v2.12.1"
+                                      children: "NUOVO v2.12.2"
                                     }
                                   ),
-                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 27 ITERAZIONI" })
+                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 29 ITERAZIONI" })
                                 ]
                               }
                             ),
@@ -11428,7 +11452,7 @@ function App() {
                               {
                                 className: "o40-display",
                                 style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 },
-                                children: "Grafica OLED — 27 iterazioni — a11y + viz!"
+                                children: "Grafica OLED — 29 iterazioni — IMU + BeforeAfter!"
                               }
                             )
                           ] })
@@ -11440,7 +11464,7 @@ function App() {
                       {
                         onClick: () => {
                           try {
-                            localStorage.setItem("o40_release_2.12.1", "dismissed");
+                            localStorage.setItem("o40_release_2.12.2", "dismissed");
                           } catch {
                           }
                           setShowReleaseBanner(false);
@@ -11530,7 +11554,7 @@ function App() {
                   {
                     onClick: () => {
                       try {
-                        localStorage.setItem("o40_release_2.12.1", "dismissed");
+                        localStorage.setItem("o40_release_2.12.2", "dismissed");
                       } catch {
                       }
                       setShowReleaseBanner(false);

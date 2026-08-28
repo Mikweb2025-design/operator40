@@ -1,5 +1,5 @@
-import { u as useT, j as jsxRuntimeExports, R as btnIcon, P as PAPER } from "./index-DeruRujQ.js";
-import { m as ChevronLeft } from "./icons-DnFQGhVC.js";
+import { u as useT, j as jsxRuntimeExports, R as btnIcon, P as PAPER } from "./index-Oq15i2wE.js";
+import { m as ChevronLeft } from "./icons-CiBW7QCm.js";
 function TopBar({ title, onBack, right }) {
   const { t } = useT();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(

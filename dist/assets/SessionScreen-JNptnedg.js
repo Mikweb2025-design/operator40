@@ -1,10 +1,10 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-Cx-PcBXv.js","./clips-CZetA5iC.js"])))=>i.map(i=>d[i]);
-import { a2 as detectLang, L as LANGS, a3 as localizedCue, a4 as getDefinition, a1 as HOLD_EXERCISES, a0 as getReps, J as EXERCISES, a5 as normalizeExerciseId, j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, P as PAPER, S as STEEL, b as INK_2, B as BLAZE, a6 as PositioningMask, a7 as FitnessEngine, a8 as drawSkeleton, a9 as alignmentScore, a as OLIVE_DARK, u as useT, V as speak, aa as getVocalMotivation, t as tr, R as btnIcon, ab as formatTime, p as playBeep, G as vibrate, ac as iconCircle, ad as pillBtn, s as secondaryBtn, $ as primaryBtn, ae as LOCALES, _ as __vitePreload } from "./index-DeruRujQ.js";
-import { r as reactExports, E as Eye, k as Music2, l as HeadphoneOff, V as Volume2, h as VolumeX, W as Wind, L as Lightbulb, J as Play, K as Pause, m as ChevronLeft, j as SkipForward, C as Check } from "./icons-DnFQGhVC.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-DcJ8amED.js";
-import { T as TopBar } from "./TopBar-C-LHxDHW.js";
-import { P as ProgressRing } from "./ProgressRing-Cl6a1d1w.js";
-import "./charts-BWCYe6zh.js";
+import { a2 as detectLang, L as LANGS, a3 as localizedCue, a4 as getDefinition, a1 as HOLD_EXERCISES, a0 as getReps, J as EXERCISES, a5 as normalizeExerciseId, j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, P as PAPER, S as STEEL, b as INK_2, B as BLAZE, a6 as PositioningMask, a7 as FitnessEngine, a8 as drawSkeleton, a9 as alignmentScore, a as OLIVE_DARK, u as useT, V as speak, aa as getVocalMotivation, t as tr, R as btnIcon, ab as formatTime, p as playBeep, G as vibrate, ac as iconCircle, ad as pillBtn, s as secondaryBtn, $ as primaryBtn, ae as LOCALES, _ as __vitePreload } from "./index-Oq15i2wE.js";
+import { r as reactExports, E as Eye, k as Music2, l as HeadphoneOff, V as Volume2, h as VolumeX, W as Wind, L as Lightbulb, K as Play, N as Pause, m as ChevronLeft, j as SkipForward, C as Check } from "./icons-CiBW7QCm.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-DuHGLnwV.js";
+import { T as TopBar } from "./TopBar-BTPNhQ67.js";
+import { P as ProgressRing } from "./ProgressRing-DcAIZsgp.js";
+import "./charts-Dc_aK1Sx.js";
 const FALLBACK = "en";
 function normalizeLang(input) {
   if (!input) return detectLang() || FALLBACK;
@@ -223,7 +223,7 @@ function fmtMs(ms) {
 function qColor(q) {
   return q > 70 ? "#7FB069" : q > 50 ? "#D4A017" : BLAZE;
 }
-function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep, onCompletePhase, onFormUpdate, aiEnabled = true, compact = false }) {
+function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep, onCompletePhase, onFormUpdate, aiEnabled = true, enableMotionFusion = false, compact = false }) {
   var _a, _b, _c, _d, _e, _f, _g;
   const videoRef = reactExports.useRef(null);
   const canvasRef = reactExports.useRef(null);
@@ -279,6 +279,7 @@ function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep,
           enableFiltering: true,
           enableSpeech: false,
           // we handle speech via CoachEngine
+          enableMotionFusion,
           onRep: (evt) => {
             var _a2, _b2, _c2;
             setReps(evt.repIndex);
@@ -362,7 +363,7 @@ function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep,
       }
       (_b2 = coachRef.current) == null ? void 0 : _b2.cancelSpeech();
     };
-  }, [exerciseId, phase == null ? void 0 : phase.exerciseId, phase == null ? void 0 : phase.reps, phase == null ? void 0 : phase.duration, aiEnabled, lang, levelKey, isHold]);
+  }, [exerciseId, phase == null ? void 0 : phase.exerciseId, phase == null ? void 0 : phase.reps, phase == null ? void 0 : phase.duration, aiEnabled, enableMotionFusion, lang, levelKey, isHold]);
   reactExports.useEffect(() => {
     let raf = 0;
     const draw = () => {
@@ -794,6 +795,7 @@ function SessionScreen({
                 lang,
                 levelKey: (profile == null ? void 0 : profile.level) ?? "combattente",
                 aiEnabled,
+                enableMotionFusion: !!(profile == null ? void 0 : profile.motionFusion),
                 onCompletePhase: ({ reps, avgQuality }) => {
                   if (soundOn) playBeep(880);
                   if (vibrate) vibrate([30]);
