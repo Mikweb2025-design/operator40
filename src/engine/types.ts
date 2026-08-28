@@ -99,6 +99,8 @@ export interface EngineMetrics {
   lastRepQuality: number | null;
   lastRepConfidence?: number | null; // 0-100 (spec §12)
   liveRepConfidence?: number; // 0-100, this frame's repConfidence even when it didn't count — diagnostic
+  repQualityHistory?: number[]; // per-counted-rep quality (0-100), most recent last
+  repDurationsMs?: number[]; // per-counted-rep cadence, aligned with repQualityHistory
   currentPhase: EnginePhase;
   currentForm: FormMetrics | null;
   caloriesEst?: number;

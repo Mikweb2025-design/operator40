@@ -39,6 +39,8 @@ export class FitnessEngine {
   private avgQuality = 0;
   private lastRepQuality: number | null = null;
   private lastRepConfidence: number | null = null;
+  private repQualityHistory: number[] = [];
+  private repDurationsMs: number[] = [];
   private currentPhase: EnginePhase = 'idle';
   private currentForm: FormMetrics | null = null;
   private troughInRep = 180;
@@ -94,6 +96,8 @@ export class FitnessEngine {
       lastRepQuality: this.lastRepQuality,
       lastRepConfidence: this.lastRepConfidence,
       liveRepConfidence: Math.round(this.liveRepConfidence),
+      repQualityHistory: this.repQualityHistory.slice(),
+      repDurationsMs: this.repDurationsMs.slice(),
       currentPhase: this.currentPhase,
       currentForm: this.currentForm,
       fps: Math.round(this.fpsEma),
@@ -170,6 +174,7 @@ export class FitnessEngine {
   private resetCounters(): void {
     this.reps = 0; this.startedAt = null; this.elapsedActiveMs = 0; this.lastRepAt = 0;
     this.qualityWindow = []; this.avgQuality = 0; this.lastRepQuality = null; this.lastRepConfidence = null;
+    this.repQualityHistory = []; this.repDurationsMs = [];
     this.currentPhase = 'idle'; this.currentForm = null;
     this.troughInRep = 180; this.peakInRep = 0;
     this.sm.reset(); this.landmarker.resetSmoother();
@@ -390,6 +395,8 @@ export class FitnessEngine {
         const repDuration = this.lastRepAt ? now - this.lastRepAt : (this.startedAt ? now - this.startedAt : 0);
         this.reps += 1; this.lastRepAt = now; this.lastRepQuality = aRes.formScore; this.lastRepConfidence = aRes.repConfidence;
         this.qualityWindow.push(aRes.formScore); if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
+        this.repQualityHistory.push(aRes.formScore); this.repDurationsMs.push(repDuration);
+        if (this.repQualityHistory.length > 30) { this.repQualityHistory.shift(); this.repDurationsMs.shift(); }
         this.avgQuality = this.qualityWindow.reduce((a,b)=>a+b,0)/this.qualityWindow.length;
         const evt = { repIndex: this.reps, timestampMs: now, durationMs: repDuration, peakAngle: this.peakInRep, troughAngle: this.troughInRep, quality: aRes.formScore, cues: aRes.cues, velocity: aRes.velocity, confidence: aRes.repConfidence } as any;
         this.onRep?.(evt);
@@ -527,6 +534,8 @@ export class FitnessEngine {
       this.lastRepQuality = repQuality; this.lastRepConfidence = (evt as any).confidence ?? repQuality;
       this.qualityWindow.push(repQuality);
       if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
+      this.repQualityHistory.push(repQuality); this.repDurationsMs.push(repDuration);
+      if (this.repQualityHistory.length > 30) { this.repQualityHistory.shift(); this.repDurationsMs.shift(); }
       this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
 
       const evt: RepEvent = {

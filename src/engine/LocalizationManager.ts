@@ -58,6 +58,9 @@ export const COACH_I18N: Record<string, Record<SupportedLang, string>> = {
   'coach.form': { it: 'Forma', en: 'Form', de: 'Form', fr: 'Forme' },
   'coach.status.good': { it: 'Buona forma', en: 'Good form', de: 'Gute Form', fr: 'Bonne forme' },
   'coach.status.fix': { it: 'Correggi', en: 'Fix form', de: 'Korrigieren', fr: 'Corrige' },
+  'coach.perRep': { it: 'Qualità per ripetizione', en: 'Quality per rep', de: 'Qualität pro Wdh', fr: 'Qualité par rép' },
+  'coach.trend': { it: 'andamento', en: 'trend', de: 'Trend', fr: 'tendance' },
+  'coach.correct': { it: 'CORREZIONE', en: 'CORRECT', de: 'KORREKTUR', fr: 'CORRECTION' },
 };
 
 export function tCoach(key: string, lang?: string): string {
