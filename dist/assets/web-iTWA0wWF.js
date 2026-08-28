@@ -1,4 +1,4 @@
-import { ap as WebPlugin } from "./index-BWvIVkg_.js";
+import { ap as WebPlugin } from "./index-F2ITDERy.js";
 import "./icons-BHJLJdva.js";
 import "./charts-DKCmdoT_.js";
 class MotionWeb extends WebPlugin {
