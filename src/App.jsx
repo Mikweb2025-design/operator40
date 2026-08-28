@@ -440,6 +440,7 @@ export default function App() {
   const [pushBusy, setPushBusy] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showTour, setShowTour] = useState(false);
+  const [tourStep, setTourStep] = useState(0);
   const [photos, setPhotos] = useState(() => loadPhotos());
   const [largeText, setLargeText] = useState(() => {
     try {
@@ -454,7 +455,7 @@ export default function App() {
   const [showChangelog, setShowChangelog] = useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = useState(() => {
     try {
-      return localStorage.getItem('o40_release_2.12.3') !== 'dismissed';
+      return localStorage.getItem('o40_release_2.13.0') !== 'dismissed';
     } catch {
       return true;
     }
@@ -715,7 +716,7 @@ export default function App() {
           return null;
         }
       })();
-      if (!seen) setShowTour(true);
+      if (!seen) { setTourStep(0); setShowTour(true); }
     }
   }, [screen, profile]);
   // ---- changelog (v2.9.0 Audit) — once per version, after tour dismissed or 1.2s delay ----
@@ -1772,24 +1773,24 @@ export default function App() {
                             borderRadius: 6,
                           }}
                         >
-                          NUOVO v2.12.3
+                          NUOVO v2.13.0
                         </span>
                         <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>
-                          28 AGO 2026 · 32 ITERAZIONI
+                          28 AGO 2026 · 34 ITERAZIONI
                         </span>
                       </div>
                       <div
                         className="o40-display"
                         style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}
                       >
-                        Roadmap — HR + NEFFEX + PWA install gate!
+                        Onboarding + Clip — 3 Step + Alias!
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.12.3', 'dismissed');
+                        localStorage.setItem('o40_release_2.13.0', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
@@ -1864,7 +1865,7 @@ export default function App() {
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.12.3', 'dismissed');
+                        localStorage.setItem('o40_release_2.13.0', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
@@ -2173,71 +2174,48 @@ export default function App() {
               </button>
             </div>
           )}
-          {/* tour */}
-          {showTour && (
+          {/* tour — 3 step con dots + skip */}
+          {showTour && (() => {
+            const steps = [
+              { icon: Sparkles, title: 'Benvenuto!', text: lang==='it' ? 'Tre tap: scegli missione, allenati 15 minuti, traccia. Tutto offline, privato.' : "Three taps: pick mission, train 15′, track. Fully offline." },
+              { icon: Target, title: 'Missioni & Pancia', text: lang==='it' ? 'Missione adattiva + Pancia 2.0 (plank/crunch test) + sfida giornaliera.' : 'Adaptive mission + Belly 2.0 + daily challenge.' },
+              { icon: Eye, title: 'Traccia & AI', text: lang==='it' ? 'AI conta reps, stats 8 settimane, export CSV/QR, backup JSON.' : 'AI counts reps, 8-week stats, CSV/QR export, backup.' },
+            ];
+            const s = steps[tourStep] || steps[0];
+            const Icon = s.icon;
+            return (
             <div
               className="o40-tour-mask"
               onClick={() => {
                 setShowTour(false);
-                try {
-                  localStorage.setItem('o40_seenTour', '1');
-                } catch {}
+                try { localStorage.setItem('o40_seenTour', '1'); } catch {}
               }}
             >
               <div className="o40-tour-card" onClick={(e) => e.stopPropagation()}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                  <Sparkles size={18} color={BLAZE} />
-                  <span className="o40-display" style={{ fontSize: 20 }}>
-                    Benvenuto!
+                  <Icon size={18} color={BLAZE} />
+                  <span className="o40-display" style={{ fontSize: 20 }}>{s.title}</span>
+                  <span style={{ marginLeft: 'auto', display: 'flex', gap: 4 }}>
+                    {[0,1,2].map(i => <span key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: i===tourStep ? BLAZE : OLIVE, opacity: i===tourStep?1:0.45 }} />)}
                   </span>
                 </div>
-                <div style={{ fontSize: 13, lineHeight: 1.5, color: '#333' }}>
-                  {lang === 'it'
-                    ? 'Tre tap: scegli la missione del giorno, allenati 15 minuti, traccia i progressi. Tutto offline, sulla tua privacy.'
-                    : "Three taps: pick today's mission, train 15 min, track progress. Fully offline, private."}
-                </div>
+                <div style={{ fontSize: 13, lineHeight: 1.5, color: '#333' }}>{s.text}</div>
                 <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
-                  <button
-                    onClick={() => {
-                      setShowTour(false);
-                      try {
-                        localStorage.setItem('o40_seenTour', '1');
-                      } catch {}
-                    }}
-                    style={{
-                      flex: 1,
-                      background: BLAZE,
-                      color: PAPER,
-                      border: 'none',
-                      borderRadius: 10,
-                      padding: '10px 0',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    INIZIA
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowTour(false);
-                      try {
-                        localStorage.setItem('o40_seenTour', '1');
-                      } catch {}
-                    }}
-                    style={{
-                      background: 'transparent',
-                      border: `1px solid ${OLIVE}`,
-                      borderRadius: 10,
-                      padding: '10px 14px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <Eye size={16} color={OLIVE} />
-                  </button>
+                  {tourStep>0 ? (
+                    <button onClick={() => setTourStep(tourStep-1)} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 14px', cursor: 'pointer' }}><ChevronLeft size={16} color={OLIVE} /></button>
+                  ) : (
+                    <button onClick={() => { setShowTour(false); try{ localStorage.setItem('o40_seenTour','1'); }catch{} }} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 14px', cursor: 'pointer' }}>{lang==='it'?'Salta':'Skip'}</button>
+                  )}
+                  {tourStep<2 ? (
+                    <button onClick={() => setTourStep(tourStep+1)} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 10, padding: '10px 0', fontWeight: 700, cursor: 'pointer' }}>{lang==='it'?'Avanti':'Next'} →</button>
+                  ) : (
+                    <button onClick={() => { setShowTour(false); try{ localStorage.setItem('o40_seenTour','1'); }catch{} }} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 10, padding: '10px 0', fontWeight: 700, cursor: 'pointer' }}>INIZIA</button>
+                  )}
                 </div>
               </div>
             </div>
-          )}
+            );
+          })()}
           {showBellyTest && (
             <div
               className="o40-tour-mask"

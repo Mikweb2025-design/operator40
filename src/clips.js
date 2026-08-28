@@ -21,6 +21,12 @@ export const CLIP_FILES = {
   skater: 'clips/skater.mp4',
   heeltap: 'clips/heeltap.mp4',
   squat: 'clips/squat.mp4',
+  // alias per 4 esercizi senza clip dedicata (fallback video vicino, roadmap clip review)
+  plank: 'clips/wallsit.mp4',
+  jumpingjack: 'clips/burpeetattico.mp4',
+  mountainclimber: 'clips/skater.mp4',
+  affondo: 'clips/squat.mp4',
+  lunge: 'clips/squat.mp4',
 };
 
 export function hasClip(exerciseId, pose) {

@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.12.3';
+export const CHANGELOG_VERSION = '2.13.0';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,10 +22,10 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.12.3',
-    title: 'Roadmap — HR + NEFFEX + PWA (v2.12.3)',
-    subtitle: 'v2.12.3 · 28 Agosto 2026 · HR import + crossfade + install gate',
-    intro: 'Batch roadmap 3: Apple Health HR avg, NEFFEX crossfade 1.2s + shuffle seed, PWA banner dopo 2 sessioni.',
+    badge: 'NUOVO v2.13.0',
+    title: 'Onboarding + Clip — 3 Step + Alias (v2.13)',
+    subtitle: 'v2.13.0 · 28 Agosto 2026 · tour 3 step + clip alias + offline',
+    intro: 'Batch roadmap 4: onboarding 3 step con dots/skip, clip alias per 4 esercizi mancanti, offline models check.',
     groups: [
       {
         icon: '🌑',
@@ -117,18 +117,27 @@ const COPY: Record<Lang, any> = {
           'PWA install banner solo dopo 2 sessioni + dismissed flag',
         ],
       },
+      {
+        icon: '🎓',
+        title: '33-34. Onboarding + Clip (v2.13)',
+        items: [
+          'Onboarding 3 step con dots, Avanti/Salta, tourStep state',
+          'Clip alias: plank→wallsit, jumpingjack→burpee, mountain→skater, affondo→squat',
+          'Offline models check + hasClip fallback polish',
+        ],
+      },
     ],
     cta: 'PROVA ORA',
     ctaHint: 'Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS',
     dismiss: 'Non mostrare più',
     close: 'Chiudi',
-    footer: 'Tutto on-device. 32 iterazioni. Prossimo: v2.13 clip + onboarding.',
+    footer: 'Tutto on-device. 34 iterazioni. Prossimo: v2.14 Camp 2.0.',
   },
   en: {
-    badge: 'NEW v2.12.3',
-    title: 'Roadmap — HR + NEFFEX + PWA (v2.12.3)',
-    subtitle: 'v2.12.3 · Aug 28 2026 · HR import + crossfade + install gate',
-    intro: 'Roadmap batch 3: Apple Health HR avg, NEFFEX crossfade 1.2s + seed, PWA after 2 sessions.',
+    badge: 'NEW v2.13.0',
+    title: 'Onboarding + Clip — 3 Step + Alias (v2.13)',
+    subtitle: 'v2.13.0 · Aug 28 2026 · tour 3 step + clip alias + offline',
+    intro: 'Roadmap batch 4: onboarding 3 step with dots/skip, clip alias for 4 missing, offline check.',
     groups: [
       { icon: '🌑', title: '1-2. OLED Depth + Card', items: ['INK #0E100D vignette + 130% radial — deeper phone, 5px camo', 'Unified card 165° + hairline + gloss', 'Card-face hairline + accent + tabular glow'] },
       { icon: '🔥', title: '3-4. Typography + CTA', items: ['Bebas/Inter sharpened, num-glow halo', 'CTA BLAZE_LIGHT→DEEP + inset highlight', 'Large btn shadow 10/28'] },
@@ -140,18 +149,19 @@ const COPY: Record<Lang, any> = {
       { icon: '♿', title: '24-27. Roadmap Batch', items: ['Focus-visible + aria-live reps + prefers-motion + print', 'Library debounce 180ms + highlight + empty + LargeText', 'CSV ai_quality/ai_reps + QR 72px share'] },
       { icon: '📳', title: '28-29. IMU + BeforeAfter', items: ['MotionFusion opt-in for jumpingJack/burpee', 'BeforeAfter pinch-zoom 1-3x + haptics', 'Engine enableMotionFusion wiring'] },
       { icon: '❤️', title: '30-32. HR + NEFFEX + PWA', items: ['Health HR avg last 20 + toast', 'NEFFEX crossfade 1.2s + daily seed', 'PWA banner after 2 sessions'] },
+      { icon: '🎓', title: '33-34. Onboarding + Clip', items: ['Onboarding 3 step with dots, Skip/Next', 'Clip alias for 4 missing (plank/jack/mountain/affondo)', 'Offline models check'] },
     ],
     cta: 'TRY IT',
     ctaHint: 'Home → Mission → Start · https://mikweb.eu/operator40/',
     dismiss: "Don't show again",
     close: 'Close',
-    footer: 'On-device. 32 iterations. Next: v2.13 clip + onboarding.',
+    footer: 'On-device. 34 iterations. Next: v2.14 Camp 2.0.',
   },
   de: {
-    badge: 'NEU v2.12.3',
-    title: 'Roadmap — HR + NEFFEX + PWA (v2.12.3)',
-    subtitle: 'v2.12.3 · 28. Aug 2026 · HR + crossfade + PWA',
-    intro: 'Roadmap Batch 3: HR avg, NEFFEX crossfade 1.2s, PWA nach 2 Sessions.',
+    badge: 'NEU v2.13.0',
+    title: 'Onboarding + Clip — 3 Step + Alias (v2.13)',
+    subtitle: 'v2.13.0 · 28. Aug 2026 · Tour 3 Step + Clip Alias',
+    intro: 'Roadmap Batch 4: Onboarding 3 Step mit Dots, Clip Alias für 4 fehlende, Offline Check.',
     groups: [
       { icon: '🌑', title: '1-2. OLED + Card', items: ['INK #0E100D Vignette', 'Unified Card + Hairline + Gloss', 'Tabular Glow'] },
       { icon: '🔥', title: '3-4. Typo + CTA', items: ['Bebas/Inter sharpened', 'CTA Blaze Light + Inset', 'Large shadow'] },
@@ -163,12 +173,13 @@ const COPY: Record<Lang, any> = {
       { icon: '♿', title: '24-27. Roadmap', items: ['Focus + aria-live + reduced-motion + print', 'Debounce + highlight + empty + LargeText', 'CSV aiQuality + QR'] },
       { icon: '📳', title: '28-29. IMU + BeforeAfter', items: ['MotionFusion opt-in', 'BeforeAfter pinch-zoom + haptics', 'Engine wiring'] },
       { icon: '❤️', title: '30-32. HR + NEFFEX + PWA', items: ['Health HR avg + toast', 'NEFFEX crossfade 1.2s + seed', 'PWA nach 2 Sessions'] },
+      { icon: '🎓', title: '33-34. Onboarding + Clip', items: ['Onboarding 3 Step mit Dots', 'Clip Alias für 4 fehlende', 'Offline Check'] },
     ],
     cta: 'TESTEN',
     ctaHint: 'Home → Mission → Start',
     dismiss: 'Nicht mehr anzeigen',
     close: 'Schließen',
-    footer: 'On-device. 32 Iterationen. Next: v2.13.',
+    footer: 'On-device. 34 Iterationen. Next: v2.14.',
   },
 };
 
