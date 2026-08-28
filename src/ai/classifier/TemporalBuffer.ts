@@ -12,6 +12,8 @@ export interface BufferedFrame {
   timestamp: number;
 }
 
+export type RomSignal = 'kneeRaw' | 'hipFlexRaw' | 'elbowRaw' | 'trunkRaw';
+
 export class TemporalBuffer {
   private frames: BufferedFrame[] = [];
   private maxSize: number;
@@ -40,7 +42,7 @@ export class TemporalBuffer {
   get values() { return this.frames; }
 
   // Statistiche temporali per classificatore
-  getROM(key: keyof ExerciseFeatures = 'kneeRaw'): number {
+  getROM(key: RomSignal = 'kneeRaw'): number {
     if (this.frames.length < 4) return 0;
     const vals = this.frames.map(f => f.features[key] as number);
     return Math.max(...vals) - Math.min(...vals);
@@ -62,10 +64,10 @@ export class TemporalBuffer {
     return this.frames.reduce((s, f) => s + f.features.symmetry, 0) / this.frames.length;
   }
 
-  // Pattern detection: down-up sinusoidale vs rumore
-  detectDownUpPattern(): { hasPattern: boolean; confidence: number; rom: number } {
+  // Pattern detection: down-up sinusoidale vs rumore (dalla definizione "decreasing then increasing")
+  detectDownUpPattern(key: RomSignal = 'kneeRaw'): { hasPattern: boolean; confidence: number; rom: number } {
     if (this.frames.length < 10) return { hasPattern: false, confidence: 0, rom: 0 };
-    const vals = this.frames.map(f => f.features.kneeRaw);
+    const vals = this.frames.map(f => f.features[key] as number);
     const rom = Math.max(...vals) - Math.min(...vals);
     if (rom < 14) return { hasPattern: false, confidence: 0, rom };
 
@@ -85,8 +87,9 @@ export class TemporalBuffer {
     return { hasPattern, confidence, rom };
   }
 
-  // Per crunch/bicycle: usa hipFlex invece di knee
-  detectFlexExtendPattern(key: 'hipFlexRaw' | 'kneeRaw' = 'kneeRaw'): { hasPattern: boolean; confidence: number; rom: number } {
+  // Per crunch/bicycle/ponte o esercizi che usano hipFlex/trunk come primario:
+  // stessa logica down-up ma sul segnale flessione (angolo diminuisce in contrazione).
+  detectFlexExtendPattern(key: RomSignal = 'kneeRaw'): { hasPattern: boolean; confidence: number; rom: number } {
     if (this.frames.length < 10) return { hasPattern: false, confidence: 0, rom: 0 };
     const vals = this.frames.map(f => f.features[key] as number);
     const rom = Math.max(...vals) - Math.min(...vals);

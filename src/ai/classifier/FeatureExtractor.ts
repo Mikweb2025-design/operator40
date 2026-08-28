@@ -19,9 +19,11 @@ export interface ExerciseFeatures {
   // derivate temporali (verranno calcolate dal buffer)
   velocity: number;
   symmetry: number;
-  // raw per debug
+  // raw per debug — ROM/pattern detection usa questi (non le versioni normalizzate)
   kneeRaw: number;
   hipFlexRaw: number;
+  elbowRaw: number;
+  trunkRaw: number;
 }
 
 export function extractFeatures(lm: PoseLandmarks, worldLm: PoseLandmarks | null, prevFeatures: ExerciseFeatures | null, dtMs: number): ExerciseFeatures {
@@ -74,6 +76,8 @@ export function extractFeatures(lm: PoseLandmarks, worldLm: PoseLandmarks | null
     symmetry,
     kneeRaw: knee,
     hipFlexRaw: hipFlex,
+    elbowRaw: elbow,
+    trunkRaw: trunk,
   };
 }
 

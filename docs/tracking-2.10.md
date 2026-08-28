@@ -62,3 +62,20 @@ localStorage.removeItem('o40_modelVariant'); // torna auto
 - [ ] Addestrare `TemporalClassifier` con dataset reale per soglie per-esercizio (minROM/minConfidence)
 - [ ] Benchmark FPS reale su device + documentare in questa pagina
 - [ ] Rigenerare screenshots `docs/screenshots/06-ai-debug.png` con `screenshots.mjs --debug`
+
+## Fix segnale temporale (2.10.x)
+Il `TemporalClassifier` validava il pattern su `kneeRaw` per TUTTI gli esercizi, ma per il
+**pushup il segnale primario è il gomito** (il ginocchio resta quasi fermo nei pushup) → il gate
+temporale misurava un giunto irrilevante e poteva contare/rifiutare rep fantasma. Fix:
+
+- `FeatureExtractor`: aggiunti `elbowRaw`/`trunkRaw` raw accanto a `kneeRaw`/`hipFlexRaw`.
+- `TemporalBuffer`: `detectDownUpPattern(key)` e `getROM(key)` ora sono segnale-aware (`RomSignal`),
+  non più hardcoded su `kneeRaw`.
+- `TemporalClassifier`: `primaryKey` per-esercizio corretto — `pushup → elbowRaw` (era `kneeRaw` via
+  hack "bilateral"), + DEFAULTS estesi a tutti e 6 i gated (squat/pushup/crunch/affondo/ponte/
+  jumpingJack/burpee) con `idealVel` e `minInterval` per-esercizio (jumpingJack più rapido, burpee
+  più lento).
+- Nuovi test `src/ai/classifier/classifier.test.ts` (5): ROM segnale-aware, pattern sul gomito per
+  pushup, e regressione che un pattern solo sul ginocchio NON conta per pushup.
+- Tot suite: 99/99.
+
