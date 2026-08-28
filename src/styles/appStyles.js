@@ -4,8 +4,11 @@ import {
   PAPER,
   OLIVE,
   OLIVE_DARK,
+  OLIVE_LIGHT,
   KHAKI,
+  KHAKI_LIGHT,
   BLAZE,
+  BLAZE_LIGHT,
   BLAZE_DEEP,
   STEEL,
 } from '../constants/theme.js';
