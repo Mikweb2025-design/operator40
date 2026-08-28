@@ -7,14 +7,15 @@ import { INK, INK_2, PAPER, OLIVE, OLIVE_LIGHT, KHAKI, BLAZE, BLAZE_LIGHT, BLAZE
 
 export const inputStyle = {
   width: '100%',
-  background: INK_2,
+  background: `linear-gradient(180deg, ${INK_2} 0%, #1E221B 100%)`,
   border: `1px solid ${OLIVE}`,
-  borderRadius: 12,
+  borderRadius: 14,
   padding: '12px 14px',
   color: PAPER,
   fontSize: 16,
   fontFamily: 'Inter, sans-serif',
   outline: 'none',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.22) inset',
 };
 
 export const primaryBtn = {
@@ -44,8 +45,8 @@ export const primaryBtnLarge = {
 };
 
 export const secondaryBtn = {
-  background: INK_2,
-  border: `1px solid ${KHAKI}`,
+  background: `linear-gradient(180deg, ${INK_2} 0%, #1C1F18 100%)`,
+  border: `1px solid ${KHAKI}88`,
   color: PAPER,
   borderRadius: 14,
   padding: '12px 16px',
@@ -53,6 +54,7 @@ export const secondaryBtn = {
   fontSize: 16,
   letterSpacing: '0.05em',
   cursor: 'pointer',
+  boxShadow: '0 4px 12px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.06) inset',
 };
 
 export const btnIcon = {

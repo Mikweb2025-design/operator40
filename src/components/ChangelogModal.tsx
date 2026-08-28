@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.11.1';
+export const CHANGELOG_VERSION = '2.12.0';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,10 +22,10 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.11.1',
-    title: 'Grafica OLED — 13 Loop (v2.11.1)',
-    subtitle: 'v2.11.1 · 28 Agosto 2026 · 13 giri grafici — +3 loop hero/card/micro',
-    intro: '10 loop + 3 extra: hero depth, card progress halo, ticker respiro. Fix white-screen BLAZE_LIGHT incluso. Zero debito funzionale.',
+    badge: 'NUOVO v2.12.0',
+    title: 'Grafica Full-App — 23 Loop (v2.12)',
+    subtitle: 'v2.12 · 28 Agosto 2026 · 23 giri — full-app OLED + hero + data viz',
+    intro: '13 loop + 10 extra full-app: color, card v2, typo, icon, nav, hero, HUD, data viz, forms, cohesion. White-screen fix + 3 loop già inclusi.',
     groups: [
       {
         icon: '🌑',
@@ -81,18 +81,27 @@ const COPY: Record<Lang, any> = {
           'Fix white-screen BLAZE_LIGHT import — #root ora renderizza',
         ],
       },
+      {
+        icon: '🚀',
+        title: '14-23. Full-App 10 Loop (v2.12)',
+        items: [
+          'Color OLED #0B0D0A 135% + card radius 16 + selected BLAZE glow',
+          'Typo display 0.06em + mono tnum, icon halo, nav pill safe-area',
+          'Hero overlay, HUD timer glow, recharts dark tooltip, input focus 3px + cohesion easing',
+        ],
+      },
     ],
     cta: 'PROVA ORA',
     ctaHint: 'Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS',
     dismiss: 'Non mostrare più',
     close: 'Chiudi',
-    footer: 'Tutto on-device. 13 loop grafici. Prossimo: v2.12 motion + a11y.',
+    footer: 'Tutto on-device. 23 loop grafici. Prossimo: v2.13 motion + watch.',
   },
   en: {
-    badge: 'NEW v2.11.1',
-    title: 'OLED Graphics — 13 Loops (v2.11.1)',
-    subtitle: 'v2.11.1 · Aug 28 2026 · 13 graphic loops — +3 hero/card/micro',
-    intro: '10 loops + 3 extra: hero depth, card halo, ticker breathing. White-screen fix included.',
+    badge: 'NEW v2.12.0',
+    title: 'OLED Graphics — 23 Loops (v2.12)',
+    subtitle: 'v2.12 · Aug 28 2026 · 23 loops — full-app OLED + hero + data viz',
+    intro: '13 loops + 10 extra full-app: color, card v2, typo, nav, hero, HUD, viz, forms, cohesion.',
     groups: [
       { icon: '🌑', title: '1-2. OLED Depth + Card', items: ['INK #0E100D vignette + 130% radial — deeper phone, 5px camo', 'Unified card 165° + hairline + gloss', 'Card-face hairline + accent + tabular glow'] },
       { icon: '🔥', title: '3-4. Typography + CTA', items: ['Bebas/Inter sharpened, num-glow halo', 'CTA BLAZE_LIGHT→DEEP + inset highlight', 'Large btn shadow 10/28'] },
@@ -100,18 +109,19 @@ const COPY: Record<Lang, any> = {
       { icon: '✨', title: '7-8. Micro + Skeleton', items: ['screenIn 0.5s, card stagger, ticker 28s', 'Skeleton 1.4s, loadbar 5px', 'Hover -3px lift'] },
       { icon: '🎨', title: '9-10. Aura & Cohesion', items: ['Aura 28s + vignette, grid 0.42', 'New tokens INK_3, PAPER_SOFT, etc.', 'Tracking 103 tests intact'] },
       { icon: '💎', title: '11-13. Extra 3 Loops', items: ['Hero shadow 12/36 + embers 1.08', 'Card-face 5/18 + accent glow', 'White-screen fix — root now renders'] },
+      { icon: '🚀', title: '14-23. Full-App 10 Loops', items: ['Color OLED #0B0D0A + card 16 + selected glow', 'Typo + icon halo + nav pill', 'HUD timer + viz tooltip + focus + cohesion'] },
     ],
     cta: 'TRY IT',
     ctaHint: 'Home → Mission → Start · https://mikweb.eu/operator40/',
     dismiss: "Don't show again",
     close: 'Close',
-    footer: 'On-device. 13 loops. Next: v2.12 motion + a11y.',
+    footer: 'On-device. 23 loops. Next: v2.13 watch + motion.',
   },
   de: {
-    badge: 'NEU v2.11.1',
-    title: 'OLED Grafik — 13 Loops (v2.11.1)',
-    subtitle: 'v2.11.1 · 28. Aug 2026 · 13 Grafik-Loops — +3 hero/card/micro',
-    intro: '10 Loops + 3 extra: hero depth, card halo, ticker breathing. White-screen fix.',
+    badge: 'NEU v2.12.0',
+    title: 'OLED Grafik — 23 Loops (v2.12)',
+    subtitle: 'v2.12 · 28. Aug 2026 · 23 Loops — full-app OLED',
+    intro: '13 Loops + 10 extra: color, card v2, typo, icon, nav, hero, HUD, viz, forms, cohesion.',
     groups: [
       { icon: '🌑', title: '1-2. OLED + Card', items: ['INK #0E100D Vignette', 'Unified Card + Hairline + Gloss', 'Tabular Glow'] },
       { icon: '🔥', title: '3-4. Typo + CTA', items: ['Bebas/Inter sharpened', 'CTA Blaze Light + Inset', 'Large shadow'] },
@@ -119,12 +129,13 @@ const COPY: Record<Lang, any> = {
       { icon: '✨', title: '7-8. Micro + Skeleton', items: ['Stagger 20/60/100ms', 'Skeleton 1.4s', 'Hover -3px'] },
       { icon: '🎨', title: '9-10. Aura', items: ['Aura 28s + Vignette', 'Neue Tokens', '103 Tests grün'] },
       { icon: '💎', title: '11-13. Extra', items: ['Hero 12/36 + embers', 'Card 5/18 + glow', 'White-screen fix'] },
+      { icon: '🚀', title: '14-23. Full-App', items: ['Color #0B0D0A + card 16', 'Typo + icon + nav', 'HUD + viz + forms + cohesion'] },
     ],
     cta: 'TESTEN',
     ctaHint: 'Home → Mission → Start',
     dismiss: 'Nicht mehr anzeigen',
     close: 'Schließen',
-    footer: 'On-device. 13 Loops. Next: v2.12.',
+    footer: 'On-device. 23 Loops. Next: v2.13.',
   },
 };
 

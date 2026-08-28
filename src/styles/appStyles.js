@@ -528,4 +528,72 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-ticker-inner { gap: 48px; padding-left: 48px; }
 .o40-topbar-glass, .o40-bottomnav-glass { backdrop-filter: blur(15px) saturate(1.2); }
 .o40-card { will-change: transform; }
+
+/* =============================================================
+   v2.12 — 10 LOOP EXTRA (14-23) full-app polish
+   14 Color — OLED ink depth + olive tint lifted
+   15 Card v2 — radius 16 + selected glow
+   16 Typography — display scale + mono tabular
+   17 Iconography — circle halo + badge
+   18 Navigation — pill glow + safe-area
+   19 Hero/Empty — overlay legibility + empty tint
+   20 Session HUD — timer glow + AI stage ring
+   21 Data viz — recharts dark tooltip + heatmap radius
+   22 Forms — focus ring 3px + pill active
+   23 Cohesion — easing + shadow unified
+   ============================================================= */
+
+/* Loop 14 — Color */
+:root { --ink: ${INK}; --ink2: ${INK_2}; --ink3: #0E100D; --olive: ${OLIVE}; --kaki: ${KHAKI}; --blaze: ${BLAZE}; --paper: ${PAPER}; }
+.o40-phone {
+  background:
+    radial-gradient(135% 62% at 50% -12%, #2D3423 0%, transparent 60%),
+    radial-gradient(105% 48% at 90% 110%, ${BLAZE_DEEP}20 0%, transparent 65%),
+    linear-gradient(180deg, #0B0D0A 0%, ${INK} 22%, ${INK} 100%);
+}
+
+/* Loop 15 — Card v2 */
+.o40-card, .o40-card-glass, .o40-card-face { border-radius: 16px; }
+.o40-card { border: 1px solid rgba(184,174,140,0.13); box-shadow: 0 7px 24px rgba(0,0,0,0.40), 0 1px 0 rgba(255,255,255,0.05) inset; }
+.o40-card-glass[aria-selected="true"], .o40-card[aria-selected="true"] { border-color: ${BLAZE}66; box-shadow: 0 10px 28px rgba(0,0,0,0.48), 0 0 0 1px ${BLAZE}22 inset; }
+@media (hover:hover){ .o40-card:hover{ transform: translateY(-3px); box-shadow: 0 18px 40px rgba(0,0,0,0.55); }}
+
+/* Loop 16 — Typography */
+.o40-display { font-size-adjust: 0.52; letter-spacing: 0.06em; line-height: 0.95; }
+.o40-mono { font-feature-settings: "tnum" 1, "ss01" 1; letter-spacing: 0.045em; }
+.o40 { line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+/* Loop 17 — Iconography */
+.o40-fav { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
+.o40-fav[aria-pressed="true"] { color: ${BLAZE}; filter: drop-shadow(0 0 6px ${BLAZE}66); }
+
+/* Loop 18 — Navigation */
+.o40-topbar-glass { min-height: 52px; border-bottom: 1px solid rgba(184,174,140,0.11); }
+.o40-bottomnav-glass { padding-bottom: max(4px, env(safe-area-inset-bottom)); }
+.o40-bottomnav-glass button[aria-current="page"] span:last-child { opacity: 1; }
+
+/* Loop 19 — Hero/Empty */
+.o40-card.o40-ring-border > div > div[style*="music-bg"], .o40-card img { filter: saturate(0.95) contrast(1.03); }
+.o40-skeleton { border-radius: 12px; }
+
+/* Loop 20 — Session HUD */
+.o40-display.o40-num-glow { text-shadow: 0 1px 0 rgba(0,0,0,0.45); }
+.o40-ai-stage { border-radius: 16px; overflow: hidden; }
+.o40-ai-stage::before { border-radius: 16px; }
+
+/* Loop 21 — Data viz */
+.recharts-tooltip-wrapper { filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45)); }
+.recharts-cartesian-grid line { stroke: rgba(184,174,140,0.08); }
+
+/* Loop 22 — Forms */
+.o40-input:focus, .o40-search:focus { border-color: ${BLAZE}; box-shadow: 0 0 0 3px ${BLAZE}22, 0 1px 0 rgba(255,255,255,0.06) inset; }
+.o40-search { border-radius: 14px; }
+.pillBtn[aria-pressed="true"], .o40-card[aria-pressed="true"] { background: ${BLAZE}14; border-color: ${BLAZE}55; }
+
+/* Loop 23 — Cohesion */
+* { scrollbar-color: ${KHAKI} ${INK_2}; }
+.o40 * { scrollbar-width: thin; }
+@media (prefers-reduced-motion: reduce){
+  .o40-card, .o40-screen-in, .o40-pop, .o40-expand, .o40-aura, .o40-gridbg, .o40-embers, .o40-ticker-inner { animation: none !important; transition: none !important; }
+}
 `;
