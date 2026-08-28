@@ -105,7 +105,7 @@ function HomeScreen({
   );
   const sessionsThisWeek = sessions.filter((s) => new Date(s.date).getTime() > weekAgo).length;
   const weeklyGoal = profile.weeklyGoal || WEEKLY_GOAL;
-  const { program: todayProgram, adaptive } = pickNextProgram(sessions, profile);
+  const { program: todayProgram, adaptive, isRecovery, isDeload } = pickNextProgram(sessions, profile);
   const othersRaw = PROGRAMS.filter((p) => p.id !== todayProgram.id);
   const others = getRecommendedMissions({ sessions, profile, others: othersRaw });
   const dailyChallenge = getDailyChallenge({ sessions, profile });
@@ -498,6 +498,12 @@ function HomeScreen({
                   >
                     NEW
                   </div>
+                )}
+                {isRecovery && (
+                  <div className="o40-mono" style={{ color: '#7FB069', background: '#7FB06922', border: '1px solid #7FB06955', borderRadius: 6, padding: '2px 7px', fontSize: 9 }}>RECUPERO</div>
+                )}
+                {isDeload && !isRecovery && (
+                  <div className="o40-mono" style={{ color: KHAKI, background: `${KHAKI}22`, border: `1px solid ${KHAKI}55`, borderRadius: 6, padding: '2px 7px', fontSize: 9 }}>DELOAD</div>
                 )}
               </div>
               <div className="o40-display" style={{ color: PAPER, fontSize: 30, marginTop: 2 }}>

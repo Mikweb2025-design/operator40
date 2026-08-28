@@ -34,6 +34,7 @@ import {
   Crown,
   Medal,
   Activity,
+  Timer,
   ChevronRight as ChevronRightIcon,
   Download,
   Upload,
@@ -163,6 +164,10 @@ export default function SetupScreen({
   onToggleVocalMotivation,
   motionFusion,
   onToggleMotionFusion,
+  tempoEnabled,
+  onToggleTempo,
+  tempoBpm,
+  onSetTempoBpm,
   level,
   onSetLevel,
   intervalPreset,
@@ -378,6 +383,20 @@ export default function SetupScreen({
               on={motionFusion}
               onClick={onToggleMotionFusion}
             />
+            <div style={{ height: 1, background: OLIVE_DARK, margin: '0 12px' }} />
+            <ToggleRow
+              label={lang==='it' ? `TEMPO metronomo ${tempoBpm} BPM` : `TEMPO metronome ${tempoBpm} BPM`}
+              icon={Timer}
+              on={tempoEnabled}
+              onClick={onToggleTempo}
+            />
+            {tempoEnabled && (
+              <div style={{ padding: '6px 12px 10px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span className="o40-mono" style={{ color: STEEL, fontSize: 11 }}>40</span>
+                <input type="range" min={40} max={60} value={tempoBpm} onChange={(e)=> onSetTempoBpm(e.target.value)} style={{ flex: 1, accentColor: BLAZE }} />
+                <span className="o40-mono" style={{ color: BLAZE, fontSize: 11 }}>{tempoBpm} BPM</span>
+              </div>
+            )}
           </div>
         )}
 

@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.13.0';
+export const CHANGELOG_VERSION = '2.14.0';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,10 +22,10 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.13.0',
-    title: 'Onboarding + Clip — 3 Step + Alias (v2.13)',
-    subtitle: 'v2.13.0 · 28 Agosto 2026 · tour 3 step + clip alias + offline',
-    intro: 'Batch roadmap 4: onboarding 3 step con dots/skip, clip alias per 4 esercizi mancanti, offline models check.',
+    badge: 'NUOVO v2.14.0',
+    title: 'Camp 2.0 + TEMPO + Coach 2.0 (v2.14)',
+    subtitle: 'v2.14.0 · 28 Agosto 2026 · recovery ogni 7 + deload + tempo 50 BPM',
+    intro: 'Batch backlog: Camp 2.0 recovery/deload, TEMPO metronomo 40-60 BPM, Coach vocale 2.0 TTS cue form<60.',
     groups: [
       {
         icon: '🌑',
@@ -126,18 +126,27 @@ const COPY: Record<Lang, any> = {
           'Offline models check + hasClip fallback polish',
         ],
       },
+      {
+        icon: '🏕️',
+        title: '35-37. Camp 2.0 + TEMPO + Coach (v2.14)',
+        items: [
+          'Camp 2.0: recovery ogni 7 (D) + deload week 22-28 (D/K/H/I)',
+          'TEMPO metronomo 40-60 BPM con toggle + slider in Impostazioni',
+          'Coach 2.0: TTS cue form<60 via SpeechCoach ogni 4s',
+        ],
+      },
     ],
     cta: 'PROVA ORA',
     ctaHint: 'Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS',
     dismiss: 'Non mostrare più',
     close: 'Chiudi',
-    footer: 'Tutto on-device. 34 iterazioni. Prossimo: v2.14 Camp 2.0.',
+    footer: 'Tutto on-device. 37 iterazioni. Prossimo: v2.15 Social + Watch.',
   },
   en: {
-    badge: 'NEW v2.13.0',
-    title: 'Onboarding + Clip — 3 Step + Alias (v2.13)',
-    subtitle: 'v2.13.0 · Aug 28 2026 · tour 3 step + clip alias + offline',
-    intro: 'Roadmap batch 4: onboarding 3 step with dots/skip, clip alias for 4 missing, offline check.',
+    badge: 'NEW v2.14.0',
+    title: 'Camp 2.0 + TEMPO + Coach 2.0 (v2.14)',
+    subtitle: 'v2.14.0 · Aug 28 2026 · recovery + tempo 50 BPM + coach',
+    intro: 'Backlog batch: Camp 2.0 recovery/deload, TEMPO 40-60 BPM, Coach 2.0 TTS cue.',
     groups: [
       { icon: '🌑', title: '1-2. OLED Depth + Card', items: ['INK #0E100D vignette + 130% radial — deeper phone, 5px camo', 'Unified card 165° + hairline + gloss', 'Card-face hairline + accent + tabular glow'] },
       { icon: '🔥', title: '3-4. Typography + CTA', items: ['Bebas/Inter sharpened, num-glow halo', 'CTA BLAZE_LIGHT→DEEP + inset highlight', 'Large btn shadow 10/28'] },
@@ -150,18 +159,19 @@ const COPY: Record<Lang, any> = {
       { icon: '📳', title: '28-29. IMU + BeforeAfter', items: ['MotionFusion opt-in for jumpingJack/burpee', 'BeforeAfter pinch-zoom 1-3x + haptics', 'Engine enableMotionFusion wiring'] },
       { icon: '❤️', title: '30-32. HR + NEFFEX + PWA', items: ['Health HR avg last 20 + toast', 'NEFFEX crossfade 1.2s + daily seed', 'PWA banner after 2 sessions'] },
       { icon: '🎓', title: '33-34. Onboarding + Clip', items: ['Onboarding 3 step with dots, Skip/Next', 'Clip alias for 4 missing (plank/jack/mountain/affondo)', 'Offline models check'] },
+      { icon: '🏕️', title: '35-37. Camp + TEMPO + Coach', items: ['Camp 2.0 recovery every 7 + deload week', 'TEMPO metronome 40-60 BPM + toggle', 'Coach 2.0 TTS cue form<60'] },
     ],
     cta: 'TRY IT',
     ctaHint: 'Home → Mission → Start · https://mikweb.eu/operator40/',
     dismiss: "Don't show again",
     close: 'Close',
-    footer: 'On-device. 34 iterations. Next: v2.14 Camp 2.0.',
+    footer: 'On-device. 37 iterations. Next: v2.15 Social + Watch.',
   },
   de: {
-    badge: 'NEU v2.13.0',
-    title: 'Onboarding + Clip — 3 Step + Alias (v2.13)',
-    subtitle: 'v2.13.0 · 28. Aug 2026 · Tour 3 Step + Clip Alias',
-    intro: 'Roadmap Batch 4: Onboarding 3 Step mit Dots, Clip Alias für 4 fehlende, Offline Check.',
+    badge: 'NEU v2.14.0',
+    title: 'Camp 2.0 + TEMPO + Coach 2.0 (v2.14)',
+    subtitle: 'v2.14.0 · 28. Aug 2026 · Recovery + Tempo + Coach',
+    intro: 'Backlog: Camp 2.0 Recovery/Deload, TEMPO 40-60 BPM, Coach 2.0 TTS.',
     groups: [
       { icon: '🌑', title: '1-2. OLED + Card', items: ['INK #0E100D Vignette', 'Unified Card + Hairline + Gloss', 'Tabular Glow'] },
       { icon: '🔥', title: '3-4. Typo + CTA', items: ['Bebas/Inter sharpened', 'CTA Blaze Light + Inset', 'Large shadow'] },
@@ -174,12 +184,13 @@ const COPY: Record<Lang, any> = {
       { icon: '📳', title: '28-29. IMU + BeforeAfter', items: ['MotionFusion opt-in', 'BeforeAfter pinch-zoom + haptics', 'Engine wiring'] },
       { icon: '❤️', title: '30-32. HR + NEFFEX + PWA', items: ['Health HR avg + toast', 'NEFFEX crossfade 1.2s + seed', 'PWA nach 2 Sessions'] },
       { icon: '🎓', title: '33-34. Onboarding + Clip', items: ['Onboarding 3 Step mit Dots', 'Clip Alias für 4 fehlende', 'Offline Check'] },
+      { icon: '🏕️', title: '35-37. Camp + TEMPO + Coach', items: ['Camp 2.0 Recovery alle 7 + Deload Woche', 'TEMPO Metronom 40-60 BPM', 'Coach 2.0 TTS bei form<60'] },
     ],
     cta: 'TESTEN',
     ctaHint: 'Home → Mission → Start',
     dismiss: 'Nicht mehr anzeigen',
     close: 'Schließen',
-    footer: 'On-device. 34 Iterationen. Next: v2.14.',
+    footer: 'On-device. 37 Iterationen. Next: v2.15.',
   },
 };
 

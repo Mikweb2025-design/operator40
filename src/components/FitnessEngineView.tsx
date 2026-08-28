@@ -69,6 +69,17 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
   }, []);
   useEffect(() => { speechRef.current?.setLang(lang as any); }, [lang]);
   useEffect(() => { speechRef.current?.setEnabled(speechOn); }, [speechOn]);
+  // Coach vocale 2.0 — TTS cue when form <60 (spec backlog)
+  const lastCoachAt = useRef(0);
+  useEffect(() => {
+    if (!lastForm || lastForm.quality >= 60 || !lastForm.cues[0]) return;
+    const now = Date.now();
+    if (now - lastCoachAt.current < 4000) return;
+    lastCoachAt.current = now;
+    const cue = localizedCue(lastForm.cues[0], lang as any);
+    setCoachingText(cue);
+    if (speechRef.current) speechRef.current.speakCue(lastForm.cues[0] as any);
+  }, [lastForm, lang]);
 
   // draw overlay loop (independent of inference; 60fps canvas draw)
   useEffect(() => {

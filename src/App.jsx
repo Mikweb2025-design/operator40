@@ -455,7 +455,7 @@ export default function App() {
   const [showChangelog, setShowChangelog] = useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = useState(() => {
     try {
-      return localStorage.getItem('o40_release_2.13.0') !== 'dismissed';
+      return localStorage.getItem('o40_release_2.14.0') !== 'dismissed';
     } catch {
       return true;
     }
@@ -1008,6 +1008,8 @@ export default function App() {
           : (profile && profile.intervalPreset) || 'standard',
       level: prevLevel || 'combattente',
       executionMode: (profile && profile.executionMode) || 'time',
+      tempoEnabled: profile ? !!profile.tempoEnabled : false,
+      tempoBpm: profile && profile.tempoBpm ? Math.max(40, Math.min(60, parseInt(profile.tempoBpm,10)||50)) : 50,
       lang: lang,
       campStart: profile && profile.campStart ? profile.campStart : new Date().toISOString(),
     };
@@ -1102,6 +1104,18 @@ export default function App() {
     } catch {}
     if (p.motionFusion) showToast(lang === 'it' ? 'IMU attivato — jumpingJack/burpee/skater' : 'IMU enabled');
     else showToast(lang === 'it' ? 'IMU disattivato' : 'IMU disabled');
+  }
+  async function toggleTempo() {
+    const p = { ...profile, tempoEnabled: !profile.tempoEnabled };
+    setProfile(p);
+    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch {}
+    showToast(p.tempoEnabled ? `TEMPO ${p.tempoBpm||50} BPM ON` : 'TEMPO OFF');
+  }
+  async function setTempoBpm(v) {
+    const bpm = Math.max(40, Math.min(60, parseInt(v,10)||50));
+    const p = { ...profile, tempoBpm: bpm };
+    setProfile(p);
+    try { await window.storage.set('o40_profile', JSON.stringify(p), false); } catch {}
   }
 
   async function setIntervalPreset(key) {
@@ -1692,6 +1706,10 @@ export default function App() {
                 onTestPush={handleTestPush}
                 motionFusion={!!(profile && profile.motionFusion)}
                 onToggleMotionFusion={toggleMotionFusion}
+                tempoEnabled={!!(profile && profile.tempoEnabled)}
+                onToggleTempo={toggleTempo}
+                tempoBpm={profile && profile.tempoBpm || 50}
+                onSetTempoBpm={setTempoBpm}
                 onExportBackup={exportData}
                 onImportBackup={(file) =>
                   handleImportBackup(file, {
@@ -1773,24 +1791,24 @@ export default function App() {
                             borderRadius: 6,
                           }}
                         >
-                          NUOVO v2.13.0
+                          NUOVO v2.14.0
                         </span>
                         <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>
-                          28 AGO 2026 · 34 ITERAZIONI
+                          28 AGO 2026 · 37 ITERAZIONI
                         </span>
                       </div>
                       <div
                         className="o40-display"
                         style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}
                       >
-                        Onboarding + Clip — 3 Step + Alias!
+                        Camp 2.0 + TEMPO + Coach 2.0!
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.13.0', 'dismissed');
+                        localStorage.setItem('o40_release_2.14.0', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
@@ -1865,7 +1883,7 @@ export default function App() {
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.13.0', 'dismissed');
+                        localStorage.setItem('o40_release_2.14.0', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}

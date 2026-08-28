@@ -198,6 +198,18 @@ function SessionScreen({
     }, Math.round(duration / 2) * 1000);
     return () => clearInterval(interval);
   }, [soundOn, vocalMotivation, paused, phase.type, phase.duration, isAiWork, isRepsWork, lang]);
+  // TEMPO metronomo 40-60 BPM (Coach vocale 2.0 / TEMPO backlog)
+  useEffect(() => {
+    if (!profile?.tempoEnabled || paused || phase.type !== 'work') return;
+    const bpm = Math.max(40, Math.min(60, profile.tempoBpm || 50));
+    const ms = Math.round(60000 / bpm);
+    const id = setInterval(() => {
+      if (document.hidden) return;
+      try { playBeep(900, 0.06); } catch {}
+      if (profile?.vibrationOn !== false) try { vibrate(12); } catch {}
+    }, ms);
+    return () => clearInterval(id);
+  }, [profile?.tempoEnabled, profile?.tempoBpm, profile?.vibrationOn, paused, phase.type, phaseIdx]);
   useEffect(() => {
     requestWakeLock();
     function onVis() {

@@ -412,24 +412,36 @@ export function programById(id) {
   return PROGRAMS.find((p) => p.id === id) || PROGRAMS[0];
 }
 
+export function isRecoveryDay(dayIdx) { return dayIdx % 7 === 0; }
+export function isDeloadWeek(dayIdx) { return dayIdx >= 22 && dayIdx <= 28; }
 export function pickNextProgram(sessions, profile) {
   if (!profile || !profile.campStart || !sessions.length) {
-    if (!sessions.length) return { program: PROGRAMS[0], adaptive: false };
+    if (!sessions.length) return { program: PROGRAMS[0], adaptive: false, isRecovery: false, isDeload: false };
     const order = ['A', 'B', 'C'];
     const last = sessions[sessions.length - 1];
     const rotationNextId = order[(order.indexOf(last.programId) + 1) % order.length];
     const hoursSince = (Date.now() - new Date(last.date).getTime()) / 3600000;
     if (last.rpe >= 4 && hoursSince < 20) {
-      return { program: programById('D'), adaptive: true };
+      return { program: programById('D'), adaptive: true, isRecovery: true, isDeload: false };
     }
-    return { program: programById(rotationNextId), adaptive: false };
+    return { program: programById(rotationNextId), adaptive: false, isRecovery: false, isDeload: false };
   }
   const idx = campDayIndex(profile);
-  let program = programById(DAY_CYCLE[(idx - 1) % DAY_CYCLE.length]);
+  // Camp 2.0: recovery ogni 7 + deload week 22-28
+  if (isRecoveryDay(idx)) {
+    return { program: programById('D'), adaptive: false, isRecovery: true, isDeload: isDeloadWeek(idx) };
+  }
+  let program;
+  if (isDeloadWeek(idx)) {
+    const deloadPool = ['D', 'K', 'H', 'I'];
+    program = programById(deloadPool[(idx - 22) % deloadPool.length]);
+  } else {
+    program = programById(DAY_CYCLE[(idx - 1) % DAY_CYCLE.length]);
+  }
   const last = sessions[sessions.length - 1];
   const hoursSince = (Date.now() - new Date(last.date).getTime()) / 3600000;
   if (last && last.rpe >= 4 && hoursSince < 20 && program.id !== 'D') {
-    return { program: programById('D'), adaptive: true };
+    return { program: programById('D'), adaptive: true, isRecovery: true, isDeload: isDeloadWeek(idx) };
   }
-  return { program, adaptive: false };
+  return { program, adaptive: false, isRecovery: false, isDeload: isDeloadWeek(idx) };
 }
