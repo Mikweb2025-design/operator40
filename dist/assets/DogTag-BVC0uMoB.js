@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL } from "./index-CcZwyDlr.js";
+import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL } from "./index-DoCc26pn.js";
 import "./icons-DnFQGhVC.js";
 function DogTag({ label, value, sub, accent = false }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
