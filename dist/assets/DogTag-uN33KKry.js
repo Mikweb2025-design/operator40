@@ -1,5 +1,5 @@
-import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, K as KHAKI, P as PAPER, S as STEEL } from "./index-bcsNZwdp.js";
-import "./icons-DnFQGhVC.js";
+import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, K as KHAKI, P as PAPER, S as STEEL } from "./index-CmuzqvQJ.js";
+import "./icons-BHJLJdva.js";
 function DogTag({ label, value, sub }) {
   const numeric = typeof value === "number";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(

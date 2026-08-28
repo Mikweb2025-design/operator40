@@ -1,9 +1,9 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DKfTMchY.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-CISTsPQZ.js","./CountdownScreen-xklEpVC9.js","./SetupScreen-BRfB1Pkg.js","./TopBar-C3eZi3oZ.js","./HomeScreen-BdbjtDxL.js","./GoalRing-Dmy3d6SL.js","./ExerciseFigure-DMtrI2un.js","./DogTag-DdWIxQQb.js","./ProgressRing-QnQUAjfU.js","./LibraryScreen-BSKfH2Al.js","./clips-CZetA5iC.js","./BuilderScreen-SG8P-XEx.js","./PreviewScreen-lDwPwNzg.js","./SessionScreen-Bz_PcOHh.js","./SummaryScreen-CvUdlfVs.js","./HistoryScreen-B2vjGYPu.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-ffeuwnPz.js","./icons-BHJLJdva.js","./charts-DKCmdoT_.js","./web-DOzcLDDG.js","./CountdownScreen-BkWCI193.js","./SetupScreen-8gt0-Cr3.js","./TopBar-CrV7IU_g.js","./HomeScreen-B3ij0TtA.js","./GoalRing-BEM1NwH7.js","./ExerciseFigure-o7Jo0liB.js","./DogTag-uN33KKry.js","./ProgressRing-Dpv5FopX.js","./LibraryScreen-BtePAI5r.js","./clips-CZetA5iC.js","./BuilderScreen-C9q3dqZm.js","./PreviewScreen-Bs77sE-T.js","./SessionScreen-BhC_UMgc.js","./SummaryScreen-CGRMjJL5.js","./HistoryScreen-PlHmPbaz.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, E as Eye } from "./icons-DnFQGhVC.js";
-import { r as reactDomExports } from "./charts-BWCYe6zh.js";
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, E as Eye } from "./icons-BHJLJdva.js";
+import { r as reactDomExports } from "./charts-DKCmdoT_.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -568,18 +568,6 @@ const I18N = {
   },
   "sum.hr.ph": { it: "es. 142", en: "e.g. 142", de: "z. B. 142" },
   "sum.zone": { it: "Zona: {label}", en: "Zone: {label}", de: "Zone: {label}" },
-  "sum.quality.title": { it: "Qualità esecuzione (AI)", en: "Form quality (AI)", de: "Ausführungsqualität (KI)" },
-  "sum.quality.body": {
-    it: "Media della qualità del movimento rilevata dall’AI Coach durante le fasi lavoro.",
-    en: "Average movement quality tracked by the AI Coach during work phases.",
-    de: "Durchschnittliche Bewegungsqualität, die der AI Coach während der Arbeitsphasen erfasst hat."
-  },
-  "sum.quality.none": {
-    it: "AI Coach non attivo durante la sessione.",
-    en: "AI Coach was not active during this session.",
-    de: "AI Coach war während dieser Sitzung nicht aktiv."
-  },
-  "sum.quality.per": { it: "{name} · Q {q}", en: "{name} · Q {q}", de: "{name} · Q {q}" },
   "sum.save": {
     it: "SALVA E TORNA ALLA BASE",
     en: "SAVE & RETURN TO BASE",
@@ -587,7 +575,6 @@ const I18N = {
   },
   /* ---- history ---- */
   "hist.title": { it: "STATISTICHE", en: "STATISTICS", de: "STATISTIK" },
-  "hist.quality": { it: "Qualità AI", en: "AI quality", de: "KI-Qualität" },
   "hist.avgint": {
     it: "Intensità media (RPE)",
     en: "Average intensity (RPE)",
@@ -3026,26 +3013,6 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-phone::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); }
 .o40-topbar-glass { backdrop-filter: blur(12px) saturate(1.15); background: color-mix(in srgb, ${INK} 88%, transparent); border-bottom: 1px solid rgba(184,174,140,0.12); }
 .o40-bottomnav-glass { backdrop-filter: blur(12px) saturate(1.15); background: color-mix(in srgb, ${INK} 90%, transparent); border-top: 1px solid rgba(184,174,140,0.12); }
-
-/* ---- AI tracking stage: scanline + edge glow overlay ---- */
-.o40-ai-stage::after {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(120% 70% at 50% 0%, ${BLAZE}22 0%, transparent 55%),
-    repeating-linear-gradient(180deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 3px);
-  mix-blend-mode: screen; opacity: 0.55;
-}
-.o40-ai-stage::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  box-shadow: inset 0 0 60px 0 rgba(0,0,0,0.55), inset 0 0 2px rgba(193,68,14,0.4);
-}
-@media (prefers-reduced-motion: reduce) {
-  .o40-ai-stage::after { background: radial-gradient(120% 70% at 50% 0%, ${BLAZE}22 0%, transparent 55%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .o40-eqbar, .o40-comet, .o40-ember, .o40-ecg, .o40-ticker-inner, .o40-loadbar > span,
-  .o40-pop, .o40-blink, .o40-expand { animation: none !important; }
-}
 `;
 function getReminder() {
   try {
@@ -5140,9 +5107,7 @@ function extractFeatures(lm, worldLm, prevFeatures, dtMs) {
     velocity,
     symmetry,
     kneeRaw: knee,
-    hipFlexRaw: hipFlex,
-    elbowRaw: elbow,
-    trunkRaw: trunk
+    hipFlexRaw: hipFlex
   };
 }
 function featuresToVector(f2) {
@@ -5193,16 +5158,9 @@ class TemporalBuffer {
     const vals = this.frames.map((f2) => f2.features[key]);
     return Math.max(...vals) - Math.min(...vals);
   }
-  getVelocityProfile(key = "kneeRaw") {
+  getVelocityProfile() {
     if (this.frames.length < 4) return { mean: 0, max: 0, smoothness: 100 };
-    const vels = [];
-    for (let i = 1; i < this.frames.length; i++) {
-      const dtMs = this.frames[i].timestamp - this.frames[i - 1].timestamp;
-      if (dtMs <= 0) continue;
-      const delta = this.frames[i].features[key] - this.frames[i - 1].features[key];
-      vels.push(Math.abs(delta) / (dtMs / 1e3));
-    }
-    if (!vels.length) return { mean: 0, max: 0, smoothness: 100 };
+    const vels = this.frames.map((f2) => Math.abs(f2.features.velocity));
     const mean = vels.reduce((a, b) => a + b, 0) / vels.length;
     const max = Math.max(...vels);
     const variance = vels.reduce((s, v) => s + (v - mean) ** 2, 0) / vels.length;
@@ -5213,10 +5171,10 @@ class TemporalBuffer {
     if (!this.frames.length) return 100;
     return this.frames.reduce((s, f2) => s + f2.features.symmetry, 0) / this.frames.length;
   }
-  // Pattern detection: down-up sinusoidale vs rumore (dalla definizione "decreasing then increasing")
-  detectDownUpPattern(key = "kneeRaw") {
+  // Pattern detection: down-up sinusoidale vs rumore
+  detectDownUpPattern() {
     if (this.frames.length < 10) return { hasPattern: false, confidence: 0, rom: 0 };
-    const vals = this.frames.map((f2) => f2.features[key]);
+    const vals = this.frames.map((f2) => f2.features.kneeRaw);
     const rom = Math.max(...vals) - Math.min(...vals);
     if (rom < 14) return { hasPattern: false, confidence: 0, rom };
     let directionChanges = 0;
@@ -5232,8 +5190,7 @@ class TemporalBuffer {
     const confidence = hasPattern ? Math.min(100, 55 + rom * 1.2 - directionChanges * 8) : 0;
     return { hasPattern, confidence, rom };
   }
-  // Per crunch/bicycle/ponte o esercizi che usano hipFlex/trunk come primario:
-  // stessa logica down-up ma sul segnale flessione (angolo diminuisce in contrazione).
+  // Per crunch/bicycle: usa hipFlex invece di knee
   detectFlexExtendPattern(key = "kneeRaw") {
     if (this.frames.length < 10) return { hasPattern: false, confidence: 0, rom: 0 };
     const vals = this.frames.map((f2) => f2.features[key]);
@@ -5257,29 +5214,23 @@ class TemporalBuffer {
   }
 }
 const DEFAULTS = {
-  squat: { minROM: 18, minConfidence: 58, primaryKey: "kneeRaw", idealVel: 120, minInterval: 360 },
-  pushup: { minROM: 20, minConfidence: 60, primaryKey: "elbowRaw", idealVel: 150, minInterval: 340 },
-  // primario è il gomito, non il ginocchio
-  crunch: { minROM: 14, minConfidence: 58, primaryKey: "hipFlexRaw", idealVel: 110, minInterval: 340 },
-  affondo: { minROM: 20, minConfidence: 60, primaryKey: "kneeRaw", idealVel: 120, minInterval: 360 },
-  ponte: { minROM: 15, minConfidence: 58, primaryKey: "hipFlexRaw", idealVel: 110, minInterval: 340 },
-  jumpingJack: { minROM: 16, minConfidence: 60, primaryKey: "kneeRaw", idealVel: 200, minInterval: 300 },
-  // più rapido
-  burpee: { minROM: 18, minConfidence: 62, primaryKey: "kneeRaw", idealVel: 160, minInterval: 380 }
-  // movimento lungo + pausa piombo
+  squat: { minROM: 18, minConfidence: 58, primaryKey: "kneeRaw" },
+  pushup: { minROM: 22, minConfidence: 60, primaryKey: "kneeRaw" },
+  // pushup usa elbow ma mappato su kneeRaw via bilateral
+  crunch: { minROM: 14, minConfidence: 58, primaryKey: "hipFlexRaw" },
+  affondo: { minROM: 20, minConfidence: 60, primaryKey: "kneeRaw" },
+  ponte: { minROM: 15, minConfidence: 58, primaryKey: "hipFlexRaw" }
 };
-const GENERIC = { minROM: 16, minConfidence: 60, primaryKey: "kneeRaw", idealVel: 120, minInterval: 340 };
 class TemporalClassifier {
   constructor(exercise, overrides) {
     this.lastCountAt = 0;
-    const def = DEFAULTS[exercise] ?? GENERIC;
+    const def = DEFAULTS[exercise] ?? { minROM: 16, minConfidence: 60, primaryKey: "kneeRaw" };
     this.cfg = {
       exercise,
       minROM: (overrides == null ? void 0 : overrides.minROM) ?? def.minROM ?? 16,
       minConfidence: (overrides == null ? void 0 : overrides.minConfidence) ?? def.minConfidence ?? 60,
-      primaryKey: (overrides == null ? void 0 : overrides.primaryKey) ?? (def.primaryKey ?? "kneeRaw"),
-      idealVel: (overrides == null ? void 0 : overrides.idealVel) ?? def.idealVel ?? 120,
-      minInterval: (overrides == null ? void 0 : overrides.minInterval) ?? def.minInterval ?? 340
+      primaryKey: (overrides == null ? void 0 : overrides.primaryKey) ?? def.primaryKey ?? "kneeRaw",
+      ...overrides
     };
   }
   evaluate(buffer, currentFeatures, dwellMs, now) {
@@ -5287,10 +5238,9 @@ class TemporalClassifier {
       return { confidence: 0, shouldCount: false, rom: 0, patternConfidence: 0, velocityScore: 0, symmetryScore: 0, reason: "buffer warming" };
     }
     const { hasPattern, confidence: patternConf, rom } = this.detectPattern(buffer);
-    const vel = buffer.getVelocityProfile(this.cfg.primaryKey);
+    const vel = buffer.getVelocityProfile();
     const sym = buffer.getSymmetryAvg();
-    const ideal = this.cfg.idealVel;
-    const velocityScore = clamp(100 - Math.abs(vel.mean - ideal) * 0.28 - Math.max(0, vel.max - 520) * 0.12, 0, 100);
+    const velocityScore = clamp(100 - Math.abs(vel.mean - 120) * 0.28 - Math.max(0, vel.max - 520) * 0.12, 0, 100);
     const symmetryScore = clamp(sym, 0, 100);
     const dwellBonus = dwellMs > 55 ? 6 : dwellMs > 30 ? 3 : 0;
     const romScore = rom > this.cfg.minROM + 12 ? 30 : rom > this.cfg.minROM + 5 ? 22 : rom > this.cfg.minROM ? 14 : 0;
@@ -5304,13 +5254,17 @@ class TemporalClassifier {
         100
       );
     }
-    const timeOk = now - this.lastCountAt > this.cfg.minInterval;
+    const minInterval = 340;
+    const timeOk = now - this.lastCountAt > minInterval;
     const shouldCount = confidence >= this.cfg.minConfidence && hasPattern && rom >= this.cfg.minROM && timeOk;
     const reason = !hasPattern ? "no pattern" : rom < this.cfg.minROM ? `rom ${Math.round(rom)}<${this.cfg.minROM}` : !timeOk ? "debounce" : confidence < this.cfg.minConfidence ? `conf ${Math.round(confidence)}<${this.cfg.minConfidence}` : "ok";
     return { confidence: Math.round(confidence), shouldCount, rom: Math.round(rom), patternConfidence: Math.round(patternConf), velocityScore: Math.round(velocityScore), symmetryScore: Math.round(symmetryScore), reason };
   }
   detectPattern(buffer) {
-    return buffer.detectDownUpPattern(this.cfg.primaryKey);
+    if (this.cfg.primaryKey === "hipFlexRaw") {
+      return buffer.detectFlexExtendPattern("hipFlexRaw");
+    }
+    return buffer.detectDownUpPattern();
   }
   markCounted(now) {
     this.lastCountAt = now;
@@ -6710,7 +6664,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-DKfTMchY.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-ffeuwnPz.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -6794,8 +6748,6 @@ class FitnessEngine {
     this.avgQuality = 0;
     this.lastRepQuality = null;
     this.lastRepConfidence = null;
-    this.repQualityHistory = [];
-    this.repDurationsMs = [];
     this.currentPhase = "idle";
     this.currentForm = null;
     this.troughInRep = 180;
@@ -6916,12 +6868,6 @@ class FitnessEngine {
           this.lastRepConfidence = aRes.repConfidence;
           this.qualityWindow.push(aRes.formScore);
           if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
-          this.repQualityHistory.push(aRes.formScore);
-          this.repDurationsMs.push(repDuration);
-          if (this.repQualityHistory.length > 30) {
-            this.repQualityHistory.shift();
-            this.repDurationsMs.shift();
-          }
           this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
           const evt = { repIndex: this.reps, timestampMs: now, durationMs: repDuration, peakAngle: this.peakInRep, troughAngle: this.troughInRep, quality: aRes.formScore, cues: aRes.cues, velocity: aRes.velocity, confidence: aRes.repConfidence };
           (_f = this.onRep) == null ? void 0 : _f.call(this, evt);
@@ -7047,12 +6993,6 @@ class FitnessEngine {
         this.lastRepConfidence = evt.confidence ?? repQuality;
         this.qualityWindow.push(repQuality);
         if (this.qualityWindow.length > (this.cfg.qualitySmoothingWindow ?? 5)) this.qualityWindow.shift();
-        this.repQualityHistory.push(repQuality);
-        this.repDurationsMs.push(repDuration);
-        if (this.repQualityHistory.length > 30) {
-          this.repQualityHistory.shift();
-          this.repDurationsMs.shift();
-        }
         this.avgQuality = this.qualityWindow.reduce((a, b) => a + b, 0) / this.qualityWindow.length;
         const evt = {
           repIndex: this.reps,
@@ -7119,8 +7059,6 @@ class FitnessEngine {
       lastRepQuality: this.lastRepQuality,
       lastRepConfidence: this.lastRepConfidence,
       liveRepConfidence: Math.round(this.liveRepConfidence),
-      repQualityHistory: this.repQualityHistory.slice(),
-      repDurationsMs: this.repDurationsMs.slice(),
       currentPhase: this.currentPhase,
       currentForm: this.currentForm,
       fps: Math.round(this.fpsEma),
@@ -7206,8 +7144,6 @@ class FitnessEngine {
     this.avgQuality = 0;
     this.lastRepQuality = null;
     this.lastRepConfidence = null;
-    this.repQualityHistory = [];
-    this.repDurationsMs = [];
     this.currentPhase = "idle";
     this.currentForm = null;
     this.troughInRep = 180;
@@ -8077,9 +8013,9 @@ const CHANGELOG_VERSION = "2.10.0";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.10.x",
-    title: "Tracking 2.0 — Fase 1 + 2 (2.10)",
-    subtitle: "v2.10 · 28 Agosto 2026 · Conteggio rep + pose — 100% offline",
+    badge: "NUOVO v2.10.0",
+    title: "Tracking 2.0 — Fase 1 + 2 (2.10.0)",
+    subtitle: "v2.10.0 · 28 Agosto 2026 · Conteggio rep + pose — 100% offline",
     intro: "Fase 1 (heavy auto + worldLandmarks + MotionFusion) + Fase 2 (buffer 30 frame + classificatore temporale). Fix ai falsi conteggi su squat/pushup/crunch e jitter laterale.",
     groups: [
       {
@@ -8117,15 +8053,6 @@ const COPY = {
           "Gate 62→58 con validazione temporale — preferisce contare incerto con bassa confidenza",
           "Form cues invariati, solo repConfidence più stabile"
         ]
-      },
-      {
-        icon: "⚡",
-        title: "5. Velocità segnale-aware (2.10.x)",
-        items: [
-          "La velocità ROM (deg/s) ora segue il segnale primario di ogni esercizio (elbowRaw per pushup, ecc.), non più il ginocchio statico",
-          "Pushup/crunch: il voto di velocità e il gate temporale usano il ROM giusto → conteggi più sincronizzati col movimento reale",
-          "Nuovi test di regressione: buffer 101 → 103 test verdi"
-        ]
       }
     ],
     cta: "PROVA ORA",
@@ -8135,54 +8062,50 @@ const COPY = {
     footer: "Tutto on-device (IndexedDB, MediaPipe mai su server). Per replay: ◯ REC durante sessione → ↓ JSON → test analyzer. Docs in src/ai/classifier/"
   },
   en: {
-    badge: "NEW v2.10.x",
-    title: "Tracking 2.0 — Phase 1 + 2 (2.10)",
-    subtitle: "v2.10 · Aug 28 2026 · Rep counting + pose — 100% offline",
+    badge: "NEW v2.10.0",
+    title: "Tracking 2.0 — Phase 1 + 2 (2.10.0)",
+    subtitle: "v2.10.0 · Aug 28 2026 · Rep counting + pose — 100% offline",
     intro: "Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-frame temporal classifier). Fixes false counts on squat/pushup/crunch and side-view jitter.",
     groups: [
       {
-        icon: "🎯",
-        title: "1. Phase 1 — Heavy auto + worldLandmarks",
-        items: [
-          "Auto PoseLandmarker: heavy on device ≥4GB/4core, lite fallback — override via localStorage o40_modelVariant",
-          "Smoother recalibrated for heavy (1.05/0.006) + smoothed worldLandmarks for depth",
-          "FitnessEngine uses worldLandmarks to correct perspective-compressed angles"
-        ]
-      },
-      {
-        icon: "📳",
-        title: "2. Phase 1 — MotionFusion re-enabled",
-        items: [
-          "Capacitor Motion for jumpingJack/burpee/highKnees/mountainClimber/skater",
-          "+12 repConfidence boost if IMU rhythm 0.8-2.5Hz — secondary, PWA works without it",
-          "PWA DeviceMotionEvent fallback already covered"
-        ]
-      },
-      {
-        icon: "🧠",
-        title: "3. Phase 2 — Temporal classifier (30 frames)",
-        items: [
-          "New src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier",
-          "Blend classic*0.55 + temporal*0.45, ROM gate + down-up pattern — avoids phantom reps",
-          "Wired into squat/pushup/crunch/jumpingJack/burpee/affondo"
-        ]
-      },
-      {
         icon: "📐",
-        title: "4. Tuning — debounce + thresholds",
+        title: "1. Structure — dedup UI (audit/3)",
         items: [
-          "squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — less side jitter",
-          "Gate 62→58 with temporal validation — prefers counting with low confidence over missing",
-          "Form cues unchanged, only more stable repConfidence"
+          "DogTag ×4, ProgressRing ×2, SegmentedProgress ×2, shared styles → src/components/ui/*",
+          "TopBar + App dead code removed",
+          "Build 749k→444k"
+        ]
+      },
+      {
+        icon: "🌍",
+        title: "2. i18n — 15+ hardcoded → I18N (audit/7)",
+        items: [
+          "Home sections + streak + backup ternaries → t()",
+          "New keys: home.section.*, setup.backup.*"
+        ]
+      },
+      {
+        icon: "🧪",
+        title: "3. Quality — tests 30→51 (audit/5)",
+        items: [
+          "New src/utils/audit.test.js: 21 tests (belly, progress, bmi, body, backup)",
+          "Coverage for kcal/streak/belly"
         ]
       },
       {
         icon: "⚡",
-        title: "5. Signal-aware velocity (2.10.x)",
+        title: "4. Performance — lazy 9 screens (audit/4)",
         items: [
-          "ROM velocity (deg/s) now follows each exercise primary signal (elbowRaw for pushup, etc.), no longer the static knee",
-          "Pushup/crunch: velocity score + temporal gate use the right ROM → counts stay in sync with the real movement",
-          "New regression tests: buffer suite 101 → 103 green"
+          "App.jsx: 9 screens → React.lazy + Suspense",
+          "Removed recharts from App — index 749k→444k"
+        ]
+      },
+      {
+        icon: "📡",
+        title: "5. PWA robust — SWR + SKIP_WAITING (audit/9)",
+        items: [
+          "sw.js: stale-while-revalidate, PRECACHE_SHELL, message handler",
+          "Network-first navigations, cache-first assets"
         ]
       }
     ],
@@ -8193,54 +8116,44 @@ const COPY = {
     footer: "Everything on-device. For replay: ◯ REC → ↓ JSON → analyzer test."
   },
   de: {
-    badge: "NEU v2.10.x",
-    title: "Tracking 2.0 — Phase 1 + 2 (2.10)",
-    subtitle: "v2.10 · 28. Aug 2026 · Rep-Zählung + Pose — 100% offline",
+    badge: "NEU v2.10.0",
+    title: "Tracking 2.0 — Phase 1 + 2 (2.10.0)",
+    subtitle: "v2.10.0 · 28. Aug 2026 · Rep-Zählung + Pose — 100% offline",
     intro: "Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-Frame Temporal Classifier). Behebt Fehlzählungen bei squat/pushup/crunch und Seitansicht-Jitter.",
     groups: [
       {
-        icon: "🎯",
-        title: "1. Phase 1 — Heavy auto + worldLandmarks",
-        items: [
-          "Auto PoseLandmarker: heavy auf Gerät ≥4GB/4core, lite Fallback — Override via localStorage o40_modelVariant",
-          "Smoother neu kalibriert für heavy (1.05/0.006) + geglättete worldLandmarks für Tiefe",
-          "FitnessEngine nutzt worldLandmarks zur Korrektur perspektivisch komprimierter Winkel"
-        ]
-      },
-      {
-        icon: "📳",
-        title: "2. Phase 1 — MotionFusion reaktiviert",
-        items: [
-          "Capacitor Motion für jumpingJack/burpee/highKnees/mountainClimber/skater",
-          "+12 repConfidence-Boost bei IMU-Rhythmus 0.8-2.5Hz — sekundär, PWA funktioniert auch ohne",
-          "PWA DeviceMotionEvent-Fallback vorhanden"
-        ]
-      },
-      {
-        icon: "🧠",
-        title: "3. Phase 2 — Temporal Classifier (30 Frames)",
-        items: [
-          "Neu src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier",
-          "Blend classic*0.55 + temporal*0.45, ROM-Gate + down-up-Muster — verhindert Phantom-Reps",
-          "Eingebunden in squat/pushup/crunch/jumpingJack/burpee/affondo"
-        ]
-      },
-      {
         icon: "📐",
-        title: "4. Tuning — Debounce + Schwellen",
+        title: "1. Struktur — dedup UI (audit/3)",
         items: [
-          "squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — weniger seitliche Jitter",
-          "Gate 62→58 mit temporaler Validierung — zählt lieber unsicher als verpasst",
-          "Form-Cues unverändert, nur stabilere repConfidence"
+          "DogTag ×4, ProgressRing ×2, gemeinsame Styles → src/components/ui/*"
+        ]
+      },
+      {
+        icon: "🌍",
+        title: "2. i18n — 15+ hardcoded → I18N (audit/7)",
+        items: [
+          "Home/Setup hardcodiert → t()"
+        ]
+      },
+      {
+        icon: "🧪",
+        title: "3. Qualität — Tests 30→51 (audit/5)",
+        items: [
+          "Neue Tests: belly, progress, bmi, body, backup"
         ]
       },
       {
         icon: "⚡",
-        title: "5. Signal-abhängige Geschwindigkeit (2.10.x)",
+        title: "4. Performance — lazy 9 Screens (audit/4)",
         items: [
-          "ROM-Geschwindigkeit (deg/s) folgt nun dem primären Signal jeder Übung (elbowRaw für pushup etc.), nicht mehr dem statischen Knie",
-          "Pushup/crunch: Geschwindigkeits-Score + temporal Gate nutzen das richtige ROM → Zählungen im Einklang mit der echten Bewegung",
-          "Neue Regressionstests: Buffer-Suite 101 → 103 grün"
+          "App.jsx: 9 Screens → React.lazy + Suspense"
+        ]
+      },
+      {
+        icon: "📡",
+        title: "5. PWA robust — SWR + SKIP_WAITING (audit/9)",
+        items: [
+          "sw.js: stale-while-revalidate, PRECACHE_SHELL"
         ]
       }
     ],
@@ -8248,7 +8161,7 @@ const COPY = {
     ctaHint: "Home → Mission → Start",
     dismiss: "Nicht mehr anzeigen",
     close: "Schließen",
-    footer: "Alles on-device. Für Replay: ◯ REC → ↓ JSON → analyzer test."
+    footer: "Alles on-device."
   }
 };
 function ChangelogModal({ lang = "it", onClose, onTry }) {
@@ -8554,14 +8467,14 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.10.0 · 6c2b672";
+const BUILD_VERSION = "2.10.0 · 00ce16b";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       onClick,
       role: onClick ? "button" : void 0,
-      title: onClick ? "Novità v2.10 — clic per riaprire changelog" : void 0,
+      title: onClick ? "Novità v2.8.4 — clic per riaprire changelog" : void 0,
       className: "o40-mono",
       style: {
         color: STEEL,
@@ -9148,7 +9061,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-CISTsPQZ.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-DOzcLDDG.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -9747,15 +9660,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-xklEpVC9.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-BRfB1Pkg.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-BdbjtDxL.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BSKfH2Al.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-SG8P-XEx.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-lDwPwNzg.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-Bz_PcOHh.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-CvUdlfVs.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-B2vjGYPu.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-BkWCI193.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-8gt0-Cr3.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-B3ij0TtA.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BtePAI5r.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-C9q3dqZm.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-Bs77sE-T.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-BhC_UMgc.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-CGRMjJL5.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-PlHmPbaz.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -9993,8 +9906,6 @@ function App() {
   const [healthWeightSuggestion, setHealthWeightSuggestion] = reactExports.useState(null);
   const [healthImportStatus, setHealthImportStatus] = reactExports.useState("idle");
   const [lastStats, setLastStats] = reactExports.useState(null);
-  const [aiPhaseQuality, setAiPhaseQuality] = reactExports.useState([]);
-  const aiPhaseQualityRef = reactExports.useRef([]);
   const [hrInput, setHrInput] = reactExports.useState("");
   const [waistInput, setWaistInput] = reactExports.useState("");
   const [rpe, setRpe] = reactExports.useState(null);
@@ -10353,23 +10264,11 @@ function App() {
     setSecondsLeft(s[0].duration ?? 0);
     setPaused(false);
     setRpe(null);
-    setAiPhaseQuality([]);
-    aiPhaseQualityRef.current = [];
     if (soundRef.current) {
       playBeep(660);
       announcePhase(s[0]);
     }
     setScreen("session");
-  }
-  function collectAiPhaseQuality(data) {
-    if (!data || !data.exerciseId || typeof data.avgQuality !== "number") return;
-    const entry = {
-      exerciseId: data.exerciseId,
-      reps: data.reps ?? 0,
-      quality: Math.round(data.avgQuality)
-    };
-    aiPhaseQualityRef.current = [...aiPhaseQualityRef.current, entry];
-    setAiPhaseQuality(aiPhaseQualityRef.current);
   }
   function finishSession() {
     const skip = !!profile.skipWarmup;
@@ -10389,34 +10288,10 @@ function App() {
     );
     if (soundRef.current) playBeep(1e3, 0.25);
     if (vibrationRef.current) vibrate([80, 60, 80, 60, 150]);
-    const qualityEntries = aiPhaseQualityRef.current;
-    let aiQuality = null;
-    if (qualityEntries.length) {
-      const byExercise = {};
-      qualityEntries.forEach((e) => {
-        if (!byExercise[e.exerciseId]) {
-          byExercise[e.exerciseId] = { name: tr$1(EXERCISES[e.exerciseId].name, lang), reps: 0, sum: 0, n: 0 };
-        }
-        const g = byExercise[e.exerciseId];
-        g.reps = Math.max(g.reps, e.reps ?? 0);
-        g.sum += e.quality;
-        g.n += 1;
-      });
-      const exercises = Object.values(byExercise).map((g) => ({
-        name: g.name,
-        reps: g.reps,
-        quality: Math.round(g.sum / g.n)
-      }));
-      aiQuality = {
-        overall: Math.round(exercises.reduce((a, e) => a + e.quality, 0) / exercises.length),
-        exercises
-      };
-    }
     setLastStats({
       program: activeProgram,
       kcal,
-      durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey),
-      aiQuality
+      durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey)
     });
     setScreen("summary");
   }
@@ -10744,7 +10619,6 @@ function App() {
       programName: tr$1(activeProgram.name, lang),
       kcal: lastStats.kcal,
       durationSec: lastStats.durationSec,
-      aiQuality: lastStats.aiQuality || null,
       peakHR: hrInput ? parseInt(hrInput, 10) : null,
       rpe,
       notes: notes.trim() || null
@@ -11313,7 +11187,6 @@ function App() {
             onPrev: goPrev,
             exitConfirm,
             setExitConfirm,
-            onAiPhaseComplete: collectAiPhaseQuality,
             onExit: () => {
               setExitConfirm(false);
               setScreen("home");
@@ -11324,7 +11197,6 @@ function App() {
           SummaryScreen,
           {
             stats: lastStats,
-            aiQuality: lastStats.aiQuality,
             profile,
             sessions,
             hrInput,
