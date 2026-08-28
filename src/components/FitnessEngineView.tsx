@@ -301,9 +301,9 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
       )}
       {/* HUD */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, padding: '10px 12px', background: INK }}>
-        <div style={{ background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', textAlign: 'center' }}>
+        <div style={{ background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', textAlign: 'center' }} aria-live="polite" aria-atomic="true">
           <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>REPS</div>
-          <div className="o40-display" style={{ color: BLAZE, fontSize: 28, lineHeight: 1 }}>{reps}</div>
+          <div className="o40-display" role="status" aria-live="polite" style={{ color: BLAZE, fontSize: 28, lineHeight: 1 }}>{reps}</div>
           <div className="o40-mono" style={{ color: KHAKI, fontSize: 9 }}>{metrics?.currentPhase ?? '—'}</div>
         </div>
         <div style={{ background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', textAlign: 'center' }}>

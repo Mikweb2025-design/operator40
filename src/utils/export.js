@@ -8,7 +8,7 @@ function csvEscape(v) {
 
 export function exportCSV(sessions, waistHistory, weightHistory) {
   const rows = [
-    ['date', 'program', 'kcal', 'duration_min', 'hr_peak', 'rpe', 'waist_cm', 'weight_kg', 'notes'],
+    ['date', 'program', 'kcal', 'duration_min', 'hr_peak', 'rpe', 'waist_cm', 'weight_kg', 'ai_quality', 'ai_reps', 'notes'],
   ];
   // Build lookup for waist/weight by day
   const waistByDay = {};
@@ -23,6 +23,8 @@ export function exportCSV(sessions, waistHistory, weightHistory) {
   });
   (sessions || []).forEach((s) => {
     const day = new Date(s.date).toISOString().slice(0, 10);
+    const aiQ = s.aiQuality?.overall ?? '';
+    const aiReps = s.aiQuality?.exercises ? s.aiQuality.exercises.map((e) => `${e.name}:${e.reps}`).join('; ') : s.aiQuality?.reps ?? '';
     rows.push([
       s.date,
       s.programId || s.programName || '',
@@ -32,6 +34,8 @@ export function exportCSV(sessions, waistHistory, weightHistory) {
       s.rpe ?? '',
       waistByDay[day] ?? '',
       weightByDay[day] ?? '',
+      aiQ,
+      aiReps,
       (s.notes || '').replace(/\n/g, ' '),
     ]);
   });

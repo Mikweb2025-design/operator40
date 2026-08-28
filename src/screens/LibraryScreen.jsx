@@ -94,13 +94,30 @@ function LibraryScreen({ sessions, profile }) {
   const [filter, setFilter] = useState('all');
   const [selectedId, setSelectedId] = useState(null);
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  useEffect(() => {
+    const id = setTimeout(() => setDebouncedQuery(query), 180);
+    return () => clearTimeout(id);
+  }, [query]);
   const [showFavs, setShowFavs] = useState(false);
   const [favs, setFavs] = useState(() => loadFavorites());
+  function highlight(text, q) {
+    if (!q) return text;
+    const idx = text.toLowerCase().indexOf(q.toLowerCase());
+    if (idx === -1) return text;
+    return (
+      <>
+        {text.slice(0, idx)}
+        <mark style={{ background: `${BLAZE}33`, color: PAPER, padding: '0 2px', borderRadius: 3 }}>{text.slice(idx, idx + q.length)}</mark>
+        {text.slice(idx + q.length)}
+      </>
+    );
+  }
   const visibleIds = Object.keys(EXERCISES).filter((id) => {
     const ex = EXERCISES[id];
     const byGroup = filter === 'all' ? true : EXERCISE_GROUPS[filter].includes(id);
     const byFav = showFavs ? favs.includes(id) : true;
-    const q = query.trim().toLowerCase();
+    const q = debouncedQuery.trim().toLowerCase();
     const byQuery =
       !q ||
       tr(ex.name, lang).toLowerCase().includes(q) ||
@@ -284,7 +301,18 @@ function LibraryScreen({ sessions, profile }) {
       })()}
       <div className="o40-scroll" style={{ flex: 1, overflowY: 'auto', padding: 16 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {visibleIds.map((id) => {
+          {visibleIds.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '36px 16px', color: STEEL }}>
+              <div style={{ fontSize: 36, marginBottom: 8 }}>🔍</div>
+              <div style={{ color: PAPER, fontWeight: 700, fontSize: 14 }}>Nessun esercizio trovato</div>
+              <div style={{ color: STEEL, fontSize: 12, marginTop: 4 }}>
+                {lang === 'it' ? 'Prova un altro termine o resetta i filtri.' : lang === 'de' ? 'Versuche einen anderen Begriff.' : 'Try another term or reset filters.'}
+              </div>
+              <button onClick={() => { setQuery(''); setFilter('all'); setShowFavs(false); }} style={{ marginTop: 12, padding: '8px 14px', borderRadius: 20, border: `1px solid ${BLAZE}`, background: BLAZE, color: PAPER, cursor: 'pointer', fontSize: 12 }}>
+                Reset filtri
+              </button>
+            </div>
+          ) : visibleIds.map((id) => {
             const ex = EXERCISES[id];
             const isOpen = selectedId === id;
             return (
@@ -345,7 +373,7 @@ function LibraryScreen({ sessions, profile }) {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <div style={{ color: PAPER, fontWeight: 700, fontSize: 14.5, flex: 1 }}>
-                        {tr(ex.name, lang)}
+                        {highlight(tr(ex.name, lang), debouncedQuery)}
                       </div>
                       <button
                         onClick={(e) => {

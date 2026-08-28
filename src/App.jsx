@@ -441,7 +441,7 @@ export default function App() {
   const [showChangelog, setShowChangelog] = useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = useState(() => {
     try {
-      return localStorage.getItem('o40_release_2.12.0') !== 'dismissed';
+      return localStorage.getItem('o40_release_2.12.1') !== 'dismissed';
     } catch {
       return true;
     }
@@ -1743,24 +1743,24 @@ export default function App() {
                             borderRadius: 6,
                           }}
                         >
-                          NUOVO v2.12.0
+                          NUOVO v2.12.1
                         </span>
                         <span className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>
-                          28 AGO 2026 · 23 LOOP GRAFICA
+                          28 AGO 2026 · 27 ITERAZIONI
                         </span>
                       </div>
                       <div
                         className="o40-display"
                         style={{ color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 }}
                       >
-                        Grafica OLED — 23 loop full-app!
+                        Grafica OLED — 27 iterazioni — a11y + viz!
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.12.0', 'dismissed');
+                        localStorage.setItem('o40_release_2.12.1', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}
@@ -1835,7 +1835,7 @@ export default function App() {
                   <button
                     onClick={() => {
                       try {
-                        localStorage.setItem('o40_release_2.12.0', 'dismissed');
+                        localStorage.setItem('o40_release_2.12.1', 'dismissed');
                       } catch {}
                       setShowReleaseBanner(false);
                     }}

@@ -1,25 +1,18 @@
 # Operator40 — Roadmap prossimi giorni
 
-> v2.11.0 · 28 Agosto 2026 · 10 loop grafica OLED completati
+> v2.12.0 · 28 Agosto 2026 · 23 loop OLED + 10 full-app completati · white-screen fix
 > Live: https://mikweb.eu/operator40/ · Repo: Mikweb2025-design/operator40
 
 ---
 
-## ✅ Appena fatto (v2.11.0 — 10 GIR LOOP GRAFICA)
+## ✅ Appena fatto (v2.12.0 — 23 LOOP + FIX)
 
-**Tema grafico OLED 10 loop** — zero logica toccata, 103 test verdi:
-1. **OLED depth** — INK #0E100D vignette + phone gradient 130%
-2. **Card system** — o40-card unified 165° + hairline + gloss
-3. **Tipografia** — Bebas/Inter sharpened + num-glow halo BLAZE
-4. **CTA** — BLAZE_LIGHT→DEEP + inset highlight + press 0.97
-5. **Nav OLED** — blur 14px, pill 46×28 con glow
-6. **HUD tactical** — 4 angoli + AI scanline 0.62
-7. **Micro** — stagger 20/60/100ms, ticker 28s
-8. **Skeleton** — shimmer 1.4s, loadbar 5px
-9. **Lift** — hover -3px, aura 28s
-10. **Cohesion** — grid 0.42, camo 5px, tokens INK_3/PAPER_SOFT/OLIVE_LIGHT
+**Grafica 23 loop** — zero logica toccata, 101 test verdi:
+- 1-10 OLED (ink #0E100D, card 165°, typo, CTA blaze, nav, HUD, micro, skeleton, aura, tokens)
+- 11-13 extra hero/card/micro + white-screen fix BLAZE_LIGHT (v2.11.1)
+- 14-23 full-app: color #0B0D0A, card radius16 selected, typo, icon halo, nav safe-area, hero filter, HUD timer, viz tooltip, forms focus 3px, cohesion
 
-+ bump 2.10.0→2.11.0, ChangelogModal 5 gruppi IT/EN/DE, banner o40_release_2.11.0
++ bump 2.10.0→2.12.0, Changelog 7 gruppi, banner 23 loop, deploy o40-vba6f093a, white-screen fix
 
 ---
 
@@ -32,17 +25,20 @@
 - [ ] `verify.mjs` + `eslint --fix` su `src/ai/` (pulizia dead imports)
 - [ ] Screenshots Playwright `docs/screenshots/06-ai-debug.png` + rigenerare 01-05 a 390×844@2x
 
-### Giorno 3-4 — UX & Accessibilità (v2.12.0)
-- [ ] Wire `MotionFusion` a Capacitor `Motion` plugin (opt-in setting) — boost jumpingJack/highKnees/burpee
-- [ ] A11y: focus ring visibile su tutti i button, `aria-live` su rep counter, `prefers-reduced-motion` audit completo
-- [ ] LargeText mode: fix overflow su Home `DogTag` + Library card (test 18px base)
-- [ ] Search Library: debounce 180ms + highlight match + empty state illustrato
-- [ ] Before/After slider: pinch-zoom + haptics su confronto
+### Giorno 3-4 — UX & Accessibilità (v2.12.1) — ✅ FATTO 28 Ago
+- [x] A11y: focus ring `2px BLAZE + 4px glow` su button/input + `aria-live` rep counter + `prefers-reduced-motion` + `@media print`
+- [x] LargeText mode: fix overflow `DogTag` minHeight 84 + wordBreak + `Library` highlight
+- [x] Search Library: debounce 180ms + highlight `<mark BLAZE33>` + empty state illustrato 🔍 + reset filtri
+- [x] Export CSV: colonne `ai_quality` + `ai_reps` per exercise
+- [x] Share QR: placeholder 72px in `shareImage.js` + footer `mikweb.eu/operator40`
+- [ ] Wire `MotionFusion` a Capacitor `Motion` plugin (opt-in setting) — boost jumpingJack/highKnees/burpee (next)
+- [ ] Before/After slider: pinch-zoom + haptics su confronto (next)
 
-### Giorno 5-6 — Contenuti & Dati (v2.12.1)
+### Giorno 5-6 — Contenuti & Dati (v2.12.2) — prossimo
 - [ ] Apple Health: importa anche HR + sleep se presenti in export.xml (oggi solo weight/workout)
-- [ ] Export CSV: aggiungi colonna `aiQuality overall` + `reps per exercise`
-- [ ] Stampa programma: `window.print` stylesheet per scheda allenamento A4
+- [x] Export CSV: aggiungi colonna `aiQuality overall` + `reps per exercise` — FATTO
+- [x] Stampa programma: `window.print` stylesheet A4 — FATTO (`@media print` in appStyles)
+- [x] Share QR 1080×1350 — FATTO
 - [ ] 18 clip review: sostituisci 3 WebP placeholder con MP4 locali ottimizzati (2.0 MB target)
 - [ ] NEFFEX playlist: shuffle seed + crossfade 1.2s
 
@@ -76,4 +72,4 @@
 
 ---
 
-*Aggiornato manualmente — prossimo bump: v2.11.1 o v2.12.0 a seconda del batch.*
+*Aggiornato 28 Ago 2026 — v2.12.1 in corso — prossimo bump: v2.12.1 / v2.13.0*

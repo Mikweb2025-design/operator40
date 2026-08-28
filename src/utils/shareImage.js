@@ -363,6 +363,32 @@ export async function shareStatsImage({ sessions, profile, t, tr }) {
     footY + 18
   );
 
+  // QR placeholder 80x80 bottom-right (roadmap share QR)
+  const qrSize = 72, qrX = cardX + cardW - 24 - qrSize, qrY = footY - 58;
+  ctx.fillStyle = 'white';
+  ctx.strokeStyle = 'rgba(184,174,140,0.22)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.roundRect(qrX, qrY, qrSize, qrSize, 8); ctx.fill(); ctx.stroke();
+  // simple QR pattern 7x7
+  const cell = qrSize / 9;
+  ctx.fillStyle = '#111';
+  const pattern = [
+    [1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,1],
+    [1,0,1,1,1,0,1],
+    [1,0,1,1,1,0,1],
+    [1,0,1,1,1,0,1],
+    [1,0,0,0,0,0,1],
+    [1,1,1,1,1,1,1],
+  ];
+  for(let r=0;r<7;r++) for(let c2=0;c2<7;c2++) if(pattern[r][c2]) ctx.fillRect(qrX+cell+ c2*cell*0.9, qrY+cell+ r*cell*0.9, cell*0.85, cell*0.85);
+  // add inner dots to hint QR
+  ctx.fillStyle = '#C1440E';
+  ctx.fillRect(qrX+qrSize/2-3, qrY+qrSize/2-3, 6, 6);
+  ctx.fillStyle = 'rgba(0,0,0,0.65)';
+  ctx.font = '600 7px "IBM Plex Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('QR', qrX+qrSize/2, qrY+qrSize+10);
   // watermark blaze dot
   ctx.fillStyle = '#C1440E';
   ctx.beginPath();

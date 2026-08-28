@@ -17,6 +17,7 @@ export default function DogTag({ label, value, sub, accent = false }) {
         position: 'relative',
         flex: 1,
         minWidth: 0,
+        minHeight: 84,
         boxShadow: '0 4px 14px rgba(0,0,0,0.35)',
       }}
     >
@@ -44,11 +45,11 @@ export default function DogTag({ label, value, sub, accent = false }) {
       </div>
       <div
         className={`o40-display ${accent ? 'o40-num-glow on' : 'o40-num-glow'}`}
-        style={{ fontSize: 26, lineHeight: 1.1 }}
+        style={{ fontSize: 26, lineHeight: 1.1, wordBreak: 'break-word', overflowWrap: 'anywhere' }}
       >
         {value}
       </div>
-      {sub && <div style={{ color: STEEL, fontSize: 11 }}>{sub}</div>}
+      {sub && <div style={{ color: STEEL, fontSize: 11, wordBreak: 'break-word' }}>{sub}</div>}
     </div>
   );
 }

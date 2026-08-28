@@ -596,4 +596,16 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 @media (prefers-reduced-motion: reduce){
   .o40-card, .o40-screen-in, .o40-pop, .o40-expand, .o40-aura, .o40-gridbg, .o40-embers, .o40-ticker-inner { animation: none !important; transition: none !important; }
 }
+
+/* === ROADMAP A11y batch (v2.12.1) === */
+.o40 button:focus-visible, .o40 a:focus-visible, .o40 [role="button"]:focus-visible {
+  outline: 2px solid ${BLAZE}; outline-offset: 2px; box-shadow: 0 0 0 4px ${BLAZE}22;
+}
+.o40 input:focus-visible, .o40 textarea:focus-visible, .o40 select:focus-visible { outline: 2px solid ${BLAZE}; outline-offset: 1px; }
+@media print {
+  .o40-phone { background: white !important; color: black !important; }
+  .o40-topbar-glass, .o40-bottomnav-glass, .o40-aura, .o40-gridbg, .o40-camo { display: none !important; }
+  .o40-card, .o40-card-glass { break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  body { background: white !important; }
+}
 `;
