@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-BZC4FCl6.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-B_hHjGIZ.js","./CountdownScreen-B-IoMXU2.js","./SetupScreen-C_NYLbHC.js","./TopBar-BQHyRfVN.js","./HomeScreen-BRF2XJO6.js","./GoalRing-BJOehzkJ.js","./ExerciseFigure-C2kskVrj.js","./DogTag-co5SA4Io.js","./ProgressRing-Bl4nfszL.js","./LibraryScreen-Bm5aQrE1.js","./clips-CZetA5iC.js","./BuilderScreen-0EaaNtti.js","./PreviewScreen-DI5TFh2u.js","./SessionScreen-DiXp08SF.js","./SummaryScreen-Dxqk6oeL.js","./HistoryScreen-D4I2pnF2.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-Bm4O0sDe.js","./icons-DnFQGhVC.js","./charts-BWCYe6zh.js","./web-ChGF2jEP.js","./CountdownScreen-BnnsuMDY.js","./SetupScreen-Cke0hcO-.js","./TopBar-CJo8wyth.js","./HomeScreen-C506Or8d.js","./GoalRing-CxsX7Zun.js","./ExerciseFigure-Byx1eVtx.js","./DogTag-DiqNRA7J.js","./ProgressRing-DaSJCvny.js","./LibraryScreen-BjakUcVR.js","./clips-CZetA5iC.js","./BuilderScreen-C3mCaQeo.js","./PreviewScreen-FuKVoqJF.js","./SessionScreen-BhsqH6dj.js","./SummaryScreen-BTAylpXJ.js","./HistoryScreen-BKOXkZKH.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -3230,6 +3230,30 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-phone::before { opacity: 0.035; }
 .o40-gridbg { opacity: 0.42; }
 .o40-embers { opacity: 0.9; }
+
+/* =============================================================
+   v2.11.1 — 3 LOOP AGGIUNTIVI (nuova)
+   Loop 11: Hero mission — depth + leggibilità + CTA pulse
+   Loop 12: Card progress — DogTag lift + Ring halo + Segmented glow
+   Loop 13: Micro — ticker respiro + glass + hover + aura
+   ============================================================= */
+
+/* Loop 11 — Hero */
+.o40-card.o40-ring-border {
+  box-shadow: 0 12px 36px rgba(0,0,0,0.52), 0 0 0 1px ${BLAZE}18 inset, 0 1px 0 rgba(255,255,255,0.07) inset;
+}
+.o40-card.o40-ring-border::before { opacity: 0.85; }
+.o40-card .o40-embers { filter: brightness(1.08); }
+
+/* Loop 12 — Card progress refs */
+.o40-card-face { box-shadow: 0 5px 18px rgba(0,0,0,0.32), 0 1px 0 rgba(255,255,255,0.04) inset; }
+.o40-card-accent { box-shadow: 0 0 8px color-mix(in srgb, var(--accent, ${BLAZE}) 45%, transparent); }
+
+/* Loop 13 — Micro extra */
+.o40-ticker { letter-spacing: 0.11em; }
+.o40-ticker-inner { gap: 48px; padding-left: 48px; }
+.o40-topbar-glass, .o40-bottomnav-glass { backdrop-filter: blur(15px) saturate(1.2); }
+.o40-card { will-change: transform; }
 `;
 function getReminder() {
   try {
@@ -6930,7 +6954,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-BZC4FCl6.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-Bm4O0sDe.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8293,14 +8317,14 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     ] })
   ] });
 }
-const CHANGELOG_VERSION = "2.11.0";
+const CHANGELOG_VERSION = "2.11.1";
 const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 const COPY = {
   it: {
-    badge: "NUOVO v2.11.0",
-    title: "Grafica OLED — 10 Loop (v2.11)",
-    subtitle: "v2.11 · 28 Agosto 2026 · 10 giri grafici — OLED depth + tactical HUD",
-    intro: "10 loop consecutivi sulla grafica: OLED ink depth, card gloss unificato, CTA blaze light, nav pill OLED, HUD tactical 4 angoli, tipografia glow, micro-interazioni stagger, skeleton shimmer, ticker 28s, aura 28s. Zero debito funzionale.",
+    badge: "NUOVO v2.11.1",
+    title: "Grafica OLED — 13 Loop (v2.11.1)",
+    subtitle: "v2.11.1 · 28 Agosto 2026 · 13 giri grafici — +3 loop hero/card/micro",
+    intro: "10 loop + 3 extra: hero depth, card progress halo, ticker respiro. Fix white-screen BLAZE_LIGHT incluso. Zero debito funzionale.",
     groups: [
       {
         icon: "🌑",
@@ -8346,49 +8370,60 @@ const COPY = {
           "Tokens nuovi: INK_3 #121410, PAPER_SOFT, OLIVE_LIGHT, KHAKI_LIGHT, BLAZE_LIGHT",
           "Tracking 2.0 invariato (103 test) + push/voice fix 2.10.x inclusi"
         ]
+      },
+      {
+        icon: "💎",
+        title: "11-13. Extra 3 Loop (v2.11.1)",
+        items: [
+          "Hero o40-ring-border shadow 12/36 + embers brightness 1.08",
+          "Card-face shadow 5/18 + accent glow 45%, ticker 48px gap + glass blur 15px",
+          "Fix white-screen BLAZE_LIGHT import — #root ora renderizza"
+        ]
       }
     ],
     cta: "PROVA ORA",
     ctaHint: "Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS",
     dismiss: "Non mostrare più",
     close: "Chiudi",
-    footer: "Tutto on-device. 10 loop grafici senza toccare logica. Prossimo: v2.12 motion + a11y."
+    footer: "Tutto on-device. 13 loop grafici. Prossimo: v2.12 motion + a11y."
   },
   en: {
-    badge: "NEW v2.11.0",
-    title: "OLED Graphics — 10 Loops (v2.11)",
-    subtitle: "v2.11 · Aug 28 2026 · 10 graphic loops — OLED depth + tactical HUD",
-    intro: "10 consecutive graphic loops: OLED ink depth, unified card gloss, blaze light CTA, OLED nav pill, 4-corner HUD, typography glow, staggered micro, skeleton shimmer, 28s ticker, 28s aura. Zero functional debt.",
+    badge: "NEW v2.11.1",
+    title: "OLED Graphics — 13 Loops (v2.11.1)",
+    subtitle: "v2.11.1 · Aug 28 2026 · 13 graphic loops — +3 hero/card/micro",
+    intro: "10 loops + 3 extra: hero depth, card halo, ticker breathing. White-screen fix included.",
     groups: [
       { icon: "🌑", title: "1-2. OLED Depth + Card", items: ["INK #0E100D vignette + 130% radial — deeper phone, 5px camo", "Unified card 165° + hairline + gloss", "Card-face hairline + accent + tabular glow"] },
       { icon: "🔥", title: "3-4. Typography + CTA", items: ["Bebas/Inter sharpened, num-glow halo", "CTA BLAZE_LIGHT→DEEP + inset highlight", "Large btn shadow 10/28"] },
       { icon: "🧭", title: "5-6. Nav + HUD", items: ["Top/bottom glass blur 14px, OLED #0E100D", "Pill 46×28 + BLAZE glow lines", "HUD 4 corners + AI scanline 0.62"] },
       { icon: "✨", title: "7-8. Micro + Skeleton", items: ["screenIn 0.5s, card stagger, ticker 28s", "Skeleton 1.4s, loadbar 5px", "Hover -3px lift"] },
-      { icon: "🎨", title: "9-10. Aura & Cohesion", items: ["Aura 28s + vignette, grid 0.42", "New tokens INK_3, PAPER_SOFT, etc.", "Tracking 103 tests intact"] }
+      { icon: "🎨", title: "9-10. Aura & Cohesion", items: ["Aura 28s + vignette, grid 0.42", "New tokens INK_3, PAPER_SOFT, etc.", "Tracking 103 tests intact"] },
+      { icon: "💎", title: "11-13. Extra 3 Loops", items: ["Hero shadow 12/36 + embers 1.08", "Card-face 5/18 + accent glow", "White-screen fix — root now renders"] }
     ],
     cta: "TRY IT",
     ctaHint: "Home → Mission → Start · https://mikweb.eu/operator40/",
     dismiss: "Don't show again",
     close: "Close",
-    footer: "On-device. 10 graphic loops, no logic touched. Next: v2.12 motion + a11y."
+    footer: "On-device. 13 loops. Next: v2.12 motion + a11y."
   },
   de: {
-    badge: "NEU v2.11.0",
-    title: "OLED Grafik — 10 Loops (v2.11)",
-    subtitle: "v2.11 · 28. Aug 2026 · 10 Grafik-Loops — OLED Tiefe + tactical HUD",
-    intro: "10 Grafik-Loops: OLED Tiefe, Card-Gloss, Blaze-CTA, OLED-Nav, 4-Ecken-HUD, Typo-Glow, Stagger-Micro, Skeleton-Shimmer, 28s Ticker, 28s Aura.",
+    badge: "NEU v2.11.1",
+    title: "OLED Grafik — 13 Loops (v2.11.1)",
+    subtitle: "v2.11.1 · 28. Aug 2026 · 13 Grafik-Loops — +3 hero/card/micro",
+    intro: "10 Loops + 3 extra: hero depth, card halo, ticker breathing. White-screen fix.",
     groups: [
       { icon: "🌑", title: "1-2. OLED + Card", items: ["INK #0E100D Vignette", "Unified Card + Hairline + Gloss", "Tabular Glow"] },
       { icon: "🔥", title: "3-4. Typo + CTA", items: ["Bebas/Inter sharpened", "CTA Blaze Light + Inset", "Large shadow"] },
       { icon: "🧭", title: "5-6. Nav + HUD", items: ["Glass blur 14px", "Pill 46×28", "HUD 4 Ecken + Scanline"] },
       { icon: "✨", title: "7-8. Micro + Skeleton", items: ["Stagger 20/60/100ms", "Skeleton 1.4s", "Hover -3px"] },
-      { icon: "🎨", title: "9-10. Aura", items: ["Aura 28s + Vignette", "Neue Tokens", "103 Tests grün"] }
+      { icon: "🎨", title: "9-10. Aura", items: ["Aura 28s + Vignette", "Neue Tokens", "103 Tests grün"] },
+      { icon: "💎", title: "11-13. Extra", items: ["Hero 12/36 + embers", "Card 5/18 + glow", "White-screen fix"] }
     ],
     cta: "TESTEN",
     ctaHint: "Home → Mission → Start",
     dismiss: "Nicht mehr anzeigen",
     close: "Schließen",
-    footer: "On-device. 10 Loops ohne Logik-Change. Next: v2.12."
+    footer: "On-device. 13 Loops. Next: v2.12."
   }
 };
 function ChangelogModal({ lang = "it", onClose, onTry }) {
@@ -8724,14 +8759,14 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.11.0 · bdb3927";
+const BUILD_VERSION = "2.11.1 · bdb3927";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       onClick,
       role: onClick ? "button" : void 0,
-      title: onClick ? "Novità v2.11 — clic per riaprire changelog" : void 0,
+      title: onClick ? "Novità v2.11.1 — clic per riaprire changelog" : void 0,
       className: "o40-mono",
       style: {
         color: STEEL,
@@ -9318,7 +9353,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-B_hHjGIZ.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-ChGF2jEP.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -9917,15 +9952,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-B-IoMXU2.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-C_NYLbHC.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-BRF2XJO6.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-Bm5aQrE1.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-0EaaNtti.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-DI5TFh2u.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-DiXp08SF.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-Dxqk6oeL.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-D4I2pnF2.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-BnnsuMDY.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-Cke0hcO-.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-C506Or8d.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BjakUcVR.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-C3mCaQeo.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-FuKVoqJF.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-BhsqH6dj.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BTAylpXJ.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BKOXkZKH.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
@@ -10120,7 +10155,7 @@ function App() {
   const [showChangelog, setShowChangelog] = reactExports.useState(false);
   const [showReleaseBanner, setShowReleaseBanner] = reactExports.useState(() => {
     try {
-      return localStorage.getItem("o40_release_2.11.0") !== "dismissed";
+      return localStorage.getItem("o40_release_2.11.1") !== "dismissed";
     } catch {
       return true;
     }
@@ -11277,10 +11312,10 @@ function App() {
                                         padding: "2px 6px",
                                         borderRadius: 6
                                       },
-                                      children: "NUOVO v2.11.0"
+                                      children: "NUOVO v2.11.1"
                                     }
                                   ),
-                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 10 LOOP GRAFICA" })
+                                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "28 AGO 2026 · 13 LOOP GRAFICA" })
                                 ]
                               }
                             ),
@@ -11289,7 +11324,7 @@ function App() {
                               {
                                 className: "o40-display",
                                 style: { color: PAPER, fontSize: 15, lineHeight: 1.1, marginTop: 3 },
-                                children: "Grafica OLED — 10 loop: depth, card gloss, CTA blaze, HUD tactical!"
+                                children: "Grafica OLED — 13 loop + fix white-screen!"
                               }
                             )
                           ] })
@@ -11301,7 +11336,7 @@ function App() {
                       {
                         onClick: () => {
                           try {
-                            localStorage.setItem("o40_release_2.11.0", "dismissed");
+                            localStorage.setItem("o40_release_2.11.1", "dismissed");
                           } catch {
                           }
                           setShowReleaseBanner(false);
@@ -11391,7 +11426,7 @@ function App() {
                   {
                     onClick: () => {
                       try {
-                        localStorage.setItem("o40_release_2.11.0", "dismissed");
+                        localStorage.setItem("o40_release_2.11.1", "dismissed");
                       } catch {
                       }
                       setShowReleaseBanner(false);
