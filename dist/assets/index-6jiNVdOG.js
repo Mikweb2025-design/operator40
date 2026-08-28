@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-Bxt6-ZNE.js","./icons-CYijDH-L.js","./charts-CgofXTP-.js","./web-CqWAXnzn.js","./CountdownScreen-BC3WZBF7.js","./SetupScreen-CTXqBoPQ.js","./TopBar-BhmTly7K.js","./HomeScreen-CK79q-Wu.js","./GoalRing-Crv4zZzb.js","./ExerciseFigure-DNsLqk9d.js","./DogTag-DCmg-Nin.js","./ProgressRing-L4pUYiIW.js","./LibraryScreen-drpdZnc7.js","./clips-DJ4gBJJK.js","./BuilderScreen-CV1T4uWv.js","./PreviewScreen-CotAp0Vk.js","./SessionScreen-5y4_MSa6.js","./SummaryScreen-DNuLZP5Z.js","./HistoryScreen-BA3WX-e9.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-C91R1snP.js","./icons-CYijDH-L.js","./charts-CgofXTP-.js","./web-AzOu4ClV.js","./CountdownScreen-B-AXHyGj.js","./SetupScreen-GRAi6-BJ.js","./TopBar-U_0LMHzB.js","./HomeScreen-BLmQwviW.js","./GoalRing-C0Ac5KRs.js","./ExerciseFigure-B5wE-vmZ.js","./DogTag-7gwLcqwq.js","./ProgressRing-CimwJ2hi.js","./LibraryScreen-BFtCJLOg.js","./clips-DJ4gBJJK.js","./BuilderScreen-C5VgWaWl.js","./PreviewScreen-CTw3ymK1.js","./SessionScreen-B6Fp6uWP.js","./SummaryScreen-BsoiDf12.js","./HistoryScreen-Das2k9FP.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -7125,7 +7125,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-Bxt6-ZNE.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-C91R1snP.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -9020,7 +9020,7 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.14.1 · c827436";
+const BUILD_VERSION = "2.14.1 · 15bd3be";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -9614,7 +9614,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-CqWAXnzn.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-AzOu4ClV.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -10213,15 +10213,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-BC3WZBF7.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-CTXqBoPQ.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-CK79q-Wu.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-drpdZnc7.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-CV1T4uWv.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-CotAp0Vk.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-5y4_MSa6.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-DNuLZP5Z.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BA3WX-e9.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-B-AXHyGj.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-GRAi6-BJ.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-BLmQwviW.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BFtCJLOg.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-C5VgWaWl.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-CTw3ymK1.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-B6Fp6uWP.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BsoiDf12.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-Das2k9FP.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
