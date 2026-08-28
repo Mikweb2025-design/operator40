@@ -1,4 +1,4 @@
-import { INK, INK_2, PAPER, OLIVE, KHAKI, BLAZE, BLAZE_DEEP } from '../../constants/theme.js';
+import { INK, INK_2, PAPER, OLIVE, OLIVE_LIGHT, KHAKI, BLAZE, BLAZE_LIGHT, BLAZE_DEEP } from '../../constants/theme.js';
 
 /**
  * UI condivisi — stili deduplicati (audit/3-dedup-ui)
@@ -18,9 +18,9 @@ export const inputStyle = {
 };
 
 export const primaryBtn = {
-  background: `linear-gradient(135deg, ${BLAZE}, ${BLAZE_DEEP})`,
+  background: `linear-gradient(135deg, ${BLAZE_LIGHT} 0%, ${BLAZE} 55%, ${BLAZE_DEEP} 100%)`,
   color: PAPER,
-  border: 'none',
+  border: `1px solid ${BLAZE_LIGHT}33`,
   borderRadius: 14,
   padding: '12px 16px',
   fontFamily: "'Bebas Neue',sans-serif",
@@ -32,6 +32,7 @@ export const primaryBtn = {
   justifyContent: 'center',
   gap: 6,
   width: '100%',
+  boxShadow: `0 8px 20px ${BLAZE}33, 0 1px 0 rgba(255,255,255,0.14) inset, 0 -1px 0 rgba(0,0,0,0.22) inset`,
 };
 
 export const primaryBtnLarge = {
@@ -39,7 +40,7 @@ export const primaryBtnLarge = {
   padding: '15px 18px',
   fontSize: 18,
   letterSpacing: '0.06em',
-  boxShadow: `0 8px 24px ${BLAZE}4d, 0 1px 0 rgba(255,255,255,0.14) inset`,
+  boxShadow: `0 10px 28px ${BLAZE}44, 0 1px 0 rgba(255,255,255,0.16) inset, 0 -1px 0 rgba(0,0,0,0.25) inset`,
 };
 
 export const secondaryBtn = {
@@ -65,13 +66,13 @@ export const btnIcon = {
 
 export const iconCircle = {
   borderRadius: '50%',
-  border: `1px solid ${OLIVE}`,
-  background: `linear-gradient(160deg, ${INK_2}, ${INK})`,
+  border: `1px solid ${OLIVE_LIGHT}55`,
+  background: `linear-gradient(160deg, ${INK_2} 0%, ${INK} 100%)`,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   cursor: 'pointer',
-  boxShadow: '0 4px 12px rgba(0,0,0,0.35)',
+  boxShadow: '0 4px 12px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset',
 };
 
 export const pillBtn = {

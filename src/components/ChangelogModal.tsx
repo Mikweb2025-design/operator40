@@ -9,7 +9,7 @@ import React from 'react';
 import { INK, INK_2, PAPER, OLIVE, OLIVE_DARK, KHAKI, BLAZE, BLAZE_DEEP, STEEL } from '../constants/theme.js';
 import { Sparkles, X, Zap, Eye, Mic, Timer, Target, Activity, Layers, Cpu, Smartphone } from 'lucide-react';
 
-export const CHANGELOG_VERSION = '2.10.0';
+export const CHANGELOG_VERSION = '2.11.0';
 export const CHANGELOG_STORAGE_KEY = `o40_changelog_${CHANGELOG_VERSION}`;
 
 type Lang = 'it' | 'en' | 'de';
@@ -22,178 +22,98 @@ interface Props {
 
 const COPY: Record<Lang, any> = {
   it: {
-    badge: 'NUOVO v2.10.x',
-    title: 'Tracking 2.0 — Fase 1 + 2 (2.10)',
-    subtitle: 'v2.10 · 28 Agosto 2026 · Conteggio rep + pose — 100% offline',
-    intro: 'Fase 1 (heavy auto + worldLandmarks + MotionFusion) + Fase 2 (buffer 30 frame + classificatore temporale). Fix ai falsi conteggi su squat/pushup/crunch e jitter laterale.',
+    badge: 'NUOVO v2.11.0',
+    title: 'Grafica OLED — 10 Loop (v2.11)',
+    subtitle: 'v2.11 · 28 Agosto 2026 · 10 giri grafici — OLED depth + tactical HUD',
+    intro: '10 loop consecutivi sulla grafica: OLED ink depth, card gloss unificato, CTA blaze light, nav pill OLED, HUD tactical 4 angoli, tipografia glow, micro-interazioni stagger, skeleton shimmer, ticker 28s, aura 28s. Zero debito funzionale.',
     groups: [
       {
-        icon: '🎯',
-        title: '1. Fase 1 — Heavy auto + worldLandmarks',
+        icon: '🌑',
+        title: '1-2. OLED Depth + Card System',
         items: [
-          'PoseLandmarker auto: heavy su device ≥4GB/4core, lite fallback — override localStorage o40_modelVariant',
-          'Smoother ricalibrato per heavy (1.05/0.006) + worldLandmarks smoothed per profondità',
-          'FitnessEngine usa worldLandmarks per correggere angoli compressi da prospettiva',
+          'INK #0E100D vignette + radial gradient 130% — phone più profondo, camo 5px',
+          'o40-card unificato: linear 165° + hairline rgba(184,174,140,0.14) + gloss 07→22',
+          'o40-card-face hairline top 1px + accent 3px, numeri tabular-nums glow',
         ],
       },
       {
-        icon: '📳',
-        title: '2. Fase 1 — MotionFusion riabilitato',
+        icon: '🔥',
+        title: '3-4. Tipografia + CTA Blaze Light',
         items: [
-          'Capacitor Motion per jumpingJack/burpee/ginocchiaAlte/mountainClimber/skater',
-          'Boost repConfidence +12 se ritmo IMU 0.8-2.5Hz — secondario, PWA funziona senza',
-          'PWA fallback DeviceMotionEvent già coperto',
+          'Bebas + Inter sharpened, num-glow drop-shadow + on-state BLAZE 66 halo',
+          'primaryBtn / o40-cta: BLAZE_LIGHT→BLAZE→DEEP + inset highlight + press 0.97',
+          'primaryBtnLarge shadow 10/28, iconCircle border OLIVE_LIGHT 55',
         ],
       },
       {
-        icon: '🧠',
-        title: '3. Fase 2 — Classificatore temporale (30 frame)',
+        icon: '🧭',
+        title: '5-6. Nav OLED + HUD Tactical',
         items: [
-          'Nuovo src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier',
-          'Blend classic*0.55 + temporal*0.45, gate ROM + pattern down-up — evita rep fantasma',
-          'Integrato in squat/pushup/crunch/jumpingJack/burpee/affondo',
+          'TopBar/BottomNav glass blur 14px, #0E100D 92-94%, shadow -8px 24px',
+          'BottomNav pill 46×28 con top underline + bottom line BLAZE glow',
+          'HUD 4 angoli + AI stage scanline 0.62 + inset 70px blur',
         ],
       },
       {
-        icon: '📐',
-        title: '4. Tuning — debounce + soglie',
+        icon: '✨',
+        title: '7-8. Micro + Skeleton',
         items: [
-          'squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — meno jitter laterale',
-          'Gate 62→58 con validazione temporale — preferisce contare incerto con bassa confidenza',
-          'Form cues invariati, solo repConfidence più stabile',
+          'screenIn 0.5s, card stagger 20/60/100ms, ticker 28s, ringSpin 5s',
+          'Skeleton 20-50-80% gradient 1.4s, loadbar 5px, toast 0.3s spring',
+          'Hover lift -3px 16/36px shadow (desktop), active 0.985',
         ],
       },
       {
-        icon: '⚡',
-        title: '5. Velocità segnale-aware (2.10.x)',
+        icon: '🎨',
+        title: '9-10. Aura & Coesione',
         items: [
-          'La velocità ROM (deg/s) ora segue il segnale primario di ogni esercizio (elbowRaw per pushup, ecc.), non più il ginocchio statico',
-          'Pushup/crunch: il voto di velocità e il gate temporale usano il ROM giusto → conteggi più sincronizzati col movimento reale',
-          'Nuovi test di regressione: buffer 101 → 103 test verdi',
+          'Aura 28s + phone::after vignette 62-100%, grid 0.42, embers 0.9',
+          'Tokens nuovi: INK_3 #121410, PAPER_SOFT, OLIVE_LIGHT, KHAKI_LIGHT, BLAZE_LIGHT',
+          'Tracking 2.0 invariato (103 test) + push/voice fix 2.10.x inclusi',
         ],
       },
     ],
     cta: 'PROVA ORA',
-    ctaHint: 'Home → Missione → Avvia · verifica su https://mikweb.eu/operator40/ con iPhone frontale',
+    ctaHint: 'Home → Missione → Avvia · https://mikweb.eu/operator40/ — PWA + iOS',
     dismiss: 'Non mostrare più',
     close: 'Chiudi',
-    footer: 'Tutto on-device (IndexedDB, MediaPipe mai su server). Per replay: ◯ REC durante sessione → ↓ JSON → test analyzer. Docs in src/ai/classifier/',
+    footer: 'Tutto on-device. 10 loop grafici senza toccare logica. Prossimo: v2.12 motion + a11y.',
   },
   en: {
-    badge: 'NEW v2.10.x',
-    title: 'Tracking 2.0 — Phase 1 + 2 (2.10)',
-    subtitle: 'v2.10 · Aug 28 2026 · Rep counting + pose — 100% offline',
-    intro: 'Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-frame temporal classifier). Fixes false counts on squat/pushup/crunch and side-view jitter.',
+    badge: 'NEW v2.11.0',
+    title: 'OLED Graphics — 10 Loops (v2.11)',
+    subtitle: 'v2.11 · Aug 28 2026 · 10 graphic loops — OLED depth + tactical HUD',
+    intro: '10 consecutive graphic loops: OLED ink depth, unified card gloss, blaze light CTA, OLED nav pill, 4-corner HUD, typography glow, staggered micro, skeleton shimmer, 28s ticker, 28s aura. Zero functional debt.',
     groups: [
-      {
-        icon: '🎯',
-        title: '1. Phase 1 — Heavy auto + worldLandmarks',
-        items: [
-          'Auto PoseLandmarker: heavy on device ≥4GB/4core, lite fallback — override via localStorage o40_modelVariant',
-          'Smoother recalibrated for heavy (1.05/0.006) + smoothed worldLandmarks for depth',
-          'FitnessEngine uses worldLandmarks to correct perspective-compressed angles',
-        ],
-      },
-      {
-        icon: '📳',
-        title: '2. Phase 1 — MotionFusion re-enabled',
-        items: [
-          'Capacitor Motion for jumpingJack/burpee/highKnees/mountainClimber/skater',
-          '+12 repConfidence boost if IMU rhythm 0.8-2.5Hz — secondary, PWA works without it',
-          'PWA DeviceMotionEvent fallback already covered',
-        ],
-      },
-      {
-        icon: '🧠',
-        title: '3. Phase 2 — Temporal classifier (30 frames)',
-        items: [
-          'New src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier',
-          'Blend classic*0.55 + temporal*0.45, ROM gate + down-up pattern — avoids phantom reps',
-          'Wired into squat/pushup/crunch/jumpingJack/burpee/affondo',
-        ],
-      },
-      {
-        icon: '📐',
-        title: '4. Tuning — debounce + thresholds',
-        items: [
-          'squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — less side jitter',
-          'Gate 62→58 with temporal validation — prefers counting with low confidence over missing',
-          'Form cues unchanged, only more stable repConfidence',
-        ],
-      },
-      {
-        icon: '⚡',
-        title: '5. Signal-aware velocity (2.10.x)',
-        items: [
-          'ROM velocity (deg/s) now follows each exercise primary signal (elbowRaw for pushup, etc.), no longer the static knee',
-          'Pushup/crunch: velocity score + temporal gate use the right ROM → counts stay in sync with the real movement',
-          'New regression tests: buffer suite 101 → 103 green',
-        ],
-      },
+      { icon: '🌑', title: '1-2. OLED Depth + Card', items: ['INK #0E100D vignette + 130% radial — deeper phone, 5px camo', 'Unified card 165° + hairline + gloss', 'Card-face hairline + accent + tabular glow'] },
+      { icon: '🔥', title: '3-4. Typography + CTA', items: ['Bebas/Inter sharpened, num-glow halo', 'CTA BLAZE_LIGHT→DEEP + inset highlight', 'Large btn shadow 10/28'] },
+      { icon: '🧭', title: '5-6. Nav + HUD', items: ['Top/bottom glass blur 14px, OLED #0E100D', 'Pill 46×28 + BLAZE glow lines', 'HUD 4 corners + AI scanline 0.62'] },
+      { icon: '✨', title: '7-8. Micro + Skeleton', items: ['screenIn 0.5s, card stagger, ticker 28s', 'Skeleton 1.4s, loadbar 5px', 'Hover -3px lift'] },
+      { icon: '🎨', title: '9-10. Aura & Cohesion', items: ['Aura 28s + vignette, grid 0.42', 'New tokens INK_3, PAPER_SOFT, etc.', 'Tracking 103 tests intact'] },
     ],
     cta: 'TRY IT',
     ctaHint: 'Home → Mission → Start · https://mikweb.eu/operator40/',
     dismiss: "Don't show again",
     close: 'Close',
-    footer: 'Everything on-device. For replay: ◯ REC → ↓ JSON → analyzer test.',
+    footer: 'On-device. 10 graphic loops, no logic touched. Next: v2.12 motion + a11y.',
   },
   de: {
-    badge: 'NEU v2.10.x',
-    title: 'Tracking 2.0 — Phase 1 + 2 (2.10)',
-    subtitle: 'v2.10 · 28. Aug 2026 · Rep-Zählung + Pose — 100% offline',
-    intro: 'Phase 1 (heavy auto + worldLandmarks + MotionFusion) + Phase 2 (30-Frame Temporal Classifier). Behebt Fehlzählungen bei squat/pushup/crunch und Seitansicht-Jitter.',
+    badge: 'NEU v2.11.0',
+    title: 'OLED Grafik — 10 Loops (v2.11)',
+    subtitle: 'v2.11 · 28. Aug 2026 · 10 Grafik-Loops — OLED Tiefe + tactical HUD',
+    intro: '10 Grafik-Loops: OLED Tiefe, Card-Gloss, Blaze-CTA, OLED-Nav, 4-Ecken-HUD, Typo-Glow, Stagger-Micro, Skeleton-Shimmer, 28s Ticker, 28s Aura.',
     groups: [
-      {
-        icon: '🎯',
-        title: '1. Phase 1 — Heavy auto + worldLandmarks',
-        items: [
-          'Auto PoseLandmarker: heavy auf Gerät ≥4GB/4core, lite Fallback — Override via localStorage o40_modelVariant',
-          'Smoother neu kalibriert für heavy (1.05/0.006) + geglättete worldLandmarks für Tiefe',
-          'FitnessEngine nutzt worldLandmarks zur Korrektur perspektivisch komprimierter Winkel',
-        ],
-      },
-      {
-        icon: '📳',
-        title: '2. Phase 1 — MotionFusion reaktiviert',
-        items: [
-          'Capacitor Motion für jumpingJack/burpee/highKnees/mountainClimber/skater',
-          '+12 repConfidence-Boost bei IMU-Rhythmus 0.8-2.5Hz — sekundär, PWA funktioniert auch ohne',
-          'PWA DeviceMotionEvent-Fallback vorhanden',
-        ],
-      },
-      {
-        icon: '🧠',
-        title: '3. Phase 2 — Temporal Classifier (30 Frames)',
-        items: [
-          'Neu src/ai/classifier/: FeatureExtractor + TemporalBuffer + TemporalClassifier',
-          'Blend classic*0.55 + temporal*0.45, ROM-Gate + down-up-Muster — verhindert Phantom-Reps',
-          'Eingebunden in squat/pushup/crunch/jumpingJack/burpee/affondo',
-        ],
-      },
-      {
-        icon: '📐',
-        title: '4. Tuning — Debounce + Schwellen',
-        items: [
-          'squat 340→380ms / 70→90ms, pushup 320→360ms / 65→85ms — weniger seitliche Jitter',
-          'Gate 62→58 mit temporaler Validierung — zählt lieber unsicher als verpasst',
-          'Form-Cues unverändert, nur stabilere repConfidence',
-        ],
-      },
-      {
-        icon: '⚡',
-        title: '5. Signal-abhängige Geschwindigkeit (2.10.x)',
-        items: [
-          'ROM-Geschwindigkeit (deg/s) folgt nun dem primären Signal jeder Übung (elbowRaw für pushup etc.), nicht mehr dem statischen Knie',
-          'Pushup/crunch: Geschwindigkeits-Score + temporal Gate nutzen das richtige ROM → Zählungen im Einklang mit der echten Bewegung',
-          'Neue Regressionstests: Buffer-Suite 101 → 103 grün',
-        ],
-      },
+      { icon: '🌑', title: '1-2. OLED + Card', items: ['INK #0E100D Vignette', 'Unified Card + Hairline + Gloss', 'Tabular Glow'] },
+      { icon: '🔥', title: '3-4. Typo + CTA', items: ['Bebas/Inter sharpened', 'CTA Blaze Light + Inset', 'Large shadow'] },
+      { icon: '🧭', title: '5-6. Nav + HUD', items: ['Glass blur 14px', 'Pill 46×28', 'HUD 4 Ecken + Scanline'] },
+      { icon: '✨', title: '7-8. Micro + Skeleton', items: ['Stagger 20/60/100ms', 'Skeleton 1.4s', 'Hover -3px'] },
+      { icon: '🎨', title: '9-10. Aura', items: ['Aura 28s + Vignette', 'Neue Tokens', '103 Tests grün'] },
     ],
     cta: 'TESTEN',
     ctaHint: 'Home → Mission → Start',
     dismiss: 'Nicht mehr anzeigen',
     close: 'Schließen',
-    footer: 'Alles on-device. Für Replay: ◯ REC → ↓ JSON → analyzer test.',
+    footer: 'On-device. 10 Loops ohne Logik-Change. Next: v2.12.',
   },
 };
 

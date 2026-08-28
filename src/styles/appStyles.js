@@ -399,4 +399,106 @@ html, body { margin: 0; padding: 0; background: ${INK}; overscroll-behavior: non
 .o40-num-glow.on { background: linear-gradient(180deg, ${BLAZE} 0%, ${BLAZE_DEEP} 140%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px ${BLAZE}55); }
 @keyframes borderSpin { to { transform: rotate(360deg); } }
 @keyframes sheenSweep { 0% { transform: translateX(-150%) skewX(-18deg); } 100% { transform: translateX(220%) skewX(-18deg); } }
+
+/* =============================================================
+   v2.12 — 10 GIR LOOP GRAFICA (OLED depth + tactical polish)
+   Loop 1: OLED depth — deeper ink, vignette
+   Loop 2: Card system — unified face + hairline + accent
+   Loop 3: Typography glow — Bebas + Inter sharpened
+   Loop 4: CTA sheen — blaze light + inset highlight
+   Loop 5: Nav pill — bottom OLED pill + top blur
+   Loop 6: HUD tactical — 4 corners + scanline refined
+   Loop 7: Micro-interactions — staggered fade + ticker
+   Loop 8: Skeletons & loading — shimmer 2-tone
+   Loop 9: Badges & rings — DogTag lift + ProgressRing halo
+   Loop 10: Aura & noise — camo subtle + aura slower
+   ============================================================= */
+
+/* Loop 1 — OLED depth */
+.o40-phone {
+  background:
+    radial-gradient(130% 60% at 50% -10%, #2A3020 0%, transparent 58%),
+    radial-gradient(100% 45% at 88% 108%, ${BLAZE_DEEP}1f 0%, transparent 62%),
+    radial-gradient(85% 35% at 8% 108%, ${OLIVE}1e 0%, transparent 58%),
+    linear-gradient(180deg, #0E100D 0%, ${INK} 18%, ${INK} 100%);
+}
+.o40-phone::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 50%, transparent 62%, rgba(0,0,0,0.42) 100%);
+  opacity: 0.9;
+}
+
+/* Loop 2 — Card system unified */
+.o40-card, .o40-card-glass, .o40-card-face {
+  border-radius: 14px;
+}
+.o40-card {
+  background: linear-gradient(165deg, ${INK_2} 0%, #1E221B 55%, ${INK} 100%);
+  border: 1px solid rgba(184,174,140,0.14);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.38), 0 1px 0 rgba(255,255,255,0.04) inset;
+}
+.o40-card-glass { backdrop-filter: blur(10px) saturate(1.15); }
+
+/* Loop 3 — Typography */
+.o40-display { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; letter-spacing: 0.055em; }
+.o40-mono { font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+.o40-num-glow { filter: drop-shadow(0 1px 0 rgba(0,0,0,0.35)); }
+.o40-num-glow.on { filter: drop-shadow(0 0 10px ${BLAZE}66) drop-shadow(0 1px 0 rgba(0,0,0,0.45)); }
+
+/* Loop 4 — CTA blaze light */
+.o40-cta {
+  background: linear-gradient(135deg, ${BLAZE_LIGHT} 0%, ${BLAZE} 58%, ${BLAZE_DEEP} 100%) !important;
+  box-shadow: 0 8px 22px ${BLAZE}33, 0 1px 0 rgba(255,255,255,0.18) inset, 0 -1px 0 rgba(0,0,0,0.28) inset !important;
+  border: 1px solid ${BLAZE_LIGHT}33;
+}
+.o40-cta:active { transform: scale(0.97); filter: brightness(0.96); }
+
+/* Loop 5 — Nav pill OLED */
+.o40-bottomnav-glass {
+  backdrop-filter: blur(14px) saturate(1.18);
+  background: color-mix(in srgb, #0E100D 94%, transparent);
+  border-top: 1px solid rgba(184,174,140,0.10);
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.45);
+}
+.o40-topbar-glass {
+  backdrop-filter: blur(14px) saturate(1.18);
+  background: color-mix(in srgb, #0E100D 92%, transparent);
+  border-bottom: 1px solid rgba(184,174,140,0.10);
+}
+.o40-camo { opacity: 0.85; height: 5px !important; }
+
+/* Loop 6 — HUD refined */
+.o40-hud { border-radius: 12px; }
+.o40-hud::before, .o40-hud::after, .o40-hud-corner { border-width: 2px; opacity: 0.95; }
+.o40-ai-stage::after { opacity: 0.62; }
+.o40-ai-stage::before { box-shadow: inset 0 0 70px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(193,68,14,0.22); }
+
+/* Loop 7 — micro-interactions staggered */
+.o40-screen-in { animation: screenIn 0.5s cubic-bezier(0.16,1,0.3,1); }
+.o40-card { animation: fadeSlide 0.32s cubic-bezier(0.16,1,0.3,1); animation-fill-mode: both; }
+.o40-card:nth-child(1) { animation-delay: 0.02s; }
+.o40-card:nth-child(2) { animation-delay: 0.06s; }
+.o40-card:nth-child(3) { animation-delay: 0.10s; }
+.o40-ticker-inner { animation-duration: 28s; }
+
+/* Loop 8 — skeletons polish */
+.o40-skeleton {
+  background: linear-gradient(90deg, ${OLIVE_DARK} 20%, ${OLIVE} 50%, ${OLIVE_DARK} 80%);
+  background-size: 200% 100%; animation: shimmer 1.4s infinite;
+  border-radius: 10px; opacity: 0.9;
+}
+.o40-loadbar { height: 5px; border-radius: 4px; }
+
+/* Loop 9 — badges lift */
+.o40-card:active { transform: scale(0.985) translateY(0px); }
+@media (hover: hover) {
+  .o40-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(0,0,0,0.52); }
+  .o40-card-glass:hover { transform: translateY(-3px); }
+}
+
+/* Loop 10 — aura slower + noise softer */
+.o40-aura { animation-duration: 28s; opacity: 0.95; }
+.o40-phone::before { opacity: 0.035; }
+.o40-gridbg { opacity: 0.42; }
+.o40-embers { opacity: 0.9; }
 `;
