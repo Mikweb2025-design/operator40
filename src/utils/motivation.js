@@ -209,6 +209,46 @@ export function getMotivationalMessage({
   };
 }
 
+// Frase motivazionale vocale breve per il parlato durante l'allenamento.
+// Frasi corte, naturali per TTS, senza emoji. Nessuna dipendenza dal coach AI.
+const VOCAL_MOTIVATION = {
+  it: [
+    'Dai, un altro sforzo.',
+    'Continua così, stai andando alla grande.',
+    'Resta concentrato, ogni secondo conta.',
+    'Respira e spingi ancora.',
+    'La fatica è il progresso che arriva.',
+    'Ancora un po\', ce la puoi fare.',
+    'Ritmo perfetto, non fermarti adesso.',
+    'Un passo alla volta, con costanza.',
+  ],
+  en: [
+    'Come on, one more push.',
+    'Keep going, you are doing great.',
+    'Stay focused, every second counts.',
+    'Breathe and push again.',
+    'The effort is where progress comes from.',
+    'A little more, you can do it.',
+    'Perfect rhythm, do not stop now.',
+    'One step at a time, with consistency.',
+  ],
+  de: [
+    'Komm, noch eine Anstrengung.',
+    'Mach weiter, du machst das großartig.',
+    'Bleib konzentriert, jede Sekunde zählt.',
+    'Atme und drück noch einmal.',
+    'Die Anstrengung ist der Fortschritt.',
+    'Noch ein bisschen, du schaffst es.',
+    'Perfekter Rhythmus, bleib dran.',
+    'Schritt für Schritt, mit Beständigkeit.',
+  ],
+};
+
+export function getVocalMotivation(lang) {
+  const list = VOCAL_MOTIVATION[lang] || VOCAL_MOTIVATION.it;
+  return list[Math.floor(Math.random() * list.length)];
+}
+
 // Per cron server: genera payload per Web Push
 export function buildPushPayload({ sessions, profile, lang }) {
   const msg = getMotivationalMessage({ sessions, profile, lang });

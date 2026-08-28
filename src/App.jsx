@@ -155,7 +155,7 @@ import {
   testPushViaSW,
   updatePushStats,
 } from './utils/push.js';
-import { getMotivationalMessage } from './utils/motivation.js';
+import { getMotivationalMessage, getVocalMotivation } from './utils/motivation.js';
 import BellyTest from './components/BellyTest.jsx';
 import BeforeAfterSlider from './components/BeforeAfterSlider.jsx';
 import FitnessEngineView from './components/FitnessEngineView.tsx';
@@ -1060,6 +1060,16 @@ export default function App() {
       await window.storage.set('o40_profile', JSON.stringify(p), false);
     } catch {}
   }
+  async function toggleVocalMotivation() {
+    const p = { ...profile, vocalMotivation: !profile.vocalMotivation };
+    setProfile(p);
+    if (p.vocalMotivation) speak(getVocalMotivation(lang), lang, LOCALES);
+    try {
+      await window.storage.set('o40_profile', JSON.stringify(p), false);
+    } catch (e) {
+      /* best effort */
+    }
+  }
   async function toggleSkipWarmup() {
     const p = { ...profile, skipWarmup: !profile.skipWarmup };
     setProfile(p);
@@ -1623,6 +1633,8 @@ export default function App() {
                 onToggleSkipWarmup={toggleSkipWarmup}
                 voiceCountdown={!!(profile && profile.voiceCountdown)}
                 onToggleVoiceCountdown={toggleVoiceCountdown}
+                vocalMotivation={profile ? profile.vocalMotivation !== false : true}
+                onToggleVocalMotivation={toggleVocalMotivation}
                 level={
                   (profile &&
                     (profile.level ||
@@ -1919,6 +1931,7 @@ export default function App() {
                 onToggleMusic={toggleMusic}
                 aiEnabled={aiCoachEnabled}
                 onToggleAi={() => setAiCoachEnabled((v) => !v)}
+                vocalMotivation={profile ? profile.vocalMotivation !== false : true}
                 lang={lang}
                 onSkip={advancePhase}
                 onPrev={goPrev}

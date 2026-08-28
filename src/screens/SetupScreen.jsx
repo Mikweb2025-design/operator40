@@ -23,6 +23,7 @@ import {
   Music,
   Music2,
   HeadphoneOff,
+  Check,
   RefreshCw,
   ChevronLeft,
   ChevronRight,
@@ -35,6 +36,7 @@ import {
   ChevronRight as ChevronRightIcon,
   Download,
   Upload,
+  Sparkles,
 } from 'lucide-react';
 import { isStandalonePWA } from '../utils/push.js';
 import {
@@ -156,6 +158,8 @@ export default function SetupScreen({
   onToggleSkipWarmup,
   voiceCountdown,
   onToggleVoiceCountdown,
+  vocalMotivation,
+  onToggleVocalMotivation,
   level,
   onSetLevel,
   intervalPreset,
@@ -344,6 +348,19 @@ export default function SetupScreen({
               icon={Music}
               on={voiceCountdown}
               onClick={onToggleVoiceCountdown}
+            />
+            <div style={{ height: 1, background: OLIVE_DARK, margin: '0 12px' }} />
+            <ToggleRow
+              label={
+                lang === 'it'
+                  ? 'Motivazioni vocali'
+                  : lang === 'de'
+                    ? 'Sprach-Motivation'
+                    : 'Voice motivation'
+              }
+              icon={Sparkles}
+              on={vocalMotivation}
+              onClick={onToggleVocalMotivation}
             />
           </div>
         )}

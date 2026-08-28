@@ -16,6 +16,7 @@ import { LOCALES } from '../i18n.js';
 import { EXERCISES } from '../data/exercises.js';
 import { formatTime } from '../utils/date.js';
 import { playBeep, vibrate, speak } from '../utils/audio.js';
+import { getVocalMotivation } from '../utils/motivation.js';
 import { requestWakeLock, releaseWakeLock } from '../utils/wakeLock.js';
 import SessionAIOverlay from '../components/SessionAIOverlay.tsx';
 import FitnessEngineView from '../components/FitnessEngineView.tsx';
@@ -144,6 +145,7 @@ function SessionScreen({
   onToggleMusic,
   aiEnabled,
   onToggleAi,
+  vocalMotivation,
   lang: langProp,
   onSkip,
   onPrev,
@@ -173,6 +175,25 @@ function SessionScreen({
     )
       speak(String(secondsLeft), lang, LOCALES);
   }, [secondsLeft, phase.type, soundOn, profile, isRepsWork]);
+
+  // Motivazioni vocali periodiche durante il lavoro (anche SENZA AI Coach).
+  // Non si attiva quando l'AI Coach parla già, né sulle fasi reps manuali.
+  useEffect(() => {
+    if (
+      !soundOn ||
+      !vocalMotivation ||
+      paused ||
+      phase.type !== 'work' ||
+      isAiWork ||
+      isRepsWork
+    )
+      return;
+    const interval = setInterval(() => {
+      if (document.hidden) return;
+      speak(getVocalMotivation(lang), lang, LOCALES);
+    }, 45000);
+    return () => clearInterval(interval);
+  }, [soundOn, vocalMotivation, paused, phase.type, isAiWork, isRepsWork, lang]);
   useEffect(() => {
     requestWakeLock();
     function onVis() {
