@@ -14,7 +14,7 @@ import {
 import { tr } from '../i18n.js';
 import { EXERCISES } from '../data/exercises.js';
 import { hrZone, WEEKLY_GOAL, RPE_LABELS, RPE_COLORS } from '../utils/stats.js';
-import { Trophy, HeartPulse, Ruler, Scale, Check } from 'lucide-react';
+import { Trophy, HeartPulse, Ruler, Scale, Check, Gauge } from 'lucide-react';
 import { WeeklyChallenge } from '../components/WeeklyChallenge.jsx';
 import DogTag from '../components/ui/DogTag.jsx';
 import { inputStyle, primaryBtn, secondaryBtn } from '../components/ui/styles.js';
@@ -22,6 +22,7 @@ import { inputStyle, primaryBtn, secondaryBtn } from '../components/ui/styles.js
 /* ================= SUMMARY SCREEN ================= */
 function SummaryScreen({
   stats,
+  aiQuality,
   profile,
   sessions,
   hrInput,
@@ -111,6 +112,85 @@ function SummaryScreen({
           <DogTag label={t('dt.kcal')} value={stats.kcal} />
         </div>
         <WeeklyChallenge sessions={sessions} weeklyGoal={profile.weeklyGoal || WEEKLY_GOAL} />
+
+        {aiQuality && aiQuality.overall != null && aiQuality.exercises?.length > 0 && (
+          <div
+            className="o40-pop"
+            style={{
+              background: INK_2,
+              border: `1px solid ${OLIVE}`,
+              borderRadius: 12,
+              padding: 16,
+              marginBottom: 12,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+              <Gauge
+                size={18}
+                color={aiQuality.overall > 70 ? '#7FB069' : aiQuality.overall > 50 ? '#D4A017' : BLAZE}
+              />
+              <span
+                className="o40-mono"
+                style={{
+                  color: KHAKI,
+                  fontSize: 11,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                }}
+              >
+                {t('sum.quality.title')}
+              </span>
+              <div
+                style={{
+                  marginLeft: 'auto',
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  gap: 2,
+                }}
+              >
+                <span
+                  className="o40-display"
+                  style={{
+                    color:
+                      aiQuality.overall > 70
+                        ? '#7FB069'
+                        : aiQuality.overall > 50
+                          ? '#D4A017'
+                          : BLAZE,
+                    fontSize: 26,
+                    lineHeight: 1,
+                  }}
+                >
+                  {aiQuality.overall}
+                </span>
+                <span className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>
+                  /100
+                </span>
+              </div>
+            </div>
+            <div style={{ color: STEEL, fontSize: 12, marginBottom: 10, lineHeight: 1.4 }}>
+              {t('sum.quality.body')}
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {aiQuality.exercises.map((e) => (
+                <span
+                  key={e.name}
+                  className="o40-mono"
+                  style={{
+                    color: PAPER,
+                    fontSize: 10,
+                    background: INK,
+                    border: `1px solid ${e.quality > 70 ? '#7FB069' : e.quality > 50 ? '#D4A017' : OLIVE}`,
+                    borderRadius: 6,
+                    padding: '3px 8px',
+                  }}
+                >
+                  {t('sum.quality.per', { name: e.name, q: e.quality })}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div
           style={{

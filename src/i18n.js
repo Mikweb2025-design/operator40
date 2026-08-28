@@ -443,6 +443,18 @@ export const I18N = {
   },
   'sum.hr.ph': { it: 'es. 142', en: 'e.g. 142', de: 'z. B. 142' },
   'sum.zone': { it: 'Zona: {label}', en: 'Zone: {label}', de: 'Zone: {label}' },
+  'sum.quality.title': { it: 'Qualità esecuzione (AI)', en: 'Form quality (AI)', de: 'Ausführungsqualität (KI)' },
+  'sum.quality.body': {
+    it: 'Media della qualità del movimento rilevata dall’AI Coach durante le fasi lavoro.',
+    en: 'Average movement quality tracked by the AI Coach during work phases.',
+    de: 'Durchschnittliche Bewegungsqualität, die der AI Coach während der Arbeitsphasen erfasst hat.',
+  },
+  'sum.quality.none': {
+    it: 'AI Coach non attivo durante la sessione.',
+    en: 'AI Coach was not active during this session.',
+    de: 'AI Coach war während dieser Sitzung nicht aktiv.',
+  },
+  'sum.quality.per': { it: '{name} · Q {q}', en: '{name} · Q {q}', de: '{name} · Q {q}' },
   'sum.save': {
     it: 'SALVA E TORNA ALLA BASE',
     en: 'SAVE & RETURN TO BASE',
@@ -451,6 +463,7 @@ export const I18N = {
 
   /* ---- history ---- */
   'hist.title': { it: 'STATISTICHE', en: 'STATISTICS', de: 'STATISTIK' },
+  'hist.quality': { it: 'Qualità AI', en: 'AI quality', de: 'KI-Qualität' },
   'hist.avgint': {
     it: 'Intensità media (RPE)',
     en: 'Average intensity (RPE)',

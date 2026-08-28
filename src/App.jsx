@@ -490,6 +490,8 @@ export default function App() {
   const [healthImportStatus, setHealthImportStatus] = useState('idle');
 
   const [lastStats, setLastStats] = useState(null);
+  const [aiPhaseQuality, setAiPhaseQuality] = useState([]);
+  const aiPhaseQualityRef = useRef([]);
   const [hrInput, setHrInput] = useState('');
   const [waistInput, setWaistInput] = useState('');
   const [rpe, setRpe] = useState(null);
@@ -883,11 +885,24 @@ export default function App() {
     setSecondsLeft(s[0].duration ?? 0);
     setPaused(false);
     setRpe(null);
+    setAiPhaseQuality([]);
+    aiPhaseQualityRef.current = [];
     if (soundRef.current) {
       playBeep(660);
       announcePhase(s[0]);
     }
     setScreen('session');
+  }
+
+  function collectAiPhaseQuality(data) {
+    if (!data || !data.exerciseId || typeof data.avgQuality !== 'number') return;
+    const entry = {
+      exerciseId: data.exerciseId,
+      reps: data.reps ?? 0,
+      quality: Math.round(data.avgQuality),
+    };
+    aiPhaseQualityRef.current = [...aiPhaseQualityRef.current, entry];
+    setAiPhaseQuality(aiPhaseQualityRef.current);
   }
 
   function finishSession() {
@@ -908,10 +923,34 @@ export default function App() {
     );
     if (soundRef.current) playBeep(1000, 0.25);
     if (vibrationRef.current) vibrate([80, 60, 80, 60, 150]);
+    const qualityEntries = aiPhaseQualityRef.current;
+    let aiQuality = null;
+    if (qualityEntries.length) {
+      const byExercise = {};
+      qualityEntries.forEach((e) => {
+        if (!byExercise[e.exerciseId]) {
+          byExercise[e.exerciseId] = { name: tr(EXERCISES[e.exerciseId].name, lang), reps: 0, sum: 0, n: 0 };
+        }
+        const g = byExercise[e.exerciseId];
+        g.reps = Math.max(g.reps, e.reps ?? 0);
+        g.sum += e.quality;
+        g.n += 1;
+      });
+      const exercises = Object.values(byExercise).map((g) => ({
+        name: g.name,
+        reps: g.reps,
+        quality: Math.round(g.sum / g.n),
+      }));
+      aiQuality = {
+        overall: Math.round(exercises.reduce((a, e) => a + e.quality, 0) / exercises.length),
+        exercises,
+      };
+    }
     setLastStats({
       program: activeProgram,
       kcal,
       durationSec: totalSeqSeconds(activeProgram, skip, preset.work, preset.rest, mode, levelKey),
+      aiQuality,
     });
     setScreen('summary');
   }
@@ -1311,6 +1350,7 @@ export default function App() {
       programName: tr(activeProgram.name, lang),
       kcal: lastStats.kcal,
       durationSec: lastStats.durationSec,
+      aiQuality: lastStats.aiQuality || null,
       peakHR: hrInput ? parseInt(hrInput, 10) : null,
       rpe: rpe,
       notes: notes.trim() || null,
@@ -1884,6 +1924,7 @@ export default function App() {
                 onPrev={goPrev}
                 exitConfirm={exitConfirm}
                 setExitConfirm={setExitConfirm}
+                onAiPhaseComplete={collectAiPhaseQuality}
                 onExit={() => {
                   setExitConfirm(false);
                   setScreen('home');
@@ -1894,6 +1935,7 @@ export default function App() {
             {screen === 'summary' && lastStats && (
               <SummaryScreen
                 stats={lastStats}
+                aiQuality={lastStats.aiQuality}
                 profile={profile}
                 sessions={sessions}
                 hrInput={hrInput}

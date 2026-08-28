@@ -147,6 +147,7 @@ function SessionScreen({
   lang: langProp,
   onSkip,
   onPrev,
+  onAiPhaseComplete,
   exitConfirm,
   setExitConfirm,
   onExit,
@@ -288,9 +289,10 @@ function SessionScreen({
               lang={lang}
               levelKey={profile?.level ?? 'combattente'}
               aiEnabled={aiEnabled}
-              onCompletePhase={() => {
+              onCompletePhase={({ reps, avgQuality }) => {
                 if (soundOn) playBeep(880);
                 if (vibrate) vibrate([30]);
+                onAiPhaseComplete?.({ exerciseId: phase.exerciseId, reps, avgQuality });
                 onSkip();
               }}
               onRep={() => {}}

@@ -1702,6 +1702,32 @@ function HistoryScreen({
                       {tr(RPE_LABELS[s.rpe - 1], lang)}
                     </div>
                   )}
+                  {s.aiQuality && s.aiQuality.overall != null && (
+                    <div
+                      className="o40-mono"
+                      title={t('hist.quality')}
+                      style={{
+                        color:
+                          s.aiQuality.overall > 70
+                            ? '#7FB069'
+                            : s.aiQuality.overall > 50
+                              ? '#D4A017'
+                              : BLAZE,
+                        fontSize: 10.5,
+                        border: `1px solid ${
+                          s.aiQuality.overall > 70
+                            ? '#7FB069'
+                            : s.aiQuality.overall > 50
+                              ? '#D4A017'
+                              : OLIVE
+                        }`,
+                        borderRadius: 4,
+                        padding: '2px 5px',
+                      }}
+                    >
+                      Q{s.aiQuality.overall}
+                    </div>
+                  )}
                   <button
                     onClick={() => {
                       if (confirmDeleteDate === s.date) {
