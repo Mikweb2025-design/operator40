@@ -182,14 +182,18 @@ function ScreenFallback() {
       style={{
         flex: 1,
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 40,
+        gap: 14,
       }}
     >
-      <div className="o40-mono" style={{ color: '#EDE8D8', fontSize: 12, letterSpacing: '0.08em' }}>
+      <div style={{ width: 32, height: 32, borderRadius: '50%', border: '2px solid #4A5233', borderTopColor: '#C1440E', animation: 'spin 0.8s linear infinite' }} />
+      <div className="o40-mono" style={{ color: '#EDE8D8', fontSize: 11, letterSpacing: '0.08em', opacity: 0.8 }}>
         CARICAMENTO…
       </div>
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
   );
 }

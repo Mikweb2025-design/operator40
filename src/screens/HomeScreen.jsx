@@ -151,6 +151,7 @@ function HomeScreen({
 
   return (
     <div className="o40-screen-in" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <style>{`@keyframes o40OrangePulse{0%,100%{box-shadow:0 0 0 1px #C1440E22 inset,0 4px 12px rgba(0,0,0,0.25)}50%{box-shadow:0 0 0 1px #C1440E44 inset,0 6px 20px rgba(193,68,14,0.22)}}`}</style>
       <div
         style={{
           padding: '16px 16px 4px',
@@ -600,6 +601,7 @@ function HomeScreen({
               cursor: 'pointer',
               textAlign: 'left',
               boxShadow: `0 0 0 1px ${BLAZE}22 inset, 0 4px 12px rgba(0,0,0,0.25)`,
+              animation: 'o40OrangePulse 2.4s ease-in-out infinite',
             }}
           >
             <div
@@ -645,6 +647,7 @@ function HomeScreen({
                   alignItems: 'center',
                   gap: 10,
                   boxShadow: `0 0 0 1px ${BLAZE}22 inset, 0 4px 12px rgba(0,0,0,0.25)`,
+                  animation: 'o40OrangePulse 2.4s ease-in-out infinite',
                 }}
               >
                 <div
@@ -705,6 +708,7 @@ function HomeScreen({
               alignItems: 'center',
               gap: 10,
               boxShadow: `0 0 0 1px ${BLAZE}22 inset, 0 4px 12px rgba(0,0,0,0.25)`,
+              animation: 'o40OrangePulse 2.4s ease-in-out infinite',
             }}
           >
             <div

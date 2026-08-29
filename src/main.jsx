@@ -19,6 +19,35 @@ window.addEventListener('beforeinstallprompt', (e) => {
   window.dispatchEvent(new CustomEvent('o40:installReady'));
 });
 
+// Global chunk-load guard: "Importing a module script failed" after PWA deploy → auto-reload once
+(function setupChunkErrorGuard(){
+  let retried = false;
+  function isChunkErr(msg){
+    const s = String(msg||'').toLowerCase();
+    return s.includes('importing a module script failed') || s.includes('failed to fetch dynamically imported module') || s.includes('loading chunk') || s.includes('chunkloaderror');
+  }
+  function tryReload(reason){
+    if (retried) return;
+    try {
+      const key = 'o40_chunk_global_retry';
+      const last = Number(sessionStorage.getItem(key)||0);
+      if (Date.now() - last < 8000) return;
+      sessionStorage.setItem(key, String(Date.now()));
+    } catch {}
+    retried = true;
+    console.warn('[o40] chunk load failed → reload', reason);
+    setTimeout(()=> window.location.reload(), 700);
+  }
+  window.addEventListener('error', (e)=>{
+    const msg = e?.message || e?.error?.message || '';
+    if (isChunkErr(msg) || isChunkErr(e?.error)) tryReload(msg);
+  }, true);
+  window.addEventListener('unhandledrejection', (e)=>{
+    const msg = e?.reason?.message || String(e?.reason||'');
+    if (isChunkErr(msg)) tryReload(msg);
+  });
+})();
+
 // Register the PWA service worker (offline-first + Chrome installability) and
 // keep an installed PWA current: check for updates on load/foreground and, when
 // a newer build's service worker takes control, reload to the fresh version.

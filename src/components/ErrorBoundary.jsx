@@ -1,15 +1,32 @@
 import React from 'react';
 
+function isChunkError(msg) {
+  const s = String(msg || '').toLowerCase();
+  return s.includes('importing a module script failed') || s.includes('failed to fetch dynamically imported module') || s.includes('loading chunk') || s.includes('loading css chunk') || s.includes('chunkloaderror');
+}
+
 export class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null, fixing: false, fixLog: '' };
+    this.state = { hasError: false, error: null, fixing: false, fixLog: '', isChunk: false, autoTried: false };
   }
   static getDerivedStateFromError(error) {
-    return { hasError: true, error };
+    return { hasError: true, error, isChunk: isChunkError(error?.message || error) };
   }
   componentDidCatch(error, info) {
     console.error('[ErrorBoundary]', error, info);
+    // auto-retry once for chunk errors (stale PWA cache after deploy)
+    if (isChunkError(error?.message || error) && !this.state.autoTried) {
+      this.setState({ autoTried: true });
+      const key = 'o40_chunk_retry';
+      try {
+        const last = Number(sessionStorage.getItem(key) || 0);
+        if (Date.now() - last > 10000) {
+          sessionStorage.setItem(key, String(Date.now()));
+          setTimeout(() => window.location.reload(), 900);
+        }
+      } catch {}
+    }
   }
   handleFix = async () => {
     this.setState({ fixing: true, fixLog: 'Pulizia cache...' });
@@ -40,6 +57,7 @@ export class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       const isFixing = this.state.fixing;
+      const isChunk = this.state.isChunk;
       return (
         <div
           style={{
@@ -57,11 +75,12 @@ export class ErrorBoundary extends React.Component {
           <div
             style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 28, letterSpacing: '0.05em' }}
           >
-            OPERAZIONE INTERROTTA
+            {isChunk ? 'AGGIORNAMENTO DISPONIBILE' : 'OPERAZIONE INTERROTTA'}
           </div>
           <div style={{ opacity: 0.7, marginTop: 8, maxWidth: 360 }}>
-            Si è verificato un errore imprevisto. I tuoi dati (missioni, foto, profilo) restano
-            salvati — non disinstallare l’app.
+            {isChunk
+              ? 'Stai caricando una versione precedente (cache PWA). Ricarica per la nuova build — i tuoi dati restano salvati.'
+              : 'Si è verificato un errore imprevisto. I tuoi dati (missioni, foto, profilo) restano salvati — non disinstallare l’app.'}
           </div>
           <button
             onClick={() => window.location.reload()}
