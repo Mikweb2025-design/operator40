@@ -653,4 +653,10 @@ export const I18N = {
   },
   'setup.custom.work': { it: 'Lavoro', en: 'Work', de: 'Arbeit' },
   'setup.custom.rest': { it: 'Recupero', en: 'Rest', de: 'Pause' },
+
+  /* ---- social sfida (v2.15) ---- */
+  'home.section.social': { it: 'SFIDA AMICI', en: 'FRIEND CHALLENGE', de: 'FREUNDE-CHALLENGE' },
+  'home.social.badge': { it: '{n} amici · {kcal} kcal', en: '{n} friends · {kcal} kcal', de: '{n} Freunde · {kcal} kcal' },
+  'home.girone.title': { it: 'SFIDA DEL GIRONE · {id} · GIRONE PANCIA', en: 'GROUP CHALLENGE · {id} · BELLY GROUP', de: 'GRUPPEN-CHALLENGE · {id} · BAUCH-GRUPPE' },
+  'home.raffica.badge': { it: 'LAMPO', en: 'BLITZ', de: 'BLITZ' },
 };

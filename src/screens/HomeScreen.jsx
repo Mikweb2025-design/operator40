@@ -666,7 +666,7 @@ function HomeScreen({
                     className="o40-mono"
                     style={{ color: BLAZE, fontSize: 10, letterSpacing: '0.06em' }}
                   >
-                    SFIDA DEL GIRONE · {gironeProgram.id} · GIRONE PANCIA
+                    {t('home.girone.title', {id: gironeProgram.id})}
                   </div>
                   <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>
                     {tr(gironeProgram.name, lang)}
@@ -1053,15 +1053,22 @@ function HomeScreen({
       </CollapsibleSection>
 
       {/* SOCIAL SFIDA — v2.15 (no backend, link share + local compare) — einklappbar wie jede Home-Section */}
-      <CollapsibleSection
-        id="social"
-        title={t('home.section.social') || 'SFIDA AMICI'}
-        icon={Users}
-        badge={`${sessions.filter(s=> new Date(s.date) >= (()=>{const d=new Date(); d.setDate(d.getDate()-((d.getDay()+6)%7)); d.setHours(0,0,0,0); return d;})()).length} / ${profile.weeklyGoal || 3} · kcal`}
-        defaultOpen={false}
-      >
-        <SocialChallenge sessions={sessions} profile={profile} lang={lang} />
-      </CollapsibleSection>
+      {(() => {
+        const wkN = sessions.filter(s=> new Date(s.date) >= (()=>{const d=new Date(); d.setDate(d.getDate()-((d.getDay()+6)%7)); d.setHours(0,0,0,0); return d;})()).length;
+        const wkKcal = Math.round(sessions.filter(s=> new Date(s.date) >= (()=>{const d=new Date(); d.setDate(d.getDate()-((d.getDay()+6)%7)); d.setHours(0,0,0,0); return d;})()).reduce((a,s)=>a+(s.kcal||0),0));
+        const friendCode = (()=>{ try{ return localStorage.getItem('o40_friend_code'); }catch{ return null; }})();
+        return (
+          <CollapsibleSection
+            id="social"
+            title={t('home.section.social')}
+            icon={Users}
+            badge={friendCode ? t('home.social.badge', {n: '1', kcal: wkKcal}) : `${wkN}/${profile.weeklyGoal||3} · ${wkKcal} kcal`}
+            defaultOpen={false}
+          >
+            <SocialChallenge sessions={sessions} profile={profile} lang={lang} />
+          </CollapsibleSection>
+        );
+      })()}
 
       {/* MISSIONI & OBIETTIVI — collassabile */}
       <CollapsibleSection

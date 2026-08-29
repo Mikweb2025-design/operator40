@@ -1573,11 +1573,9 @@ function HistoryScreen({
                       fontWeight: d.sessions.length ? 700 : 400,
                       background: d.sessions.length ? `linear-gradient(135deg, ${BLAZE} 0%, ${BLAZE_DEEP} 100%)` : 'transparent',
                       color: d.sessions.length ? PAPER : STEEL,
-                      border: d.sessions.length ? `1px solid ${BLAZE}55` : `1px solid transparent`,
+                      border: d.isToday ? `1px solid ${KHAKI}` : d.sessions.length ? `1px solid ${BLAZE}55` : `1px solid transparent`,
                       boxShadow: d.sessions.length ? `0 2px 8px ${BLAZE}33` : 'none',
                       opacity: d.isToday ? 1 : d.sessions.length ? 1 : 0.85,
-                      border: d.isToday ? `1px solid ${KHAKI}` : '1px solid transparent',
-                      fontWeight: d.sessions.length ? 700 : 400,
                     }}
                   >
                     {d.day}
