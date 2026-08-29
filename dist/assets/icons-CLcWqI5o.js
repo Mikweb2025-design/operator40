@@ -589,6 +589,16 @@ const Lightbulb = createLucideIcon("Lightbulb", [
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
+const Link = createLucideIcon("Link", [
+  ["path", { d: "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71", key: "1cjeqo" }],
+  ["path", { d: "M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71", key: "19qd67" }]
+]);
+/**
+ * @license lucide-react v0.462.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
 const Medal = createLucideIcon("Medal", [
   [
     "path",
@@ -745,6 +755,19 @@ const Settings = createLucideIcon("Settings", [
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
+const Share2 = createLucideIcon("Share2", [
+  ["circle", { cx: "18", cy: "5", r: "3", key: "gq8acd" }],
+  ["circle", { cx: "6", cy: "12", r: "3", key: "w7nqdw" }],
+  ["circle", { cx: "18", cy: "19", r: "3", key: "1xt0gg" }],
+  ["line", { x1: "8.59", x2: "15.42", y1: "13.51", y2: "17.49", key: "47mynk" }],
+  ["line", { x1: "15.41", x2: "8.59", y1: "6.51", y2: "10.49", key: "1n3mei" }]
+]);
+/**
+ * @license lucide-react v0.462.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
 const ShieldCheck = createLucideIcon("ShieldCheck", [
   [
     "path",
@@ -885,6 +908,18 @@ const Upload = createLucideIcon("Upload", [
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
+const Users = createLucideIcon("Users", [
+  ["path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", key: "1yyitq" }],
+  ["circle", { cx: "9", cy: "7", r: "4", key: "nufk8" }],
+  ["path", { d: "M22 21v-2a4 4 0 0 0-3-3.87", key: "kshegd" }],
+  ["path", { d: "M16 3.13a4 4 0 0 1 0 7.75", key: "1da9ce" }]
+]);
+/**
+ * @license lucide-react v0.462.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
 const Vibrate = createLucideIcon("Vibrate", [
   ["path", { d: "m2 8 2 2-2 2 2 2-2 2", key: "sv1b1" }],
   ["path", { d: "m22 8-2 2 2 2-2 2 2 2", key: "101i4y" }],
@@ -961,23 +996,24 @@ const Zap = createLucideIcon("Zap", [
   ]
 ]);
 export {
+  Gauge as $,
   Activity as A,
   BookOpen as B,
   Check as C,
   Download as D,
   Eye as E,
   Flame as F,
-  TrendingDown as G,
+  Lightbulb as G,
   House as H,
   Info as I,
-  Scale as J,
-  Play as K,
-  Lightbulb as L,
+  Trash2 as J,
+  Ruler as K,
+  Link as L,
   Music as M,
-  Pause as N,
-  ShieldCheck as O,
+  TrendingDown as N,
+  Scale as O,
   Plus as P,
-  Gauge as Q,
+  Play as Q,
   React as R,
   Sparkles as S,
   Trophy as T,
@@ -985,7 +1021,9 @@ export {
   Volume2 as V,
   Wind as W,
   X,
+  Pause as Y,
   Zap as Z,
+  ShieldCheck as _,
   Timer as a,
   ChevronRight as b,
   commonjsGlobal as c,
@@ -1007,9 +1045,9 @@ export {
   BellOff as s,
   Send as t,
   HeartPulse as u,
-  TrendingUp as v,
-  Star as w,
-  RotateCcw as x,
-  Trash2 as y,
-  Ruler as z
+  Users as v,
+  Share2 as w,
+  TrendingUp as x,
+  Star as y,
+  RotateCcw as z
 };

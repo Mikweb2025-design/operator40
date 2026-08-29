@@ -1,9 +1,9 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-C91R1snP.js","./icons-CYijDH-L.js","./charts-CgofXTP-.js","./web-AzOu4ClV.js","./CountdownScreen-B-AXHyGj.js","./SetupScreen-GRAi6-BJ.js","./TopBar-U_0LMHzB.js","./HomeScreen-BLmQwviW.js","./GoalRing-C0Ac5KRs.js","./ExerciseFigure-B5wE-vmZ.js","./DogTag-7gwLcqwq.js","./ProgressRing-CimwJ2hi.js","./LibraryScreen-BFtCJLOg.js","./clips-DJ4gBJJK.js","./BuilderScreen-C5VgWaWl.js","./PreviewScreen-CTw3ymK1.js","./SessionScreen-B6Fp6uWP.js","./SummaryScreen-BsoiDf12.js","./HistoryScreen-Das2k9FP.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-aK3jCnQG.js","./icons-CLcWqI5o.js","./charts-BIux2oEU.js","./web-LLef69x4.js","./CountdownScreen-B6ns6Aq8.js","./SetupScreen-Bay8QDqG.js","./TopBar-CWXKtjL2.js","./HomeScreen-CMc2D1Qq.js","./GoalRing-Ckz3cdjj.js","./ExerciseFigure-Bz-yJ1YY.js","./DogTag-McALqTeV.js","./ProgressRing-DkbvVO8W.js","./LibraryScreen-xbIkzZo4.js","./clips-DJ4gBJJK.js","./BuilderScreen-DvmanM2H.js","./PreviewScreen-nULaaRt8.js","./SessionScreen-CZY9wT1H.js","./SummaryScreen-D2LQtufl.js","./HistoryScreen-BZjFAbK2.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, h as Target, E as Eye, i as ChevronLeft } from "./icons-CYijDH-L.js";
-import { r as reactDomExports } from "./charts-CgofXTP-.js";
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, h as Target, E as Eye, i as ChevronLeft } from "./icons-CLcWqI5o.js";
+import { r as reactDomExports } from "./charts-BIux2oEU.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -5672,16 +5672,16 @@ class TemporalBuffer {
   }
 }
 const DEFAULTS = {
-  squat: { minROM: 18, minConfidence: 58, primaryKey: "kneeRaw", idealVel: 120, minInterval: 360 },
-  pushup: { minROM: 20, minConfidence: 60, primaryKey: "elbowRaw", idealVel: 150, minInterval: 340 },
-  // primario è il gomito, non il ginocchio
+  // v2.14.2: tuned via 32 fixtures replay (incl. 9 new: squat-shallow/deep, pushup-side/shallow, legraise-bent/fast, twist-slow/shallow, burpee-nojump)
+  squat: { minROM: 17, minConfidence: 55, primaryKey: "kneeRaw", idealVel: 120, minInterval: 350 },
+  pushup: { minROM: 18, minConfidence: 56, primaryKey: "elbowRaw", idealVel: 145, minInterval: 340 },
   crunch: { minROM: 14, minConfidence: 58, primaryKey: "hipFlexRaw", idealVel: 110, minInterval: 340 },
   affondo: { minROM: 20, minConfidence: 60, primaryKey: "kneeRaw", idealVel: 120, minInterval: 360 },
   ponte: { minROM: 15, minConfidence: 58, primaryKey: "hipFlexRaw", idealVel: 110, minInterval: 340 },
   jumpingJack: { minROM: 16, minConfidence: 60, primaryKey: "kneeRaw", idealVel: 200, minInterval: 300 },
-  // più rapido
-  burpee: { minROM: 18, minConfidence: 62, primaryKey: "kneeRaw", idealVel: 160, minInterval: 380 }
-  // movimento lungo + pausa piombo
+  burpee: { minROM: 16, minConfidence: 58, primaryKey: "kneeRaw", idealVel: 155, minInterval: 360 },
+  legraise: { minROM: 16, minConfidence: 56, primaryKey: "hipFlexRaw", idealVel: 115, minInterval: 340 },
+  russiantwist: { minROM: 14, minConfidence: 55, primaryKey: "hipFlexRaw", idealVel: 130, minInterval: 320 }
 };
 const GENERIC = { minROM: 16, minConfidence: 60, primaryKey: "kneeRaw", idealVel: 120, minInterval: 340 };
 class TemporalClassifier {
@@ -5866,15 +5866,15 @@ class PushupAnalyzer extends ExerciseAnalyzer {
     this.trough = Math.min(this.trough, ang);
     this.peak = Math.max(this.peak, ang);
     let next = this.phase;
-    if (this.phase === "READY" && ang < 120) next = "DESCENDING";
-    else if (this.phase === "DESCENDING" && ang < 110) next = "BOTTOM";
-    else if (this.phase === "BOTTOM" && ang > 125) next = "ASCENDING";
-    else if (this.phase === "ASCENDING" && ang > 142) next = "TOP";
+    if (this.phase === "READY" && ang < 122) next = "DESCENDING";
+    else if (this.phase === "DESCENDING" && ang < 112) next = "BOTTOM";
+    else if (this.phase === "BOTTOM" && ang > 123) next = "ASCENDING";
+    else if (this.phase === "ASCENDING" && ang > 140) next = "TOP";
     let repInc = false, repConf = 0;
     if (next === "TOP" && (this.phase === "ASCENDING" || this.phase === "BOTTOM")) {
       const rom = this.peak - this.trough;
-      const depthOk = this.trough < 110;
-      const extOk = ang > 142;
+      const depthOk = this.trough < 112;
+      const extOk = ang > 140;
       const velScore = clamp(100 - Math.abs(this.velFilt) * 0.06, 0, 100);
       const alignScore = line > 155 ? 95 : line > 145 ? 78 : 42;
       const romScore = rom > 28 ? 28 : rom > 18 ? 18 : 10;
@@ -5882,7 +5882,7 @@ class PushupAnalyzer extends ExerciseAnalyzer {
       if (depthOk && extOk) {
         repConf = clamp(velScore * 0.32 + alignScore * 0.35 + romScore + depthBonus, 0, 100);
       } else {
-        repConf = clamp(velScore * 0.18 + 8, 0, 100);
+        repConf = clamp(velScore * 0.18 + 6, 0, 100);
       }
       const tRes = temporal.evaluate(this.temporalBuffer, feats, this.dwellAtBottom, ts);
       const bufferReady = this.temporalBuffer.length >= 10;
@@ -5890,9 +5890,9 @@ class PushupAnalyzer extends ExerciseAnalyzer {
         if (!tRes.shouldCount && tRes.rom < 18) repConf = Math.min(repConf, tRes.confidence + 10);
         else repConf = clamp(repConf * 0.6 + tRes.confidence * 0.4, 0, 100);
       }
-      const temporalGate = !bufferReady || tRes.shouldCount || tRes.confidence > 50;
-      if (depthOk && extOk && repConf > 58 && q2.exerciseConfidence > 38 && temporalGate) {
-        if (this.shouldCountRep(ts, repConf, 58)) {
+      const temporalGate = !bufferReady || tRes.shouldCount || tRes.confidence > 48;
+      if (depthOk && extOk && repConf > 55 && q2.exerciseConfidence > 36 && temporalGate) {
+        if (this.shouldCountRep(ts, repConf, 55)) {
           repInc = true;
           this.lastRepAt = ts;
           temporal.markCounted(ts);
@@ -5964,16 +5964,16 @@ class SquatAnalyzer extends ExerciseAnalyzer {
     this.trough = Math.min(this.trough, ang);
     this.peak = Math.max(this.peak, ang);
     let next = this.phase;
-    if (this.phase === "READY" && (ang <= 122 || hipYDelta > 0.05)) next = "DESCENDING";
-    else if (this.phase === "DESCENDING" && (ang <= 113 || hipYDelta > 0.09)) next = "BOTTOM";
-    else if (this.phase === "DESCENDING" && ang > 142 && hipYDelta < 0.05 && this.trough < 122 && this.canTransition(ts, 55)) next = "ASCENDING";
-    else if (this.phase === "BOTTOM" && (ang > 140 || hipYDelta < 0.09) && this.canTransition(ts, 70)) next = "ASCENDING";
-    else if (this.phase === "ASCENDING" && ang > 146 && this.canTransition(ts, 55)) next = "STANDING";
+    if (this.phase === "READY" && (ang <= 124 || hipYDelta > 0.05)) next = "DESCENDING";
+    else if (this.phase === "DESCENDING" && (ang <= 111 || hipYDelta > 0.09)) next = "BOTTOM";
+    else if (this.phase === "DESCENDING" && ang > 142 && hipYDelta < 0.05 && this.trough < 124 && this.canTransition(ts, 55)) next = "ASCENDING";
+    else if (this.phase === "BOTTOM" && (ang > 138 || hipYDelta < 0.09) && this.canTransition(ts, 65)) next = "ASCENDING";
+    else if (this.phase === "ASCENDING" && ang > 144 && this.canTransition(ts, 55)) next = "STANDING";
     let repInc = false, repConf = 0;
     if (next === "STANDING" && (this.phase === "ASCENDING" || this.phase === "BOTTOM" || this.phase === "DESCENDING")) {
       const rom = this.peak - this.trough;
-      const depthOk = this.trough < 122;
-      const extOk = ang > 142;
+      const depthOk = this.trough < 124;
+      const extOk = ang > 140;
       const velScore = clamp(100 - Math.abs(this.velFilt) * 0.06, 0, 100);
       const trunkScore = tr2 > 155 ? 40 : tr2 > 142 ? 30 : 18;
       const romScore = rom > 28 ? 32 : rom > 20 ? 22 : rom > 14 ? 14 : 8;
@@ -5981,7 +5981,7 @@ class SquatAnalyzer extends ExerciseAnalyzer {
       if (depthOk && extOk) {
         repConf = clamp(velScore * 0.32 + romScore + trunkScore + depthBonus, 0, 100);
       } else {
-        repConf = clamp(velScore * 0.18 + 8, 0, 100);
+        repConf = clamp(velScore * 0.18 + 6, 0, 100);
       }
       const tRes = temporal.evaluate(this.temporalBuffer, feats, this.dwellAtBottom, ts);
       const bufferReady = this.temporalBuffer.length >= 10;
@@ -5989,9 +5989,9 @@ class SquatAnalyzer extends ExerciseAnalyzer {
         if (!tRes.shouldCount && tRes.rom < 16) repConf = Math.min(repConf, tRes.confidence + 12);
         else repConf = clamp(repConf * 0.55 + tRes.confidence * 0.45, 0, 100);
       }
-      const temporalGate = !bufferReady || tRes.shouldCount || tRes.confidence > 52;
-      if (depthOk && extOk && repConf > 58 && q2.exerciseConfidence > 38 && temporalGate) {
-        if (this.shouldCountRep(ts, repConf, 58)) {
+      const temporalGate = !bufferReady || tRes.shouldCount || tRes.confidence > 50;
+      if (depthOk && extOk && repConf > 55 && q2.exerciseConfidence > 36 && temporalGate) {
+        if (this.shouldCountRep(ts, repConf, 55)) {
           repInc = true;
           this.lastRepAt = ts;
           temporal.markCounted(ts);
@@ -6165,23 +6165,23 @@ class LegRaiseAnalyzer extends ExerciseAnalyzer {
     this.trough = Math.min(this.trough, hipFlex);
     this.peak = Math.max(this.peak, hipFlex);
     let next = this.phase;
-    if (this.phase === "READY" && hipFlex < 145) next = "RAISING";
-    else if (this.phase === "RAISING" && hipFlex < 105) next = "TOP";
-    else if (this.phase === "TOP" && hipFlex > 118) next = "LOWERING";
-    else if (this.phase === "LOWERING" && hipFlex > 148) next = "DOWN";
+    if (this.phase === "READY" && hipFlex < 147) next = "RAISING";
+    else if (this.phase === "RAISING" && hipFlex < 108) next = "TOP";
+    else if (this.phase === "TOP" && hipFlex > 115) next = "LOWERING";
+    else if (this.phase === "LOWERING" && hipFlex > 145) next = "DOWN";
     let repInc = false, repConf = 0;
     if (next === "DOWN" && (this.phase === "LOWERING" || this.phase === "TOP")) {
       const rom = this.peak - this.trough;
-      const topOk = this.trough < 108;
-      const downOk = hipFlex > 148;
-      const kneeScore = lk > 155 ? 18 : lk > 145 ? 10 : 2;
+      const topOk = this.trough < 110;
+      const downOk = hipFlex > 145;
+      const kneeScore = lk > 155 ? 18 : lk > 142 ? 10 : 2;
       if (topOk && downOk) {
-        repConf = clamp(52 + kneeScore + (rom > 45 ? 14 : rom > 30 ? 8 : 4) + (Math.abs(this.velFilt) < 350 ? 8 : 0), 0, 100);
+        repConf = clamp(52 + kneeScore + (rom > 42 ? 14 : rom > 28 ? 8 : 4) + (Math.abs(this.velFilt) < 360 ? 8 : 0), 0, 100);
       } else {
-        repConf = clamp(14, 0, 100);
+        repConf = clamp(12, 0, 100);
       }
-      if (topOk && downOk && repConf > 60 && q2.exerciseConfidence > 38) {
-        if (this.shouldCountRep(ts, repConf, 60)) {
+      if (topOk && downOk && repConf > 58 && q2.exerciseConfidence > 36) {
+        if (this.shouldCountRep(ts, repConf, 58)) {
           repInc = true;
           this.lastRepAt = ts;
         }
@@ -6581,26 +6581,26 @@ class BurpeeAnalyzer extends ExerciseAnalyzer {
     const elbow = (angleFromLandmarks(lm, LM.left_shoulder, LM.left_elbow, LM.left_wrist) + angleFromLandmarks(lm, LM.right_shoulder, LM.right_elbow, LM.right_wrist)) / 2;
     const hipY = ((((_a = lm[LM.left_hip]) == null ? void 0 : _a.y) ?? 0.5) + (((_b = lm[LM.right_hip]) == null ? void 0 : _b.y) ?? 0.5)) / 2;
     let repInc = false, repConf = 0;
-    const standing = knee > 142 && hipY < 0.62;
-    const squat = knee < 108;
-    const handsDown = hipY > 0.58 && Math.min(((_c = lm[LM.left_wrist]) == null ? void 0 : _c.y) ?? 1, ((_d = lm[LM.right_wrist]) == null ? void 0 : _d.y) ?? 1) > 0.62;
-    const plank = elbow > 145 && knee > 135;
-    const jump = hipY < 0.52 && knee > 145 && Math.abs(knee - 150) < 30;
+    const standing = knee > 138 && hipY < 0.65;
+    const squat = knee < 112;
+    const handsDown = hipY > 0.56 && Math.min(((_c = lm[LM.left_wrist]) == null ? void 0 : _c.y) ?? 1, ((_d = lm[LM.right_wrist]) == null ? void 0 : _d.y) ?? 1) > 0.6;
+    const plank = elbow > 142 && knee > 132;
+    const jump = hipY < 0.54 && knee > 142 && Math.abs(knee - 150) < 32;
     if (this.phase === "READY" && squat) this.phase = "SQUAT";
     else if (this.phase === "SQUAT" && handsDown) this.phase = "HANDS_DOWN";
     else if (this.phase === "HANDS_DOWN" && plank) this.phase = "PLANK";
     else if (this.phase === "PLANK" && squat) this.phase = "RETURN";
     else if (this.phase === "RETURN" && standing) this.phase = "STANDING";
     else if (this.phase === "STANDING" && jump) {
-      repConf = clamp(68 + (q2.exerciseConfidence > 60 ? 10 : 0) + (Math.abs(elbow - 160) < 20 ? 6 : 0), 0, 100);
-      if (repConf > 60 && q2.exerciseConfidence > 38 && this.shouldCountRep(ts, repConf, 60)) {
+      repConf = clamp(68 + (q2.exerciseConfidence > 58 ? 10 : 0) + (Math.abs(elbow - 160) < 20 ? 6 : 0), 0, 100);
+      if (repConf > 58 && q2.exerciseConfidence > 36 && this.shouldCountRep(ts, repConf, 58)) {
         repInc = true;
         this.lastRepAt = ts;
         this.phase = "READY";
       }
-    } else if (this.phase === "STANDING" && standing && ts - this.lastTransitionAt > 900) {
-      repConf = clamp(62 + (q2.exerciseConfidence > 60 ? 8 : 0), 0, 100);
-      if (repConf > 60 && q2.exerciseConfidence > 38 && this.shouldCountRep(ts, repConf, 60)) {
+    } else if (this.phase === "STANDING" && standing && ts - this.lastTransitionAt > 850) {
+      repConf = clamp(62 + (q2.exerciseConfidence > 58 ? 8 : 0), 0, 100);
+      if (repConf > 58 && q2.exerciseConfidence > 36 && this.shouldCountRep(ts, repConf, 58)) {
         repInc = true;
         this.lastRepAt = ts;
         this.phase = "READY";
@@ -6893,15 +6893,15 @@ class RussianTwistAnalyzer extends ExerciseAnalyzer {
     const n2 = tl > 1e-6 ? 1 / tl : 1;
     const left = Math.abs(lw.x - midHip.x) * n2, right = Math.abs(rw.x - midHip.x) * n2;
     const maxL = Math.max(left, right);
-    const centered = maxL < 0.52;
-    const twisted = maxL > 0.72;
+    const centered = maxL < 0.55;
+    const twisted = maxL > 0.66;
     let repInc = false, repConf = 0;
     if (this.phase === "READY" && centered) this.phase = "CENTER";
     else if (this.phase === "CENTER" && twisted) {
       const side = left > right ? "left" : "right";
       if (this.lastSide && this.lastSide !== side) {
-        repConf = clamp(70, 0, 100);
-        if (repConf > 58 && q2.exerciseConfidence > 38 && this.shouldCountRep(ts, repConf, 58)) {
+        repConf = clamp(68 + (q2.exerciseConfidence > 55 ? 6 : 0), 0, 100);
+        if (repConf > 55 && q2.exerciseConfidence > 36 && this.shouldCountRep(ts, repConf, 55)) {
           repInc = true;
           this.lastRepAt = ts;
         }
@@ -7125,7 +7125,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-C91R1snP.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-aK3jCnQG.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -9020,7 +9020,7 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.14.1 · 15bd3be";
+const BUILD_VERSION = "2.15.0 · 3d1b238";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -9614,7 +9614,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-AzOu4ClV.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-LLef69x4.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -10213,15 +10213,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-B-AXHyGj.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-GRAi6-BJ.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-BLmQwviW.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-BFtCJLOg.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-C5VgWaWl.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-CTw3ymK1.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-B6Fp6uWP.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BsoiDf12.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-Das2k9FP.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-B6ns6Aq8.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-Bay8QDqG.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-CMc2D1Qq.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-xbIkzZo4.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-DvmanM2H.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-nULaaRt8.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-CZY9wT1H.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-D2LQtufl.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BZjFAbK2.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",

@@ -1,10 +1,10 @@
-import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, I as INK, B as BLAZE, K as KHAKI, P as PAPER, S as STEEL, q as getMedalProgress, b as INK_2, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, f as BLAZE_DEEP, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-6jiNVdOG.js";
-import { r as reactExports, b as ChevronRight, p as Medal, X, S as Sparkles, F as Flame, I as Info, v as TrendingUp, o as Crown, Z as Zap, w as Star, x as RotateCcw, L as Lightbulb, E as Eye, h as Target, T as Trophy, B as BookOpen, e as Settings, C as Check, y as Trash2, P as Plus, z as Ruler, G as TrendingDown, J as Scale } from "./icons-CYijDH-L.js";
-import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-C0Ac5KRs.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-B5wE-vmZ.js";
-import { D as DogTag } from "./DogTag-7gwLcqwq.js";
-import { P as ProgressRing } from "./ProgressRing-CimwJ2hi.js";
-import "./charts-CgofXTP-.js";
+import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL, f as BLAZE_DEEP, P as PAPER, q as getMedalProgress, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-Cyfaa6hN.js";
+import { r as reactExports, v as Users, T as Trophy, C as Check, w as Share2, L as Link, X, b as ChevronRight, p as Medal, S as Sparkles, F as Flame, I as Info, x as TrendingUp, o as Crown, Z as Zap, y as Star, z as RotateCcw, G as Lightbulb, E as Eye, h as Target, B as BookOpen, e as Settings, J as Trash2, P as Plus, K as Ruler, N as TrendingDown, O as Scale } from "./icons-CLcWqI5o.js";
+import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-Ckz3cdjj.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-Bz-yJ1YY.js";
+import { D as DogTag } from "./DogTag-McALqTeV.js";
+import { P as ProgressRing } from "./ProgressRing-DkbvVO8W.js";
+import "./charts-BIux2oEU.js";
 function getPersonalChallenge(sessions, profile) {
   const n = (sessions == null ? void 0 : sessions.length) || 0;
   const bestStreak = computeBestStreak(sessions || []);
@@ -292,6 +292,208 @@ function getBellyMissions({ sessions, profile, waistHistory }) {
     if (needsBelly) return (counts[a.id] || 0) - (counts[b.id] || 0);
     return (counts[a.id] || 0) - (counts[b.id] || 0);
   }).map((p) => ({ ...p, _needsBelly: needsBelly }));
+}
+function weekKey(d = /* @__PURE__ */ new Date()) {
+  const date = new Date(d);
+  const day = (date.getDay() + 6) % 7;
+  date.setDate(date.getDate() - day);
+  date.setHours(0, 0, 0, 0);
+  return date.toISOString().slice(0, 10);
+}
+function getWeeklyStats(sessions) {
+  const weekStart = /* @__PURE__ */ new Date();
+  weekStart.setDate(weekStart.getDate() - (weekStart.getDay() + 6) % 7);
+  weekStart.setHours(0, 0, 0, 0);
+  const wk = (sessions || []).filter((s) => new Date(s.date) >= weekStart);
+  const kcal = Math.round(wk.reduce((a, s) => a + (s.kcal || 0), 0));
+  const n = wk.length;
+  const bestDay = wk.length ? Math.max(...wk.map((s) => s.kcal || 0)) : 0;
+  return { weekKey: weekKey(), kcal, n, bestDay, from: weekStart.toISOString() };
+}
+function generateInviteCode(sessions, profile) {
+  const wk = getWeeklyStats(sessions);
+  const payload = {
+    v: 1,
+    wk: wk.weekKey,
+    k: wk.kcal,
+    n: wk.n,
+    s: wk.bestDay,
+    name: ((profile == null ? void 0 : profile.name) || "Amico").slice(0, 12),
+    ts: Date.now()
+  };
+  try {
+    const json = JSON.stringify(payload);
+    const b64 = btoa(unescape(encodeURIComponent(json))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    return b64;
+  } catch {
+    return "";
+  }
+}
+function parseInviteCode(code) {
+  if (!code || typeof code !== "string") return null;
+  try {
+    let b64 = code.replace(/-/g, "+").replace(/_/g, "/");
+    while (b64.length % 4) b64 += "=";
+    const json = decodeURIComponent(escape(atob(b64)));
+    const p = JSON.parse(json);
+    if (!p || p.v !== 1 || typeof p.k !== "number") return null;
+    if (p.ts && Date.now() - p.ts > 14 * 864e5) return { ...p, expired: true };
+    return p;
+  } catch {
+    return null;
+  }
+}
+function getInviteLink(code) {
+  const base = "https://mikweb.eu/operator40/";
+  return `${base}?invite=${encodeURIComponent(code)}`;
+}
+function getLeaderboard(localSessions, friendPayload) {
+  const me = getWeeklyStats(localSessions);
+  const entries = [
+    { id: "me", name: "Tu", kcal: me.kcal, n: me.n, isMe: true }
+  ];
+  if (friendPayload && !friendPayload.expired) {
+    entries.push({ id: "friend", name: friendPayload.name || "Amico", kcal: friendPayload.k || 0, n: friendPayload.n || 0, isMe: false });
+  }
+  entries.sort((a, b) => b.kcal - a.kcal);
+  const leader = entries[0];
+  const diff = friendPayload ? me.kcal - (friendPayload.k || 0) : 0;
+  return { entries, leader, diff, me, friend: friendPayload };
+}
+function getSocialShareText(leaderboard, lang = "it") {
+  const { me } = leaderboard;
+  if (lang === "de") return `Operator40 Wochen-Challenge: ${me.kcal} kcal in ${me.n} Einheiten — schaffst du mehr?`;
+  if (lang === "en") return `Operator40 weekly challenge: ${me.kcal} kcal in ${me.n} sessions — beat me?`;
+  return `Operator40 sfida settimanale: ${me.kcal} kcal in ${me.n} sessioni — mi batti?`;
+}
+function SocialChallenge({ sessions = [], profile, lang = "it" }) {
+  const [friendCode, setFriendCode] = reactExports.useState(() => {
+    try {
+      return localStorage.getItem("o40_friend_code") || "";
+    } catch {
+      return "";
+    }
+  });
+  const [copied, setCopied] = reactExports.useState(false);
+  const [inputCode, setInputCode] = reactExports.useState(friendCode);
+  const myCode = generateInviteCode(sessions, profile);
+  const myLink = getInviteLink(myCode);
+  const friendPayload = parseInviteCode((friendCode || "").trim());
+  const lb = getLeaderboard(sessions, friendPayload);
+  reactExports.useEffect(() => {
+    try {
+      const url = new URL(window.location.href);
+      const inv = url.searchParams.get("invite");
+      if (inv && !friendCode) {
+        const p = parseInviteCode(inv);
+        if (p && !p.expired) {
+          setFriendCode(inv);
+          setInputCode(inv);
+          localStorage.setItem("o40_friend_code", inv);
+          url.searchParams.delete("invite");
+          window.history.replaceState({}, "", url.toString());
+        }
+      }
+    } catch {
+    }
+  }, []);
+  async function handleShare() {
+    const text = getSocialShareText(lb, lang);
+    const shareData = { title: "Operator40 — Sfida", text: `${text} ${myLink}`, url: myLink };
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+    } catch {
+    }
+    try {
+      await navigator.clipboard.writeText(`${text} ${myLink}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2e3);
+    } catch {
+      window.prompt(lang === "it" ? "Copia il link:" : "Copy link:", myLink);
+    }
+  }
+  function handleSaveFriend() {
+    const c = (inputCode || "").trim();
+    const p = parseInviteCode(c);
+    if (!c) {
+      localStorage.removeItem("o40_friend_code");
+      setFriendCode("");
+      return;
+    }
+    if (!p) {
+      alert(lang === "it" ? "Codice non valido" : "Invalid code");
+      return;
+    }
+    if (p.expired) {
+      alert(lang === "it" ? "Codice scaduto (>14gg)" : "Code expired");
+      return;
+    }
+    setFriendCode(c);
+    try {
+      localStorage.setItem("o40_friend_code", c);
+    } catch {
+    }
+  }
+  function handleClear() {
+    setFriendCode("");
+    setInputCode("");
+    try {
+      localStorage.removeItem("o40_friend_code");
+    } catch {
+    }
+  }
+  const t = (it, en, de) => lang === "de" ? de : lang === "en" ? en : it;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `linear-gradient(135deg, ${INK_2} 0%, ${INK} 100%)`, border: `1px solid ${OLIVE}`, borderRadius: 16, padding: 14, boxShadow: "0 8px 24px rgba(0,0,0,0.32)" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Users, { size: 16, color: BLAZE }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.08em" }, children: t("SFIDA SETTIMANALE AMICI", "WEEKLY FRIEND CHALLENGE", "WÖCHENTLICHE FREUNDE-CHALLENGE") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { marginLeft: "auto", color: STEEL, fontSize: 10 }, children: t("Lun-Dom kcal", "Mon-Sun kcal", "Mo-So kcal") })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", gap: 8, marginBottom: 12 }, children: lb.entries.map((e, idx) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, background: idx === 0 ? `linear-gradient(135deg, ${BLAZE} 0%, ${BLAZE_DEEP} 100%)` : INK, border: `1px solid ${idx === 0 ? BLAZE : OLIVE}`, borderRadius: 12, padding: "10px 10px", textAlign: "center", position: "relative" }, children: [
+      idx === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { size: 12, color: PAPER, style: { position: "absolute", top: 6, right: 6 } }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: idx === 0 ? PAPER : STEEL, fontSize: 9 }, children: [
+        idx === 0 ? "1°" : "2°",
+        " · ",
+        e.isMe ? t("TU", "YOU", "DU") : e.name.toUpperCase()
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: idx === 0 ? PAPER : KHAKI, fontSize: 22 }, children: e.kcal }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: idx === 0 ? PAPER : STEEL, fontSize: 11 }, children: [
+        e.n,
+        " ",
+        t("sess.", "sess.", "Einh.")
+      ] })
+    ] }, e.id)) }),
+    friendPayload && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginBottom: 10, padding: "8px 10px", borderRadius: 8, background: lb.diff >= 0 ? "#7FB06918" : `${BLAZE}18`, border: `1px solid ${lb.diff >= 0 ? "#7FB069" : BLAZE}33`, color: lb.diff >= 0 ? "#7FB069" : BLAZE, fontSize: 12, textAlign: "center" }, children: lb.diff === 0 ? "Pareggio — spingete!" : lb.diff > 0 ? `Sei avanti di ${lb.diff} kcal!` : `Sei dietro di ${Math.abs(lb.diff)} kcal` }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, marginBottom: 10 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: handleShare, style: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, background: BLAZE, color: PAPER, border: "none", borderRadius: 10, padding: "10px 12px", fontWeight: 700, fontSize: 13, cursor: "pointer" }, children: [
+        copied ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 14 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Share2, { size: 14 }),
+        " ",
+        copied ? t("Copiato!", "Copied!", "Kopiert!") : t("Invita amico", "Invite friend", "Freund einladen")
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => {
+        var _a;
+        (_a = navigator.clipboard) == null ? void 0 : _a.writeText(myCode).then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1500);
+        });
+      }, style: { display: "flex", alignItems: "center", gap: 6, background: INK_2, color: KHAKI, border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 12px", fontSize: 12, cursor: "pointer" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { size: 13 }),
+        " ",
+        t("Copia codice", "Copy code", "Code kopieren")
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9, marginBottom: 6 }, children: t("Il tuo codice (condividi link):", "Your code (share link):", "Dein Code:") }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: "8px 10px", fontSize: 10, color: KHAKI, wordBreak: "break-all", fontFamily: "monospace" }, children: myCode }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginTop: 12, display: "flex", gap: 8 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("input", { value: inputCode, onChange: (e) => setInputCode(e.target.value), placeholder: t("Incolla codice amico", "Paste friend code", "Freundescode einfügen"), style: { flex: 1, background: INK, border: `1px solid ${OLIVE}`, borderRadius: 8, padding: "8px 10px", color: PAPER, fontSize: 12 } }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleSaveFriend, style: { background: KHAKI, color: INK, border: "none", borderRadius: 8, padding: "8px 12px", fontWeight: 700, fontSize: 12, cursor: "pointer" }, children: t("Confronta", "Compare", "Vergleichen") }),
+      friendCode && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleClear, style: { background: "transparent", border: `1px solid ${STEEL}`, borderRadius: 8, padding: "8px 10px", cursor: "pointer" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14, color: STEEL }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 10, marginTop: 6 }, children: t("No backend — solo kcal settimanali, codice scade dopo 14gg.", "No backend — weekly kcal only, code expires in 14 days.", "Kein Backend — nur wöchentliche kcal, Code 14 Tage gültig.") })
+  ] });
 }
 function CollapsibleSection({
   id,
@@ -1686,6 +1888,22 @@ function HomeScreen({
             }
           ) })
         ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      CollapsibleSection,
+      {
+        id: "social",
+        title: t("home.section.social") || "SFIDA AMICI",
+        icon: Users,
+        badge: `${sessions.filter((s) => new Date(s.date) >= (() => {
+          const d = /* @__PURE__ */ new Date();
+          d.setDate(d.getDate() - (d.getDay() + 6) % 7);
+          d.setHours(0, 0, 0, 0);
+          return d;
+        })()).length} / ${profile.weeklyGoal || 3} · kcal`,
+        defaultOpen: false,
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialChallenge, { sessions, profile, lang })
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
