@@ -22,3 +22,4 @@ dist/api/composer.lock
 public/wasm/*.wasm
 public/wasm/*.js
 public/models/*.task
+electron/

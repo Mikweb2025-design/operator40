@@ -1,6 +1,6 @@
 # Operator40 — Complete Structure & Functions
 
-> **Read this to continue tomorrow without re-discovering the repo.** Updated **2026-08-28** — `main @ c827436` (`index-D3Kh0jMn.js / o40-v1d399171`) + `deploy-tmp @ 32a59f7` (live `o40-v1d399171`). Build `2.14.1 · c827436` + **40 iterazioni + Statistiche premium**.
+> **Read this to continue tomorrow without re-discovering the repo.** Updated **2026-08-29** — `main @ c606569` (`index-im_bxdsk.js / o40-v688a02c6`) + `deploy-tmp @ 477e14b` (live `o40-v688a02c6`). Build `2.15.0 · c606569` + **QA + Social sfida**.
 
 ---
 
@@ -16,7 +16,7 @@ Dark military UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N
   - `operator40-Watch` — with Huawei (separate branch)
 - **Stack:** React 18, Vite 5, Capacitor 6 (`idb 8`, `@mediapipe/tasks-vision 0.10` lite/heavy/auto + GPU→CPU + WASM offline `fetch-mediapipe.mjs`), `lucide-react`, `recharts`, Vitest 1, Playwright, PHP 8.3 `web-push` 9.0
 
-**v2.14.1 what changed (40 iterazioni):** `Statistiche premium` (DogTag accent + PR glass + Bar gradient + heatmap 6px) + `Camp 2.0` (recovery/deload) + `TEMPO 50 BPM` + `Coach 2.0` + `Onboarding 3-step` + `Clip alias 22/22` + `HR crossfade + PWA gate` + `IMU opt-in + BeforeAfter pinch` + `A11y/Library/CSV/QR` + 23 loop OLED. Build `2.14.1` + `HistoryScreen 110k`.
+**v2.15.0 what changed (QA + Social):** `QA v2.14.2` 5 analyzer tuned (squat/pushup/burpee/legRaise/russianTwist) via 32 fixtures (9 new) + `BENCHMARK.md` lite/heavy `auto` + `Social sfida` invite code + leaderboard (no backend) + `06-ai-debug.png` + `Offline lite.task` bundled. Build `2.15.0 · c606569` + `o40-v688a02c6`.
 
 ---
 
@@ -76,12 +76,13 @@ operator40/
 │   │   ├── overlay/poseConnections.ts
 │   │   └── hooks/useFitnessEngine.ts
 │   ├── utils/
-│   │   ├── stats.js, progress.js, goals.js, missions.js, motivation.js, push.js, belly.js, bellyTest.js, workout.js, audio.js, export.js, share*.js, bmi.js, body.js, audit.test.js (21), backup.js (BACKUP_VERSION=2), favorites.js, photos.js, wakeLock.js, notifications.js
+│   │   ├── stats.js, progress.js, goals.js, missions.js, motivation.js, push.js, belly.js, bellyTest.js, workout.js, audio.js, export.js, share*.js, bmi.js, body.js, audit.test.js (21), backup.js (BACKUP_VERSION=2), social.js (invite/leaderboard) + social.test.js (8), favorites.js, photos.js, wakeLock.js, notifications.js
 │   │   └── ...
 │   ├── components/
 │   │   ├── ui/ DogTag.jsx, ProgressRing.jsx, SegmentedProgress.jsx, styles.js (dedup + accent)
 │   │   ├── FitnessEngineView.tsx    # AI view 22 switcher + Coach 2.0 TTS + poseQuality + DEBUG HUD
 │   │   ├── SessionAIOverlay.tsx     # mission→exercise auto + IMU enableMotionFusion + voice
+│   │   ├── SocialChallenge.jsx      # v2.15 Social invite + leaderboard (no backend)
 │   │   ├── PoseCounter.jsx          # DEPRECATED → FitnessEngineView
 │   │   ├── PositioningMask.tsx      # alignmentScore
 │   │   ├── BellyTest.jsx, BeforeAfterSlider.jsx (pinch-zoom + haptics), ExerciseFigure.jsx, etc.
@@ -91,12 +92,13 @@ operator40/
 │   └── styles/appStyles.js
 ├── scripts/
 │   ├── version-sw.mjs
-│   ├── fetch-mediapipe.mjs  # WASM + task download
+│   ├── fetch-mediapipe.mjs  # WASM + task download (copies to public/wasm/models)
 │   ├── verify.mjs
 │   ├── deploy.mjs           # --local/--remote/--ios
-│   └── screenshots.mjs      # Playwright 390×844 @2x → docs/screenshots/
-├── docs/screenshots/        # 01-home, 02-libreria, 03-esercizio, 04-sessione (AI debug), 05-statistiche (+06-ai-debug next)
-├── ios/ + android/          # Capacitor shells (public ← dist)
+│   └── screenshots.mjs      # Playwright 390×844 @2x → docs/screenshots/ 01-06
+├── docs/                    # screenshots/ 01-06 (390×844@2x) + BENCHMARK.md lite/heavy + ROADMAP.md
+├── tests/fixtures/          # 32 json (9 new v2.14.2: squat-shallow/deep, pushup-side/shallow, etc.)
+├── ios/ + android/          # Capacitor shells (public ← dist) — electron/ via `npx cap add @capacitor-community/electron`
 ├── vite.config.js           # __APP_VERSION__ + vitest
 └── STRUCTURE.md             # ← this file
 ```
@@ -139,6 +141,6 @@ operator40/
 - Screenshots: `npm run preview` on `:4173` + `node scripts/screenshots.mjs` → `docs/screenshots/06-ai-debug.png` (commit with `git add docs/screenshots`)
 - Continue tomorrow: tune thresholds in `src/ai/exercises/analyzers/*.ts` using `landmarks.json` replay, add fixtures to `tests/fixtures/` — 2.9.0 già bumpato, prossimo 2.9.1
 
-**Current:** `main c827436` (`index-D3Kh0jMn.js / o40-v1d399171`) + `deploy-tmp 32a59f7` live `o40-v1d399171` — 40 iterazioni + Statistiche premium (v2.14.1).
+**Current:** `main c606569` (`index-im_bxdsk.js / o40-v688a02c6`) + `deploy-tmp 477e14b` live `o40-v688a02c6` — QA 5 tuned + Social sfida (v2.15.0).
 
-All set — next: `Camp 2.0` già fatto, ora `Social sfida` + `Watch` + `Offline lite.task`.
+All set — next: `Watch` HR live (branch `operator40-Watch`) + `Electron` menu bar (`npx cap add @capacitor-community/electron`).

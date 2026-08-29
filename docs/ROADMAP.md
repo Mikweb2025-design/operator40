@@ -56,13 +56,13 @@
 
 ## 🔮 Backlog (settimana 2+)
 
-- [ ] **Camp 2.0** — giorno libero programmato ogni 7 (active recovery) + deload week 4
-- [ ] **Coach vocale 2.0** — TTS on-device per cue esercizio (es: “schiena dritta”, “ginocchio 90°”) da formScore <60
-- [ ] **Watch** — sync Huawei / Apple Watch HR live durante sessione (branch `operator40-Watch`)
-- [ ] **TEMPO mode** — metronomo 40-60 BPM per esecuzione controllata (ROM/velocity feedback)
-- [ ] **Social** — sfida settimanale amici (codice invito, classifica kcal, no backend — link share + local compare)
-- [ ] **Offline models** — bundle `pose_landmarker_lite.task` in `public/models/` per primo avvio senza rete
-- [ ] **Electron Mac** — menu bar app (Capacitor @capacitor-community/electron già in package.json)
+- [x] **Camp 2.0** — giorno libero ogni 7 + deload week 22-28 — DONE v2.14.0
+- [x] **Coach vocale 2.0** — TTS cue `form<60` ogni 4s — DONE v2.14.0
+- [x] **TEMPO mode** — metronomo 40-60 BPM — DONE v2.14.0
+- [x] **Social** — sfida settimanale amici (codice invito base64url + classifica kcal, no backend) — DONE v2.15.0 (`src/utils/social.js` + `SocialChallenge.jsx` in Home)
+- [x] **Offline models** — bundle `pose_landmarker_lite.task` 5.5M + heavy 29M + wasm 3×11M in `public/models|wasm` via `fetch:mediapipe` — DONE v2.15.0
+- [ ] **Watch** — sync Huawei / Apple Watch HR live durante sessione (branch `operator40-Watch` 6e2d9a9, da integrare in main)
+- [ ] **Electron Mac** — menu bar app (`@capacitor-community/electron 5.0.1` in package.json, manca `electron/` scaffolding → `npx cap add @capacitor-community/electron`)
 
 ---
 
@@ -75,4 +75,4 @@
 
 ---
 
-*Aggiornato 29 Ago 2026 — v2.14.2 QA · 32 fixtures + 5 analyzer tuned + BENCHMARK.md — prossimo: v2.15 Social sfida + Watch HR + Offline lite.task*
+*Aggiornato 29 Ago 2026 — v2.15.0 QA + Social sfida + Offline lite.task (live o40-v688a02c6) — prossimo: v2.16 Watch HR + Electron menu bar*

@@ -9,7 +9,7 @@ Military dark UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N
 
 ---
 
-## Screenshots (v2.14.1 — 40 iterazioni · Statistiche premium)
+## Screenshots (v2.15.0 — QA + Social sfida)
 
 | Home — mission + belly + adherence | Library — 18 clips + AI tips |
 |:---:|:---:|
@@ -23,11 +23,11 @@ Military dark UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N
 |:---:|:---:|
 | ![Statistics](docs/screenshots/05-statistiche.png) | [`05-statistiche-full.png`](docs/screenshots/05-statistiche-full.png) |
 
-> **New in v2.14.1:** 40 iterazioni — `Statistiche premium` (DogTag accent + PR glass + Bar gradient + heatmap 6px + calendar 8px) + `Camp 2.0` (recovery ogni 7 + deload) + `TEMPO 50 BPM` + `Coach 2.0` + `Onboarding 3-step` + `Clip alias 22/22` + `HR crossfade + PWA gate`. Debug HUD `◇ DEBUG` + `landmarks.json`. Generate: `npm run build && npm run preview` then `node scripts/screenshots.mjs` (390×844 @2x).
+> **New in v2.15.0:** QA 5 analyzer tuned (`squat/pushup/burpee/legRaise/russianTwist` via 32 fixtures) + `BENCHMARK.md` lite/heavy `auto` + `Social sfida` (invite code base64url + leaderboard kcal, no backend) + `06-ai-debug.png` + `Offline lite.task` bundled. Debug HUD `◇ DEBUG` + `landmarks.json`. Generate: `npm run build && npm run preview` then `node scripts/screenshots.mjs` (390×844 @2x).
 
 ---
 
-## Features (v2.14.1 — 40 iterazioni)
+## Features (v2.15.0 — QA + Social)
 
 - **Onboarding** — age, weight, waist, height, weekly goal → TDEE / BMI / kcal zones. Stays on device.
 - **18 programs + 22 exercises** — `A–M` + `N,O,P` belly + `Q` Quick Burst, 30-day Camp (`DAY_CYCLE` 20, belly every 2 days), adaptive via RPE, levels `Recruit / Fighter / Elite`.
@@ -60,6 +60,10 @@ Military dark UI (`INK`/`OLIVE`/`BLAZE`/`KHAKI`/`PAPER`), 18 programs (A–M + N
 - **Coach 2.0** — TTS cue `form<60` via `SpeechCoach` ogni 4s in `FitnessEngineView`.
 - **Statistics premium (v2.14.1)** — Hero `DogTag accent` + PR `glass 16px` + Bar `gradient BLAZE→DEEP + tooltip blur` + Heatmap `6px glow` + Calendar `8px gradient`.
 - **Onboarding 3-step** — dots + `Avanti/Salta` + `tourStep` state, `clip alias 22/22` (`plank→wallsit` ecc.), `HR avg` + `NEFFEX crossfade 1.2s` + `PWA dopo 2 sessioni`.
+- **QA tuned (v2.14.2)** — 5 analyzer (`squat/pushup/burpee/legRaise/russianTwist`) tuned via 32 fixtures (9 new: shallow/deep/side/bent/fast), `TemporalClassifier` gate 55-58, `docs/BENCHMARK.md` lite/heavy `auto`.
+- **Social sfida (v2.15.0)** — `src/utils/social.js` invite code base64url (`k/n/name/wk`), `getLeaderboard` kcal settimanali, `SocialChallenge.jsx` in Home (share via `navigator.share` + `https://mikweb.eu/operator40/?invite=CODE`, 14gg expiry, local compare).
+- **Offline lite.task** — `public/wasm/*.wasm` (3×11M) + `public/models/pose_landmarker_{lite(5.5M),heavy(29M)}.task` via `npm run fetch:mediapipe` (sw.js precache if present).
+- **Screenshots 390×844@2x** — 01-home … 06-ai-debug (+ `05-statistiche-crop`) via `scripts/screenshots.mjs` + Playwright.
 
 ---
 
@@ -71,7 +75,7 @@ npm run dev          # http://localhost:5173
 npm run build        # dist/ + sw.js o40-v<hash>
 npm run preview      # http://localhost:4173 (for phone on same Wi-Fi)
 npm run verify       # ReferenceError check
-npm run test         # vitest 101 tests (stateMachine + definitions + MissionManager + 22 analyzers + audit 21 + classifier + fixtures)
+npm run test         # vitest 127 tests (stateMachine + definitions + MissionManager + 22 analyzers + audit 21 + classifier + fixtures + social 8)
 npm run fetch:mediapipe # optional: copy wasm + download pose_landmarker_{lite,heavy}.task → public/wasm,models
 ```
 
@@ -112,7 +116,7 @@ npx cap open android # Android Studio → Run (emulator TestAVD API 37.1 ps16k o
 
 ---
 
-## Project structure (v2.14.1 — 40 iterazioni)
+## Project structure (v2.15.0 — QA + Social)
 
 - `src/App.jsx` ~2330 lines — router + 9 screens `React.lazy` + `tourStep 3-step` + `motionFusion/tempo` profile + `isAiWork` gated `SessionAIOverlay`
 - `src/data/programs.js` 18 programs + `DAY_CYCLE` + `isRecoveryDay/isDeloadWeek` + `pickNextProgram` Camp 2.0 (recovery ogni 7 + deload 22-28) + `BELLY_IDS` + `CAMP_DAYS 30`
@@ -124,12 +128,12 @@ npx cap open android # Android Studio → Run (emulator TestAVD API 37.1 ps16k o
   - `exercises/ExerciseAnalyzer.ts` base + `ExerciseRegistry.ts` 22 + `analyzers/{22}.ts` per exercise
   - `coaching/` (FormScore via analyzers), `debug/LandmarkRecorder.ts` (landmarks.json), `session/ExerciseSession.ts` placeholder
 - `src/engine/` — legacy engine kept for compat: `FitnessEngine.ts` now delegates to `src/ai` when analyzer exists, fallback blocked if `trackingSupported=false`; `PoseLandmarkerManager.ts` lite/heavy/auto + `./wasm` fallback; `stateMachine.ts` hysteresis; `types.ts` 27 `ExerciseId` + `repConfidence`
-- `src/utils/` — `stats.js / progress.js / belly.js / bellyTest.js / motivation.js / push.js / workout.js / bmi.js / body.js / audit.test.js (21) / backup.js / ...`
-- `src/components/` — `FitnessEngineView.tsx` (22 switcher + Coach 2.0 TTS), `SessionAIOverlay.tsx` (IMU), `BeforeAfterSlider.jsx` (pinch-zoom), `ui/DogTag/ProgressRing/SegmentedProgress` + `ui/styles.js`, `ChangelogModal.tsx` v2.14.1 (10 gruppi)
+- `src/utils/` — `stats.js / progress.js / belly.js / bellyTest.js / motivation.js / push.js / workout.js / bmi.js / body.js / audit.test.js (21) / backup.js / social.js (invite/leaderboard) + social.test.js (8) / ...`
+- `src/components/` — `FitnessEngineView.tsx` (22 switcher + Coach 2.0 TTS), `SessionAIOverlay.tsx` (IMU), `BeforeAfterSlider.jsx` (pinch-zoom), `SocialChallenge.jsx` (v2.15 Social invite), `ui/DogTag/ProgressRing/SegmentedProgress` + `ui/styles.js`, `ChangelogModal.tsx` v2.14.1 (10 gruppi)
 - `public/{clips,icons,tracks,wasm,models,api,sw.js,manifest.webmanifest}` — `wasm/models` gitignored `*.task/*.wasm`
 - `ios/ + android/` — Capacitor shells (public ← dist, gitignored)
 - `scripts/{version-sw.mjs,fetch-mediapipe.mjs,verify.mjs,deploy.mjs,screenshots.mjs}` + `vite.config.js` `__APP_VERSION__` deterministic + `vitest`
-- `docs/screenshots/` — `01-home … 05-statistiche` (+ `06-ai-debug` after `screenshots.mjs`)
+- `docs/screenshots/` — `01-home … 06-ai-debug` (390×844@2x) + `05-statistiche-crop` + `docs/BENCHMARK.md` lite/heavy + `tests/fixtures/` 32 json (9 new v2.14.2)
 
 ---
 
@@ -137,7 +141,7 @@ npx cap open android # Android Studio → Run (emulator TestAVD API 37.1 ps16k o
 
 ```bash
 npm run verify && npm run build    # o40-v<8hex> in sw.js
-npm run test                       # 51 tests
+npm run test                       # 127 tests
 npm run deploy:local               # info only
 npm run deploy -- --remote --ios   # push deploy-tmp + curl raw to mikweb.eu + cap sync
 node scripts/screenshots.mjs       # Playwright 390×844 @2x → docs/screenshots/ (needs preview on :4173)
@@ -153,14 +157,16 @@ React 18 · Vite 5 · Capacitor 6 · `idb 8` · `@mediapipe/tasks-vision 0.10` �
 
 ---
 
-## Roadmap — next (v2.15)
+## Roadmap — next (v2.16)
 
-- [ ] Tune 5 analyzer più instabili (squat/pushup/burpee/legRaise/russianTwist) con `landmarks.json` replay
-- [ ] Fixtures `tests/fixtures/landmarks-*.json` per CI (almeno 3 per top-6)
-- [ ] Benchmark `lite vs heavy` FPS su iPhone 14/15, documenta `auto` heuristic
+- [x] Tune 5 analyzer più instabili (squat/pushup/burpee/legRaise/russianTwist) con `landmarks.json` replay — DONE v2.14.2 (32 fixtures, BENCHMARK.md)
+- [x] Fixtures `tests/fixtures/landmarks-*.json` per CI (almeno 3 per top-6) — DONE v2.14.2 (127 tests)
+- [x] Benchmark `lite vs heavy` FPS su iPhone 14/15, documenta `auto` heuristic — DONE v2.14.2 (`docs/BENCHMARK.md`)
 - [x] Camp 2.0 + TEMPO + Coach 2.0 + Onboarding 3-step + Clip alias 22/22 — DONE v2.13.0-v2.14.1
 - [x] Statistiche premium (DogTag accent + charts gradient + heatmap/calendar) — DONE v2.14.1
-- [ ] `Social` sfida settimanale + `Watch` HR + `Offline lite.task` bundle + `Electron` menu bar — backlog settimana 2
+- [x] `Social` sfida settimanale — DONE v2.15.0 (invite code + leaderboard, no backend)
+- [x] `Offline lite.task` bundle — DONE v2.15.0 (`public/wasm` + `models` 5.5M/29M via fetch:mediapipe)
+- [ ] `Watch` HR live + `Electron` menu bar — backlog v2.16 (branch `operator40-Watch` da integrare, `npx cap add @capacitor-community/electron` scaffolding)
 
 Local: `git checkout main && git pull && npm run dev` — continua su `src/screens/HistoryScreen.jsx` e `src/ai/exercises/analyzers/*`.
 GitHub: `main` (source) + `deploy-tmp` (dist) — vedi `STRUCTURE.md §7` + `docs/ROADMAP.md` per dettaglio.
