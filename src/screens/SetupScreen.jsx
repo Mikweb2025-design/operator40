@@ -1038,6 +1038,38 @@ export default function SetupScreen({
               <HeartPulse size={14} /> {huaweiWatchStatus==='connected' ? 'Watch connesso ✓' : huaweiWatchStatus==='searching' ? 'Ricerca...' : 'Connetti Huawei Watch'}
             </button>
             {huaweiWatchStatus==='error' && <div style={{ color: BLAZE, fontSize: 11, marginTop: 6 }}>Bluetooth non disponibile — usa Chrome/Edge</div>}
+
+            {import.meta.env.VITE_HUAWEI_CLOUD === '1' && (
+              <div style={{ marginTop: 12, paddingTop: 12, borderTop: `1px solid ${OLIVE_DARK}` }}>
+                <div className="o40-mono" style={{ color: BLAZE, fontSize: 10, letterSpacing: '0.06em', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <Sparkles size={12} color={BLAZE} /> Huawei Cloud (beta) · OAuth
+                </div>
+                <div style={{ color: STEEL, fontSize: 11.5, marginBottom: 8, lineHeight: 1.4 }}>
+                  {lang === 'it' ? 'Sincronizza passi/HR dal Huawei Cloud via OAuth (serve backend con secret, vedi docs/HUAWEI_PLAN.md). Solo su branch feature/huawei-cloud, non live.' : 'Sync steps/HR from Huawei Cloud via OAuth (needs backend secret).'}
+                </div>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button
+                    onClick={() => { window.location.href = './api/huawei/auth/start.php'; }}
+                    style={{ ...secondaryBtn, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+                  >
+                    <HeartPulse size={14} /> Connetti Huawei Cloud
+                  </button>
+                  <button
+                    onClick={async ()=>{
+                      try {
+                        const r = await fetch('./api/huawei/status.php');
+                        const j = await r.json();
+                        showToast && showToast(j.connected ? 'Huawei connesso ✓' : 'Non connesso (stub 501)');
+                      } catch { showToast && showToast('Status fallito'); }
+                    }}
+                    style={{ ...secondaryBtn, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+                  >
+                    Verifica stato
+                  </button>
+                </div>
+                <div style={{ color: STEEL, fontSize: 10, marginTop: 6, opacity: 0.7 }}>Flag VITE_HUAWEI_CLOUD=1 — nascosto in live (default 0)</div>
+              </div>
+            )}
           </div>
         )}
 
