@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useT } from '../context/LangContext.jsx';
+import { parseHuaweiHealthExport } from '../utils/huawei.js';
+import { connectHuaweiWatch, isBluetoothAvailable } from '../utils/huaweiWatch.js';
 import { getLevel, INTERVAL_PRESETS, LEVELS } from '../data/programs.js';
 import { TRACKS } from '../music.js';
 import {
@@ -191,6 +193,9 @@ export default function SetupScreen({
 }) {
   const { lang, t, setLang } = useT();
   const curLevel = getLevel(level || 'combattente');
+  const [huaweiStatus, setHuaweiStatus] = useState('idle');
+  const [huaweiWatchStatus, setHuaweiWatchStatus] = useState('idle');
+  const [huaweiWatchHr, setHuaweiWatchHr] = useState(null);
   return (
     <div className="o40-screen-in" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
       <TopBar title={t('setup.title')} onBack={canCancel ? onCancel : null} />
@@ -912,6 +917,127 @@ export default function SetupScreen({
                 </button>
               </div>
             )}
+          </div>
+        )}
+
+        {canCancel && (
+          <div
+            style={{
+              background: INK_2,
+              border: `1px solid ${OLIVE}`,
+              borderRadius: 14,
+              padding: 14,
+            }}
+          >
+            <div
+              className="o40-mono"
+              style={{
+                color: KHAKI,
+                fontSize: 11,
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: 8,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <HeartPulse size={14} color={BLAZE} /> Huawei Health
+            </div>
+            <div style={{ color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }}>
+              {lang === 'it'
+                ? 'Importa da Huawei Health: esporta da Huawei Health → Richiedi i tuoi dati → JSON/TCX/CSV. Lettura 100% locale, come Apple Health.'
+                : lang === 'de'
+                  ? 'Aus Huawei Health importieren: JSON/TCX/CSV — 100% lokal.'
+                  : 'Import from Huawei Health: JSON/TCX/CSV — 100% on-device.'}
+            </div>
+            <label
+              style={{
+                ...secondaryBtn,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 6,
+                cursor: 'pointer',
+                width: '100%',
+              }}
+            >
+              {huaweiStatus === 'parsing' ? t('setup.health.processing') : 'Carica Huawei JSON/TCX/CSV'}
+              <input
+                type="file"
+                accept=".json,.tcx,.csv"
+                style={{ display: 'none' }}
+                onChange={async (e) => {
+                  const f = e.target.files && e.target.files[0];
+                  if (!f) return;
+                  setHuaweiStatus('parsing');
+                  try {
+                    const text = await f.text();
+                    const parsed = parseHuaweiHealthExport(text, f.name);
+                    if (!parsed.workouts.length && !parsed.weightKg) throw new Error('empty');
+                    // reuse same storage as Apple Health: push to sessions via window.storage
+                    const r = await window.storage.get('o40_sessions', false);
+                    const cur = r ? JSON.parse(r.value) : [];
+                    const existing = new Set(cur.map(s=>s.date));
+                    let added = 0;
+                    for (const w of parsed.workouts) {
+                      const d = w.startDate ? new Date(w.startDate) : null;
+                      if (!d || isNaN(d)) continue;
+                      const iso = d.toISOString();
+                      if (existing.has(iso)) continue;
+                      cur.push({ date: iso, programId: 'health-import', programName: w.type || 'Huawei', kcal: w.kcal || 120, peakHR: null, rpe: null, notes: null, imported: true });
+                      existing.add(iso); added++;
+                    }
+                    cur.sort((a,b)=> new Date(a.date)-new Date(b.date));
+                    await window.storage.set('o40_sessions', JSON.stringify(cur), false);
+                    if (parsed.weightKg) {
+                      showToast && showToast(`Huawei: ${added} allenamenti + peso ${parsed.weightKg}kg`);
+                    } else {
+                      showToast && showToast(`Huawei: ${added} allenamenti importati`);
+                    }
+                    setHuaweiStatus('done');
+                    setTimeout(()=> setHuaweiStatus('idle'), 2000);
+                  } catch (err) {
+                    setHuaweiStatus('error');
+                    setTimeout(()=> setHuaweiStatus('idle'), 2500);
+                  }
+                  e.target.value = '';
+                }}
+              />
+            </label>
+            {huaweiStatus === 'error' && <div style={{ color: BLAZE, fontSize: 11.5, marginTop: 8 }}>File Huawei non riconosciuto</div>}
+            {huaweiStatus === 'done' && <div style={{ color: '#7FB069', fontSize: 11.5, marginTop: 8 }}>Import Huawei completato ✓</div>}
+
+            <div style={{ height: 1, background: OLIVE_DARK, margin: '12px 0' }} />
+
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Activity size={14} color={BLAZE} /> Watch HR Live
+              {huaweiWatchHr && <span style={{ marginLeft: 'auto', color: BLAZE, fontSize: 14 }}>{huaweiWatchHr} bpm ❤️</span>}
+            </div>
+            <div style={{ color: STEEL, fontSize: 11.5, marginBottom: 8 }}>
+              {lang === 'it' ? 'Connetti Huawei Watch GT via Bluetooth (Chrome/Edge) per HR live durante la sessione.' : 'Connect Huawei Watch GT via Bluetooth for live HR.'}
+            </div>
+            <button
+              onClick={async ()=>{
+                setHuaweiWatchStatus('searching');
+                try {
+                  await connectHuaweiWatch({
+                    onHeartRate: (hr)=> setHuaweiWatchHr(hr),
+                    onStatus: (s)=> setHuaweiWatchStatus(s),
+                  });
+                  setHuaweiWatchStatus('connected');
+                } catch (err) {
+                  setHuaweiWatchStatus('error');
+                  showToast && showToast(err.message || 'Bluetooth fallito');
+                  setTimeout(()=> setHuaweiWatchStatus('idle'), 2000);
+                }
+              }}
+              disabled={huaweiWatchStatus==='searching' || huaweiWatchStatus==='connected'}
+              style={{ ...secondaryBtn, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, opacity: huaweiWatchStatus==='searching'?0.6:1 }}
+            >
+              <HeartPulse size={14} /> {huaweiWatchStatus==='connected' ? 'Watch connesso ✓' : huaweiWatchStatus==='searching' ? 'Ricerca...' : 'Connetti Huawei Watch'}
+            </button>
+            {huaweiWatchStatus==='error' && <div style={{ color: BLAZE, fontSize: 11, marginTop: 6 }}>Bluetooth non disponibile — usa Chrome/Edge</div>}
           </div>
         )}
 
