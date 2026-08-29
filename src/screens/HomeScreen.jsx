@@ -585,6 +585,7 @@ function HomeScreen({
             </button>
           )}
 
+          {/* RAFFICA LAMPO — bordo arancione come mission of the day */}
           <button
             onClick={() => onOpenProgram(QUICK_PROGRAM)}
             style={{
@@ -593,11 +594,12 @@ function HomeScreen({
               gap: 12,
               width: '100%',
               background: `linear-gradient(135deg, ${INK_2}, ${INK})`,
-              border: `1px solid ${KHAKI}`,
+              border: `1px solid ${BLAZE}`,
               borderRadius: 12,
               padding: 12,
               cursor: 'pointer',
               textAlign: 'left',
+              boxShadow: `0 0 0 1px ${BLAZE}22 inset, 0 4px 12px rgba(0,0,0,0.25)`,
             }}
           >
             <div
@@ -605,14 +607,14 @@ function HomeScreen({
                 width: 34,
                 height: 34,
                 borderRadius: '50%',
-                background: `${KHAKI}22`,
+                background: `${BLAZE}22`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
               }}
             >
-              <Zap size={17} color={KHAKI} />
+              <Zap size={17} color={BLAZE} />
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ color: PAPER, fontSize: 13.5, fontWeight: 600 }}>
@@ -622,18 +624,87 @@ function HomeScreen({
                 {tr(QUICK_PROGRAM.tagline, lang)} · {t('home.quick.min')}
               </div>
             </div>
-            <ChevronRight size={16} color={STEEL} />
+            <ChevronRight size={16} color={BLAZE} />
           </button>
+
+          {/* SFIDA DEL GIRONE — bordo arancione come mission of the day (girone = belly/pancia) */}
+          {(() => {
+            const gironeProgram = (() => {
+              const belly = PROGRAMS.filter(p => p.belly);
+              const idx = new Date().getDate() % belly.length;
+              return belly[idx] || dailyChallenge.program;
+            })();
+            return (
+              <div
+                style={{
+                  background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`,
+                  border: `1px solid ${BLAZE}`,
+                  borderRadius: 12,
+                  padding: '10px 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  boxShadow: `0 0 0 1px ${BLAZE}22 inset, 0 4px 12px rgba(0,0,0,0.25)`,
+                }}
+              >
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: '50%',
+                    background: `${BLAZE}22`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Target size={16} color={BLAZE} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div
+                    className="o40-mono"
+                    style={{ color: BLAZE, fontSize: 10, letterSpacing: '0.06em' }}
+                  >
+                    SFIDA DEL GIRONE · {gironeProgram.id} · GIRONE PANCIA
+                  </div>
+                  <div style={{ color: PAPER, fontSize: 12.5, fontWeight: 600 }}>
+                    {tr(gironeProgram.name, lang)}
+                  </div>
+                  <div style={{ color: STEEL, fontSize: 11 }}>
+                    {tr(gironeProgram.tagline, lang)}
+                  </div>
+                </div>
+                <button
+                  onClick={() => onOpenProgram(gironeProgram)}
+                  style={{
+                    background: BLAZE,
+                    color: PAPER,
+                    border: 'none',
+                    borderRadius: 8,
+                    padding: '6px 12px',
+                    fontSize: 11,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    flexShrink: 0,
+                  }}
+                >
+                  {t('home.daily.go')}
+                </button>
+              </div>
+            );
+          })()}
 
           <div
             style={{
               background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`,
-              border: `1px solid ${OLIVE}`,
+              border: `1px solid ${BLAZE}`,
               borderRadius: 12,
               padding: '10px 12px',
               display: 'flex',
               alignItems: 'center',
               gap: 10,
+              boxShadow: `0 0 0 1px ${BLAZE}22 inset, 0 4px 12px rgba(0,0,0,0.25)`,
             }}
           >
             <div
@@ -641,19 +712,19 @@ function HomeScreen({
                 width: 36,
                 height: 36,
                 borderRadius: '50%',
-                background: `${KHAKI}22`,
+                background: `${BLAZE}22`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
               }}
             >
-              <Star size={16} color={KHAKI} />
+              <Star size={16} color={BLAZE} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div
                 className="o40-mono"
-                style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.06em' }}
+                style={{ color: BLAZE, fontSize: 10, letterSpacing: '0.06em' }}
               >
                 {t('home.dailyChallenge', { bonus: dailyChallenge.bonus })}
               </div>
