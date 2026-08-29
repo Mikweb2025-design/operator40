@@ -72,6 +72,7 @@ import {
   Trash2,
   Check,
   Plus,
+  Users,
 } from 'lucide-react';
 import CollapsibleSection from '../components/CollapsibleSection.jsx';
 import AchievementsModal from '../components/AchievementsModal.jsx';
@@ -980,10 +981,16 @@ function HomeScreen({
         </div>
       </CollapsibleSection>
 
-      {/* SOCIAL SFIDA — v2.15 (no backend, link share + local compare) */}
-      <div style={{ margin: '12px 16px 0' }}>
+      {/* SOCIAL SFIDA — v2.15 (no backend, link share + local compare) — einklappbar wie jede Home-Section */}
+      <CollapsibleSection
+        id="social"
+        title={t('home.section.social') || 'SFIDA AMICI'}
+        icon={Users}
+        badge={`${sessions.filter(s=> new Date(s.date) >= (()=>{const d=new Date(); d.setDate(d.getDate()-((d.getDay()+6)%7)); d.setHours(0,0,0,0); return d;})()).length} / ${profile.weeklyGoal || 3} · kcal`}
+        defaultOpen={false}
+      >
         <SocialChallenge sessions={sessions} profile={profile} lang={lang} />
-      </div>
+      </CollapsibleSection>
 
       {/* MISSIONI & OBIETTIVI — collassabile */}
       <CollapsibleSection
