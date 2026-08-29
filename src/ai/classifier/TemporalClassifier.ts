@@ -29,13 +29,16 @@ export interface ClassifierResult {
 }
 
 const DEFAULTS: Record<string, Partial<ClassifierConfig>> = {
-  squat:            { minROM: 18, minConfidence: 58, primaryKey: 'kneeRaw',    idealVel: 120, minInterval: 360 },
-  pushup:           { minROM: 20, minConfidence: 60, primaryKey: 'elbowRaw',   idealVel: 150, minInterval: 340 }, // primario è il gomito, non il ginocchio
+  // v2.14.2: tuned via 32 fixtures replay (incl. 9 new: squat-shallow/deep, pushup-side/shallow, legraise-bent/fast, twist-slow/shallow, burpee-nojump)
+  squat:            { minROM: 17, minConfidence: 55, primaryKey: 'kneeRaw',    idealVel: 120, minInterval: 350 },
+  pushup:           { minROM: 18, minConfidence: 56, primaryKey: 'elbowRaw',   idealVel: 145, minInterval: 340 },
   crunch:           { minROM: 14, minConfidence: 58, primaryKey: 'hipFlexRaw', idealVel: 110, minInterval: 340 },
   affondo:          { minROM: 20, minConfidence: 60, primaryKey: 'kneeRaw',    idealVel: 120, minInterval: 360 },
   ponte:            { minROM: 15, minConfidence: 58, primaryKey: 'hipFlexRaw', idealVel: 110, minInterval: 340 },
-  jumpingJack:      { minROM: 16, minConfidence: 60, primaryKey: 'kneeRaw',    idealVel: 200, minInterval: 300 }, // più rapido
-  burpee:           { minROM: 18, minConfidence: 62, primaryKey: 'kneeRaw',    idealVel: 160, minInterval: 380 }, // movimento lungo + pausa piombo
+  jumpingJack:      { minROM: 16, minConfidence: 60, primaryKey: 'kneeRaw',    idealVel: 200, minInterval: 300 },
+  burpee:           { minROM: 16, minConfidence: 58, primaryKey: 'kneeRaw',    idealVel: 155, minInterval: 360 },
+  legraise:         { minROM: 16, minConfidence: 56, primaryKey: 'hipFlexRaw', idealVel: 115, minInterval: 340 },
+  russiantwist:     { minROM: 14, minConfidence: 55, primaryKey: 'hipFlexRaw', idealVel: 130, minInterval: 320 },
 };
 
 const GENERIC: Partial<ClassifierConfig> = { minROM: 16, minConfidence: 60, primaryKey: 'kneeRaw', idealVel: 120, minInterval: 340 };

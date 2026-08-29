@@ -47,6 +47,7 @@ import { shouldProgressBellyLevel } from '../utils/bellyTest.js';
 import { getNextMedals, getMedalProgress } from '../utils/stats.js';
 import { greeting } from '../utils/stats.js';
 import { ExerciseFigure } from '../components/ExerciseFigure.jsx';
+import { SocialChallenge } from '../components/SocialChallenge.jsx';
 import { vibrate } from '../utils/audio.js';
 import {
   Flame,
@@ -978,6 +979,11 @@ function HomeScreen({
           </button>
         </div>
       </CollapsibleSection>
+
+      {/* SOCIAL SFIDA — v2.15 (no backend, link share + local compare) */}
+      <div style={{ margin: '12px 16px 0' }}>
+        <SocialChallenge sessions={sessions} profile={profile} lang={lang} />
+      </div>
 
       {/* MISSIONI & OBIETTIVI — collassabile */}
       <CollapsibleSection

@@ -24,23 +24,25 @@ export class PushupAnalyzer extends ExerciseAnalyzer {
     this.peak = Math.max(this.peak, ang);
 
     let next = this.phase;
-    if (this.phase==='READY' && ang < 120) next='DESCENDING';
-    else if (this.phase==='DESCENDING' && ang < 110) next='BOTTOM';
-    else if (this.phase==='BOTTOM' && ang > 125) next='ASCENDING';
-    else if (this.phase==='ASCENDING' && ang > 142) next='TOP';
+    // v2.14.2: tuned via pushup.json + pushup-side/shallow fixtures (8+7+6 frames)
+    // READY gate 120→122 (earlier entry), BOTTOM 110→112 (over-40 shallower still counts with penalty)
+    if (this.phase==='READY' && ang < 122) next='DESCENDING';
+    else if (this.phase==='DESCENDING' && ang < 112) next='BOTTOM';
+    else if (this.phase==='BOTTOM' && ang > 123) next='ASCENDING';
+    else if (this.phase==='ASCENDING' && ang > 140) next='TOP';
 
     let repInc=false, repConf=0;
     if (next==='TOP' && (this.phase==='ASCENDING' || this.phase==='BOTTOM')){
       const rom = this.peak - this.trough;
-      const depthOk = this.trough < 110;
-      const extOk = ang > 142;
+      const depthOk = this.trough < 112;
+      const extOk = ang > 140;
       const velScore = clamp(100 - Math.abs(this.velFilt)*0.06,0,100);
       const alignScore = line>155? 95 : line>145? 78 : 42;
       const romScore = rom>28?28: rom>18?18:10;
       const depthBonus = this.trough<92?8: this.trough<102?4:0;
       if (depthOk && extOk){
         repConf = clamp(velScore*0.32 + alignScore*0.35 + romScore + depthBonus,0,100);
-      } else { repConf = clamp(velScore*0.18+8,0,100); }
+      } else { repConf = clamp(velScore*0.18+6,0,100); }
       // Fase 2: blend con temporal buffer — evita rep fantasma da jitter elbow
       const tRes = temporal.evaluate(this.temporalBuffer, feats, this.dwellAtBottom, ts);
       const bufferReady = this.temporalBuffer.length >= 10;
@@ -48,9 +50,10 @@ export class PushupAnalyzer extends ExerciseAnalyzer {
         if (!tRes.shouldCount && tRes.rom < 18) repConf = Math.min(repConf, tRes.confidence + 10);
         else repConf = clamp(repConf * 0.60 + tRes.confidence * 0.40, 0, 100);
       }
-      const temporalGate = !bufferReady || tRes.shouldCount || tRes.confidence > 50;
-      if (depthOk && extOk && repConf>58 && q.exerciseConfidence>38 && temporalGate){
-        if (this.shouldCountRep(ts, repConf, 58)){ repInc=true; this.lastRepAt=ts; temporal.markCounted(ts); }
+      const temporalGate = !bufferReady || tRes.shouldCount || tRes.confidence > 48;
+      // v2.14.2: gate 58→55, exerciseConfidence 38→36, temporal 50→48 (pushup side-view vis 0.18)
+      if (depthOk && extOk && repConf>55 && q.exerciseConfidence>36 && temporalGate){
+        if (this.shouldCountRep(ts, repConf, 55)){ repInc=true; this.lastRepAt=ts; temporal.markCounted(ts); }
       }
       this.trough=ang; this.peak=ang; next='READY';
     }

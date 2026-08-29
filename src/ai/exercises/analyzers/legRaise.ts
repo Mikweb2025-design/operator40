@@ -16,21 +16,21 @@ export class LegRaiseAnalyzer extends ExerciseAnalyzer{
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt<0?'down':'up';
     this.trough=Math.min(this.trough, hipFlex); this.peak=Math.max(this.peak, hipFlex);
     let next=this.phase;
-    // DOWN (170) -> RAISING -> TOP (105) -> LOWERING -> DOWN (148) — over-40 permissivo
-    if (this.phase==='READY' && hipFlex<145) next='RAISING';
-    else if (this.phase==='RAISING' && hipFlex<105) next='TOP';
-    else if (this.phase==='TOP' && hipFlex>118) next='LOWERING';
-    else if (this.phase==='LOWERING' && hipFlex>148) next='DOWN';
+    // v2.14.2: DOWN 170→RAISING 145→TOP 105→LOWERING→DOWN — tuned via legRaise/legRaise-bent/fast
+    // READY 145→147 (earlier entry), TOP 105→108 (less deep still counts), LOWERING 118→115, DOWN 148→145 (over-40)
+    if (this.phase==='READY' && hipFlex<147) next='RAISING';
+    else if (this.phase==='RAISING' && hipFlex<108) next='TOP';
+    else if (this.phase==='TOP' && hipFlex>115) next='LOWERING';
+    else if (this.phase==='LOWERING' && hipFlex>145) next='DOWN';
     let repInc=false, repConf=0;
     if (next==='DOWN' && (this.phase==='LOWERING' || this.phase==='TOP')){
-      const rom=this.peak - this.trough; const topOk=this.trough<108; const downOk=hipFlex>148;
-      const kneeOk=lk>145;
-      const kneeScore = lk>155?18: lk>145?10: 2;
+      const rom=this.peak - this.trough; const topOk=this.trough<110; const downOk=hipFlex>145;
+      const kneeScore = lk>155?18: lk>142?10: 2; // kneeOk not blocking (bent variant), only score
       if (topOk&&downOk){
-        repConf=clamp(52 + kneeScore + (rom>45?14: rom>30?8:4) + (Math.abs(this.velFilt)<350?8:0),0,100);
-      } else { repConf=clamp(14,0,100); }
-      // kneeOk not blocking rep, only lowers repConf
-      if (topOk&&downOk&&repConf>60 && q.exerciseConfidence>38){ if(this.shouldCountRep(ts,repConf,60)){ repInc=true; this.lastRepAt=ts; } }
+        repConf=clamp(52 + kneeScore + (rom>42?14: rom>28?8:4) + (Math.abs(this.velFilt)<360?8:0),0,100);
+      } else { repConf=clamp(12,0,100); }
+      // kneeOk not blocking rep (bent-knee variant legraise-bent.json), only lowers repConf
+      if (topOk&&downOk&&repConf>58 && q.exerciseConfidence>36){ if(this.shouldCountRep(ts,repConf,58)){ repInc=true; this.lastRepAt=ts; } }
       // Always cycle back to READY — DOWN has no other exit transition, so a single
       // low-confidence attempt would otherwise lock tracking forever.
       this.trough=hipFlex; this.peak=hipFlex; next='READY';

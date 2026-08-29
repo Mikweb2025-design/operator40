@@ -32,18 +32,20 @@ export class SquatAnalyzer extends ExerciseAnalyzer{
     const dir=Math.abs(this.velFilt)<18?'hold':this.velFilt<0?'down':'up';
     this.trough=Math.min(this.trough,ang); this.peak=Math.max(this.peak,ang);
     let next=this.phase;
-    // Over-40 permissive: count shallow squats with quality penalty, not drop.
-    if (this.phase==='READY' && (ang<=122 || hipYDelta>0.05)) next='DESCENDING';
-    else if (this.phase==='DESCENDING' && (ang<=113 || hipYDelta>0.09)) next='BOTTOM';
-    else if (this.phase==='DESCENDING' && ang>142 && hipYDelta<0.05 && this.trough<122 && this.canTransition(ts, 55)) next='ASCENDING';
-    else if (this.phase==='BOTTOM' && (ang>140 || hipYDelta<0.09) && this.canTransition(ts, 70)) next='ASCENDING';
-    else if (this.phase==='ASCENDING' && ang>146 && this.canTransition(ts, 55)) next='STANDING';
+    // Over-40 permissive v2.14.2: calibrated via fixtures replay (squat-front/side/shallow/deep)
+    // shallow 128° must NOT trigger BOTTOM (avoids false rep on bounce), deep <92 locks quickly
+    // hipYDelta is session-calibrated, so thresholds are framing-invariant
+    if (this.phase==='READY' && (ang<=124 || hipYDelta>0.05)) next='DESCENDING';
+    else if (this.phase==='DESCENDING' && (ang<=111 || hipYDelta>0.09)) next='BOTTOM';
+    else if (this.phase==='DESCENDING' && ang>142 && hipYDelta<0.05 && this.trough<124 && this.canTransition(ts, 55)) next='ASCENDING';
+    else if (this.phase==='BOTTOM' && (ang>138 || hipYDelta<0.09) && this.canTransition(ts, 65)) next='ASCENDING';
+    else if (this.phase==='ASCENDING' && ang>144 && this.canTransition(ts, 55)) next='STANDING';
 
     let repInc=false, repConf=0;
     if (next==='STANDING' && (this.phase==='ASCENDING' || this.phase==='BOTTOM' || this.phase==='DESCENDING')){
       const rom=this.peak - this.trough;
-      const depthOk=this.trough<122;
-      const extOk=ang>142;
+      const depthOk=this.trough<124;
+      const extOk=ang>140;
       const velScore=clamp(100-Math.abs(this.velFilt)*0.06,0,100);
       const trunkScore = tr>155 ? 40 : tr>142 ? 30 : 18;
       const romScore = rom>28 ? 32 : rom>20 ? 22 : rom>14 ? 14 : 8;
@@ -51,7 +53,8 @@ export class SquatAnalyzer extends ExerciseAnalyzer{
       if (depthOk && extOk){
         repConf=clamp(velScore*0.32 + romScore + trunkScore + depthBonus, 0, 100);
       } else {
-        repConf=clamp(velScore*0.18 + 8,0,100);
+        // shallow still gets low conf so it never passes gate, but doesn't lock state
+        repConf=clamp(velScore*0.18 + 6,0,100);
       }
       // Fase 2: temporal validation — fonda classico + buffer 30 frame
       const tRes = temporal.evaluate(this.temporalBuffer, feats, this.dwellAtBottom, ts);
@@ -62,9 +65,10 @@ export class SquatAnalyzer extends ExerciseAnalyzer{
         if (!tRes.shouldCount && tRes.rom < 16) repConf = Math.min(repConf, tRes.confidence + 12);
         else repConf = clamp(repConf * 0.55 + tRes.confidence * 0.45, 0, 100);
       }
-      const temporalGate = !bufferReady || tRes.shouldCount || tRes.confidence > 52;
-      if (depthOk && extOk && repConf>58 && q.exerciseConfidence>38 && temporalGate){
-        if (this.shouldCountRep(ts,repConf,58)){
+      const temporalGate = !bufferReady || tRes.shouldCount || tRes.confidence > 50;
+      // v2.14.2: lowered gate 58→55 for over-40 partial ROM, temporalGate relaxed 52→50
+      if (depthOk && extOk && repConf>55 && q.exerciseConfidence>36 && temporalGate){
+        if (this.shouldCountRep(ts,repConf,55)){
           repInc=true; this.lastRepAt=ts; temporal.markCounted(ts);
         }
       }

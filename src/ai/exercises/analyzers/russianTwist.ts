@@ -15,14 +15,16 @@ export class RussianTwistAnalyzer extends ExerciseAnalyzer{
     const tl=torsoLength(lm); const n = tl>1e-6 ? 1/tl : 1;
     const left=Math.abs(lw.x - midHip.x)*n, right=Math.abs(rw.x - midHip.x)*n;
     const maxL=Math.max(left,right);
-    const centered=maxL<0.52; const twisted=maxL>0.72;
+    // v2.14.2: tuned via russiantwist.json + slow/shallow — centered 0.52→0.55, twisted 0.72→0.66 (over-40 + phone FOV)
+    const centered=maxL<0.55; const twisted=maxL>0.66;
     let repInc=false, repConf=0;
     if (this.phase==='READY' && centered) this.phase='CENTER';
     else if (this.phase==='CENTER' && twisted){
       const side = left>right ? 'left':'right';
+      // require alternate sides; first twist after READY primes lastSide without counting
       if (this.lastSide && this.lastSide!==side){
-        repConf=clamp(70,0,100);
-        if(repConf>58 && q.exerciseConfidence>38 && this.shouldCountRep(ts,repConf,58)){ repInc=true; this.lastRepAt=ts; }
+        repConf=clamp(68 + (q.exerciseConfidence>55?6:0),0,100);
+        if(repConf>55 && q.exerciseConfidence>36 && this.shouldCountRep(ts,repConf,55)){ repInc=true; this.lastRepAt=ts; }
       }
       this.lastSide=side as any;
       this.phase=side==='left'?'LEFT':'RIGHT';

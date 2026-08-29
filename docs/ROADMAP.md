@@ -20,12 +20,12 @@
 
 ## 📋 Prossimi giorni — priorità
 
-### Giorno 1-2 — Stabilità & QA (v2.11.1)
-- [ ] Test su iPhone 14/15: front vs side-view, lite vs heavy FPS benchmark (documentare `auto` heuristic)
-- [ ] Tune soglie analyzer su 5 esercizi più instabili (squat, pushup, burpee, legRaise, russianTwist) con `landmarks.json` replay
-- [ ] Aggiungi fixtures `tests/fixtures/landmarks-*.json` per CI (almeno 3 per esercizio top-6)
-- [ ] `verify.mjs` + `eslint --fix` su `src/ai/` (pulizia dead imports)
-- [ ] Screenshots Playwright `docs/screenshots/06-ai-debug.png` + rigenerare 01-05 a 390×844@2x
+### Giorno 1-2 — Stabilità & QA (v2.14.2) — ✅ FATTO 29 Ago
+- [x] Test su iPhone 14/15: front vs side-view, lite vs heavy FPS benchmark (documentato `auto` heuristic in `docs/BENCHMARK.md`)
+- [x] Tune soglie analyzer su 5 esercizi più instabili (squat, pushup, burpee, legRaise, russianTwist) con `landmarks.json` replay — vedi `docs/BENCHMARK.md` tuning + `TemporalClassifier` defaults
+- [x] Aggiungi fixtures `tests/fixtures/landmarks-*.json` per CI (almeno 3 per esercizio top-6) — 32 fixtures (era 23) + 119 test verdi
+- [x] `verify.mjs` + `eslint --fix` su `src/ai/` (pulizia dead imports) — `verify OK`, eslint 8.57.1 su `src` (TS via tsc skipLibCheck)
+- [ ] Screenshots Playwright `docs/screenshots/06-ai-debug.png` + rigenerare 01-05 a 390×844@2x — next
 
 ### Giorno 3-4 — UX & Accessibilità (v2.12.3) — ✅ FATTO 28 Ago
 - [x] A11y: focus ring `2px BLAZE + 4px glow` su button/input + `aria-live` rep counter + `prefers-reduced-motion` + `@media print`
@@ -75,4 +75,4 @@
 
 ---
 
-*Aggiornato 28 Ago 2026 — v2.14.1 · 40 iterazioni — prossimo: v2.15 Social sfida + Watch HR + Offline lite.task*
+*Aggiornato 29 Ago 2026 — v2.14.2 QA · 32 fixtures + 5 analyzer tuned + BENCHMARK.md — prossimo: v2.15 Social sfida + Watch HR + Offline lite.task*
