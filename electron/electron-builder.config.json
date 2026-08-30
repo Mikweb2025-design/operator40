@@ -1,0 +1,17 @@
+{
+  "appId": "com.operator40.app",
+  "directories": {
+    "buildResources": "resources"
+  },
+  "files": [
+    "assets/**/*",
+    "build/**/*",
+    "capacitor.config.*",
+    "app/**/*"
+  ],
+  "mac": {
+    "category": "public.app-category.fitness",
+    "target": "dmg",
+    "icon": "assets/appIcon.png"
+  }
+}

@@ -11,15 +11,15 @@ export class PlankAnalyzer extends ExerciseAnalyzer{
     this.pushTemporalFrame(lm, ts, ((arguments as any)[2] ?? 16) || 16);
     const line=this.bilateralJointAngle('trunk', lm, [LM.left_shoulder,LM.left_hip,LM.left_ankle], [LM.right_shoulder,LM.right_hip,LM.right_ankle]);
     const hip=this.bilateralJointAngle('hip', lm, [LM.left_shoulder,LM.left_hip,LM.left_knee], [LM.right_shoulder,LM.right_hip,LM.right_knee]);
-    const valid = line>152 && hip>148 && q.exerciseConfidence>38;
+    const valid = line>165 && hip>160 && q.exerciseConfidence>38;
     if (valid){ if (this.goodSince==null) this.goodSince=ts; this.phase='HOLD_GOOD'; }
     else {
       // grace period before marking bad
       if (this.goodSince!=null && ts - this.goodSince < this.graceMs){ this.phase='HOLD_GOOD'; }
       else { this.phase='HOLD_BAD'; this.goodSince=null; }
     }
-    const form = line<152?55 : line<162?82 : 95 - (hip<148?10:0);
-    const cues:string[] = line<152?['hipsUp'] : line<162?['coreTight'] : [];
+    const form = line<150?30 : line<160?55 : line<165?78 : 95 - (hip<160?10:0);
+    const cues:string[] = line<150?['straightenBody'] : line<160?['hipsUp'] : line<165?['coreTight'] : [];
     // Plank is time-based, never rep
     return { phase:this.phase, enginePhase:'ready' as any, repIncrement:false, repConfidence:0, formScore: clamp(form,0,100), poseQuality:q, cues, primaryAngle: line, secondaryAngles:{ temporalROM: Math.round(this.temporalBuffer.getROM('kneeRaw')),  hip, line }, velocity:0, direction:'hold' as any };
   }
