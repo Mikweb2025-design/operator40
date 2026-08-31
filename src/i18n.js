@@ -704,4 +704,7 @@ export const I18N = {
   'ticker.rank': { it: 'RANGO', en: 'RANK', de: 'RANG' },
   'tour.skip': { it: 'Salta', en: 'Skip', de: 'Überspringen' },
   'tour.next': { it: 'Avanti', en: 'Next', de: 'Weiter' },
+  'ses.preview': { it: 'ANTEPRIMA', en: 'PREVIEW', de: 'VORSCHAU' },
+  'ses.preview.skip': { it: 'INIZIA SUBITO', en: 'START NOW', de: 'JETZT STARTEN' },
+  'ses.preview.hint': { it: 'Guarda il video, poi parti', en: 'Watch the clip, then go', de: 'Clip ansehen, dann los' },
 };

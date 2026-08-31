@@ -163,6 +163,41 @@ function SessionScreen({
   const isRepsWork = phase.type === 'work' && phase.mode === 'reps';
   const isAiWork = aiEnabled && phase.type === 'work' && !!phase.exerciseId;
   const progress = isRepsWork ? 1 : phase.duration ? 1 - secondsLeft / phase.duration : 0;
+
+  // --- anteprima video prima di ogni esercizio (richiesta utente) ---
+  const [previewSec, setPreviewSec] = useState(null);
+  // quando entri in una fase work, mostra 5s di anteprima video prima di far partire il timer
+  useEffect(() => {
+    if (phase.type !== 'work' || !ex) {
+      setPreviewSec(null);
+      return;
+    }
+    // avvia anteprima 5s
+    setPreviewSec(5);
+    // congela il countdown principale di App.jsx durante l'anteprima
+    setPaused(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phaseIdx]);
+  // countdown anteprima (indipendente da paused utente — avanza comunque)
+  useEffect(() => {
+    if (previewSec === null) return;
+    if (previewSec <= 0) {
+      setPreviewSec(null);
+      setPaused(false);
+      if (soundOn) {
+        try { playBeep(880, 0.15); } catch {}
+        try { if (ex) speak(tr(ex.name, lang)); } catch {}
+      }
+      return;
+    }
+    const id = setTimeout(() => setPreviewSec((s) => (s !== null ? s - 1 : s)), 1000);
+    return () => clearTimeout(id);
+  }, [previewSec, soundOn, ex, lang, setPaused]);
+  // skip manuale
+  function skipPreview() {
+    setPreviewSec(null);
+    setPaused(false);
+  }
   useEffect(() => {
     if (
       soundOn &&
@@ -310,15 +345,39 @@ function SessionScreen({
           padding: 16,
         }}
       >
-        <div
-          key={phaseIdx}
-          className={`o40-mono o40-expand ${phase.type === 'work' ? 'o40-gradtext' : ''}`}
-          style={{ color: ringColor, fontSize: 13, letterSpacing: '0.1em' }}
-        >
-          {phaseLabel}
-        </div>
+        {previewSec !== null && phase.type === 'work' && ex ? (
+          <div style={{ width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+            <div className="o40-mono" style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.12em' }}>
+              {t('ses.preview')}
+            </div>
+            <div className="o40-display" style={{ color: PAPER, fontSize: 20, textAlign: 'center', lineHeight: 1.1 }}>
+              {tr(ex.name, lang).toUpperCase()}
+            </div>
+            <div style={{ width: '100%', aspectRatio: '9 / 12', maxHeight: 360, background: INK, borderRadius: 14, overflow: 'hidden', border: `1px solid ${OLIVE}` }}>
+              <ExerciseMedia exerciseId={phase.exerciseId} pose={ex.pose} color={BLAZE} size="100%" rounded={14} />
+            </div>
+            <div style={{ color: KHAKI, fontSize: 12, textAlign: 'center' }}>{tr(ex.repGuide, lang)}</div>
+            <div className="o40-display" style={{ color: BLAZE, fontSize: 56, lineHeight: 1 }}>
+              {previewSec > 0 ? previewSec : 'VIA!'}
+            </div>
+            <button onClick={skipPreview} style={{ ...primaryBtn, background: BLAZE, borderRadius: 12, padding: '10px 18px' }}>
+              {t('ses.preview.skip')} <Play size={14} />
+            </button>
+            <div className="o40-mono" style={{ color: STEEL, fontSize: 10, textAlign: 'center' }}>
+              {isAiWork ? t('ses.ai.active') : t('ses.preview.hint')}
+            </div>
+          </div>
+        ) : (
+          <>
+            <div
+              key={phaseIdx}
+              className={`o40-mono o40-expand ${phase.type === 'work' ? 'o40-gradtext' : ''}`}
+              style={{ color: ringColor, fontSize: 13, letterSpacing: '0.1em' }}
+            >
+              {phaseLabel}
+            </div>
 
-        {isAiWork ? (
+            {isAiWork ? (
           <div style={{ width: '100%', maxWidth: 420 }}>
             <SessionAIOverlay
               key={`${phase.exerciseId}-${phaseIdx}`}
@@ -561,6 +620,8 @@ function SessionScreen({
             t('ses.last')
           )}
         </div>
+          </>
+        )}
       </div>
 
       <div
