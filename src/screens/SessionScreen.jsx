@@ -211,28 +211,21 @@ function SessionScreen({
       speak(String(secondsLeft), lang, LOCALES);
   }, [secondsLeft, phase.type, soundOn, profile, isRepsWork]);
 
-  // Motivazioni vocali periodiche durante il lavoro (anche SENZA AI Coach).
-  // Non si attiva quando l'AI Coach parla già, né sulle fasi reps manuali.
-  // Intervallo = metà della durata della fase (default 40s → nudge a ~20s),
-  // così la frase arriva davvero durante un esercizio a tempo standard.
+  // Motivazioni vocali periodiche durante il lavoro — FIX: deve parlare anche con AI on
+  // e anche in modalità reps (prima bloccata). Non durante anteprima.
+  // Intervallo = metà della durata della fase (default 40s → nudge a ~20s), reps → 15s fisso.
   useEffect(() => {
-    if (
-      !soundOn ||
-      !vocalMotivation ||
-      paused ||
-      phase.type !== 'work' ||
-      isAiWork ||
-      isRepsWork
-    )
+    if (!soundOn || !vocalMotivation || paused || phase.type !== 'work' || previewSec !== null)
       return;
-    const duration = phase.duration || 40;
+    const duration = phase.duration || (isRepsWork ? 30 : 40);
     if (duration < 12) return;
+    const ms = isRepsWork ? 15000 : Math.round(duration / 2) * 1000;
     const interval = setInterval(() => {
       if (document.hidden) return;
-      speak(getVocalMotivation(lang), lang, LOCALES);
-    }, Math.round(duration / 2) * 1000);
+      try { speak(getVocalMotivation(lang), lang, LOCALES); } catch {}
+    }, ms);
     return () => clearInterval(interval);
-  }, [soundOn, vocalMotivation, paused, phase.type, phase.duration, isAiWork, isRepsWork, lang]);
+  }, [soundOn, vocalMotivation, paused, phase.type, phase.duration, isRepsWork, previewSec, lang]);
   // TEMPO metronomo 40-60 BPM (Coach vocale 2.0 / TEMPO backlog)
   useEffect(() => {
     if (!profile?.tempoEnabled || paused || phase.type !== 'work') return;
