@@ -304,12 +304,12 @@ function LibraryScreen({ sessions, profile }) {
           {visibleIds.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '36px 16px', color: STEEL }}>
               <div style={{ fontSize: 36, marginBottom: 8 }}>🔍</div>
-              <div style={{ color: PAPER, fontWeight: 700, fontSize: 14 }}>Nessun esercizio trovato</div>
+              <div style={{ color: PAPER, fontWeight: 700, fontSize: 14 }}>{t('lib.notFound')}</div>
               <div style={{ color: STEEL, fontSize: 12, marginTop: 4 }}>
-                {lang === 'it' ? 'Prova un altro termine o resetta i filtri.' : lang === 'de' ? 'Versuche einen anderen Begriff.' : 'Try another term or reset filters.'}
+                {t('lib.empty')}
               </div>
               <button onClick={() => { setQuery(''); setFilter('all'); setShowFavs(false); }} style={{ marginTop: 12, padding: '8px 14px', borderRadius: 20, border: `1px solid ${BLAZE}`, background: BLAZE, color: PAPER, cursor: 'pointer', fontSize: 12 }}>
-                Reset filtri
+                {t('lib.resetFilters')}
               </button>
             </div>
           ) : visibleIds.map((id) => {

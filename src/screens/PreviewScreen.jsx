@@ -156,14 +156,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
           {t('prev.sub', {
             n: program.exercises.length,
             r: program.rounds,
-            p:
-              mode === 'reps'
-                ? lang === 'it'
-                  ? 'Ripetizioni'
-                  : lang === 'de'
-                    ? 'Wiederholungen'
-                    : 'Reps'
-                : tr(preset.label, lang),
+            p: mode === 'reps' ? t('ses.reps') : tr(preset.label, lang),
           })}
         </div>
         {mode === 'reps' && (
@@ -179,9 +172,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
               textAlign: 'center',
             }}
           >
-            {lang === 'it'
-              ? 'Modalità ripetizioni: tocca FATTO quando hai finito ogni esercizio. Hold resta a tempo.'
-              : 'Reps mode: tap DONE when finished each exercise. Holds stay timed.'}
+            {t('preview.reps')}
           </div>
         )}
 
@@ -331,7 +322,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
                         <span>{tr(ex.repGuide, lang)}</span>
                         {mode === 'reps' && !HOLD_EXERCISES.has(currentId) && (
                           <span style={{ color: STEEL, fontSize: 10 }}>
-                            · {lang === 'it' ? 'tocca FATTO' : 'tap DONE'}
+                            · {t('preview.tapDone')}
                           </span>
                         )}
                       </div>

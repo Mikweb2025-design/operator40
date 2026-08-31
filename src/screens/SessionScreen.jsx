@@ -339,11 +339,7 @@ function SessionScreen({
               className="o40-mono"
               style={{ color: STEEL, fontSize: 9, textAlign: 'center', marginTop: 6 }}
             >
-              {aiEnabled
-                ? lang === 'it'
-                  ? 'AI Coach attivo — conta automatico, voce nella tua lingua'
-                  : 'AI Coach on — auto-count, voice in your language'
-                : ''}
+              {aiEnabled ? t('ses.ai.active') : ''}
             </div>
           </div>
         ) : (
@@ -413,10 +409,10 @@ function SessionScreen({
                       className="o40-mono"
                       style={{ color: KHAKI, fontSize: 11, letterSpacing: '0.08em' }}
                     >
-                      {lang === 'it' ? 'RIPETIZIONI' : 'REPS'}
+                      {t('ses.reps')}
                     </div>
                     <div style={{ marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }}>
-                      {lang === 'it' ? 'Tocca FATTO quando hai finito' : 'Tap DONE when finished'}
+                      {t('ses.reps.hint')}
                     </div>
                   </>
                 ) : (
@@ -522,11 +518,7 @@ function SessionScreen({
               className="o40-mono"
               style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.08em' }}
             >
-              {lang === 'it'
-                ? 'Respira — 4 sec in, 4 sec out'
-                : lang === 'de'
-                  ? 'Atmen — 4s ein, 4s aus'
-                  : 'Breathe — 4s in, 4s out'}
+              {t('ses.breathe')}
             </span>
           </div>
         )}
@@ -600,7 +592,7 @@ function SessionScreen({
           disabled={phaseIdx === 0}
           style={{ ...pillBtn, opacity: phaseIdx === 0 ? 0.4 : 1 }}
         >
-          <ChevronLeft size={15} /> PREV
+          <ChevronLeft size={15} /> {t('ses.prev')}
         </button>
         <button
           onClick={onSkip}
@@ -612,23 +604,9 @@ function SessionScreen({
             flex: isRepsWork || isAiWork ? 1.6 : 1,
             opacity: isAiWork ? 0.9 : 1,
           }}
-          title={
-            isAiWork
-              ? lang === 'it'
-                ? 'AI conta auto — puoi saltare manualmente'
-                : 'AI auto-count — you can skip manually'
-              : undefined
-          }
+          title={isAiWork ? t('ses.ai.hint') : undefined}
         >
-          {isAiWork
-            ? lang === 'it'
-              ? 'SALTA →'
-              : 'SKIP →'
-            : isRepsWork
-              ? lang === 'it'
-                ? 'FATTO ✓'
-                : 'DONE ✓'
-              : 'NEXT'}{' '}
+          {isAiWork ? t('ses.skip') : isRepsWork ? t('ses.reps.done') : t('ses.next')}{' '}
           {isAiWork ? (
             <SkipForward size={15} />
           ) : isRepsWork ? (
@@ -643,9 +621,7 @@ function SessionScreen({
           className="o40-mono"
           style={{ color: STEEL, fontSize: 9, textAlign: 'center', paddingBottom: 8 }}
         >
-          {lang === 'it'
-            ? 'AI avanzerà da solo al target · disattiva con 👁️'
-            : 'AI will auto-advance at target · disable with 👁️'}
+          {t('ses.ai.autoAdvance')}
         </div>
       )}
 

@@ -156,11 +156,13 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
         const friendly = isChunkErr
           ? (lang === 'it'
               ? `AI non caricata: ${raw.slice(0,180)} — Ricarica la pagina (aggiornamento in corso o rete lenta). Se offline, serve aver eseguito npm run fetch:mediapipe prima del build.`
-              : `AI failed to load: ${raw.slice(0,180)} — Reload page (update in progress or slow network).`)
+              : lang === 'de'
+                ? `KI nicht geladen: ${raw.slice(0,180)} — Seite neu laden (Update läuft oder langsames Netz).`
+                : `AI failed to load: ${raw.slice(0,180)} — Reload page (update in progress or slow network).`)
           : raw.includes('NotAllowedError') || raw.includes('Permission') || raw.includes('Permission denied')
-            ? (lang === 'it' ? 'Permesso camera negato — consenti la camera e riprova (serve HTTPS).' : 'Camera permission denied — allow camera and retry (HTTPS required).')
+            ? (lang === 'it' ? 'Permesso camera negato — consenti la camera e riprova (serve HTTPS).' : lang === 'de' ? 'Kamera-Berechtigung verweigert — erlaube Kamera und versuche erneut (HTTPS erforderlich).' : 'Camera permission denied — allow camera and retry (HTTPS required).')
             : raw.includes('NotFoundError') || raw.includes('Overconstrained')
-              ? (lang === 'it' ? 'Camera non trovata — nessun dispositivo video disponibile.' : 'No camera found.')
+              ? (lang === 'it' ? 'Camera non trovata — nessun dispositivo video disponibile.' : lang === 'de' ? 'Keine Kamera gefunden.' : 'No camera found.')
               : raw;
         setError(friendly);
         setStatus('error');
@@ -227,7 +229,7 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
     return (
       <div style={{ width: '100%', background: INK, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, textAlign: 'center' }}>
         <div className="o40-mono" style={{ color: KHAKI, fontSize: 10 }}>AI TRACKING</div>
-        <div style={{ color: PAPER, fontSize: 13, marginTop: 6 }}>{lang === 'it' ? 'Tracciamento AI non ancora calibrato per questo esercizio — usa timer standard.' : 'AI tracking not yet calibrated for this exercise — using standard timer.'}</div>
+        <div style={{ color: PAPER, fontSize: 13, marginTop: 6 }}>{lang === 'it' ? 'Tracciamento AI non ancora calibrato per questo esercizio — usa timer standard.' : lang === 'de' ? 'KI-Tracking für diese Übung noch nicht kalibriert — Standard-Timer wird verwendet.' : 'AI tracking not yet calibrated for this exercise — using standard timer.'}</div>
         <div style={{ color: STEEL, fontSize: 11, marginTop: 8 }}>{exerciseId}</div>
       </div>
     );
@@ -339,10 +341,10 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
             <div style={{ maxWidth: 300 }}>
               <div style={{ color: BLAZE, fontSize: 12, lineHeight: 1.4 }}>{error}</div>
               <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 12, flexWrap: 'wrap' }}>
-                <button onClick={() => window.location.reload()} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>{lang === 'it' ? 'Ricarica' : 'Reload'}</button>
-                <button onClick={() => { setError(null); setStatus('idle'); if (streamRef.current) { try { streamRef.current.getTracks().forEach(t=>t.stop()); } catch {} streamRef.current=null; } }} style={{ background: 'transparent', color: KHAKI, border: `1px solid ${KHAKI}`, borderRadius: 8, padding: '6px 12px', fontSize: 11, cursor: 'pointer' }}>{lang === 'it' ? 'Riprova camera' : 'Retry'}</button>
+                <button onClick={() => window.location.reload()} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>{lang === 'it' ? 'Ricarica' : lang === 'de' ? 'Neu laden' : 'Reload'}</button>
+                <button onClick={() => { setError(null); setStatus('idle'); if (streamRef.current) { try { streamRef.current.getTracks().forEach(t=>t.stop()); } catch {} streamRef.current=null; } }} style={{ background: 'transparent', color: KHAKI, border: `1px solid ${KHAKI}`, borderRadius: 8, padding: '6px 12px', fontSize: 11, cursor: 'pointer' }}>{lang === 'it' ? 'Riprova camera' : lang === 'de' ? 'Erneut versuchen' : 'Retry'}</button>
               </div>
-              <div style={{ color: STEEL, fontSize: 9, marginTop: 8 }}>{lang === 'it' ? 'Suggerimento: disattiva AI con 👁️ per usare timer standard senza camera.' : 'Tip: disable AI with 👁️ to use timer without camera.'}</div>
+              <div style={{ color: STEEL, fontSize: 9, marginTop: 8 }}>{lang === 'it' ? 'Suggerimento: disattiva AI con 👁️ per usare timer standard senza camera.' : lang === 'de' ? 'Tipp: KI mit 👁️ deaktivieren für Timer ohne Kamera.' : 'Tip: disable AI with 👁️ to use timer without camera.'}</div>
             </div>
           </div>
         )}

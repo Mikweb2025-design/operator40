@@ -1005,8 +1005,8 @@ export default function SetupScreen({
                 }}
               />
             </label>
-            {huaweiStatus === 'error' && <div style={{ color: BLAZE, fontSize: 11.5, marginTop: 8 }}>File Huawei non riconosciuto</div>}
-            {huaweiStatus === 'done' && <div style={{ color: '#7FB069', fontSize: 11.5, marginTop: 8 }}>Import Huawei completato ✓</div>}
+            {huaweiStatus === 'error' && <div style={{ color: BLAZE, fontSize: 11.5, marginTop: 8 }}>{t('setup.huawei.fileError')}</div>}
+            {huaweiStatus === 'done' && <div style={{ color: '#7FB069', fontSize: 11.5, marginTop: 8 }}>{t('setup.huawei.importOk')}</div>}
 
             <div style={{ height: 1, background: OLIVE_DARK, margin: '12px 0' }} />
 
@@ -1015,7 +1015,7 @@ export default function SetupScreen({
               {huaweiWatchHr && <span style={{ marginLeft: 'auto', color: BLAZE, fontSize: 14 }}>{huaweiWatchHr} bpm ❤️</span>}
             </div>
             <div style={{ color: STEEL, fontSize: 11.5, marginBottom: 8 }}>
-              {lang === 'it' ? 'Connetti Huawei Watch GT via Bluetooth (Chrome/Edge) per HR live durante la sessione.' : 'Connect Huawei Watch GT via Bluetooth for live HR.'}
+              {t('setup.huawei.watchLive')}
             </div>
             <button
               onClick={async ()=>{
@@ -1035,9 +1035,9 @@ export default function SetupScreen({
               disabled={huaweiWatchStatus==='searching' || huaweiWatchStatus==='connected'}
               style={{ ...secondaryBtn, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, opacity: huaweiWatchStatus==='searching'?0.6:1 }}
             >
-              <HeartPulse size={14} /> {huaweiWatchStatus==='connected' ? 'Watch connesso ✓' : huaweiWatchStatus==='searching' ? 'Ricerca...' : 'Connetti Huawei Watch'}
+              <HeartPulse size={14} /> {huaweiWatchStatus==='connected' ? t('setup.huawei.connected') : huaweiWatchStatus==='searching' ? t('setup.huawei.searching') : t('setup.huawei.connect')}
             </button>
-            {huaweiWatchStatus==='error' && <div style={{ color: BLAZE, fontSize: 11, marginTop: 6 }}>Bluetooth non disponibile — usa Chrome/Edge</div>}
+            {huaweiWatchStatus==='error' && <div style={{ color: BLAZE, fontSize: 11, marginTop: 6 }}>{t('setup.huawei.bluetoothFail')}</div>}
           </div>
         )}
 
@@ -1072,9 +1072,7 @@ export default function SetupScreen({
             </span>
           </div>
           <div style={{ color: STEEL, fontSize: 12, lineHeight: 1.5, marginBottom: 10 }}>
-            {lang === 'it'
-              ? 'Esporta tutti i dati (profilo, sessioni, misure, foto) in un file JSON. Ripristina su altro device o dopo reset.'
-              : 'Export all data (profile, sessions, measures, photos) to JSON. Restore on another device.'}
+            {t('setup.backup.hint2')}
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             <button

@@ -14,6 +14,7 @@ import { EXERCISE_DEFINITIONS, normalizeExerciseId, getDefinition } from '../eng
 import { localizedCue } from '../engine/exercises/definitions';
 import PositioningMask, { alignmentScore } from './PositioningMask';
 import { LandmarkRecorder } from '../ai/debug/LandmarkRecorder';
+import { translate } from '../i18n.js';
 import type { EngineMetrics, RepEvent, FormMetrics } from '../engine/types';
 
 type Lang = 'it' | 'en' | 'de';
@@ -205,11 +206,13 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
       const friendly = isChunkErr
         ? (lang === 'it'
             ? `AI non caricata: ${raw.slice(0,220)} — Ricarica la pagina. Se offline, serve build con npm run fetch:mediapipe.`
-            : `AI failed to load: ${raw.slice(0,220)} — Reload page.`)
+            : lang === 'de'
+              ? `KI nicht geladen: ${raw.slice(0,220)} — Seite neu laden.`
+              : `AI failed to load: ${raw.slice(0,220)} — Reload page.`)
         : notAllowed
-          ? (lang === 'it' ? 'Permesso camera negato — consenti la camera e riprova (serve HTTPS).' : 'Camera permission denied — allow camera and retry (HTTPS required).')
+          ? (lang === 'it' ? 'Permesso camera negato — consenti la camera e riprova (serve HTTPS).' : lang === 'de' ? 'Kamera-Berechtigung verweigert — erlaube Kamera und versuche erneut (HTTPS erforderlich).' : 'Camera permission denied — allow camera and retry (HTTPS required).')
           : notFound
-            ? (lang === 'it' ? 'Camera non trovata — nessun dispositivo video disponibile.' : 'No camera found.')
+            ? (lang === 'it' ? 'Camera non trovata — nessun dispositivo video disponibile.' : lang === 'de' ? 'Keine Kamera gefunden.' : 'No camera found.')
             : raw;
       setError(friendly);
       setStatus('error');
@@ -334,17 +337,17 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
       {/* HUD */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, padding: '10px 12px', background: INK }}>
         <div style={{ background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', textAlign: 'center' }} aria-live="polite" aria-atomic="true">
-          <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>REPS</div>
+          <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>{translate('ses.reps', lang)}</div>
           <div className="o40-display" role="status" aria-live="polite" style={{ color: BLAZE, fontSize: 28, lineHeight: 1 }}>{reps}</div>
           <div className="o40-mono" style={{ color: KHAKI, fontSize: 9 }}>{metrics?.currentPhase ?? '—'}</div>
         </div>
         <div style={{ background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', textAlign: 'center' }}>
-          <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>TIME</div>
+          <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>{lang==='it' ? 'TEMPO' : lang==='de' ? 'ZEIT' : 'TIME'}</div>
           <div className="o40-display" style={{ color: PAPER, fontSize: 22, lineHeight: 1 }}>{fmtMs(metrics?.elapsedMs ?? 0)}</div>
           <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>active {fmtMs(metrics?.elapsedActiveMs ?? 0)}</div>
         </div>
         <div style={{ background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: '10px 12px', textAlign: 'center' }}>
-          <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>QUALITY</div>
+          <div className="o40-mono" style={{ color: STEEL, fontSize: 9 }}>{lang==='it' ? 'QUALITÀ' : lang==='de' ? 'QUALITÄT' : 'QUALITY'}</div>
           <div className="o40-display" style={{ color: (metrics?.avgQuality ?? 0) > 70 ? '#7FB069' : (metrics?.avgQuality ?? 0) > 50 ? '#D4A017' : BLAZE, fontSize: 22, lineHeight: 1 }}>{Math.round(metrics?.avgQuality ?? lastForm?.quality ?? 0)}</div>
           <div className="o40-mono" style={{ color: KHAKI, fontSize: 9 }}>/100</div>
         </div>
@@ -392,11 +395,11 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
         <div style={{ margin: 12, padding: 14, borderRadius: 12, background: `${BLAZE}14`, border: `1px solid ${BLAZE}55`, color: BLAZE, fontSize: 12, lineHeight: 1.5 }}>
           <div style={{ wordBreak: 'break-word' }}>{error}</div>
           <span style={{ color: STEEL, fontSize: 11, display: 'block', marginTop: 6 }}>
-            {/AI non caricata|AI failed/i.test(error) ? (lang === 'it' ? 'Ricarica la pagina — se persiste, verifica connessione o reinstalla PWA.' : 'Reload page — check network or reinstall PWA.') : 'Apri con HTTPS (richiesto da iOS per la camera). Consenti la camera quando il browser lo chiede.'}
+            {/AI non caricata|AI failed|KI nicht/i.test(error) ? (lang === 'it' ? 'Ricarica la pagina — se persiste, verifica connessione o reinstalla PWA.' : lang === 'de' ? 'Seite neu laden — bei Fortbestehen Verbindung prüfen oder PWA neu installieren.' : 'Reload page — check network or reinstall PWA.') : lang === 'de' ? 'Mit HTTPS öffnen (für iOS-Kamera erforderlich). Erlaube Kamera wenn Browser fragt.' : 'Apri con HTTPS (richiesto da iOS per la camera). Consenti la camera quando il browser lo chiede.'}
           </span>
           <div style={{ marginTop: 10, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            <button onClick={() => { setError(null); setStatus('idle'); }} style={{ padding: '8px 14px', borderRadius: 10, border: `1px solid ${OLIVE}`, background: INK, color: PAPER, cursor: 'pointer' }}>Riprova</button>
-            <button onClick={() => window.location.reload()} style={{ padding: '8px 14px', borderRadius: 10, border: `1px solid ${BLAZE}`, background: BLAZE, color: PAPER, cursor: 'pointer', fontWeight: 700 }}>Ricarica</button>
+            <button onClick={() => { setError(null); setStatus('idle'); }} style={{ padding: '8px 14px', borderRadius: 10, border: `1px solid ${OLIVE}`, background: INK, color: PAPER, cursor: 'pointer' }}>{lang === 'de' ? 'Erneut' : 'Riprova'}</button>
+            <button onClick={() => window.location.reload()} style={{ padding: '8px 14px', borderRadius: 10, border: `1px solid ${BLAZE}`, background: BLAZE, color: PAPER, cursor: 'pointer', fontWeight: 700 }}>{lang === 'de' ? 'Neu laden' : lang === 'it' ? 'Ricarica' : 'Reload'}</button>
           </div>
         </div>
       ) : (

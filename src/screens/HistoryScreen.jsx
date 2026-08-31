@@ -230,11 +230,11 @@ function MedalGrid({ sessions }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       {[
-        { key: 'streak', title: 'SERIE', icon: 'fire' },
-        { key: 'sessions', title: 'SESSIONI', icon: 'zap' },
-        { key: 'kcal', title: 'KCAL', icon: 'target' },
-        { key: 'consistency', title: 'COSTANZA', icon: 'star' },
-        { key: 'perfect', title: 'SETT. PERFETTE', icon: 'star' },
+        { key: 'streak', title: t('hist.medal.streak'), icon: 'fire' },
+        { key: 'sessions', title: t('hist.medal.sessions'), icon: 'zap' },
+        { key: 'kcal', title: t('hist.medal.kcal'), icon: 'target' },
+        { key: 'consistency', title: t('hist.medal.consistency'), icon: 'star' },
+        { key: 'perfect', title: t('hist.medal.perfect'), icon: 'star' },
       ].map((cat) => (
         <div key={cat.key}>
           <div
@@ -458,7 +458,7 @@ function HistoryScreen({
             <div style={{ flex: 1, textAlign: 'center' }}>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 4 }}><Flame size={14} color={BLAZE} /></div>
               <div className="o40-mono" style={{ color: KHAKI, fontSize: 9, letterSpacing: '0.07em' }}>
-                MAX KCAL
+                {t('hist.maxKcal')}
               </div>
               <div className="o40-display o40-num-glow on" style={{ fontSize: 22, lineHeight: 1.1 }}>
                 {pr.maxKcal}
@@ -1859,7 +1859,7 @@ function HistoryScreen({
                 gap: 6,
               }}
             >
-              <Sparkles size={14} /> {lang === 'it' ? 'Condividi PNG' : 'Share PNG'}
+              <Sparkles size={14} /> {t('hist.share.png')}
             </button>{' '}
             <button
               onClick={() => setConfirmClear(true)}

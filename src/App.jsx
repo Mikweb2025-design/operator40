@@ -1882,7 +1882,7 @@ export default function App() {
                       gap: 6,
                     }}
                   >
-                    <Zap size={14} /> DETTAGLI <ChevronRight size={14} />
+                    <Zap size={14} /> {t('app.details')} <ChevronRight size={14} />
                   </button>
                   <button
                     onClick={() => {
@@ -1902,7 +1902,7 @@ export default function App() {
                       cursor: 'pointer',
                     }}
                   >
-                    Chiudi
+                    {t('app.close')}
                   </button>
                 </div>
               </div>
@@ -2226,12 +2226,12 @@ export default function App() {
                   {tourStep>0 ? (
                     <button onClick={() => setTourStep(tourStep-1)} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 14px', cursor: 'pointer' }}><ChevronLeft size={16} color={OLIVE} /></button>
                   ) : (
-                    <button onClick={() => { setShowTour(false); try{ localStorage.setItem('o40_seenTour','1'); }catch{} }} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 14px', cursor: 'pointer' }}>{lang==='it'?'Salta':'Skip'}</button>
+                    <button onClick={() => { setShowTour(false); try{ localStorage.setItem('o40_seenTour','1'); }catch{} }} style={{ background: 'transparent', border: `1px solid ${OLIVE}`, borderRadius: 10, padding: '10px 14px', cursor: 'pointer' }}>{t('tour.skip')}</button>
                   )}
                   {tourStep<2 ? (
-                    <button onClick={() => setTourStep(tourStep+1)} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 10, padding: '10px 0', fontWeight: 700, cursor: 'pointer' }}>{lang==='it'?'Avanti':'Next'} →</button>
+                    <button onClick={() => setTourStep(tourStep+1)} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 10, padding: '10px 0', fontWeight: 700, cursor: 'pointer' }}>{t('ses.next')} →</button>
                   ) : (
-                    <button onClick={() => { setShowTour(false); try{ localStorage.setItem('o40_seenTour','1'); }catch{} }} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 10, padding: '10px 0', fontWeight: 700, cursor: 'pointer' }}>INIZIA</button>
+                    <button onClick={() => { setShowTour(false); try{ localStorage.setItem('o40_seenTour','1'); }catch{} }} style={{ flex: 1, background: BLAZE, color: PAPER, border: 'none', borderRadius: 10, padding: '10px 0', fontWeight: 700, cursor: 'pointer' }}>{t('app.start')}</button>
                   )}
                 </div>
               </div>
