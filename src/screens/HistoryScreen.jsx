@@ -218,6 +218,7 @@ function Badge({ label, unlocked, value, color = BLAZE, icon = 'trophy', progres
 }
 
 function MedalGrid({ sessions }) {
+  const { t } = useT();
   const { all, unlocked } = getMedalProgress(sessions);
   const byType = {
     streak: all.filter((m) => m.type === 'streak'),
