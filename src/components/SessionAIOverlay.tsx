@@ -150,8 +150,31 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
         eng.start();
         setStatus('running');
       } catch (e: any) {
-        setError(e?.message ?? String(e));
+        const raw = e?.message ?? String(e);
+        // Traduci chunk/network error in messaggio utente + hint ricarica
+        const isChunkErr = /Failed to fetch|module script failed|ChunkLoadError|dynamically imported|WASM|PoseLandmarker|tasks-vision/i.test(raw);
+        const friendly = isChunkErr
+          ? (lang === 'it'
+              ? `AI non caricata: ${raw.slice(0,180)} — Ricarica la pagina (aggiornamento in corso o rete lenta). Se offline, serve aver eseguito npm run fetch:mediapipe prima del build.`
+              : `AI failed to load: ${raw.slice(0,180)} — Reload page (update in progress or slow network).`)
+          : raw.includes('NotAllowedError') || raw.includes('Permission') || raw.includes('Permission denied')
+            ? (lang === 'it' ? 'Permesso camera negato — consenti la camera e riprova (serve HTTPS).' : 'Camera permission denied — allow camera and retry (HTTPS required).')
+            : raw.includes('NotFoundError') || raw.includes('Overconstrained')
+              ? (lang === 'it' ? 'Camera non trovata — nessun dispositivo video disponibile.' : 'No camera found.')
+              : raw;
+        setError(friendly);
         setStatus('error');
+        // Chunk error dopo deploy PWA -> forza reload una volta (in aggiunta al guard globale)
+        if (isChunkErr && /Failed to fetch|module script failed|ChunkLoadError|dynamically imported/i.test(raw)) {
+          try {
+            const k = 'o40_ai_chunk_retry';
+            const last = Number(sessionStorage.getItem(k) || 0);
+            if (Date.now() - last > 8000) {
+              sessionStorage.setItem(k, String(Date.now()));
+              setTimeout(() => window.location.reload(), 900);
+            }
+          } catch {}
+        }
       }
     }
     start();
@@ -312,8 +335,15 @@ export default function SessionAIOverlay({ phase, lang = 'it', levelKey = 'comba
           </div>
         )}
         {status === 'error' && error && (
-          <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'rgba(0,0,0,0.7)', padding: 16, textAlign: 'center' }}>
-            <div style={{ color: BLAZE, fontSize: 12 }}>{error}<br /><span style={{ color: STEEL, fontSize: 10 }}>HTTPS + camera permission required.</span></div>
+          <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'rgba(0,0,0,0.82)', padding: 16, textAlign: 'center' }}>
+            <div style={{ maxWidth: 300 }}>
+              <div style={{ color: BLAZE, fontSize: 12, lineHeight: 1.4 }}>{error}</div>
+              <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 12, flexWrap: 'wrap' }}>
+                <button onClick={() => window.location.reload()} style={{ background: BLAZE, color: PAPER, border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>{lang === 'it' ? 'Ricarica' : 'Reload'}</button>
+                <button onClick={() => { setError(null); setStatus('idle'); if (streamRef.current) { try { streamRef.current.getTracks().forEach(t=>t.stop()); } catch {} streamRef.current=null; } }} style={{ background: 'transparent', color: KHAKI, border: `1px solid ${KHAKI}`, borderRadius: 8, padding: '6px 12px', fontSize: 11, cursor: 'pointer' }}>{lang === 'it' ? 'Riprova camera' : 'Retry'}</button>
+              </div>
+              <div style={{ color: STEEL, fontSize: 9, marginTop: 8 }}>{lang === 'it' ? 'Suggerimento: disattiva AI con 👁️ per usare timer standard senza camera.' : 'Tip: disable AI with 👁️ to use timer without camera.'}</div>
+            </div>
           </div>
         )}
         <div style={{ position: 'absolute', bottom: 6, left: 6, right: 6, display: 'flex', justifyContent: 'space-between', pointerEvents: 'none' }}>

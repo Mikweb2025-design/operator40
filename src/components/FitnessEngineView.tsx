@@ -198,12 +198,31 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
       eng.start();
       setStatus('running');
     } catch (e: any) {
-      const msg = e?.message ?? String(e);
-      const friendly = msg.includes('NotAllowedError') || msg.includes('Permission')
-        ? (lang === 'it' ? 'Permesso camera negato — consenti la camera e riprova (serve HTTPS).' : 'Camera permission denied — allow camera and retry (HTTPS required).')
-        : msg;
+      const raw = e?.message ?? String(e);
+      const isChunkErr = /Failed to fetch|module script failed|ChunkLoadError|dynamically imported|WASM|PoseLandmarker|tasks-vision/i.test(raw);
+      const notAllowed = raw.includes('NotAllowedError') || raw.includes('Permission') || raw.includes('Permission denied');
+      const notFound = raw.includes('NotFoundError') || raw.includes('Overconstrained');
+      const friendly = isChunkErr
+        ? (lang === 'it'
+            ? `AI non caricata: ${raw.slice(0,220)} — Ricarica la pagina. Se offline, serve build con npm run fetch:mediapipe.`
+            : `AI failed to load: ${raw.slice(0,220)} — Reload page.`)
+        : notAllowed
+          ? (lang === 'it' ? 'Permesso camera negato — consenti la camera e riprova (serve HTTPS).' : 'Camera permission denied — allow camera and retry (HTTPS required).')
+          : notFound
+            ? (lang === 'it' ? 'Camera non trovata — nessun dispositivo video disponibile.' : 'No camera found.')
+            : raw;
       setError(friendly);
       setStatus('error');
+      if (isChunkErr && /Failed to fetch|module script failed|ChunkLoadError|dynamically imported/i.test(raw)) {
+        try {
+          const k = 'o40_ai_chunk_retry';
+          const last = Number(sessionStorage.getItem(k) || 0);
+          if (Date.now() - last > 8000) {
+            sessionStorage.setItem(k, String(Date.now()));
+            setTimeout(() => window.location.reload(), 900);
+          }
+        } catch {}
+      }
     }
   }, [exId, lang, speechOn, onRep, enableMotionFusion]);
 
@@ -371,8 +390,14 @@ export default function FitnessEngineView({ exercise = 'squat', lang = 'it', onC
       {/* video stage */}
       {error ? (
         <div style={{ margin: 12, padding: 14, borderRadius: 12, background: `${BLAZE}14`, border: `1px solid ${BLAZE}55`, color: BLAZE, fontSize: 12, lineHeight: 1.5 }}>
-          {error}<br /><span style={{ color: STEEL, fontSize: 11 }}>Apri con HTTPS (richiesto da iOS per la camera). Consenti la camera quando il browser lo chiede.</span>
-          <div style={{ marginTop: 10 }}><button onClick={() => { setError(null); setStatus('idle'); }} style={{ padding: '8px 14px', borderRadius: 10, border: `1px solid ${OLIVE}`, background: INK, color: PAPER, cursor: 'pointer' }}>Riprova</button></div>
+          <div style={{ wordBreak: 'break-word' }}>{error}</div>
+          <span style={{ color: STEEL, fontSize: 11, display: 'block', marginTop: 6 }}>
+            {/AI non caricata|AI failed/i.test(error) ? (lang === 'it' ? 'Ricarica la pagina — se persiste, verifica connessione o reinstalla PWA.' : 'Reload page — check network or reinstall PWA.') : 'Apri con HTTPS (richiesto da iOS per la camera). Consenti la camera quando il browser lo chiede.'}
+          </span>
+          <div style={{ marginTop: 10, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <button onClick={() => { setError(null); setStatus('idle'); }} style={{ padding: '8px 14px', borderRadius: 10, border: `1px solid ${OLIVE}`, background: INK, color: PAPER, cursor: 'pointer' }}>Riprova</button>
+            <button onClick={() => window.location.reload()} style={{ padding: '8px 14px', borderRadius: 10, border: `1px solid ${BLAZE}`, background: BLAZE, color: PAPER, cursor: 'pointer', fontWeight: 700 }}>Ricarica</button>
+          </div>
         </div>
       ) : (
         <div style={{ position: 'relative', width: '100%', aspectRatio: '4/3', background: '#050608', overflow: 'hidden' }}>

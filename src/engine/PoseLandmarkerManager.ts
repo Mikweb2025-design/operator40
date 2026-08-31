@@ -18,9 +18,10 @@ const LITE_MODEL = 'https://storage.googleapis.com/mediapipe-models/pose_landmar
 const HEAVY_MODEL = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_heavy/float16/1/pose_landmarker_heavy.task';
 const FULL_MODEL = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task';
 // For offline PWA: local copies in public/wasm + public/models (see scripts/fetch-mediapipe.mjs)
+// Local first -> instant + offline, CDN fallback se file locali mancanti (es. installazione senza fetch:mediapipe)
 const FALLBACK_WASM_BASES = [
-  DEFAULT_WASM_BASE,
   './wasm',
+  DEFAULT_WASM_BASE,
 ];
 function modelUrlsForVariant(variant: string): string[] {
   const localMap: Record<string, string> = {
@@ -74,8 +75,21 @@ export class PoseLandmarkerManager {
 
   async init(onProgress?: (msg: string) => void): Promise<void> {
     if (this.ready) return;
-    const vision: MPVision = await import('@mediapipe/tasks-vision');
+    let vision: MPVision;
+    try {
+      // Vite gestisce questo come chunk separato `vision` (siehe vite.config manualChunks).
+      // Non usare @vite-ignore/webpackIgnore: serve il bundling per PWA offline + hash deterministico.
+      vision = await import('@mediapipe/tasks-vision');
+    } catch (e: any) {
+      const msg = String(e?.message ?? e);
+      // Chunk 404 dopo deploy PWA -> il guard globale in main.jsx fa reload, ma qui forniamo errore leggibile
+      if (msg.includes('Failed to fetch') || msg.includes('module script failed') || msg.includes('ChunkLoadError') || msg.includes('dynamically imported')) {
+        throw new Error(`AI module non caricato (aggiornamento in corso) — ricarica la pagina. Dettaglio: ${msg}`);
+      }
+      throw new Error(`Impossibile caricare AI (tasks-vision): ${msg}. Verifica connessione o ricarica.`);
+    }
     const { PoseLandmarker, FilesetResolver } = vision as any;
+    if (!PoseLandmarker || !FilesetResolver) throw new Error('tasks-vision incompleto: PoseLandmarker/FilesetResolver mancanti');
 
     // Fase 1: auto-heuristic improved — heavy if deviceMemory>=4 && not low-end iPhone && not low battery
     // Defaults to 'auto' for best accuracy/performance tradeoff
@@ -99,15 +113,18 @@ export class PoseLandmarkerManager {
     }
 
     let lastErr: any = null;
-    // Try wasm bases (CDN first, then local offline copy)
+    // Try wasm bases (local first, CDN fallback)
     for (const wasmBase of FALLBACK_WASM_BASES) {
       try {
         onProgress?.(`wasm:${wasmBase}`);
         this.fileset = await FilesetResolver.forVisionTasks(wasmBase);
         break;
-      } catch (e) { lastErr = e; }
+      } catch (e) { lastErr = e; onProgress?.(`wasm fail:${wasmBase}`); }
     }
-    if (!this.fileset) throw new Error(`Fileset failed: ${String(lastErr)}`);
+    if (!this.fileset) {
+      const hint = String(lastErr ?? '').includes('404') ? ' (file wasm mancanti: esegui npm run fetch:mediapipe e ricompila)' : '';
+      throw new Error(`WASM non caricato${hint}: ${String(lastErr)}`);
+    }
 
     const candidateModels = modelUrlsForVariant(this.modelVariant);
     // Try model paths with GPU then CPU fallback, with heavy->lite fallback on failure
@@ -131,10 +148,13 @@ export class PoseLandmarkerManager {
           const dt = performance.now() - t0;
           if (dt > 3800) onProgress?.('heavy_slow');
           return;
-        } catch (e) { lastErr = e; }
+        } catch (e) { lastErr = e; onProgress?.(`model fail:${delegate}:${modelPath}`); }
       }
     }
-    throw new Error(`PoseLandmarker init failed: ${String(lastErr)}`);
+    // Messaggio finale più utile per UI
+    const isNetworkErr = String(lastErr ?? '').toLowerCase().includes('fetch') || String(lastErr ?? '').includes('404') || String(lastErr ?? '').includes('network');
+    const hint = isNetworkErr ? ' — verifica connessione o usa modello locale (npm run fetch:mediapipe)' : '';
+    throw new Error(`PoseLandmarker non inizializzato${hint}: ${String(lastErr)}`);
   }
 
   /** Detect for video element at given timestamp (performance.now). Returns smoothed landmarks + worldLandmarks. */
