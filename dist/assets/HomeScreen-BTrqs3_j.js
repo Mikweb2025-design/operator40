@@ -1,9 +1,9 @@
-import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL, f as BLAZE_DEEP, P as PAPER, q as getMedalProgress, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-Cu1AEXq7.js";
+import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL, f as BLAZE_DEEP, P as PAPER, q as getMedalProgress, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-DnzZm8wt.js";
 import { r as reactExports, v as Users, T as Trophy, C as Check, w as Share2, L as Link, X, b as ChevronRight, p as Medal, S as Sparkles, F as Flame, I as Info, x as TrendingUp, o as Crown, Z as Zap, y as Star, z as RotateCcw, h as Target, G as Lightbulb, E as Eye, B as BookOpen, e as Settings, J as Trash2, P as Plus, K as Ruler, N as TrendingDown, O as Scale } from "./icons-Cu976FrU.js";
-import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-zXLNSwB7.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-Cx8PzSAs.js";
-import { D as DogTag } from "./DogTag-C2WEhxnO.js";
-import { P as ProgressRing } from "./ProgressRing-CRnbegwy.js";
+import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-DBRWvzws.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-CJYzejZr.js";
+import { D as DogTag } from "./DogTag-Kw0SOJVS.js";
+import { P as ProgressRing } from "./ProgressRing-Bo83gPWd.js";
 import "./charts-Cp2TOHCu.js";
 function getPersonalChallenge(sessions, profile) {
   const n = (sessions == null ? void 0 : sessions.length) || 0;

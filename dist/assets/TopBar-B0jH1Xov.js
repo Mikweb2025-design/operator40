@@ -1,4 +1,4 @@
-import { u as useT, j as jsxRuntimeExports, R as btnIcon, P as PAPER } from "./index-Cu1AEXq7.js";
+import { u as useT, j as jsxRuntimeExports, R as btnIcon, P as PAPER } from "./index-DnzZm8wt.js";
 import { i as ChevronLeft } from "./icons-Cu976FrU.js";
 function TopBar({ title, onBack, right }) {
   const { t } = useT();

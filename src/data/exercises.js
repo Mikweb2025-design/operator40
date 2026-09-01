@@ -114,6 +114,9 @@ export const EXERCISES = {
       en: 'Inhale lowering, exhale pushing up.',
       de: 'Einatmen beim Absenken, ausatmen beim Hochdrücken.',
     },
+    infoImage: 'images/pushup-muscles.webp',
+    infoImageFallback: 'images/pushup-muscles.png',
+    muscles: { it: 'Pettorali, tricipiti, spalle, addome', en: 'Chest, triceps, shoulders, abs', de: 'Brust, Trizeps, Schultern, Bauch' },
   },
   plank: {
     name: { it: 'Plank', en: 'Plank', de: 'Unterarmstütz' },
