@@ -1,9 +1,9 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-aK3jCnQG.js","./icons-CLcWqI5o.js","./charts-BIux2oEU.js","./web-LLef69x4.js","./CountdownScreen-B6ns6Aq8.js","./SetupScreen-Bay8QDqG.js","./TopBar-CWXKtjL2.js","./HomeScreen-CMc2D1Qq.js","./GoalRing-Ckz3cdjj.js","./ExerciseFigure-Bz-yJ1YY.js","./DogTag-McALqTeV.js","./ProgressRing-DkbvVO8W.js","./LibraryScreen-xbIkzZo4.js","./clips-DJ4gBJJK.js","./BuilderScreen-DvmanM2H.js","./PreviewScreen-nULaaRt8.js","./SessionScreen-CZY9wT1H.js","./SummaryScreen-D2LQtufl.js","./HistoryScreen-BZjFAbK2.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DGZGuWDd.js","./icons-Cu976FrU.js","./charts-Cp2TOHCu.js","./web-CUELQz1Z.js","./CountdownScreen-B08PFt98.js","./SetupScreen-C-iGBCAa.js","./TopBar-BAwVgnQn.js","./HomeScreen-BkLpcGoi.js","./GoalRing-BAdG4ZT5.js","./ExerciseFigure-BON2E8Tg.js","./DogTag-DwGd8j6w.js","./ProgressRing-CUXQpRN6.js","./LibraryScreen-B_s0PLFz.js","./clips-BUPhiWww.js","./BuilderScreen-BjE7U7eZ.js","./PreviewScreen-7R492GLA.js","./SessionScreen-BnCkqo-J.js","./SummaryScreen-BVDSzbDF.js","./HistoryScreen-DPal-TuV.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, h as Target, E as Eye, i as ChevronLeft } from "./icons-CLcWqI5o.js";
-import { r as reactDomExports } from "./charts-BIux2oEU.js";
+import { r as reactExports, T as Trophy, a as Timer, C as Check, b as ChevronRight, R as React, S as Sparkles, X, Z as Zap, H as House, B as BookOpen, d as History, e as Settings, f as RefreshCw, h as Target, E as Eye, i as ChevronLeft } from "./icons-Cu976FrU.js";
+import { r as reactDomExports } from "./charts-Cp2TOHCu.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -397,7 +397,7 @@ const I18N = {
     en: "MISSIONS & GOALS",
     de: "MISSIONEN & ZIELE"
   },
-  "home.section.achievements": { it: "ACHIEVEMENTS", en: "ACHIEVEMENTS", de: "ACHIEVEMENTS" },
+  "home.section.achievements": { it: "TRAGUARDI", en: "ACHIEVEMENTS", de: "ERFOLGE" },
   "home.section.measurements": { it: "MISURAZIONI", en: "MEASUREMENTS", de: "MESSUNGEN" },
   "home.streak.break": {
     it: "Streak interrotta — riparti oggi",
@@ -774,7 +774,59 @@ const I18N = {
     de: "z. B. 12× Kniebeuge — tippe FERTIG. Halten bleibt Zeit."
   },
   "setup.custom.work": { it: "Lavoro", en: "Work", de: "Arbeit" },
-  "setup.custom.rest": { it: "Recupero", en: "Rest", de: "Pause" }
+  "setup.custom.rest": { it: "Recupero", en: "Rest", de: "Pause" },
+  /* ---- social sfida (v2.15) ---- */
+  "home.section.social": { it: "SFIDA AMICI", en: "FRIEND CHALLENGE", de: "FREUNDE-CHALLENGE" },
+  "home.social.badge": { it: "{n} amici · {kcal} kcal", en: "{n} friends · {kcal} kcal", de: "{n} Freunde · {kcal} kcal" },
+  "home.girone.title": { it: "SFIDA DEL GIRONE · {id} · GIRONE PANCIA", en: "GROUP CHALLENGE · {id} · BELLY GROUP", de: "GRUPPEN-CHALLENGE · {id} · BAUCH-GRUPPE" },
+  "home.raffica.badge": { it: "LAMPO", en: "BLITZ", de: "BLITZ" },
+  /* ---- session extras (fix mix IT/EN) ---- */
+  "ses.reps": { it: "RIPETIZIONI", en: "REPS", de: "WIEDERHOLUNGEN" },
+  "ses.reps.hint": { it: "Tocca FATTO quando hai finito", en: "Tap DONE when finished", de: "Tippe FERTIG wenn fertig" },
+  "ses.reps.done": { it: "FATTO ✓", en: "DONE ✓", de: "FERTIG ✓" },
+  "ses.prev": { it: "INDIETRO", en: "PREV", de: "ZURÜCK" },
+  "ses.next": { it: "AVANTI", en: "NEXT", de: "WEITER" },
+  "ses.skip": { it: "SALTA →", en: "SKIP →", de: "ÜBERSPRINGEN →" },
+  "ses.ai.active": { it: "AI Coach attivo — conta automatico, voce nella tua lingua", en: "AI Coach on — auto-count, voice in your language", de: "KI-Coach an — Auto-Zählung, Stimme in deiner Sprache" },
+  "ses.ai.autoAdvance": { it: "AI avanzerà da solo al target · disattiva con 👁️", en: "AI will auto-advance at target · disable with 👁️", de: "KI springt automatisch zum Ziel · mit 👁️ deaktivieren" },
+  "ses.breathe": { it: "Respira — 4 sec in, 4 sec out", en: "Breathe — 4s in, 4s out", de: "Atmen — 4s ein, 4s aus" },
+  "ses.ai.hint": { it: "AI conta auto — puoi saltare manualmente", en: "AI auto-count — you can skip manually", de: "KI zählt automatisch — du kannst manuell überspringen" },
+  "ses.ai.notCalibrated": { it: "Tracciamento AI non ancora calibrato per questo esercizio — usa timer standard.", en: "AI tracking not yet calibrated for this exercise — using standard timer.", de: "KI-Tracking für diese Übung noch nicht kalibriert — Standard-Timer wird verwendet." },
+  "ses.ai.moveBack": { it: "Allontanati così vedo tutto il corpo.", en: "Move back so I can see your whole body.", de: "Geh zurück, damit ich deinen ganzen Körper sehe." },
+  "ses.ai.moveBackShort": { it: "Allontanati", en: "Move back", de: "Zurück" },
+  "ses.camera.hint": { it: "Suggerimento: disattiva AI con 👁️ per usare timer standard senza camera.", en: "Tip: disable AI with 👁️ to use timer without camera.", de: "Tipp: KI mit 👁️ deaktivieren für Timer ohne Kamera." },
+  "ses.camera.reload": { it: "Ricarica", en: "Reload", de: "Neu laden" },
+  "ses.camera.retry": { it: "Riprova camera", en: "Retry", de: "Erneut versuchen" },
+  "lib.empty": { it: "Prova un altro termine o resetta i filtri.", en: "Try another term or reset filters.", de: "Versuche einen anderen Begriff oder setze die Filter zurück." },
+  "lib.notFound": { it: "Nessun esercizio trovato", en: "No exercise found", de: "Keine Übung gefunden" },
+  "lib.resetFilters": { it: "Reset filtri", en: "Reset filters", de: "Filter zurücksetzen" },
+  "preview.reps": { it: "Modalità ripetizioni: tocca FATTO quando hai finito ogni esercizio. Hold resta a tempo.", en: "Reps mode: tap DONE when finished each exercise. Holds stay timed.", de: "Wiederholungsmodus: Tippe FERTIG wenn fertig. Halten bleibt Zeit." },
+  "preview.tapDone": { it: "tocca FATTO", en: "tap DONE", de: "tippe FERTIG" },
+  "setup.huawei.watchLive": { it: "Connetti Huawei Watch GT via Bluetooth (Chrome/Edge) per HR live durante la sessione.", en: "Connect Huawei Watch GT via Bluetooth (Chrome/Edge) for live HR during session.", de: "Huawei Watch GT via Bluetooth (Chrome/Edge) für Live-HR verbinden." },
+  "setup.huawei.connected": { it: "Watch connesso ✓", en: "Watch connected ✓", de: "Watch verbunden ✓" },
+  "setup.huawei.searching": { it: "Ricerca...", en: "Searching...", de: "Suche..." },
+  "setup.huawei.connect": { it: "Connetti Huawei Watch", en: "Connect Huawei Watch", de: "Huawei Watch verbinden" },
+  "setup.huawei.bluetoothFail": { it: "Bluetooth non disponibile — usa Chrome/Edge", en: "Bluetooth unavailable — use Chrome/Edge", de: "Bluetooth nicht verfügbar — Chrome/Edge verwenden" },
+  "setup.huawei.importOk": { it: "Import Huawei completato ✓", en: "Huawei import complete ✓", de: "Huawei-Import abgeschlossen ✓" },
+  "setup.huawei.fileError": { it: "File Huawei non riconosciuto", en: "Huawei file not recognized", de: "Huawei-Datei nicht erkannt" },
+  "setup.backup.hint2": { it: "Esporta tutti i dati (profilo, sessioni, misure, foto) in un file JSON. Ripristina su altro device o dopo reset.", en: "Export all data (profile, sessions, measures, photos) to JSON. Restore on another device.", de: "Alle Daten (Profil, Sessions, Maße, Fotos) als JSON exportieren. Auf anderem Gerät wiederherstellen." },
+  "hist.medal.streak": { it: "SERIE", en: "STREAK", de: "SERIE" },
+  "hist.medal.sessions": { it: "SESSIONI", en: "SESSIONS", de: "SESSIONS" },
+  "hist.medal.kcal": { it: "KCAL", en: "KCAL", de: "KCAL" },
+  "hist.medal.consistency": { it: "COSTANZA", en: "CONSISTENCY", de: "KONSTANZ" },
+  "hist.medal.perfect": { it: "SETT. PERFETTE", en: "PERFECT WEEKS", de: "PERFEKTE WOCHEN" },
+  "hist.maxKcal": { it: "MAX KCAL", en: "MAX KCAL", de: "MAX KCAL" },
+  "hist.share.png": { it: "Condividi PNG", en: "Share PNG", de: "PNG teilen" },
+  "app.details": { it: "DETTAGLI", en: "DETAILS", de: "DETAILS" },
+  "app.close": { it: "Chiudi", en: "Close", de: "Schließen" },
+  "app.start": { it: "INIZIA", en: "START", de: "START" },
+  "ticker.level": { it: "LIVELLO", en: "LEVEL", de: "STUFE" },
+  "ticker.rank": { it: "RANGO", en: "RANK", de: "RANG" },
+  "tour.skip": { it: "Salta", en: "Skip", de: "Überspringen" },
+  "tour.next": { it: "Avanti", en: "Next", de: "Weiter" },
+  "ses.preview": { it: "ANTEPRIMA", en: "PREVIEW", de: "VORSCHAU" },
+  "ses.preview.skip": { it: "INIZIA SUBITO", en: "START NOW", de: "JETZT STARTEN" },
+  "ses.preview.hint": { it: "Guarda il video, poi parti", en: "Watch the clip, then go", de: "Clip ansehen, dann los" }
 };
 const LangContext = reactExports.createContext({
   lang: "it",
@@ -5357,8 +5409,8 @@ const LITE_MODEL = "https://storage.googleapis.com/mediapipe-models/pose_landmar
 const HEAVY_MODEL = "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_heavy/float16/1/pose_landmarker_heavy.task";
 const FULL_MODEL = "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task";
 const FALLBACK_WASM_BASES = [
-  DEFAULT_WASM_BASE,
-  "./wasm"
+  "./wasm",
+  DEFAULT_WASM_BASE
 ];
 function modelUrlsForVariant(variant) {
   const localMap = {
@@ -5405,8 +5457,18 @@ class PoseLandmarkerManager {
   }
   async init(onProgress) {
     if (this.ready) return;
-    const vision = await __vitePreload(() => import("./vision-BnDXmRAR.js"), true ? [] : void 0, import.meta.url);
+    let vision;
+    try {
+      vision = await __vitePreload(() => import("./vision-BnDXmRAR.js"), true ? [] : void 0, import.meta.url);
+    } catch (e) {
+      const msg = String((e == null ? void 0 : e.message) ?? e);
+      if (msg.includes("Failed to fetch") || msg.includes("module script failed") || msg.includes("ChunkLoadError") || msg.includes("dynamically imported")) {
+        throw new Error(`AI module non caricato (aggiornamento in corso) — ricarica la pagina. Dettaglio: ${msg}`);
+      }
+      throw new Error(`Impossibile caricare AI (tasks-vision): ${msg}. Verifica connessione o ricarica.`);
+    }
     const { PoseLandmarker, FilesetResolver } = vision;
+    if (!PoseLandmarker || !FilesetResolver) throw new Error("tasks-vision incompleto: PoseLandmarker/FilesetResolver mancanti");
     const requested = this.opts.modelVariant ?? "auto";
     if (requested === "auto") {
       try {
@@ -5434,9 +5496,13 @@ class PoseLandmarkerManager {
         break;
       } catch (e) {
         lastErr = e;
+        onProgress == null ? void 0 : onProgress(`wasm fail:${wasmBase}`);
       }
     }
-    if (!this.fileset) throw new Error(`Fileset failed: ${String(lastErr)}`);
+    if (!this.fileset) {
+      const hint2 = String(lastErr ?? "").includes("404") ? " (file wasm mancanti: esegui npm run fetch:mediapipe e ricompila)" : "";
+      throw new Error(`WASM non caricato${hint2}: ${String(lastErr)}`);
+    }
     const candidateModels = modelUrlsForVariant(this.modelVariant);
     for (const delegate of [this.delegate, "CPU"]) {
       for (const modelPath of candidateModels) {
@@ -5459,10 +5525,13 @@ class PoseLandmarkerManager {
           return;
         } catch (e) {
           lastErr = e;
+          onProgress == null ? void 0 : onProgress(`model fail:${delegate}:${modelPath}`);
         }
       }
     }
-    throw new Error(`PoseLandmarker init failed: ${String(lastErr)}`);
+    const isNetworkErr = String(lastErr ?? "").toLowerCase().includes("fetch") || String(lastErr ?? "").includes("404") || String(lastErr ?? "").includes("network");
+    const hint = isNetworkErr ? " — verifica connessione o usa modello locale (npm run fetch:mediapipe)" : "";
+    throw new Error(`PoseLandmarker non inizializzato${hint}: ${String(lastErr)}`);
   }
   /** Detect for video element at given timestamp (performance.now). Returns smoothed landmarks + worldLandmarks. */
   detect(video, timestampMs) {
@@ -6124,7 +6193,7 @@ class PlankAnalyzer extends ExerciseAnalyzer {
     this.pushTemporalFrame(lm, ts, (arguments[2] ?? 16) || 16);
     const line = this.bilateralJointAngle("trunk", lm, [LM.left_shoulder, LM.left_hip, LM.left_ankle], [LM.right_shoulder, LM.right_hip, LM.right_ankle]);
     const hip = this.bilateralJointAngle("hip", lm, [LM.left_shoulder, LM.left_hip, LM.left_knee], [LM.right_shoulder, LM.right_hip, LM.right_knee]);
-    const valid = line > 152 && hip > 148 && q2.exerciseConfidence > 38;
+    const valid = line > 165 && hip > 160 && q2.exerciseConfidence > 38;
     if (valid) {
       if (this.goodSince == null) this.goodSince = ts;
       this.phase = "HOLD_GOOD";
@@ -6136,8 +6205,8 @@ class PlankAnalyzer extends ExerciseAnalyzer {
         this.goodSince = null;
       }
     }
-    const form = line < 152 ? 55 : line < 162 ? 82 : 95 - (hip < 148 ? 10 : 0);
-    const cues = line < 152 ? ["hipsUp"] : line < 162 ? ["coreTight"] : [];
+    const form = line < 150 ? 30 : line < 160 ? 55 : line < 165 ? 78 : 95 - (hip < 160 ? 10 : 0);
+    const cues = line < 150 ? ["straightenBody"] : line < 160 ? ["hipsUp"] : line < 165 ? ["coreTight"] : [];
     return { phase: this.phase, enginePhase: "ready", repIncrement: false, repConfidence: 0, formScore: clamp(form, 0, 100), poseQuality: q2, cues, primaryAngle: line, secondaryAngles: { temporalROM: Math.round(this.temporalBuffer.getROM("kneeRaw")), hip, line }, velocity: 0, direction: "hold" };
   }
   reset() {
@@ -7125,7 +7194,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-aK3jCnQG.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-DGZGuWDd.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -8214,10 +8283,24 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
       eng.start();
       setStatus("running");
     } catch (e) {
-      const msg = (e == null ? void 0 : e.message) ?? String(e);
-      const friendly = msg.includes("NotAllowedError") || msg.includes("Permission") ? lang === "it" ? "Permesso camera negato — consenti la camera e riprova (serve HTTPS)." : "Camera permission denied — allow camera and retry (HTTPS required)." : msg;
+      const raw = (e == null ? void 0 : e.message) ?? String(e);
+      const isChunkErr = /Failed to fetch|module script failed|ChunkLoadError|dynamically imported|WASM|PoseLandmarker|tasks-vision/i.test(raw);
+      const notAllowed = raw.includes("NotAllowedError") || raw.includes("Permission") || raw.includes("Permission denied");
+      const notFound = raw.includes("NotFoundError") || raw.includes("Overconstrained");
+      const friendly = isChunkErr ? lang === "it" ? `AI non caricata: ${raw.slice(0, 220)} — Ricarica la pagina. Se offline, serve build con npm run fetch:mediapipe.` : lang === "de" ? `KI nicht geladen: ${raw.slice(0, 220)} — Seite neu laden.` : `AI failed to load: ${raw.slice(0, 220)} — Reload page.` : notAllowed ? lang === "it" ? "Permesso camera negato — consenti la camera e riprova (serve HTTPS)." : lang === "de" ? "Kamera-Berechtigung verweigert — erlaube Kamera und versuche erneut (HTTPS erforderlich)." : "Camera permission denied — allow camera and retry (HTTPS required)." : notFound ? lang === "it" ? "Camera non trovata — nessun dispositivo video disponibile." : lang === "de" ? "Keine Kamera gefunden." : "No camera found." : raw;
       setError(friendly);
       setStatus("error");
+      if (isChunkErr && /Failed to fetch|module script failed|ChunkLoadError|dynamically imported/i.test(raw)) {
+        try {
+          const k2 = "o40_ai_chunk_retry";
+          const last = Number(sessionStorage.getItem(k2) || 0);
+          if (Date.now() - last > 8e3) {
+            sessionStorage.setItem(k2, String(Date.now()));
+            setTimeout(() => window.location.reload(), 900);
+          }
+        } catch {
+        }
+      }
     }
   }, [exId, lang, speechOn, onRep, enableMotionFusion]);
   reactExports.useEffect(() => {
@@ -8341,12 +8424,12 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
     metrics != null && ((metrics == null ? void 0 : metrics.poseQuality) ?? 100) < 42 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { margin: "6px 12px 0", padding: "6px 8px", borderRadius: 8, background: `${BLAZE}1A`, border: `1px solid ${BLAZE}55`, color: PAPER, fontSize: 11, textAlign: "center" }, children: lang === "it" ? "Allontanati così vedo tutto il corpo." : lang === "de" ? "Geh zurück, damit ich deinen ganzen Körper sehe." : "Move back so I can see your whole body." }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, padding: "10px 12px", background: INK }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", textAlign: "center" }, "aria-live": "polite", "aria-atomic": "true", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "REPS" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: translate("ses.reps", lang) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", role: "status", "aria-live": "polite", style: { color: BLAZE, fontSize: 28, lineHeight: 1 }, children: reps }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 9 }, children: (metrics == null ? void 0 : metrics.currentPhase) ?? "—" })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", textAlign: "center" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "TIME" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: lang === "it" ? "TEMPO" : lang === "de" ? "ZEIT" : "TIME" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 22, lineHeight: 1 }, children: fmtMs((metrics == null ? void 0 : metrics.elapsedMs) ?? 0) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: [
           "active ",
@@ -8354,7 +8437,7 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { background: `${INK}CC`, border: `1px solid ${OLIVE}`, borderRadius: 12, padding: "10px 12px", textAlign: "center" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: "QUALITY" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 9 }, children: lang === "it" ? "QUALITÀ" : lang === "de" ? "QUALITÄT" : "QUALITY" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: ((metrics == null ? void 0 : metrics.avgQuality) ?? 0) > 70 ? "#7FB069" : ((metrics == null ? void 0 : metrics.avgQuality) ?? 0) > 50 ? "#D4A017" : BLAZE, fontSize: 22, lineHeight: 1 }, children: Math.round((metrics == null ? void 0 : metrics.avgQuality) ?? (lastForm == null ? void 0 : lastForm.quality) ?? 0) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 9 }, children: "/100" })
       ] })
@@ -8439,13 +8522,15 @@ function FitnessEngineView({ exercise = "squat", lang = "it", onClose, onRep, on
       ] })
     ] }),
     error ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { margin: 12, padding: 14, borderRadius: 12, background: `${BLAZE}14`, border: `1px solid ${BLAZE}55`, color: BLAZE, fontSize: 12, lineHeight: 1.5 }, children: [
-      error,
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11 }, children: "Apri con HTTPS (richiesto da iOS per la camera). Consenti la camera quando il browser lo chiede." }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 10 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
-        setError(null);
-        setStatus("idle");
-      }, style: { padding: "8px 14px", borderRadius: 10, border: `1px solid ${OLIVE}`, background: INK, color: PAPER, cursor: "pointer" }, children: "Riprova" }) })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { wordBreak: "break-word" }, children: error }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 11, display: "block", marginTop: 6 }, children: /AI non caricata|AI failed|KI nicht/i.test(error) ? lang === "it" ? "Ricarica la pagina — se persiste, verifica connessione o reinstalla PWA." : lang === "de" ? "Seite neu laden — bei Fortbestehen Verbindung prüfen oder PWA neu installieren." : "Reload page — check network or reinstall PWA." : lang === "de" ? "Mit HTTPS öffnen (für iOS-Kamera erforderlich). Erlaube Kamera wenn Browser fragt." : "Apri con HTTPS (richiesto da iOS per la camera). Consenti la camera quando il browser lo chiede." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+          setError(null);
+          setStatus("idle");
+        }, style: { padding: "8px 14px", borderRadius: 10, border: `1px solid ${OLIVE}`, background: INK, color: PAPER, cursor: "pointer" }, children: lang === "de" ? "Erneut" : "Riprova" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => window.location.reload(), style: { padding: "8px 14px", borderRadius: 10, border: `1px solid ${BLAZE}`, background: BLAZE, color: PAPER, cursor: "pointer", fontWeight: 700 }, children: lang === "de" ? "Neu laden" : lang === "it" ? "Ricarica" : "Reload" })
+      ] })
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: "100%", aspectRatio: "4/3", background: "#050608", overflow: "hidden" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "video",
@@ -9020,7 +9105,7 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.15.0 · 3d1b238";
+const BUILD_VERSION = "2.15.1 · e72cc07";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -9614,7 +9699,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-LLef69x4.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-CUELQz1Z.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -10213,27 +10298,33 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-B6ns6Aq8.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-Bay8QDqG.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-CMc2D1Qq.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-xbIkzZo4.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-DvmanM2H.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-nULaaRt8.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-CZY9wT1H.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-D2LQtufl.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-BZjFAbK2.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-B08PFt98.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-C-iGBCAa.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-BkLpcGoi.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-B_s0PLFz.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-BjE7U7eZ.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-7R492GLA.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-BnCkqo-J.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BVDSzbDF.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-DPal-TuV.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       style: {
         flex: 1,
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: 40
+        padding: 40,
+        gap: 14
       },
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: "#EDE8D8", fontSize: 12, letterSpacing: "0.08em" }, children: "CARICAMENTO…" })
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 32, height: 32, borderRadius: "50%", border: "2px solid #4A5233", borderTopColor: "#C1440E", animation: "spin 0.8s linear infinite" } }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: "#EDE8D8", fontSize: 11, letterSpacing: "0.08em", opacity: 0.8 }, children: "CARICAMENTO…" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("style", { children: `@keyframes spin{to{transform:rotate(360deg)}}` })
+      ]
     }
   );
 }
@@ -11733,7 +11824,9 @@ function App() {
                     },
                     children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 14 }),
-                      " DETTAGLI ",
+                      " ",
+                      t("app.details"),
+                      " ",
                       /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 14 })
                     ]
                   }
@@ -11758,7 +11851,7 @@ function App() {
                       fontWeight: 600,
                       cursor: "pointer"
                     },
-                    children: "Chiudi"
+                    children: t("app.close")
                   }
                 )
               ] })
@@ -12094,9 +12187,9 @@ function App() {
                     localStorage.setItem("o40_seenTour", "1");
                   } catch {
                   }
-                }, style: { background: "transparent", border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 14px", cursor: "pointer" }, children: lang === "it" ? "Salta" : "Skip" }),
+                }, style: { background: "transparent", border: `1px solid ${OLIVE}`, borderRadius: 10, padding: "10px 14px", cursor: "pointer" }, children: t("tour.skip") }),
                 tourStep < 2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setTourStep(tourStep + 1), style: { flex: 1, background: BLAZE, color: PAPER, border: "none", borderRadius: 10, padding: "10px 0", fontWeight: 700, cursor: "pointer" }, children: [
-                  lang === "it" ? "Avanti" : "Next",
+                  t("ses.next"),
                   " →"
                 ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
                   setShowTour(false);
@@ -12104,7 +12197,7 @@ function App() {
                     localStorage.setItem("o40_seenTour", "1");
                   } catch {
                   }
-                }, style: { flex: 1, background: BLAZE, color: PAPER, border: "none", borderRadius: 10, padding: "10px 0", fontWeight: 700, cursor: "pointer" }, children: "INIZIA" })
+                }, style: { flex: 1, background: BLAZE, color: PAPER, border: "none", borderRadius: 10, padding: "10px 0", fontWeight: 700, cursor: "pointer" }, children: t("app.start") })
               ] })
             ] })
           }
@@ -12168,6 +12261,10 @@ function App() {
     ] })
   ] }) });
 }
+function isChunkError(msg) {
+  const s = String(msg || "").toLowerCase();
+  return s.includes("importing a module script failed") || s.includes("failed to fetch dynamically imported module") || s.includes("loading chunk") || s.includes("loading css chunk") || s.includes("chunkloaderror");
+}
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -12199,17 +12296,30 @@ class ErrorBoundary extends React.Component {
         this.setState({ fixing: false, fixLog: "Errore: " + e.message });
       }
     });
-    this.state = { hasError: false, error: null, fixing: false, fixLog: "" };
+    this.state = { hasError: false, error: null, fixing: false, fixLog: "", isChunk: false, autoTried: false };
   }
   static getDerivedStateFromError(error) {
-    return { hasError: true, error };
+    return { hasError: true, error, isChunk: isChunkError((error == null ? void 0 : error.message) || error) };
   }
   componentDidCatch(error, info) {
     console.error("[ErrorBoundary]", error, info);
+    if (isChunkError((error == null ? void 0 : error.message) || error) && !this.state.autoTried) {
+      this.setState({ autoTried: true });
+      const key = "o40_chunk_retry";
+      try {
+        const last = Number(sessionStorage.getItem(key) || 0);
+        if (Date.now() - last > 1e4) {
+          sessionStorage.setItem(key, String(Date.now()));
+          setTimeout(() => window.location.reload(), 900);
+        }
+      } catch {
+      }
+    }
   }
   render() {
     if (this.state.hasError) {
       const isFixing = this.state.fixing;
+      const isChunk = this.state.isChunk;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -12229,10 +12339,10 @@ class ErrorBoundary extends React.Component {
               "div",
               {
                 style: { fontFamily: "Bebas Neue, sans-serif", fontSize: 28, letterSpacing: "0.05em" },
-                children: "OPERAZIONE INTERROTTA"
+                children: isChunk ? "AGGIORNAMENTO DISPONIBILE" : "OPERAZIONE INTERROTTA"
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { opacity: 0.7, marginTop: 8, maxWidth: 360 }, children: "Si è verificato un errore imprevisto. I tuoi dati (missioni, foto, profilo) restano salvati — non disinstallare l’app." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { opacity: 0.7, marginTop: 8, maxWidth: 360 }, children: isChunk ? "Stai caricando una versione precedente (cache PWA). Ricarica per la nuova build — i tuoi dati restano salvati." : "Si è verificato un errore imprevisto. I tuoi dati (missioni, foto, profilo) restano salvati — non disinstallare l’app." }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "button",
               {
@@ -12309,6 +12419,36 @@ window.addEventListener("beforeinstallprompt", (e) => {
   window.__o40DeferPrompt = e;
   window.dispatchEvent(new CustomEvent("o40:installReady"));
 });
+(function setupChunkErrorGuard() {
+  let retried = false;
+  function isChunkErr(msg) {
+    const s = String(msg || "").toLowerCase();
+    return s.includes("importing a module script failed") || s.includes("failed to fetch dynamically imported module") || s.includes("loading chunk") || s.includes("chunkloaderror");
+  }
+  function tryReload(reason) {
+    if (retried) return;
+    try {
+      const key = "o40_chunk_global_retry";
+      const last = Number(sessionStorage.getItem(key) || 0);
+      if (Date.now() - last < 8e3) return;
+      sessionStorage.setItem(key, String(Date.now()));
+    } catch {
+    }
+    retried = true;
+    console.warn("[o40] chunk load failed → reload", reason);
+    setTimeout(() => window.location.reload(), 700);
+  }
+  window.addEventListener("error", (e) => {
+    var _a;
+    const msg = (e == null ? void 0 : e.message) || ((_a = e == null ? void 0 : e.error) == null ? void 0 : _a.message) || "";
+    if (isChunkErr(msg) || isChunkErr(e == null ? void 0 : e.error)) tryReload(msg);
+  }, true);
+  window.addEventListener("unhandledrejection", (e) => {
+    var _a;
+    const msg = ((_a = e == null ? void 0 : e.reason) == null ? void 0 : _a.message) || String((e == null ? void 0 : e.reason) || "");
+    if (isChunkErr(msg)) tryReload(msg);
+  });
+})();
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     let refreshing = false;
@@ -12380,10 +12520,10 @@ export {
   drawSkeleton as a8,
   alignmentScore as a9,
   getVocalMotivation as aa,
-  formatTime as ab,
-  iconCircle as ac,
-  pillBtn as ad,
-  LOCALES as ae,
+  LOCALES as ab,
+  formatTime as ac,
+  iconCircle as ad,
+  pillBtn as ae,
   hrZone as af,
   RPE_LABELS as ag,
   RPE_COLORS as ah,

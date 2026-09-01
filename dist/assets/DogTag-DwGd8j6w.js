@@ -1,5 +1,5 @@
-import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL } from "./index-Cyfaa6hN.js";
-import "./icons-CLcWqI5o.js";
+import { j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL } from "./index-BbonTWJl.js";
+import "./icons-Cu976FrU.js";
 function DogTag({ label, value, sub, accent = false }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",

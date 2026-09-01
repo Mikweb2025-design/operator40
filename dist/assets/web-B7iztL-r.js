@@ -1,6 +1,6 @@
-import { aq as WebPlugin } from "./index-Cyfaa6hN.js";
-import "./icons-CLcWqI5o.js";
-import "./charts-BIux2oEU.js";
+import { aq as WebPlugin } from "./index-BbonTWJl.js";
+import "./icons-Cu976FrU.js";
+import "./charts-Cp2TOHCu.js";
 class MotionWeb extends WebPlugin {
   constructor() {
     super();

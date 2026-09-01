@@ -1,10 +1,10 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-DoPMocCZ.js","./clips-DJ4gBJJK.js"])))=>i.map(i=>d[i]);
-import { a2 as detectLang, L as LANGS, a3 as localizedCue, a4 as getDefinition, a1 as HOLD_EXERCISES, a0 as getReps, J as EXERCISES, a5 as normalizeExerciseId, j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, P as PAPER, S as STEEL, b as INK_2, B as BLAZE, a6 as PositioningMask, a7 as FitnessEngine, a8 as drawSkeleton, a9 as alignmentScore, a as OLIVE_DARK, u as useT, V as speak, aa as getVocalMotivation, p as playBeep, G as vibrate, t as tr, R as btnIcon, ab as formatTime, ac as iconCircle, ad as pillBtn, s as secondaryBtn, $ as primaryBtn, ae as LOCALES, _ as __vitePreload } from "./index-Cyfaa6hN.js";
-import { r as reactExports, E as Eye, m as Music2, n as HeadphoneOff, V as Volume2, j as VolumeX, W as Wind, G as Lightbulb, Q as Play, Y as Pause, i as ChevronLeft, l as SkipForward, C as Check } from "./icons-CLcWqI5o.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-Bz-yJ1YY.js";
-import { T as TopBar } from "./TopBar-CWXKtjL2.js";
-import { P as ProgressRing } from "./ProgressRing-DkbvVO8W.js";
-import "./charts-BIux2oEU.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-BXv9Yzv2.js","./clips-BUPhiWww.js"])))=>i.map(i=>d[i]);
+import { a2 as detectLang, L as LANGS, a3 as localizedCue, a4 as getDefinition, a1 as HOLD_EXERCISES, a0 as getReps, J as EXERCISES, a5 as normalizeExerciseId, j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, P as PAPER, S as STEEL, b as INK_2, B as BLAZE, a6 as PositioningMask, a7 as FitnessEngine, a8 as drawSkeleton, a9 as alignmentScore, a as OLIVE_DARK, u as useT, p as playBeep, V as speak, t as tr, aa as getVocalMotivation, ab as LOCALES, G as vibrate, R as btnIcon, ac as formatTime, $ as primaryBtn, ad as iconCircle, ae as pillBtn, s as secondaryBtn, _ as __vitePreload } from "./index-BbonTWJl.js";
+import { r as reactExports, E as Eye, m as Music2, n as HeadphoneOff, V as Volume2, j as VolumeX, Q as Play, W as Wind, G as Lightbulb, Y as Pause, i as ChevronLeft, l as SkipForward, C as Check } from "./icons-Cu976FrU.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-BON2E8Tg.js";
+import { T as TopBar } from "./TopBar-BAwVgnQn.js";
+import { P as ProgressRing } from "./ProgressRing-CUXQpRN6.js";
+import "./charts-Cp2TOHCu.js";
 const FALLBACK = "en";
 function normalizeLang(input) {
   if (!input) return detectLang() || FALLBACK;
@@ -341,8 +341,22 @@ function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep,
         eng.start();
         setStatus("running");
       } catch (e) {
-        setError((e == null ? void 0 : e.message) ?? String(e));
+        const raw = (e == null ? void 0 : e.message) ?? String(e);
+        const isChunkErr = /Failed to fetch|module script failed|ChunkLoadError|dynamically imported|WASM|PoseLandmarker|tasks-vision/i.test(raw);
+        const friendly = isChunkErr ? lang === "it" ? `AI non caricata: ${raw.slice(0, 180)} — Ricarica la pagina (aggiornamento in corso o rete lenta). Se offline, serve aver eseguito npm run fetch:mediapipe prima del build.` : lang === "de" ? `KI nicht geladen: ${raw.slice(0, 180)} — Seite neu laden (Update läuft oder langsames Netz).` : `AI failed to load: ${raw.slice(0, 180)} — Reload page (update in progress or slow network).` : raw.includes("NotAllowedError") || raw.includes("Permission") || raw.includes("Permission denied") ? lang === "it" ? "Permesso camera negato — consenti la camera e riprova (serve HTTPS)." : lang === "de" ? "Kamera-Berechtigung verweigert — erlaube Kamera und versuche erneut (HTTPS erforderlich)." : "Camera permission denied — allow camera and retry (HTTPS required)." : raw.includes("NotFoundError") || raw.includes("Overconstrained") ? lang === "it" ? "Camera non trovata — nessun dispositivo video disponibile." : lang === "de" ? "Keine Kamera gefunden." : "No camera found." : raw;
+        setError(friendly);
         setStatus("error");
+        if (isChunkErr && /Failed to fetch|module script failed|ChunkLoadError|dynamically imported/i.test(raw)) {
+          try {
+            const k = "o40_ai_chunk_retry";
+            const last = Number(sessionStorage.getItem(k) || 0);
+            if (Date.now() - last > 8e3) {
+              sessionStorage.setItem(k, String(Date.now()));
+              setTimeout(() => window.location.reload(), 900);
+            }
+          } catch {
+          }
+        }
       }
     }
     start();
@@ -404,7 +418,7 @@ function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep,
   if (!trackingSupported) {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%", background: INK, border: `1px solid ${OLIVE}`, borderRadius: 14, padding: 14, textAlign: "center" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 10 }, children: "AI TRACKING" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13, marginTop: 6 }, children: lang === "it" ? "Tracciamento AI non ancora calibrato per questo esercizio — usa timer standard." : "AI tracking not yet calibrated for this exercise — using standard timer." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 13, marginTop: 6 }, children: lang === "it" ? "Tracciamento AI non ancora calibrato per questo esercizio — usa timer standard." : lang === "de" ? "KI-Tracking für diese Übung noch nicht kalibriert — Standard-Timer wird verwendet." : "AI tracking not yet calibrated for this exercise — using standard timer." }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11, marginTop: 8 }, children: exerciseId })
     ] });
   }
@@ -475,10 +489,23 @@ function SessionAIOverlay({ phase, lang = "it", levelKey = "combattente", onRep,
       /* @__PURE__ */ jsxRuntimeExports.jsx("canvas", { ref: canvasRef, width: 640, height: 480, style: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scaleX(-1)", pointerEvents: "none" } }),
       reps === 0 && status === "running" && ((metrics == null ? void 0 : metrics.currentPhase) === "ready" || (metrics == null ? void 0 : metrics.currentPhase) === "idle" || !metrics) && /* @__PURE__ */ jsxRuntimeExports.jsx(PositioningMask, { exerciseId, landmarks: ((_g = (_f = engineRef.current) == null ? void 0 : _f.getLastResult()) == null ? void 0 : _g.landmarks) ?? null, lang, width: 640, height: 480 }),
       status === "loading" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, display: "grid", placeItems: "center", background: "rgba(0,0,0,0.45)", color: PAPER }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { fontSize: 10, color: KHAKI }, children: "AI Coach loading…" }) }),
-      status === "error" && error && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, display: "grid", placeItems: "center", background: "rgba(0,0,0,0.7)", padding: 16, textAlign: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: BLAZE, fontSize: 12 }, children: [
-        error,
-        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontSize: 10 }, children: "HTTPS + camera permission required." })
+      status === "error" && error && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "absolute", inset: 0, display: "grid", placeItems: "center", background: "rgba(0,0,0,0.82)", padding: 16, textAlign: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { maxWidth: 300 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: BLAZE, fontSize: 12, lineHeight: 1.4 }, children: error }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8, justifyContent: "center", marginTop: 12, flexWrap: "wrap" }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => window.location.reload(), style: { background: BLAZE, color: PAPER, border: "none", borderRadius: 8, padding: "6px 12px", fontSize: 11, fontWeight: 700, cursor: "pointer" }, children: lang === "it" ? "Ricarica" : lang === "de" ? "Neu laden" : "Reload" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
+            setError(null);
+            setStatus("idle");
+            if (streamRef.current) {
+              try {
+                streamRef.current.getTracks().forEach((t) => t.stop());
+              } catch {
+              }
+              streamRef.current = null;
+            }
+          }, style: { background: "transparent", color: KHAKI, border: `1px solid ${KHAKI}`, borderRadius: 8, padding: "6px 12px", fontSize: 11, cursor: "pointer" }, children: lang === "it" ? "Riprova camera" : lang === "de" ? "Erneut versuchen" : "Retry" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 9, marginTop: 8 }, children: lang === "it" ? "Suggerimento: disattiva AI con 👁️ per usare timer standard senza camera." : lang === "de" ? "Tipp: KI mit 👁️ deaktivieren für Timer ohne Kamera." : "Tip: disable AI with 👁️ to use timer without camera." })
       ] }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "absolute", bottom: 6, left: 6, right: 6, display: "flex", justifyContent: "space-between", pointerEvents: "none" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "o40-mono", style: { background: `${INK}DD`, color: KHAKI, fontSize: 9, padding: "3px 7px", borderRadius: 20, border: `1px solid ${OLIVE}55` }, children: [
@@ -559,7 +586,7 @@ function SegmentedProgress({ total, current, currentProgress, color }) {
 let _mediaPromise = null;
 function getMediaMap() {
   if (!_mediaPromise)
-    _mediaPromise = __vitePreload(() => import("./media-DoPMocCZ.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url).then((m) => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
+    _mediaPromise = __vitePreload(() => import("./media-BXv9Yzv2.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url).then((m) => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -677,21 +704,58 @@ function SessionScreen({
   const isRepsWork = phase.type === "work" && phase.mode === "reps";
   const isAiWork = aiEnabled && phase.type === "work" && !!phase.exerciseId;
   const progress = isRepsWork ? 1 : phase.duration ? 1 - secondsLeft / phase.duration : 0;
+  const [previewSec, setPreviewSec] = reactExports.useState(null);
+  reactExports.useEffect(() => {
+    if (phase.type !== "work" || !ex) {
+      setPreviewSec(null);
+      return;
+    }
+    setPreviewSec(5);
+    setPaused(true);
+  }, [phaseIdx]);
+  reactExports.useEffect(() => {
+    if (previewSec === null) return;
+    if (previewSec <= 0) {
+      setPreviewSec(null);
+      setPaused(false);
+      if (soundOn) {
+        try {
+          playBeep(880, 0.15);
+        } catch {
+        }
+        try {
+          if (ex) speak(tr(ex.name, lang));
+        } catch {
+        }
+      }
+      return;
+    }
+    const id = setTimeout(() => setPreviewSec((s) => s !== null ? s - 1 : s), 1e3);
+    return () => clearTimeout(id);
+  }, [previewSec, soundOn, ex, lang, setPaused]);
+  function skipPreview() {
+    setPreviewSec(null);
+    setPaused(false);
+  }
   reactExports.useEffect(() => {
     if (soundOn && profile && profile.voiceCountdown && secondsLeft <= 3 && secondsLeft > 0 && phase.type === "work" && !isRepsWork)
       speak(String(secondsLeft), lang, LOCALES);
   }, [secondsLeft, phase.type, soundOn, profile, isRepsWork]);
   reactExports.useEffect(() => {
-    if (!soundOn || !vocalMotivation || paused || phase.type !== "work" || isAiWork || isRepsWork)
+    if (!soundOn || !vocalMotivation || paused || phase.type !== "work" || previewSec !== null)
       return;
-    const duration = phase.duration || 40;
+    const duration = phase.duration || (isRepsWork ? 30 : 40);
     if (duration < 12) return;
+    const ms = isRepsWork ? 15e3 : Math.round(duration / 2) * 1e3;
     const interval = setInterval(() => {
       if (document.hidden) return;
-      speak(getVocalMotivation(lang), lang, LOCALES);
-    }, Math.round(duration / 2) * 1e3);
+      try {
+        speak(getVocalMotivation(lang), lang, LOCALES);
+      } catch {
+      }
+    }, ms);
     return () => clearInterval(interval);
-  }, [soundOn, vocalMotivation, paused, phase.type, phase.duration, isAiWork, isRepsWork, lang]);
+  }, [soundOn, vocalMotivation, paused, phase.type, phase.duration, isRepsWork, previewSec, lang]);
   reactExports.useEffect(() => {
     if (!(profile == null ? void 0 : profile.tempoEnabled) || paused || phase.type !== "work") return;
     const bpm = Math.max(40, Math.min(60, profile.tempoBpm || 50));
@@ -782,7 +846,7 @@ function SessionScreen({
         }
       )
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
         style: {
@@ -794,7 +858,19 @@ function SessionScreen({
           gap: 10,
           padding: 16
         },
-        children: [
+        children: previewSec !== null && phase.type === "work" && ex ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%", maxWidth: 400, display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 11, letterSpacing: "0.12em" }, children: t("ses.preview") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 20, textAlign: "center", lineHeight: 1.1 }, children: tr(ex.name, lang).toUpperCase() }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%", aspectRatio: "9 / 12", maxHeight: 360, background: INK, borderRadius: 14, overflow: "hidden", border: `1px solid ${OLIVE}` }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExerciseMedia, { exerciseId: phase.exerciseId, pose: ex.pose, color: BLAZE, size: "100%", rounded: 14 }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: KHAKI, fontSize: 12, textAlign: "center" }, children: tr(ex.repGuide, lang) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: BLAZE, fontSize: 56, lineHeight: 1 }, children: previewSec > 0 ? previewSec : "VIA!" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: skipPreview, style: { ...primaryBtn, background: BLAZE, borderRadius: 12, padding: "10px 18px" }, children: [
+            t("ses.preview.skip"),
+            " ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 14 })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: STEEL, fontSize: 10, textAlign: "center" }, children: isAiWork ? t("ses.ai.active") : t("ses.preview.hint") })
+        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
@@ -829,7 +905,7 @@ function SessionScreen({
               {
                 className: "o40-mono",
                 style: { color: STEEL, fontSize: 9, textAlign: "center", marginTop: 6 },
-                children: aiEnabled ? lang === "it" ? "AI Coach attivo — conta automatico, voce nella tua lingua" : "AI Coach on — auto-count, voice in your language" : ""
+                children: aiEnabled ? t("ses.ai.active") : ""
               }
             )
           ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -901,10 +977,10 @@ function SessionScreen({
                 {
                   className: "o40-mono",
                   style: { color: KHAKI, fontSize: 11, letterSpacing: "0.08em" },
-                  children: lang === "it" ? "RIPETIZIONI" : "REPS"
+                  children: t("ses.reps")
                 }
               ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }, children: lang === "it" ? "Tocca FATTO quando hai finito" : "Tap DONE when finished" })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: 8, color: BLAZE, fontSize: 11, fontWeight: 600 }, children: t("ses.reps.hint") })
             ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display", style: { color: PAPER, fontSize: 40 }, children: formatTime(secondsLeft) }) })
           ] }),
           ex && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", maxWidth: 330 }, children: [
@@ -999,7 +1075,7 @@ function SessionScreen({
                   {
                     className: "o40-mono",
                     style: { color: KHAKI, fontSize: 10, letterSpacing: "0.08em" },
-                    children: lang === "it" ? "Respira — 4 sec in, 4 sec out" : lang === "de" ? "Atmen — 4s ein, 4s aus" : "Breathe — 4s in, 4s out"
+                    children: t("ses.breathe")
                   }
                 )
               ]
@@ -1034,7 +1110,7 @@ function SessionScreen({
               ] }) : t("ses.last")
             }
           )
-        ]
+        ] })
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -1073,7 +1149,8 @@ function SessionScreen({
           style: { ...pillBtn, opacity: phaseIdx === 0 ? 0.4 : 1 },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 15 }),
-            " PREV"
+            " ",
+            t("ses.prev")
           ]
         }
       ),
@@ -1089,9 +1166,9 @@ function SessionScreen({
             flex: isRepsWork || isAiWork ? 1.6 : 1,
             opacity: isAiWork ? 0.9 : 1
           },
-          title: isAiWork ? lang === "it" ? "AI conta auto — puoi saltare manualmente" : "AI auto-count — you can skip manually" : void 0,
+          title: isAiWork ? t("ses.ai.hint") : void 0,
           children: [
-            isAiWork ? lang === "it" ? "SALTA →" : "SKIP →" : isRepsWork ? lang === "it" ? "FATTO ✓" : "DONE ✓" : "NEXT",
+            isAiWork ? t("ses.skip") : isRepsWork ? t("ses.reps.done") : t("ses.next"),
             " ",
             isAiWork ? /* @__PURE__ */ jsxRuntimeExports.jsx(SkipForward, { size: 15 }) : isRepsWork ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { size: 16 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(SkipForward, { size: 15 })
           ]
@@ -1103,7 +1180,7 @@ function SessionScreen({
       {
         className: "o40-mono",
         style: { color: STEEL, fontSize: 9, textAlign: "center", paddingBottom: 8 },
-        children: lang === "it" ? "AI avanzerà da solo al target · disattiva con 👁️" : "AI will auto-advance at target · disable with 👁️"
+        children: t("ses.ai.autoAdvance")
       }
     ),
     exitConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx(

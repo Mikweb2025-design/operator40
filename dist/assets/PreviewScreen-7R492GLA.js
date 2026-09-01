@@ -1,15 +1,15 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-DoPMocCZ.js","./clips-DJ4gBJJK.js"])))=>i.map(i=>d[i]);
-import { u as useT, X as levelPreset, Y as estimateProgramKcal, Z as totalSeqSeconds, j as jsxRuntimeExports, P as PAPER, t as tr, K as KHAKI, B as BLAZE, U as EXERCISE_GROUPS, O as OLIVE, b as INK_2, I as INK, J as EXERCISES, S as STEEL, a0 as getReps, a1 as HOLD_EXERCISES, V as speak, R as btnIcon, a as OLIVE_DARK, $ as primaryBtn, _ as __vitePreload } from "./index-Cyfaa6hN.js";
-import { r as reactExports, W as Wind, f as RefreshCw, Q as Play } from "./icons-CLcWqI5o.js";
-import { h as hasClip } from "./clips-DJ4gBJJK.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-Bz-yJ1YY.js";
-import { T as TopBar } from "./TopBar-CWXKtjL2.js";
-import { D as DogTag } from "./DogTag-McALqTeV.js";
-import "./charts-BIux2oEU.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-BXv9Yzv2.js","./clips-BUPhiWww.js"])))=>i.map(i=>d[i]);
+import { u as useT, X as levelPreset, Y as estimateProgramKcal, Z as totalSeqSeconds, j as jsxRuntimeExports, P as PAPER, t as tr, K as KHAKI, B as BLAZE, U as EXERCISE_GROUPS, O as OLIVE, b as INK_2, I as INK, J as EXERCISES, S as STEEL, a0 as getReps, a1 as HOLD_EXERCISES, V as speak, R as btnIcon, a as OLIVE_DARK, $ as primaryBtn, _ as __vitePreload } from "./index-BbonTWJl.js";
+import { r as reactExports, W as Wind, f as RefreshCw, Q as Play } from "./icons-Cu976FrU.js";
+import { h as hasClip } from "./clips-BUPhiWww.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-BON2E8Tg.js";
+import { T as TopBar } from "./TopBar-BAwVgnQn.js";
+import { D as DogTag } from "./DogTag-DwGd8j6w.js";
+import "./charts-Cp2TOHCu.js";
 let _mediaPromise = null;
 function getMediaMap() {
   if (!_mediaPromise)
-    _mediaPromise = __vitePreload(() => import("./media-DoPMocCZ.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url).then((m) => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
+    _mediaPromise = __vitePreload(() => import("./media-BXv9Yzv2.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url).then((m) => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -131,7 +131,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
           children: t("prev.sub", {
             n: program.exercises.length,
             r: program.rounds,
-            p: mode === "reps" ? lang === "it" ? "Ripetizioni" : lang === "de" ? "Wiederholungen" : "Reps" : tr(preset.label, lang)
+            p: mode === "reps" ? t("ses.reps") : tr(preset.label, lang)
           })
         }
       ),
@@ -148,7 +148,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
             padding: "6px 10px",
             textAlign: "center"
           },
-          children: lang === "it" ? "Modalità ripetizioni: tocca FATTO quando hai finito ogni esercizio. Hold resta a tempo." : "Reps mode: tap DONE when finished each exercise. Holds stay timed."
+          children: t("preview.reps")
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 10 }, children: program.exercises.map((originalId, i) => {
@@ -312,7 +312,7 @@ function PreviewScreen({ program, profile, soundOn, onBack, onStart }) {
                               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tr(ex.repGuide, lang) }),
                               mode === "reps" && !HOLD_EXERCISES.has(currentId) && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: STEEL, fontSize: 10 }, children: [
                                 "· ",
-                                lang === "it" ? "tocca FATTO" : "tap DONE"
+                                t("preview.tapDone")
                               ] })
                             ]
                           }

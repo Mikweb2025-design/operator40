@@ -1,10 +1,10 @@
-import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL, f as BLAZE_DEEP, P as PAPER, q as getMedalProgress, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-Cyfaa6hN.js";
-import { r as reactExports, v as Users, T as Trophy, C as Check, w as Share2, L as Link, X, b as ChevronRight, p as Medal, S as Sparkles, F as Flame, I as Info, x as TrendingUp, o as Crown, Z as Zap, y as Star, z as RotateCcw, G as Lightbulb, E as Eye, h as Target, B as BookOpen, e as Settings, J as Trash2, P as Plus, K as Ruler, N as TrendingDown, O as Scale } from "./icons-CLcWqI5o.js";
-import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-Ckz3cdjj.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-Bz-yJ1YY.js";
-import { D as DogTag } from "./DogTag-McALqTeV.js";
-import { P as ProgressRing } from "./ProgressRing-DkbvVO8W.js";
-import "./charts-BIux2oEU.js";
+import { k as computeBestStreak, l as getConsistencyScore, m as PROGRAMS, n as BELLY_IDS, o as getBellyCount, j as jsxRuntimeExports, O as OLIVE, b as INK_2, I as INK, B as BLAZE, K as KHAKI, S as STEEL, f as BLAZE_DEEP, P as PAPER, q as getMedalProgress, u as useT, r as computeStreakWithFreeze, W as WEEKLY_GOAL, v as pickNextProgram, w as getRank, x as nextBadge, y as campDayDisplay, g as getLevel, d as LEVELS, z as getWeeklyProgress, A as getAveragePace, C as getStreakRisk, D as getBellyProgress, E as greeting, t as tr, F as CAMP_DAYS, a as OLIVE_DARK, G as vibrate, Q as QUICK_PROGRAM, H as getBellyInsight, J as EXERCISES, M as getBellyStreak, N as shouldProgressBellyLevel, R as btnIcon } from "./index-BbonTWJl.js";
+import { r as reactExports, v as Users, T as Trophy, C as Check, w as Share2, L as Link, X, b as ChevronRight, p as Medal, S as Sparkles, F as Flame, I as Info, x as TrendingUp, o as Crown, Z as Zap, y as Star, z as RotateCcw, h as Target, G as Lightbulb, E as Eye, B as BookOpen, e as Settings, J as Trash2, P as Plus, K as Ruler, N as TrendingDown, O as Scale } from "./icons-Cu976FrU.js";
+import { g as getGoalHistory, e as estimateWeeklyCalories, M as MiniGoalBar, a as getSmartInsight, b as getSmartRecommendation } from "./GoalRing-BAdG4ZT5.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-BON2E8Tg.js";
+import { D as DogTag } from "./DogTag-DwGd8j6w.js";
+import { P as ProgressRing } from "./ProgressRing-CUXQpRN6.js";
+import "./charts-Cp2TOHCu.js";
 function getPersonalChallenge(sessions, profile) {
   const n = (sessions == null ? void 0 : sessions.length) || 0;
   const bestStreak = computeBestStreak(sessions || []);
@@ -942,6 +942,7 @@ function HomeScreen({
   const isRisk = risk !== "ok";
   const showPinnedProgress = isRisk || canPromote;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "o40-screen-in", style: { flex: 1, display: "flex", flexDirection: "column" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("style", { children: `@keyframes o40OrangePulse{0%,100%{box-shadow:0 0 0 1px #C1440E22 inset,0 4px 12px rgba(0,0,0,0.25)}50%{box-shadow:0 0 0 1px #C1440E44 inset,0 6px 20px rgba(193,68,14,0.22)}}` }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
@@ -1431,11 +1432,13 @@ function HomeScreen({
               gap: 12,
               width: "100%",
               background: `linear-gradient(135deg, ${INK_2}, ${INK})`,
-              border: `1px solid ${KHAKI}`,
+              border: `1px solid ${BLAZE}`,
               borderRadius: 12,
               padding: 12,
               cursor: "pointer",
-              textAlign: "left"
+              textAlign: "left",
+              boxShadow: `0 0 0 1px ${BLAZE}22 inset, 0 4px 12px rgba(0,0,0,0.25)`,
+              animation: "o40OrangePulse 2.4s ease-in-out infinite"
             },
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -1445,13 +1448,13 @@ function HomeScreen({
                     width: 34,
                     height: 34,
                     borderRadius: "50%",
-                    background: `${KHAKI}22`,
+                    background: `${BLAZE}22`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0
                   },
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 17, color: KHAKI })
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 17, color: BLAZE })
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1 }, children: [
@@ -1462,21 +1465,94 @@ function HomeScreen({
                   t("home.quick.min")
                 ] })
               ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 16, color: STEEL })
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 16, color: BLAZE })
             ]
           }
         ),
+        (() => {
+          const gironeProgram = (() => {
+            const belly = PROGRAMS.filter((p) => p.belly);
+            const idx = (/* @__PURE__ */ new Date()).getDate() % belly.length;
+            return belly[idx] || dailyChallenge.program;
+          })();
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              style: {
+                background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`,
+                border: `1px solid ${BLAZE}`,
+                borderRadius: 12,
+                padding: "10px 12px",
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                boxShadow: `0 0 0 1px ${BLAZE}22 inset, 0 4px 12px rgba(0,0,0,0.25)`,
+                animation: "o40OrangePulse 2.4s ease-in-out infinite"
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    style: {
+                      width: 36,
+                      height: 36,
+                      borderRadius: "50%",
+                      background: `${BLAZE}22`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0
+                    },
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(Target, { size: 16, color: BLAZE })
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "div",
+                    {
+                      className: "o40-mono",
+                      style: { color: BLAZE, fontSize: 10, letterSpacing: "0.06em" },
+                      children: t("home.girone.title", { id: gironeProgram.id })
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontSize: 12.5, fontWeight: 600 }, children: tr(gironeProgram.name, lang) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11 }, children: tr(gironeProgram.tagline, lang) })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    onClick: () => onOpenProgram(gironeProgram),
+                    style: {
+                      background: BLAZE,
+                      color: PAPER,
+                      border: "none",
+                      borderRadius: 8,
+                      padding: "6px 12px",
+                      fontSize: 11,
+                      fontWeight: 700,
+                      cursor: "pointer",
+                      flexShrink: 0
+                    },
+                    children: t("home.daily.go")
+                  }
+                )
+              ]
+            }
+          );
+        })(),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
             style: {
               background: `linear-gradient(135deg, ${INK_2}, ${OLIVE_DARK})`,
-              border: `1px solid ${OLIVE}`,
+              border: `1px solid ${BLAZE}`,
               borderRadius: 12,
               padding: "10px 12px",
               display: "flex",
               alignItems: "center",
-              gap: 10
+              gap: 10,
+              boxShadow: `0 0 0 1px ${BLAZE}22 inset, 0 4px 12px rgba(0,0,0,0.25)`,
+              animation: "o40OrangePulse 2.4s ease-in-out infinite"
             },
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -1486,13 +1562,13 @@ function HomeScreen({
                     width: 36,
                     height: 36,
                     borderRadius: "50%",
-                    background: `${KHAKI}22`,
+                    background: `${BLAZE}22`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0
                   },
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { size: 16, color: KHAKI })
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { size: 16, color: BLAZE })
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
@@ -1500,7 +1576,7 @@ function HomeScreen({
                   "div",
                   {
                     className: "o40-mono",
-                    style: { color: KHAKI, fontSize: 10, letterSpacing: "0.06em" },
+                    style: { color: BLAZE, fontSize: 10, letterSpacing: "0.06em" },
                     children: t("home.dailyChallenge", { bonus: dailyChallenge.bonus })
                   }
                 ),
@@ -1890,22 +1966,38 @@ function HomeScreen({
         ]
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      CollapsibleSection,
-      {
-        id: "social",
-        title: t("home.section.social") || "SFIDA AMICI",
-        icon: Users,
-        badge: `${sessions.filter((s) => new Date(s.date) >= (() => {
-          const d = /* @__PURE__ */ new Date();
-          d.setDate(d.getDate() - (d.getDay() + 6) % 7);
-          d.setHours(0, 0, 0, 0);
-          return d;
-        })()).length} / ${profile.weeklyGoal || 3} · kcal`,
-        defaultOpen: false,
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialChallenge, { sessions, profile, lang })
-      }
-    ),
+    (() => {
+      const wkN = sessions.filter((s) => new Date(s.date) >= (() => {
+        const d = /* @__PURE__ */ new Date();
+        d.setDate(d.getDate() - (d.getDay() + 6) % 7);
+        d.setHours(0, 0, 0, 0);
+        return d;
+      })()).length;
+      const wkKcal = Math.round(sessions.filter((s) => new Date(s.date) >= (() => {
+        const d = /* @__PURE__ */ new Date();
+        d.setDate(d.getDate() - (d.getDay() + 6) % 7);
+        d.setHours(0, 0, 0, 0);
+        return d;
+      })()).reduce((a, s) => a + (s.kcal || 0), 0));
+      const friendCode = (() => {
+        try {
+          return localStorage.getItem("o40_friend_code");
+        } catch {
+          return null;
+        }
+      })();
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        CollapsibleSection,
+        {
+          id: "social",
+          title: t("home.section.social"),
+          icon: Users,
+          badge: friendCode ? t("home.social.badge", { n: "1", kcal: wkKcal }) : `${wkN}/${profile.weeklyGoal || 3} · ${wkKcal} kcal`,
+          defaultOpen: false,
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialChallenge, { sessions, profile, lang })
+        }
+      );
+    })(),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       CollapsibleSection,
       {

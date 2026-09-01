@@ -1,9 +1,9 @@
-import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, G as vibrate, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ae as LOCALES, ai as computeStreak, W as WEEKLY_GOAL, aj as buildHeatmap, ak as getPersonalRecords, al as buildYearHeatmap, b as INK_2, a as OLIVE_DARK, ah as RPE_COLORS, P as PAPER, z as getWeeklyProgress, A as getAveragePace, ac as iconCircle, f as BLAZE_DEEP, am as getMonthlyTrend, m as PROGRAMS, t as tr, af as hrZone, ag as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, an as dayKey, ao as sessionDayKey, ap as getNextMedals } from "./index-Cyfaa6hN.js";
-import { r as reactExports, F as Flame, o as Crown, K as Ruler, u as HeartPulse, T as Trophy, Z as Zap, S as Sparkles, G as Lightbulb, p as Medal, C as Check, X, z as RotateCcw, y as Star, h as Target } from "./icons-CLcWqI5o.js";
-import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-Ckz3cdjj.js";
-import { T as TopBar } from "./TopBar-CWXKtjL2.js";
-import { D as DogTag } from "./DogTag-McALqTeV.js";
-import { R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-BIux2oEU.js";
+import { j as jsxRuntimeExports, O as OLIVE, I as INK, K as KHAKI, B as BLAZE, S as STEEL, G as vibrate, w as getRank, k as computeBestStreak, l as getConsistencyScore, q as getMedalProgress, C as getStreakRisk, u as useT, ab as LOCALES, ai as computeStreak, W as WEEKLY_GOAL, aj as buildHeatmap, ak as getPersonalRecords, al as buildYearHeatmap, b as INK_2, a as OLIVE_DARK, ah as RPE_COLORS, P as PAPER, z as getWeeklyProgress, A as getAveragePace, ad as iconCircle, f as BLAZE_DEEP, am as getMonthlyTrend, m as PROGRAMS, t as tr, af as hrZone, ag as RPE_LABELS, R as btnIcon, s as secondaryBtn, $ as primaryBtn, an as dayKey, ao as sessionDayKey, ap as getNextMedals } from "./index-BbonTWJl.js";
+import { r as reactExports, F as Flame, o as Crown, K as Ruler, q as HeartPulse, T as Trophy, Z as Zap, S as Sparkles, G as Lightbulb, p as Medal, C as Check, X, z as RotateCcw, y as Star, h as Target } from "./icons-Cu976FrU.js";
+import { a as getSmartInsight, g as getGoalHistory, s as suggestNextGoal, c as getStreakWeeks, M as MiniGoalBar, f as formatGoal, e as estimateWeeklyCalories } from "./GoalRing-BAdG4ZT5.js";
+import { T as TopBar } from "./TopBar-BAwVgnQn.js";
+import { D as DogTag } from "./DogTag-DwGd8j6w.js";
+import { R as ResponsiveContainer, B as BarChart, C as CartesianGrid, X as XAxis, Y as YAxis, T as Tooltip, a as Bar, L as LineChart, b as Line } from "./charts-Cp2TOHCu.js";
 function BeforeAfterSlider({ before, after }) {
   const [pos, setPos] = reactExports.useState(50);
   const [scale, setScale] = reactExports.useState(1);
@@ -915,6 +915,7 @@ function Badge({ label, unlocked, value, color = BLAZE, icon = "trophy", progres
   );
 }
 function MedalGrid({ sessions }) {
+  const { t } = useT();
   const { all, unlocked } = getMedalProgress(sessions);
   const byType = {
     streak: all.filter((m) => m.type === "streak"),
@@ -926,11 +927,11 @@ function MedalGrid({ sessions }) {
   const next = getNextMedals(sessions, 3);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     [
-      { key: "streak", title: "SERIE", icon: "fire" },
-      { key: "sessions", title: "SESSIONI", icon: "zap" },
-      { key: "kcal", title: "KCAL", icon: "target" },
-      { key: "consistency", title: "COSTANZA", icon: "star" },
-      { key: "perfect", title: "SETT. PERFETTE", icon: "star" }
+      { key: "streak", title: t("hist.medal.streak"), icon: "fire" },
+      { key: "sessions", title: t("hist.medal.sessions"), icon: "zap" },
+      { key: "kcal", title: t("hist.medal.kcal"), icon: "target" },
+      { key: "consistency", title: t("hist.medal.consistency"), icon: "star" },
+      { key: "perfect", title: t("hist.medal.perfect"), icon: "star" }
     ].map((cat) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
@@ -1129,7 +1130,7 @@ function HistoryScreen({
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", justifyContent: "center", marginBottom: 4 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 14, color: BLAZE }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 9, letterSpacing: "0.07em" }, children: "MAX KCAL" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-mono", style: { color: KHAKI, fontSize: 9, letterSpacing: "0.07em" }, children: t("hist.maxKcal") }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-display o40-num-glow on", style: { fontSize: 22, lineHeight: 1.1 }, children: pr.maxKcal })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: 1, background: `linear-gradient(180deg, transparent, ${OLIVE}55, transparent)` } }),
@@ -2406,11 +2407,9 @@ function HistoryScreen({
                           fontWeight: d.sessions.length ? 700 : 400,
                           background: d.sessions.length ? `linear-gradient(135deg, ${BLAZE} 0%, ${BLAZE_DEEP} 100%)` : "transparent",
                           color: d.sessions.length ? PAPER : STEEL,
-                          border: d.sessions.length ? `1px solid ${BLAZE}55` : `1px solid transparent`,
+                          border: d.isToday ? `1px solid ${KHAKI}` : d.sessions.length ? `1px solid ${BLAZE}55` : `1px solid transparent`,
                           boxShadow: d.sessions.length ? `0 2px 8px ${BLAZE}33` : "none",
-                          opacity: d.isToday ? 1 : d.sessions.length ? 1 : 0.85,
-                          border: d.isToday ? `1px solid ${KHAKI}` : "1px solid transparent",
-                          fontWeight: d.sessions.length ? 700 : 400
+                          opacity: d.isToday ? 1 : d.sessions.length ? 1 : 0.85
                         },
                         children: d.day
                       },
@@ -2711,7 +2710,7 @@ function HistoryScreen({
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 14 }),
               " ",
-              lang === "it" ? "Condividi PNG" : "Share PNG"
+              t("hist.share.png")
             ]
           }
         ),

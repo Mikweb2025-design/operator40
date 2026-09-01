@@ -1,9 +1,9 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-DoPMocCZ.js","./clips-DJ4gBJJK.js"])))=>i.map(i=>d[i]);
-import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-Cyfaa6hN.js";
-import { r as reactExports, X, y as Star, S as Sparkles, W as Wind } from "./icons-CLcWqI5o.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-Bz-yJ1YY.js";
-import { h as hasClip } from "./clips-DJ4gBJJK.js";
-import "./charts-BIux2oEU.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-BXv9Yzv2.js","./clips-BUPhiWww.js"])))=>i.map(i=>d[i]);
+import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-BbonTWJl.js";
+import { r as reactExports, X, y as Star, S as Sparkles, W as Wind } from "./icons-Cu976FrU.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-BON2E8Tg.js";
+import { h as hasClip } from "./clips-BUPhiWww.js";
+import "./charts-Cp2TOHCu.js";
 function loadFavorites() {
   try {
     const v = localStorage.getItem("o40_favs");
@@ -34,7 +34,7 @@ function toggleFavorite(list, id) {
 let _mediaPromise = null;
 function getMediaMap() {
   if (!_mediaPromise)
-    _mediaPromise = __vitePreload(() => import("./media-DoPMocCZ.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url).then((m) => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
+    _mediaPromise = __vitePreload(() => import("./media-BXv9Yzv2.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url).then((m) => ({ b64: m.VIDEO_B64, files: m.VIDEO_FILES }));
   return _mediaPromise;
 }
 function ExerciseMedia({ exerciseId, pose, color = BLAZE, size = "100%", rounded = 10 }) {
@@ -284,13 +284,13 @@ function LibraryScreen({ sessions, profile }) {
     })(),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "o40-scroll", style: { flex: 1, overflowY: "auto", padding: 16 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 10 }, children: visibleIds.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { textAlign: "center", padding: "36px 16px", color: STEEL }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 36, marginBottom: 8 }, children: "🔍" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 14 }, children: "Nessun esercizio trovato" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginTop: 4 }, children: lang === "it" ? "Prova un altro termine o resetta i filtri." : lang === "de" ? "Versuche einen anderen Begriff." : "Try another term or reset filters." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: PAPER, fontWeight: 700, fontSize: 14 }, children: t("lib.notFound") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 12, marginTop: 4 }, children: t("lib.empty") }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => {
         setQuery("");
         setFilter("all");
         setShowFavs(false);
-      }, style: { marginTop: 12, padding: "8px 14px", borderRadius: 20, border: `1px solid ${BLAZE}`, background: BLAZE, color: PAPER, cursor: "pointer", fontSize: 12 }, children: "Reset filtri" })
+      }, style: { marginTop: 12, padding: "8px 14px", borderRadius: 20, border: `1px solid ${BLAZE}`, background: BLAZE, color: PAPER, cursor: "pointer", fontSize: 12 }, children: t("lib.resetFilters") })
     ] }) : visibleIds.map((id) => {
       const ex = EXERCISES[id];
       const isOpen = selectedId === id;
