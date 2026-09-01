@@ -453,6 +453,73 @@ function LibraryScreen({ sessions, profile }) {
                         >
                           {tr(ex.tip40, lang)}
                         </div>
+                        {ex.infoImage && (
+                          <div
+                            style={{
+                              marginTop: 10,
+                              background: '#0A0A0A',
+                              borderRadius: 10,
+                              border: `1px solid ${OLIVE}`,
+                              overflow: 'hidden',
+                            }}
+                          >
+                            <picture>
+                              <source srcSet={`./${ex.infoImage}`} type="image/webp" />
+                              {ex.infoImageFallback && (
+                                <source srcSet={`./${ex.infoImageFallback}`} type="image/png" />
+                              )}
+                              <img
+                                src={`./${ex.infoImageFallback || ex.infoImage}`}
+                                alt={tr(ex.name, lang) + ' — ' + (ex.muscles ? tr(ex.muscles, lang) : 'muscoli')}
+                                loading="lazy"
+                                style={{
+                                  width: '100%',
+                                  height: 'auto',
+                                  display: 'block',
+                                  background: '#0A0A0A',
+                                }}
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none';
+                                }}
+                              />
+                            </picture>
+                            {ex.muscles && (
+                              <div
+                                style={{
+                                  padding: '6px 10px 8px',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 6,
+                                  borderTop: `1px solid ${OLIVE}`,
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    width: 10,
+                                    height: 10,
+                                    borderRadius: 2,
+                                    background: '#7AC74F',
+                                    flexShrink: 0,
+                                  }}
+                                />
+                                <span
+                                  className="o40-mono"
+                                  style={{ color: KHAKI, fontSize: 10, letterSpacing: '0.04em' }}
+                                >
+                                  {lang === 'it'
+                                    ? 'MUSCOLI PRINCIPALI'
+                                    : lang === 'de'
+                                      ? 'HAUPTMUSKELN'
+                                      : 'MAIN MUSCLES'}
+                                  {' · '}
+                                  <span style={{ color: STEEL, fontWeight: 400 }}>
+                                    {tr(ex.muscles, lang)}
+                                  </span>
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </>
                     ) : (
                       <div style={{ color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4 }}>

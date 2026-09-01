@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports, a as OLIVE_DARK, P as PAPER } from "./index-BbonTWJl.js";
+import { j as jsxRuntimeExports, a as OLIVE_DARK, P as PAPER } from "./index-DDPOFJ5q.js";
 import "./icons-Cu976FrU.js";
 function ProgressRing({ progress, size = 240, stroke = 12, color, comet = true }) {
   const radius = (size - stroke) / 2;

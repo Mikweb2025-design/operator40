@@ -1,7 +1,7 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./media-BXv9Yzv2.js","./clips-BUPhiWww.js"])))=>i.map(i=>d[i]);
-import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-BbonTWJl.js";
+import { u as useT, J as EXERCISES, U as EXERCISE_GROUPS, t as tr, j as jsxRuntimeExports, P as PAPER, K as KHAKI, S as STEEL, B as BLAZE, O as OLIVE, m as PROGRAMS, l as getConsistencyScore, C as getStreakRisk, b as INK_2, I as INK, V as speak, _ as __vitePreload } from "./index-DDPOFJ5q.js";
 import { r as reactExports, X, y as Star, S as Sparkles, W as Wind } from "./icons-Cu976FrU.js";
-import { E as ExerciseFigure } from "./ExerciseFigure-BON2E8Tg.js";
+import { E as ExerciseFigure } from "./ExerciseFigure-BgT3XvRf.js";
 import { h as hasClip } from "./clips-BUPhiWww.js";
 import "./charts-Cp2TOHCu.js";
 function loadFavorites() {
@@ -441,6 +441,79 @@ function LibraryScreen({ sessions, profile }) {
                         fontStyle: "italic"
                       },
                       children: tr(ex.tip40, lang)
+                    }
+                  ),
+                  ex.infoImage && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "div",
+                    {
+                      style: {
+                        marginTop: 10,
+                        background: "#0A0A0A",
+                        borderRadius: 10,
+                        border: `1px solid ${OLIVE}`,
+                        overflow: "hidden"
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("picture", { children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("source", { srcSet: `./${ex.infoImage}`, type: "image/webp" }),
+                          ex.infoImageFallback && /* @__PURE__ */ jsxRuntimeExports.jsx("source", { srcSet: `./${ex.infoImageFallback}`, type: "image/png" }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "img",
+                            {
+                              src: `./${ex.infoImageFallback || ex.infoImage}`,
+                              alt: tr(ex.name, lang) + " — " + (ex.muscles ? tr(ex.muscles, lang) : "muscoli"),
+                              loading: "lazy",
+                              style: {
+                                width: "100%",
+                                height: "auto",
+                                display: "block",
+                                background: "#0A0A0A"
+                              },
+                              onError: (e) => {
+                                e.currentTarget.style.display = "none";
+                              }
+                            }
+                          )
+                        ] }),
+                        ex.muscles && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                          "div",
+                          {
+                            style: {
+                              padding: "6px 10px 8px",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 6,
+                              borderTop: `1px solid ${OLIVE}`
+                            },
+                            children: [
+                              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                                "span",
+                                {
+                                  style: {
+                                    width: 10,
+                                    height: 10,
+                                    borderRadius: 2,
+                                    background: "#7AC74F",
+                                    flexShrink: 0
+                                  }
+                                }
+                              ),
+                              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                                "span",
+                                {
+                                  className: "o40-mono",
+                                  style: { color: KHAKI, fontSize: 10, letterSpacing: "0.04em" },
+                                  children: [
+                                    lang === "it" ? "MUSCOLI PRINCIPALI" : lang === "de" ? "HAUPTMUSKELN" : "MAIN MUSCLES",
+                                    " · ",
+                                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: STEEL, fontWeight: 400 }, children: tr(ex.muscles, lang) })
+                                  ]
+                                }
+                              )
+                            ]
+                          }
+                        )
+                      ]
                     }
                   )
                 ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: STEEL, fontSize: 11.5, marginTop: 3, lineHeight: 1.4 }, children: tr(ex.cue, lang) })

@@ -152,6 +152,9 @@ export const EXERCISES = {
       en: 'Slow, steady breathing, never held.',
       de: 'Langsam und gleichmäßig atmen, nie anhalten.',
     },
+    infoImage: 'images/plank-muscles.webp',
+    infoImageFallback: 'images/plank-muscles.png',
+    muscles: { it: 'Addome, spalle, trapezio, glutei', en: 'Abs, shoulders, traps, glutes', de: 'Bauch, Schultern, Trapez, Gesäß' },
   },
   jumpingjack: {
     name: { it: 'Jumping jack', en: 'Jumping jack', de: 'Jumping Jack' },

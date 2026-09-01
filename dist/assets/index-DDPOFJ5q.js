@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-DGZGuWDd.js","./icons-Cu976FrU.js","./charts-Cp2TOHCu.js","./web-CUELQz1Z.js","./CountdownScreen-B08PFt98.js","./SetupScreen-C-iGBCAa.js","./TopBar-BAwVgnQn.js","./HomeScreen-BkLpcGoi.js","./GoalRing-BAdG4ZT5.js","./ExerciseFigure-BON2E8Tg.js","./DogTag-DwGd8j6w.js","./ProgressRing-CUXQpRN6.js","./LibraryScreen-B_s0PLFz.js","./clips-BUPhiWww.js","./BuilderScreen-BjE7U7eZ.js","./PreviewScreen-7R492GLA.js","./SessionScreen-BnCkqo-J.js","./SummaryScreen-BVDSzbDF.js","./HistoryScreen-DPal-TuV.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./index-D6BUQ1CJ.js","./icons-Cu976FrU.js","./charts-Cp2TOHCu.js","./web-C05HSh2t.js","./CountdownScreen-D-i0bFgp.js","./SetupScreen-BJU8uYDA.js","./TopBar-B2wO2UQf.js","./HomeScreen-BGTJsR42.js","./GoalRing-COx3yRPV.js","./ExerciseFigure-BgT3XvRf.js","./DogTag-oqtrOAtA.js","./ProgressRing-BjDbq_T4.js","./LibraryScreen-cb1Gdahr.js","./clips-BUPhiWww.js","./BuilderScreen-BKeS5m4A.js","./PreviewScreen-BqFy7Wvq.js","./SessionScreen-Bc5u01VB.js","./SummaryScreen-7szLGKCn.js","./HistoryScreen-GO-PbL1X.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -1317,7 +1317,10 @@ const EXERCISES = {
       it: "Respiro lento e costante, mai trattenuto.",
       en: "Slow, steady breathing, never held.",
       de: "Langsam und gleichmäßig atmen, nie anhalten."
-    }
+    },
+    infoImage: "images/plank-muscles.webp",
+    infoImageFallback: "images/plank-muscles.png",
+    muscles: { it: "Addome, spalle, trapezio, glutei", en: "Abs, shoulders, traps, glutes", de: "Bauch, Schultern, Trapez, Gesäß" }
   },
   jumpingjack: {
     name: { it: "Jumping jack", en: "Jumping jack", de: "Jumping Jack" },
@@ -7194,7 +7197,7 @@ class MotionFusion {
   }
   async listen() {
     try {
-      const mod = await __vitePreload(() => import("./index-DGZGuWDd.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
+      const mod = await __vitePreload(() => import("./index-D6BUQ1CJ.js"), true ? __vite__mapDeps([0,1,2]) : void 0, import.meta.url).catch(() => null);
       const Motion = mod == null ? void 0 : mod.Motion;
       if (Motion && typeof Motion.addListener === "function") {
         const listener = await Motion.addListener("accel", (event) => {
@@ -9105,7 +9108,7 @@ function BottomNav({ active, onNavigate }) {
     }
   );
 }
-const BUILD_VERSION = "2.15.1 · e72cc07";
+const BUILD_VERSION = "2.15.1 · 44b9adf";
 function VersionBadge({ onClick }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -9699,7 +9702,7 @@ registerPlugin("CapacitorHttp", {
   web: () => new CapacitorHttpPluginWeb()
 });
 const Preferences = registerPlugin("Preferences", {
-  web: () => __vitePreload(() => import("./web-CUELQz1Z.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
+  web: () => __vitePreload(() => import("./web-C05HSh2t.js"), true ? __vite__mapDeps([3,1,2]) : void 0, import.meta.url).then((m2) => new m2.PreferencesWeb())
 });
 const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
 let idbProxyableTypes;
@@ -10298,15 +10301,15 @@ function getBellyInsight({ sessions, waistHistory, lang = "it" }) {
   }
   return lang === "it" ? `Obiettivo pancia: 3 missioni / sett. per attaccare il grasso addominale.` : `Belly goal: 3 missions / week to attack belly fat.`;
 }
-const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-B08PFt98.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-C-iGBCAa.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
-const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-BkLpcGoi.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
-const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-B_s0PLFz.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
-const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-BjE7U7eZ.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
-const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-7R492GLA.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
-const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-BnCkqo-J.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
-const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-BVDSzbDF.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
-const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-DPal-TuV.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
+const CountdownScreen = reactExports.lazy(() => __vitePreload(() => import("./CountdownScreen-D-i0bFgp.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
+const SetupScreen = reactExports.lazy(() => __vitePreload(() => import("./SetupScreen-BJU8uYDA.js"), true ? __vite__mapDeps([5,1,6,2]) : void 0, import.meta.url));
+const HomeScreen = reactExports.lazy(() => __vitePreload(() => import("./HomeScreen-BGTJsR42.js"), true ? __vite__mapDeps([7,1,8,9,10,11,2]) : void 0, import.meta.url));
+const LibraryScreen = reactExports.lazy(() => __vitePreload(() => import("./LibraryScreen-cb1Gdahr.js"), true ? __vite__mapDeps([12,1,9,13,2]) : void 0, import.meta.url));
+const BuilderScreen = reactExports.lazy(() => __vitePreload(() => import("./BuilderScreen-BKeS5m4A.js"), true ? __vite__mapDeps([14,1,6,9,2]) : void 0, import.meta.url));
+const PreviewScreen = reactExports.lazy(() => __vitePreload(() => import("./PreviewScreen-BqFy7Wvq.js"), true ? __vite__mapDeps([15,1,13,9,6,10,2]) : void 0, import.meta.url));
+const SessionScreen = reactExports.lazy(() => __vitePreload(() => import("./SessionScreen-Bc5u01VB.js"), true ? __vite__mapDeps([16,1,9,6,11,2]) : void 0, import.meta.url));
+const SummaryScreen = reactExports.lazy(() => __vitePreload(() => import("./SummaryScreen-7szLGKCn.js"), true ? __vite__mapDeps([17,1,10,2]) : void 0, import.meta.url));
+const HistoryScreen = reactExports.lazy(() => __vitePreload(() => import("./HistoryScreen-GO-PbL1X.js"), true ? __vite__mapDeps([18,1,8,6,10,2]) : void 0, import.meta.url));
 function ScreenFallback() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
